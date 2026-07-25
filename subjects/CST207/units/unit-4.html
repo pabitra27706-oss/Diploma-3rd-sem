@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 4 – Assembly Language Programming | CST207</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .asm-code {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--primary-color);
+      border-radius: 0 8px 8px 0;
+      padding: 0.9rem 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: var(--text-primary);
+      overflow-x: auto;
+      white-space: pre;
+      margin-top: 0.6rem;
+    }
+    .asm-code .comment {
+      color: #6a9955;
+    }
+    .asm-code .keyword {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    .asm-code .label {
+      color: #d19a66;
+      font-weight: 700;
+    }
+    .dir-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-top: 0.75rem;
+    }
+    .dir-table th {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    .dir-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 0.75rem;
+      color: var(--text-secondary);
+    }
+    .dir-table tr:nth-child(even) td {
+      background: var(--card-bg);
+    }
+    .prog-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .prog-card h4 {
+      color: var(--primary-color);
+      font-size: 0.95rem;
+      margin: 0 0 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-microchip"></i>
+      <span>CST207 – Unit 4</span>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#simple-programs">Simple Progs</a>
+      <a href="#logical-programs">Logical</a>
+      <a href="#branch-call">Branch/Call</a>
+      <a href="#sorting">Sorting</a>
+      <a href="#strings">Strings</a>
+      <a href="#directives">Directives</a>
+      <a href="#procedures">Procedures</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 4 – CST207</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#simple-programs">Simple Programs</a>
+    <a href="#logical-programs">Logical Programs</a>
+    <a href="#branch-call">Branch & Call</a>
+    <a href="#sorting">Sorting</a>
+    <a href="#expressions">Expressions</a>
+    <a href="#strings">String Manipulation</a>
+    <a href="#directives">Assembler Directives</a>
+    <a href="#procedures">Procedures & Macros</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Q</a>
+    <a href="#long-questions">Long Q</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <h1><i class="fas fa-terminal"></i> Unit 4: Assembly Language Programming</h1>
+      <p>CST207 – System Organization &nbsp;|&nbsp; 9 Hours</p>
+      <div class="info-item" style="margin-top:0.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <span><i class="fas fa-clock"></i> 9 Hours</span>
+        <span><i class="fas fa-layer-group"></i> Full Depth</span>
+        <span><i class="fas fa-home"></i>
+          <a href="../index.html" style="color:inherit;">Back to CST207</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ============================================================
+       SECTION 1: OVERVIEW
+  ============================================================ -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What This Unit Covers</div>
+        <p>This unit focuses on writing programs in 8086 assembly language. You will learn to write simple data transfer programs, logical operations, branching and looping, sorting algorithms, arithmetic expression evaluation, string manipulation, and how to use assembler directives, procedures, and macros. This unit directly builds on the 8086 architecture studied in Unit 3.</p>
+      </div>
+      <div class="topic-grid" style="margin-top:1rem;">
+        <div class="topic-card">
+          <i class="fas fa-exchange-alt"></i>
+          <h4>Simple Programs</h4>
+          <p>Data transfer, addition, subtraction</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-project-diagram"></i>
+          <h4>Logical Programs</h4>
+          <p>AND, OR, XOR operations</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-code-branch"></i>
+          <h4>Branch & Call</h4>
+          <p>Conditional jumps, loops, subroutines</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-sort-amount-up"></i>
+          <h4>Sorting</h4>
+          <p>Bubble sort implementation</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-font"></i>
+          <h4>Strings</h4>
+          <p>Move, compare, scan string operations</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-tools"></i>
+          <h4>Directives & Procedures</h4>
+          <p>DB, DW, ASSUME, procedures, macros</p>
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-info-circle"></i> 8086 Assembly Program Structure</div>
+        <p>Every 8086 assembly program typically follows this structure:</p>
+        <div class="asm-code"><span class="comment">; Data Segment</span>
+<span class="keyword">DATA SEGMENT</span>
+    <span class="comment">; Variable declarations (DB, DW)</span>
+<span class="keyword">DATA ENDS</span>
+
+<span class="comment">; Code Segment</span>
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX        <span class="comment">; Initialize DS</span>
+
+    <span class="comment">; Your program logic here</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H           <span class="comment">; Terminate program</span>
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: SIMPLE PROGRAMS
+  ============================================================ -->
+  <section class="section" id="simple-programs">
+    <h2 class="section-title">
+      <i class="fas fa-exchange-alt"></i> Simple Programs
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- Data Transfer -->
+      <div class="prog-card">
+        <h4><i class="fas fa-arrow-right"></i> Program 1: Data Transfer Between Registers</h4>
+        <div class="concept-box">
+          <div class="box-title"><i class="fas fa-info-circle"></i> Objective</div>
+          <p>Move a 16-bit value from one register to another and from memory to register.</p>
+        </div>
+        <div class="code-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    NUM1 <span class="keyword">DW</span> 1234H       <span class="comment">; 16-bit number in memory</span>
+    NUM2 <span class="keyword">DW</span> ?            <span class="comment">; Destination variable</span>
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX          <span class="comment">; Initialize DS</span>
+
+    <span class="keyword">MOV</span> AX, NUM1        <span class="comment">; AX ← 1234H (memory to register)</span>
+    <span class="keyword">MOV</span> BX, AX          <span class="comment">; BX ← AX (register to register)</span>
+    <span class="keyword">MOV</span> NUM2, BX        <span class="comment">; NUM2 ← BX (register to memory)</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H             <span class="comment">; Exit to DOS</span>
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <!-- Addition -->
+      <div class="prog-card">
+        <h4><i class="fas fa-plus"></i> Program 2: 16-bit Addition of Two Numbers</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    NUM1 <span class="keyword">DW</span> 1234H
+    NUM2 <span class="keyword">DW</span> 5678H
+    SUM  <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">MOV</span> AX, NUM1        <span class="comment">; AX = 1234H</span>
+    <span class="keyword">ADD</span> AX, NUM2        <span class="comment">; AX = 1234H + 5678H = 68ACH</span>
+    <span class="keyword">MOV</span> SUM, AX         <span class="comment">; Store result in SUM</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <!-- Subtraction -->
+      <div class="prog-card">
+        <h4><i class="fas fa-minus"></i> Program 3: 16-bit Subtraction</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    NUM1 <span class="keyword">DW</span> 5678H
+    NUM2 <span class="keyword">DW</span> 1234H
+    DIFF <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">MOV</span> AX, NUM1        <span class="comment">; AX = 5678H</span>
+    <span class="keyword">SUB</span> AX, NUM2        <span class="comment">; AX = 5678H - 1234H = 4444H</span>
+    <span class="keyword">MOV</span> DIFF, AX        <span class="comment">; Store result</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <!-- 32-bit Addition -->
+      <div class="prog-card">
+        <h4><i class="fas fa-plus-circle"></i> Program 4: 32-bit Addition (Multi-precision)</h4>
+        <div class="concept-box">
+          <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+          <p>A 32-bit number is stored as two 16-bit words (low word first). Add low words with ADD, then add high words with ADC (Add with Carry) to include any carry from the low-word addition.</p>
+        </div>
+        <div class="code-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    NUM1_LO <span class="keyword">DW</span> 0FFFFH    <span class="comment">; Low word of NUM1</span>
+    NUM1_HI <span class="keyword">DW</span> 0001H     <span class="comment">; High word: NUM1 = 0001FFFFH</span>
+    NUM2_LO <span class="keyword">DW</span> 0002H     <span class="comment">; Low word of NUM2</span>
+    NUM2_HI <span class="keyword">DW</span> 0003H     <span class="comment">; High word: NUM2 = 00030002H</span>
+    SUM_LO  <span class="keyword">DW</span> ?
+    SUM_HI  <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">MOV</span> AX, NUM1_LO     <span class="comment">; AX = FFFFH</span>
+    <span class="keyword">ADD</span> AX, NUM2_LO     <span class="comment">; AX = FFFFH+0002H = 0001H, CF=1</span>
+    <span class="keyword">MOV</span> SUM_LO, AX
+
+    <span class="keyword">MOV</span> AX, NUM1_HI     <span class="comment">; AX = 0001H</span>
+    <span class="keyword">ADC</span> AX, NUM2_HI     <span class="comment">; AX = 0001H+0003H+CF = 0005H</span>
+    <span class="keyword">MOV</span> SUM_HI, AX      <span class="comment">; Result = 00050001H</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: LOGICAL PROGRAMS
+  ============================================================ -->
+  <section class="section" id="logical-programs">
+    <h2 class="section-title">
+      <i class="fas fa-project-diagram"></i> Logical Programs
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="prog-card">
+        <h4><i class="fas fa-mask"></i> Program 5: Logical AND, OR, XOR Operations</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    VAL1    <span class="keyword">DW</span> 0F0FH
+    VAL2    <span class="keyword">DW</span> 00FFH
+    AND_RES <span class="keyword">DW</span> ?
+    OR_RES  <span class="keyword">DW</span> ?
+    XOR_RES <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="comment">; AND operation: 0F0FH AND 00FFH = 000FH</span>
+    <span class="keyword">MOV</span> AX, VAL1
+    <span class="keyword">AND</span> AX, VAL2
+    <span class="keyword">MOV</span> AND_RES, AX     <span class="comment">; 000FH</span>
+
+    <span class="comment">; OR operation: 0F0FH OR 00FFH = 0FFFH</span>
+    <span class="keyword">MOV</span> AX, VAL1
+    <span class="keyword">OR</span>  AX, VAL2
+    <span class="keyword">MOV</span> OR_RES, AX      <span class="comment">; 0FFFH</span>
+
+    <span class="comment">; XOR operation: 0F0FH XOR 00FFH = 0FF0H</span>
+    <span class="keyword">MOV</span> AX, VAL1
+    <span class="keyword">XOR</span> AX, VAL2
+    <span class="keyword">MOV</span> XOR_RES, AX     <span class="comment">; 0FF0H</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-mask"></i> Program 6: Masking — Extract Lower Nibble</h4>
+        <div class="concept-box">
+          <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+          <p>Masking uses AND to isolate specific bits. AND with 0FH extracts the lower 4 bits (lower nibble) of a byte, clearing the upper nibble to 0.</p>
+        </div>
+        <div class="code-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">MOV</span> AL, 5AH          <span class="comment">; AL = 0101 1010 = 5AH</span>
+<span class="keyword">AND</span> AL, 0FH          <span class="comment">; AL = 0000 1010 = 0AH</span>
+<span class="comment">; Lower nibble = AH (0AH), upper nibble cleared</span></div>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-toggle-on"></i> Program 7: Set and Clear Specific Bits</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="comment">; SET bit 3 of AL (OR with mask)</span>
+<span class="keyword">MOV</span> AL, 00H
+<span class="keyword">OR</span>  AL, 08H          <span class="comment">; AL = 00001000 = 08H (bit 3 set)</span>
+
+<span class="comment">; CLEAR bit 3 of AL (AND with inverted mask)</span>
+<span class="keyword">MOV</span> AL, 0FFH
+<span class="keyword">AND</span> AL, 0F7H         <span class="comment">; AL = 11110111 AND 11111111 = F7H (bit 3 cleared)</span>
+
+<span class="comment">; TOGGLE bit 5 of AL (XOR with mask)</span>
+<span class="keyword">MOV</span> AL, 0A0H
+<span class="keyword">XOR</span> AL, 20H          <span class="comment">; Bit 5 toggled: A0H XOR 20H = 80H</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: BRANCH AND CALL
+  ============================================================ -->
+  <section class="section" id="branch-call">
+    <h2 class="section-title">
+      <i class="fas fa-code-branch"></i> Branch &amp; Call Instructions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="prog-card">
+        <h4><i class="fas fa-greater-than"></i> Program 8: Find Larger of Two Numbers</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    NUM1   <span class="keyword">DW</span> 0050H
+    NUM2   <span class="keyword">DW</span> 0030H
+    LARGER <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">MOV</span> AX, NUM1         <span class="comment">; AX = 0050H</span>
+    <span class="keyword">CMP</span> AX, NUM2         <span class="comment">; Compare AX with NUM2</span>
+    <span class="keyword">JGE</span> <span class="label">STORE</span>            <span class="comment">; If AX >= NUM2, jump</span>
+    <span class="keyword">MOV</span> AX, NUM2         <span class="comment">; Else AX = NUM2</span>
+<span class="label">STORE:</span>
+    <span class="keyword">MOV</span> LARGER, AX       <span class="comment">; Store larger value</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-redo"></i> Program 9: Sum of Array Elements Using LOOP</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    ARR <span class="keyword">DW</span> 10H, 20H, 30H, 40H, 50H  <span class="comment">; 5-element array</span>
+    SUM <span class="keyword">DW</span> ?
+    CNT <span class="keyword">DW</span> 05H                      <span class="comment">; Count = 5</span>
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">LEA</span> SI, ARR          <span class="comment">; SI points to start of array</span>
+    <span class="keyword">MOV</span> CX, CNT          <span class="comment">; CX = 5 (loop counter)</span>
+    <span class="keyword">XOR</span> AX, AX           <span class="comment">; AX = 0 (accumulator for sum)</span>
+
+<span class="label">NEXT:</span>
+    <span class="keyword">ADD</span> AX, [SI]         <span class="comment">; Add current element to AX</span>
+    <span class="keyword">ADD</span> SI, 02H          <span class="comment">; Move to next word (DW = 2 bytes)</span>
+    <span class="keyword">LOOP</span> <span class="label">NEXT</span>            <span class="comment">; CX--, if CX!=0 goto NEXT</span>
+
+    <span class="keyword">MOV</span> SUM, AX          <span class="comment">; Store sum (10+20+30+40+50 = F0H)</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-phone-alt"></i> Program 10: Subroutine Call (CALL / RET)</h4>
+        <div class="concept-box">
+          <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+          <p>CALL pushes IP (return address) onto the stack and jumps to the subroutine. RET pops IP from the stack and returns execution to the caller.</p>
+        </div>
+        <div class="code-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, 000AH       <span class="comment">; AX = 10</span>
+    <span class="keyword">MOV</span> BX, 0014H       <span class="comment">; BX = 20</span>
+    <span class="keyword">CALL</span> <span class="label">ADD_SUB</span>         <span class="comment">; Call subroutine</span>
+    <span class="comment">; After CALL: CX has result</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+
+<span class="comment">; ---- Subroutine: ADD two numbers ----</span>
+<span class="label">ADD_SUB</span> <span class="keyword">PROC NEAR</span>
+    <span class="keyword">MOV</span> CX, AX          <span class="comment">; CX = AX</span>
+    <span class="keyword">ADD</span> CX, BX          <span class="comment">; CX = AX + BX = 30</span>
+    <span class="keyword">RET</span>                  <span class="comment">; Return to caller</span>
+<span class="label">ADD_SUB</span> <span class="keyword">ENDP</span>
+
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: SORTING
+  ============================================================ -->
+  <section class="section" id="sorting">
+    <h2 class="section-title">
+      <i class="fas fa-sort-amount-up"></i> Sorting (Bubble Sort)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Bubble Sort Algorithm</div>
+        <p>Bubble sort repeatedly compares adjacent elements and swaps them if they are in the wrong order. After each pass, the largest unsorted element "bubbles" to the end. For n elements, n−1 passes are needed.</p>
+        <div class="algo-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-list-ol"></i> Steps</div>
+          <ol style="padding-left:1.3rem; line-height:2.2;">
+            <li>Set pass counter = n − 1 (outer loop).</li>
+            <li>For each pass, compare adjacent elements from start.</li>
+            <li>If current &gt; next (ascending), swap them using XCHG.</li>
+            <li>After each pass, the largest element is at the end.</li>
+            <li>Reduce comparison count by 1 each pass.</li>
+            <li>Repeat until all passes complete.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-sort"></i> Program 11: Bubble Sort (Ascending Order)</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    ARR <span class="keyword">DW</span> 50H, 10H, 40H, 20H, 30H   <span class="comment">; 5 unsorted elements</span>
+    N   <span class="keyword">DW</span> 05H                        <span class="comment">; Number of elements</span>
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">MOV</span> DX, N
+    <span class="keyword">DEC</span> DX               <span class="comment">; DX = n-1 = 4 (outer passes)</span>
+
+<span class="label">OUTER:</span>
+    <span class="keyword">LEA</span> SI, ARR          <span class="comment">; SI → start of array</span>
+    <span class="keyword">MOV</span> CX, DX           <span class="comment">; CX = comparisons in this pass</span>
+
+<span class="label">INNER:</span>
+    <span class="keyword">MOV</span> AX, [SI]         <span class="comment">; AX = current element</span>
+    <span class="keyword">CMP</span> AX, [SI+2]       <span class="comment">; Compare with next element</span>
+    <span class="keyword">JLE</span> <span class="label">NOSWAP</span>           <span class="comment">; If current <= next, no swap</span>
+
+    <span class="comment">; Swap [SI] and [SI+2]</span>
+    <span class="keyword">MOV</span> BX, [SI+2]
+    <span class="keyword">MOV</span> [SI], BX
+    <span class="keyword">MOV</span> [SI+2], AX
+
+<span class="label">NOSWAP:</span>
+    <span class="keyword">ADD</span> SI, 02H          <span class="comment">; Move to next pair</span>
+    <span class="keyword">LOOP</span> <span class="label">INNER</span>           <span class="comment">; Repeat inner loop</span>
+
+    <span class="keyword">DEC</span> DX               <span class="comment">; One less pass needed</span>
+    <span class="keyword">JNZ</span> <span class="label">OUTER</span>            <span class="comment">; If DX != 0, next pass</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START
+<span class="comment">; Result: ARR = 10H, 20H, 30H, 40H, 50H (sorted ascending)</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6: ARITHMETIC EXPRESSIONS
+  ============================================================ -->
+  <section class="section" id="expressions">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Evaluation of Arithmetic Expressions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Approach</div>
+        <p>Arithmetic expressions are evaluated by breaking them into individual operations, following operator precedence (multiply/divide first, then add/subtract), and using registers as temporary storage. For complex expressions, the intermediate results are stored in memory or stack.</p>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-calculator"></i> Program 12: Evaluate Z = (A + B) × (C − D)</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    A <span class="keyword">DW</span> 000AH    <span class="comment">; A = 10</span>
+    B <span class="keyword">DW</span> 0005H    <span class="comment">; B = 5</span>
+    C <span class="keyword">DW</span> 000FH    <span class="comment">; C = 15</span>
+    D <span class="keyword">DW</span> 0003H    <span class="comment">; D = 3</span>
+    Z <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="comment">; Step 1: Calculate (A + B)</span>
+    <span class="keyword">MOV</span> AX, A
+    <span class="keyword">ADD</span> AX, B            <span class="comment">; AX = A + B = 15</span>
+
+    <span class="comment">; Step 2: Calculate (C - D)</span>
+    <span class="keyword">MOV</span> BX, C
+    <span class="keyword">SUB</span> BX, D            <span class="comment">; BX = C - D = 12</span>
+
+    <span class="comment">; Step 3: Multiply (A+B) × (C-D)</span>
+    <span class="keyword">MUL</span> BX               <span class="comment">; DX:AX = AX × BX = 15 × 12 = 180</span>
+
+    <span class="comment">; Step 4: Store result</span>
+    <span class="keyword">MOV</span> Z, AX            <span class="comment">; Z = 00B4H = 180</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-calculator"></i> Program 13: Evaluate Y = A² + B² (Sum of Squares)</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    A <span class="keyword">DW</span> 0004H    <span class="comment">; A = 4</span>
+    B <span class="keyword">DW</span> 0003H    <span class="comment">; B = 3</span>
+    Y <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">MOV</span> AX, A            <span class="comment">; AX = 4</span>
+    <span class="keyword">MUL</span> AX               <span class="comment">; DX:AX = 4 × 4 = 16</span>
+    <span class="keyword">MOV</span> BX, AX           <span class="comment">; BX = A² = 16</span>
+
+    <span class="keyword">MOV</span> AX, B            <span class="comment">; AX = 3</span>
+    <span class="keyword">MUL</span> AX               <span class="comment">; DX:AX = 3 × 3 = 9</span>
+
+    <span class="keyword">ADD</span> AX, BX           <span class="comment">; AX = 9 + 16 = 25</span>
+    <span class="keyword">MOV</span> Y, AX            <span class="comment">; Y = 0019H = 25</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7: STRING MANIPULATION
+  ============================================================ -->
+  <section class="section" id="strings">
+    <h2 class="section-title">
+      <i class="fas fa-font"></i> String Manipulation
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> String Instructions in 8086</div>
+        <p>The 8086 provides powerful string instructions that operate on sequences of bytes or words. They use specific register conventions:</p>
+        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
+          <li><strong>SI</strong> → Source index (points to source string in DS segment)</li>
+          <li><strong>DI</strong> → Destination index (points to destination in ES segment)</li>
+          <li><strong>CX</strong> → Counter for REP prefix</li>
+          <li><strong>DF</strong> (Direction Flag): 0 = auto-increment (CLD), 1 = auto-decrement (STD)</li>
+        </ul>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="dir-table">
+            <thead>
+              <tr><th>Instruction</th><th>Operation</th><th>Registers Used</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>MOVSB / MOVSW</code></td><td>Move String Byte/Word</td><td>DS:SI → ES:DI</td></tr>
+              <tr><td><code>CMPSB / CMPSW</code></td><td>Compare String Byte/Word</td><td>DS:SI vs ES:DI (sets flags)</td></tr>
+              <tr><td><code>SCASB / SCASW</code></td><td>Scan String (search)</td><td>AL/AX vs ES:DI</td></tr>
+              <tr><td><code>LODSB / LODSW</code></td><td>Load String to AL/AX</td><td>DS:SI → AL/AX</td></tr>
+              <tr><td><code>STOSB / STOSW</code></td><td>Store AL/AX to String</td><td>AL/AX → ES:DI</td></tr>
+              <tr><td><code>REP</code></td><td>Repeat CX times</td><td>Used with MOVS, STOS</td></tr>
+              <tr><td><code>REPE/REPZ</code></td><td>Repeat while equal/zero</td><td>Used with CMPS, SCAS</td></tr>
+              <tr><td><code>REPNE/REPNZ</code></td><td>Repeat while not equal</td><td>Used with CMPS, SCAS</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-copy"></i> Program 14: Copy a String (Move String)</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    SRC <span class="keyword">DB</span> 'HELLO$'
+    DST <span class="keyword">DB</span> 6 <span class="keyword">DUP</span>('$')    <span class="comment">; Destination of same size</span>
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA, ES:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+    <span class="keyword">MOV</span> ES, AX           <span class="comment">; ES = DS (same segment)</span>
+
+    <span class="keyword">CLD</span>                  <span class="comment">; DF=0, auto-increment SI/DI</span>
+    <span class="keyword">LEA</span> SI, SRC          <span class="comment">; SI → source string</span>
+    <span class="keyword">LEA</span> DI, DST          <span class="comment">; DI → destination string</span>
+    <span class="keyword">MOV</span> CX, 06H          <span class="comment">; CX = 6 bytes to copy</span>
+
+    <span class="keyword">REP</span> <span class="keyword">MOVSB</span>            <span class="comment">; Copy CX bytes from DS:SI to ES:DI</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <h4><i class="fas fa-search"></i> Program 15: Search for a Character in String (SCASB)</h4>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> 8086 Assembly Code</div>
+          <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    STR1 <span class="keyword">DB</span> 'ASSEMBLY$'
+    LEN  <span class="keyword">DW</span> 08H           <span class="comment">; Length of string</span>
+    POS  <span class="keyword">DW</span> ?             <span class="comment">; Position found</span>
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA, ES:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+    <span class="keyword">MOV</span> ES, AX
+
+    <span class="keyword">CLD</span>                  <span class="comment">; Forward direction</span>
+    <span class="keyword">LEA</span> DI, STR1         <span class="comment">; DI → string</span>
+    <span class="keyword">MOV</span> CX, LEN          <span class="comment">; CX = string length</span>
+    <span class="keyword">MOV</span> AL, 'M'          <span class="comment">; Character to search</span>
+
+    <span class="keyword">REPNE</span> <span class="keyword">SCASB</span>          <span class="comment">; Scan until AL = ES:DI or CX=0</span>
+
+    <span class="keyword">JNZ</span> <span class="label">NOT_FOUND</span>       <span class="comment">; If ZF=0, not found</span>
+
+    <span class="comment">; Found: DI now points to byte AFTER match</span>
+    <span class="keyword">DEC</span> DI
+    <span class="keyword">LEA</span> AX, STR1
+    <span class="keyword">SUB</span> DI, AX           <span class="comment">; DI = position (0-indexed)</span>
+    <span class="keyword">MOV</span> POS, DI
+
+<span class="label">NOT_FOUND:</span>
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 8: ASSEMBLER DIRECTIVES
+  ============================================================ -->
+  <section class="section" id="directives">
+    <h2 class="section-title">
+      <i class="fas fa-wrench"></i> Assembler Directives
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What Are Assembler Directives?</div>
+        <p>Assembler directives are instructions to the assembler (not to the CPU). They do not generate machine code but control how the assembler organizes the program, allocates memory, and defines constants. They are also called <strong>pseudo-operations</strong>.</p>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <table class="dir-table">
+          <thead>
+            <tr><th>Directive</th><th>Syntax</th><th>Description</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DB</strong></td>
+              <td>name DB value</td>
+              <td>Define Byte — allocates 1 byte</td>
+              <td><code>NUM DB 25H</code></td>
+            </tr>
+            <tr>
+              <td><strong>DW</strong></td>
+              <td>name DW value</td>
+              <td>Define Word — allocates 2 bytes (16-bit)</td>
+              <td><code>VAL DW 1234H</code></td>
+            </tr>
+            <tr>
+              <td><strong>DD</strong></td>
+              <td>name DD value</td>
+              <td>Define Double Word — allocates 4 bytes (32-bit)</td>
+              <td><code>BIG DD 12345678H</code></td>
+            </tr>
+            <tr>
+              <td><strong>DUP</strong></td>
+              <td>count DUP(value)</td>
+              <td>Duplicate — repeat initial value count times</td>
+              <td><code>ARR DB 10 DUP(0)</code></td>
+            </tr>
+            <tr>
+              <td><strong>ASSUME</strong></td>
+              <td>ASSUME CS:seg, DS:seg</td>
+              <td>Tells assembler which segment register maps to which segment</td>
+              <td><code>ASSUME CS:CODE, DS:DATA</code></td>
+            </tr>
+            <tr>
+              <td><strong>SEGMENT / ENDS</strong></td>
+              <td>name SEGMENT...ENDS</td>
+              <td>Define a segment block</td>
+              <td><code>DATA SEGMENT...DATA ENDS</code></td>
+            </tr>
+            <tr>
+              <td><strong>END</strong></td>
+              <td>END label</td>
+              <td>End of program. Label = starting execution point.</td>
+              <td><code>END START</code></td>
+            </tr>
+            <tr>
+              <td><strong>EQU</strong></td>
+              <td>name EQU value</td>
+              <td>Define a constant (no memory allocated)</td>
+              <td><code>MAX EQU 100</code></td>
+            </tr>
+            <tr>
+              <td><strong>ORG</strong></td>
+              <td>ORG address</td>
+              <td>Set origin — next byte at specified address</td>
+              <td><code>ORG 100H</code></td>
+            </tr>
+            <tr>
+              <td><strong>PROC / ENDP</strong></td>
+              <td>name PROC...ENDP</td>
+              <td>Define a procedure (subroutine)</td>
+              <td><code>ADD_NUM PROC NEAR...ENDP</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="important-note" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-star"></i> DB vs DW — Key Difference</div>
+        <p><strong>DB</strong> (Define Byte) allocates 1 byte per value. <strong>DW</strong> (Define Word) allocates 2 bytes per value. When traversing an array: for DB array, increment pointer by 1 (<code>INC SI</code>); for DW array, increment by 2 (<code>ADD SI, 2</code>).</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 9: PROCEDURES AND MACROS
+  ============================================================ -->
+  <section class="section" id="procedures">
+    <h2 class="section-title">
+      <i class="fas fa-tools"></i> Procedures &amp; Macros
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-folder-open"></i> Procedures</div>
+        <p>A procedure (subroutine) is a reusable block of code defined between <code>PROC</code> and <code>ENDP</code> directives. Called using CALL, returns with RET.</p>
+        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
+          <li><strong>NEAR Procedure:</strong> Caller and procedure in the same code segment. CALL pushes only IP. RET pops only IP.</li>
+          <li><strong>FAR Procedure:</strong> Caller and procedure in different code segments. CALL pushes CS and IP. RETF pops both.</li>
+        </ul>
+        <div class="code-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> Procedure Syntax</div>
+          <div class="asm-code"><span class="label">MULTIPLY</span> <span class="keyword">PROC NEAR</span>
+    <span class="keyword">MUL</span> BX               <span class="comment">; DX:AX = AX × BX</span>
+    <span class="keyword">RET</span>
+<span class="label">MULTIPLY</span> <span class="keyword">ENDP</span>
+
+<span class="comment">; Calling:</span>
+<span class="keyword">MOV</span> AX, 05H
+<span class="keyword">MOV</span> BX, 03H
+<span class="keyword">CALL</span> <span class="label">MULTIPLY</span>         <span class="comment">; After: DX:AX = 15</span></div>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-copy"></i> Macros</div>
+        <p>A macro is a named block of code defined once and expanded in-place wherever it is invoked. Unlike a procedure, a macro is substituted (expanded) by the assembler at each call site — no CALL/RET overhead.</p>
+        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
+          <li>Defined using <code>MACRO...ENDM</code>.</li>
+          <li>Can accept parameters.</li>
+          <li>No stack overhead — faster than procedures.</li>
+          <li>Code is duplicated at each call site → larger executable.</li>
+        </ul>
+        <div class="code-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> Macro Syntax</div>
+          <div class="asm-code"><span class="comment">; Macro definition</span>
+<span class="label">ADD_TWO</span> <span class="keyword">MACRO</span> P1, P2
+    <span class="keyword">MOV</span> AX, P1
+    <span class="keyword">ADD</span> AX, P2
+<span class="keyword">ENDM</span>
+
+<span class="comment">; Macro invocation (usage)</span>
+<span class="label">ADD_TWO</span> NUM1, NUM2       <span class="comment">; Expands to: MOV AX, NUM1 / ADD AX, NUM2</span>
+<span class="label">ADD_TWO</span> VAL1, VAL2       <span class="comment">; Expands again — separate copy</span></div>
+        </div>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <table class="dir-table">
+          <thead>
+            <tr><th>Feature</th><th>Procedure</th><th>Macro</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Definition</td><td>PROC...ENDP</td><td>MACRO...ENDM</td></tr>
+            <tr><td>Invocation</td><td>CALL instruction</td><td>Macro name (expanded in place)</td></tr>
+            <tr><td>Code size</td><td>One copy in memory</td><td>Expanded at each call (multiple copies)</td></tr>
+            <tr><td>Overhead</td><td>CALL/RET + stack push/pop</td><td>No overhead (inline expansion)</td></tr>
+            <tr><td>Speed</td><td>Slightly slower (CALL overhead)</td><td>Faster (no CALL/RET)</td></tr>
+            <tr><td>Parameters</td><td>Via registers or stack</td><td>Via macro parameters (direct substitution)</td></tr>
+            <tr><td>Memory usage</td><td>Efficient (single copy)</td><td>Less efficient (multiple copies)</td></tr>
+            <tr><td>Best for</td><td>Large, frequently called routines</td><td>Small, frequently used code snippets</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+    <!-- ============================================================
+       SECTION 10: FORMULAS & SYNTAX REFERENCE
+  ============================================================ -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Syntax Reference &amp; Key Rules
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> MOV Instruction Rules</div>
+        <p><code>MOV dst, src</code> — copies src into dst. Restrictions:</p>
+        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
+          <li>Cannot MOV memory to memory directly: <code>MOV [2000H], [3000H]</code> ❌</li>
+          <li>Cannot MOV immediate to segment register: <code>MOV DS, 1000H</code> ❌ → use AX as bridge</li>
+          <li>Cannot MOV CS directly: CS is read-only in MOV.</li>
+          <li>Both operands must be same size (8-bit or 16-bit).</li>
+        </ul>
+      </div>
+
+      <div class="syntax-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> MUL / DIV Register Usage</div>
+        <p>8-bit MUL: <code>MUL src8</code> → AX = AL × src8</p>
+        <p>16-bit MUL: <code>MUL src16</code> → DX:AX = AX × src16</p>
+        <p>8-bit DIV: <code>DIV src8</code> → AL = AX ÷ src8, AH = remainder</p>
+        <p>16-bit DIV: <code>DIV src16</code> → AX = DX:AX ÷ src16, DX = remainder</p>
+      </div>
+
+      <div class="syntax-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> LOOP Instruction</div>
+        <p><code>LOOP label</code> → CX ← CX − 1; if CX ≠ 0, jump to label</p>
+        <p><code>LOOPE label</code> → CX ← CX − 1; if CX ≠ 0 AND ZF = 1, jump</p>
+        <p><code>LOOPNE label</code> → CX ← CX − 1; if CX ≠ 0 AND ZF = 0, jump</p>
+      </div>
+
+      <div class="syntax-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> String Instruction Setup</div>
+        <p>Before any string operation:</p>
+        <p>1. <code>CLD</code> → clear DF (forward direction, SI/DI auto-increment)</p>
+        <p>2. <code>LEA SI, source</code> → SI points to source</p>
+        <p>3. <code>LEA DI, dest</code> → DI points to destination</p>
+        <p>4. <code>MOV CX, count</code> → set repeat count</p>
+        <p>5. <code>REP MOVSB</code> → execute string operation</p>
+      </div>
+
+      <div class="syntax-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Stack Operations</div>
+        <p><code>PUSH AX</code> → SP ← SP − 2; [SS:SP] ← AX</p>
+        <p><code>POP AX</code> → AX ← [SS:SP]; SP ← SP + 2</p>
+        <p>Stack grows downward (SP decrements on PUSH).</p>
+        <p>Last In First Out (LIFO) — last pushed is first popped.</p>
+      </div>
+
+      <div class="formula-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Array Pointer Increment</div>
+        <div class="formula">DB array (bytes): ADD SI, 1 or INC SI</div>
+        <div class="formula answer">DW array (words): ADD SI, 2</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Bubble Sort Passes</div>
+        <div class="formula">Number of passes = N − 1</div>
+        <div class="formula answer">Comparisons in pass i = N − i</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">Total comparisons = N(N−1)/2 in worst case.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 11: DEFINITIONS
+  ============================================================ -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Assembler Directive</div>
+        <p>An instruction to the assembler (not to the CPU) that controls how the assembler processes the source code. Directives define memory segments, allocate storage, define constants, and mark the start/end of the program. They generate no machine code.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Procedure (Subroutine)</div>
+        <p>A named, reusable block of assembly code defined between PROC and ENDP directives. Invoked using the CALL instruction and returns using RET. The CPU automatically saves the return address (IP) on the stack during CALL.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Macro</div>
+        <p>A named block of assembly instructions defined using MACRO...ENDM directives. When invoked, the assembler replaces the macro call with the actual instructions in-place (inline expansion). Unlike procedures, macros have no CALL/RET overhead but produce duplicate code at each invocation.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> DB (Define Byte)</div>
+        <p>An assembler directive that allocates one byte of memory per value and optionally initializes it. Used for 8-bit variables, character strings, and byte arrays.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> DW (Define Word)</div>
+        <p>An assembler directive that allocates two bytes (one 16-bit word) of memory per value and optionally initializes it. Used for 16-bit variables, addresses, and word arrays.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> ASSUME Directive</div>
+        <p>An assembler directive that informs the assembler which segment register is associated with which segment. It does not actually load segment registers — the programmer must initialize them with MOV instructions at runtime.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> REP Prefix</div>
+        <p>A string instruction prefix that repeats the following string operation CX times, decrementing CX each time until CX = 0. REPE repeats while equal (ZF=1), REPNE repeats while not equal (ZF=0).</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Bubble Sort</div>
+        <p>A simple sorting algorithm that repeatedly compares adjacent elements and swaps them if they are in wrong order. Requires N−1 passes for N elements. Time complexity O(N²) in worst case.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 12: COMPARISONS
+  ============================================================ -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Procedure vs Macro</p>
+        <table class="dir-table">
+          <thead>
+            <tr><th>Feature</th><th>Procedure</th><th>Macro</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Definition keyword</td><td>PROC...ENDP</td><td>MACRO...ENDM</td></tr>
+            <tr><td>Invocation</td><td>CALL instruction</td><td>Macro name (inline expansion)</td></tr>
+            <tr><td>Code duplication</td><td>No — single copy in memory</td><td>Yes — expanded at each use</td></tr>
+            <tr><td>Execution speed</td><td>Slower (CALL/RET overhead)</td><td>Faster (no CALL/RET)</td></tr>
+            <tr><td>Memory usage</td><td>Efficient</td><td>More memory (copies)</td></tr>
+            <tr><td>Parameters</td><td>Registers or stack</td><td>Direct textual substitution</td></tr>
+            <tr><td>Recursion possible</td><td>Yes</td><td>No (compile-time expansion)</td></tr>
+            <tr><td>Best for</td><td>Large, reused routines</td><td>Short, frequently used snippets</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">DB vs DW vs DD</p>
+        <table class="dir-table">
+          <thead>
+            <tr><th>Directive</th><th>Size</th><th>Range</th><th>Use Case</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>DB</td><td>1 byte</td><td>0 to 255 (unsigned)</td><td>Bytes, characters, byte arrays</td><td><code>CH DB 'A'</code></td></tr>
+            <tr><td>DW</td><td>2 bytes</td><td>0 to 65535 (unsigned)</td><td>16-bit integers, addresses</td><td><code>X DW 1234H</code></td></tr>
+            <tr><td>DD</td><td>4 bytes</td><td>0 to 4GB (unsigned)</td><td>32-bit integers, far pointers</td><td><code>N DD 12345678H</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">REP vs REPE vs REPNE</p>
+        <table class="dir-table">
+          <thead>
+            <tr><th>Prefix</th><th>Condition to Continue</th><th>Used With</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>REP</td><td>CX ≠ 0</td><td>MOVSB, MOVSW, STOSB, STOSW, LODSB</td></tr>
+            <tr><td>REPE / REPZ</td><td>CX ≠ 0 AND ZF = 1</td><td>CMPSB, CMPSW, SCASB, SCASW</td></tr>
+            <tr><td>REPNE / REPNZ</td><td>CX ≠ 0 AND ZF = 0</td><td>CMPSB, CMPSW, SCASB, SCASW</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">NEAR vs FAR Procedure</p>
+        <table class="dir-table">
+          <thead>
+            <tr><th>Feature</th><th>NEAR Procedure</th><th>FAR Procedure</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Segment</td><td>Same code segment as caller</td><td>Different code segment</td></tr>
+            <tr><td>CALL pushes</td><td>IP only (2 bytes)</td><td>CS and IP (4 bytes)</td></tr>
+            <tr><td>RET pops</td><td>IP only</td><td>IP then CS</td></tr>
+            <tr><td>Speed</td><td>Faster</td><td>Slower (extra CS save/restore)</td></tr>
+            <tr><td>Use case</td><td>Routines in same program</td><td>Inter-segment calls, OS calls</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 13: MCQs
+  ============================================================ -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Which instruction is used for multi-precision addition where the carry from a previous addition must be included?</p>
+          <ul class="options">
+            <li>a. ADD</li>
+            <li>b. ADC</li>
+            <li>c. INC</li>
+            <li>d. SBB</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: b. ADC</strong>
+            <p>ADC (Add with Carry) computes: dst ← dst + src + CF. It includes the carry flag from a previous ADD, making it essential for 32-bit or larger addition using 16-bit registers.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the result of executing <code>XOR AX, AX</code>?</p>
+          <ul class="options">
+            <li>a. AX = FFFFH</li>
+            <li>b. AX = 0001H</li>
+            <li>c. AX = 0000H</li>
+            <li>d. AX is unchanged</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: c. AX = 0000H</strong>
+            <p>XOR of any value with itself always gives 0. This is the most efficient way to clear a register — it is shorter and faster than MOV AX, 0 on 8086.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Which assembler directive allocates 2 bytes of memory?</p>
+          <ul class="options">
+            <li>a. DB</li>
+            <li>b. DD</li>
+            <li>c. DW</li>
+            <li>d. DQ</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: c. DW</strong>
+            <p>DW (Define Word) allocates 2 bytes (16 bits) per value. DB = 1 byte, DD = 4 bytes (double word), DQ = 8 bytes (quad word).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>In bubble sort with 5 elements, how many passes are needed to guarantee sorted order?</p>
+          <ul class="options">
+            <li>a. 5</li>
+            <li>b. 3</li>
+            <li>c. 4</li>
+            <li>d. 10</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. 4</strong>
+            <p>Bubble sort requires N−1 passes for N elements. For N=5: 5−1=4 passes. Total comparisons in worst case = N(N−1)/2 = 10.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>The LOOP instruction in 8086 uses which register as the counter?</p>
+          <ul class="options">
+            <li>a. AX</li>
+            <li>b. BX</li>
+            <li>c. DX</li>
+            <li>d. CX</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: d. CX</strong>
+            <p>LOOP automatically decrements CX and jumps to the label if CX ≠ 0. CX is the dedicated counter register of the 8086.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Which string instruction copies a byte from DS:SI to ES:DI?</p>
+          <ul class="options">
+            <li>a. SCASB</li>
+            <li>b. CMPSB</li>
+            <li>c. MOVSB</li>
+            <li>d. STOSB</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: c. MOVSB</strong>
+            <p>MOVSB (Move String Byte) copies one byte from DS:SI to ES:DI, then auto-increments or decrements both SI and DI based on the DF flag. Used with REP prefix for block copy.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What does the ASSUME directive do in 8086 assembly?</p>
+          <ul class="options">
+            <li>a. Loads values into segment registers</li>
+            <li>b. Tells the assembler which segment register maps to which segment</li>
+            <li>c. Allocates memory for variables</li>
+            <li>d. Marks end of program</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: b. Tells the assembler which segment register maps to which segment</strong>
+            <p>ASSUME is an assembler directive (not a CPU instruction) that tells the assembler how segments are mapped. The programmer must still initialize segment registers with MOV instructions at runtime.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Which prefix repeats a string operation while CX ≠ 0 AND the zero flag is clear?</p>
+          <ul class="options">
+            <li>a. REP</li>
+            <li>b. REPE</li>
+            <li>c. REPNE</li>
+            <li>d. REPZ</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: c. REPNE</strong>
+            <p>REPNE (Repeat while Not Equal) continues while CX ≠ 0 AND ZF = 0. Used with SCASB to scan for a character — stops when character is found (ZF=1) or CX reaches 0.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>After executing <code>MUL BX</code> where AX=0050H and BX=0003H, the result is stored in:</p>
+          <ul class="options">
+            <li>a. AX only</li>
+            <li>b. BX:AX</li>
+            <li>c. DX:AX</li>
+            <li>d. CX:AX</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: c. DX:AX</strong>
+            <p>For 16-bit MUL: DX:AX = AX × src. Result = 0050H × 0003H = 00F0H. DX=0000H, AX=00F0H. The 32-bit result is split with high word in DX and low word in AX.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>What is the main advantage of a macro over a procedure?</p>
+          <ul class="options">
+            <li>a. Uses less memory</li>
+            <li>b. Can be recursive</li>
+            <li>c. No CALL/RET overhead — faster execution</li>
+            <li>d. Supports more parameters</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: c. No CALL/RET overhead — faster execution</strong>
+            <p>Macros expand inline so there is no CALL/RET instruction overhead and no stack push/pop. This makes macros faster. The tradeoff is that code is duplicated at each invocation, using more memory.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>Which instruction is used to load the effective address (offset) of a memory variable into a register?</p>
+          <ul class="options">
+            <li>a. MOV BX, [VAR]</li>
+            <li>b. LEA BX, VAR</li>
+            <li>c. LDS BX, VAR</li>
+            <li>d. XCHG BX, VAR</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: b. LEA BX, VAR</strong>
+            <p>LEA (Load Effective Address) loads the offset address of VAR into BX — not the data at VAR. MOV BX, [VAR] loads the actual data. LEA is used to set up pointer registers for memory access.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>The CLD instruction in 8086 is used to:</p>
+          <ul class="options">
+            <li>a. Clear the carry flag</li>
+            <li>b. Clear the direction flag to set forward string processing</li>
+            <li>c. Clear the zero flag</li>
+            <li>d. Clear all flags</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: b. Clear the direction flag to set forward string processing</strong>
+            <p>CLD clears DF=0, causing string instructions (MOVSB, SCASB etc.) to auto-increment SI and DI after each operation (forward direction). STD sets DF=1 for backward direction.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 13</h4>
+          <p>In a NEAR procedure call, which value is pushed onto the stack by CALL?</p>
+          <ul class="options">
+            <li>a. CS and IP</li>
+            <li>b. FLAGS only</li>
+            <li>c. IP only</li>
+            <li>d. CS, IP, and FLAGS</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq13"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq13">
+            <strong>Answer: c. IP only</strong>
+            <p>CALL NEAR pushes only the IP (return address — offset of next instruction) onto the stack. FAR CALL pushes CS then IP. INT pushes FLAGS, CS, then IP.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 14</h4>
+          <p>What does <code>ARR DB 5 DUP(0)</code> do?</p>
+          <ul class="options">
+            <li>a. Defines a word array of 5 elements</li>
+            <li>b. Defines 5 bytes all initialized to 0</li>
+            <li>c. Defines 5 double words</li>
+            <li>d. Reserves 5 bytes without initialization</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq14"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq14">
+            <strong>Answer: b. Defines 5 bytes all initialized to 0</strong>
+            <p>DB 5 DUP(0) allocates 5 bytes, each initialized to 0. DUP is the duplicate operator. It creates repeated initial values. Total memory = 5 × 1 = 5 bytes.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 15</h4>
+          <p>Which instruction compares two strings byte by byte and sets flags without modifying either string?</p>
+          <ul class="options">
+            <li>a. MOVSB</li>
+            <li>b. STOSB</li>
+            <li>c. LODSB</li>
+            <li>d. CMPSB</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq15"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq15">
+            <strong>Answer: d. CMPSB</strong>
+            <p>CMPSB (Compare String Byte) subtracts ES:DI from DS:SI and sets flags (ZF, CF, SF) but does not store the result. Used with REPE prefix to compare strings until a difference is found.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 14: SHORT QUESTIONS
+  ============================================================ -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the difference between ADD and ADC instructions?</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p><strong>ADD dst, src:</strong> dst ← dst + src. Simple addition. Does not include carry flag. Used for first word of multi-precision addition.</p>
+            <p><strong>ADC dst, src:</strong> dst ← dst + src + CF. Add with Carry — includes carry flag from previous ADD. Used for higher words in multi-precision (32-bit, 64-bit) addition on 16-bit processor.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is an assembler directive? Give two examples.</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p>An assembler directive is an instruction to the assembler, not to the CPU. It controls how the assembler organizes and processes the source code. Directives do not produce machine code.</p>
+            <p>Examples: <strong>DB</strong> (Define Byte — allocates 1 byte of memory) and <strong>ASSUME</strong> (tells assembler which segment register maps to which segment).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Why must ES be initialized before using string instructions like MOVSB?</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p>String destination instructions (MOVSB, STOSB, CMPSB) use ES:DI as the destination segment:offset pair. The destination is always accessed via ES (Extra Segment). If ES is not initialized to point to the correct data segment, the destination write will go to the wrong memory location. Therefore ES must be explicitly loaded (usually <code>MOV AX, DATA / MOV ES, AX</code>) before string operations.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the role of the CX register in the LOOP and REP instructions?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p>CX acts as the automatic counter in both instructions:</p>
+            <ul style="padding-left:1.3rem; line-height:2;">
+              <li><strong>LOOP label:</strong> CX is decremented by 1; if CX ≠ 0, jump to label. When CX reaches 0, loop exits.</li>
+              <li><strong>REP MOVSB:</strong> Repeats MOVSB, decrementing CX each time, until CX = 0.</li>
+            </ul>
+            <p>Both use CX implicitly — programmer sets CX to the desired count before the loop/string instruction.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>How do you swap two memory words in 8086 assembly without using XCHG directly?</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p>To swap [SI] and [SI+2] using registers:</p>
+            <div class="asm-code" style="margin-top:0.5rem;"><span class="keyword">MOV</span> AX, [SI]      <span class="comment">; AX = first element</span>
+<span class="keyword">MOV</span> BX, [SI+2]    <span class="comment">; BX = second element</span>
+<span class="keyword">MOV</span> [SI], BX      <span class="comment">; First ← second</span>
+<span class="keyword">MOV</span> [SI+2], AX    <span class="comment">; Second ← first</span></div>
+            <p style="margin-top:0.5rem;">This uses two registers as temporary storage to accomplish the swap without XCHG.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the difference between MOVSB and STOSB?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p><strong>MOVSB:</strong> Copies byte from DS:SI to ES:DI. Both SI and DI are updated (incremented/decremented). Used for block memory copy.</p>
+            <p><strong>STOSB:</strong> Stores AL into ES:DI. Only DI is updated. SI is not used. Used for filling a memory block with a constant value (e.g., clearing memory with <code>REP STOSB</code>).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Write a sequence of instructions to load DS with the value 2000H.</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p>DS cannot be loaded directly with an immediate value. A register must be used as a bridge:</p>
+            <div class="asm-code" style="margin-top:0.5rem;"><span class="keyword">MOV</span> AX, 2000H     <span class="comment">; Load 2000H into AX first</span>
+<span class="keyword">MOV</span> DS, AX        <span class="comment">; Then transfer AX to DS</span></div>
+            <p style="margin-top:0.5rem;">This is required because 8086 does not allow direct immediate-to-segment-register transfers.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the purpose of the END directive and the END START statement?</p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>The <strong>END</strong> directive marks the physical end of the assembly source file. The assembler stops processing after this point.</p>
+            <p><strong>END START</strong> additionally tells the assembler (and linker) that execution should begin at the label START. When the program is loaded, the IP is set to the address of START. Without the label, the linker does not know where to begin execution.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 15: LONG QUESTIONS
+  ============================================================ -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a complete 8086 assembly program to implement bubble sort on an array of 5 words in ascending order. Trace the first pass on the array [50H, 10H, 40H, 20H, 30H].</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Complete Bubble Sort Program</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    ARR <span class="keyword">DW</span> 50H, 10H, 40H, 20H, 30H
+    N   <span class="keyword">DW</span> 05H
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+    <span class="keyword">MOV</span> DX, N
+    <span class="keyword">DEC</span> DX
+<span class="label">OUTER:</span>
+    <span class="keyword">LEA</span> SI, ARR
+    <span class="keyword">MOV</span> CX, DX
+<span class="label">INNER:</span>
+    <span class="keyword">MOV</span> AX, [SI]
+    <span class="keyword">CMP</span> AX, [SI+2]
+    <span class="keyword">JLE</span> <span class="label">NOSWAP</span>
+    <span class="keyword">MOV</span> BX, [SI+2]
+    <span class="keyword">MOV</span> [SI], BX
+    <span class="keyword">MOV</span> [SI+2], AX
+<span class="label">NOSWAP:</span>
+    <span class="keyword">ADD</span> SI, 02H
+    <span class="keyword">LOOP</span> <span class="label">INNER</span>
+    <span class="keyword">DEC</span> DX
+    <span class="keyword">JNZ</span> <span class="label">OUTER</span>
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+            </div>
+            <div class="trace-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-table"></i> First Pass Trace on [50H, 10H, 40H, 20H, 30H]</div>
+              <p><strong>Compare 50H, 10H:</strong> 50H &gt; 10H → swap → [10H, 50H, 40H, 20H, 30H]</p>
+              <p><strong>Compare 50H, 40H:</strong> 50H &gt; 40H → swap → [10H, 40H, 50H, 20H, 30H]</p>
+              <p><strong>Compare 50H, 20H:</strong> 50H &gt; 20H → swap → [10H, 40H, 20H, 50H, 30H]</p>
+              <p><strong>Compare 50H, 30H:</strong> 50H &gt; 30H → swap → [10H, 40H, 20H, 30H, 50H]</p>
+              <p style="margin-top:0.5rem;"><strong>After Pass 1:</strong> [10H, 40H, 20H, 30H, <span style="color:var(--primary-color);font-weight:700;">50H</span>] — largest element (50H) is in place.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a complete 8086 assembly program to copy a string from source to destination using string instructions. Explain each instruction used.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> String Copy Program</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    SRC <span class="keyword">DB</span> 'HELLO WORLD$'
+    DST <span class="keyword">DB</span> 12 <span class="keyword">DUP</span>('$')
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA, ES:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX        <span class="comment">; DS = source segment</span>
+    <span class="keyword">MOV</span> ES, AX        <span class="comment">; ES = destination segment</span>
+    <span class="keyword">CLD</span>               <span class="comment">; DF=0: forward (increment SI, DI)</span>
+    <span class="keyword">LEA</span> SI, SRC       <span class="comment">; SI → source string</span>
+    <span class="keyword">LEA</span> DI, DST       <span class="comment">; DI → destination string</span>
+    <span class="keyword">MOV</span> CX, 12        <span class="comment">; CX = 12 bytes to copy</span>
+    <span class="keyword">REP</span> <span class="keyword">MOVSB</span>         <span class="comment">; Copy CX bytes DS:SI→ES:DI</span>
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+            </div>
+            <div class="algo-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-list-ol"></i> Instruction Explanation</div>
+              <ul style="padding-left:1.3rem; line-height:2.2;">
+                <li><strong>MOV DS, AX / MOV ES, AX:</strong> Initialize segment registers. ES needed because MOVSB writes to ES:DI.</li>
+                <li><strong>CLD:</strong> Clear Direction Flag → SI and DI auto-increment after each byte copied (forward direction).</li>
+                <li><strong>LEA SI, SRC:</strong> Load offset address of SRC into SI. SI is the source pointer.</li>
+                <li><strong>LEA DI, DST:</strong> Load offset address of DST into DI. DI is the destination pointer.</li>
+                <li><strong>MOV CX, 12:</strong> Set counter to 12 (number of bytes to copy).</li>
+                <li><strong>REP MOVSB:</strong> Repeats MOVSB 12 times. Each iteration: copies byte DS:SI→ES:DI, increments SI and DI, decrements CX. Stops when CX=0.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain procedures and macros in 8086 assembly. Write a program using a procedure to find the factorial of a number.</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p><strong>Procedure:</strong> Reusable code block. Invoked with CALL, returns with RET. Single copy in memory. Stack used for return address.</p>
+            <p><strong>Macro:</strong> Inline code expansion. Faster (no CALL overhead). Code duplicated at each use. Defined with MACRO...ENDM.</p>
+            <div class="code-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-code"></i> Factorial Using Procedure (Iterative)</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    NUM    <span class="keyword">DW</span> 0005H    <span class="comment">; Find 5!</span>
+    RESULT <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+    <span class="keyword">MOV</span> AX, NUM
+    <span class="keyword">CALL</span> <span class="label">FACT</span>
+    <span class="keyword">MOV</span> RESULT, AX    <span class="comment">; AX = 5! = 120 = 78H</span>
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+
+<span class="comment">; Procedure: Compute factorial of AX</span>
+<span class="comment">; Input: AX = n. Output: AX = n!</span>
+<span class="label">FACT</span> <span class="keyword">PROC NEAR</span>
+    <span class="keyword">MOV</span> CX, AX
+    <span class="keyword">MOV</span> AX, 0001H    <span class="comment">; AX = 1 (result)</span>
+<span class="label">MULT_LOOP:</span>
+    <span class="keyword">MUL</span> CX            <span class="comment">; AX = AX × CX</span>
+    <span class="keyword">DEC</span> CX
+    <span class="keyword">JNZ</span> <span class="label">MULT_LOOP</span>    <span class="comment">; Repeat until CX=0</span>
+    <span class="keyword">RET</span>
+<span class="label">FACT</span> <span class="keyword">ENDP</span>
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START
+<span class="comment">; 5! = 5×4×3×2×1 = 120 = 0078H</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a complete 8086 assembly program to evaluate the expression: Z = (A × B) + (C ÷ D). Use A=6, B=4, C=20, D=5.</p>
+          <button class="toggle-btn" data-target="lq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4">
+            <p><strong>Expected result:</strong> Z = (6×4) + (20÷5) = 24 + 4 = 28 = 1CH</p>
+            <div class="code-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-code"></i> Expression Evaluation Program</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    A <span class="keyword">DW</span> 0006H
+    B <span class="keyword">DW</span> 0004H
+    C <span class="keyword">DW</span> 0014H    <span class="comment">; 20D</span>
+    D <span class="keyword">DW</span> 0005H
+    Z <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="comment">; Step 1: A × B</span>
+    <span class="keyword">MOV</span> AX, A           <span class="comment">; AX = 6</span>
+    <span class="keyword">MUL</span> B               <span class="comment">; DX:AX = 6 × 4 = 24 = 18H</span>
+    <span class="keyword">MOV</span> BX, AX          <span class="comment">; BX = 18H (save A×B)</span>
+
+    <span class="comment">; Step 2: C ÷ D</span>
+    <span class="keyword">MOV</span> AX, C           <span class="comment">; AX = 20</span>
+    <span class="keyword">XOR</span> DX, DX          <span class="comment">; DX = 0 (clear for 16-bit DIV)</span>
+    <span class="keyword">DIV</span> D               <span class="comment">; AX = 20 ÷ 5 = 4, DX = 0</span>
+
+    <span class="comment">; Step 3: Add results</span>
+    <span class="keyword">ADD</span> AX, BX          <span class="comment">; AX = 4 + 24 = 28 = 1CH</span>
+    <span class="keyword">MOV</span> Z, AX           <span class="comment">; Z = 1CH = 28</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Explain all important assembler directives used in 8086 programming with syntax and examples for each.</p>
+          <button class="toggle-btn" data-target="lq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq5">
+            <p>Assembler directives control the assembler, not the CPU. Key directives:</p>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="dir-table">
+                <thead><tr><th>Directive</th><th>Syntax</th><th>Purpose</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td>DB</td><td>name DB val</td><td>Allocate 1 byte</td><td><code>X DB 25H</code></td></tr>
+                  <tr><td>DW</td><td>name DW val</td><td>Allocate 2 bytes</td><td><code>Y DW 1234H</code></td></tr>
+                  <tr><td>DD</td><td>name DD val</td><td>Allocate 4 bytes</td><td><code>Z DD 12345678H</code></td></tr>
+                  <tr><td>DUP</td><td>n DUP(v)</td><td>Repeat value n times</td><td><code>ARR DB 10 DUP(0)</code></td></tr>
+                  <tr><td>EQU</td><td>name EQU val</td><td>Define constant (no memory)</td><td><code>MAX EQU 100</code></td></tr>
+                  <tr><td>SEGMENT/ENDS</td><td>name SEGMENT...ENDS</td><td>Define segment block</td><td><code>DATA SEGMENT...DATA ENDS</code></td></tr>
+                  <tr><td>ASSUME</td><td>ASSUME CS:seg,DS:seg</td><td>Map segments to registers</td><td><code>ASSUME CS:CODE,DS:DATA</code></td></tr>
+                  <tr><td>PROC/ENDP</td><td>name PROC...ENDP</td><td>Define procedure</td><td><code>ADD PROC NEAR...ENDP</code></td></tr>
+                  <tr><td>END</td><td>END label</td><td>End of source, set entry</td><td><code>END START</code></td></tr>
+                  <tr><td>ORG</td><td>ORG addr</td><td>Set current address</td><td><code>ORG 100H</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="important-note" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-star"></i> Key Exam Points</div>
+              <ul style="padding-left:1.3rem; line-height:2;">
+                <li>ASSUME does NOT load registers — just informs the assembler.</li>
+                <li>EQU creates a constant — no memory allocated.</li>
+                <li>DUP is used for arrays and buffer initialization.</li>
+                <li>END START sets the program entry point for the linker.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 16: PRACTICE
+  ============================================================ -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write an 8086 assembly program to find the largest element in an array of 5 words: [30H, 10H, 50H, 20H, 40H].</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Find Largest Element</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    ARR <span class="keyword">DW</span> 30H, 10H, 50H, 20H, 40H
+    MAX <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">LEA</span> SI, ARR
+    <span class="keyword">MOV</span> CX, 04H         <span class="comment">; Compare 4 times (N-1)</span>
+    <span class="keyword">MOV</span> AX, [SI]        <span class="comment">; AX = first element (assume max)</span>
+    <span class="keyword">ADD</span> SI, 02H
+
+<span class="label">COMPARE:</span>
+    <span class="keyword">CMP</span> AX, [SI]        <span class="comment">; Is current element > AX?</span>
+    <span class="keyword">JGE</span> <span class="label">SKIP</span>            <span class="comment">; If AX >= [SI], skip update</span>
+    <span class="keyword">MOV</span> AX, [SI]        <span class="comment">; Update max</span>
+<span class="label">SKIP:</span>
+    <span class="keyword">ADD</span> SI, 02H
+    <span class="keyword">LOOP</span> <span class="label">COMPARE</span>
+
+    <span class="keyword">MOV</span> MAX, AX         <span class="comment">; MAX = 50H</span>
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write an 8086 program to count the number of positive and negative numbers in an array: [0005H, 0FF00H, 0003H, 0FFF0H, 0001H]. Treat MSB=1 as negative (signed).</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Count Positive and Negative Numbers</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    ARR  <span class="keyword">DW</span> 0005H, 0FF00H, 0003H, 0FFF0H, 0001H
+    POS  <span class="keyword">DW</span> 0
+    NEG  <span class="keyword">DW</span> 0
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+    <span class="keyword">LEA</span> SI, ARR
+    <span class="keyword">MOV</span> CX, 05H
+
+<span class="label">CHECK:</span>
+    <span class="keyword">MOV</span> AX, [SI]
+    <span class="keyword">TEST</span> AX, 8000H      <span class="comment">; Test MSB (sign bit)</span>
+    <span class="keyword">JNZ</span> <span class="label">IS_NEG</span>          <span class="comment">; If MSB=1, negative</span>
+    <span class="keyword">INC</span> POS             <span class="comment">; Else positive</span>
+    <span class="keyword">JMP</span> <span class="label">NEXT</span>
+<span class="label">IS_NEG:</span>
+    <span class="keyword">INC</span> NEG
+<span class="label">NEXT:</span>
+    <span class="keyword">ADD</span> SI, 02H
+    <span class="keyword">LOOP</span> <span class="label">CHECK</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START
+<span class="comment">; Result: POS=3, NEG=2</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a macro named SWAP that exchanges the contents of two word memory variables. Show how to invoke it.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> SWAP Macro Definition and Usage</div>
+              <div class="asm-code"><span class="comment">; Macro Definition</span>
+<span class="label">SWAP</span> <span class="keyword">MACRO</span> X, Y
+    <span class="keyword">MOV</span> AX, X
+    <span class="keyword">MOV</span> BX, Y
+    <span class="keyword">MOV</span> X, BX
+    <span class="keyword">MOV</span> Y, AX
+<span class="keyword">ENDM</span>
+
+<span class="keyword">DATA SEGMENT</span>
+    VAL1 <span class="keyword">DW</span> 1234H
+    VAL2 <span class="keyword">DW</span> 5678H
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="comment">; Before: VAL1=1234H, VAL2=5678H</span>
+    <span class="label">SWAP</span> VAL1, VAL2
+    <span class="comment">; After: VAL1=5678H, VAL2=1234H</span>
+
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+            </div>
+            <div class="tip-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-lightbulb"></i> Macro Expansion</div>
+              <p>The assembler replaces <code>SWAP VAL1, VAL2</code> with the 4 MOV instructions inline. No CALL/RET is generated. Each invocation produces a separate copy of the 4 instructions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write an 8086 program to reverse a string of 5 characters using stack.</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Reverse String Using Stack</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    STR <span class="keyword">DB</span> 'HELLO'
+    REV <span class="keyword">DB</span> 5 <span class="keyword">DUP</span>('$')
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="comment">; Push all characters onto stack</span>
+    <span class="keyword">LEA</span> SI, STR
+    <span class="keyword">MOV</span> CX, 05H
+<span class="label">PUSH_LOOP:</span>
+    <span class="keyword">MOV</span> AL, [SI]
+    <span class="keyword">PUSH</span> AX             <span class="comment">; Push (note: pushes 16-bit AX)</span>
+    <span class="keyword">INC</span> SI
+    <span class="keyword">LOOP</span> <span class="label">PUSH_LOOP</span>
+
+    <span class="comment">; Pop into destination (reversed order)</span>
+    <span class="keyword">LEA</span> DI, REV
+    <span class="keyword">MOV</span> CX, 05H
+<span class="label">POP_LOOP:</span>
+    <span class="keyword">POP</span> AX
+    <span class="keyword">MOV</span> [DI], AL        <span class="comment">; Store only AL (character byte)</span>
+    <span class="keyword">INC</span> DI
+    <span class="keyword">LOOP</span> <span class="label">POP_LOOP</span>
+
+    <span class="comment">; REV now = 'OLLEH'</span>
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write an 8086 program to perform 32-bit subtraction. NUM1 = 00050010H, NUM2 = 00020005H.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <p><strong>Expected result:</strong> 00050010H − 00020005H = 0003000BH</p>
+            <div class="code-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-code"></i> 32-bit Subtraction</div>
+              <div class="asm-code"><span class="keyword">DATA SEGMENT</span>
+    N1_LO <span class="keyword">DW</span> 0010H     <span class="comment">; Low word of NUM1</span>
+    N1_HI <span class="keyword">DW</span> 0005H     <span class="comment">; High word of NUM1</span>
+    N2_LO <span class="keyword">DW</span> 0005H     <span class="comment">; Low word of NUM2</span>
+    N2_HI <span class="keyword">DW</span> 0002H     <span class="comment">; High word of NUM2</span>
+    R_LO  <span class="keyword">DW</span> ?
+    R_HI  <span class="keyword">DW</span> ?
+<span class="keyword">DATA ENDS</span>
+
+<span class="keyword">CODE SEGMENT</span>
+    <span class="keyword">ASSUME</span> CS:CODE, DS:DATA
+<span class="label">START:</span>
+    <span class="keyword">MOV</span> AX, DATA
+    <span class="keyword">MOV</span> DS, AX
+
+    <span class="keyword">MOV</span> AX, N1_LO
+    <span class="keyword">SUB</span> AX, N2_LO       <span class="comment">; 0010H-0005H=000BH, CF=0</span>
+    <span class="keyword">MOV</span> R_LO, AX        <span class="comment">; R_LO = 000BH</span>
+
+    <span class="keyword">MOV</span> AX, N1_HI
+    <span class="keyword">SBB</span> AX, N2_HI       <span class="comment">; 0005H-0002H-CF=0003H</span>
+    <span class="keyword">MOV</span> R_HI, AX        <span class="comment">; R_HI = 0003H</span>
+
+    <span class="comment">; Result = 0003:000BH = 0003000BH ✅</span>
+    <span class="keyword">MOV</span> AH, 4CH
+    <span class="keyword">INT</span> 21H
+<span class="keyword">CODE ENDS</span>
+<span class="keyword">END</span> START</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 17: REVISION
+  ============================================================ -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-redo"></i> Revision &amp; Quick Summary
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul style="padding-left:1.3rem; line-height:2.3;">
+          <li>Every 8086 program: <strong>DATA SEGMENT...DATA ENDS</strong>, <strong>CODE SEGMENT...CODE ENDS</strong>, <strong>ASSUME CS:CODE, DS:DATA</strong>, initialize DS at start, end with <strong>INT 21H (AH=4CH)</strong>.</li>
+          <li>DS cannot be loaded with immediate: use <strong>MOV AX, DATA / MOV DS, AX</strong>.</li>
+          <li><strong>ADD</strong> = simple add. <strong>ADC</strong> = add with carry (for multi-precision). <strong>SUB</strong> = subtract. <strong>SBB</strong> = subtract with borrow.</li>
+          <li><strong>AND</strong> = mask/clear bits. <strong>OR</strong> = set bits. <strong>XOR</strong> = toggle bits. <strong>XOR AX,AX</strong> = clear AX.</li>
+          <li><strong>CMP</strong> sets flags but does NOT store result. Used before conditional jumps.</li>
+          <li><strong>TEST</strong> = AND without storing. Used to check specific bits.</li>
+          <li><strong>JGE</strong> = jump if greater or equal (signed). <strong>JLE</strong> = jump if less or equal. <strong>JA/JB</strong> = unsigned above/below.</li>
+          <li><strong>LOOP</strong> = decrement CX, jump if CX≠0. Must initialize CX before loop.</li>
+          <li>Bubble sort: <strong>N−1 passes</strong>, each pass uses <strong>LOOP</strong> and <strong>CMP + swap</strong>.</li>
+          <li>For DW arrays: increment pointer by <strong>2</strong> (ADD SI, 2). For DB arrays: by <strong>1</strong> (INC SI).</li>
+          <li><strong>MUL BX</strong> (16-bit): result in <strong>DX:AX</strong>. <strong>DIV BX</strong>: quotient in AX, remainder in DX. Clear DX=0 before DIV.</li>
+          <li>String instructions use: <strong>SI</strong>=source (DS:SI), <strong>DI</strong>=destination (ES:DI), <strong>CX</strong>=count.</li>
+          <li><strong>CLD</strong> = clear DF → auto-increment SI/DI (forward). <strong>STD</strong> = set DF → auto-decrement (backward).</li>
+          <li><strong>MOVSB</strong>=copy byte, <strong>STOSB</strong>=store AL, <strong>CMPSB</strong>=compare bytes, <strong>SCASB</strong>=scan for AL.</li>
+          <li><strong>REP</strong> = repeat CX times. <strong>REPE</strong> = while equal (ZF=1). <strong>REPNE</strong> = while not equal (ZF=0).</li>
+          <li><strong>DB</strong>=1 byte, <strong>DW</strong>=2 bytes, <strong>DD</strong>=4 bytes. <strong>DUP</strong> = repeat.</li>
+          <li><strong>ASSUME</strong> = assembler directive (not CPU instruction) — does not load registers.</li>
+          <li><strong>EQU</strong> = constant, no memory. <strong>ORG</strong> = set current address.</li>
+          <li><strong>PROC NEAR</strong>: CALL pushes IP only. <strong>PROC FAR</strong>: CALL pushes CS then IP.</li>
+          <li><strong>Macro</strong> = inline expansion (faster, more code). <strong>Procedure</strong> = CALL/RET (slower, less code).</li>
+          <li>To reverse string: push all chars onto stack, pop into destination.</li>
+          <li>Terminate DOS program: <strong>MOV AH, 4CH / INT 21H</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exam</div>
+        <ul style="padding-left:1.3rem; line-height:2.3;">
+          <li>Bubble sort passes = <strong>N − 1</strong>. Total worst-case comparisons = <strong>N(N−1)/2</strong>.</li>
+          <li>16-bit MUL result: <strong>DX:AX</strong>. Always clear DX=0 before 16-bit DIV.</li>
+          <li>String ops: SI=source in DS, DI=destination in <strong>ES</strong>. ES must be initialized.</li>
+          <li>CLD before string copy (forward). REPNE SCASB to search for character.</li>
+          <li>ASSUME is for assembler only — <strong>does NOT load segment registers</strong>.</li>
+          <li>Macro: <strong>MACRO...ENDM</strong>. Procedure: <strong>PROC...ENDP</strong>.</li>
+          <li>Program termination: <strong>MOV AH, 4CH / INT 21H</strong>.</li>
+          <li>XOR reg, reg = fastest way to clear a register to 0.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</div>
+        <ul style="padding-left:1.3rem; line-height:2.3;">
+          <li>❌ <code>MOV DS, 1000H</code> — cannot load segment register directly with immediate. Use <strong>MOV AX, 1000H / MOV DS, AX</strong>.</li>
+          <li>❌ Forgetting to initialize <strong>ES</strong> before using MOVSB/STOSB — MOVSB writes to ES:DI.</li>
+          <li>❌ Using <code>ADD SI, 1</code> for DW array — must use <strong>ADD SI, 2</strong> for word arrays.</li>
+          <li>❌ Forgetting <code>XOR DX, DX</code> before <strong>DIV</strong> — DX must be 0 for correct 16-bit division.</li>
+          <li>❌ Confusing MOVSB (copy DS:SI→ES:DI) with STOSB (store AL→ES:DI, SI not used).</li>
+          <li>❌ Confusing REPE (repeat while ZF=1) with REPNE (repeat while ZF=0).</li>
+          <li>❌ Saying ASSUME loads segment registers — <strong>it only informs the assembler</strong>.</li>
+          <li>❌ Forgetting that LOOP uses <strong>CX</strong> exclusively — do not use CX for other purposes inside loop.</li>
+          <li>❌ Confusing CMP and SUB — CMP does <strong>not modify operands</strong>, SUB stores result in destination.</li>
+          <li>❌ Bubble sort: outer loop count = <strong>N−1</strong>, not N. Using N causes one unnecessary pass.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

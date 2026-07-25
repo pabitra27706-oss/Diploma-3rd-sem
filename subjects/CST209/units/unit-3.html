@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 3 – Searching | CST209</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="../../units-com/common.css"/>
+  <style>
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .search-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1rem;
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+    .search-card h4 {
+      margin: 0 0 0.4rem 0;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .search-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .complexity-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.78rem;
+      font-family: 'Courier New', monospace;
+      margin-top: 0.4rem;
+    }
+    .trace-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 0.8rem;
+      margin: 0.3rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+    }
+    .trace-step .step-label {
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 0.5rem;
+    }
+    .highlight-el {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 3px;
+      padding: 0 4px;
+      font-weight: 700;
+    }
+    .tree-diagram {
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      line-height: 2;
+      overflow-x: auto;
+      margin-top: 0.6rem;
+      white-space: pre;
+    }
+    .hash-table-vis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+    }
+    .hash-cell {
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem;
+      text-align: center;
+      background: var(--card-bg);
+      font-size: 0.85rem;
+    }
+    .hash-cell .idx {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+    .hash-cell .val {
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Courier New', monospace;
+    }
+    .hash-cell.occupied {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, var(--card-bg));
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="../index.html" style="text-decoration:none;color:inherit;">
+        <i class="fas fa-arrow-left"></i> CST209
+      </a>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview">Overview</a>
+      <a href="#linear-search">Linear</a>
+      <a href="#binary-search">Binary</a>
+      <a href="#bst">BST</a>
+      <a href="#balanced">Balanced Trees</a>
+      <a href="#hashing">Hashing</a>
+      <a href="#symbol-tables">Symbol Tables</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#definitions">Definitions</a>
+      <a href="#comparisons">Comparisons</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#short-questions">Short Qs</a>
+      <a href="#long-questions">Long Qs</a>
+      <a href="#practice">Practice</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 3 – Searching</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#linear-search">Linear Search</a>
+    <a href="#binary-search">Binary Search</a>
+    <a href="#bst">Binary Search Trees</a>
+    <a href="#balanced">Balanced Search Trees</a>
+    <a href="#hashing">Hashing</a>
+    <a href="#symbol-tables">Symbol Tables</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Key Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice Problems</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-code-branch"></i> CST209 – Algorithms</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Unit 3 of 5</div>
+      <div class="info-item"><i class="fas fa-clock"></i> 12 Hours</div>
+      <div class="info-item"><i class="fas fa-graduation-cap"></i> Diploma 3rd Semester</div>
+    </div>
+    <h1><i class="fas fa-search"></i> Searching Algorithms</h1>
+    <p>Linear search, binary search, BSTs, balanced trees (AVL, Red-Black, B-Trees), and hashing with collision resolution.</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- =================== SECTION 1: OVERVIEW =================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What is this unit about?</div>
+        <p>Searching is the process of finding a specific element within a collection. This unit covers all major searching strategies — from the simplest linear scan to advanced balanced trees and hash-based techniques.</p>
+        <ul>
+          <li><strong>Basic search:</strong> Linear Search O(n) and Binary Search O(log n).</li>
+          <li><strong>Tree-based search:</strong> BST operations — insert, delete, search.</li>
+          <li><strong>Balanced trees:</strong> AVL Trees, Red-Black Trees, B-Trees — why balancing matters.</li>
+          <li><strong>Hash-based search:</strong> Hash tables, hash functions, collision resolution — O(1) average.</li>
+          <li><strong>Symbol Tables:</strong> Key-value pair data structures used in compilers and interpreters.</li>
+        </ul>
+      </div>
+      <div class="search-grid">
+        <div class="search-card">
+          <h4><i class="fas fa-list"></i> Linear Search</h4>
+          <p>Scan one by one. Works on unsorted data.</p>
+          <span class="complexity-badge">O(n)</span>
+        </div>
+        <div class="search-card">
+          <h4><i class="fas fa-cut"></i> Binary Search</h4>
+          <p>Halve search space each step. Needs sorted data.</p>
+          <span class="complexity-badge">O(log n)</span>
+        </div>
+        <div class="search-card">
+          <h4><i class="fas fa-tree"></i> BST Search</h4>
+          <p>Tree-based key comparison.</p>
+          <span class="complexity-badge">O(h)</span>
+        </div>
+        <div class="search-card">
+          <h4><i class="fas fa-balance-scale"></i> AVL / RB Tree</h4>
+          <p>Self-balancing BSTs, guaranteed height.</p>
+          <span class="complexity-badge">O(log n)</span>
+        </div>
+        <div class="search-card">
+          <h4><i class="fas fa-hashtag"></i> Hash Table</h4>
+          <p>Key mapped to index via hash function.</p>
+          <span class="complexity-badge">O(1) avg</span>
+        </div>
+        <div class="search-card">
+          <h4><i class="fas fa-sitemap"></i> B-Tree</h4>
+          <p>Multi-way balanced tree for disk storage.</p>
+          <span class="complexity-badge">O(log n)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 2: LINEAR SEARCH =================== -->
+  <section class="section" id="linear-search">
+    <h2 class="section-title">
+      <i class="fas fa-list"></i> Linear Search
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Linear Search (Sequential Search) scans each element of the array <strong>one by one</strong> from left to right until the target element is found or the array is exhausted. It works on both sorted and unsorted arrays.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Linear Search</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+LINEAR-SEARCH(A, n, key)
+  for i = 0 to n-1
+    if A[i] == key
+      return i      // Found at index i
+  return -1         // Not found
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A=[10,20,80,30,60,50,110,100,130,170], key=110</div>
+        <div class="trace-step"><span class="step-label">i=0:</span> A[0]=10 ≠ 110</div>
+        <div class="trace-step"><span class="step-label">i=1:</span> A[1]=20 ≠ 110</div>
+        <div class="trace-step"><span class="step-label">i=2:</span> A[2]=80 ≠ 110</div>
+        <div class="trace-step"><span class="step-label">i=3:</span> A[3]=30 ≠ 110</div>
+        <div class="trace-step"><span class="step-label">i=4:</span> A[4]=60 ≠ 110</div>
+        <div class="trace-step"><span class="step-label">i=5:</span> A[5]=50 ≠ 110</div>
+        <div class="trace-step"><span class="step-label">i=6:</span> A[6]=<span class="highlight-el">110</span> == 110 → return 6 ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Linear Search</div>
+        <ul>
+          <li><strong>Best Case:</strong> O(1) — element found at first position.</li>
+          <li><strong>Average Case:</strong> O(n/2) = O(n) — element found midway on average.</li>
+          <li><strong>Worst Case:</strong> O(n) — element at last position or not present.</li>
+          <li><strong>Space Complexity:</strong> O(1) — no extra space.</li>
+        </ul>
+      </div>
+      <div class="tip-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> When to Use Linear Search</div>
+        <ul>
+          <li>Array is <strong>unsorted</strong>.</li>
+          <li>Array is <strong>small</strong> (n &lt; 10).</li>
+          <li>Search is done <strong>rarely</strong> — not worth sorting first.</li>
+          <li>Data is in a <strong>linked list</strong> (random access not possible).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 3: BINARY SEARCH =================== -->
+  <section class="section" id="binary-search">
+    <h2 class="section-title">
+      <i class="fas fa-cut"></i> Binary Search
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Binary Search works on a <strong>sorted array</strong>. It repeatedly halves the search space by comparing the target with the <strong>middle element</strong>. If equal, found. If target is smaller, search left half. If larger, search right half.</p>
+        <p style="margin-top:0.5rem;"><strong>Prerequisite:</strong> Array must be sorted.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Binary Search (Iterative)</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BINARY-SEARCH(A, n, key)
+  low = 0
+  high = n - 1
+  while low <= high
+    mid = (low + high) / 2
+    if A[mid] == key
+      return mid          // Found
+    else if A[mid] < key
+      low = mid + 1       // Search right half
+    else
+      high = mid - 1      // Search left half
+  return -1               // Not found
+        </pre>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Binary Search (Recursive)</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BINARY-SEARCH-REC(A, low, high, key)
+  if low > high: return -1
+  mid = (low + high) / 2
+  if A[mid] == key: return mid
+  else if A[mid] < key:
+    return BINARY-SEARCH-REC(A, mid+1, high, key)
+  else:
+    return BINARY-SEARCH-REC(A, low, mid-1, key)
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A=[2,3,4,10,40], key=10</div>
+        <div class="trace-step"><span class="step-label">Step 1:</span> low=0, high=4, mid=2, A[2]=4 &lt; 10 → low=3</div>
+        <div class="trace-step"><span class="step-label">Step 2:</span> low=3, high=4, mid=3, A[3]=<span class="highlight-el">10</span> == 10 → return 3 ✅</div>
+      </div>
+      <div class="trace-box" style="margin-top:0.4rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A=[1,3,5,7,9,11,13,15,17,19], key=7</div>
+        <div class="trace-step"><span class="step-label">Step 1:</span> low=0, high=9, mid=4, A[4]=9 &gt; 7 → high=3</div>
+        <div class="trace-step"><span class="step-label">Step 2:</span> low=0, high=3, mid=1, A[1]=3 &lt; 7 → low=2</div>
+        <div class="trace-step"><span class="step-label">Step 3:</span> low=2, high=3, mid=2, A[2]=5 &lt; 7 → low=3</div>
+        <div class="trace-step"><span class="step-label">Step 4:</span> low=3, high=3, mid=3, A[3]=<span class="highlight-el">7</span> == 7 → return 3 ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Binary Search</div>
+        <ul>
+          <li><strong>Best Case:</strong> O(1) — key is at the middle element.</li>
+          <li><strong>Average Case:</strong> O(log n)</li>
+          <li><strong>Worst Case:</strong> O(log n) — key not found, search space halved each time: log₂(n) steps.</li>
+          <li><strong>Space (iterative):</strong> O(1)</li>
+          <li><strong>Space (recursive):</strong> O(log n) — recursion stack.</li>
+        </ul>
+      </div>
+      <div class="warning-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistake</div>
+        <p>Using <code>mid = (low + high) / 2</code> can cause integer overflow for large values. The safe version is: <code>mid = low + (high - low) / 2</code>.</p>
+      </div>
+      <div class="important-note" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Binary Search Recurrence</div>
+        <p>T(n) = T(n/2) + O(1) → By Master Theorem (Case 2 with f(n)=O(1)): <strong>T(n) = O(log n)</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 4: BST =================== -->
+  <section class="section" id="bst">
+    <h2 class="section-title">
+      <i class="fas fa-tree"></i> Binary Search Trees (BST)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Binary Search Tree (BST)</strong> is a binary tree where for every node N:</p>
+        <ul>
+          <li>All keys in the <strong>left subtree</strong> of N are <strong>less than</strong> N's key.</li>
+          <li>All keys in the <strong>right subtree</strong> of N are <strong>greater than</strong> N's key.</li>
+          <li>Both left and right subtrees are also valid BSTs.</li>
+        </ul>
+      </div>
+
+      <div class="tree-diagram">
+           50
+          /  \
+        30    70
+       /  \  /  \
+      20  40 60  80
+      </div>
+
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-search"></i> BST Search Algorithm</div>
+        <div class="pseudocode-box" style="margin-top:0.4rem;">
+          <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode</div>
+          <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BST-SEARCH(node, key)
+  if node == NULL or node.key == key
+    return node
+  if key < node.key
+    return BST-SEARCH(node.left, key)
+  else
+    return BST-SEARCH(node.right, key)
+          </pre>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-plus-circle"></i> BST Insertion Algorithm</div>
+        <div class="pseudocode-box" style="margin-top:0.4rem;">
+          <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode</div>
+          <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BST-INSERT(root, key)
+  if root == NULL
+    return new Node(key)
+  if key < root.key
+    root.left = BST-INSERT(root.left, key)
+  else if key > root.key
+    root.right = BST-INSERT(root.right, key)
+  return root
+          </pre>
+        </div>
+        <div class="trace-box" style="margin-top:0.4rem;">
+          <div class="box-title"><i class="fas fa-shoe-prints"></i> Insert 65 into the BST above</div>
+          <div class="trace-step"><span class="step-label">Start:</span> root=50, 65 &gt; 50 → go right</div>
+          <div class="trace-step"><span class="step-label">At 70:</span> 65 &lt; 70 → go left</div>
+          <div class="trace-step"><span class="step-label">At 60:</span> 65 &gt; 60 → go right</div>
+          <div class="trace-step"><span class="step-label">NULL:</span> Insert 65 as right child of 60 ✅</div>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-trash-alt"></i> BST Deletion — Three Cases</div>
+        <ol style="margin:0.5rem 0 0 1rem;line-height:2.0;">
+          <li><strong>Node is a leaf (no children):</strong> Simply remove it.</li>
+          <li><strong>Node has one child:</strong> Replace the node with its child.</li>
+          <li><strong>Node has two children:</strong> Find the <strong>in-order successor</strong> (smallest key in right subtree), copy its key to the node, then delete the in-order successor.</li>
+        </ol>
+      </div>
+
+      <div class="complexity-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> BST Complexity</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Operation</th><th>Best Case</th><th>Average Case</th><th>Worst Case</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Search</td><td>O(1)</td><td>O(log n)</td><td>O(n)</td></tr>
+              <tr><td>Insert</td><td>O(1)</td><td>O(log n)</td><td>O(n)</td></tr>
+              <tr><td>Delete</td><td>O(1)</td><td>O(log n)</td><td>O(n)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.5rem;"><strong>Worst case O(n):</strong> When the BST degenerates into a linked list (all insertions in sorted order).</p>
+      </div>
+
+      <div class="warning-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> BST Degeneration Problem</div>
+        <p>Inserting keys in sorted order (e.g., 10, 20, 30, 40, 50) creates a BST that looks like a linked list — every node only has a right child. Height becomes O(n), making all operations O(n). This is why <strong>balanced BSTs</strong> (AVL, Red-Black) are needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 5: BALANCED SEARCH TREES =================== -->
+  <section class="section" id="balanced">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Balanced Search Trees
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Why Balanced Trees?</div>
+        <p>A BST's performance depends on its <strong>height h</strong>. In the worst case (skewed tree), h = n → O(n) operations. Balanced BSTs maintain h = O(log n) through automatic <strong>rotations</strong> or structural rules, guaranteeing O(log n) operations always.</p>
+      </div>
+
+      <!-- AVL TREES -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin:1.2rem 0 0.6rem;"><i class="fas fa-balance-scale"></i> 1. AVL Trees</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>An <strong>AVL Tree</strong> (Adelson-Velsky and Landis, 1962) is a self-balancing BST where the <strong>Balance Factor</strong> of every node is −1, 0, or +1.</p>
+        <p style="margin-top:0.5rem;"><strong>Balance Factor (BF) = Height(Left Subtree) − Height(Right Subtree)</strong></p>
+        <p>If any node's BF becomes ±2 after an insertion or deletion, the tree is <strong>rebalanced using rotations</strong>.</p>
+      </div>
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-sync-alt"></i> AVL Rotations (4 Types)</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Case</th><th>Imbalance</th><th>Rotation</th><th>When</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>LL</td><td>Left-Left</td><td>Single Right Rotation</td><td>Inserted in left subtree of left child</td></tr>
+              <tr><td>RR</td><td>Right-Right</td><td>Single Left Rotation</td><td>Inserted in right subtree of right child</td></tr>
+              <tr><td>LR</td><td>Left-Right</td><td>Left then Right Rotation</td><td>Inserted in right subtree of left child</td></tr>
+              <tr><td>RL</td><td>Right-Left</td><td>Right then Left Rotation</td><td>Inserted in left subtree of right child</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> AVL Insertion Example: Insert 30, 20, 10 (LL Case)</div>
+        <div class="trace-step"><span class="step-label">Insert 30:</span> Tree: [30] BF=0 — balanced</div>
+        <div class="trace-step"><span class="step-label">Insert 20:</span> Tree: 30(left=20) BF(30)=1 — balanced</div>
+        <div class="trace-step"><span class="step-label">Insert 10:</span> BF(30)=2 → LL imbalance at node 30</div>
+        <div class="trace-step"><span class="step-label">Right Rotation at 30:</span> 20 becomes root, 30 is right child of 20, 10 is left child of 20</div>
+        <div class="trace-step"><span class="step-label">Result:</span> Balanced AVL: 20(left=10, right=30), all BF=0 ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> AVL Tree Complexity</div>
+        <ul>
+          <li><strong>Search / Insert / Delete:</strong> O(log n) — height always ≤ 1.44 log₂(n+2).</li>
+          <li><strong>Space:</strong> O(n).</li>
+          <li><strong>Rotations per insertion:</strong> At most 2 (for LR/RL) or 1 (for LL/RR).</li>
+          <li><strong>Rotations per deletion:</strong> O(log n) in worst case.</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0;border:none;border-top:1px dashed var(--border);">
+
+      <!-- RED-BLACK TREES -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-circle" style="color:red;"></i> 2. Red-Black Trees</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition &amp; Properties</div>
+        <p>A <strong>Red-Black Tree</strong> is a self-balancing BST where every node is coloured either <strong>RED</strong> or <strong>BLACK</strong>. It satisfies these properties:</p>
+        <ol style="margin:0.5rem 0 0 1rem;line-height:2.0;">
+          <li>Every node is Red or Black.</li>
+          <li>The root is always <strong>Black</strong>.</li>
+          <li>Every leaf (NIL node) is <strong>Black</strong>.</li>
+          <li>If a node is <strong>Red</strong>, both its children must be <strong>Black</strong> (no two consecutive reds).</li>
+          <li>All paths from any node to its descendant NIL leaves contain the <strong>same number of Black nodes</strong> (Black-height).</li>
+        </ol>
+      </div>
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-tools"></i> Red-Black Tree Operations</div>
+        <p><strong>Insertion:</strong> Insert as in BST, colour new node Red. Fix violations using:</p>
+        <ul>
+          <li><strong>Recolouring:</strong> When uncle is Red — recolour parent and uncle Black, grandparent Red.</li>
+          <li><strong>Rotation:</strong> When uncle is Black — perform rotations (similar to AVL).</li>
+        </ul>
+        <p style="margin-top:0.5rem;"><strong>Deletion:</strong> More complex — uses double-black concept and several cases of recolouring/rotation to restore properties.</p>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Red-Black Tree Complexity</div>
+        <ul>
+          <li><strong>Search / Insert / Delete:</strong> O(log n) — height ≤ 2 log₂(n+1).</li>
+          <li><strong>Space:</strong> O(n).</li>
+          <li><strong>Rotations per insertion:</strong> At most 2.</li>
+          <li><strong>Rotations per deletion:</strong> At most 3.</li>
+          <li><strong>Advantage over AVL:</strong> Fewer rotations — better for insertion/deletion-heavy workloads.</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0;border:none;border-top:1px dashed var(--border);">
+
+      <!-- B-TREES -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-sitemap"></i> 3. B-Trees</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>B-Tree of order m</strong> is a self-balancing <strong>multi-way search tree</strong> where:</p>
+        <ol style="margin:0.5rem 0 0 1rem;line-height:2.0;">
+          <li>Every node has at most <strong>m children</strong>.</li>
+          <li>Every non-root internal node has at least <strong>⌈m/2⌉ children</strong>.</li>
+          <li>All leaves are at the <strong>same level</strong>.</li>
+          <li>A node with k children contains <strong>k−1 keys</strong>.</li>
+          <li>Keys in a node are stored in <strong>sorted order</strong>.</li>
+        </ol>
+      </div>
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-database"></i> Why B-Trees?</div>
+        <ul>
+          <li>Designed for <strong>disk-based storage</strong> — minimises disk I/O operations.</li>
+          <li>Each node can store many keys → tree height is very small → fewer disk reads.</li>
+          <li>Used in <strong>database indexing</strong> (e.g., MySQL InnoDB), <strong>file systems</strong>.</li>
+          <li>B+ Tree (variant): All data in leaves, internal nodes have only keys — even better for range queries.</li>
+        </ul>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> B-Tree Complexity (order m, n keys)</div>
+        <ul>
+          <li><strong>Height:</strong> O(log_m n) — very short even for millions of keys.</li>
+          <li><strong>Search / Insert / Delete:</strong> O(log n) comparisons.</li>
+          <li><strong>Disk accesses:</strong> O(log_m n) — the key advantage.</li>
+        </ul>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <table class="data-table">
+          <thead>
+            <tr><th>Property</th><th>AVL Tree</th><th>Red-Black Tree</th><th>B-Tree</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Balance Criterion</td><td>BF ∈ {-1,0,1}</td><td>5 colour properties</td><td>All leaves same level</td></tr>
+            <tr><td>Height</td><td>≤ 1.44 log n</td><td>≤ 2 log n</td><td>O(log_m n)</td></tr>
+            <tr><td>Rotations (insert)</td><td>≤ 2</td><td>≤ 2</td><td>None (split nodes)</td></tr>
+            <tr><td>Operations</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td></tr>
+            <tr><td>Best for</td><td>Search-heavy</td><td>Insert/Delete-heavy</td><td>Disk/database storage</td></tr>
+            <tr><td>Used in</td><td>C++ map (some)</td><td>Java TreeMap, C++ map</td><td>Databases, file systems</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 6: HASHING =================== -->
+  <section class="section" id="hashing">
+    <h2 class="section-title">
+      <i class="fas fa-hashtag"></i> Hashing
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Hashing is a technique to map keys to array indices using a <strong>hash function</strong>. Instead of searching through all elements, we compute the index directly. This gives O(1) average-case search, insert, and delete.</p>
+        <p style="margin-top:0.5rem;"><strong>Hash Table:</strong> An array of size m where keys are stored at positions computed by the hash function.</p>
+        <p style="margin-top:0.3rem;"><strong>Load Factor α = n/m</strong> (n = number of keys, m = table size). Performance degrades as α → 1.</p>
+      </div>
+
+      <!-- HASH FUNCTIONS -->
+      <h3 style="color:var(--accent);font-size:1rem;margin:1rem 0 0.6rem;"><i class="fas fa-function"></i> Hash Functions</h3>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-superscript"></i> 1. Division Method</div>
+        <div class="formula">h(k) = k mod m</div>
+        <p style="margin-top:0.6rem;"><strong>Best values of m:</strong> A prime number not close to a power of 2. Avoids clustering.</p>
+        <p><strong>Example:</strong> m=11, k=100 → h(100) = 100 mod 11 = <strong>1</strong></p>
+        <p><strong>Example:</strong> m=11, k=54 → h(54) = 54 mod 11 = <strong>10</strong></p>
+      </div>
+
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> 2. Multiplication Method</div>
+        <div class="formula">h(k) = ⌊m × (k × A mod 1)⌋</div>
+        <p style="margin-top:0.6rem;">where A is a constant between 0 and 1. Knuth suggests A ≈ (√5 − 1)/2 ≈ 0.6180339887.</p>
+        <p><strong>Advantage:</strong> Value of m is not critical — any m works well.</p>
+        <p><strong>Example:</strong> k=123456, A=0.6180339887, m=10000 → h(k) = ⌊10000 × (0.0041)⌋ = <strong>41</strong></p>
+      </div>
+
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> 3. Universal Hashing</div>
+        <div class="formula">h_{a,b}(k) = ((a·k + b) mod p) mod m</div>
+        <p style="margin-top:0.6rem;">where p is a prime larger than all keys, a ∈ {1,...,p-1}, b ∈ {0,...,p-1} chosen randomly.</p>
+        <p><strong>Advantage:</strong> No single input can always cause worst-case behaviour — randomised choice prevents adversarial inputs.</p>
+      </div>
+
+      <!-- COLLISION RESOLUTION -->
+      <h3 style="color:var(--accent);font-size:1rem;margin:1.2rem 0 0.6rem;"><i class="fas fa-car-crash"></i> Collision Resolution Techniques</h3>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> What is a Collision?</div>
+        <p>A <strong>collision</strong> occurs when two different keys hash to the same index: h(k₁) = h(k₂) but k₁ ≠ k₂. Collision resolution strategies handle this situation.</p>
+      </div>
+
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-link"></i> 1. Chaining (Separate Chaining)</div>
+        <p>Each slot in the hash table is a <strong>linked list</strong>. All keys that hash to the same slot are stored in the list at that slot.</p>
+        <p style="margin-top:0.5rem;"><strong>Insert:</strong> Compute h(k), prepend to list at h(k).</p>
+        <p><strong>Search:</strong> Compute h(k), scan list at h(k) for k.</p>
+        <p style="margin-top:0.5rem;"><strong>Complexity:</strong></p>
+        <ul>
+          <li>Average case: O(1 + α) where α = n/m (load factor).</li>
+          <li>Worst case: O(n) — all keys in one chain.</li>
+        </ul>
+        <p><strong>Advantage:</strong> Never runs out of space; handles high load factors well.</p>
+        <p><strong>Disadvantage:</strong> Extra memory for pointers; poor cache performance.</p>
+      </div>
+
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-search"></i> 2. Open Addressing</div>
+        <p>All keys are stored <strong>within the hash table itself</strong> (no external lists). When a collision occurs, probe alternate positions until an empty slot is found.</p>
+        <p style="margin-top:0.4rem;"><strong>Probe sequence:</strong> h(k, i) = (h'(k) + f(i)) mod m, where i = 0, 1, 2, ...</p>
+
+        <div class="formula-box" style="margin-top:0.6rem;">
+          <div class="box-title"><i class="fas fa-superscript"></i> a. Linear Probing</div>
+          <div class="formula">h(k, i) = (h'(k) + i) mod m</div>
+          <p style="margin-top:0.5rem;">If slot h'(k) is occupied, try h'(k)+1, h'(k)+2, ... (wraps around).</p>
+          <p><strong>Problem:</strong> <em>Primary clustering</em> — long runs of occupied slots build up, degrading performance.</p>
+        </div>
+
+        <div class="formula-box" style="margin-top:0.6rem;">
+          <div class="box-title"><i class="fas fa-superscript"></i> b. Quadratic Probing</div>
+          <div class="formula">h(k, i) = (h'(k) + c₁·i + c₂·i²) mod m</div>
+          <p style="margin-top:0.5rem;">Probes at quadratic intervals instead of linear ones.</p>
+          <p><strong>Problem:</strong> <em>Secondary clustering</em> — keys with same h'(k) follow same probe sequence.</p>
+        </div>
+
+        <div class="formula-box" style="margin-top:0.6rem;">
+          <div class="box-title"><i class="fas fa-superscript"></i> c. Double Hashing</div>
+          <div class="formula">h(k, i) = (h₁(k) + i · h₂(k)) mod m</div>
+          <p style="margin-top:0.5rem;">Uses a second hash function h₂(k) for the step size. h₂(k) must never return 0.</p>
+          <p><strong>Common choice:</strong> h₂(k) = p − (k mod p) where p is prime &lt; m.</p>
+          <p><strong>Advantage:</strong> Best open addressing method — avoids both primary and secondary clustering.</p>
+        </div>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <table class="data-table">
+          <thead>
+            <tr><th>Method</th><th>Average Search</th><th>Clustering</th><th>Space</th><th>Best When</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Chaining</td><td>O(1+α)</td><td>None</td><td>Extra (pointers)</td><td>α can be &gt; 1</td></tr>
+            <tr><td>Linear Probing</td><td>O(1/(1-α))</td><td>Primary</td><td>O(1)</td><td>α &lt; 0.5</td></tr>
+            <tr><td>Quadratic Probing</td><td>Better than linear</td><td>Secondary</td><td>O(1)</td><td>α &lt; 0.7</td></tr>
+            <tr><td>Double Hashing</td><td>Best open addr.</td><td>Minimal</td><td>O(1)</td><td>α &lt; 0.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trace-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Hash Table Trace: Division Method + Linear Probing, m=7</div>
+        <p style="margin:0.4rem 0 0.4rem 0; font-size:0.9rem;">Insert keys: 50, 700, 76, 85, 92, 73, 101. h(k) = k mod 7</p>
+        <div class="trace-step"><span class="step-label">h(50)=1:</span> slot 1 empty → place 50</div>
+        <div class="trace-step"><span class="step-label">h(700)=0:</span> slot 0 empty → place 700</div>
+        <div class="trace-step"><span class="step-label">h(76)=6:</span> slot 6 empty → place 76</div>
+        <div class="trace-step"><span class="step-label">h(85)=1:</span> slot 1 occupied (50) → probe slot 2 → empty → place 85</div>
+        <div class="trace-step"><span class="step-label">h(92)=1:</span> slot 1 occupied → slot 2 occupied → probe slot 3 → empty → place 92</div>
+        <div class="trace-step"><span class="step-label">h(73)=3:</span> slot 3 occupied → probe slot 4 → empty → place 73</div>
+        <div class="trace-step"><span class="step-label">h(101)=3:</span> slot 3,4 occupied → probe slot 5 → empty → place 101</div>
+        <div class="hash-table-vis">
+          <div class="hash-cell occupied"><div class="idx">0</div><div class="val">700</div></div>
+          <div class="hash-cell occupied"><div class="idx">1</div><div class="val">50</div></div>
+          <div class="hash-cell occupied"><div class="idx">2</div><div class="val">85</div></div>
+          <div class="hash-cell occupied"><div class="idx">3</div><div class="val">92</div></div>
+          <div class="hash-cell occupied"><div class="idx">4</div><div class="val">73</div></div>
+          <div class="hash-cell occupied"><div class="idx">5</div><div class="val">101</div></div>
+          <div class="hash-cell occupied"><div class="idx">6</div><div class="val">76</div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 7: SYMBOL TABLES =================== -->
+  <section class="section" id="symbol-tables">
+    <h2 class="section-title">
+      <i class="fas fa-table"></i> Symbol Tables
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Symbol Table</strong> is a data structure that stores <strong>key-value pairs</strong> and supports the following operations:</p>
+        <ul>
+          <li><code>put(key, value)</code> — Insert or update a key-value pair.</li>
+          <li><code>get(key)</code> — Retrieve the value associated with a key.</li>
+          <li><code>delete(key)</code> — Remove a key-value pair.</li>
+          <li><code>contains(key)</code> — Check if a key exists.</li>
+        </ul>
+      </div>
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Use in Compilers</div>
+        <p>Symbol tables are a core component of <strong>compilers and interpreters</strong>:</p>
+        <ul>
+          <li><strong>Lexical Analysis:</strong> Stores identifiers (variable names, function names).</li>
+          <li><strong>Semantic Analysis:</strong> Stores type information for each identifier.</li>
+          <li><strong>Code Generation:</strong> Stores memory addresses / offsets.</li>
+        </ul>
+        <p style="margin-top:0.5rem;"><strong>Example:</strong> In <code>int x = 5;</code>, the symbol table stores {x → (type:int, value:5, address:0x100)}.</p>
+      </div>
+      <div class="table-wrapper" style="margin-top:0.8rem;">
+        <table class="data-table">
+          <thead>
+            <tr><th>Implementation</th><th>Search</th><th>Insert</th><th>Delete</th><th>Ordered?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Unsorted Array</td><td>O(n)</td><td>O(1)</td><td>O(n)</td><td>No</td></tr>
+            <tr><td>Sorted Array</td><td>O(log n)</td><td>O(n)</td><td>O(n)</td><td>Yes</td></tr>
+            <tr><td>BST</td><td>O(h)</td><td>O(h)</td><td>O(h)</td><td>Yes</td></tr>
+            <tr><td>AVL / Red-Black Tree</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>Yes</td></tr>
+            <tr><td>Hash Table</td><td>O(1) avg</td><td>O(1) avg</td><td>O(1) avg</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Best Implementation Choice</div>
+        <p>Use <strong>Hash Table</strong> when ordering is not needed (most compiler use cases). Use <strong>Red-Black Tree</strong> when ordered iteration is needed (e.g., Java's TreeMap). Python's <code>dict</code> and Java's <code>HashMap</code> are hash table-based symbol tables.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 8: FORMULAS =================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Formulas &amp; Quick References
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-superscript"></i> Binary Search Recurrence</div>
+        <div class="formula">T(n) = T(n/2) + O(1)  →  T(n) = O(log n)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> AVL Balance Factor</div>
+        <div class="formula">BF(node) = Height(Left Subtree) − Height(Right Subtree) ∈ {−1, 0, +1}</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> AVL Height Bound</div>
+        <div class="formula">h ≤ 1.44 × log₂(n + 2) − 0.328</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Red-Black Tree Height Bound</div>
+        <div class="formula">h ≤ 2 × log₂(n + 1)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Hash Functions</div>
+        <div class="formula">Division: h(k) = k mod m</div>
+        <div class="formula" style="margin-top:0.4rem;">Multiplication: h(k) = ⌊m × (k·A mod 1)⌋,  A ≈ 0.6180339887</div>
+        <div class="formula" style="margin-top:0.4rem;">Universal: h(k) = ((a·k + b) mod p) mod m</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Open Addressing Probes</div>
+        <div class="formula">Linear:    h(k,i) = (h'(k) + i) mod m</div>
+        <div class="formula" style="margin-top:0.4rem;">Quadratic: h(k,i) = (h'(k) + c₁·i + c₂·i²) mod m</div>
+        <div class="formula" style="margin-top:0.4rem;">Double:    h(k,i) = (h₁(k) + i·h₂(k)) mod m</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Hash Table Load Factor</div>
+        <div class="formula">α = n / m   (n = keys stored, m = table size)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> B-Tree — Node Key Count</div>
+        <div class="formula">Node with k children contains exactly k−1 keys</div>
+        <div class="formula" style="margin-top:0.4rem;">Min children (non-root): ⌈m/2⌉   |   Max children: m</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 9: DEFINITIONS =================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-spell-check"></i> All Key Terms</div>
+        <ul style="line-height:2.2;">
+          <li><strong>Linear Search:</strong> Sequential scan of array elements; O(n) worst case.</li>
+          <li><strong>Binary Search:</strong> Halves search space at each step; requires sorted array; O(log n).</li>
+          <li><strong>BST (Binary Search Tree):</strong> Binary tree where left subtree has smaller keys, right subtree has larger keys.</li>
+          <li><strong>In-order Successor:</strong> The smallest key in the right subtree — used in BST deletion.</li>
+          <li><strong>Skewed BST:</strong> A degenerate BST shaped like a linked list due to sorted insertions; O(n) operations.</li>
+          <li><strong>AVL Tree:</strong> Self-balancing BST; balance factor of every node ∈ {-1, 0, 1}.</li>
+          <li><strong>Balance Factor:</strong> Height(left subtree) − Height(right subtree).</li>
+          <li><strong>Rotation:</strong> Tree restructuring operation to restore balance; types: LL, RR, LR, RL.</li>
+          <li><strong>Red-Black Tree:</strong> Self-balancing BST with colour (red/black) property; used in Java TreeMap, C++ std::map.</li>
+          <li><strong>Black-Height:</strong> Number of black nodes on any path from a node to a leaf — must be equal for all paths.</li>
+          <li><strong>B-Tree:</strong> Multi-way balanced tree for disk storage; all leaves at same level.</li>
+          <li><strong>Hashing:</strong> Mapping keys to array indices using a hash function.</li>
+          <li><strong>Hash Function:</strong> A function h(k) that maps key k to an index in the hash table.</li>
+          <li><strong>Collision:</strong> When two keys hash to the same index: h(k₁) = h(k₂), k₁ ≠ k₂.</li>
+          <li><strong>Chaining:</strong> Collision resolution using linked lists at each slot.</li>
+          <li><strong>Open Addressing:</strong> Collision resolution by probing alternate slots in the table.</li>
+          <li><strong>Linear Probing:</strong> Open addressing where next slot is checked sequentially.</li>
+          <li><strong>Quadratic Probing:</strong> Open addressing using quadratic function for probe sequence.</li>
+          <li><strong>Double Hashing:</strong> Open addressing using a second hash function for step size.</li>
+          <li><strong>Load Factor (α):</strong> Ratio n/m; measures how full the hash table is.</li>
+          <li><strong>Primary Clustering:</strong> Long chains of occupied slots in linear probing.</li>
+          <li><strong>Symbol Table:</strong> Data structure storing key-value pairs used in compilers.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 10: COMPARISONS =================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3 style="font-size:1rem;color:var(--accent);margin-bottom:0.6rem;"><i class="fas fa-table"></i> Linear Search vs Binary Search</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Feature</th><th>Linear Search</th><th>Binary Search</th></tr></thead>
+          <tbody>
+            <tr><td>Sorted required?</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Best case</td><td>O(1)</td><td>O(1)</td></tr>
+            <tr><td>Worst case</td><td>O(n)</td><td>O(log n)</td></tr>
+            <tr><td>Works on</td><td>Array, Linked List</td><td>Array only (random access)</td></tr>
+            <tr><td>Technique</td><td>Sequential scan</td><td>Divide and conquer</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:1rem;color:var(--accent);margin:1.2rem 0 0.6rem;"><i class="fas fa-table"></i> BST vs AVL Tree vs Red-Black Tree</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Feature</th><th>BST</th><th>AVL Tree</th><th>Red-Black Tree</th></tr></thead>
+          <tbody>
+            <tr><td>Balanced?</td><td>No (may skew)</td><td>Strictly balanced</td><td>Approximately balanced</td></tr>
+            <tr><td>Height</td><td>O(n) worst</td><td>≤ 1.44 log n</td><td>≤ 2 log n</td></tr>
+            <tr><td>Search</td><td>O(n) worst</td><td>O(log n)</td><td>O(log n)</td></tr>
+            <tr><td>Insert rotations</td><td>0</td><td>≤ 2</td><td>≤ 2</td></tr>
+            <tr><td>Delete rotations</td><td>0</td><td>O(log n)</td><td>≤ 3</td></tr>
+            <tr><td>Best for</td><td>Ordered data</td><td>Search-intensive</td><td>Insert/delete-intensive</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:1rem;color:var(--accent);margin:1.2rem 0 0.6rem;"><i class="fas fa-table"></i> Chaining vs Open Addressing</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Feature</th><th>Chaining</th><th>Open Addressing</th></tr></thead>
+          <tbody>
+            <tr><td>Storage</td><td>External linked lists</td><td>Within the table</td></tr>
+            <tr><td>Load factor</td><td>α can be &gt; 1</td><td>α must be &lt; 1</td></tr>
+            <tr><td>Cache performance</td><td>Poor (pointer chasing)</td><td>Better (contiguous)</td></tr>
+            <tr><td>Deletion</td><td>Simple</td><td>Complex (tombstone needed)</td></tr>
+            <tr><td>Space</td><td>Extra (pointers)</td><td>No extra</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 11: MCQs =================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the worst-case time complexity of binary search?</p>
+          <ul class="options">
+            <li>a. O(n)</li>
+            <li>b. O(n²)</li>
+            <li>c. O(log n)</li>
+            <li>d. O(1)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-1">
+            <strong>Answer: c. O(log n)</strong>
+            <p>Binary Search halves the search space at each step. Starting with n elements, after k steps the space is n/2^k. When n/2^k = 1, k = log₂n. So worst case = O(log n).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Which data structure is required for binary search to work?</p>
+          <ul class="options">
+            <li>a. Linked List</li>
+            <li>b. Unsorted Array</li>
+            <li>c. Sorted Array</li>
+            <li>d. Stack</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-2">
+            <strong>Answer: c. Sorted Array</strong>
+            <p>Binary Search requires random access (array) AND the data must be sorted. It cannot work on a linked list (no random access) or an unsorted array.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>In a BST, insertion of keys 10, 20, 30, 40, 50 in order results in:</p>
+          <ul class="options">
+            <li>a. A balanced tree</li>
+            <li>b. A right-skewed tree</li>
+            <li>c. A left-skewed tree</li>
+            <li>d. A complete binary tree</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-3">
+            <strong>Answer: b. A right-skewed tree</strong>
+            <p>Inserting sorted keys in ascending order causes each new node to become the right child of the previous node, creating a right-skewed (degenerate) BST with height n-1 = O(n).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>The balance factor of an AVL tree node is defined as:</p>
+          <ul class="options">
+            <li>a. Height(right) - Height(left)</li>
+            <li>b. Height(left) - Height(right)</li>
+            <li>c. Height(left) + Height(right)</li>
+            <li>d. Height(left) × Height(right)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-4">
+            <strong>Answer: b. Height(left) - Height(right)</strong>
+            <p>Balance Factor = Height(Left Subtree) − Height(Right Subtree). For an AVL tree, this must be in {-1, 0, +1} for every node.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Which collision resolution method uses linked lists at each hash table slot?</p>
+          <ul class="options">
+            <li>a. Linear Probing</li>
+            <li>b. Quadratic Probing</li>
+            <li>c. Double Hashing</li>
+            <li>d. Chaining</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-5">
+            <strong>Answer: d. Chaining</strong>
+            <p>Chaining (Separate Chaining) stores colliding elements in a linked list at each slot. Linear Probing, Quadratic Probing, and Double Hashing are all Open Addressing techniques that store elements within the table.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>The division method hash function is:</p>
+          <ul class="options">
+            <li>a. h(k) = k × m</li>
+            <li>b. h(k) = k mod m</li>
+            <li>c. h(k) = k + m</li>
+            <li>d. h(k) = ⌊m/k⌋</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-6">
+            <strong>Answer: b. h(k) = k mod m</strong>
+            <p>The division method computes h(k) = k mod m, mapping key k to an index in range [0, m-1]. m should be a prime number not close to a power of 2.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>In a Red-Black Tree, the root node is always:</p>
+          <ul class="options">
+            <li>a. Red</li>
+            <li>b. Black</li>
+            <li>c. Either Red or Black</li>
+            <li>d. Depends on insertion order</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-7">
+            <strong>Answer: b. Black</strong>
+            <p>One of the five Red-Black Tree properties states: "The root is always BLACK." Even if a Red node is inserted as root, it is immediately recoloured Black.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Linear probing suffers from which problem?</p>
+          <ul class="options">
+            <li>a. Secondary clustering</li>
+            <li>b. Primary clustering</li>
+            <li>c. Overflow</li>
+            <li>d. Underflow</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-8">
+            <strong>Answer: b. Primary clustering</strong>
+            <p>Linear probing causes primary clustering — long consecutive runs of occupied slots that grow larger, increasing average probe length significantly.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>B-Trees are primarily used for:</p>
+          <ul class="options">
+            <li>a. In-memory sorting</li>
+            <li>b. Disk-based storage and database indexing</li>
+            <li>c. Hash table collision resolution</li>
+            <li>d. Graph traversal</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-9">
+            <strong>Answer: b. Disk-based storage and database indexing</strong>
+            <p>B-Trees minimise disk I/O by storing many keys per node, keeping tree height very small (O(log_m n)). They are used in database indexes (MySQL, PostgreSQL) and file systems (NTFS, ext4).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>Which is the best open addressing collision resolution method?</p>
+          <ul class="options">
+            <li>a. Linear Probing</li>
+            <li>b. Quadratic Probing</li>
+            <li>c. Double Hashing</li>
+            <li>d. All are equal</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-10">
+            <strong>Answer: c. Double Hashing</strong>
+            <p>Double Hashing avoids both primary clustering (linear probing problem) and secondary clustering (quadratic probing problem) by using a second hash function for step size, giving the best distribution among open addressing methods.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>What is the average-case time complexity of search in a hash table with chaining (load factor α)?</p>
+          <ul class="options">
+            <li>a. O(α)</li>
+            <li>b. O(1 + α)</li>
+            <li>c. O(n)</li>
+            <li>d. O(log n)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-11">
+            <strong>Answer: b. O(1 + α)</strong>
+            <p>With chaining, the average search cost is O(1 + α) where α = n/m. The O(1) is for computing the hash, and O(α) is the expected chain length. When α is O(1) (table size proportional to n), search is O(1).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>How many rotations does an AVL tree perform per insertion in the worst case?</p>
+          <ul class="options">
+            <li>a. O(log n)</li>
+            <li>b. O(n)</li>
+            <li>c. At most 2</li>
+            <li>d. At most 1</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3-12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3-12">
+            <strong>Answer: c. At most 2</strong>
+            <p>AVL insertion requires at most 2 rotations (for LR or RL cases — double rotation). LL and RR cases require only 1 rotation. After at most 2 rotations, balance is restored for the entire tree.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 12: SHORT QUESTIONS =================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the difference between linear search and binary search?</p>
+          <button class="toggle-btn" data-target="sq3-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-1">
+            <p><strong>Linear Search:</strong> Scans every element sequentially. Works on unsorted and sorted arrays. O(n) worst case.</p>
+            <p><strong>Binary Search:</strong> Halves the search space by comparing with middle element. Requires sorted array. O(log n) worst case.</p>
+            <p><strong>When n=1000:</strong> Linear needs up to 1000 comparisons; Binary needs at most log₂(1000) ≈ 10 comparisons.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the BST property? Give an example.</p>
+          <button class="toggle-btn" data-target="sq3-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-2">
+            <p><strong>BST Property:</strong> For every node N, all keys in its left subtree are less than N.key, and all keys in its right subtree are greater than N.key.</p>
+            <p><strong>Example:</strong> In the tree rooted at 50 with left child 30 and right child 70 — all left subtree values &lt; 50 and all right subtree values &gt; 50.</p>
+            <p><strong>In-order traversal</strong> of a BST gives the elements in sorted order.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is a collision in hashing? Name two resolution techniques.</p>
+          <button class="toggle-btn" data-target="sq3-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-3">
+            <p>A <strong>collision</strong> occurs when two different keys hash to the same table index: h(k₁) = h(k₂) but k₁ ≠ k₂.</p>
+            <p><strong>Resolution Techniques:</strong></p>
+            <ol>
+              <li><strong>Chaining (Separate Chaining):</strong> Use a linked list at each slot to store all colliding keys.</li>
+              <li><strong>Open Addressing (Linear Probing):</strong> Search for next empty slot in the table sequentially.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the significance of height balancing in search trees?</p>
+          <button class="toggle-btn" data-target="sq3-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-4">
+            <p>The time complexity of BST operations (search, insert, delete) is O(h) where h = height of tree. Without balancing, h can be O(n) (skewed tree), making operations O(n).</p>
+            <p>Height balancing (AVL, Red-Black) ensures h = O(log n), guaranteeing O(log n) operations always.</p>
+            <p><strong>Significance:</strong> For n = 1,000,000 nodes: Skewed BST → 1,000,000 operations; Balanced BST → only ≈20 operations.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>State the five properties of a Red-Black Tree.</p>
+          <button class="toggle-btn" data-target="sq3-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-5">
+            <ol style="line-height:2.0;">
+              <li>Every node is either <strong>Red</strong> or <strong>Black</strong>.</li>
+              <li>The <strong>root</strong> is always <strong>Black</strong>.</li>
+              <li>Every <strong>leaf (NIL)</strong> node is <strong>Black</strong>.</li>
+              <li>If a node is <strong>Red</strong>, both its children are <strong>Black</strong> (no two consecutive reds).</li>
+              <li>All paths from any node to its descendant NIL leaves contain the same number of <strong>Black nodes</strong> (Black-height property).</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is a symbol table? Name two real-world uses.</p>
+          <button class="toggle-btn" data-target="sq3-6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-6">
+            <p>A <strong>symbol table</strong> is a data structure that stores key-value pairs and supports efficient insertion, retrieval, and deletion by key.</p>
+            <p><strong>Real-world uses:</strong></p>
+            <ol>
+              <li><strong>Compilers:</strong> Store identifiers (variables, functions) with their type, scope, and memory address during compilation.</li>
+              <li><strong>Interpreters:</strong> Python's <code>dict</code> is the runtime symbol table for variable name → value mapping.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is the load factor in a hash table? How does it affect performance?</p>
+          <button class="toggle-btn" data-target="sq3-7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-7">
+            <p><strong>Load Factor α = n/m</strong>, where n = number of keys stored, m = size of hash table.</p>
+            <p><strong>Effect on performance:</strong></p>
+            <ul>
+              <li>Low α (e.g., 0.1) → few collisions → fast O(1) operations.</li>
+              <li>High α (e.g., 0.9) → many collisions → longer probe sequences → slower operations.</li>
+              <li>For chaining: average search time = O(1 + α).</li>
+              <li>Practical threshold: rehash when α &gt; 0.7 (double the table size).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Explain double hashing and why it is better than linear probing.</p>
+          <button class="toggle-btn" data-target="sq3-8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3-8">
+            <p><strong>Double Hashing:</strong> h(k, i) = (h₁(k) + i·h₂(k)) mod m</p>
+            <p>Uses two hash functions. The step size between probes is determined by h₂(k), which is different for each key.</p>
+            <p><strong>Better than Linear Probing because:</strong></p>
+            <ul>
+              <li>Linear probing: all keys with same h₁(k) probe the same sequence → <em>primary clustering</em>.</li>
+              <li>Double hashing: different keys have different step sizes → probe sequences are spread out → <em>no clustering</em>.</li>
+              <li>Approximates random probing in practice.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 13: LONG QUESTIONS =================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain Binary Search with algorithm, trace on A=[2,5,8,12,16,23,38,56,72,91], key=23, and complexity analysis.</p>
+          <button class="toggle-btn" data-target="lq3-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3-1">
+            <p><strong>Binary Search</strong> repeatedly halves the search range by comparing the key with the middle element.</p>
+            <div class="pseudocode-box">
+              <div class="box-title"><i class="fas fa-file-alt"></i> Algorithm</div>
+              <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BINARY-SEARCH(A, n, key)
+  low=0, high=n-1
+  while low <= high
+    mid = (low+high)/2
+    if A[mid]==key: return mid
+    else if A[mid]&lt;key: low=mid+1
+    else: high=mid-1
+  return -1
+              </pre>
+            </div>
+            <div class="trace-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: key=23, n=10</div>
+              <div class="trace-step"><span class="step-label">Step 1:</span> low=0,high=9,mid=4,A[4]=16&lt;23 → low=5</div>
+              <div class="trace-step"><span class="step-label">Step 2:</span> low=5,high=9,mid=7,A[7]=56&gt;23 → high=6</div>
+              <div class="trace-step"><span class="step-label">Step 3:</span> low=5,high=6,mid=5,A[5]=<span class="highlight-el">23</span>==23 → return 5 ✅</div>
+            </div>
+            <div class="complexity-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-chart-line"></i> Complexity</div>
+              <ul>
+                <li><strong>Recurrence:</strong> T(n) = T(n/2) + O(1)</li>
+                <li><strong>Best:</strong> O(1) — key at mid first try.</li>
+                <li><strong>Worst/Avg:</strong> O(log n) — halving until 1 element.</li>
+                <li><strong>Space (iterative):</strong> O(1); (recursive): O(log n).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain BST insertion, search, and deletion. Build a BST by inserting: 50, 30, 70, 20, 40, 60, 80. Then delete 30.</p>
+          <button class="toggle-btn" data-target="lq3-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3-2">
+            <p><strong>BST Operations:</strong></p>
+            <p><strong>Insert:</strong> Compare key with node; go left if smaller, right if larger; insert at NULL position.</p>
+            <p><strong>Search:</strong> Compare key with node; return if equal; recurse left if smaller, right if larger.</p>
+            <p><strong>Delete (3 cases):</strong> Leaf → remove. One child → replace with child. Two children → replace with in-order successor, delete successor.</p>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Build BST: 50,30,70,20,40,60,80</div>
+              <div class="trace-step"><span class="step-label">Insert 50:</span> Root=50</div>
+              <div class="trace-step"><span class="step-label">Insert 30:</span> 30&lt;50 → left child of 50</div>
+              <div class="trace-step"><span class="step-label">Insert 70:</span> 70&gt;50 → right child of 50</div>
+              <div class="trace-step"><span class="step-label">Insert 20:</span> 20&lt;50→left; 20&lt;30→left of 30</div>
+              <div class="trace-step"><span class="step-label">Insert 40:</span> 40&lt;50→left; 40&gt;30→right of 30</div>
+              <div class="trace-step"><span class="step-label">Insert 60:</span> 60&gt;50→right; 60&lt;70→left of 70</div>
+              <div class="trace-step"><span class="step-label">Insert 80:</span> 80&gt;50→right; 80&gt;70→right of 70</div>
+            </div>
+            <div class="tree-diagram" style="margin-top:0.5rem;">
+         50
+        /  \
+      30    70
+     /  \  /  \
+    20  40 60  80
+            </div>
+            <div class="trace-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Delete 30 (has two children)</div>
+              <div class="trace-step"><span class="step-label">Find 30's in-order successor:</span> Smallest in right subtree of 30 = 40</div>
+              <div class="trace-step"><span class="step-label">Replace 30 with 40:</span> Node 30's key becomes 40</div>
+              <div class="trace-step"><span class="step-label">Delete original 40:</span> 40 is a leaf → simply remove</div>
+              <div class="trace-step"><span class="step-label">Result tree:</span> 50(left=40(left=20), right=70(left=60,right=80)) ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain AVL Tree insertion with rotations. Insert keys 10, 20, 30, 40, 50 into an AVL tree step by step.</p>
+          <button class="toggle-btn" data-target="lq3-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3-3">
+            <p><strong>AVL Tree</strong> maintains balance factor ∈ {-1,0,1} using rotations after every insertion.</p>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Insert 10,20,30,40,50</div>
+              <div class="trace-step"><span class="step-label">Insert 10:</span> Root=10, BF=0. Balanced.</div>
+              <div class="trace-step"><span class="step-label">Insert 20:</span> 20 right of 10. BF(10)=-1. Balanced.</div>
+              <div class="trace-step"><span class="step-label">Insert 30:</span> 30 right of 20. BF(10)=-2 → RR imbalance. Left Rotation at 10. New root=20, left=10, right=30. All BF=0.</div>
+              <div class="trace-step"><span class="step-label">Insert 40:</span> 40 right of 30. BF(20)=-1. Balanced.</div>
+              <div class="trace-step"><span class="step-label">Insert 50:</span> 50 right of 40. BF(30)=-2 → RR imbalance at 30. Left Rotation at 30. 40 replaces 30 as right child of 20. New subtree: 40(left=30,right=50). BF(20)=-1. Balanced.</div>
+              <div class="trace-step"><span class="step-label">Final AVL:</span> 20(left=10, right=40(left=30,right=50)) ✅</div>
+            </div>
+            <div class="complexity-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-chart-line"></i> AVL Complexity</div>
+              <ul>
+                <li>All operations: <strong>O(log n)</strong> — height ≤ 1.44 log n.</li>
+                <li>Rotations per insert: at most <strong>2</strong>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Explain all three open addressing collision resolution techniques with formulas and examples. Compare them.</p>
+          <button class="toggle-btn" data-target="lq3-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3-4">
+            <p>Open addressing stores all elements within the hash table. On collision, a probe sequence finds the next empty slot.</p>
+            <div class="formula-box">
+              <div class="box-title"><i class="fas fa-superscript"></i> Linear Probing: h(k,i) = (h'(k) + i) mod m</div>
+              <p>Probes: h'(k), h'(k)+1, h'(k)+2, ... mod m</p>
+              <p><strong>Example:</strong> m=7, h'(k)=3. Probe sequence: 3,4,5,6,0,1,2.</p>
+              <p><strong>Problem:</strong> Primary clustering — occupied slots cluster together.</p>
+            </div>
+            <div class="formula-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-superscript"></i> Quadratic Probing: h(k,i) = (h'(k) + i²) mod m</div>
+              <p>Probes: h'(k), h'(k)+1, h'(k)+4, h'(k)+9, ...</p>
+              <p><strong>Example:</strong> m=7, h'(k)=3. Probe: 3, 4, 0, 5, 3 (may cycle).</p>
+              <p><strong>Problem:</strong> Secondary clustering — same h'(k) → same probe sequence.</p>
+            </div>
+            <div class="formula-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-superscript"></i> Double Hashing: h(k,i) = (h₁(k) + i·h₂(k)) mod m</div>
+              <p>h₂(k) = p − (k mod p), p prime &lt; m.</p>
+              <p><strong>Example:</strong> m=11, p=7. k=58: h₁=58 mod 11=3, h₂=7−(58 mod 7)=7−2=5. Probes: 3,8,2,7,1,...</p>
+              <p><strong>Advantage:</strong> No clustering — each key has a unique probe sequence.</p>
+            </div>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="data-table">
+                <thead><tr><th>Method</th><th>Clustering</th><th>Max Load Factor</th><th>Quality</th></tr></thead>
+                <tbody>
+                  <tr><td>Linear Probing</td><td>Primary (severe)</td><td>α &lt; 0.5</td><td>Poor</td></tr>
+                  <tr><td>Quadratic</td><td>Secondary (mild)</td><td>α &lt; 0.7</td><td>Good</td></tr>
+                  <tr><td>Double Hashing</td><td>Minimal</td><td>α &lt; 0.8</td><td>Best</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Compare AVL Trees, Red-Black Trees, and B-Trees. When would you choose each?</p>
+          <button class="toggle-btn" data-target="lq3-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3-5">
+            <p>All three are self-balancing trees with O(log n) operations, but differ in balancing strategy and use cases.</p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Property</th><th>AVL Tree</th><th>Red-Black Tree</th><th>B-Tree</th></tr></thead>
+                <tbody>
+                  <tr><td>Strictness</td><td>Strictly balanced (BF ∈ {-1,0,1})</td><td>Approximately balanced</td><td>All leaves at same level</td></tr>
+                  <tr><td>Height</td><td>≤ 1.44 log n</td><td>≤ 2 log n</td><td>O(log_m n)</td></tr>
+                  <tr><td>Rotations/insert</td><td>≤ 2</td><td>≤ 2</td><td>0 (node splits)</td></tr>
+                  <tr><td>Rotations/delete</td><td>O(log n)</td><td>≤ 3</td><td>0 (node merges)</td></tr>
+                  <tr><td>Best for</td><td>Frequent searches</td><td>Frequent inserts/deletes</td><td>Disk storage</td></tr>
+                  <tr><td>Used in</td><td>Linux kernel (some)</td><td>Java TreeMap, C++ map</td><td>MySQL, NTFS</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tip-box" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-lightbulb"></i> Choice Guide</div>
+              <ul>
+                <li>Choose <strong>AVL</strong> when reads far outnumber writes (stricter balance → faster search).</li>
+                <li>Choose <strong>Red-Black</strong> for general purpose in-memory use (fewer rotations on writes).</li>
+                <li>Choose <strong>B-Tree</strong> for on-disk data structures where I/O cost dominates.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 14: PRACTICE =================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Apply binary search on A=[1,3,5,7,9,11,13,15,17,19] to find key=15. Show all steps.</p>
+          <button class="toggle-btn" data-target="pp3-1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3-1">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Binary Search: key=15, n=10</div>
+              <div class="trace-step"><span class="step-label">Step 1:</span> low=0, high=9, mid=4, A[4]=9 &lt; 15 → low=5</div>
+              <div class="trace-step"><span class="step-label">Step 2:</span> low=5, high=9, mid=7, A[7]=15 == <span class="highlight-el">15</span> → return 7 ✅</div>
+            </div>
+            <p style="margin-top:0.5rem;">Found in <strong>2 comparisons</strong> vs linear search which would need up to 8 comparisons.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Build a BST by inserting: 8, 3, 10, 1, 6, 14, 4, 7, 13. Then perform in-order traversal.</p>
+          <button class="toggle-btn" data-target="pp3-2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3-2">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> BST Construction</div>
+              <div class="trace-step"><span class="step-label">Root:</span> 8</div>
+              <div class="trace-step"><span class="step-label">3:</span> 3&lt;8 → left of 8</div>
+              <div class="trace-step"><span class="step-label">10:</span> 10&gt;8 → right of 8</div>
+              <div class="trace-step"><span class="step-label">1:</span> 1&lt;8→left; 1&lt;3→left of 3</div>
+              <div class="trace-step"><span class="step-label">6:</span> 6&lt;8→left; 6&gt;3→right of 3</div>
+              <div class="trace-step"><span class="step-label">14:</span> 14&gt;8→right; 14&gt;10→right of 10</div>
+              <div class="trace-step"><span class="step-label">4:</span> left; right of 3; left of 6</div>
+              <div class="trace-step"><span class="step-label">7:</span> left; right of 3; right of 6</div>
+              <div class="trace-step"><span class="step-label">13:</span> right of 8; right of 10; left of 14</div>
+            </div>
+            <div class="tree-diagram" style="margin-top:0.5rem;">
+        8
+       / \
+      3   10
+     / \    \
+    1   6   14
+       / \ /
+      4  7 13
+            </div>
+            <p style="margin-top:0.5rem;"><strong>In-order traversal (Left-Root-Right):</strong> 1, 3, 4, 6, 7, 8, 10, 13, 14 — gives sorted order ✅</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Given hash table size m=10 and hash function h(k) = k mod 10, insert keys: 22, 34, 52, 73, 84, 93 using linear probing.</p>
+          <button class="toggle-btn" data-target="pp3-3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3-3">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Hash Table: Linear Probing, m=10</div>
+              <div class="trace-step"><span class="step-label">h(22)=2:</span> slot 2 empty → insert at 2</div>
+              <div class="trace-step"><span class="step-label">h(34)=4:</span> slot 4 empty → insert at 4</div>
+              <div class="trace-step"><span class="step-label">h(52)=2:</span> slot 2 occupied (22) → probe slot 3 → empty → insert at 3</div>
+              <div class="trace-step"><span class="step-label">h(73)=3:</span> slot 3 occupied (52) → probe slot 4 occupied (34) → probe slot 5 empty → insert at 5</div>
+              <div class="trace-step"><span class="step-label">h(84)=4:</span> slot 4 occupied → 5 occupied → 6 empty → insert at 6</div>
+              <div class="trace-step"><span class="step-label">h(93)=3:</span> slot 3,4,5,6 occupied → slot 7 empty → insert at 7</div>
+            </div>
+            <div class="hash-table-vis">
+              <div class="hash-cell"><div class="idx">0</div><div class="val">—</div></div>
+              <div class="hash-cell"><div class="idx">1</div><div class="val">—</div></div>
+              <div class="hash-cell occupied"><div class="idx">2</div><div class="val">22</div></div>
+              <div class="hash-cell occupied"><div class="idx">3</div><div class="val">52</div></div>
+              <div class="hash-cell occupied"><div class="idx">4</div><div class="val">34</div></div>
+              <div class="hash-cell occupied"><div class="idx">5</div><div class="val">73</div></div>
+              <div class="hash-cell occupied"><div class="idx">6</div><div class="val">84</div></div>
+              <div class="hash-cell occupied"><div class="idx">7</div><div class="val">93</div></div>
+              <div class="hash-cell"><div class="idx">8</div><div class="val">—</div></div>
+              <div class="hash-cell"><div class="idx">9</div><div class="val">—</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Insert keys 5, 10, 15, 20, 25 into an AVL tree. Show rotations performed at each step.</p>
+          <button class="toggle-btn" data-target="pp3-4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3-4">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> AVL Insert: 5,10,15,20,25</div>
+              <div class="trace-step"><span class="step-label">Insert 5:</span> Root=5. BF=0.</div>
+              <div class="trace-step"><span class="step-label">Insert 10:</span> Right of 5. BF(5)=-1. Balanced.</div>
+              <div class="trace-step"><span class="step-label">Insert 15:</span> Right of 10. BF(5)=-2 → RR case → Left Rotation at 5. New root=10. 10(left=5,right=15). All BF=0.</div>
+              <div class="trace-step"><span class="step-label">Insert 20:</span> Right of 15. BF(10)=-1. Balanced.</div>
+              <div class="trace-step"><span class="step-label">Insert 25:</span> Right of 20. BF(15)=-2 → RR → Left Rotation at 15. 20 replaces 15 as right child of 10. 20(left=15,right=25). BF(10)=-1. Balanced.</div>
+              <div class="trace-step"><span class="step-label">Final tree:</span> 10(left=5, right=20(left=15,right=25)) ✅</div>
+            </div>
+            <p style="margin-top:0.5rem;"><strong>Rotations performed:</strong> 2 Left Rotations (both RR cases).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Using double hashing with m=7, h₁(k) = k mod 7, h₂(k) = 5 − (k mod 5), insert keys: 76, 40, 48, 5, 55.</p>
+          <button class="toggle-btn" data-target="pp3-5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3-5">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Double Hashing: m=7</div>
+              <div class="trace-step"><span class="step-label">h₁(76)=76 mod 7=6:</span> slot 6 empty → insert 76 at 6</div>
+              <div class="trace-step"><span class="step-label">h₁(40)=40 mod 7=5:</span> slot 5 empty → insert 40 at 5</div>
+              <div class="trace-step"><span class="step-label">h₁(48)=48 mod 7=6:</span> slot 6 occupied. h₂(48)=5-(48 mod 5)=5-3=2. Probe: (6+2) mod 7=1 → empty → insert 48 at 1</div>
+              <div class="trace-step"><span class="step-label">h₁(5)=5 mod 7=5:</span> slot 5 occupied. h₂(5)=5-(5 mod 5)=5-0=5. Probe: (5+5) mod 7=3 → empty → insert 5 at 3</div>
+              <div class="trace-step"><span class="step-label">h₁(55)=55 mod 7=6:</span> slot 6 occupied. h₂(55)=5-(55 mod 5)=5-0=5. Probe: (6+5) mod 7=4 → empty → insert 55 at 4</div>
+            </div>
+            <div class="hash-table-vis">
+              <div class="hash-cell"><div class="idx">0</div><div class="val">—</div></div>
+              <div class="hash-cell occupied"><div class="idx">1</div><div class="val">48</div></div>
+              <div class="hash-cell"><div class="idx">2</div><div class="val">—</div></div>
+              <div class="hash-cell occupied"><div class="idx">3</div><div class="val">5</div></div>
+              <div class="hash-cell occupied"><div class="idx">4</div><div class="val">55</div></div>
+              <div class="hash-cell occupied"><div class="idx">5</div><div class="val">40</div></div>
+              <div class="hash-cell occupied"><div class="idx">6</div><div class="val">76</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 15: REVISION =================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul style="line-height:2.2;">
+          <li><strong>Linear Search:</strong> O(n) worst, O(1) best. Works on unsorted data. Simple.</li>
+          <li><strong>Binary Search:</strong> O(log n). Requires sorted array. Uses divide and conquer.</li>
+          <li><strong>BST property:</strong> Left &lt; Root &lt; Right. In-order gives sorted order.</li>
+          <li><strong>BST worst case:</strong> O(n) when skewed (sorted insertions).</li>
+          <li><strong>AVL Tree:</strong> Balance factor ∈ {-1, 0, 1}. Height ≤ 1.44 log n. 4 rotation types: LL, RR, LR, RL.</li>
+          <li><strong>Red-Black Tree:</strong> 5 colour properties. Height ≤ 2 log n. Root always Black. No two consecutive reds.</li>
+          <li><strong>AVL vs RB:</strong> AVL stricter (search faster); RB fewer rotations (insert/delete faster).</li>
+          <li><strong>B-Tree:</strong> Multi-way. All leaves same level. Used for disk storage. m children → m-1 keys per node.</li>
+          <li><strong>Hash function — Division:</strong> h(k) = k mod m. m should be prime.</li>
+          <li><strong>Hash function — Multiplication:</strong> h(k) = ⌊m(kA mod 1)⌋. A ≈ 0.618.</li>
+          <li><strong>Chaining:</strong> Linked list per slot. α can exceed 1. O(1+α) average search.</li>
+          <li><strong>Linear Probing:</strong> Sequential probe. Primary clustering. h(k,i)=(h'(k)+i) mod m.</li>
+          <li><strong>Quadratic Probing:</strong> Quadratic step. Secondary clustering.</li>
+          <li><strong>Double Hashing:</strong> Best open addressing. No clustering. Uses h₂(k) for step size.</li>
+          <li><strong>Symbol Table:</strong> Key-value store. Hash table (O(1) avg) or BST (O(log n), ordered).</li>
+          <li><strong>Load factor α = n/m.</strong> Rehash when α exceeds threshold (typically 0.7).</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exam</div>
+        <ul style="line-height:2.2;">
+          <li>Binary Search prerequisite: array must be <strong>sorted</strong>.</li>
+          <li>BST worst case is O(n) not O(log n) — occurs when <strong>sorted keys inserted</strong>.</li>
+          <li>AVL balance factor = <strong>Height(Left) − Height(Right)</strong>, valid range: {−1, 0, +1}.</li>
+          <li>Red-Black Tree root is always <strong>Black</strong>.</li>
+          <li>Red-Black: no two consecutive <strong>Red</strong> nodes allowed.</li>
+          <li>B-Tree: all <strong>leaves at same level</strong> (perfectly balanced height-wise).</li>
+          <li>Hash Division method: <strong>h(k) = k mod m</strong>. Best m = prime.</li>
+          <li>Double Hashing is best open addressing — avoids <strong>both clustering types</strong>.</li>
+          <li>Linear Probing → Primary Clustering; Quadratic → Secondary Clustering.</li>
+          <li>Hash table average search: O(1). Worst case (all in one chain): O(n).</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+        <ul style="line-height:2.2;">
+          <li>Applying Binary Search on an <strong>unsorted</strong> array — it gives wrong results.</li>
+          <li>Saying BST search is always O(log n) — worst case is <strong>O(n)</strong> for skewed trees.</li>
+          <li>Writing balance factor as Height(Right) − Height(Left) instead of <strong>Height(Left) − Height(Right)</strong>.</li>
+          <li>Confusing AVL rotations: LL case needs <strong>Right rotation</strong> (not Left).</li>
+          <li>Saying Red-Black Tree is more strictly balanced than AVL — <strong>AVL is stricter</strong>.</li>
+          <li>Saying load factor can be greater than 1 for open addressing — it <strong>cannot</strong> (must be &lt; 1).</li>
+          <li>Applying double hashing with h₂(k) = 0 — this causes <strong>infinite loop</strong> (h₂ must never be 0).</li>
+          <li>Confusing primary clustering (linear) with secondary clustering (quadratic).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB BUTTONS -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

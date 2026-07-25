@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 2 – Control Structures | CST203</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .flow-table { width:100%; border-collapse:collapse; font-size:0.87rem; margin-top:0.5rem; }
+    .flow-table th { background:var(--primary); color:#fff; padding:0.55rem 0.8rem; text-align:left; }
+    .flow-table td { padding:0.5rem 0.8rem; border-bottom:1px solid var(--border); color:var(--text); }
+    .flow-table tr:nth-child(even) td { background:var(--card-bg); }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fab fa-python"></i>
+      <span>CST203 — Unit 2</span>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#conditionals">Conditionals</a>
+      <a href="#loops">Loops</a>
+      <a href="#loop-control">Loop Control</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 2 – Control Structures</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#conditionals">Conditionals</a>
+    <a href="#loops">Loops</a>
+    <a href="#loop-control">Loop Control</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle"><i class="fas fa-moon"></i> Theme</button>
+    <button id="drawerPrint"><i class="fas fa-print"></i> Print</button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <h1><i class="fas fa-code-branch"></i> Unit 2: Control Structures</h1>
+      <p>CST203 — Scripting Languages (Python) &nbsp;|&nbsp; 5 Hours</p>
+      <div class="course-info">
+        <span class="info-item"><i class="fas fa-clock"></i> 5 Hours</span>
+        <span class="info-item"><i class="fas fa-signal"></i> Moderate Depth</span>
+        <span class="info-item"><i class="fas fa-list"></i> 3 Topics</span>
+        <span class="info-item"><a href="../index.html" style="color:inherit;text-decoration:none;"><i class="fas fa-home"></i> Subject Home</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== OVERVIEW ========== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What This Unit Covers</div>
+        <p>Unit 2 covers how Python controls the flow of program execution using decision-making and repetition:</p>
+        <ul>
+          <li><strong>Conditional Blocks:</strong> if, elif, else — make decisions based on conditions.</li>
+          <li><strong>Loops:</strong> for and while — repeat blocks of code.</li>
+          <li><strong>Loop Control:</strong> break, continue, pass, else-with-loops.</li>
+        </ul>
+      </div>
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Study Tip</div>
+        <p>Control structures are the backbone of every Python program. Master indentation — every block must be consistently indented. Trace through each example manually to understand the flow.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONDITIONALS ========== -->
+  <section class="section" id="conditionals">
+    <h2 class="section-title">
+      <i class="fas fa-code-branch"></i> Conditional Blocks
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What are Conditional Blocks?</div>
+        <p>Conditional blocks allow a program to <strong>make decisions</strong> and execute different code depending on whether a condition is True or False. Python provides <code>if</code>, <code>elif</code>, and <code>else</code> for this purpose.</p>
+      </div>
+
+      <!-- if statement -->
+      <div class="syntax-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> if Statement</div>
+        <p>The <code>if</code> statement executes a block of code <strong>only if</strong> the condition evaluates to <code>True</code>.</p>
+        <div class="formula">if condition:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# block executes if condition is True</div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> if Example</div>
+        <pre>
+age = 18
+
+if age >= 18:
+    print("You are an adult.")
+    print("You can vote.")
+
+# If age is less than 18, nothing is printed
+        </pre>
+      </div>
+
+      <!-- if-else -->
+      <div class="syntax-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> if-else Statement</div>
+        <p>The <code>else</code> block runs when the <code>if</code> condition is <code>False</code>.</p>
+        <div class="formula">if condition:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# runs if True</div>
+        <div class="formula">else:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# runs if False</div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> if-else Example</div>
+        <pre>
+number = int(input("Enter a number: "))
+
+if number % 2 == 0:
+    print(f"{number} is Even")
+else:
+    print(f"{number} is Odd")
+        </pre>
+      </div>
+
+      <!-- elif -->
+      <div class="syntax-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> elif Statement (else-if ladder)</div>
+        <p><code>elif</code> lets you check <strong>multiple conditions</strong> in sequence. Only the first matching condition executes. The final <code>else</code> is optional and catches everything else.</p>
+        <div class="formula">if condition1:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# block 1</div>
+        <div class="formula">elif condition2:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# block 2</div>
+        <div class="formula">elif condition3:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# block 3</div>
+        <div class="formula">else:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# default block</div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> elif Example — Grade Calculator</div>
+        <pre>
+marks = int(input("Enter your marks (0-100): "))
+
+if marks >= 90:
+    grade = "A+"
+elif marks >= 80:
+    grade = "A"
+elif marks >= 70:
+    grade = "B"
+elif marks >= 60:
+    grade = "C"
+elif marks >= 50:
+    grade = "D"
+else:
+    grade = "F (Fail)"
+
+print(f"Your grade is: {grade}")
+        </pre>
+      </div>
+
+      <div class="trace-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Trace — if-elif-else (marks = 75)</div>
+        <div class="table-wrapper">
+          <table class="flow-table">
+            <thead><tr><th>Step</th><th>Condition Checked</th><th>Result</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><code>75 &gt;= 90</code></td><td>False</td><td>Skip block</td></tr>
+              <tr><td>2</td><td><code>75 &gt;= 80</code></td><td>False</td><td>Skip block</td></tr>
+              <tr><td>3</td><td><code>75 &gt;= 70</code></td><td>True</td><td>Execute: grade = "B", stop checking</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:0.85rem;margin-top:0.5rem;">Output: <strong>Your grade is: B</strong></p>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Key Points</div>
+        <ul>
+          <li>Only the <strong>first matching</strong> condition in an if-elif chain executes.</li>
+          <li>The <code>else</code> block is optional.</li>
+          <li>You can have any number of <code>elif</code> blocks.</li>
+          <li>Every condition must end with a colon <code>:</code>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== LOOPS ========== -->
+  <section class="section" id="loops">
+    <h2 class="section-title">
+      <i class="fas fa-redo"></i> Loops
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What are Loops?</div>
+        <p>Loops allow a block of code to be <strong>executed repeatedly</strong>. Python provides two types of loops: <code>for</code> loops (iterate over a sequence) and <code>while</code> loops (repeat while a condition is true).</p>
+      </div>
+
+      <!-- for loop -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-rotate-right"></i> for Loop</div>
+        <p>A <code>for</code> loop iterates over items of any <strong>sequence</strong> (list, tuple, string, range). The loop variable takes each value one by one.</p>
+      </div>
+      <div class="syntax-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> for Loop Syntax</div>
+        <div class="formula">for variable in sequence:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# block executes for each item</div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> for Loop Examples</div>
+        <pre>
+# Iterating over a list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# Iterating over a string
+for char in "Python":
+    print(char, end=" ")   # P y t h o n
+
+# Using range()
+for i in range(5):
+    print(i, end=" ")      # 0 1 2 3 4
+
+# range(start, stop, step)
+for i in range(1, 10, 2):
+    print(i, end=" ")      # 1 3 5 7 9
+
+# range(start, stop) — stop is exclusive
+for i in range(1, 6):
+    print(i, end=" ")      # 1 2 3 4 5
+
+# Iterating over a tuple
+coords = (10, 20, 30)
+for val in coords:
+    print(val)
+        </pre>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-info-circle"></i> range() Function</div>
+        <p>The <code>range()</code> function generates a sequence of numbers. It is commonly used with <code>for</code> loops.</p>
+        <div class="table-wrapper">
+          <table class="flow-table">
+            <thead><tr><th>Form</th><th>Description</th><th>Example</th><th>Generates</th></tr></thead>
+            <tbody>
+              <tr><td><code>range(stop)</code></td><td>0 to stop-1</td><td><code>range(5)</code></td><td>0, 1, 2, 3, 4</td></tr>
+              <tr><td><code>range(start, stop)</code></td><td>start to stop-1</td><td><code>range(2, 6)</code></td><td>2, 3, 4, 5</td></tr>
+              <tr><td><code>range(start, stop, step)</code></td><td>start to stop-1 with step</td><td><code>range(0, 10, 2)</code></td><td>0, 2, 4, 6, 8</td></tr>
+              <tr><td><code>range(5, 0, -1)</code></td><td>Countdown</td><td><code>range(5, 0, -1)</code></td><td>5, 4, 3, 2, 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- while loop -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-sync"></i> while Loop</div>
+        <p>A <code>while</code> loop repeats a block of code <strong>as long as a condition is True</strong>. The condition is checked before each iteration. If the condition is False from the start, the loop body never executes.</p>
+      </div>
+      <div class="syntax-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> while Loop Syntax</div>
+        <div class="formula">while condition:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# block executes while condition is True</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# must have something that eventually makes condition False</div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> while Loop Examples</div>
+        <pre>
+# Basic while loop — count from 1 to 5
+count = 1
+while count <= 5:
+    print(count, end=" ")   # 1 2 3 4 5
+    count += 1              # increment — prevents infinite loop
+
+# while loop — sum until user enters 0
+total = 0
+num = int(input("Enter number (0 to stop): "))
+while num != 0:
+    total += num
+    num = int(input("Enter number (0 to stop): "))
+print("Total:", total)
+
+# Infinite loop (use break to exit)
+while True:
+    answer = input("Type 'quit' to exit: ")
+    if answer == "quit":
+        break
+print("Exited!")
+        </pre>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Infinite Loop Warning</div>
+        <p>If the condition in a <code>while</code> loop never becomes False, the loop runs forever — this is called an <strong>infinite loop</strong>. Always ensure the loop variable is updated inside the loop. Use <code>Ctrl+C</code> to stop an infinite loop in terminal.</p>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> for vs while Loop</div>
+        <div class="table-wrapper">
+          <table class="flow-table">
+            <thead><tr><th>Aspect</th><th>for Loop</th><th>while Loop</th></tr></thead>
+            <tbody>
+              <tr><td>Use when</td><td>Number of iterations is known</td><td>Number of iterations is unknown</td></tr>
+              <tr><td>Iterates over</td><td>Sequence (list, range, string, etc.)</td><td>Condition</td></tr>
+              <tr><td>Counter management</td><td>Automatic</td><td>Manual (must update)</td></tr>
+              <tr><td>Risk</td><td>No infinite loop risk</td><td>Risk of infinite loop</td></tr>
+              <tr><td>Example use</td><td>Print 1 to 10, iterate a list</td><td>Keep asking until valid input</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== LOOP CONTROL ========== -->
+  <section class="section" id="loop-control">
+    <h2 class="section-title">
+      <i class="fas fa-sliders-h"></i> Loop Control Statements
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What are Loop Control Statements?</div>
+        <p>Loop control statements change the normal flow of loop execution. Python provides <code>break</code>, <code>continue</code>, <code>pass</code>, and <code>else</code> with loops.</p>
+      </div>
+
+      <!-- break -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-stop-circle"></i> break Statement</div>
+        <p><code>break</code> immediately <strong>exits the loop entirely</strong>, regardless of the loop condition. Execution continues with the statement after the loop.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> break Example</div>
+        <pre>
+# Stop loop when number 5 is found
+numbers = [1, 3, 5, 7, 9, 11]
+for num in numbers:
+    if num == 5:
+        print("Found 5! Stopping.")
+        break
+    print(num)
+
+# Output:
+# 1
+# 3
+# Found 5! Stopping.
+
+# break in while loop
+i = 0
+while True:
+    print(i, end=" ")
+    i += 1
+    if i >= 5:
+        break
+# Output: 0 1 2 3 4
+        </pre>
+      </div>
+
+      <!-- continue -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-forward"></i> continue Statement</div>
+        <p><code>continue</code> <strong>skips the rest of the current iteration</strong> and jumps back to the loop condition check (for while) or the next item (for for). The loop does NOT exit.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> continue Example</div>
+        <pre>
+# Skip even numbers — print only odd
+for i in range(1, 11):
+    if i % 2 == 0:
+        continue        # skip even numbers
+    print(i, end=" ")   # prints: 1 3 5 7 9
+
+# Skip negative numbers
+numbers = [3, -1, 7, -4, 2, -9, 8]
+for num in numbers:
+    if num < 0:
+        continue        # skip negatives
+    print(num, end=" ") # prints: 3 7 2 8
+        </pre>
+      </div>
+
+      <!-- pass -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-minus-circle"></i> pass Statement</div>
+        <p><code>pass</code> is a <strong>null statement</strong> — it does absolutely nothing. It is used as a placeholder where Python syntax requires a statement but you have no code to write yet. Useful during development.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> pass Example</div>
+        <pre>
+# pass in a loop — placeholder
+for i in range(5):
+    pass    # loop runs but does nothing — no error
+
+# pass in an if block — placeholder
+x = 10
+if x > 5:
+    pass    # TODO: add code later
+else:
+    print("x is 5 or less")
+
+# pass in a function — placeholder
+def my_function():
+    pass    # will be implemented later
+        </pre>
+      </div>
+
+      <!-- else with loops -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-check-circle"></i> else with Loops</div>
+        <p>Python allows an <code>else</code> block with loops. The <code>else</code> block executes <strong>only if the loop completes normally</strong> (without being stopped by <code>break</code>). If <code>break</code> is used, the <code>else</code> block is skipped.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> else with for Loop</div>
+        <pre>
+# Search for a number
+numbers = [1, 3, 7, 9, 11]
+target = 7
+
+for num in numbers:
+    if num == target:
+        print(f"Found {target}!")
+        break
+else:
+    # Only runs if loop finished without break
+    print(f"{target} not found in list.")
+
+# Output: Found 7!
+
+# Example where else DOES execute
+target = 5
+for num in numbers:
+    if num == target:
+        print(f"Found {target}!")
+        break
+else:
+    print(f"{target} not found in list.")
+
+# Output: 5 not found in list.
+        </pre>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> else with while Loop</div>
+        <pre>
+# while-else
+i = 1
+while i <= 5:
+    print(i, end=" ")
+    i += 1
+else:
+    print("\nLoop completed normally.")
+
+# Output:
+# 1 2 3 4 5
+# Loop completed normally.
+        </pre>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> break vs continue vs pass Summary</div>
+        <div class="table-wrapper">
+          <table class="flow-table">
+            <thead><tr><th>Statement</th><th>Effect</th><th>Loop continues?</th></tr></thead>
+            <tbody>
+              <tr><td><code>break</code></td><td>Exits the loop completely</td><td>No — loop ends</td></tr>
+              <tr><td><code>continue</code></td><td>Skips rest of current iteration</td><td>Yes — next iteration</td></tr>
+              <tr><td><code>pass</code></td><td>Does nothing — placeholder</td><td>Yes — loop continues normally</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== FORMULAS ========== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Syntax Reference
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> if-elif-else Syntax</div>
+        <div class="formula">if condition1:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;block1</div>
+        <div class="formula">elif condition2:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;block2</div>
+        <div class="formula">else:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;default_block</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> for Loop with range()</div>
+        <div class="formula">for i in range(start, stop, step):</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;block</div>
+        <div class="formula answer">stop is always exclusive (not included)</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> while Loop</div>
+        <div class="formula">while condition:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;block</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;update_condition_variable</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> for-else / while-else</div>
+        <div class="formula">for item in sequence:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;if condition: break</div>
+        <div class="formula">else:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# runs only if no break occurred</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== DEFINITIONS ========== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Control Structure</div>
+        <p>A programming construct that controls the order in which statements are executed. Includes conditionals (if/elif/else) and loops (for/while).</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> for Loop</div>
+        <p>A loop that iterates over items of a sequence (list, tuple, string, range) one by one. The loop variable takes each value in order.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> while Loop</div>
+        <p>A loop that executes its block repeatedly as long as a given condition remains True. The condition is checked before each iteration.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> break</div>
+        <p>A statement that immediately terminates the nearest enclosing loop. Execution continues with the statement after the loop.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> continue</div>
+        <p>A statement that skips the remaining statements in the current iteration and jumps to the next iteration of the loop.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> pass</div>
+        <p>A null statement that does nothing. Used as a syntactic placeholder where Python requires a statement but no action is needed.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== COMPARISONS ========== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> if vs elif vs else</div>
+        <div class="table-wrapper">
+          <table class="flow-table">
+            <thead><tr><th>Keyword</th><th>Purpose</th><th>Required?</th><th>How many?</th></tr></thead>
+            <tbody>
+              <tr><td><code>if</code></td><td>First condition check</td><td>Yes</td><td>Exactly 1</td></tr>
+              <tr><td><code>elif</code></td><td>Additional condition checks</td><td>No</td><td>0 or more</td></tr>
+              <tr><td><code>else</code></td><td>Default fallback</td><td>No</td><td>0 or 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> break vs continue vs pass</div>
+        <div class="table-wrapper">
+          <table class="flow-table">
+            <thead><tr><th>Statement</th><th>What it does</th><th>Loop exits?</th><th>else block runs?</th></tr></thead>
+            <tbody>
+              <tr><td><code>break</code></td><td>Exits loop completely</td><td>Yes</td><td>No</td></tr>
+              <tr><td><code>continue</code></td><td>Skips current iteration</td><td>No</td><td>Yes (if loop ends normally)</td></tr>
+              <tr><td><code>pass</code></td><td>Does nothing</td><td>No</td><td>Yes (loop runs normally)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== MCQs ========== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the output of <code>range(2, 10, 3)</code>?</p>
+          <ul class="options">
+            <li>a. 2, 4, 6, 8, 10</li>
+            <li>b. 2, 5, 8</li>
+            <li>c. 3, 6, 9</li>
+            <li>d. 2, 5, 8, 11</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2_1">
+            <strong>Answer: b. 2, 5, 8</strong>
+            <p><code>range(2, 10, 3)</code> starts at 2, steps by 3, stops before 10: 2, 5, 8. (Next would be 11 which exceeds 10.)</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Which statement is used to skip the current iteration and continue with the next?</p>
+          <ul class="options">
+            <li>a. break</li>
+            <li>b. pass</li>
+            <li>c. skip</li>
+            <li>d. continue</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2_2">
+            <strong>Answer: d. continue</strong>
+            <p><code>continue</code> skips the remaining code in the current iteration and moves to the next iteration of the loop.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>When does the <code>else</code> block of a loop execute?</p>
+          <ul class="options">
+            <li>a. Always after the loop</li>
+            <li>b. Only when the loop runs zero times</li>
+            <li>c. Only when loop completes without a break</li>
+            <li>d. Only when break is used</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2_3">
+            <strong>Answer: c. Only when loop completes without a break</strong>
+            <p>The <code>else</code> block of a loop executes when the loop finishes normally without encountering a <code>break</code> statement.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What does <code>pass</code> do in Python?</p>
+          <ul class="options">
+            <li>a. Exits the loop</li>
+            <li>b. Skips the iteration</li>
+            <li>c. Does nothing — acts as a placeholder</li>
+            <li>d. Passes a value to the next iteration</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2_4">
+            <strong>Answer: c. Does nothing — acts as a placeholder</strong>
+            <p><code>pass</code> is a null operation. It is used where Python syntax requires a statement but no code needs to execute.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>How many times will the following loop execute? <code>for i in range(0, 10, 2):</code></p>
+          <ul class="options">
+            <li>a. 10</li>
+            <li>b. 4</li>
+            <li>c. 5</li>
+            <li>d. 6</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2_5">
+            <strong>Answer: c. 5</strong>
+            <p><code>range(0, 10, 2)</code> generates: 0, 2, 4, 6, 8 — that is 5 values, so the loop executes 5 times.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SHORT QUESTIONS ========== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the difference between <code>break</code> and <code>continue</code>?</p>
+          <button class="toggle-btn" data-target="sq2_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2_1">
+            <p><code>break</code> completely exits the loop. <code>continue</code> skips only the current iteration and moves to the next one. After <code>break</code>, the loop is over. After <code>continue</code>, the loop keeps running.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the purpose of the <code>else</code> clause with a loop?</p>
+          <button class="toggle-btn" data-target="sq2_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2_2">
+            <p>The <code>else</code> clause with a loop executes when the loop completes normally without hitting a <code>break</code> statement. It is commonly used to detect if a search loop found its target or not.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the difference between a <code>for</code> loop and a <code>while</code> loop?</p>
+          <button class="toggle-btn" data-target="sq2_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2_3">
+            <p>A <code>for</code> loop iterates over a sequence and is used when the number of iterations is known. A <code>while</code> loop runs while a condition is True and is used when the number of iterations is unknown.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What does <code>range(1, 10, 2)</code> generate?</p>
+          <button class="toggle-btn" data-target="sq2_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2_4">
+            <p><code>range(1, 10, 2)</code> generates the sequence: 1, 3, 5, 7, 9. It starts at 1, steps by 2, and stops before 10.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What happens if the condition in a <code>while</code> loop never becomes False?</p>
+          <button class="toggle-btn" data-target="sq2_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2_5">
+            <p>The loop runs forever — this is called an <strong>infinite loop</strong>. The program will hang and never terminate. It can be stopped with <code>Ctrl+C</code> in the terminal, or by using a <code>break</code> statement inside the loop.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LONG QUESTIONS ========== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain the if, elif, and else conditional statements in Python with syntax and examples.</p>
+          <button class="toggle-btn" data-target="lq2_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2_1">
+            <p><strong>if statement:</strong> Executes a block only when condition is True.</p>
+            <p><code>if age &gt;= 18: print("Adult")</code></p>
+            <p><strong>else statement:</strong> Provides an alternative block when if condition is False.</p>
+            <p><code>if x &gt; 0: print("Positive") else: print("Not positive")</code></p>
+            <p><strong>elif statement:</strong> Checks multiple conditions in sequence. Only the first True block executes.</p>
+            <p>Example — grade system: marks &gt;= 90 → A+, marks &gt;= 80 → A, marks &gt;= 70 → B, else → F.</p>
+            <p><strong>Key rules:</strong></p>
+            <ul>
+              <li>Every condition ends with a colon <code>:</code>.</li>
+              <li>Blocks must be indented consistently.</li>
+              <li>Only one else is allowed. Multiple elif are allowed.</li>
+              <li>Only the first matching condition's block executes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain for and while loops in Python with syntax, range() function, and examples.</p>
+          <button class="toggle-btn" data-target="lq2_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2_2">
+            <p><strong>for loop:</strong> Iterates over any sequence (list, tuple, string, range).</p>
+            <p>Syntax: <code>for variable in sequence: block</code></p>
+            <p>Example: <code>for i in range(1, 6): print(i)</code> → prints 1 2 3 4 5</p>
+            <p><strong>range() function:</strong></p>
+            <ul>
+              <li><code>range(n)</code> → 0 to n-1</li>
+              <li><code>range(start, stop)</code> → start to stop-1</li>
+              <li><code>range(start, stop, step)</code> → with step</li>
+            </ul>
+            <p><strong>while loop:</strong> Runs while condition is True.</p>
+            <p>Syntax: <code>while condition: block (update variable)</code></p>
+            <p>Example: <code>i = 1; while i &lt;= 5: print(i); i += 1</code> → prints 1 2 3 4 5</p>
+            <p><strong>Difference:</strong> for loop — known iterations. while loop — unknown iterations, condition-based.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain break, continue, pass, and else-with-loops in Python with examples.</p>
+          <button class="toggle-btn" data-target="lq2_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2_3">
+            <p><strong>break:</strong> Exits the loop immediately.</p>
+            <p>Example: <code>for i in range(10): if i==5: break; print(i)</code> → prints 0 1 2 3 4</p>
+            <p><strong>continue:</strong> Skips the current iteration, goes to next.</p>
+            <p>Example: <code>for i in range(6): if i%2==0: continue; print(i)</code> → prints 1 3 5</p>
+            <p><strong>pass:</strong> Does nothing — placeholder.</p>
+            <p>Example: <code>for i in range(5): pass</code> — loop runs silently.</p>
+            <p><strong>else with loops:</strong> Executes only if loop finishes without break.</p>
+            <p>Example — search loop: if target found → break (else skipped). If not found → loop ends normally, else runs, prints "Not found".</p>
+            <p>This is a powerful pattern for <strong>search algorithms</strong> in Python.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRACTICE ========== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a Python program using a for loop to print the multiplication table of a number entered by the user.</p>
+          <button class="toggle-btn" data-target="pp2_1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2_1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+n = int(input("Enter a number: "))
+print(f"Multiplication table of {n}:")
+for i in range(1, 11):
+    print(f"{n} x {i} = {n * i}")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a Python program using a while loop to find the sum of digits of a number entered by the user.</p>
+          <button class="toggle-btn" data-target="pp2_2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2_2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+num = int(input("Enter a number: "))
+original = num
+digit_sum = 0
+
+while num > 0:
+    digit = num % 10      # Get last digit
+    digit_sum += digit    # Add to sum
+    num = num // 10       # Remove last digit
+
+print(f"Sum of digits of {original} = {digit_sum}")
+
+# Example: 1234 → 1+2+3+4 = 10
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a Python program to print all prime numbers between 1 and 50 using a for loop and break with else.</p>
+          <button class="toggle-btn" data-target="pp2_3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2_3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+print("Prime numbers between 1 and 50:")
+for num in range(2, 51):
+    for i in range(2, num):
+        if num % i == 0:
+            break        # Not prime
+    else:
+        print(num, end=" ")  # else runs only if no break
+
+# Output: 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47
+              </pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== REVISION ========== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul>
+          <li><code>if</code> — executes block when condition is True.</li>
+          <li><code>elif</code> — checks additional conditions. Multiple allowed.</li>
+          <li><code>else</code> — fallback when all conditions are False. Only one allowed.</li>
+          <li><strong>Only the first matching condition</strong> in an if-elif chain executes.</li>
+          <li><code>for</code> loop — iterates over a sequence. Used when iterations are known.</li>
+          <li><code>range(start, stop, step)</code> — stop is always <strong>exclusive</strong>.</li>
+          <li><code>while</code> loop — runs while condition is True. Condition checked before each iteration.</li>
+          <li><code>break</code> — exits the loop entirely. else block is <strong>skipped</strong>.</li>
+          <li><code>continue</code> — skips to next iteration. Loop continues.</li>
+          <li><code>pass</code> — null statement. Does nothing. Placeholder only.</li>
+          <li><code>else</code> with loop — executes only if loop ends <strong>without break</strong>.</li>
+          <li>Infinite loop occurs when <code>while</code> condition never becomes False.</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Must Remember for Exam</div>
+        <ul>
+          <li><code>range(1, 6)</code> → 1, 2, 3, 4, 5 (stop=6 is NOT included).</li>
+          <li><code>break</code> prevents the loop's <code>else</code> block from running.</li>
+          <li><code>pass</code> is used as a placeholder — it has no effect on execution.</li>
+          <li>A <code>while True:</code> loop is an intentional infinite loop — must use <code>break</code> to exit.</li>
+          <li>Every if/elif/else/for/while line ends with a colon <code>:</code>.</li>
+          <li><code>continue</code> does NOT exit the loop — only skips the current iteration.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Forgetting the colon <code>:</code> at the end of <code>if</code>, <code>for</code>, <code>while</code>.</li>
+          <li>Confusing <code>break</code> (exits loop) with <code>continue</code> (skips iteration).</li>
+          <li>Thinking <code>range(1, 10)</code> includes 10 — it does NOT. It stops at 9.</li>
+          <li>Not updating the loop variable in a <code>while</code> loop — causes infinite loop.</li>
+          <li>Thinking <code>pass</code> is like <code>continue</code> — it is NOT. <code>pass</code> does absolutely nothing.</li>
+          <li>Forgetting that <code>else</code> in a loop is skipped when <code>break</code> is used.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end .container -->
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+
+</body>
+</html>

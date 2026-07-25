@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 1 – Structure of Computers & Register Transfer | CST207</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .reg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+    }
+    .reg-table th {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 0.6rem 0.9rem;
+      text-align: left;
+    }
+    .reg-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.55rem 0.9rem;
+      color: var(--text-secondary);
+    }
+    .reg-table tr:nth-child(even) td {
+      background: var(--card-bg);
+    }
+    .hamming-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+      margin: 0.75rem 0;
+      text-align: center;
+      font-size: 0.82rem;
+    }
+    .hamming-grid .hcell {
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.2rem;
+      border-radius: 4px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+    }
+    .hamming-grid .hcell.parity {
+      background: var(--primary-color);
+      color: #fff;
+      font-weight: 700;
+    }
+    .alu-op-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .alu-op-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .alu-op-card i {
+      font-size: 1.4rem;
+      color: var(--primary-color);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .alu-op-card strong {
+      font-size: 0.88rem;
+      color: var(--text-primary);
+    }
+    .alu-op-card p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin: 0.25rem 0 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-microchip"></i>
+      <span>CST207 – Unit 1</span>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#computer-structure">Structure</a>
+      <a href="#data-representation">Data Rep.</a>
+      <a href="#error-codes">Error Codes</a>
+      <a href="#register-transfer">Reg. Transfer</a>
+      <a href="#micro-operations">Micro-Ops</a>
+      <a href="#alu">ALU</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 1 – CST207</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#computer-structure">Computer Structure</a>
+    <a href="#data-representation">Data Representation</a>
+    <a href="#error-codes">Error Detecting Codes</a>
+    <a href="#register-transfer">Register Transfer</a>
+    <a href="#micro-operations">Micro-Operations</a>
+    <a href="#alu">ALU</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Q</a>
+    <a href="#long-questions">Long Q</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <h1><i class="fas fa-server"></i> Unit 1: Structure of Computers &amp; Register Transfer</h1>
+      <p>CST207 – System Organization &nbsp;|&nbsp; 6 Hours</p>
+      <div class="info-item" style="margin-top:0.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <span><i class="fas fa-clock"></i> 6 Hours</span>
+        <span><i class="fas fa-layer-group"></i> Moderate Depth</span>
+        <span><i class="fas fa-home"></i> <a href="../index.html" style="color:inherit;">Back to CST207</a></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ============================================================
+       SECTION 1: OVERVIEW
+  ============================================================ -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What This Unit Covers</div>
+        <p>This unit forms the foundation of System Organization. It covers how a computer is structurally organized, how it represents data internally, how it detects errors, and how data moves between internal registers through micro-operations. Every topic here is a prerequisite for understanding later units on control units, arithmetic, and pipelining.</p>
+      </div>
+      <div class="topic-grid" style="margin-top:1rem;">
+        <div class="topic-card">
+          <i class="fas fa-sitemap"></i>
+          <h4>Computer Structure</h4>
+          <p>Functional units, Von-Neumann model, bus architecture, instruction cycle</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-database"></i>
+          <h4>Data Representation</h4>
+          <p>Fixed-point, floating-point, signed numbers, IEEE 754</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-shield-alt"></i>
+          <h4>Error Detecting Codes</h4>
+          <p>Parity bits, Hamming code for single-bit error detection &amp; correction</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-exchange-alt"></i>
+          <h4>Register Transfer</h4>
+          <p>RTL notation, register to register, memory read/write transfers</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-cogs"></i>
+          <h4>Micro-Operations</h4>
+          <p>Arithmetic, Logic, Shift micro-operations performed by the CPU</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-microchip"></i>
+          <h4>ALU Design</h4>
+          <p>Arithmetic Logic Shift Unit combining all micro-operations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: COMPUTER STRUCTURE
+  ============================================================ -->
+  <section class="section" id="computer-structure">
+    <h2 class="section-title">
+      <i class="fas fa-sitemap"></i> Computer Structure
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-cubes"></i> Computer Functional Units</div>
+        <p>A computer system is organized around three fundamental functional units that interact with each other to execute programs:</p>
+        <ul style="margin-top:0.5rem; padding-left:1.3rem; line-height:2;">
+          <li><strong>CPU (Central Processing Unit):</strong> The brain of the computer. It fetches instructions from memory, decodes them, and executes them. Contains the ALU, control unit, and registers.</li>
+          <li><strong>Memory:</strong> Stores instructions and data. Primary memory (RAM/ROM) directly interacts with the CPU. Secondary memory stores data permanently.</li>
+          <li><strong>I/O (Input/Output):</strong> Interfaces the computer with the external world. Includes keyboards, monitors, printers, disk drives, etc.</li>
+        </ul>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-brain"></i> Von-Neumann Architecture</div>
+        <p>The Von-Neumann architecture (also called the stored-program concept) is the foundation of modern computers. Key features:</p>
+        <ul style="margin-top:0.5rem; padding-left:1.3rem; line-height:2;">
+          <li><strong>Stored Program Concept:</strong> Both instructions and data are stored in the same memory unit in binary form. The CPU fetches instructions from memory one by one and executes them sequentially.</li>
+          <li><strong>Single Memory:</strong> Instructions and data share the same memory space and the same bus — this is called the Von-Neumann bottleneck.</li>
+          <li><strong>Sequential Execution:</strong> Instructions are executed one at a time in order unless a branch/jump instruction changes the flow.</li>
+          <li><strong>Components:</strong> Memory Unit, ALU, Control Unit, Input Device, Output Device.</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Von-Neumann Bottleneck</div>
+        <p>Since both instructions and data share the same bus, only one can be transferred at a time. This limits performance. Harvard Architecture solves this by using separate buses and memory for instructions and data.</p>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-random"></i> Bus Structures</div>
+        <p>A bus is a shared communication pathway connecting all functional units. There are three main types:</p>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Bus Type</th>
+                <th>Direction</th>
+                <th>Width</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Data Bus</strong></td>
+                <td>Bidirectional</td>
+                <td>8, 16, 32, 64 bits</td>
+                <td>Carries actual data between CPU, memory, and I/O</td>
+              </tr>
+              <tr>
+                <td><strong>Address Bus</strong></td>
+                <td>Unidirectional (CPU → Memory/IO)</td>
+                <td>16, 20, 32 bits</td>
+                <td>Carries memory address to select location</td>
+              </tr>
+              <tr>
+                <td><strong>Control Bus</strong></td>
+                <td>Bidirectional</td>
+                <td>Varies</td>
+                <td>Carries control signals: Read, Write, Interrupt, Clock</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="formula-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-calculator"></i> Addressable Memory</div>
+          <div class="formula">Addressable Memory = 2<sup>N</sup> locations</div>
+          <p style="margin-top:0.4rem; font-size:0.88rem;">where N = number of address bus lines. Example: 20-bit address bus → 2²⁰ = 1 MB addressable memory.</p>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-sync-alt"></i> Instruction Execution Cycle</div>
+        <p>The CPU repeatedly performs a fetch-decode-execute cycle for every instruction:</p>
+        <div class="algo-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-list-ol"></i> Steps of Instruction Cycle</div>
+          <ol style="padding-left:1.3rem; line-height:2.2;">
+            <li><strong>Fetch:</strong> PC (Program Counter) holds address of next instruction. MAR ← PC. Memory reads instruction into MDR. IR ← MDR. PC is incremented.</li>
+            <li><strong>Decode:</strong> Control Unit decodes the opcode in IR to determine what operation to perform.</li>
+            <li><strong>Execute:</strong> ALU performs the operation. Result stored in accumulator or register. Flags updated.</li>
+            <li><strong>Memory Access (if needed):</strong> Load/store instructions access memory in this step.</li>
+            <li><strong>Write Back (if needed):</strong> Result written back to register file.</li>
+          </ol>
+        </div>
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> Key Registers in Instruction Cycle</div>
+          <ul style="padding-left:1.3rem; line-height:2;">
+            <li><strong>PC (Program Counter):</strong> Holds address of next instruction to fetch.</li>
+            <li><strong>MAR (Memory Address Register):</strong> Holds address for memory operation.</li>
+            <li><strong>MDR (Memory Data Register):</strong> Holds data read from or to be written to memory.</li>
+            <li><strong>IR (Instruction Register):</strong> Holds the currently fetched instruction.</li>
+            <li><strong>ACC (Accumulator):</strong> Holds intermediate ALU results.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: DATA REPRESENTATION
+  ============================================================ -->
+  <section class="section" id="data-representation">
+    <h2 class="section-title">
+      <i class="fas fa-database"></i> Data Representation
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-thumbtack"></i> Fixed-Point Numbers</div>
+        <p>In fixed-point representation, the binary point is assumed to be at a fixed position — either at the extreme right (integers) or at a defined position (fractions).</p>
+        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
+          <li><strong>Unsigned integers:</strong> All bits represent magnitude. Range: 0 to 2ⁿ − 1 for n-bit number.</li>
+          <li><strong>Sign-Magnitude:</strong> MSB is sign bit (0 = positive, 1 = negative). Remaining bits are magnitude.</li>
+          <li><strong>1's Complement:</strong> Negative number formed by inverting all bits. Has two representations of zero.</li>
+          <li><strong>2's Complement:</strong> Most widely used. Negative number = 1's complement + 1. Only one zero representation. Simplifies arithmetic.</li>
+        </ul>
+        <div class="formula-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-calculator"></i> 2's Complement Ranges</div>
+          <div class="formula">n-bit 2's complement range: −2<sup>n−1</sup> to +2<sup>n−1</sup> − 1</div>
+          <p style="margin-top:0.4rem; font-size:0.88rem;">Example: 8-bit → −128 to +127</p>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-wave-square"></i> Floating-Point Numbers</div>
+        <p>Floating-point representation is used for very large or very small numbers. A floating-point number has two parts:</p>
+        <div class="formula-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-equals"></i> Floating-Point Form</div>
+          <div class="formula">Number = Mantissa × Base<sup>Exponent</sup></div>
+        </div>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>IEEE 754 Format</th>
+                <th>Total Bits</th>
+                <th>Sign</th>
+                <th>Exponent</th>
+                <th>Mantissa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Single Precision</td>
+                <td>32 bits</td>
+                <td>1 bit</td>
+                <td>8 bits</td>
+                <td>23 bits</td>
+              </tr>
+              <tr>
+                <td>Double Precision</td>
+                <td>64 bits</td>
+                <td>1 bit</td>
+                <td>11 bits</td>
+                <td>52 bits</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="important-note" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-star"></i> IEEE 754 Biased Exponent</div>
+          <p>Exponent is stored in biased (excess) form to handle both positive and negative exponents. Bias = 127 for single precision, 1023 for double precision.</p>
+          <div class="formula" style="margin-top:0.5rem;">Stored Exponent = Actual Exponent + Bias</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: ERROR DETECTING CODES
+  ============================================================ -->
+  <section class="section" id="error-codes">
+    <h2 class="section-title">
+      <i class="fas fa-shield-alt"></i> Error Detecting Codes
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-check-double"></i> Parity Bits</div>
+        <p>A parity bit is an extra bit added to a binary data word to make the total number of 1s either even or odd, allowing single-bit error detection.</p>
+        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
+          <li><strong>Even Parity:</strong> Parity bit is chosen so total number of 1s (including parity bit) is even.</li>
+          <li><strong>Odd Parity:</strong> Parity bit is chosen so total number of 1s is odd.</li>
+          <li><strong>Limitation:</strong> Can detect only single-bit errors. Cannot detect double-bit errors. Cannot correct errors.</li>
+        </ul>
+        <div class="formula-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-calculator"></i> Example</div>
+          <p>Data: 1011001 → Count of 1s = 4 (even)</p>
+          <p>Even parity bit = 0 (total stays even) → Transmitted: <strong>0 1011001</strong></p>
+          <p>Odd parity bit = 1 (to make total odd = 5) → Transmitted: <strong>1 1011001</strong></p>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-hammer"></i> Hamming Code</div>
+        <p>Hamming code is an error-detecting and error-correcting code that can detect and correct single-bit errors. It inserts parity bits at specific positions (powers of 2) in the data word.</p>
+
+        <div class="algo-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-list-ol"></i> Hamming Code Construction Steps</div>
+          <ol style="padding-left:1.3rem; line-height:2.2;">
+            <li>Determine number of parity bits (r) needed: 2<sup>r</sup> ≥ m + r + 1, where m = data bits.</li>
+            <li>Parity bits are placed at positions 1, 2, 4, 8, 16, ... (powers of 2).</li>
+            <li>Data bits fill the remaining positions.</li>
+            <li>Each parity bit covers specific bit positions (those whose binary representation includes its bit position).</li>
+            <li>Set each parity bit so that the total number of 1s in covered positions is even (even parity).</li>
+          </ol>
+        </div>
+
+        <div class="formula-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-calculator"></i> Parity Bit Count Formula</div>
+          <div class="formula">2<sup>r</sup> ≥ m + r + 1</div>
+          <p style="margin-top:0.4rem; font-size:0.88rem;">For m=4 data bits: try r=3 → 2³=8 ≥ 4+3+1=8 ✅ → Need 3 parity bits → Total 7 bits</p>
+        </div>
+
+        <p style="margin-top:0.75rem; font-size:0.9rem; color:var(--text-secondary);">Hamming(7,4) code — Bit positions with parity bits highlighted:</p>
+        <div class="hamming-grid">
+          <div class="hcell parity">P1<br>Pos 1</div>
+          <div class="hcell parity">P2<br>Pos 2</div>
+          <div class="hcell">D1<br>Pos 3</div>
+          <div class="hcell parity">P4<br>Pos 4</div>
+          <div class="hcell">D2<br>Pos 5</div>
+          <div class="hcell">D3<br>Pos 6</div>
+          <div class="hcell">D4<br>Pos 7</div>
+          <div class="hcell" style="border:none; background:transparent;"></div>
+        </div>
+
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> Error Detection using Hamming Code</div>
+          <p>At the receiver, recalculate all parity bits. Form a binary number (syndrome) from the results. If syndrome = 0, no error. If syndrome ≠ 0, the syndrome value indicates the bit position of the error → flip that bit to correct.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: REGISTER TRANSFER
+  ============================================================ -->
+  <section class="section" id="register-transfer">
+    <h2 class="section-title">
+      <i class="fas fa-exchange-alt"></i> Register Transfer &amp; Micro Operations
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Register Transfer Language (RTL)</div>
+        <p>Register Transfer Language is a symbolic notation used to describe the movement of data between registers and the operations performed on that data. It provides a hardware-level description of digital systems.</p>
+        <div class="syntax-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> RTL Notation Basics</div>
+          <p><code>R2 ← R1</code> &nbsp;&nbsp; Transfer contents of R1 to R2</p>
+          <p><code>R2 ← R1, if (T=1)</code> &nbsp;&nbsp; Conditional transfer (when control signal T is 1)</p>
+          <p><code>MAR ← PC</code> &nbsp;&nbsp; Transfer PC value to MAR</p>
+          <p><code>MDR ← M[MAR]</code> &nbsp;&nbsp; Read memory at address MAR into MDR</p>
+          <p><code>M[MAR] ← MDR</code> &nbsp;&nbsp; Write MDR contents to memory at MAR</p>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-memory"></i> Memory Transfers</div>
+        <p>Memory read and write operations are described using RTL:</p>
+        <div class="algo-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-book-open"></i> Memory Read Operation</div>
+          <ol style="padding-left:1.3rem; line-height:2.2;">
+            <li>MAR ← Address &nbsp;&nbsp; <em>(Load address into MAR)</em></li>
+            <li>MDR ← M[MAR] &nbsp;&nbsp; <em>(Memory sends data to MDR)</em></li>
+            <li>R ← MDR &nbsp;&nbsp; <em>(Transfer data to destination register)</em></li>
+          </ol>
+        </div>
+        <div class="algo-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-pen"></i> Memory Write Operation</div>
+          <ol style="padding-left:1.3rem; line-height:2.2;">
+            <li>MAR ← Address &nbsp;&nbsp; <em>(Load address into MAR)</em></li>
+            <li>MDR ← R &nbsp;&nbsp; <em>(Load data into MDR from register)</em></li>
+            <li>M[MAR] ← MDR &nbsp;&nbsp; <em>(Write MDR to memory)</em></li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6: MICRO-OPERATIONS
+  ============================================================ -->
+  <section class="section" id="micro-operations">
+    <h2 class="section-title">
+      <i class="fas fa-cogs"></i> Micro-Operations
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-atom"></i> What Are Micro-Operations?</div>
+        <p>A micro-operation is the most basic, elementary operation performed on data stored in registers. A single machine instruction may consist of several micro-operations. There are four types:</p>
+      </div>
+
+      <!-- Arithmetic Micro-Ops -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-plus-minus"></i> Arithmetic Micro-Operations</div>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="reg-table">
+            <thead>
+              <tr><th>Operation</th><th>RTL Notation</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Addition</td><td>R3 ← R1 + R2</td><td>Add contents of R1 and R2, store in R3</td></tr>
+              <tr><td>Subtraction</td><td>R3 ← R1 − R2</td><td>Subtract R2 from R1 (using 2's complement)</td></tr>
+              <tr><td>Increment</td><td>R1 ← R1 + 1</td><td>Add 1 to register R1</td></tr>
+              <tr><td>Decrement</td><td>R1 ← R1 − 1</td><td>Subtract 1 from register R1</td></tr>
+              <tr><td>Negate (2's comp)</td><td>R1 ← R1' + 1</td><td>Find 2's complement (negate) of R1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Logic Micro-Ops -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Logic Micro-Operations</div>
+        <p>Performed bit-by-bit on register operands. Used for masking, setting, and clearing bits.</p>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="reg-table">
+            <thead>
+              <tr><th>Operation</th><th>RTL</th><th>Effect</th><th>Use Case</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>AND</td><td>R1 ← R1 ∧ R2</td><td>Bit-by-bit AND</td><td>Masking (clearing specific bits)</td></tr>
+              <tr><td>OR</td><td>R1 ← R1 ∨ R2</td><td>Bit-by-bit OR</td><td>Setting specific bits</td></tr>
+              <tr><td>XOR</td><td>R1 ← R1 ⊕ R2</td><td>Bit-by-bit XOR</td><td>Toggling bits, comparing</td></tr>
+              <tr><td>Complement</td><td>R1 ← R1'</td><td>Bit-by-bit NOT</td><td>1's complement, logic inversion</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Shift Micro-Ops -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-arrows-alt-h"></i> Shift Micro-Operations</div>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="reg-table">
+            <thead>
+              <tr><th>Type</th><th>Direction</th><th>What Happens</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Logical Shift Left</strong></td>
+                <td>Left</td>
+                <td>All bits shift left. 0 inserted at LSB. MSB lost. Equivalent to ×2.</td>
+              </tr>
+              <tr>
+                <td><strong>Logical Shift Right</strong></td>
+                <td>Right</td>
+                <td>All bits shift right. 0 inserted at MSB. LSB lost. Equivalent to ÷2 (unsigned).</td>
+              </tr>
+              <tr>
+                <td><strong>Arithmetic Shift Left</strong></td>
+                <td>Left</td>
+                <td>Same as logical shift left. MSB (sign) may change → overflow possible.</td>
+              </tr>
+              <tr>
+                <td><strong>Arithmetic Shift Right</strong></td>
+                <td>Right</td>
+                <td>Sign bit is replicated (copied) into MSB. LSB lost. Preserves sign for ÷2.</td>
+              </tr>
+              <tr>
+                <td><strong>Circular Shift Left (Rotate)</strong></td>
+                <td>Left</td>
+                <td>MSB wraps around to LSB. No bit is lost.</td>
+              </tr>
+              <tr>
+                <td><strong>Circular Shift Right (Rotate)</strong></td>
+                <td>Right</td>
+                <td>LSB wraps around to MSB. No bit is lost.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warning-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Key Difference</div>
+          <p>In arithmetic right shift, the sign bit is preserved (replicated). In logical right shift, 0 is always inserted at MSB regardless of sign. This is the most commonly confused point in exams.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7: ALU
+  ============================================================ -->
+  <section class="section" id="alu">
+    <h2 class="section-title">
+      <i class="fas fa-microchip"></i> Arithmetic Logic Shift Unit (ALU)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-cog"></i> What is the ALU?</div>
+        <p>The Arithmetic Logic Shift Unit (ALSU / ALU) is a combinational digital circuit that performs all arithmetic micro-operations, all logic micro-operations, and all shift micro-operations in a single hardware unit. It is the computational core of the CPU.</p>
+        <p style="margin-top:0.5rem;">The ALU takes two input operands (from registers), a set of function-select lines (from the control unit), and produces an output result along with status flags.</p>
+      </div>
+
+      <div class="alu-op-grid" style="margin-top:1rem;">
+        <div class="alu-op-card">
+          <i class="fas fa-plus"></i>
+          <strong>Arithmetic Ops</strong>
+          <p>Add, Subtract, Increment, Decrement, Negate</p>
+        </div>
+        <div class="alu-op-card">
+          <i class="fas fa-network-wired"></i>
+          <strong>Logic Ops</strong>
+          <p>AND, OR, XOR, NOT / Complement</p>
+        </div>
+        <div class="alu-op-card">
+          <i class="fas fa-arrows-alt-h"></i>
+          <strong>Shift Ops</strong>
+          <p>Logical shift, Arithmetic shift, Circular shift</p>
+        </div>
+        <div class="alu-op-card">
+          <i class="fas fa-flag"></i>
+          <strong>Status Flags</strong>
+          <p>Zero (Z), Carry (C), Overflow (V), Sign (S)</p>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-sliders-h"></i> Function Select Lines</div>
+        <p>The ALU uses select lines (S₀, S₁, ... Sₙ) from the control unit to choose which operation to perform. A multiplexer-based design routes the correct operation output to the result.</p>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="reg-table">
+            <thead>
+              <tr><th>S₁ S₀</th><th>Operation</th><th>Output F</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0 0</td><td>Transfer A</td><td>F = A</td></tr>
+              <tr><td>0 1</td><td>Increment</td><td>F = A + 1</td></tr>
+              <tr><td>1 0</td><td>Add</td><td>F = A + B</td></tr>
+              <tr><td>1 1</td><td>Subtract</td><td>F = A − B</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> ALU Status Flags</div>
+        <ul style="padding-left:1.3rem; line-height:2;">
+          <li><strong>Zero (Z):</strong> Set when ALU result is 0.</li>
+          <li><strong>Carry (C):</strong> Set when there is a carry out of the MSB (unsigned overflow).</li>
+          <li><strong>Overflow (V):</strong> Set when signed arithmetic overflow occurs.</li>
+          <li><strong>Sign (S) / Negative (N):</strong> Set when result is negative (MSB = 1 in 2's complement).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 8: FORMULAS
+  ============================================================ -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Key Formulas
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-calculator"></i> Addressable Memory</div>
+        <div class="formula">Addressable Locations = 2<sup>N</sup></div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">N = number of address lines. 8086 has 20 address lines → 2²⁰ = 1 MB.</p>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> 2's Complement Range</div>
+        <div class="formula">Range = −2<sup>n−1</sup> to +2<sup>n−1</sup> − 1</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">For 8-bit: −128 to +127. For 16-bit: −32768 to +32767.</p>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Hamming Code Parity Bits</div>
+        <div class="formula">2<sup>r</sup> ≥ m + r + 1</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">r = parity bits needed, m = data bits. Solve for smallest r satisfying this inequality.</p>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> IEEE 754 Biased Exponent</div>
+        <div class="formula">Stored Exponent = Actual Exponent + Bias</div>
+        <div class="formula answer">Bias = 127 (single) &nbsp;|&nbsp; Bias = 1023 (double)</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Shift Operations Effect</div>
+        <div class="formula">Left Shift by n = Multiply by 2<sup>n</sup></div>
+        <div class="formula answer">Right Shift by n = Divide by 2<sup>n</sup></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 9: DEFINITIONS
+  ============================================================ -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Von-Neumann Architecture</div>
+        <p>A computer design model in which both instructions and data are stored in the same memory unit and accessed using the same bus, based on the stored-program concept proposed by John Von Neumann.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Register Transfer Language (RTL)</div>
+        <p>A symbolic notation used at the register level to describe the transfer of data between registers and the micro-operations performed on data during each clock cycle.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Micro-Operation</div>
+        <p>The most elementary operation performed on data stored in registers during a single clock pulse. A machine instruction consists of a sequence of micro-operations.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Hamming Code</div>
+        <p>An error-correcting code that inserts parity bits at positions that are powers of 2 in the data word, allowing detection and correction of single-bit errors and detection of double-bit errors.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> ALU (Arithmetic Logic Unit)</div>
+        <p>A combinational digital circuit within the CPU that performs all arithmetic operations (add, subtract, etc.), logical operations (AND, OR, XOR, NOT), and shift operations on binary data.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Stored Program Concept</div>
+        <p>The idea that a computer program can be represented as data in the computer's memory, allowing the program to be modified or replaced without changing the hardware. This is the fundamental principle of modern computers.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 10: COMPARISONS
+  ============================================================ -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Fixed-Point vs Floating-Point Numbers</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Aspect</th><th>Fixed-Point</th><th>Floating-Point</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Binary Point Position</td><td>Fixed at predetermined position</td><td>Varies (represented by exponent)</td></tr>
+            <tr><td>Range</td><td>Limited</td><td>Very large and very small numbers</td></tr>
+            <tr><td>Precision</td><td>Uniform precision</td><td>Variable precision</td></tr>
+            <tr><td>Hardware Complexity</td><td>Simple</td><td>Complex (needs FPU)</td></tr>
+            <tr><td>Speed</td><td>Faster</td><td>Slower (more hardware)</td></tr>
+            <tr><td>Use Case</td><td>Integer arithmetic, embedded systems</td><td>Scientific computing, graphics</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Parity Bit vs Hamming Code</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Feature</th><th>Parity Bit</th><th>Hamming Code</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Error Detection</td><td>Single-bit only</td><td>Single and double-bit</td></tr>
+            <tr><td>Error Correction</td><td>No</td><td>Yes (single-bit)</td></tr>
+            <tr><td>Overhead</td><td>1 extra bit per data word</td><td>Multiple parity bits (r bits)</td></tr>
+            <tr><td>Complexity</td><td>Very simple</td><td>Moderate</td></tr>
+            <tr><td>Use Case</td><td>Simple memory parity check</td><td>ECC memory, error-critical systems</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Logical Shift vs Arithmetic Shift</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Feature</th><th>Logical Shift</th><th>Arithmetic Shift</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Left Shift</td><td>0 filled at LSB</td><td>0 filled at LSB (same)</td></tr>
+            <tr><td>Right Shift</td><td>0 filled at MSB</td><td>Sign bit replicated at MSB</td></tr>
+            <tr><td>Sign Preservation</td><td>No</td><td>Yes (in right shift)</td></tr>
+            <tr><td>Used For</td><td>Unsigned numbers</td><td>Signed numbers</td></tr>
+            <tr><td>Right Shift Effect</td><td>Divide by 2 (unsigned)</td><td>Divide by 2 (signed)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 11: MCQs
+  ============================================================ -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>The Von-Neumann architecture is based on which fundamental concept?</p>
+          <ul class="options">
+            <li>a. Harvard architecture</li>
+            <li>b. Stored program concept</li>
+            <li>c. Distributed processing</li>
+            <li>d. Parallel computation</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: b. Stored program concept</strong>
+            <p>Von-Neumann architecture stores both instructions and data in the same memory, based on the stored-program concept.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Which bus is unidirectional — from CPU to memory?</p>
+          <ul class="options">
+            <li>a. Data bus</li>
+            <li>b. Control bus</li>
+            <li>c. Address bus</li>
+            <li>d. System bus</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: c. Address bus</strong>
+            <p>The address bus is unidirectional — the CPU sends addresses to memory or I/O. The data bus is bidirectional.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>How many parity bits are needed to protect a 4-bit data word using Hamming code?</p>
+          <ul class="options">
+            <li>a. 2</li>
+            <li>b. 3</li>
+            <li>c. 4</li>
+            <li>d. 1</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: b. 3</strong>
+            <p>Using 2<sup>r</sup> ≥ m + r + 1: for m=4, r=3 → 8 ≥ 8 ✅. So 3 parity bits are needed. Total Hamming code length = 7 bits.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>In IEEE 754 single precision floating point, how many bits are used for the exponent?</p>
+          <ul class="options">
+            <li>a. 23</li>
+            <li>b. 11</li>
+            <li>c. 8</li>
+            <li>d. 1</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. 8</strong>
+            <p>IEEE 754 single precision: 1 sign bit + 8 exponent bits + 23 mantissa bits = 32 bits total.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Which arithmetic right shift operation preserves the sign bit of a 2's complement number?</p>
+          <ul class="options">
+            <li>a. Logical right shift</li>
+            <li>b. Circular right shift</li>
+            <li>c. Arithmetic right shift</li>
+            <li>d. Logical left shift</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. Arithmetic right shift</strong>
+            <p>Arithmetic right shift replicates (copies) the sign bit (MSB) into the vacated MSB position, preserving the sign of the number.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>The register that holds the memory address for the next read/write operation is called:</p>
+          <ul class="options">
+            <li>a. Program Counter</li>
+            <li>b. Instruction Register</li>
+            <li>c. Memory Data Register</li>
+            <li>d. Memory Address Register</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: d. Memory Address Register (MAR)</strong>
+            <p>MAR holds the address of the memory location to be accessed. MDR holds the actual data being read/written.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Which logic micro-operation is used to selectively CLEAR (set to 0) specific bits of a register?</p>
+          <ul class="options">
+            <li>a. OR</li>
+            <li>b. XOR</li>
+            <li>c. AND</li>
+            <li>d. NOT</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: c. AND</strong>
+            <p>AND with a mask clears bits where the mask has 0s and preserves bits where mask has 1s. This is called masking.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>If a computer has a 20-bit address bus, what is the maximum addressable memory?</p>
+          <ul class="options">
+            <li>a. 512 KB</li>
+            <li>b. 1 MB</li>
+            <li>c. 2 MB</li>
+            <li>d. 4 MB</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: b. 1 MB</strong>
+            <p>2²⁰ = 1,048,576 = 1 MB. The 8086 microprocessor uses a 20-bit address bus giving 1 MB addressable memory.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 12: SHORT QUESTIONS
+  ============================================================ -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the stored-program concept?</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>The stored-program concept states that a computer program is stored as binary data in the computer's memory. The CPU fetches instructions from memory one by one and executes them. This allows programs to be changed without altering hardware.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the difference between the data bus and the address bus?</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p>The <strong>data bus</strong> is bidirectional and carries actual data between CPU, memory, and I/O. The <strong>address bus</strong> is unidirectional (CPU to memory/IO) and carries the memory address to select a specific location.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is a micro-operation? Give one example.</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p>A micro-operation is the most elementary operation performed on register data in one clock cycle. Example: <code>R1 ← R1 + R2</code> (addition micro-operation that adds contents of R1 and R2 and stores result in R1).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the purpose of parity bits in data transmission?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p>Parity bits are extra bits added to binary data to make the total count of 1s either even (even parity) or odd (odd parity). They allow the receiver to detect single-bit errors during data transmission by checking if the parity condition is satisfied.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>List the four types of micro-operations.</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p>The four types of micro-operations are: (1) <strong>Register Transfer</strong> — moving data between registers. (2) <strong>Arithmetic</strong> — add, subtract, increment, decrement. (3) <strong>Logic</strong> — AND, OR, XOR, NOT. (4) <strong>Shift</strong> — logical, arithmetic, circular shifts.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the Von-Neumann bottleneck?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p>The Von-Neumann bottleneck refers to the performance limitation caused by sharing a single bus between instructions and data in the Von-Neumann architecture. Since only one can be transferred at a time, the bus becomes a bottleneck limiting CPU speed.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 13: LONG QUESTIONS
+  ============================================================ -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain the Von-Neumann architecture with a neat block diagram description. What are its limitations?</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p><strong>Von-Neumann Architecture</strong> consists of five main components connected by buses:</p>
+            <ul style="padding-left:1.3rem; line-height:2; margin:0.5rem 0;">
+              <li><strong>Memory Unit:</strong> Stores both instructions and data in binary form in the same memory space.</li>
+              <li><strong>ALU (Arithmetic Logic Unit):</strong> Performs arithmetic and logic operations on data.</li>
+              <li><strong>Control Unit:</strong> Fetches instructions from memory, decodes them, and generates control signals.</li>
+              <li><strong>Input Device:</strong> Feeds data and programs into the computer.</li>
+              <li><strong>Output Device:</strong> Displays or stores results.</li>
+            </ul>
+            <p><strong>Working:</strong> The CPU repeatedly performs Fetch → Decode → Execute cycles. The PC holds the address of the next instruction. The instruction is fetched into IR, decoded by CU, and executed by ALU.</p>
+            <div class="important-note" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-exclamation-circle"></i> Limitations</div>
+              <ul style="padding-left:1.3rem; line-height:2;">
+                <li><strong>Von-Neumann Bottleneck:</strong> Single shared bus for instructions and data limits throughput.</li>
+                <li><strong>Sequential execution:</strong> Instructions execute one at a time (solved by pipelining).</li>
+                <li><strong>Memory speed mismatch:</strong> CPU is much faster than memory, causing wait states.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain Hamming code with an example. Encode the data 1011 using Hamming code and show how an error at bit position 5 is detected and corrected.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p><strong>Step 1: Find number of parity bits</strong></p>
+            <p>m = 4 data bits. Use 2<sup>r</sup> ≥ m + r + 1. For r=3: 8 ≥ 8 ✅. So r = 3 parity bits. Total bits = 7.</p>
+            <p style="margin-top:0.5rem;"><strong>Step 2: Arrange bit positions (1 to 7)</strong></p>
+            <p>Parity bits at positions 1, 2, 4. Data bits at positions 3, 5, 6, 7.</p>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="reg-table">
+                <thead><tr><th>Pos</th><th>1(P1)</th><th>2(P2)</th><th>3(D1)</th><th>4(P4)</th><th>5(D2)</th><th>6(D3)</th><th>7(D4)</th></tr></thead>
+                <tbody><tr><td>Data 1011</td><td>P1</td><td>P2</td><td>1</td><td>P4</td><td>0</td><td>1</td><td>1</td></tr></tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.5rem;"><strong>Step 3: Calculate parity bits (even parity)</strong></p>
+            <ul style="padding-left:1.3rem; line-height:2;">
+              <li>P1 covers positions 1,3,5,7 → bits: P1, 1, 0, 1 → count of 1s = 2 → P1 = 0</li>
+              <li>P2 covers positions 2,3,6,7 → bits: P2, 1, 1, 1 → count of 1s = 3 → P2 = 1</li>
+              <li>P4 covers positions 4,5,6,7 → bits: P4, 0, 1, 1 → count of 1s = 2 → P4 = 0</li>
+            </ul>
+            <p><strong>Encoded Hamming code: 0 1 1 0 0 1 1</strong></p>
+            <p style="margin-top:0.5rem;"><strong>Error Detection:</strong> If bit 5 is flipped (0→1), received word = 0 1 1 0 1 1 1.</p>
+            <p>Recalculate parity. Syndrome = P4 P2 P1 = 1 0 1 = 5 in decimal → Error at position 5. Flip bit 5 to correct.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Describe the instruction execution cycle with a step-by-step RTL description. What are the roles of PC, MAR, MDR, and IR in this cycle?</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p>The instruction execution cycle (fetch-decode-execute cycle) is the sequence of operations the CPU performs to execute each instruction:</p>
+            <div class="algo-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-list-ol"></i> RTL Description of Instruction Cycle</div>
+              <p><strong>Fetch Phase:</strong></p>
+              <p><code>MAR ← PC</code> &nbsp;→ Address of instruction sent to MAR</p>
+              <p><code>MDR ← M[MAR], PC ← PC + 1</code> &nbsp;→ Instruction read; PC incremented</p>
+              <p><code>IR ← MDR</code> &nbsp;→ Instruction loaded into IR</p>
+              <p style="margin-top:0.5rem;"><strong>Decode Phase:</strong></p>
+              <p>Control Unit analyzes opcode field of IR. Determines operation type and operand addresses.</p>
+              <p style="margin-top:0.5rem;"><strong>Execute Phase:</strong></p>
+              <p><code>MAR ← IR[address]</code> &nbsp;→ Operand address sent to MAR (if memory operand)</p>
+              <p><code>MDR ← M[MAR]</code> &nbsp;→ Operand fetched</p>
+              <p><code>ACC ← ACC + MDR</code> &nbsp;→ ALU performs operation (example: ADD)</p>
+            </div>
+            <div class="definition-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-info-circle"></i> Register Roles</div>
+              <ul style="padding-left:1.3rem; line-height:2;">
+                <li><strong>PC:</strong> Points to next instruction. Auto-increments after each fetch.</li>
+                <li><strong>MAR:</strong> Interface to memory address bus. Holds address for any memory access.</li>
+                <li><strong>MDR:</strong> Interface to memory data bus. Holds data being transferred to/from memory.</li>
+                <li><strong>IR:</strong> Holds the complete current instruction being decoded and executed.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 14: PRACTICE
+  ============================================================ -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Encode the 4-bit data word <strong>1101</strong> using Hamming code (even parity). Show all steps.</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <p>m = 4, r = 3. Total bits = 7. Positions: P1(1), P2(2), D1(3), P4(4), D2(5), D3(6), D4(7).</p>
+            <p>Data 1101 → D1=1, D2=1, D3=0, D4=1 at positions 3,5,6,7.</p>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="reg-table">
+                <thead><tr><th>Pos 1</th><th>Pos 2</th><th>Pos 3</th><th>Pos 4</th><th>Pos 5</th><th>Pos 6</th><th>Pos 7</th></tr></thead>
+                <tbody><tr><td>P1</td><td>P2</td><td>1</td><td>P4</td><td>1</td><td>0</td><td>1</td></tr></tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.5rem;"><strong>P1</strong> (covers 1,3,5,7): bits = P1, 1, 1, 1 → three 1s → P1 = 1 (make even)</p>
+            <p><strong>P2</strong> (covers 2,3,6,7): bits = P2, 1, 0, 1 → two 1s → P2 = 0</p>
+            <p><strong>P4</strong> (covers 4,5,6,7): bits = P4, 1, 0, 1 → two 1s → P4 = 0</p>
+            <div class="formula-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-check"></i> Final Hamming Code</div>
+              <div class="formula answer">1 0 1 0 1 0 1</div>
+              <p style="font-size:0.88rem;">Positions: 1=P1=1, 2=P2=0, 3=D1=1, 4=P4=0, 5=D2=1, 6=D3=0, 7=D4=1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Perform the following shift operations on the 8-bit value <strong>10110100</strong>: (a) Logical right shift by 2 (b) Arithmetic right shift by 2 (c) Circular left shift by 3.</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <p>Original: <strong>10110100</strong></p>
+            <p style="margin-top:0.5rem;"><strong>(a) Logical Right Shift by 2:</strong></p>
+            <p>Insert 0s at MSB, shift right: <strong>00101101</strong></p>
+            <p>MSB sign not preserved. Two 0s inserted at left.</p>
+            <p style="margin-top:0.5rem;"><strong>(b) Arithmetic Right Shift by 2:</strong></p>
+            <p>Sign bit = 1, replicate it: <strong>11101101</strong></p>
+            <p>Two 1s inserted at left (sign preserved). Number ÷ 4 in signed representation.</p>
+            <p style="margin-top:0.5rem;"><strong>(c) Circular Left Shift by 3:</strong></p>
+            <p>Original: 10110100. The 3 leftmost bits (101) rotate to the right end.</p>
+            <p>Result: <strong>10100101</strong></p>
+            <p style="font-size:0.85rem; color:var(--text-secondary);">No bits are lost in circular shift — they wrap around.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Convert the decimal number <strong>−45</strong> to 8-bit 2's complement binary representation.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <p><strong>Step 1:</strong> Convert 45 to binary: 45 = 00101101</p>
+            <p><strong>Step 2:</strong> Find 1's complement: 11010010</p>
+            <p><strong>Step 3:</strong> Add 1 to get 2's complement:</p>
+            <div class="trace-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-table"></i> 2's Complement Calculation</div>
+              <p>1's complement: &nbsp; 1 1 0 1 0 0 1 0</p>
+              <p>Add 1: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 0 0 0 0 0 0 0 1</p>
+              <p>─────────────────────</p>
+              <p>2's complement: &nbsp; 1 1 0 1 0 0 1 1</p>
+            </div>
+            <div class="formula-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-check"></i> Result</div>
+              <div class="formula answer">−45 in 8-bit 2's complement = 11010011</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 15: REVISION
+  ============================================================ -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-redo"></i> Revision &amp; Quick Summary
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul style="padding-left:1.3rem; line-height:2.2;">
+          <li>A computer has three functional units: <strong>CPU, Memory, I/O</strong>.</li>
+          <li>Von-Neumann: instructions and data in <strong>same memory</strong>, sequential execution.</li>
+          <li><strong>Address bus</strong> is unidirectional; <strong>data bus</strong> is bidirectional; <strong>control bus</strong> carries control signals.</li>
+          <li>N-bit address bus → <strong>2ᴺ</strong> addressable memory locations.</li>
+          <li>Instruction cycle: <strong>Fetch → Decode → Execute</strong>.</li>
+          <li>Key registers: PC (next instruction), MAR (memory address), MDR (memory data), IR (current instruction), ACC (ALU result).</li>
+          <li><strong>2's complement</strong> is most used: negate by inverting all bits then adding 1. Range: −2ⁿ⁻¹ to +2ⁿ⁻¹−1.</li>
+          <li>IEEE 754 single precision: <strong>1 sign + 8 exponent + 23 mantissa = 32 bits</strong>. Bias = 127.</li>
+          <li>Parity bit detects <strong>single-bit errors only</strong>. Cannot correct errors.</li>
+          <li>Hamming code: parity bits at <strong>positions 1, 2, 4, 8, ...</strong> (powers of 2). Formula: 2ʳ ≥ m+r+1.</li>
+          <li>Hamming syndrome ≠ 0 → syndrome value = <strong>error bit position</strong>. Flip that bit to correct.</li>
+          <li>RTL notation: <strong>R2 ← R1</strong> means transfer R1 to R2.</li>
+          <li>AND = masking/clear bits. OR = set bits. XOR = toggle bits. NOT = complement.</li>
+          <li>Arithmetic right shift: <strong>sign bit replicated</strong>. Logical right shift: 0 inserted at MSB.</li>
+          <li>Left shift by n = multiply by 2ⁿ. Right shift by n = divide by 2ⁿ.</li>
+          <li>ALU performs: arithmetic + logic + shift operations based on select lines from control unit.</li>
+          <li>ALU flags: <strong>Zero (Z), Carry (C), Overflow (V), Sign (S)</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exam</div>
+        <ul style="padding-left:1.3rem; line-height:2.2;">
+          <li>Hamming code formula: <strong>2ʳ ≥ m + r + 1</strong> — memorize this.</li>
+          <li>For 4 data bits → 3 parity bits → 7-bit Hamming code. For 8 data bits → 4 parity bits → 12-bit Hamming code.</li>
+          <li>Von-Neumann bottleneck = shared bus for instructions and data.</li>
+          <li>IEEE 754: Single precision exponent bias = 127. Double precision bias = 1023.</li>
+          <li>Arithmetic right shift preserves sign bit (replicate). Logical right shift inserts 0.</li>
+          <li>Address bus width determines maximum memory. Control bus carries Read/Write/Interrupt signals.</li>
+          <li>PC auto-increments after every instruction fetch.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</div>
+        <ul style="padding-left:1.3rem; line-height:2.2;">
+          <li>❌ Confusing <strong>MAR</strong> (holds address) with <strong>MDR</strong> (holds data). They are different registers.</li>
+          <li>❌ Confusing <strong>logical right shift</strong> (inserts 0) with <strong>arithmetic right shift</strong> (replicates sign bit).</li>
+          <li>❌ Forgetting to add 1 when computing 2's complement — 1's complement alone is NOT 2's complement.</li>
+          <li>❌ Hamming parity bit positions are powers of 2: 1, 2, 4, 8 — NOT 1, 2, 3, 4.</li>
+          <li>❌ Syndrome value in Hamming code gives the <strong>position</strong> of error (1-indexed), not the bit index from 0.</li>
+          <li>❌ Data bus width ≠ address bus width. They are independent. More address lines → more memory addressable.</li>
+          <li>❌ Von-Neumann and Harvard architectures are different. Harvard uses separate instruction and data memory.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

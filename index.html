@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Diploma 3rd Sem - Study Hub</title>
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
+    <meta name="description" content="Complete study companion for WB Diploma 3rd Semester - CST Stream">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/pwa/icon-192x192.png">
+    <link rel="apple-touch-icon" href="assets/pwa/icon-192x192.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+    <!-- Welcome Screen (First Launch Only) -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-bg">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        
+        <div class="welcome-content">
+            <div class="welcome-badge">WB Polytechnic</div>
+            
+            <div class="welcome-icon">
+                <svg class="icon-large"><use href="assets/icons/sprite.svg#graduation"></use></svg>
+            </div>
+            
+            <h1 class="welcome-title">Diploma 3rd Sem</h1>
+            <p class="welcome-subtitle">Computer Science & Technology</p>
+            
+            <div class="welcome-stats">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Subjects</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">Units</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Questions</div>
+                </div>
+            </div>
+
+            <!-- Name Input (shows only on first launch) -->
+            <div class="name-input-wrapper" id="nameInputWrapper">
+                <label for="studentName">What should we call you?</label>
+                <input 
+                    type="text" 
+                    id="studentName" 
+                    placeholder="Enter your name"
+                    maxlength="20"
+                    autocomplete="name"
+                >
+            </div>
+
+            <button class="cta-btn" id="startBtn">
+                <span>Start Learning</span>
+                <svg class="icon"><use href="assets/icons/sprite.svg#arrow-right"></use></svg>
+            </button>
+
+            <p class="welcome-note">All study materials, practice & PYQs in one place</p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container" id="appContainer">
+        
+        <!-- Top Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button class="icon-btn" id="backBtn" style="display: none;">
+                    <svg class="icon"><use href="assets/icons/sprite.svg#arrow-left"></use></svg>
+                </button>
+                <div class="header-title">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p id="pageBreadcrumb">Welcome back</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon icon-sun"><use href="assets/icons/sprite.svg#sun"></use></svg>
+                    <svg class="icon icon-moon"><use href="assets/icons/sprite.svg#moon"></use></svg>
+                </button>
+                <button class="icon-btn" id="menuBtn">
+                    <svg class="icon"><use href="assets/icons/sprite.svg#menu"></use></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            
+            <!-- Greeting Section -->
+            <section class="greeting-section">
+                <div class="greeting-text">
+                    <h2 class="greeting-title" id="greetingTitle">Good Morning</h2>
+                    <p class="greeting-name" id="greetingName">Ready to study?</p>
+                </div>
+                <div class="greeting-date">
+                    <div class="date-display" id="dateDisplay"></div>
+                    <div class="exam-countdown" id="examCountdown"></div>
+                </div>
+            </section>
+
+            <!-- Continue Card (if last session exists) -->
+            <div class="continue-card" id="continueCard" style="display: none;">
+                <div class="continue-left">
+                    <div class="continue-icon" id="continueIcon"></div>
+                    <div class="continue-info">
+                        <span class="continue-label">Continue where you left</span>
+                        <span class="continue-subject" id="continueSubject"></span>
+                    </div>
+                </div>
+                <svg class="icon"><use href="assets/icons/sprite.svg#arrow-right"></use></svg>
+            </div>
+
+            <!-- Section: Subjects -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <svg class="icon"><use href="assets/icons/sprite.svg#book"></use></svg>
+                        All Subjects
+                    </h3>
+                    <span class="section-count">5 subjects</span>
+                </div>
+
+                <div class="subject-grid" id="subjectGrid">
+                    <!-- Subject cards will be injected here -->
+                </div>
+            </section>
+
+            <!-- Section: Quick Access -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <svg class="icon"><use href="assets/icons/sprite.svg#zap"></use></svg>
+                        Quick Access
+                    </h3>
+                </div>
+
+                <div class="quick-grid">
+                    <a href="practice/index.html" class="quick-card">
+                        <div class="quick-icon practice">
+                            <svg class="icon"><use href="assets/icons/sprite.svg#edit"></use></svg>
+                        </div>
+                        <span class="quick-label">Practice</span>
+                    </a>
+
+                    <a href="quiz/index.html" class="quick-card">
+                        <div class="quick-icon quiz">
+                            <svg class="icon"><use href="assets/icons/sprite.svg#award"></use></svg>
+                        </div>
+                        <span class="quick-label">Quiz</span>
+                    </a>
+
+                    <a href="pyq/index.html" class="quick-card">
+                        <div class="quick-icon pyq">
+                            <svg class="icon"><use href="assets/icons/sprite.svg#file-text"></use></svg>
+                        </div>
+                        <span class="quick-label">PYQs</span>
+                    </a>
+
+                    <a href="roadmap/index.html" class="quick-card">
+                        <div class="quick-icon roadmap">
+                            <svg class="icon"><use href="assets/icons/sprite.svg#map"></use></svg>
+                        </div>
+                        <span class="quick-label">Roadmap</span>
+                    </a>
+
+                    <a href="bookmarks/index.html" class="quick-card">
+                        <div class="quick-icon bookmarks">
+                            <svg class="icon"><use href="assets/icons/sprite.svg#bookmark"></use></svg>
+                        </div>
+                        <span class="quick-label">Saved</span>
+                    </a>
+
+                    <a href="suggestions/index.html" class="quick-card">
+                        <div class="quick-icon suggestions">
+                            <svg class="icon"><use href="assets/icons/sprite.svg#lightbulb"></use></svg>
+                        </div>
+                        <span class="quick-label">Tips</span>
+                    </a>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item active">
+                <svg class="icon"><use href="assets/icons/sprite.svg#home"></use></svg>
+                <span>Home</span>
+            </a>
+            <a href="practice/index.html" class="nav-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#edit"></use></svg>
+                <span>Practice</span>
+            </a>
+            <a href="quiz/index.html" class="nav-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#award"></use></svg>
+                <span>Quiz</span>
+            </a>
+            <a href="bookmarks/index.html" class="nav-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#bookmark"></use></svg>
+                <span>Saved</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- Side Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Side Menu Panel -->
+    <aside class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div class="menu-profile">
+                <div class="profile-avatar" id="profileAvatar"></div>
+                <div class="profile-info">
+                    <div class="profile-name" id="profileName">Student</div>
+                    <div class="profile-role">3rd Semester - CST</div>
+                </div>
+            </div>
+            <button class="icon-btn" id="closeMenuBtn">
+                <svg class="icon"><use href="assets/icons/sprite.svg#close"></use></svg>
+            </button>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="roadmap/index.html" class="menu-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#map"></use></svg>
+                <span>30-Day Roadmap</span>
+            </a>
+            <a href="suggestions/index.html" class="menu-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#lightbulb"></use></svg>
+                <span>Study Tips</span>
+            </a>
+            <div class="menu-divider"></div>
+            <a href="info/about.html" class="menu-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#info"></use></svg>
+                <span>About This App</span>
+            </a>
+            <a href="info/usage-guide.html" class="menu-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#help"></use></svg>
+                <span>How to Use</span>
+            </a>
+            <a href="info/contact.html" class="menu-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#mail"></use></svg>
+                <span>Contact & Feedback</span>
+            </a>
+            <a href="info/credits.html" class="menu-item">
+                <svg class="icon"><use href="assets/icons/sprite.svg#heart"></use></svg>
+                <span>Credits</span>
+            </a>
+            <div class="menu-divider"></div>
+            <button class="menu-item" id="resetAppBtn">
+                <svg class="icon"><use href="assets/icons/sprite.svg#refresh"></use></svg>
+                <span>Reset App Data</span>
+            </button>
+        </nav>
+
+        <div class="menu-footer">
+            <p>Version 1.0.0</p>
+            <p>Made with care for WB Polytechnic students</p>
+        </div>
+    </aside>
+
+    <!-- Scripts -->
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[SW] Registered', reg.scope))
+                    .catch(err => console.error('[SW] Registration failed', err));
+            });
+        }
+    </script>
+
+</body>
+</html>

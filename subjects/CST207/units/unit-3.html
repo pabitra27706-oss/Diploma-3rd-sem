@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 3 – Intel 8086 Microprocessor Architecture | CST207</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .reg-diagram {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .reg-group {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.9rem;
+    }
+    .reg-group h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin: 0 0 0.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.4rem;
+    }
+    .reg-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.3rem 0;
+      font-size: 0.83rem;
+    }
+    .reg-name {
+      background: var(--primary-color);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      min-width: 40px;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+    .reg-desc {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+    .pin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+    }
+    .pin-table th {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    .pin-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.45rem 0.75rem;
+      color: var(--text-secondary);
+    }
+    .pin-table tr:nth-child(even) td {
+      background: var(--card-bg);
+    }
+    .seg-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .seg-card {
+      background: var(--card-bg);
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .seg-card .seg-label {
+      font-weight: 700;
+      color: var(--primary-color);
+      font-size: 0.9rem;
+    }
+    .seg-card .seg-reg {
+      font-family: monospace;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 0.3rem;
+    }
+    .seg-card .seg-use {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+    .addr-formula {
+      background: var(--card-bg);
+      border-left: 4px solid var(--primary-color);
+      border-radius: 0 8px 8px 0;
+      padding: 0.75rem 1rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      margin: 0.5rem 0;
+    }
+    .flag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+    .flag-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.6rem;
+      text-align: center;
+    }
+    .flag-card .flag-bit {
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--primary-color);
+      font-size: 0.88rem;
+    }
+    .flag-card .flag-name {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+    .mode-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-top: 0.75rem;
+    }
+    .mode-table th {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    .mode-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 0.75rem;
+      color: var(--text-secondary);
+    }
+    .mode-table tr:nth-child(even) td {
+      background: var(--card-bg);
+    }
+    .instr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .instr-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+    .instr-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin: 0 0 0.4rem 0;
+    }
+    .instr-card code {
+      font-size: 0.8rem;
+      background: var(--border-color);
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      color: var(--text-primary);
+    }
+    .instr-card p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin: 0.3rem 0 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-microchip"></i>
+      <span>CST207 – Unit 3</span>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#block-diagram">Block Diagram</a>
+      <a href="#registers">Registers</a>
+      <a href="#segmentation">Segmentation</a>
+      <a href="#interrupts">Interrupts</a>
+      <a href="#addressing">Addressing</a>
+      <a href="#instructions">Instructions</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 3 – CST207</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#block-diagram">Block Diagram</a>
+    <a href="#registers">Register Structure</a>
+    <a href="#segmentation">Segmentation</a>
+    <a href="#interrupts">Interrupts</a>
+    <a href="#addressing">Addressing Modes</a>
+    <a href="#instructions">Instructions</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Q</a>
+    <a href="#long-questions">Long Q</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <h1><i class="fas fa-microchip"></i> Unit 3: Intel 8086 Microprocessor Architecture</h1>
+      <p>CST207 – System Organization &nbsp;|&nbsp; 10 Hours</p>
+      <div class="info-item" style="margin-top:0.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <span><i class="fas fa-clock"></i> 10 Hours</span>
+        <span><i class="fas fa-layer-group"></i> Full Depth</span>
+        <span><i class="fas fa-home"></i>
+          <a href="../index.html" style="color:inherit;">Back to CST207</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ============================================================
+       SECTION 1: OVERVIEW
+  ============================================================ -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What This Unit Covers</div>
+        <p>This unit introduces the Intel 8086 microprocessor — the foundation of all modern x86 processors. We study its internal architecture, register structure, memory segmentation model, interrupt handling, addressing modes, and instruction set. Understanding the 8086 is essential for writing assembly language programs in Unit 4.</p>
+      </div>
+      <div class="topic-grid" style="margin-top:1rem;">
+        <div class="topic-card">
+          <i class="fas fa-th-large"></i>
+          <h4>Block Diagram</h4>
+          <p>BIU and EU units, internal architecture overview</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-server"></i>
+          <h4>Register Structure</h4>
+          <p>General purpose, segment, pointer, index, flag registers</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-map-marked-alt"></i>
+          <h4>Segmentation</h4>
+          <p>CS, DS, SS, ES segments, physical address calculation</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-bell"></i>
+          <h4>Interrupts</h4>
+          <p>Maskable (INTR), Non-maskable (NMI), software interrupts</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-crosshairs"></i>
+          <h4>Addressing Modes</h4>
+          <p>Immediate, register, direct, indirect, relative, indexed</p>
+        </div>
+        <div class="topic-card">
+          <i class="fas fa-code"></i>
+          <h4>Instruction Set</h4>
+          <p>Data transfer, arithmetic, logical, branch, call instructions</p>
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-history"></i> Historical Context</div>
+        <p>The Intel 8086 was introduced in 1978 as a 16-bit microprocessor. It has a 16-bit data bus and a 20-bit address bus (1 MB addressable memory). It is the ancestor of all modern Intel/AMD x86 processors. The 8088 variant (used in IBM PC) had an 8-bit external data bus but same 16-bit internal architecture.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: BLOCK DIAGRAM
+  ============================================================ -->
+  <section class="section" id="block-diagram">
+    <h2 class="section-title">
+      <i class="fas fa-th-large"></i> 8086 Block Diagram &amp; Pin Functions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-sitemap"></i> Internal Architecture — Two Units</div>
+        <p>The 8086 is divided internally into two independent and parallel-working units:</p>
+        <ul style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
+          <li><strong>BIU (Bus Interface Unit):</strong> Handles all bus operations — fetches instructions from memory, reads/writes data. Contains the instruction queue (prefetch buffer), segment registers, IP (Instruction Pointer), and the address generation logic.</li>
+          <li><strong>EU (Execution Unit):</strong> Executes instructions. Contains the ALU, general-purpose registers, flag register, and the control unit. Receives instructions from the BIU's queue and executes them.</li>
+        </ul>
+        <div class="important-note" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-star"></i> Pipelining in 8086</div>
+          <p>The BIU and EU operate in parallel — while the EU executes one instruction, the BIU prefetches the next instructions into the 6-byte instruction queue. This is a basic form of pipelining that improves throughput.</p>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-stream"></i> BIU — Bus Interface Unit Details</div>
+        <ul style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
+          <li><strong>Instruction Queue:</strong> 6-byte FIFO buffer that holds prefetched instruction bytes. EU reads from this queue, BIU fills it from memory.</li>
+          <li><strong>Segment Registers:</strong> CS, DS, SS, ES — hold the base address (shifted left 4 bits) of the four memory segments.</li>
+          <li><strong>Instruction Pointer (IP):</strong> Holds the offset of the next instruction within the Code Segment.</li>
+          <li><strong>Address Adder:</strong> Computes 20-bit physical address from 16-bit segment register and 16-bit offset.</li>
+          <li><strong>Internal Bus:</strong> 16-bit internal bus connecting BIU to EU.</li>
+        </ul>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-cogs"></i> EU — Execution Unit Details</div>
+        <ul style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
+          <li><strong>ALU:</strong> 16-bit arithmetic and logic operations.</li>
+          <li><strong>General Purpose Registers:</strong> AX, BX, CX, DX (each 16-bit, dividable into two 8-bit halves).</li>
+          <li><strong>Pointer &amp; Index Registers:</strong> SP, BP, SI, DI.</li>
+          <li><strong>Flag Register:</strong> 16-bit register holding status flags (CF, ZF, SF, OF, etc.).</li>
+          <li><strong>Control Unit:</strong> Decodes instructions received from BIU queue and generates micro-operations.</li>
+        </ul>
+      </div>
+
+      <!-- Pin Functions -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-plug"></i> Important 8086 Pin Functions</div>
+        <p>The 8086 is a 40-pin DIP package. Key pins and their functions:</p>
+        <table class="pin-table">
+          <thead>
+            <tr>
+              <th>Pin(s)</th>
+              <th>Name</th>
+              <th>Direction</th>
+              <th>Function</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>AD0–AD15</td>
+              <td>Address/Data Bus</td>
+              <td>Bidirectional</td>
+              <td>Multiplexed — carries address (T1) and data (T2, T3)</td>
+            </tr>
+            <tr>
+              <td>A16–A19</td>
+              <td>Address Bus (high)</td>
+              <td>Output</td>
+              <td>Upper 4 bits of 20-bit address (multiplexed with status)</td>
+            </tr>
+            <tr>
+              <td>ALE</td>
+              <td>Address Latch Enable</td>
+              <td>Output</td>
+              <td>High during T1 — signals valid address on AD0–AD15</td>
+            </tr>
+            <tr>
+              <td>RD̄</td>
+              <td>Read</td>
+              <td>Output</td>
+              <td>Active LOW — indicates memory/IO read cycle</td>
+            </tr>
+            <tr>
+              <td>WR̄</td>
+              <td>Write</td>
+              <td>Output</td>
+              <td>Active LOW — indicates memory/IO write cycle</td>
+            </tr>
+            <tr>
+              <td>M/IŌ</td>
+              <td>Memory/IO Select</td>
+              <td>Output</td>
+              <td>HIGH = memory access; LOW = I/O access</td>
+            </tr>
+            <tr>
+              <td>RESET</td>
+              <td>Reset</td>
+              <td>Input</td>
+              <td>HIGH resets CPU. Execution starts from FFFF0H after reset.</td>
+            </tr>
+            <tr>
+              <td>CLK</td>
+              <td>Clock</td>
+              <td>Input</td>
+              <td>System clock input. 8086 runs at 5 MHz, 8 MHz, or 10 MHz.</td>
+            </tr>
+            <tr>
+              <td>INTR</td>
+              <td>Interrupt Request</td>
+              <td>Input</td>
+              <td>Maskable interrupt — can be disabled by clearing IF flag.</td>
+            </tr>
+            <tr>
+              <td>NMI</td>
+              <td>Non-Maskable Interrupt</td>
+              <td>Input</td>
+              <td>Cannot be disabled — always responded to. Higher priority than INTR.</td>
+            </tr>
+            <tr>
+              <td>HOLD</td>
+              <td>Hold Request</td>
+              <td>Input</td>
+              <td>DMA controller requests control of bus.</td>
+            </tr>
+            <tr>
+              <td>HLDA</td>
+              <td>Hold Acknowledge</td>
+              <td>Output</td>
+              <td>CPU acknowledges bus release to DMA controller.</td>
+            </tr>
+            <tr>
+              <td>MN/MX̄</td>
+              <td>Min/Max Mode</td>
+              <td>Input</td>
+              <td>HIGH = Minimum mode (single processor). LOW = Maximum mode (multiprocessor).</td>
+            </tr>
+            <tr>
+              <td>BHĒ</td>
+              <td>Bus High Enable</td>
+              <td>Output</td>
+              <td>Active LOW — enables upper byte (D8–D15) of data bus.</td>
+            </tr>
+            <tr>
+              <td>READY</td>
+              <td>Ready</td>
+              <td>Input</td>
+              <td>LOW causes CPU to insert wait states for slow memory/IO.</td>
+            </tr>
+            <tr>
+              <td>TEST̄</td>
+              <td>Test</td>
+              <td>Input</td>
+              <td>Used with WAIT instruction to synchronize with 8087 coprocessor.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="important-note" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-exclamation-circle"></i> Multiplexed Bus</div>
+          <p>The 8086 uses a <strong>multiplexed address/data bus</strong> on pins AD0–AD15. During T1 (first clock cycle of bus cycle), these pins carry the address. During T2 and T3, they carry data. The ALE signal is used to latch the address into an external latch (like 74LS373) before it disappears.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: REGISTER STRUCTURE
+  ============================================================ -->
+  <section class="section" id="registers">
+    <h2 class="section-title">
+      <i class="fas fa-server"></i> Register Structure
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Overview of 8086 Registers</div>
+        <p>The 8086 has fourteen 16-bit registers organized into four groups. Understanding these registers is critical for assembly programming.</p>
+      </div>
+
+      <div class="reg-diagram">
+
+        <!-- General Purpose -->
+        <div class="reg-group">
+          <h4><i class="fas fa-cube"></i> General Purpose Registers (GPR)</h4>
+          <div class="reg-row">
+            <span class="reg-name">AX</span>
+            <span class="reg-desc">Accumulator — arithmetic, I/O operations. AH (high byte) + AL (low byte)</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">BX</span>
+            <span class="reg-desc">Base register — memory addressing (base address). BH + BL</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">CX</span>
+            <span class="reg-desc">Counter — loop counter, shift count. CH + CL</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">DX</span>
+            <span class="reg-desc">Data register — I/O port address, MUL/DIV extension. DH + DL</span>
+          </div>
+        </div>
+
+        <!-- Segment Registers -->
+        <div class="reg-group">
+          <h4><i class="fas fa-map-marked-alt"></i> Segment Registers</h4>
+          <div class="reg-row">
+            <span class="reg-name">CS</span>
+            <span class="reg-desc">Code Segment — base address of program instructions</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">DS</span>
+            <span class="reg-desc">Data Segment — base address of data variables</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">SS</span>
+            <span class="reg-desc">Stack Segment — base address of the stack</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">ES</span>
+            <span class="reg-desc">Extra Segment — extra data segment (used by string ops)</span>
+          </div>
+        </div>
+
+        <!-- Pointer & Index -->
+        <div class="reg-group">
+          <h4><i class="fas fa-arrows-alt"></i> Pointer &amp; Index Registers</h4>
+          <div class="reg-row">
+            <span class="reg-name">SP</span>
+            <span class="reg-desc">Stack Pointer — points to top of stack in SS</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">BP</span>
+            <span class="reg-desc">Base Pointer — accesses parameters on stack in SS</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">SI</span>
+            <span class="reg-desc">Source Index — source address for string operations in DS</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">DI</span>
+            <span class="reg-desc">Destination Index — destination for string operations in ES</span>
+          </div>
+        </div>
+
+        <!-- Control Registers -->
+        <div class="reg-group">
+          <h4><i class="fas fa-sliders-h"></i> Control Registers</h4>
+          <div class="reg-row">
+            <span class="reg-name">IP</span>
+            <span class="reg-desc">Instruction Pointer — offset of next instruction in CS</span>
+          </div>
+          <div class="reg-row">
+            <span class="reg-name">FLAGS</span>
+            <span class="reg-desc">Flag Register — 16-bit status and control flags</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GPR Detail -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-layer-group"></i> General Purpose Register — 16/8 bit Split</div>
+        <p>Each GPR (AX, BX, CX, DX) can be accessed as a full 16-bit register or as two independent 8-bit registers:</p>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="pin-table">
+            <thead>
+              <tr><th>16-bit</th><th>High Byte (8-bit)</th><th>Low Byte (8-bit)</th><th>Primary Use</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>AX</td><td>AH</td><td>AL</td><td>Accumulator for arithmetic/IO</td></tr>
+              <tr><td>BX</td><td>BH</td><td>BL</td><td>Base address in memory</td></tr>
+              <tr><td>CX</td><td>CH</td><td>CL</td><td>Counter for loops and shifts</td></tr>
+              <tr><td>DX</td><td>DH</td><td>DL</td><td>Data/I/O port, MUL/DIV</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Flag Register -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-flag"></i> Flag Register (16-bit)</div>
+        <p>The flag register contains 9 active bits (7 are undefined). Divided into status flags and control flags:</p>
+        <div class="flag-grid">
+          <div class="flag-card">
+            <div class="flag-bit">CF</div>
+            <div class="flag-name">Carry Flag<br>Set on unsigned overflow</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">PF</div>
+            <div class="flag-name">Parity Flag<br>Set if result has even # of 1s</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">AF</div>
+            <div class="flag-name">Auxiliary Carry<br>BCD arithmetic carry from bit 3</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">ZF</div>
+            <div class="flag-name">Zero Flag<br>Set if result = 0</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">SF</div>
+            <div class="flag-name">Sign Flag<br>Set if result is negative (MSB=1)</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">OF</div>
+            <div class="flag-name">Overflow Flag<br>Set on signed overflow</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">TF</div>
+            <div class="flag-name">Trap Flag<br>Single-step/debug mode</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">IF</div>
+            <div class="flag-name">Interrupt Flag<br>Enables/disables INTR</div>
+          </div>
+          <div class="flag-card">
+            <div class="flag-bit">DF</div>
+            <div class="flag-name">Direction Flag<br>Controls string op direction</div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> Status vs Control Flags</div>
+          <p><strong>Status flags</strong> (CF, PF, AF, ZF, SF, OF) are set/cleared automatically by arithmetic and logic instructions to reflect the result. <strong>Control flags</strong> (TF, IF, DF) are set/cleared by the programmer to control CPU behavior.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: SEGMENTATION
+  ============================================================ -->
+  <section class="section" id="segmentation">
+    <h2 class="section-title">
+      <i class="fas fa-map-marked-alt"></i> Memory Segmentation
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Why Segmentation?</div>
+        <p>The 8086 has 16-bit registers but a 20-bit address bus. To address 1 MB (2²⁰ bytes) of memory using 16-bit registers, Intel introduced the segmented memory model. Memory is divided into logical segments, each up to 64 KB.</p>
+        <div class="formula-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-calculator"></i> Physical Address Calculation</div>
+          <div class="formula">Physical Address = Segment Register × 16 + Offset</div>
+          <div class="formula answer">= (Segment Register &lt;&lt; 4) + Offset</div>
+          <p style="font-size:0.88rem; margin-top:0.4rem;">The segment register value is shifted left by 4 bits (multiplied by 16 = 10H) and added to the 16-bit offset to produce a 20-bit physical address.</p>
+        </div>
+      </div>
+
+      <div class="seg-map">
+        <div class="seg-card">
+          <div class="seg-label"><i class="fas fa-code"></i> Code Segment</div>
+          <div class="seg-reg">CS : IP</div>
+          <div class="seg-use">Stores program instructions. IP holds offset of next instruction to execute.</div>
+        </div>
+        <div class="seg-card">
+          <div class="seg-label"><i class="fas fa-database"></i> Data Segment</div>
+          <div class="seg-reg">DS : offset</div>
+          <div class="seg-use">Stores data variables. BX, SI, DI used as offsets for addressing.</div>
+        </div>
+        <div class="seg-card">
+          <div class="seg-label"><i class="fas fa-layer-group"></i> Stack Segment</div>
+          <div class="seg-reg">SS : SP / BP</div>
+          <div class="seg-use">Stores the stack. SP points to top; BP accesses stack frame parameters.</div>
+        </div>
+        <div class="seg-card">
+          <div class="seg-label"><i class="fas fa-plus-circle"></i> Extra Segment</div>
+          <div class="seg-reg">ES : DI</div>
+          <div class="seg-use">Extra data segment. DI used as destination in string operations (MOVS, STOS).</div>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Physical Address Examples</div>
+        <div class="addr-formula">
+          CS = 1000H, IP = 0200H<br>
+          Physical Address = 1000H × 10H + 0200H<br>
+          = 10000H + 0200H = <strong>10200H</strong>
+        </div>
+        <div class="addr-formula" style="margin-top:0.5rem;">
+          DS = 2000H, Offset = 0050H<br>
+          Physical Address = 2000H × 10H + 0050H<br>
+          = 20000H + 0050H = <strong>20050H</strong>
+        </div>
+        <div class="warning-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Segment Overlap</div>
+          <p>Segments can overlap in memory. Two different segment:offset pairs can point to the same physical address. The same physical address can have multiple logical addresses (segment aliasing). Maximum segment size is 64 KB (FFFFH offset).</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: INTERRUPT MECHANISM
+  ============================================================ -->
+  <section class="section" id="interrupts">
+    <h2 class="section-title">
+      <i class="fas fa-bell"></i> Interrupt Mechanism
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is an Interrupt?</div>
+        <p>An interrupt is a signal that temporarily suspends the normal execution of a program and transfers control to a special routine called an Interrupt Service Routine (ISR). After the ISR completes, the original program resumes from where it was interrupted.</p>
+        <div class="algo-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-list-ol"></i> Interrupt Processing Steps</div>
+          <ol style="padding-left:1.3rem; line-height:2.2;">
+            <li>CPU completes current instruction.</li>
+            <li>CPU saves state: pushes FLAGS, CS, and IP onto the stack.</li>
+            <li>Clears IF and TF flags (to disable further interrupts during ISR).</li>
+            <li>Fetches interrupt vector from Interrupt Vector Table (IVT) at address 0000:0000.</li>
+            <li>Jumps to ISR (loads CS:IP from vector table).</li>
+            <li>ISR executes, handles the interrupt.</li>
+            <li>IRET instruction: pops IP, CS, FLAGS from stack → resumes original program.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Interrupt Vector Table (IVT)</div>
+        <p>The IVT occupies the first 1 KB of memory (addresses 0000:0000 to 0000:03FF). It has 256 entries, each 4 bytes (2 bytes for IP + 2 bytes for CS of ISR).</p>
+        <div class="formula-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-calculator"></i> IVT Address Calculation</div>
+          <div class="formula">IVT Address = Interrupt Type × 4</div>
+          <p style="font-size:0.88rem; margin-top:0.4rem;">Example: INT 21H → IVT address = 21H × 4 = 84H. CS:IP of ISR stored at 0000:0084H.</p>
+        </div>
+      </div>
+
+      <!-- Types of Interrupts -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-list"></i> Types of Interrupts in 8086</div>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="pin-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Source</th>
+                <th>Maskable?</th>
+                <th>Priority</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>NMI</strong></td>
+                <td>External (pin NMI)</td>
+                <td>No</td>
+                <td>Highest</td>
+                <td>Non-maskable. Triggered on rising edge. Used for power failure, memory parity errors.</td>
+              </tr>
+              <tr>
+                <td><strong>INTR</strong></td>
+                <td>External (pin INTR)</td>
+                <td>Yes (IF flag)</td>
+                <td>High</td>
+                <td>Maskable hardware interrupt. IF=1 → accepted; IF=0 → ignored. Level-triggered.</td>
+              </tr>
+              <tr>
+                <td><strong>INT n</strong></td>
+                <td>Software (instruction)</td>
+                <td>No</td>
+                <td>Medium</td>
+                <td>Software interrupt instruction. INT 21H = DOS services, INT 10H = BIOS video.</td>
+              </tr>
+              <tr>
+                <td><strong>INTO</strong></td>
+                <td>Software (instruction)</td>
+                <td>No</td>
+                <td>Medium</td>
+                <td>Interrupt on Overflow — triggers type 4 interrupt if OF flag is set.</td>
+              </tr>
+              <tr>
+                <td><strong>Single Step</strong></td>
+                <td>Internal (TF flag)</td>
+                <td>No</td>
+                <td>Low</td>
+                <td>When TF=1, CPU generates INT 1 after each instruction (for debugging).</td>
+              </tr>
+              <tr>
+                <td><strong>Divide Error</strong></td>
+                <td>Internal</td>
+                <td>No</td>
+                <td>Highest</td>
+                <td>Automatically triggered on division by zero (INT 0).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important-note" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-star"></i> Maskable vs Non-Maskable</div>
+          <ul style="padding-left:1.3rem; line-height:2;">
+            <li><strong>Maskable (INTR):</strong> Can be enabled/disabled using <code>STI</code> (Set Interrupt Flag) and <code>CLI</code> (Clear Interrupt Flag) instructions. When IF=0, INTR is ignored.</li>
+            <li><strong>Non-Maskable (NMI):</strong> Cannot be disabled by software. Always responded to. Used for critical hardware events (power failure, memory error).</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6: ADDRESSING MODES
+  ============================================================ -->
+  <section class="section" id="addressing">
+    <h2 class="section-title">
+      <i class="fas fa-crosshairs"></i> Addressing Modes
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What are Addressing Modes?</div>
+        <p>An addressing mode defines how the operand of an instruction is specified — where to find the data needed for the instruction. The 8086 supports a rich set of addressing modes providing flexibility in accessing data.</p>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <table class="mode-table">
+          <thead>
+            <tr>
+              <th>Mode</th>
+              <th>Example</th>
+              <th>Effective Address</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Immediate</strong></td>
+              <td><code>MOV AX, 1234H</code></td>
+              <td>No memory access</td>
+              <td>Operand is part of the instruction itself. Data = 1234H.</td>
+            </tr>
+            <tr>
+              <td><strong>Register</strong></td>
+              <td><code>MOV AX, BX</code></td>
+              <td>No memory access</td>
+              <td>Operand is in a register. Fastest mode — no memory fetch needed.</td>
+            </tr>
+            <tr>
+              <td><strong>Direct</strong></td>
+              <td><code>MOV AX, [2000H]</code></td>
+              <td>EA = 2000H</td>
+              <td>Effective address is directly given as a 16-bit displacement in the instruction.</td>
+            </tr>
+            <tr>
+              <td><strong>Register Indirect</strong></td>
+              <td><code>MOV AX, [BX]</code></td>
+              <td>EA = BX</td>
+              <td>Effective address is the content of a register (BX, SI, or DI).</td>
+            </tr>
+            <tr>
+              <td><strong>Register + Displacement</strong></td>
+              <td><code>MOV AX, [BX+10H]</code></td>
+              <td>EA = BX + 10H</td>
+              <td>EA = register content + constant displacement. Useful for array/structure access.</td>
+            </tr>
+            <tr>
+              <td><strong>Based Indexed</strong></td>
+              <td><code>MOV AX, [BX+SI]</code></td>
+              <td>EA = BX + SI</td>
+              <td>EA = base register (BX/BP) + index register (SI/DI). For 2D array access.</td>
+            </tr>
+            <tr>
+              <td><strong>Based Indexed + Displacement</strong></td>
+              <td><code>MOV AX, [BX+SI+05H]</code></td>
+              <td>EA = BX+SI+05H</td>
+              <td>Most complex. EA = base + index + displacement. For records in arrays.</td>
+            </tr>
+            <tr>
+              <td><strong>Relative</strong></td>
+              <td><code>JMP SHORT label</code></td>
+              <td>EA = IP + disp</td>
+              <td>Target address = IP + signed displacement. Used by branch instructions.</td>
+            </tr>
+            <tr>
+              <td><strong>Implicit</strong></td>
+              <td><code>PUSH AX</code></td>
+              <td>SP implied</td>
+              <td>Operand is implied by the instruction (e.g., PUSH always uses SP).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="formula-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Effective Address &amp; Physical Address</div>
+        <div class="formula">Effective Address (EA) = Base + Index + Displacement</div>
+        <div class="formula answer">Physical Address = DS × 10H + EA &nbsp; (for data accesses)</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">Base registers: BX, BP. Index registers: SI, DI. Displacement: 8-bit or 16-bit constant in instruction.</p>
+      </div>
+
+      <div class="tip-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Default Segment Associations</div>
+        <ul style="padding-left:1.3rem; line-height:2;">
+          <li>BX, SI, DI → default segment = <strong>DS</strong></li>
+          <li>BP → default segment = <strong>SS</strong></li>
+          <li>IP → always uses <strong>CS</strong></li>
+          <li>SP → always uses <strong>SS</strong></li>
+          <li>Segment override prefix can change the default (e.g., <code>ES:[BX]</code>)</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7: INSTRUCTIONS
+  ============================================================ -->
+  <section class="section" id="instructions">
+    <h2 class="section-title">
+      <i class="fas fa-code"></i> 8086 Instruction Set
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- Data Transfer -->
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-exchange-alt"></i> Data Transfer Instructions</div>
+        <div class="instr-grid">
+          <div class="instr-card">
+            <h4>MOV</h4>
+            <code>MOV dst, src</code>
+            <p>Move data from source to destination. Most used instruction.</p>
+          </div>
+          <div class="instr-card">
+            <h4>PUSH / POP</h4>
+            <code>PUSH AX &nbsp; POP BX</code>
+            <p>Push register onto stack (SP−2), Pop from stack into register (SP+2).</p>
+          </div>
+          <div class="instr-card">
+            <h4>XCHG</h4>
+            <code>XCHG AX, BX</code>
+            <p>Exchange contents of two registers or register and memory.</p>
+          </div>
+          <div class="instr-card">
+            <h4>IN / OUT</h4>
+            <code>IN AL, DX &nbsp; OUT DX, AL</code>
+            <p>Transfer data between accumulator and I/O port.</p>
+          </div>
+          <div class="instr-card">
+            <h4>LEA</h4>
+            <code>LEA BX, [2000H]</code>
+            <p>Load Effective Address — loads offset address into register (not the data).</p>
+          </div>
+          <div class="instr-card">
+            <h4>LDS / LES</h4>
+            <code>LDS SI, [BX]</code>
+            <p>Load DS:SI or ES:DI from memory (loads both segment and offset).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arithmetic Instructions -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-plus-minus"></i> Arithmetic Instructions</div>
+        <div class="instr-grid">
+          <div class="instr-card">
+            <h4>ADD</h4>
+            <code>ADD AX, BX</code>
+            <p>Add source to destination. Affects CF, ZF, SF, OF, PF, AF.</p>
+          </div>
+          <div class="instr-card">
+            <h4>SUB</h4>
+            <code>SUB AX, BX</code>
+            <p>Subtract source from destination. Uses 2's complement internally.</p>
+          </div>
+          <div class="instr-card">
+            <h4>ADC</h4>
+            <code>ADC AX, BX</code>
+            <p>Add with Carry — AX ← AX + BX + CF. For multi-precision addition.</p>
+          </div>
+          <div class="instr-card">
+            <h4>SBB</h4>
+            <code>SBB AX, BX</code>
+            <p>Subtract with Borrow — AX ← AX − BX − CF. Multi-precision subtraction.</p>
+          </div>
+          <div class="instr-card">
+            <h4>INC / DEC</h4>
+            <code>INC CX &nbsp; DEC BX</code>
+            <p>Increment/decrement by 1. Does NOT affect CF flag.</p>
+          </div>
+          <div class="instr-card">
+            <h4>MUL / IMUL</h4>
+            <code>MUL BX</code>
+            <p>Unsigned/Signed multiply. 8-bit: AX=AL×src. 16-bit: DX:AX=AX×src.</p>
+          </div>
+          <div class="instr-card">
+            <h4>DIV / IDIV</h4>
+            <code>DIV BX</code>
+            <p>Unsigned/Signed divide. 16-bit: AX=DX:AX÷src, DX=remainder.</p>
+          </div>
+          <div class="instr-card">
+            <h4>NEG</h4>
+            <code>NEG AX</code>
+            <p>Negate — forms 2's complement of operand. AX ← 0 − AX.</p>
+          </div>
+          <div class="instr-card">
+            <h4>CMP</h4>
+            <code>CMP AX, BX</code>
+            <p>Compare — performs AX−BX but only sets flags, does not store result.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logical Instructions -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Logical Instructions</div>
+        <div class="instr-grid">
+          <div class="instr-card">
+            <h4>AND</h4>
+            <code>AND AX, BX</code>
+            <p>Bitwise AND. Used for masking (clearing) bits. Clears CF and OF.</p>
+          </div>
+          <div class="instr-card">
+            <h4>OR</h4>
+            <code>OR AX, BX</code>
+            <p>Bitwise OR. Used for setting specific bits. Clears CF and OF.</p>
+          </div>
+          <div class="instr-card">
+            <h4>XOR</h4>
+            <code>XOR AX, AX</code>
+            <p>Bitwise XOR. XOR reg,reg clears a register to 0 efficiently.</p>
+          </div>
+          <div class="instr-card">
+            <h4>NOT</h4>
+            <code>NOT AX</code>
+            <p>Bitwise NOT (1's complement). Does not affect any flags.</p>
+          </div>
+          <div class="instr-card">
+            <h4>TEST</h4>
+            <code>TEST AX, 0001H</code>
+            <p>Bitwise AND but only sets flags (like CMP for AND). Checks specific bits.</p>
+          </div>
+          <div class="instr-card">
+            <h4>SHL/SAL, SHR, SAR</h4>
+            <code>SHL AX, 1</code>
+            <p>Shift left/right logical/arithmetic. CL holds shift count for counts &gt;1.</p>
+          </div>
+          <div class="instr-card">
+            <h4>ROL, ROR, RCL, RCR</h4>
+            <code>ROL AX, 1</code>
+            <p>Rotate left/right, rotate through carry left/right.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Branch/Call Instructions -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code-branch"></i> Branch &amp; Call Instructions</div>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="mode-table">
+            <thead>
+              <tr><th>Instruction</th><th>Condition</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>JMP label</code></td><td>Always</td><td>Unconditional jump to label</td></tr>
+              <tr><td><code>JZ / JE label</code></td><td>ZF = 1</td><td>Jump if Zero / Equal</td></tr>
+              <tr><td><code>JNZ / JNE label</code></td><td>ZF = 0</td><td>Jump if Not Zero / Not Equal</td></tr>
+              <tr><td><code>JC label</code></td><td>CF = 1</td><td>Jump if Carry set</td></tr>
+              <tr><td><code>JNC label</code></td><td>CF = 0</td><td>Jump if No Carry</td></tr>
+              <tr><td><code>JS label</code></td><td>SF = 1</td><td>Jump if Sign (negative)</td></tr>
+              <tr><td><code>JNS label</code></td><td>SF = 0</td><td>Jump if Not Sign (positive)</td></tr>
+              <tr><td><code>JO label</code></td><td>OF = 1</td><td>Jump if Overflow</td></tr>
+              <tr><td><code>JA / JNBE</code></td><td>CF=0 AND ZF=0</td><td>Jump if Above (unsigned &gt;)</td></tr>
+              <tr><td><code>JB / JNAE</code></td><td>CF = 1</td><td>Jump if Below (unsigned &lt;)</td></tr>
+              <tr><td><code>JG / JNLE</code></td><td>ZF=0 AND SF=OF</td><td>Jump if Greater (signed &gt;)</td></tr>
+              <tr><td><code>JL / JNGE</code></td><td>SF ≠ OF</td><td>Jump if Less (signed &lt;)</td></tr>
+              <tr><td><code>LOOP label</code></td><td>CX ≠ 0</td><td>Decrement CX; jump if CX ≠ 0</td></tr>
+              <tr><td><code>CALL proc</code></td><td>Always</td><td>Call subroutine — push IP (and CS for far), jump to proc</td></tr>
+              <tr><td><code>RET</code></td><td>Always</td><td>Return from subroutine — pop IP (and CS for far call)</td></tr>
+              <tr><td><code>INT n</code></td><td>Always</td><td>Software interrupt — push FLAGS, CS, IP; jump to ISR</td></tr>
+              <tr><td><code>IRET</code></td><td>Always</td><td>Return from interrupt — pop IP, CS, FLAGS</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 8: FORMULAS
+  ============================================================ -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Key Formulas
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-calculator"></i> Physical Address Calculation</div>
+        <div class="formula">Physical Address = Segment Register × 10H + Offset</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">Segment register is shifted left by 4 bits (×16). Both segment and offset are 16-bit. Result is 20-bit.</p>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Maximum Addressable Memory</div>
+        <div class="formula">Memory = 2²⁰ = 1 MB = 1,048,576 bytes</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">20-bit address bus → 2²⁰ unique addresses. Each address selects 1 byte.</p>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> IVT Entry Address</div>
+        <div class="formula">IVT Address = Interrupt Type Number × 4</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">Each IVT entry = 4 bytes (2 for IP + 2 for CS). Total IVT = 256 × 4 = 1024 bytes = 1 KB at 0000:0000.</p>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Effective Address (EA)</div>
+        <div class="formula">EA = Base Register + Index Register + Displacement</div>
+        <div class="formula answer">Physical = DS:EA (default for data) or CS:IP (for code)</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Maximum Segment Size</div>
+        <div class="formula">Max Segment Size = 2¹⁶ = 64 KB = 65,536 bytes</div>
+        <p style="font-size:0.88rem; margin-top:0.4rem;">Since offset is 16-bit, maximum offset = FFFFH = 65535. So each segment can be at most 64 KB.</p>
+      </div>
+
+    </div>
+  </section>
+    <!-- ============================================================
+       SECTION 9: DEFINITIONS
+  ============================================================ -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> BIU (Bus Interface Unit)</div>
+        <p>The unit in the 8086 that handles all external bus operations including instruction prefetching, memory reads/writes, and I/O operations. It contains the instruction queue, segment registers, IP, and address generation logic.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> EU (Execution Unit)</div>
+        <p>The unit in the 8086 that executes instructions received from the BIU's instruction queue. It contains the ALU, general-purpose registers, flag register, and control unit. It operates in parallel with the BIU.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Segmentation</div>
+        <p>A memory management technique used by the 8086 where the 1 MB address space is divided into logical segments of up to 64 KB each. A 20-bit physical address is formed by combining a 16-bit segment register value (shifted left 4 bits) with a 16-bit offset.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Interrupt Vector Table (IVT)</div>
+        <p>A table stored in the first 1 KB of memory (0000:0000 to 0000:03FF) containing 256 entries, each 4 bytes (CS:IP address of the ISR). The CPU uses this table to find the starting address of the Interrupt Service Routine for each interrupt type.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Addressing Mode</div>
+        <p>A method of specifying the location of an operand in an instruction. The 8086 supports multiple addressing modes including immediate, register, direct, register indirect, based indexed, and relative modes.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Effective Address (EA)</div>
+        <p>The 16-bit offset address within a segment used to locate an operand in memory. EA = Base Register + Index Register + Displacement. The physical address is then computed as Segment × 10H + EA.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> NMI (Non-Maskable Interrupt)</div>
+        <p>A hardware interrupt that cannot be disabled by software (cannot be masked using the IF flag). It has the highest priority among external interrupts and is used for critical events like power failure or memory parity errors.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Instruction Queue</div>
+        <p>A 6-byte FIFO buffer in the BIU that holds prefetched instruction bytes fetched from memory. The EU reads instructions from this queue while the BIU simultaneously fetches ahead, implementing basic pipelining.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 10: COMPARISONS
+  ============================================================ -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">BIU vs EU</p>
+        <table class="mode-table">
+          <thead>
+            <tr><th>Feature</th><th>BIU (Bus Interface Unit)</th><th>EU (Execution Unit)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Function</td><td>Handles all bus operations</td><td>Executes instructions</td></tr>
+            <tr><td>Contains</td><td>Instruction queue, segment registers, IP, address adder</td><td>ALU, GPRs, flags, control unit</td></tr>
+            <tr><td>Works with</td><td>External memory and I/O</td><td>Internal registers and ALU</td></tr>
+            <tr><td>Parallelism</td><td>Prefetches instructions ahead</td><td>Executes from queue simultaneously</td></tr>
+            <tr><td>Bus access</td><td>Yes — controls address/data/control bus</td><td>No — requests BIU for memory access</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">NMI vs INTR (Maskable vs Non-Maskable)</p>
+        <table class="mode-table">
+          <thead>
+            <tr><th>Feature</th><th>NMI</th><th>INTR</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Maskable</td><td>No — always responded</td><td>Yes — controlled by IF flag</td></tr>
+            <tr><td>Priority</td><td>Higher</td><td>Lower (than NMI)</td></tr>
+            <tr><td>Triggering</td><td>Rising edge (edge triggered)</td><td>Level triggered (high level)</td></tr>
+            <tr><td>Type number</td><td>Fixed — Type 2</td><td>Variable — sent by 8259 PIC</td></tr>
+            <tr><td>Use case</td><td>Power failure, memory error</td><td>Keyboard, timer, disk I/O</td></tr>
+            <tr><td>Enable/Disable</td><td>Cannot be disabled</td><td>CLI (disable) / STI (enable)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">MOV vs LEA</p>
+        <table class="mode-table">
+          <thead>
+            <tr><th>Feature</th><th>MOV BX, [2000H]</th><th>LEA BX, [2000H]</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>What is loaded</td><td>Data at address 2000H</td><td>Address 2000H itself</td></tr>
+            <tr><td>Memory access</td><td>Yes — reads from memory</td><td>No — computes address only</td></tr>
+            <tr><td>BX after instruction</td><td>Content of memory[2000H]</td><td>2000H</td></tr>
+            <tr><td>Use case</td><td>Load data value</td><td>Load pointer/address</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">8086 vs 8088</p>
+        <table class="mode-table">
+          <thead>
+            <tr><th>Feature</th><th>Intel 8086</th><th>Intel 8088</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Internal architecture</td><td>16-bit</td><td>16-bit (same)</td></tr>
+            <tr><td>External data bus</td><td>16-bit</td><td>8-bit</td></tr>
+            <tr><td>Instruction queue</td><td>6 bytes</td><td>4 bytes</td></tr>
+            <tr><td>Memory transfers</td><td>16-bit per cycle</td><td>8-bit per cycle (slower)</td></tr>
+            <tr><td>Used in</td><td>High performance systems</td><td>Original IBM PC (cost saving)</td></tr>
+            <tr><td>Address bus</td><td>20-bit (same)</td><td>20-bit (same)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1.25rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Status Flags vs Control Flags</p>
+        <table class="mode-table">
+          <thead>
+            <tr><th>Feature</th><th>Status Flags</th><th>Control Flags</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Flags</td><td>CF, PF, AF, ZF, SF, OF</td><td>TF, IF, DF</td></tr>
+            <tr><td>Set by</td><td>Automatically by instructions</td><td>Programmer using instructions</td></tr>
+            <tr><td>Purpose</td><td>Reflect result of last operation</td><td>Control CPU behavior</td></tr>
+            <tr><td>Used by</td><td>Conditional jump instructions</td><td>Debug, interrupt, string ops</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 11: MCQs
+  ============================================================ -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>The 8086 microprocessor has how many address lines and what is its maximum addressable memory?</p>
+          <ul class="options">
+            <li>a. 16 address lines, 64 KB</li>
+            <li>b. 20 address lines, 1 MB</li>
+            <li>c. 24 address lines, 16 MB</li>
+            <li>d. 32 address lines, 4 GB</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: b. 20 address lines, 1 MB</strong>
+            <p>The 8086 has a 20-bit address bus (A0–A19) giving 2²⁰ = 1,048,576 = 1 MB of addressable memory. Data bus is 16-bit.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Which unit of the 8086 is responsible for prefetching instructions from memory?</p>
+          <ul class="options">
+            <li>a. Execution Unit (EU)</li>
+            <li>b. Arithmetic Logic Unit (ALU)</li>
+            <li>c. Bus Interface Unit (BIU)</li>
+            <li>d. Control Unit (CU)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: c. Bus Interface Unit (BIU)</strong>
+            <p>The BIU handles all bus operations including fetching instructions from memory into the 6-byte instruction queue. The EU reads from this queue and executes instructions.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>If CS = 2000H and IP = 0300H, what is the physical address of the next instruction?</p>
+          <ul class="options">
+            <li>a. 2300H</li>
+            <li>b. 20300H</li>
+            <li>c. 23000H</li>
+            <li>d. 2030H</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: b. 20300H</strong>
+            <p>Physical Address = CS × 10H + IP = 2000H × 10H + 0300H = 20000H + 0300H = 20300H.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Which register is used as a loop counter in 8086 assembly language?</p>
+          <ul class="options">
+            <li>a. AX</li>
+            <li>b. BX</li>
+            <li>c. CX</li>
+            <li>d. DX</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. CX</strong>
+            <p>CX is the Counter register. The LOOP instruction automatically decrements CX and jumps if CX ≠ 0. CL also holds the shift count for SHL/SHR instructions.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>The instruction <code>MOV AX, 1234H</code> uses which addressing mode?</p>
+          <ul class="options">
+            <li>a. Register addressing</li>
+            <li>b. Direct addressing</li>
+            <li>c. Immediate addressing</li>
+            <li>d. Indirect addressing</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. Immediate addressing</strong>
+            <p>In immediate addressing, the operand (1234H) is directly specified in the instruction itself. No memory access needed to fetch the operand.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Which flag is used to enable or disable the maskable hardware interrupt (INTR)?</p>
+          <ul class="options">
+            <li>a. TF (Trap Flag)</li>
+            <li>b. SF (Sign Flag)</li>
+            <li>c. DF (Direction Flag)</li>
+            <li>d. IF (Interrupt Flag)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: d. IF (Interrupt Flag)</strong>
+            <p>IF=1 (set by STI instruction) enables INTR. IF=0 (cleared by CLI instruction) disables INTR. NMI cannot be masked and is always responded to regardless of IF.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>The Interrupt Vector Table (IVT) in 8086 occupies:</p>
+          <ul class="options">
+            <li>a. First 256 bytes of memory</li>
+            <li>b. First 512 bytes of memory</li>
+            <li>c. First 1 KB of memory</li>
+            <li>d. First 4 KB of memory</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: c. First 1 KB of memory</strong>
+            <p>256 interrupt types × 4 bytes each (2 for IP + 2 for CS) = 1024 bytes = 1 KB. Located at physical addresses 00000H to 003FFH.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Which segment register is used by default for stack operations (PUSH/POP)?</p>
+          <ul class="options">
+            <li>a. CS</li>
+            <li>b. DS</li>
+            <li>c. ES</li>
+            <li>d. SS</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: d. SS</strong>
+            <p>Stack operations (PUSH, POP, CALL, RET) always use the Stack Segment (SS) register. SP points to the current top of stack within SS.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What does the ALE (Address Latch Enable) pin signal indicate?</p>
+          <ul class="options">
+            <li>a. Data is valid on the bus</li>
+            <li>b. A valid address is present on AD0–AD15</li>
+            <li>c. CPU is in reset state</li>
+            <li>d. Interrupt is being acknowledged</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: b. A valid address is present on AD0–AD15</strong>
+            <p>ALE goes HIGH during T1 clock cycle when the address is valid on the multiplexed AD0–AD15 pins. External logic (latch like 74LS373) uses ALE to latch the address before the bus switches to data mode.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>The instruction <code>LEA BX, [SI+100H]</code> loads into BX:</p>
+          <ul class="options">
+            <li>a. The data at address SI+100H</li>
+            <li>b. The value 100H</li>
+            <li>c. The effective address SI+100H</li>
+            <li>d. The physical address DS:SI+100H</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: c. The effective address SI+100H</strong>
+            <p>LEA (Load Effective Address) loads the computed offset address (SI+100H) into BX — not the data at that address and not the physical address. No memory access occurs.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>After execution of <code>XOR AX, AX</code>, what is the value of AX?</p>
+          <ul class="options">
+            <li>a. FFFFH</li>
+            <li>b. Unchanged</li>
+            <li>c. 0000H</li>
+            <li>d. 0001H</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: c. 0000H</strong>
+            <p>XOR of any value with itself = 0. XOR AX, AX is a common and efficient way to clear a register to zero. It also clears CF and OF flags.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>Which instruction returns from an interrupt service routine?</p>
+          <ul class="options">
+            <li>a. RET</li>
+            <li>b. RETF</li>
+            <li>c. IRET</li>
+            <li>d. POP IP</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: c. IRET</strong>
+            <p>IRET (Interrupt Return) pops IP, CS, and FLAGS from the stack to restore the state saved when the interrupt was accepted. RET only pops IP (and CS for far calls) but not FLAGS.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 13</h4>
+          <p>In the 8086, which register pair is used to hold the result of a 16-bit multiplication?</p>
+          <ul class="options">
+            <li>a. AX and BX</li>
+            <li>b. DX and AX</li>
+            <li>c. CX and AX</li>
+            <li>d. AX only</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq13"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq13">
+            <strong>Answer: b. DX and AX</strong>
+            <p>For 16-bit × 16-bit multiplication (MUL/IMUL), the 32-bit result is stored in DX:AX (DX = high word, AX = low word). For 8-bit × 8-bit, result is in AX.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 14</h4>
+          <p>The LOOP instruction in 8086 automatically:</p>
+          <ul class="options">
+            <li>a. Increments CX and jumps if CX ≠ 0</li>
+            <li>b. Decrements CX and jumps if CX ≠ 0</li>
+            <li>c. Decrements CX and jumps if CX = 0</li>
+            <li>d. Checks ZF and jumps accordingly</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq14"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq14">
+            <strong>Answer: b. Decrements CX and jumps if CX ≠ 0</strong>
+            <p>LOOP decrements CX by 1. If CX ≠ 0 after decrement, it jumps to the label. If CX becomes 0, execution falls through to the next instruction.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 15</h4>
+          <p>What is the size of the instruction prefetch queue in the 8086?</p>
+          <ul class="options">
+            <li>a. 4 bytes</li>
+            <li>b. 6 bytes</li>
+            <li>c. 8 bytes</li>
+            <li>d. 16 bytes</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq15"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq15">
+            <strong>Answer: b. 6 bytes</strong>
+            <p>The 8086 BIU has a 6-byte instruction prefetch queue (FIFO). The 8088 has a 4-byte queue. The BIU fills this queue whenever the bus is free and the queue is not full.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 12: SHORT QUESTIONS
+  ============================================================ -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What are the two functional units of the 8086 and what does each do?</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>The 8086 has two functional units:</p>
+            <ul style="padding-left:1.3rem; line-height:2;">
+              <li><strong>BIU (Bus Interface Unit):</strong> Handles all external bus operations — fetches instructions into the 6-byte queue, reads/writes memory and I/O, generates 20-bit physical addresses from segment:offset pairs.</li>
+              <li><strong>EU (Execution Unit):</strong> Executes instructions fetched by BIU. Contains ALU, GPRs (AX, BX, CX, DX), pointer/index registers, and flag register. Both units operate in parallel for pipelining.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Calculate the physical address when DS = 3000H and offset = 0250H.</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p>Physical Address = DS × 10H + Offset</p>
+            <p>= 3000H × 10H + 0250H</p>
+            <p>= 30000H + 0250H</p>
+            <p>= <strong>30250H</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the purpose of the ALE pin in the 8086?</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p>ALE (Address Latch Enable) goes HIGH during T1 of the bus cycle when the address is valid on the multiplexed AD0–AD15 pins. External hardware (like 74LS373 latch) uses the falling edge of ALE to latch and hold the address, because AD0–AD15 will be used for data in the next clock cycle.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Differentiate between NMI and INTR interrupts.</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p><strong>NMI (Non-Maskable Interrupt):</strong> Cannot be disabled by software. Always responded to. Edge-triggered. Fixed type 2. Used for critical events (power failure).</p>
+            <p><strong>INTR (Maskable Interrupt):</strong> Can be enabled/disabled using STI/CLI instructions (IF flag). Level-triggered. Type number supplied by 8259 PIC. Used for keyboard, timer, I/O devices.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is the function of the flag register? Name any four flags.</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p>The flag register is a 16-bit register that reflects the status of the last arithmetic/logic operation and controls certain CPU behaviors. Four important flags:</p>
+            <ul style="padding-left:1.3rem; line-height:2;">
+              <li><strong>ZF (Zero Flag):</strong> Set when result = 0.</li>
+              <li><strong>CF (Carry Flag):</strong> Set on unsigned overflow/carry out.</li>
+              <li><strong>SF (Sign Flag):</strong> Set when result is negative (MSB=1).</li>
+              <li><strong>IF (Interrupt Flag):</strong> Controls maskable interrupts (STI sets, CLI clears).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the difference between MOV AX, [BX] and MOV AX, BX?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p><strong>MOV AX, BX:</strong> Register addressing. Copies the 16-bit content of BX directly into AX. No memory access. AX ← BX.</p>
+            <p><strong>MOV AX, [BX]:</strong> Register indirect addressing. Treats BX as a memory address (pointer). Reads the 16-bit data at memory location DS:BX into AX. AX ← Memory[DS:BX].</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What happens during an IRET instruction?</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p>IRET (Interrupt Return) pops three values from the stack in this order: first IP (restores instruction pointer), then CS (restores code segment), then FLAGS (restores all flags including IF and TF). This completely restores the processor state to what it was just before the interrupt occurred, resuming the interrupted program exactly where it left off.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the purpose of the CMP instruction? Does it modify any registers?</p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>CMP (Compare) subtracts the source from the destination operand and sets the flags (ZF, CF, SF, OF) based on the result, but does NOT store the result — neither operand is modified. It is used before conditional jump instructions (JZ, JNZ, JA, JB, etc.) to compare two values and then branch based on the comparison result.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 13: LONG QUESTIONS
+  ============================================================ -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Draw and explain the internal block diagram of the Intel 8086 microprocessor. Describe the function of BIU and EU in detail.</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p>The 8086 is internally divided into two independently operating units:</p>
+            <div class="algo-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-th-large"></i> BIU (Bus Interface Unit)</div>
+              <p><strong>Components:</strong></p>
+              <ul style="padding-left:1.3rem; line-height:2;">
+                <li>6-byte Instruction Queue (FIFO prefetch buffer)</li>
+                <li>Segment Registers: CS, DS, SS, ES</li>
+                <li>Instruction Pointer (IP)</li>
+                <li>Address Adder: computes Physical = Segment×10H + Offset</li>
+                <li>Internal 16-bit bus to EU</li>
+              </ul>
+              <p style="margin-top:0.5rem;"><strong>Function:</strong> Fetches instructions from memory into queue whenever queue has space and bus is free. Handles all memory read/write requests from EU. Generates 20-bit physical addresses.</p>
+            </div>
+            <div class="algo-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-cogs"></i> EU (Execution Unit)</div>
+              <p><strong>Components:</strong></p>
+              <ul style="padding-left:1.3rem; line-height:2;">
+                <li>16-bit ALU</li>
+                <li>General Purpose Registers: AX, BX, CX, DX</li>
+                <li>Pointer/Index Registers: SP, BP, SI, DI</li>
+                <li>Flag Register (16-bit)</li>
+                <li>Control Unit (instruction decoder)</li>
+              </ul>
+              <p style="margin-top:0.5rem;"><strong>Function:</strong> Reads instructions from BIU queue, decodes them, executes using ALU, updates flags, and requests BIU for memory operand access when needed.</p>
+            </div>
+            <div class="important-note" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-star"></i> Parallel Operation</div>
+              <p>BIU and EU work simultaneously — while EU executes instruction N, BIU prefetches instruction N+1, N+2 into the queue. This overlap improves throughput and is the 8086's basic pipeline mechanism.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain the memory segmentation in 8086. How is the physical address calculated? Give three numerical examples.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p><strong>Why Segmentation:</strong> 8086 has 16-bit registers but 20-bit address bus. Segmentation allows 16-bit registers to address 1 MB by dividing memory into logical segments.</p>
+            <p style="margin-top:0.5rem;"><strong>Four Segments:</strong></p>
+            <ul style="padding-left:1.3rem; line-height:2; margin-bottom:0.5rem;">
+              <li><strong>CS:IP</strong> — Code Segment: holds instructions</li>
+              <li><strong>DS:offset</strong> — Data Segment: holds data variables</li>
+              <li><strong>SS:SP/BP</strong> — Stack Segment: holds the stack</li>
+              <li><strong>ES:DI</strong> — Extra Segment: for string destinations</li>
+            </ul>
+            <div class="formula-box">
+              <div class="box-title"><i class="fas fa-calculator"></i> Formula</div>
+              <div class="formula">Physical Address = Segment × 10H + Offset</div>
+            </div>
+            <p style="margin-top:0.5rem;"><strong>Example 1:</strong></p>
+            <div class="addr-formula">CS = 1200H, IP = 0500H → PA = 12000H + 0500H = <strong>12500H</strong></div>
+            <p style="margin-top:0.5rem;"><strong>Example 2:</strong></p>
+            <div class="addr-formula">DS = 4000H, Offset = 0100H → PA = 40000H + 0100H = <strong>40100H</strong></div>
+            <p style="margin-top:0.5rem;"><strong>Example 3:</strong></p>
+            <div class="addr-formula">SS = 5000H, SP = 00FEH → PA = 50000H + 00FEH = <strong>500FEH</strong></div>
+            <div class="warning-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Key Points</div>
+              <ul style="padding-left:1.3rem; line-height:2;">
+                <li>Max segment size = 64 KB (16-bit offset → max FFFFH).</li>
+                <li>Segments can overlap in physical memory.</li>
+                <li>Same physical address can have multiple segment:offset representations.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain the interrupt mechanism of the 8086. Describe the steps that occur when an INTR interrupt is accepted. What is the role of the IVT?</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p><strong>Interrupt Mechanism:</strong> An interrupt suspends the current program and transfers control to an ISR. The 8086 supports hardware interrupts (NMI, INTR) and software interrupts (INT n).</p>
+            <div class="algo-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-list-ol"></i> Steps When INTR is Accepted</div>
+              <ol style="padding-left:1.3rem; line-height:2.2;">
+                <li>Device asserts INTR pin HIGH. CPU checks IF flag.</li>
+                <li>If IF=1, CPU completes current instruction.</li>
+                <li>CPU sends INTA (Interrupt Acknowledge) signal to 8259 PIC.</li>
+                <li>8259 PIC sends the interrupt type number on data bus.</li>
+                <li>CPU pushes FLAGS onto stack (saves status).</li>
+                <li>CPU clears IF and TF (disables further interrupts).</li>
+                <li>CPU pushes CS onto stack (saves code segment).</li>
+                <li>CPU pushes IP onto stack (saves return address).</li>
+                <li>CPU reads IVT at address = type × 4. Gets ISR CS:IP.</li>
+                <li>CPU loads CS:IP from IVT — jumps to ISR.</li>
+                <li>ISR executes and services the interrupt.</li>
+                <li>IRET: pops IP, CS, FLAGS from stack. Resumes original program.</li>
+              </ol>
+            </div>
+            <div class="definition-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-table"></i> IVT (Interrupt Vector Table)</div>
+              <p>Located at 0000:0000 to 0000:03FF (first 1 KB). 256 entries × 4 bytes each. Each entry = 2 bytes IP + 2 bytes CS of the ISR. Example: INT 21H ISR address found at physical address 21H × 4 = 84H.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Explain any five addressing modes of the 8086 with examples and effective address calculation for each.</p>
+          <button class="toggle-btn" data-target="lq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4">
+            <div class="table-wrapper">
+              <table class="mode-table">
+                <thead>
+                  <tr><th>Mode</th><th>Example</th><th>EA Calculation</th><th>Physical Address (DS=2000H)</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Immediate</strong></td>
+                    <td><code>MOV AX, 5678H</code></td>
+                    <td>No EA — data in instruction</td>
+                    <td>No memory access. AX ← 5678H</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Register</strong></td>
+                    <td><code>MOV AX, BX</code></td>
+                    <td>No EA — operand in register</td>
+                    <td>No memory access. AX ← BX</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Direct</strong></td>
+                    <td><code>MOV AX, [0100H]</code></td>
+                    <td>EA = 0100H</td>
+                    <td>PA = 20000H + 0100H = 20100H</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Register Indirect</strong></td>
+                    <td><code>MOV AX, [BX]</code> (BX=0200H)</td>
+                    <td>EA = BX = 0200H</td>
+                    <td>PA = 20000H + 0200H = 20200H</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Based + Displacement</strong></td>
+                    <td><code>MOV AX, [BX+50H]</code> (BX=0200H)</td>
+                    <td>EA = BX + 50H = 0250H</td>
+                    <td>PA = 20000H + 0250H = 20250H</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tip-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-lightbulb"></i> Why Multiple Modes?</div>
+              <p>Different modes suit different tasks. Immediate = constants. Register = fastest, no memory. Direct = fixed addresses. Indirect = pointers. Based+Displacement = structure/record fields. Based+Indexed = 2D arrays.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Describe the register structure of the 8086. Explain the role of each register group with examples.</p>
+          <button class="toggle-btn" data-target="lq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq5">
+            <p>The 8086 has 14 registers organized in four groups:</p>
+            <div class="algo-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-cube"></i> Group 1: General Purpose Registers</div>
+              <p>AX (Accumulator), BX (Base), CX (Counter), DX (Data). Each 16-bit, splittable into AH/AL etc.</p>
+              <ul style="padding-left:1.3rem; line-height:2; margin-top:0.3rem;">
+                <li>AX: primary for arithmetic/IO — <code>ADD AX, BX</code></li>
+                <li>BX: memory base address — <code>MOV AX, [BX]</code></li>
+                <li>CX: loop counter — <code>LOOP label</code> uses CX</li>
+                <li>DX: I/O port address, MUL/DIV extension — <code>MUL BX</code> → result in DX:AX</li>
+              </ul>
+            </div>
+            <div class="algo-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-map-marked-alt"></i> Group 2: Segment Registers</div>
+              <p>CS (Code), DS (Data), SS (Stack), ES (Extra). Hold base addresses of memory segments. Combined with 16-bit offset to form 20-bit physical address.</p>
+            </div>
+            <div class="algo-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-arrows-alt"></i> Group 3: Pointer &amp; Index Registers</div>
+              <p>SP (Stack Pointer — top of stack in SS), BP (Base Pointer — stack frame access), SI (Source Index — string source in DS), DI (Destination Index — string destination in ES).</p>
+            </div>
+            <div class="algo-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-sliders-h"></i> Group 4: Control Registers</div>
+              <p>IP (Instruction Pointer — offset of next instruction in CS, auto-incremented after fetch), FLAGS (16-bit — CF, PF, AF, ZF, SF, OF, TF, IF, DF).</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 14: PRACTICE
+  ============================================================ -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Calculate the physical addresses for the following segment:offset pairs:<br>
+          (a) CS = 1500H, IP = 0200H<br>
+          (b) DS = 3800H, BX = 0050H<br>
+          (c) SS = 2200H, SP = 00FEH</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <p><strong>(a) CS = 1500H, IP = 0200H:</strong></p>
+            <div class="addr-formula">PA = 1500H × 10H + 0200H = 15000H + 0200H = <strong>15200H</strong></div>
+            <p style="margin-top:0.5rem;"><strong>(b) DS = 3800H, BX = 0050H:</strong></p>
+            <div class="addr-formula">PA = 3800H × 10H + 0050H = 38000H + 0050H = <strong>38050H</strong></div>
+            <p style="margin-top:0.5rem;"><strong>(c) SS = 2200H, SP = 00FEH:</strong></p>
+            <div class="addr-formula">PA = 2200H × 10H + 00FEH = 22000H + 00FEH = <strong>220FEH</strong></div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Identify the addressing mode used in each of the following 8086 instructions:</p>
+          <p>(a) <code>MOV AX, 0FFH</code><br>
+          (b) <code>MOV AX, [BX+SI]</code><br>
+          (c) <code>MOV AX, CX</code><br>
+          (d) <code>MOV AX, [1200H]</code><br>
+          (e) <code>MOV AX, [BP+10H]</code></p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <ul style="padding-left:1.3rem; line-height:2.2;">
+              <li>(a) <code>MOV AX, 0FFH</code> → <strong>Immediate Addressing</strong> (operand 0FFH is in the instruction)</li>
+              <li>(b) <code>MOV AX, [BX+SI]</code> → <strong>Based Indexed Addressing</strong> (EA = BX + SI)</li>
+              <li>(c) <code>MOV AX, CX</code> → <strong>Register Addressing</strong> (both operands are registers)</li>
+              <li>(d) <code>MOV AX, [1200H]</code> → <strong>Direct Addressing</strong> (EA = 1200H directly specified)</li>
+              <li>(e) <code>MOV AX, [BP+10H]</code> → <strong>Register + Displacement Addressing</strong> (EA = BP + 10H; uses SS segment since BP)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Find the IVT address for the following interrupt types and state what is stored at that address:<br>
+          (a) INT 0 (Divide Error)<br>
+          (b) INT 21H (DOS Services)<br>
+          (c) INT 10H (BIOS Video)</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <p>Formula: IVT Address = Type Number × 4</p>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="mode-table">
+                <thead><tr><th>Interrupt</th><th>Type No.</th><th>IVT Address</th><th>Stored At</th></tr></thead>
+                <tbody>
+                  <tr><td>INT 0 (Divide Error)</td><td>0</td><td>0 × 4 = 0000H</td><td>CS:IP of Divide Error ISR at 0000:0000</td></tr>
+                  <tr><td>INT 21H (DOS)</td><td>21H = 33</td><td>33 × 4 = 84H</td><td>CS:IP of DOS ISR at 0000:0084H</td></tr>
+                  <tr><td>INT 10H (BIOS)</td><td>10H = 16</td><td>16 × 4 = 40H</td><td>CS:IP of BIOS Video ISR at 0000:0040H</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.5rem; font-size:0.88rem;">Each entry is 4 bytes: first 2 bytes = IP of ISR, next 2 bytes = CS of ISR.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Trace what happens step by step when the 8086 executes <code>INT 21H</code>. Assume stack is at SS=5000H, SP=0100H.</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-table"></i> INT 21H Execution Trace</div>
+              <p>1. CPU fetches and decodes INT 21H instruction.</p>
+              <p>2. SP ← SP − 2 = 00FEH. Stack PA = 5000H×10H+00FEH = 500FEH.</p>
+              <p>&nbsp;&nbsp;&nbsp;FLAGS pushed → Memory[500FEH] ← FLAGS</p>
+              <p>3. IF ← 0, TF ← 0 (interrupts disabled during ISR).</p>
+              <p>4. SP ← SP − 2 = 00FCH.</p>
+              <p>&nbsp;&nbsp;&nbsp;CS pushed → Memory[500FCH] ← CS</p>
+              <p>5. SP ← SP − 2 = 00FAH.</p>
+              <p>&nbsp;&nbsp;&nbsp;IP pushed → Memory[500FAH] ← IP (return address)</p>
+              <p>6. IVT address = 21H × 4 = 84H.</p>
+              <p>&nbsp;&nbsp;&nbsp;New IP ← Memory[0000:0084H]</p>
+              <p>&nbsp;&nbsp;&nbsp;New CS ← Memory[0000:0086H]</p>
+              <p>7. CPU jumps to CS:IP = ISR for INT 21H (DOS service handler).</p>
+              <p>8. ISR executes DOS service.</p>
+              <p>9. IRET: IP ← [stack], CS ← [stack], FLAGS ← [stack]. SP += 6.</p>
+              <p>10. Program resumes after INT 21H instruction.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>For the instruction <code>MOV AX, [BX+SI+0100H]</code>, if BX=1000H, SI=0200H, DS=4000H, calculate the Effective Address and Physical Address.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <p><strong>Addressing Mode:</strong> Based Indexed with Displacement</p>
+            <div class="formula-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-calculator"></i> Effective Address</div>
+              <div class="formula">EA = BX + SI + Displacement</div>
+              <div class="formula">EA = 1000H + 0200H + 0100H = 1300H</div>
+            </div>
+            <div class="formula-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-calculator"></i> Physical Address</div>
+              <div class="formula">PA = DS × 10H + EA</div>
+              <div class="formula">PA = 4000H × 10H + 1300H</div>
+              <div class="formula answer">PA = 40000H + 1300H = 41300H</div>
+            </div>
+            <p style="margin-top:0.5rem;">The 16-bit word at physical address 41300H is loaded into AX.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 15: REVISION
+  ============================================================ -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-redo"></i> Revision &amp; Quick Summary
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul style="padding-left:1.3rem; line-height:2.3;">
+          <li>8086: <strong>16-bit data bus, 20-bit address bus</strong>, 1 MB addressable memory, 40-pin DIP.</li>
+          <li>Two internal units: <strong>BIU</strong> (fetches instructions, handles bus) and <strong>EU</strong> (executes instructions) — work in parallel.</li>
+          <li>BIU has <strong>6-byte instruction queue</strong> (8088 has 4-byte). This provides basic pipelining.</li>
+          <li>Physical Address = <strong>Segment × 10H + Offset</strong> (20-bit result).</li>
+          <li>Four segments: <strong>CS:IP</strong> (code), <strong>DS:offset</strong> (data), <strong>SS:SP/BP</strong> (stack), <strong>ES:DI</strong> (extra).</li>
+          <li>Max segment size = <strong>64 KB</strong> (16-bit offset).</li>
+          <li>GPRs: <strong>AX, BX, CX, DX</strong> — each 16-bit, divisible into AH/AL, BH/BL, CH/CL, DH/DL.</li>
+          <li>CX = counter (LOOP), AX = accumulator (arithmetic/IO), BX = base (memory), DX = data (MUL/DIV/IO).</li>
+          <li>Flag register: <strong>CF, PF, AF, ZF, SF, OF</strong> (status) + <strong>TF, IF, DF</strong> (control).</li>
+          <li>IF=1 enables INTR (STI sets it). IF=0 disables INTR (CLI clears it). NMI cannot be masked.</li>
+          <li>IVT: <strong>256 entries × 4 bytes = 1 KB</strong> at 0000:0000 to 0000:03FF. Entry address = type × 4.</li>
+          <li>Interrupt response: push FLAGS → clear IF,TF → push CS → push IP → fetch ISR from IVT → jump to ISR.</li>
+          <li>IRET: pops IP, CS, FLAGS (in that order from stack).</li>
+          <li>INT n → software interrupt. NMI → non-maskable hardware. INTR → maskable hardware.</li>
+          <li>Addressing modes: Immediate (in instruction), Register (register to register), Direct (fixed address), Indirect ([BX]), Based+Disp ([BX+disp]), Based Indexed ([BX+SI]).</li>
+          <li>LEA loads <strong>address</strong>, MOV [addr] loads <strong>data</strong> at that address.</li>
+          <li>XOR AX,AX = fastest way to clear AX to 0.</li>
+          <li>CMP sets flags without storing result. TEST = AND without storing result.</li>
+          <li>MUL BX → 16-bit: result in <strong>DX:AX</strong>. DIV BX → quotient in <strong>AX</strong>, remainder in <strong>DX</strong>.</li>
+          <li>LOOP decrements <strong>CX</strong> and jumps if CX≠0. CALL pushes IP/CS, RET pops them.</li>
+          <li>AD0–AD15: <strong>multiplexed</strong> — address during T1 (ALE high), data during T2/T3.</li>
+          <li>After RESET: 8086 starts executing from <strong>FFFF0H</strong> (CS=FFFFH, IP=0000H).</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exam</div>
+        <ul style="padding-left:1.3rem; line-height:2.3;">
+          <li>Physical Address formula: <strong>Segment × 10H + Offset</strong> — most asked numerical.</li>
+          <li>8086: <strong>16-bit data bus, 20-bit address bus, 1 MB memory, 6-byte queue</strong>.</li>
+          <li>IVT entry address = <strong>Type × 4</strong>. Each entry = 4 bytes (IP low, IP high, CS low, CS high).</li>
+          <li>NMI = <strong>non-maskable</strong> (type 2, edge-triggered). INTR = <strong>maskable</strong> (IF flag, level-triggered).</li>
+          <li>IRET pops: <strong>IP then CS then FLAGS</strong> (reverse of what INT pushed).</li>
+          <li>Instruction prefetch queue: <strong>8086 = 6 bytes, 8088 = 4 bytes</strong>.</li>
+          <li>Default segments: BX/SI/DI → DS, BP/SP → SS, IP → CS, DI in string ops → ES.</li>
+          <li>MUL result: 8×8 → AX. 16×16 → <strong>DX:AX</strong>. DIV: quotient → AX, remainder → DX.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</div>
+        <ul style="padding-left:1.3rem; line-height:2.3;">
+          <li>❌ Multiplying segment by 16 (decimal) not 10H — both are the same but write <strong>× 10H</strong> in hex context.</li>
+          <li>❌ Confusing <strong>LEA</strong> (loads address/offset) with <strong>MOV</strong> (loads data at address).</li>
+          <li>❌ Saying NMI can be disabled — NMI is <strong>always non-maskable</strong>. Only INTR is maskable via IF.</li>
+          <li>❌ Confusing IRET with RET — IRET pops <strong>FLAGS too</strong>. RET only pops IP (and CS for far).</li>
+          <li>❌ Confusing BIU and EU roles — BIU handles the <strong>bus and prefetch</strong>, EU handles <strong>execution</strong>.</li>
+          <li>❌ Saying 8086 has separate address and data buses — AD0–AD15 is <strong>multiplexed</strong> (time-shared).</li>
+          <li>❌ Forgetting that INC/DEC do <strong>NOT affect CF</strong> (Carry Flag). All other arithmetic ops do.</li>
+          <li>❌ Confusing CMP with SUB — CMP does <strong>not store result</strong>, only sets flags. SUB stores result.</li>
+          <li>❌ Using wrong default segment — <strong>BP uses SS</strong> by default, not DS like BX/SI/DI.</li>
+          <li>❌ Saying 8086 starts at address 0 after reset — it starts at <strong>FFFF0H</strong> (CS=FFFFH, IP=0000H).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

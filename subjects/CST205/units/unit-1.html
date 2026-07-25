@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 1 - Introduction to Data Structures | CST205</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-database"></i>
+      <span>CST205 - Unit 1</span>
+    </div>
+    <div class="nav-links">
+      <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="#overview">Overview</a>
+      <a href="#terminology">Terminology</a>
+      <a href="#classification">Classification</a>
+      <a href="#operations">Operations</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 1</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="#overview"><i class="fas fa-info-circle"></i> Overview</a>
+    <a href="#terminology"><i class="fas fa-book"></i> Terminology</a>
+    <a href="#classification"><i class="fas fa-sitemap"></i> Classification</a>
+    <a href="#operations"><i class="fas fa-cogs"></i> Operations</a>
+    <a href="#mcqs"><i class="fas fa-question-circle"></i> MCQs</a>
+    <a href="#revision"><i class="fas fa-check-circle"></i> Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <div class="info-item">
+        <i class="fas fa-code"></i>
+        <span>CST205</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-bookmark"></i>
+        <span>Unit 1</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-clock"></i>
+        <span>3 Hours</span>
+      </div>
+    </div>
+    <h1><i class="fas fa-database"></i> Introduction to Data Structures</h1>
+    <p>Master the fundamental concepts, terminology, classification, and basic operations of data structures.</p>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="container">
+
+  <!-- Overview Section -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-info-circle"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You'll Learn</div>
+        <p>This unit introduces you to the foundational concepts of data structures — the backbone of efficient programming. You will learn how data is organized, stored, and accessed in computer memory, and understand the different types of data structures and their operations.</p>
+        <ul>
+          <li><strong>Basic Terminology:</strong> Data, Data Item, Data Type, Data Structure, Abstract Data Type (ADT)</li>
+          <li><strong>Classification:</strong> Primitive vs Non-Primitive, Linear vs Non-Linear structures</li>
+          <li><strong>Operations:</strong> Traversal, Insertion, Deletion, Searching, Sorting, Merging, Updating</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Why This Matters</div>
+        <p>Understanding data structures is critical for:</p>
+        <ul>
+          <li>Writing efficient and optimized programs</li>
+          <li>Solving complex computational problems</li>
+          <li>Building scalable software systems</li>
+          <li>Cracking technical interviews and competitive programming challenges</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Basic Terminology Section -->
+  <section class="section" id="terminology">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Basic Terminology
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> 1. Data</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Data</strong> refers to raw, unprocessed facts and figures that have no meaning on their own. Data is the basic building block of information.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Examples</div>
+        <ul>
+          <li>Numbers: 42, 3.14, -7</li>
+          <li>Characters: 'A', 'z', '$'</li>
+          <li>Symbols: @, #, %</li>
+          <li>Text strings: "Hello", "2024"</li>
+        </ul>
+        <p><strong>Note:</strong> Data becomes <em>information</em> when it is processed and given context.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 2. Data Item</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Data Item</strong> is a single unit of value. It is an elementary piece of information that cannot be divided further in a given context.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Examples</div>
+        <ul>
+          <li>A single roll number: 12345</li>
+          <li>A single student name: "John Doe"</li>
+          <li>A single temperature reading: 98.6</li>
+          <li>A single boolean value: true or false</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 3. Data Type</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Data Type</strong> is a classification that specifies which type of value a variable can hold and what operations can be performed on it. It determines the size and layout of the variable's memory, the range of values that can be stored, and the set of operations that can be applied.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Common Data Types in C</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Data Type</th>
+                <th>Size (bytes)</th>
+                <th>Range</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>int</td>
+                <td>4</td>
+                <td>-2,147,483,648 to 2,147,483,647</td>
+                <td>int age = 25;</td>
+              </tr>
+              <tr>
+                <td>float</td>
+                <td>4</td>
+                <td>3.4E-38 to 3.4E+38</td>
+                <td>float pi = 3.14;</td>
+              </tr>
+              <tr>
+                <td>char</td>
+                <td>1</td>
+                <td>-128 to 127 (ASCII)</td>
+                <td>char grade = 'A';</td>
+              </tr>
+              <tr>
+                <td>double</td>
+                <td>8</td>
+                <td>1.7E-308 to 1.7E+308</td>
+                <td>double balance = 12345.67;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 4. Data Structure</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Data Structure</strong> is a specialized way of organizing, storing, and managing data in a computer so that it can be accessed and modified efficiently. It is a collection of data values, the relationships among them, and the functions/operations that can be applied to the data.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Why Data Structures?</div>
+        <p>Data structures enable:</p>
+        <ul>
+          <li><strong>Efficient Access:</strong> Faster retrieval of data (e.g., searching in a sorted array vs unsorted)</li>
+          <li><strong>Memory Management:</strong> Optimal use of memory space</li>
+          <li><strong>Organization:</strong> Logical arrangement of related data</li>
+          <li><strong>Reusability:</strong> Code that can be reused for different applications</li>
+        </ul>
+      </div>
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Real-World Analogy</div>
+        <p>Think of a <strong>library</strong>. Books (data) are organized on shelves (data structure). You can find a book quickly if it's organized by category, author, or ISBN. Without organization, finding a book would take hours!</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 5. Abstract Data Type (ADT)</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>An <strong>Abstract Data Type (ADT)</strong> is a mathematical model for data types where the data is defined by its behavior (operations) from the point of view of a user, rather than by its implementation. ADT specifies <em>what</em> operations can be performed, but not <em>how</em> they are implemented.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Stack ADT Example</div>
+        <p>A <strong>Stack</strong> is defined by the following operations:</p>
+        <ul>
+          <li><code>push(item)</code> — Add an item to the top</li>
+          <li><code>pop()</code> — Remove and return the top item</li>
+          <li><code>peek()</code> — View the top item without removing it</li>
+          <li><code>isEmpty()</code> — Check if the stack is empty</li>
+        </ul>
+        <p><strong>Key Point:</strong> Whether the stack is implemented using an <em>array</em> or a <em>linked list</em> does not matter to the user. The behavior remains the same. This is the power of abstraction.</p>
+      </div>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> ADT vs Data Structure</div>
+        <ul>
+          <li><strong>ADT:</strong> Logical description (what operations are available)</li>
+          <li><strong>Data Structure:</strong> Physical implementation (how data is stored and accessed)</li>
+        </ul>
+        <p><strong>Example:</strong> Stack is an ADT. It can be implemented using an array or linked list (both are data structures).</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Classification Section -->
+  <section class="section" id="classification">
+    <h2 class="section-title">
+      <i class="fas fa-sitemap"></i> Classification of Data Structures
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-folder-tree"></i> Overview</div>
+        <p>Data structures can be broadly classified into two main categories:</p>
+        <ul>
+          <li><strong>Primitive Data Structures</strong> — Built-in types supported by the language</li>
+          <li><strong>Non-Primitive Data Structures</strong> — Complex structures derived from primitive types</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 1. Primitive Data Structures</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Primitive Data Structures</strong> are the fundamental data types that are directly supported and provided by the programming language itself. They represent single values and are the building blocks for more complex data structures.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list"></i> Examples</div>
+        <ul>
+          <li><code>int</code> — Integer numbers</li>
+          <li><code>char</code> — Single characters</li>
+          <li><code>float</code> — Floating-point numbers</li>
+          <li><code>double</code> — Double-precision floating-point numbers</li>
+          <li><code>pointer</code> — Memory addresses</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 2. Non-Primitive Data Structures</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Non-Primitive Data Structures</strong> are more complex data structures that are derived from primitive data types. They are used to store collections of data and define relationships between them.</p>
+      </div>
+      <p>Non-primitive data structures are further divided into two categories:</p>
+
+      <h4><i class="fas fa-caret-right"></i> A. Linear Data Structures</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-arrow-right"></i> Characteristics</div>
+        <p>In <strong>Linear Data Structures</strong>, elements are arranged in a sequential order. Each element is connected to its previous and next element (except the first and last). Traversal is done in a linear manner — one element after another.</p>
+      </div>
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Examples of Linear Data Structures</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Data Structure</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Array</strong></td>
+                <td>Fixed-size collection of elements of the same type stored in contiguous memory</td>
+              </tr>
+              <tr>
+                <td><strong>Linked List</strong></td>
+                <td>Collection of nodes where each node contains data and a pointer to the next node</td>
+              </tr>
+              <tr>
+                <td><strong>Stack</strong></td>
+                <td>LIFO (Last In First Out) structure — elements added/removed from the top</td>
+              </tr>
+              <tr>
+                <td><strong>Queue</strong></td>
+                <td>FIFO (First In First Out) structure — elements added at rear, removed from front</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> B. Non-Linear Data Structures</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Characteristics</div>
+        <p>In <strong>Non-Linear Data Structures</strong>, elements are not arranged in a sequential order. They are connected in a hierarchical or network manner. One element can be connected to multiple other elements. Traversal is non-linear.</p>
+      </div>
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Examples of Non-Linear Data Structures</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Data Structure</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tree</strong></td>
+                <td>Hierarchical structure with a root node and child nodes (e.g., Binary Tree, AVL Tree, B-Tree)</td>
+              </tr>
+              <tr>
+                <td><strong>Graph</strong></td>
+                <td>Collection of vertices (nodes) connected by edges (e.g., social networks, road maps)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> Linear vs Non-Linear</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Linear</th>
+                <th>Non-Linear</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Arrangement</strong></td>
+                <td>Sequential</td>
+                <td>Hierarchical / Network</td>
+              </tr>
+              <tr>
+                <td><strong>Traversal</strong></td>
+                <td>Single run (one after another)</td>
+                <td>Multiple runs (recursive/iterative)</td>
+              </tr>
+              <tr>
+                <td><strong>Memory</strong></td>
+                <td>Usually contiguous (arrays) or linked</td>
+                <td>Non-contiguous, complex relationships</td>
+              </tr>
+              <tr>
+                <td><strong>Examples</strong></td>
+                <td>Array, Stack, Queue, Linked List</td>
+                <td>Tree, Graph</td>
+              </tr>
+              <tr>
+                <td><strong>Complexity</strong></td>
+                <td>Easier to implement</td>
+                <td>More complex to implement</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Operations Section -->
+  <section class="section" id="operations">
+    <h2 class="section-title">
+      <i class="fas fa-cogs"></i> Operations on Data Structures
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Introduction</div>
+        <p>Operations are actions or functions that can be performed on data structures. Different data structures support different sets of operations, but there are some common operations that apply to most data structures.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 1. Traversal</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Traversal</strong> means visiting and accessing each element of the data structure exactly once for processing (e.g., displaying, summing, or searching).</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-code"></i> Example: Array Traversal in C</div>
+        <div class="code-box">
+          <pre><code>int arr[5] = {10, 20, 30, 40, 50};
+for(int i = 0; i &lt; 5; i++) {
+    printf("%d ", arr[i]);
+}
+// Output: 10 20 30 40 50</code></pre>
+        </div>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 2. Insertion</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Insertion</strong> is the process of adding a new element to the data structure at a specified position or following a specific rule.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Examples</div>
+        <ul>
+          <li>Inserting an element at the end of an array</li>
+          <li>Pushing an element onto a stack</li>
+          <li>Enqueuing an element into a queue</li>
+          <li>Inserting a node in a linked list</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 3. Deletion</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Deletion</strong> is the process of removing an existing element from the data structure.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Examples</div>
+        <ul>
+          <li>Deleting an element from an array</li>
+          <li>Popping an element from a stack</li>
+          <li>Dequeuing an element from a queue</li>
+          <li>Removing a node from a linked list</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 4. Searching</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Searching</strong> is the process of finding the location (index or address) of an element with a given key or value in the data structure.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Common Search Algorithms</div>
+        <ul>
+          <li><strong>Linear Search:</strong> Check each element one by one (O(n) time)</li>
+          <li><strong>Binary Search:</strong> Efficient search in sorted arrays (O(log n) time)</li>
+        </ul>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Linear Search Example in C</div>
+        <pre><code>int search(int arr[], int n, int key) {
+    for(int i = 0; i &lt; n; i++) {
+        if(arr[i] == key) {
+            return i;  // Element found at index i
+        }
+    }
+    return -1;  // Element not found
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 5. Sorting</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Sorting</strong> is the process of arranging elements of the data structure in a specific order — either ascending or descending.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Common Sorting Algorithms</div>
+        <ul>
+          <li><strong>Bubble Sort</strong> — Repeatedly swap adjacent elements if they are in wrong order</li>
+          <li><strong>Selection Sort</strong> — Select the smallest element and place it at the beginning</li>
+          <li><strong>Insertion Sort</strong> — Build the sorted array one item at a time</li>
+          <li><strong>Merge Sort</strong> — Divide and conquer approach (O(n log n))</li>
+          <li><strong>Quick Sort</strong> — Efficient divide and conquer (O(n log n) average)</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 6. Merging</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Merging</strong> is the process of combining two data structures of the same type into a single data structure.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Example</div>
+        <p>Merging two sorted arrays into one sorted array is a key operation in Merge Sort algorithm.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 7. Updating</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Updating</strong> (or Modification) is the process of changing the value of an existing element in the data structure.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-code"></i> Example</div>
+        <div class="code-box">
+          <pre><code>int arr[5] = {10, 20, 30, 40, 50};
+arr[2] = 99;  // Update element at index 2
+// Array becomes: {10, 20, 99, 40, 50}</code></pre>
+        </div>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Summary Table</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Traversal</strong></td>
+                <td>Visit each element once</td>
+                <td>Print all elements</td>
+              </tr>
+              <tr>
+                <td><strong>Insertion</strong></td>
+                <td>Add a new element</td>
+                <td>Push to stack</td>
+              </tr>
+              <tr>
+                <td><strong>Deletion</strong></td>
+                <td>Remove an element</td>
+                <td>Pop from stack</td>
+              </tr>
+              <tr>
+                <td><strong>Searching</strong></td>
+                <td>Find element location</td>
+                <td>Binary search</td>
+              </tr>
+              <tr>
+                <td><strong>Sorting</strong></td>
+                <td>Arrange in order</td>
+                <td>Quick sort</td>
+              </tr>
+              <tr>
+                <td><strong>Merging</strong></td>
+                <td>Combine two structures</td>
+                <td>Merge two arrays</td>
+              </tr>
+              <tr>
+                <td><strong>Updating</strong></td>
+                <td>Change element value</td>
+                <td>arr[i] = newValue</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Formulas Section -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Key Formulas
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Array Index Access</div>
+        <p class="formula">Element at position i: arr[i]</p>
+        <p class="formula">First element: arr[0]</p>
+        <p class="formula">Last element: arr[n-1], where n is the size</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Time Complexity Notation</div>
+        <p class="formula">O(1) — Constant time (e.g., array access)</p>
+        <p class="formula">O(n) — Linear time (e.g., traversal, linear search)</p>
+        <p class="formula">O(log n) — Logarithmic time (e.g., binary search)</p>
+        <p class="formula">O(n²) — Quadratic time (e.g., bubble sort)</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Memory for Array</div>
+        <p class="formula">Total memory = n × size of data type</p>
+        <p>Example: int arr[100] requires 100 × 4 = 400 bytes</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Definitions Section -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-bookmark"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="tag-grid">
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Data</div>
+          <p>Raw, unprocessed facts and figures with no meaning on their own.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Data Item</div>
+          <p>A single unit of value that cannot be divided further in a given context.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Data Type</div>
+          <p>A classification that specifies the type of value a variable can hold and operations allowed on it.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Data Structure</div>
+          <p>A specialized way of organizing and storing data for efficient access and modification.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> ADT</div>
+          <p>Abstract Data Type — a mathematical model defined by behavior (operations), not implementation.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Primitive</div>
+          <p>Fundamental data types directly supported by the language (int, char, float, etc.).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Non-Primitive</div>
+          <p>Complex data structures derived from primitive types (arrays, lists, trees, graphs).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Linear DS</div>
+          <p>Data arranged sequentially; each element connected to previous and next.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Non-Linear DS</div>
+          <p>Data arranged hierarchically or in a network; not sequential.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Traversal</div>
+          <p>Visiting each element of a data structure exactly once.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Insertion</div>
+          <p>Adding a new element to a data structure.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Deletion</div>
+          <p>Removing an element from a data structure.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Searching</div>
+          <p>Finding the location of an element with a given value.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Sorting</div>
+          <p>Arranging elements in a specific order (ascending or descending).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Merging</div>
+          <p>Combining two data structures of the same type into one.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Updating</div>
+          <p>Changing the value of an existing element.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Comparisons Section -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> Primitive vs Non-Primitive Data Structures</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Primitive</th>
+              <th>Non-Primitive</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Definition</strong></td>
+              <td>Basic data types provided by language</td>
+              <td>Complex types derived from primitives</td>
+            </tr>
+            <tr>
+              <td><strong>Examples</strong></td>
+              <td>int, char, float, double, pointer</td>
+              <td>Array, Stack, Queue, Tree, Graph</td>
+            </tr>
+            <tr>
+              <td><strong>Nature</strong></td>
+              <td>Store single values</td>
+              <td>Store collections of values</td>
+            </tr>
+            <tr>
+              <td><strong>Operations</strong></td>
+              <td>Basic arithmetic, comparison</td>
+              <td>Insertion, deletion, search, sort, etc.</td>
+            </tr>
+            <tr>
+              <td><strong>Memory</strong></td>
+              <td>Fixed size</td>
+              <td>Variable size (dynamic or static)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Linear vs Non-Linear Data Structures</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Linear</th>
+              <th>Non-Linear</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Arrangement</strong></td>
+              <td>Sequential, one after another</td>
+              <td>Hierarchical or network-based</td>
+            </tr>
+            <tr>
+              <td><strong>Traversal</strong></td>
+              <td>Single pass, linear order</td>
+              <td>Multiple paths, recursive/iterative</td>
+            </tr>
+            <tr>
+              <td><strong>Levels</strong></td>
+              <td>Elements on same level</td>
+              <td>Elements on different levels</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Use</strong></td>
+              <td>Efficient if contiguous</td>
+              <td>May require extra pointers</td>
+            </tr>
+            <tr>
+              <td><strong>Implementation</strong></td>
+              <td>Easier to implement</td>
+              <td>More complex to implement</td>
+            </tr>
+            <tr>
+              <td><strong>Examples</strong></td>
+              <td>Array, Stack, Queue, Linked List</td>
+              <td>Tree, Graph</td>
+            </tr>
+            <tr>
+              <td><strong>Use Cases</strong></td>
+              <td>Simple data storage and retrieval</td>
+              <td>Representing hierarchies, networks</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> ADT vs Data Structure</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>ADT</th>
+              <th>Data Structure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Definition</strong></td>
+              <td>Logical description of operations</td>
+              <td>Physical implementation of storage</td>
+            </tr>
+            <tr>
+              <td><strong>Focus</strong></td>
+              <td>What operations are possible</td>
+              <td>How data is stored and accessed</td>
+            </tr>
+            <tr>
+              <td><strong>Level</strong></td>
+              <td>Abstract, high-level</td>
+              <td>Concrete, low-level</td>
+            </tr>
+            <tr>
+              <td><strong>Example</strong></td>
+              <td>Stack ADT (push, pop, peek)</td>
+              <td>Array-based stack or Linked-list stack</td>
+            </tr>
+            <tr>
+              <td><strong>User View</strong></td>
+              <td>User sees only operations</td>
+              <td>Programmer sees storage details</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCQs Section -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Which of the following is a primitive data structure?</p>
+          <ul class="options">
+            <li>a. Stack</li>
+            <li>b. Queue</li>
+            <li>c. Integer</li>
+            <li>d. Tree</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: c. Integer</strong>
+            <p>Primitive data structures are basic types like int, char, float provided by the language. Stack, Queue, and Tree are non-primitive.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Which of the following is an example of a non-linear data structure?</p>
+          <ul class="options">
+            <li>a. Array</li>
+            <li>b. Linked List</li>
+            <li>c. Stack</li>
+            <li>d. Tree</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: d. Tree</strong>
+            <p>Tree is a non-linear data structure where elements are arranged hierarchically. Array, Linked List, and Stack are linear.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>What is the main difference between ADT and Data Structure?</p>
+          <ul class="options">
+            <li>a. ADT defines operations, Data Structure defines implementation</li>
+            <li>b. ADT is faster than Data Structure</li>
+            <li>c. They are the same thing</li>
+            <li>d. ADT uses less memory</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: a. ADT defines operations, Data Structure defines implementation</strong>
+            <p>ADT is a logical model (what operations), while Data Structure is the physical implementation (how data is stored).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Which operation visits each element of a data structure exactly once?</p>
+          <ul class="options">
+            <li>a. Insertion</li>
+            <li>b. Traversal</li>
+            <li>c. Deletion</li>
+            <li>d. Searching</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: b. Traversal</strong>
+            <p>Traversal is the process of visiting and processing each element exactly once.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>In linear data structures, elements are arranged in:</p>
+          <ul class="options">
+            <li>a. Hierarchical order</li>
+            <li>b. Random order</li>
+            <li>c. Sequential order</li>
+            <li>d. Network order</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. Sequential order</strong>
+            <p>Linear data structures arrange elements in a sequential manner, where each element is connected to the previous and next.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Which of the following is NOT a linear data structure?</p>
+          <ul class="options">
+            <li>a. Queue</li>
+            <li>b. Graph</li>
+            <li>c. Array</li>
+            <li>d. Linked List</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: b. Graph</strong>
+            <p>Graph is a non-linear data structure. Queue, Array, and Linked List are linear.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Short Questions Section -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-clipboard-question"></i> Short Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Define Data Structure.</p>
+          <button class="toggle-btn" data-target="sq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq1">
+            <p>A data structure is a specialized way of organizing, storing, and managing data in a computer so that it can be accessed and modified efficiently. It is a collection of data values, the relationships among them, and the operations that can be applied to the data.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>What is an Abstract Data Type (ADT)?</p>
+          <button class="toggle-btn" data-target="sq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq2">
+            <p>An Abstract Data Type (ADT) is a mathematical model for data types where the data is defined by its behavior (operations) from the user's point of view, rather than by its implementation. For example, Stack ADT is defined by push(), pop(), and peek() operations.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Differentiate between primitive and non-primitive data structures.</p>
+          <button class="toggle-btn" data-target="sq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq3">
+            <p><strong>Primitive:</strong> Basic data types directly supported by the language (int, char, float, double).</p>
+            <p><strong>Non-Primitive:</strong> Complex data structures derived from primitive types (Array, Stack, Queue, Tree, Graph).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>What is the difference between linear and non-linear data structures?</p>
+          <button class="toggle-btn" data-target="sq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq4">
+            <p><strong>Linear:</strong> Elements are arranged sequentially; traversal is linear (e.g., Array, Stack, Queue).</p>
+            <p><strong>Non-Linear:</strong> Elements are arranged hierarchically or in a network; traversal is non-linear (e.g., Tree, Graph).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>List any four operations on data structures.</p>
+          <button class="toggle-btn" data-target="sq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq5">
+            <p>1. Traversal — visiting each element</p>
+            <p>2. Insertion — adding a new element</p>
+            <p>3. Deletion — removing an element</p>
+            <p>4. Searching — finding an element's location</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>What is Traversal in data structures?</p>
+          <button class="toggle-btn" data-target="sq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq6">
+            <p>Traversal is the process of visiting and accessing each element of a data structure exactly once for processing, such as displaying or summing the elements.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Long Questions Section -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Explain the classification of data structures with examples.</p>
+          <button class="toggle-btn" data-target="lq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq1">
+            <p>Data structures can be classified into two main categories:</p>
+            <h4>1. Primitive Data Structures:</h4>
+            <p>These are fundamental data types directly supported by the programming language.</p>
+            <p><strong>Examples:</strong> int, char, float, double, pointer</p>
+            <h4>2. Non-Primitive Data Structures:</h4>
+            <p>These are complex data structures derived from primitive types. They are further classified into:</p>
+            <p><strong>A. Linear Data Structures:</strong></p>
+            <ul>
+              <li>Elements are arranged in sequential order</li>
+              <li>Examples: Array, Linked List, Stack, Queue</li>
+            </ul>
+            <p><strong>B. Non-Linear Data Structures:</strong></p>
+            <ul>
+              <li>Elements are arranged hierarchically or in a network</li>
+              <li>Examples: Tree, Graph</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Describe the basic operations that can be performed on data structures.</p>
+          <button class="toggle-btn" data-target="lq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq2">
+            <p>The basic operations on data structures are:</p>
+            <ol>
+              <li><strong>Traversal:</strong> Visiting each element exactly once for processing (e.g., printing all elements).</li>
+              <li><strong>Insertion:</strong> Adding a new element to the data structure at a specified position.</li>
+              <li><strong>Deletion:</strong> Removing an existing element from the data structure.</li>
+              <li><strong>Searching:</strong> Finding the location of an element with a given key or value.</li>
+              <li><strong>Sorting:</strong> Arranging elements in ascending or descending order.</li>
+              <li><strong>Merging:</strong> Combining two data structures of the same type into one.</li>
+              <li><strong>Updating:</strong> Modifying the value of an existing element.</li>
+            </ol>
+            <p>These operations form the foundation for working with any data structure efficiently.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>What is Abstract Data Type? Explain with an example.</p>
+          <button class="toggle-btn" data-target="lq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq3">
+            <p><strong>Abstract Data Type (ADT)</strong> is a mathematical model for data types where the data is defined by its behavior (operations) from the point of view of a user, rather than by its implementation.</p>
+            <h4>Key Points:</h4>
+            <ul>
+              <li>ADT specifies <em>what</em> operations can be performed</li>
+              <li>It does not specify <em>how</em> these operations are implemented</li>
+              <li>The implementation details are hidden from the user</li>
+            </ul>
+            <h4>Example: Stack ADT</h4>
+            <p>A Stack is an ADT that supports the following operations:</p>
+            <ul>
+              <li><code>push(item)</code> — Add an item to the top</li>
+              <li><code>pop()</code> — Remove and return the top item</li>
+              <li><code>peek()</code> — View the top item without removing</li>
+              <li><code>isEmpty()</code> — Check if stack is empty</li>
+            </ul>
+            <p><strong>Implementation Independence:</strong> The Stack ADT can be implemented using either an array or a linked list. The user doesn't need to know which implementation is used — they only use the operations provided.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Compare and contrast linear and non-linear data structures.</p>
+          <button class="toggle-btn" data-target="lq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq4">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Aspect</th>
+                    <th>Linear</th>
+                    <th>Non-Linear</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Arrangement</strong></td>
+                    <td>Sequential order</td>
+                    <td>Hierarchical/Network</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Traversal</strong></td>
+                    <td>Single pass, linear</td>
+                    <td>Multiple paths, recursive</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Levels</strong></td>
+                    <td>Single level</td>
+                    <td>Multiple levels</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Memory</strong></td>
+                    <td>Contiguous or linked</td>
+                    <td>Non-contiguous, complex</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Implementation</strong></td>
+                    <td>Easier</td>
+                    <td>More complex</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Examples</strong></td>
+                    <td>Array, Stack, Queue, List</td>
+                    <td>Tree, Graph</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Conclusion:</strong> Linear structures are simpler and suitable for sequential data, while non-linear structures are used for representing hierarchies and complex relationships.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Practice Section -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-laptop-code"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Write a C program to traverse and print all elements of an integer array.</p>
+          <button class="toggle-btn" data-target="pp1">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    int n = 5;
+    
+    printf("Array elements: ");
+    for(int i = 0; i &lt; n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
+
+// Output: Array elements: 10 20 30 40 50</code></pre>
+            </div>
+            <p><strong>Explanation:</strong> This program uses a for loop to traverse the array from index 0 to n-1 and prints each element.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Write a C program to perform linear search in an array.</p>
+          <button class="toggle-btn" data-target="pp2">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int linearSearch(int arr[], int n, int key) {
+    for(int i = 0; i &lt; n; i++) {
+        if(arr[i] == key) {
+            return i;  // Return index if found
+        }
+    }
+    return -1;  // Return -1 if not found
+}
+
+int main() {
+    int arr[] = {10, 25, 30, 45, 50};
+    int n = 5;
+    int key = 30;
+    
+    int result = linearSearch(arr, n, key);
+    
+    if(result != -1) {
+        printf("Element %d found at index %d\n", key, result);
+    } else {
+        printf("Element %d not found\n", key);
+    }
+    
+    return 0;
+}
+
+// Output: Element 30 found at index 2</code></pre>
+            </div>
+            <p><strong>Explanation:</strong> Linear search checks each element sequentially until the key is found or the array ends. Time complexity: O(n).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Write a C program to insert an element at a specific position in an array.</p>
+          <button class="toggle-btn" data-target="pp3">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+
+void insertElement(int arr[], int *n, int pos, int value) {
+    // Shift elements to the right
+    for(int i = *n; i > pos; i--) {
+        arr[i] = arr[i-1];
+    }
+    arr[pos] = value;
+    (*n)++;  // Increase array size
+}
+
+int main() {
+    int arr[10] = {10, 20, 30, 40, 50};
+    int n = 5;
+    int pos = 2;
+    int value = 99;
+    
+    printf("Before insertion: ");
+    for(int i = 0; i &lt; n; i++) printf("%d ", arr[i]);
+    printf("\n");
+    
+    insertElement(arr, &n, pos, value);
+    
+    printf("After insertion: ");
+    for(int i = 0; i &lt; n; i++) printf("%d ", arr[i]);
+    printf("\n");
+    
+    return 0;
+}
+
+// Output:
+// Before insertion: 10 20 30 40 50
+// After insertion: 10 20 99 30 40 50</code></pre>
+            </div>
+            <p><strong>Explanation:</strong> Elements from the insertion position onward are shifted right, then the new value is placed at the specified position.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Revision Section -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-check-circle"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Quick Revision Points</div>
+        <ul>
+          <li><strong>Data:</strong> Raw facts and figures (e.g., 42, 'A', "Hello").</li>
+          <li><strong>Data Item:</strong> A single unit of value.</li>
+          <li><strong>Data Type:</strong> Classification specifying type and allowed operations (int, char, float).</li>
+          <li><strong>Data Structure:</strong> Specialized way of organizing data for efficient access.</li>
+          <li><strong>ADT:</strong> Logical model defined by operations, not implementation.</li>
+          <li><strong>Primitive DS:</strong> int, char, float, double, pointer.</li>
+          <li><strong>Non-Primitive DS:</strong> Array, Stack, Queue, Tree, Graph.</li>
+          <li><strong>Linear DS:</strong> Sequential arrangement (Array, Stack, Queue, List).</li>
+          <li><strong>Non-Linear DS:</strong> Hierarchical arrangement (Tree, Graph).</li>
+          <li><strong>Operations:</strong> Traversal, Insertion, Deletion, Searching, Sorting, Merging, Updating.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exams</div>
+        <ul>
+          <li>Definition of Data Structure and ADT — very important for 1-mark and 2-mark questions.</li>
+          <li>Classification diagram: Primitive vs Non-Primitive, Linear vs Non-Linear — draw this in exams.</li>
+          <li>List of operations on data structures — know at least 5.</li>
+          <li>Difference between Linear and Non-Linear — frequently asked in comparison questions.</li>
+          <li>Examples of each type: Array (linear), Tree (non-linear), int (primitive).</li>
+          <li>Time complexity notation: O(1), O(n), O(log n), O(n²) — understand basics.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</div>
+        <ul>
+          <li>Confusing ADT with Data Structure — ADT is logical, DS is physical implementation.</li>
+          <li>Mixing primitive and non-primitive examples — int is primitive, array is non-primitive.</li>
+          <li>Forgetting that Graph is non-linear, not linear.</li>
+          <li>Not being able to list all 7 operations — practice writing them.</li>
+          <li>Confusing traversal (visit all) with searching (find one).</li>
+          <li>Not understanding that Stack can be implemented using array OR linked list (ADT concept).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

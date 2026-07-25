@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 2 – Decision Control & Looping | CST201</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../../units-com/common.css">
+<style>
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 6px 0;
+  }
+  .flow-arrow {
+    color: var(--accent, #4361ee);
+    font-size: 1.2rem;
+  }
+  .flow-box {
+    background: var(--box-bg, #f0f4ff);
+    border: 1px solid var(--border, #ddd);
+    border-radius: 6px;
+    padding: 5px 14px;
+    font-size: 0.88rem;
+  }
+  .loop-compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .loop-card {
+    background: var(--box-bg, #f0f4ff);
+    border: 1px solid var(--border, #ddd);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .loop-card h4 {
+    margin: 0 0 8px 0;
+    color: var(--accent, #4361ee);
+    font-size: 0.95rem;
+  }
+  .loop-card p, .loop-card li {
+    font-size: 0.86rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-code"></i> CST201 – Unit 2
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#decision">Decision</a>
+      <a href="#switch">Switch</a>
+      <a href="#goto">Goto</a>
+      <a href="#loops">Loops</a>
+      <a href="#jump">Jump</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="../index.html"><i class="fas fa-home"></i></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 2 – Control & Loops</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#decision">Decision Statements</a>
+    <a href="#switch">Switch-Case</a>
+    <a href="#goto">goto Statement</a>
+    <a href="#loops">Looping Statements</a>
+    <a href="#jump">Jump Statements</a>
+    <a href="#formulas">Formulas & Syntax</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+    <a href="../index.html">← Subject Home</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <h1><i class="fas fa-code-branch"></i> Unit 2: Decision Control &amp; Looping Statements</h1>
+    <p>CST201 — Computer Programming in C | 3rd Semester</p>
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-clock"></i> 5 Hours</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Module A</div>
+      <div class="info-item"><i class="fas fa-signal"></i> Foundation Level</div>
+      <div class="info-item"><i class="fas fa-file-code"></i> Language: C</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ======================== OVERVIEW ======================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You Will Learn</div>
+        <p>Unit 2 covers the <strong>control flow</strong> of a C program — how the program makes decisions and repeats actions. Without control structures, every program would execute line by line from top to bottom with no decisions or repetitions. This unit covers decision-making statements (if, if-else, switch), the goto statement, all three loop types (while, do-while, for), and jump statements (break, continue).</p>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3><i class="fas fa-random"></i> Decision Making</h3>
+          <p>if, if-else, else-if ladder, nested if-else — choosing what to execute based on conditions.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-list-ol"></i> Switch-Case</h3>
+          <p>Multi-way branching for discrete values. Efficient alternative to long if-else ladders.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-sign-out-alt"></i> goto Statement</h3>
+          <p>Unconditional jump. Rarely used; creates spaghetti code. Exam topic for drawbacks.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-redo"></i> Loops</h3>
+          <p>while, do-while, for — entry and exit controlled loops with nested loop applications.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-forward"></i> Jump Statements</h3>
+          <p>break exits the loop immediately; continue skips current iteration and goes to next.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== DECISION MAKING ======================== -->
+  <section class="section" id="decision">
+    <h2 class="section-title">
+      <i class="fas fa-random"></i> Decision Making Statements
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is Decision Making?</div>
+        <p>Decision making statements allow the program to choose between different paths of execution based on whether a condition evaluates to <strong>true (non-zero)</strong> or <strong>false (0)</strong>. In C, any non-zero value is treated as true.</p>
+      </div>
+
+      <!-- IF STATEMENT -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-angle-right"></i> 1. Simple if Statement</div>
+        <p>Executes a block of code only if the condition is true. If false, the block is skipped entirely.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>if (condition) {
+    /* statements executed only if condition is true */
+}</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int age = 20;
+    if (age >= 18) {
+        printf("You are eligible to vote.\n");
+    }
+    printf("Program continues...\n");
+    return 0;
+}
+/* Output:
+   You are eligible to vote.
+   Program continues...
+*/</pre>
+        </div>
+      </div>
+
+      <!-- IF-ELSE -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-angle-right"></i> 2. if-else Statement</div>
+        <p>Executes one block if the condition is true, and a different block if the condition is false. Exactly one block always executes.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>if (condition) {
+    /* executed if condition is TRUE */
+} else {
+    /* executed if condition is FALSE */
+}</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example — Even or Odd</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    if (n % 2 == 0) {
+        printf("%d is Even.\n", n);
+    } else {
+        printf("%d is Odd.\n", n);
+    }
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <!-- ELSE-IF LADDER -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-angle-right"></i> 3. else-if Ladder</div>
+        <p>Used when there are <strong>multiple mutually exclusive conditions</strong> to test. Conditions are checked from top to bottom. The first true condition's block executes and the rest are skipped. If none match, the final else runs.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>if (condition1) {
+    /* block 1 */
+} else if (condition2) {
+    /* block 2 */
+} else if (condition3) {
+    /* block 3 */
+} else {
+    /* default block — none of above matched */
+}</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example — Grading System</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int marks;
+    printf("Enter marks (0-100): ");
+    scanf("%d", &marks);
+
+    if (marks >= 90) {
+        printf("Grade: A (Distinction)\n");
+    } else if (marks >= 75) {
+        printf("Grade: B (First Class)\n");
+    } else if (marks >= 60) {
+        printf("Grade: C (Second Class)\n");
+    } else if (marks >= 40) {
+        printf("Grade: D (Pass)\n");
+    } else {
+        printf("Grade: F (Fail)\n");
+    }
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <!-- NESTED IF-ELSE -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-angle-right"></i> 4. Nested if-else</div>
+        <p>An if or if-else statement placed <strong>inside another if or else block</strong>. Used when a decision depends on multiple layered conditions.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example — Largest of Three Numbers</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a, b, c;
+    printf("Enter three numbers: ");
+    scanf("%d %d %d", &a, &b, &c);
+
+    if (a >= b) {
+        if (a >= c) {
+            printf("Largest = %d\n", a);
+        } else {
+            printf("Largest = %d\n", c);
+        }
+    } else {
+        if (b >= c) {
+            printf("Largest = %d\n", b);
+        } else {
+            printf("Largest = %d\n", c);
+        }
+    }
+    return 0;
+}</pre>
+        </div>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Dangling else Problem</div>
+          <p>In nested if-else, an <code>else</code> always pairs with the <strong>nearest unmatched if</strong>. Always use curly braces {} to avoid ambiguity and bugs caused by the dangling else problem.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SWITCH-CASE ======================== -->
+  <section class="section" id="switch">
+    <h2 class="section-title">
+      <i class="fas fa-list-ol"></i> Switch-Case Statement
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is Switch-Case?</div>
+        <p>The switch statement is a <strong>multi-way branching</strong> decision statement. It tests the value of an expression against multiple constant values (cases) and executes the matching case block. It is more efficient than an if-else ladder when testing a single variable against many discrete constant values.</p>
+      </div>
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+        <pre>switch (expression) {
+    case constant1:
+        /* statements */
+        break;
+    case constant2:
+        /* statements */
+        break;
+    case constant3:
+        /* statements */
+        break;
+    default:
+        /* statements — executed if no case matches */
+}</pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Key Rules of Switch-Case</div>
+        <ul>
+          <li>The <strong>expression</strong> must evaluate to an integer or character type (int, char). Float is NOT allowed.</li>
+          <li>Each <strong>case value must be a constant</strong> (not a variable or expression).</li>
+          <li>The <strong>break</strong> statement is used to exit the switch after a matching case executes. Without break, execution <strong>falls through</strong> to the next case.</li>
+          <li>The <strong>default</strong> case is optional and executes when no case matches. It is like the final else in an if-else ladder.</li>
+          <li>Two cases <strong>cannot have the same value</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Example — Simple Calculator using Switch</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a, b;
+    char op;
+    printf("Enter expression (e.g. 5 + 3): ");
+    scanf("%d %c %d", &a, &op, &b);
+
+    switch (op) {
+        case '+':
+            printf("Result = %d\n", a + b);
+            break;
+        case '-':
+            printf("Result = %d\n", a - b);
+            break;
+        case '*':
+            printf("Result = %d\n", a * b);
+            break;
+        case '/':
+            if (b != 0)
+                printf("Result = %d\n", a / b);
+            else
+                printf("Error: Division by zero!\n");
+            break;
+        default:
+            printf("Unknown operator!\n");
+    }
+    return 0;
+}</pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Fall-Through Behavior (Without break)</div>
+        <p>If you omit <code>break</code>, execution continues into the next case regardless of whether it matches. This is called <strong>fall-through</strong>. Sometimes intentional, but usually a bug.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Fall-Through Example</div>
+          <pre>int x = 2;
+switch(x) {
+    case 1: printf("One\n");   /* no break — falls through */
+    case 2: printf("Two\n");   /* no break — falls through */
+    case 3: printf("Three\n"); break;
+    case 4: printf("Four\n");
+}
+/* Output when x=2: Two   Three
+   (falls through from case 2 to case 3, then break stops it) */</pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== GOTO ======================== -->
+  <section class="section" id="goto">
+    <h2 class="section-title">
+      <i class="fas fa-sign-out-alt"></i> goto Statement
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is goto?</div>
+        <p>The <code>goto</code> statement causes an <strong>unconditional jump</strong> to a labeled statement anywhere in the same function. The label is a valid identifier followed by a colon (:).</p>
+      </div>
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+        <pre>goto label_name;
+/* ... other code ... */
+label_name:
+    /* statement to jump to */</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> goto Example</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int i = 1;
+    start:                     /* label */
+    if (i &lt;= 5) {
+        printf("%d\n", i);
+        i++;
+        goto start;            /* jump back to start */
+    }
+    return 0;
+}
+/* Output: 1 2 3 4 5 */</pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Drawbacks of goto — Why to Avoid It</div>
+        <ul>
+          <li><strong>Spaghetti Code</strong> — Uncontrolled jumps make the flow of execution very difficult to follow and understand.</li>
+          <li><strong>Difficult to Debug</strong> — When bugs occur, tracing the flow is nearly impossible with goto.</li>
+          <li><strong>Reduces Readability</strong> — goto breaks the top-to-bottom, structured flow of code.</li>
+          <li><strong>Harder to Maintain</strong> — Modifications to code with goto often introduce new bugs.</li>
+          <li><strong>Not needed</strong> — Any logic written with goto can be rewritten using loops and conditionals.</li>
+          <li>Famous computer scientist Edsger Dijkstra wrote a paper titled <strong>"Go To Statement Considered Harmful"</strong> (1968) arguing against its use.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== LOOPS ======================== -->
+  <section class="section" id="loops">
+    <h2 class="section-title">
+      <i class="fas fa-redo"></i> Looping / Iterative Statements
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is a Loop?</div>
+        <p>A loop is a control structure that allows a block of code to be executed <strong>repeatedly</strong> as long as a condition remains true. Loops eliminate the need to write the same code multiple times. C provides three types of loops: <strong>while</strong>, <strong>do-while</strong>, and <strong>for</strong>.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-layer-group"></i> Entry Controlled vs Exit Controlled Loops</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Feature</th><th>Entry Controlled</th><th>Exit Controlled</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Condition check</td><td>At the beginning (entry)</td><td>At the end (exit)</td></tr>
+              <tr><td>Minimum executions</td><td>Zero (may not execute at all)</td><td>One (always executes at least once)</td></tr>
+              <tr><td>Examples in C</td><td>while loop, for loop</td><td>do-while loop</td></tr>
+              <tr><td>Use case</td><td>When number of iterations may be zero</td><td>When at least one execution is required</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- WHILE LOOP -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-sync"></i> 1. while Loop (Entry Controlled)</div>
+        <p>The condition is checked <strong>before</strong> each iteration. If the condition is false at the start, the loop body never executes.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>initialization;
+while (condition) {
+    /* loop body */
+    update_expression;
+}</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example — Sum of 1 to N</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int n, i = 1, sum = 0;
+    printf("Enter N: ");
+    scanf("%d", &n);
+
+    while (i &lt;= n) {       /* condition checked before each iteration */
+        sum = sum + i;
+        i++;                /* update: prevents infinite loop */
+    }
+    printf("Sum = %d\n", sum);
+    return 0;
+}
+/* For N=5: Sum = 15 (1+2+3+4+5) */</pre>
+        </div>
+      </div>
+
+      <!-- DO-WHILE -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-sync-alt"></i> 2. do-while Loop (Exit Controlled)</div>
+        <p>The loop body executes <strong>first</strong>, and then the condition is checked. This guarantees the loop body runs <strong>at least once</strong>, even if the condition is initially false.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>initialization;
+do {
+    /* loop body — executes at least once */
+    update_expression;
+} while (condition);   /* semicolon is mandatory here! */</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example — Menu Driven Program</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int choice;
+    do {
+        printf("\n1. Add\n2. Subtract\n3. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: printf("Add selected\n"); break;
+            case 2: printf("Subtract selected\n"); break;
+            case 3: printf("Exiting...\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while (choice != 3);   /* keep showing menu until user exits */
+    return 0;
+}</pre>
+        </div>
+        <div class="tip-box">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> When to use do-while?</div>
+          <p>Use do-while for <strong>menu-driven programs</strong> where you want to show the menu at least once, or when input validation is needed and you must read input at least once before checking it.</p>
+        </div>
+      </div>
+
+      <!-- FOR LOOP -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> 3. for Loop (Entry Controlled)</div>
+        <p>The most compact loop structure. Combines <strong>initialization, condition, and update</strong> in a single line. Ideal when the number of iterations is known in advance.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>for (initialization; condition; update) {
+    /* loop body */
+}</pre>
+        </div>
+        <div class="algo-box">
+          <div class="box-title"><i class="fas fa-project-diagram"></i> Execution Flow of for Loop</div>
+          <div class="flow-step">
+            <span class="flow-box">Step 1: Initialization (runs only ONCE)</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-arrow"><i class="fas fa-arrow-down"></i></span>
+            <span class="flow-box">Step 2: Check Condition</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-arrow"><i class="fas fa-arrow-down"></i></span>
+            <span class="flow-box">If TRUE → Execute Loop Body → Step 3</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-arrow"><i class="fas fa-arrow-down"></i></span>
+            <span class="flow-box">Step 3: Update Expression → Go back to Step 2</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-arrow"><i class="fas fa-arrow-down"></i></span>
+            <span class="flow-box">If FALSE → Exit Loop</span>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Examples of for Loop</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    /* Example 1: Print 1 to 10 */
+    for (int i = 1; i &lt;= 10; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+
+    /* Example 2: Factorial */
+    int n = 5, fact = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        fact *= i;
+    }
+    printf("Factorial of %d = %d\n", n, fact);  /* 120 */
+
+    /* Example 3: Reverse counting */
+    for (int i = 10; i &gt;= 1; i--) {
+        printf("%d ", i);
+    }
+    printf("\n");
+
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <!-- NESTED LOOPS -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-layer-group"></i> 4. Nested Loops</div>
+        <p>A loop placed <strong>inside another loop</strong>. The inner loop completes all its iterations for each single iteration of the outer loop. Total iterations = outer × inner.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example — Multiplication Table (Nested for)</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    /* Print multiplication table from 1x1 to 5x5 */
+    for (int i = 1; i &lt;= 5; i++) {          /* outer loop */
+        for (int j = 1; j &lt;= 5; j++) {      /* inner loop */
+            printf("%4d", i * j);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+/* Output:
+    1    2    3    4    5
+    2    4    6    8   10
+    3    6    9   12   15
+    4    8   12   16   20
+    5   10   15   20   25
+*/</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Example — Star Pattern (Nested Loop Application)</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int n = 5;
+    for (int i = 1; i &lt;= n; i++) {
+        for (int j = 1; j &lt;= i; j++) {
+            printf("* ");
+        }
+        printf("\n");
+    }
+    return 0;
+}
+/* Output:
+   *
+   * *
+   * * *
+   * * * *
+   * * * * *
+*/</pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== JUMP STATEMENTS ======================== -->
+  <section class="section" id="jump">
+    <h2 class="section-title">
+      <i class="fas fa-forward"></i> Jump Statements: break and continue
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-stop-circle"></i> break Statement</div>
+        <p>The <code>break</code> statement causes an <strong>immediate exit</strong> from the innermost enclosing loop or switch statement. Program execution continues with the statement after the loop/switch.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> break Example — Stop at First Negative</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int num;
+    for (int i = 0; i &lt; 10; i++) {
+        printf("Enter number: ");
+        scanf("%d", &num);
+        if (num &lt; 0) {
+            printf("Negative number found. Stopping.\n");
+            break;         /* exits the for loop immediately */
+        }
+        printf("You entered: %d\n", num);
+    }
+    printf("Loop ended.\n");
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-step-forward"></i> continue Statement</div>
+        <p>The <code>continue</code> statement <strong>skips the remaining statements</strong> in the current iteration and jumps to the next iteration of the loop. Unlike break, it does NOT exit the loop — it just moves to the next iteration.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> continue Example — Skip Even Numbers</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    printf("Odd numbers from 1 to 10:\n");
+    for (int i = 1; i &lt;= 10; i++) {
+        if (i % 2 == 0) {
+            continue;    /* skip even numbers, go to next iteration */
+        }
+        printf("%d ", i);
+    }
+    printf("\n");
+    return 0;
+}
+/* Output: 1 3 5 7 9 */</pre>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">break vs continue Comparison</caption>
+          <thead>
+            <tr><th>Feature</th><th>break</th><th>continue</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Effect</td><td>Exits the loop completely</td><td>Skips current iteration only</td></tr>
+            <tr><td>Loop continues?</td><td>No — loop terminates</td><td>Yes — next iteration starts</td></tr>
+            <tr><td>Used in</td><td>Loops and switch</td><td>Loops only</td></tr>
+            <tr><td>Typical use</td><td>Stop on condition (e.g., found target)</td><td>Skip specific iterations (e.g., skip even)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== FORMULAS ======================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Key Syntax Reference
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> if-else Syntax</div>
+        <div class="formula">if (condition) { block1 } else { block2 }</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> switch-case Syntax</div>
+        <div class="formula">switch(expr) { case c1: ...; break; default: ...; }</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> while Loop Syntax</div>
+        <div class="formula">while (condition) { body; update; }</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> do-while Syntax</div>
+        <div class="formula">do { body; update; } while (condition);</div>
+        <div class="formula answer">Note: Semicolon after while() is mandatory in do-while!</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> for Loop Syntax</div>
+        <div class="formula">for (init; condition; update) { body; }</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Infinite Loop Patterns</div>
+        <div class="formula">while (1) { ... }   — infinite while loop</div>
+        <div class="formula">for (;;) { ... }    — infinite for loop</div>
+        <div class="formula answer">Use break inside to exit infinite loops</div>
+      </div>
+
+    </div>
+  </section>
+    <!-- ======================== DEFINITIONS ======================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Decision Making Statement</div>
+        <p>A statement that allows the program to choose between two or more execution paths based on whether a condition evaluates to true or false.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> else-if Ladder</div>
+        <p>A chain of if-else statements used to test multiple mutually exclusive conditions in sequence. The first matching condition executes its block and all others are skipped.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Switch Statement</div>
+        <p>A multi-way branching statement that tests the value of an expression against multiple constant case values and transfers control to the matching case.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Fall-Through</div>
+        <p>The behavior in a switch statement where execution continues into the next case block when the break statement is omitted from the current case.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Entry Controlled Loop</div>
+        <p>A loop in which the condition is tested before the loop body executes. If the condition is false at the start, the body may never execute. Examples: while, for.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Exit Controlled Loop</div>
+        <p>A loop in which the condition is tested after the loop body executes. The body always executes at least once regardless of the condition. Example: do-while.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Nested Loop</div>
+        <p>A loop structure where one loop is placed inside another. The inner loop completes all its iterations for every single iteration of the outer loop.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> break Statement</div>
+        <p>A jump statement that immediately terminates the execution of the innermost loop or switch statement and transfers control to the statement following it.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> continue Statement</div>
+        <p>A jump statement that skips the remaining statements of the current loop iteration and transfers control to the loop's update expression (for) or condition check (while/do-while).</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> goto Statement</div>
+        <p>An unconditional jump statement that transfers control to a labeled statement anywhere within the same function. Its use is discouraged because it creates unreadable "spaghetti code".</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== COMPARISONS ======================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">if-else Ladder vs switch-case</caption>
+          <thead>
+            <tr><th>Feature</th><th>if-else Ladder</th><th>switch-case</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Condition type</td><td>Any expression (ranges, complex conditions)</td><td>Only equality check against constants</td></tr>
+            <tr><td>Data types</td><td>Works with all types including float</td><td>Only int and char (not float)</td></tr>
+            <tr><td>Speed</td><td>Slower for many conditions</td><td>Faster (uses jump table internally)</td></tr>
+            <tr><td>Readability</td><td>Can become messy with many conditions</td><td>Cleaner for many discrete values</td></tr>
+            <tr><td>Default handler</td><td>final else block</td><td>default case</td></tr>
+            <tr><td>Range checking</td><td>Possible (e.g., marks &gt;= 60)</td><td>Not possible</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">while vs do-while vs for Loop</caption>
+          <thead>
+            <tr><th>Feature</th><th>while</th><th>do-while</th><th>for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Type</td><td>Entry controlled</td><td>Exit controlled</td><td>Entry controlled</td></tr>
+            <tr><td>Condition check</td><td>Before body</td><td>After body</td><td>Before body</td></tr>
+            <tr><td>Min executions</td><td>0</td><td>1 (always)</td><td>0</td></tr>
+            <tr><td>Semicolon after condition</td><td>No</td><td>Yes — mandatory</td><td>No</td></tr>
+            <tr><td>Best used when</td><td>Number of iterations unknown</td><td>Must execute at least once (menus)</td><td>Number of iterations known</td></tr>
+            <tr><td>Init/Update location</td><td>Outside and inside loop</td><td>Outside and inside loop</td><td>Inside loop header</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">break vs continue vs goto</caption>
+          <thead>
+            <tr><th>Feature</th><th>break</th><th>continue</th><th>goto</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Action</td><td>Exits loop/switch completely</td><td>Skips current iteration</td><td>Jumps to labeled statement</td></tr>
+            <tr><td>Loop continues?</td><td>No</td><td>Yes (next iteration)</td><td>Depends on label location</td></tr>
+            <tr><td>Used in</td><td>Loops and switch</td><td>Loops only</td><td>Anywhere in function</td></tr>
+            <tr><td>Recommended?</td><td>Yes — common use</td><td>Yes — common use</td><td>No — avoid in structured code</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== MCQs ======================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Which of the following is an exit-controlled loop in C?</p>
+          <ul class="options">
+            <li>a. for loop</li>
+            <li>b. while loop</li>
+            <li>c. do-while loop</li>
+            <li>d. None of the above</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: c. do-while loop</strong>
+            <p>The do-while loop is exit-controlled because the condition is checked AFTER the loop body executes, guaranteeing at least one execution. for and while are entry-controlled.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the minimum number of times a do-while loop body executes?</p>
+          <ul class="options">
+            <li>a. 0</li>
+            <li>b. 1</li>
+            <li>c. 2</li>
+            <li>d. Depends on condition</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: b. 1</strong>
+            <p>The do-while loop always executes its body at least once because the condition is checked after the body. Even if the condition is false from the start, the body runs once.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What happens when a break statement is encountered inside a switch inside a for loop?</p>
+          <ul class="options">
+            <li>a. Exits both the switch and the for loop</li>
+            <li>b. Exits only the switch statement</li>
+            <li>c. Exits only the for loop</li>
+            <li>d. Causes a compile error</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: b. Exits only the switch statement</strong>
+            <p>The break statement exits the innermost enclosing loop or switch. Since the switch is innermost here, only the switch is exited. The for loop continues its next iteration.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Which data type CANNOT be used in a switch expression?</p>
+          <ul class="options">
+            <li>a. int</li>
+            <li>b. char</li>
+            <li>c. float</li>
+            <li>d. long</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. float</strong>
+            <p>The switch statement in C only works with integer types (int, char, long, short, enum). Float and double cannot be used because equality comparison with floating-point is unreliable.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is the output of: <code>for(int i=0; i&lt;5; i++) { if(i==3) continue; printf("%d ",i); }</code></p>
+          <ul class="options">
+            <li>a. 0 1 2 3 4</li>
+            <li>b. 0 1 2 4</li>
+            <li>c. 0 1 2</li>
+            <li>d. 1 2 4 5</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: b. 0 1 2 4</strong>
+            <p>When i=3, the continue statement skips the printf for that iteration and goes to i++ (i becomes 4). So 3 is skipped in the output. All other values (0,1,2,4) are printed.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>The goto statement is discouraged in C programming mainly because:</p>
+          <ul class="options">
+            <li>a. It is slow</li>
+            <li>b. It creates spaghetti code that is hard to read and debug</li>
+            <li>c. It cannot jump forward in code</li>
+            <li>d. It requires special header files</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: b. It creates spaghetti code that is hard to read and debug</strong>
+            <p>goto breaks the structured, top-to-bottom flow of code, making it difficult to trace, debug, and maintain. Edsger Dijkstra's famous paper "Go To Statement Considered Harmful" argued this point.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>In a switch statement, what is the role of the default case?</p>
+          <ul class="options">
+            <li>a. It is mandatory and always executes</li>
+            <li>b. It executes when no other case matches</li>
+            <li>c. It is the first case to be checked</li>
+            <li>d. It terminates the switch</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: b. It executes when no other case matches</strong>
+            <p>The default case is optional (not mandatory) and executes only when none of the case values match the switch expression. It is equivalent to the final else in an if-else ladder.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>How many times does the following loop execute? <code>for(int i=10; i&gt;0; i-=3)</code></p>
+          <ul class="options">
+            <li>a. 3</li>
+            <li>b. 4</li>
+            <li>c. 10</li>
+            <li>d. Infinite</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: b. 4</strong>
+            <p>i takes values: 10 (i&gt;0 ✓), 7 (✓), 4 (✓), 1 (✓), -2 (✗ — condition fails). So the loop executes 4 times with i = 10, 7, 4, 1.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What is "fall-through" in a switch statement?</p>
+          <ul class="options">
+            <li>a. When the switch fails to match any case</li>
+            <li>b. When execution continues to next case after a matched case due to missing break</li>
+            <li>c. When default executes first</li>
+            <li>d. When switch exits without executing any case</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: b. When execution continues to next case after a matched case due to missing break</strong>
+            <p>Fall-through occurs when a break statement is missing from a case. Execution "falls" into the next case and continues until a break or end of switch is reached, regardless of whether that case matches.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>Which loop is best suited when the exact number of iterations is known beforehand?</p>
+          <ul class="options">
+            <li>a. while loop</li>
+            <li>b. do-while loop</li>
+            <li>c. for loop</li>
+            <li>d. goto loop</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: c. for loop</strong>
+            <p>The for loop is ideal when the number of iterations is known in advance because it keeps initialization, condition, and update together in one line, making the code compact and readable.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SHORT QUESTIONS ======================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the difference between entry-controlled and exit-controlled loops?</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>In an <strong>entry-controlled loop</strong> (while, for), the condition is tested before the loop body executes. If the condition is false initially, the body may never run. In an <strong>exit-controlled loop</strong> (do-while), the condition is tested after the body executes, so the body always runs at least once.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the difference between break and continue statements?</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p><strong>break</strong> immediately terminates and exits the entire loop. <strong>continue</strong> skips only the current iteration's remaining statements and jumps to the next iteration. break can also be used in switch; continue cannot.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What are the drawbacks of the goto statement in C?</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p>Drawbacks of goto: (1) Creates <strong>spaghetti code</strong> — uncontrolled jumps make flow hard to trace; (2) Makes code <strong>difficult to debug</strong>; (3) Reduces <strong>readability</strong>; (4) Makes code <strong>hard to maintain</strong>; (5) Any logic using goto can be rewritten using structured loops and conditionals.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Why is a semicolon needed after the while condition in a do-while loop?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p>In a do-while loop, the syntax is <code>do { ... } while(condition);</code>. The semicolon is part of the <strong>do-while statement syntax</strong> and marks the end of the statement. Without it, the compiler gives a syntax error. This is unlike while and for loops which do not have a semicolon after their condition.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is an infinite loop? How can you create one using a for loop and a while loop?</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p>An <strong>infinite loop</strong> is a loop whose condition never becomes false, causing it to execute forever. It can be created as: <code>for(;;) { ... }</code> (for loop with no condition) or <code>while(1) { ... }</code> (while loop with always-true condition). A break statement inside can exit an infinite loop when needed.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is fall-through in switch-case? Is it always a bug?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p><strong>Fall-through</strong> occurs when a break is omitted from a case, causing execution to continue into the next case. It is not always a bug — sometimes it is intentional. For example, multiple cases executing the same code: <code>case 1: case 2: printf("One or Two");</code>. However, unintentional fall-through is a common source of bugs.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is nested loop? What is the total number of iterations if outer loop runs 4 times and inner loop runs 3 times?</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p>A <strong>nested loop</strong> is a loop placed inside another loop. The inner loop completes all its iterations for each iteration of the outer loop. Total iterations = outer × inner = 4 × 3 = <strong>12 times</strong>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Write the for loop equivalent of: <code>int i=1; while(i&lt;=10) { printf("%d",i); i++; }</code></p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>The equivalent for loop is: <code>for(int i=1; i&lt;=10; i++) { printf("%d", i); }</code>. The initialization (<code>i=1</code>), condition (<code>i&lt;=10</code>), and update (<code>i++</code>) are combined into the for loop header. All three loops can be converted to each other.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== LONG QUESTIONS ======================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions (6 Marks)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain all forms of the if statement in C (simple if, if-else, else-if ladder, nested if-else) with syntax and an example for each.</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p>C provides four forms of the if statement:</p>
+
+            <p><strong>1. Simple if:</strong> Executes a block only if condition is true.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Simple if</div>
+              <pre>if (x > 0) {
+    printf("Positive number");
+}</pre>
+            </div>
+
+            <p><strong>2. if-else:</strong> Executes one of two blocks based on condition.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> if-else</div>
+              <pre>if (x % 2 == 0) {
+    printf("Even");
+} else {
+    printf("Odd");
+}</pre>
+            </div>
+
+            <p><strong>3. else-if Ladder:</strong> Tests multiple conditions in sequence.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> else-if Ladder</div>
+              <pre>if (marks >= 90)      printf("A");
+else if (marks >= 75) printf("B");
+else if (marks >= 60) printf("C");
+else if (marks >= 40) printf("D");
+else                  printf("F");</pre>
+            </div>
+
+            <p><strong>4. Nested if-else:</strong> if-else inside another if-else.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Nested if-else</div>
+              <pre>if (a > b) {
+    if (a > c) printf("a is largest");
+    else        printf("c is largest");
+} else {
+    if (b > c) printf("b is largest");
+    else        printf("c is largest");
+}</pre>
+            </div>
+
+            <p>Key point: In nested if-else, the <strong>dangling else</strong> problem occurs when an else is ambiguous about which if it belongs to. Always use curly braces to avoid this.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain the three looping statements in C (while, do-while, for) with syntax, flowchart description, and differences. When should each be used?</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p>C provides three looping statements:</p>
+
+            <p><strong>1. while Loop (Entry Controlled):</strong></p>
+            <ul>
+              <li>Condition tested before body executes</li>
+              <li>May execute zero times if condition initially false</li>
+              <li>Best when number of iterations is not known in advance</li>
+            </ul>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> while Loop</div>
+              <pre>int i = 1;
+while (i &lt;= 5) {
+    printf("%d ", i);
+    i++;
+}
+/* Output: 1 2 3 4 5 */</pre>
+            </div>
+
+            <p><strong>2. do-while Loop (Exit Controlled):</strong></p>
+            <ul>
+              <li>Body executes first, condition checked after</li>
+              <li>Always executes at least once</li>
+              <li>Best for menu-driven programs and input validation</li>
+              <li>Semicolon after while() is mandatory</li>
+            </ul>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> do-while Loop</div>
+              <pre>int i = 1;
+do {
+    printf("%d ", i);
+    i++;
+} while (i &lt;= 5);
+/* Output: 1 2 3 4 5 */</pre>
+            </div>
+
+            <p><strong>3. for Loop (Entry Controlled):</strong></p>
+            <ul>
+              <li>Combines init, condition, update in one line</li>
+              <li>Most compact; best when iterations are known</li>
+              <li>All three parts (init; condition; update) are optional</li>
+            </ul>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> for Loop</div>
+              <pre>for (int i = 1; i &lt;= 5; i++) {
+    printf("%d ", i);
+}
+/* Output: 1 2 3 4 5 */</pre>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Feature</th><th>while</th><th>do-while</th><th>for</th></tr></thead>
+                <tbody>
+                  <tr><td>Type</td><td>Entry</td><td>Exit</td><td>Entry</td></tr>
+                  <tr><td>Min executions</td><td>0</td><td>1</td><td>0</td></tr>
+                  <tr><td>Semicolon after condition</td><td>No</td><td>Yes</td><td>No</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain the switch-case statement in C with syntax and a complete example. What are its advantages over if-else? What is fall-through? Explain with code.</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p>The <strong>switch</strong> statement is a multi-way branching control structure that selects one of several code blocks to execute based on the value of an expression.</p>
+
+            <p><strong>Syntax:</strong></p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Switch Syntax and Complete Example</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int day;
+    printf("Enter day (1-7): ");
+    scanf("%d", &day);
+
+    switch(day) {
+        case 1: printf("Monday\n");    break;
+        case 2: printf("Tuesday\n");   break;
+        case 3: printf("Wednesday\n"); break;
+        case 4: printf("Thursday\n");  break;
+        case 5: printf("Friday\n");    break;
+        case 6: printf("Saturday\n");  break;
+        case 7: printf("Sunday\n");    break;
+        default: printf("Invalid!\n");
+    }
+    return 0;
+}</pre>
+            </div>
+
+            <p><strong>Advantages over if-else:</strong></p>
+            <ul>
+              <li>More readable when testing one variable against many values</li>
+              <li>Faster execution (uses jump table)</li>
+              <li>Cleaner code structure</li>
+            </ul>
+
+            <p><strong>Limitations:</strong> Cannot use float; cannot test ranges (e.g., marks &gt;= 60).</p>
+
+            <p><strong>Fall-Through:</strong> When break is omitted, execution continues to the next case:</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Fall-Through Example</div>
+              <pre>int x = 2;
+switch(x) {
+    case 1:
+    case 2:
+    case 3: printf("1, 2, or 3\n"); break; /* intentional fall-through */
+    case 4: printf("Four\n"); break;
+}
+/* Output when x=2: 1, 2, or 3 */</pre>
+            </div>
+            <p>Here cases 1, 2, and 3 all share the same output — intentional and valid use of fall-through.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== PRACTICE ======================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a C program to print all prime numbers between 1 and 100 using nested loops.</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int i, j, isPrime;
+    printf("Prime numbers between 1 and 100:\n");
+    for (i = 2; i &lt;= 100; i++) {       /* outer: check each number */
+        isPrime = 1;
+        for (j = 2; j &lt; i; j++) {      /* inner: check divisibility */
+            if (i % j == 0) {
+                isPrime = 0;
+                break;                  /* not prime, no need to check further */
+            }
+        }
+        if (isPrime) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Concepts:</strong> Nested loops, break statement, flag variable (isPrime).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a C program to print the following pattern using nested loops:<br>
+          1<br>1 2<br>1 2 3<br>1 2 3 4<br>1 2 3 4 5</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int n = 5;
+    for (int i = 1; i &lt;= n; i++) {        /* outer: rows */
+        for (int j = 1; j &lt;= i; j++) {    /* inner: columns */
+            printf("%d ", j);
+        }
+        printf("\n");
+    }
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Key concept:</strong> Inner loop runs j from 1 to i (current row number).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a C program to implement a simple calculator using switch-case. Support +, -, *, / and handle division by zero.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    float a, b, result;
+    char op;
+    printf("Enter expression (e.g., 5.0 + 3.0): ");
+    scanf("%f %c %f", &a, &op, &b);
+
+    switch(op) {
+        case '+':
+            result = a + b;
+            printf("%.2f + %.2f = %.2f\n", a, b, result);
+            break;
+        case '-':
+            result = a - b;
+            printf("%.2f - %.2f = %.2f\n", a, b, result);
+            break;
+        case '*':
+            result = a * b;
+            printf("%.2f * %.2f = %.2f\n", a, b, result);
+            break;
+        case '/':
+            if (b == 0)
+                printf("Error: Division by zero!\n");
+            else {
+                result = a / b;
+                printf("%.2f / %.2f = %.2f\n", a, b, result);
+            }
+            break;
+        default:
+            printf("Invalid operator!\n");
+    }
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a C program to find the sum of digits of a number entered by the user using a while loop. Example: 1234 → 1+2+3+4 = 10.</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int n, sum = 0, digit;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    if (n &lt; 0) n = -n;   /* handle negative numbers */
+
+    while (n != 0) {
+        digit = n % 10;   /* extract last digit */
+        sum += digit;      /* add to sum */
+        n = n / 10;        /* remove last digit */
+    }
+    printf("Sum of digits = %d\n", sum);
+    return 0;
+}
+/* For input 1234:
+   Iteration 1: digit=4, sum=4,  n=123
+   Iteration 2: digit=3, sum=7,  n=12
+   Iteration 3: digit=2, sum=9,  n=1
+   Iteration 4: digit=1, sum=10, n=0  (loop ends)
+*/</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a C program to print a multiplication table of a given number using a for loop with continue to skip multiples of 5.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    printf("Multiplication table of %d (skipping multiples of 5):\n", n);
+    for (int i = 1; i &lt;= 10; i++) {
+        if ((n * i) % 5 == 0) {
+            continue;   /* skip if product is multiple of 5 */
+        }
+        printf("%d x %d = %d\n", n, i, n * i);
+    }
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Demonstrates:</strong> for loop + continue statement combination.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== REVISION ======================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points — Unit 2</div>
+        <ul>
+          <li>In C, <strong>non-zero = true</strong>, <strong>zero = false</strong> for any condition.</li>
+          <li><strong>Simple if</strong> — executes block only if condition true. May skip entirely.</li>
+          <li><strong>if-else</strong> — exactly one of the two blocks always executes.</li>
+          <li><strong>else-if ladder</strong> — tests multiple conditions top to bottom; first match wins.</li>
+          <li><strong>Nested if-else</strong> — else pairs with nearest unmatched if (dangling else problem).</li>
+          <li><strong>switch</strong> — works only with int and char; not with float.</li>
+          <li><strong>break in switch</strong> — exits switch; without it, fall-through occurs.</li>
+          <li><strong>default</strong> — optional; executes when no case matches.</li>
+          <li><strong>goto</strong> — unconditional jump to label; avoided in structured programming (spaghetti code).</li>
+          <li><strong>while loop</strong> — entry controlled; condition checked before body; may execute 0 times.</li>
+          <li><strong>do-while loop</strong> — exit controlled; always executes at least once; needs semicolon after while().</li>
+          <li><strong>for loop</strong> — entry controlled; init+condition+update in one line; best for known iterations.</li>
+          <li><strong>Nested loop</strong> — total iterations = outer × inner.</li>
+          <li><strong>break</strong> — exits loop immediately. <strong>continue</strong> — skips current iteration only.</li>
+          <li><strong>Infinite loop</strong>: <code>while(1){}</code> or <code>for(;;){}</code>.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-fire"></i> Must Remember for Exam</div>
+        <ul>
+          <li><strong>do-while ALWAYS executes at least once</strong> — this is THE most common exam MCQ for this unit.</li>
+          <li><strong>Semicolon after do-while's while()</strong> is mandatory — forgetting it = compile error.</li>
+          <li><strong>switch does NOT work with float</strong> — very common MCQ trap.</li>
+          <li><strong>break exits the innermost loop or switch</strong> — not all nested loops.</li>
+          <li><strong>continue skips current iteration only</strong> — does NOT exit the loop.</li>
+          <li><strong>goto creates spaghetti code</strong> — always mention this in exams when asked about drawbacks.</li>
+          <li><strong>else-if ladder</strong> — only first matching condition executes; rest are skipped.</li>
+          <li>Without <strong>break</strong> in switch, fall-through occurs into next case.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Writing <code>if(x = 5)</code> instead of <code>if(x == 5)</code> — assignment instead of comparison; always evaluates true in C.</li>
+          <li>Missing <strong>semicolon</strong> after <code>while(condition);</code> in do-while loops.</li>
+          <li>Thinking <strong>break exits all nested loops</strong> — it only exits the innermost one.</li>
+          <li>Using <strong>float in switch</strong> expression — not allowed in C.</li>
+          <li>Forgetting <strong>break</strong> in switch cases — causes unintended fall-through.</li>
+          <li>Infinite loops — forgetting the <strong>update expression</strong> inside while/do-while loops.</li>
+          <li>Writing <code>for(i=0; i&lt;n; i++)</code> but starting from 1 — off-by-one error.</li>
+          <li>Confusing <strong>do-while minimum executions (1)</strong> with while (0).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

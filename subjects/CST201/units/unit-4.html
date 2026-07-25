@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 4 – User Defined Functions | CST201</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../../units-com/common.css">
+<style>
+  .stack-frame {
+    border: 2px solid var(--accent, #4361ee);
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin: 4px 0;
+    background: var(--box-bg, #f0f4ff);
+    font-family: monospace;
+    font-size: 0.87rem;
+    position: relative;
+  }
+  .stack-frame .frame-label {
+    font-weight: bold;
+    color: var(--accent, #4361ee);
+  }
+  .stack-arrow {
+    text-align: center;
+    color: var(--accent, #4361ee);
+    font-size: 1.1rem;
+    margin: 2px 0;
+  }
+  .recursion-tree {
+    font-family: monospace;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    padding: 10px;
+    background: var(--box-bg, #f0f4ff);
+    border-radius: 8px;
+    border: 1px solid var(--border, #ddd);
+    overflow-x: auto;
+  }
+  .scope-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .scope-card {
+    background: var(--box-bg, #f0f4ff);
+    border: 1px solid var(--border, #ddd);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .scope-card h4 {
+    margin: 0 0 6px 0;
+    color: var(--accent, #4361ee);
+    font-size: 0.9rem;
+  }
+  .scope-card p, .scope-card li {
+    font-size: 0.83rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-code"></i> CST201 – Unit 4
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#functions-intro">Functions</a>
+      <a href="#scope">Scope & Storage</a>
+      <a href="#parameters">Parameters</a>
+      <a href="#recursion">Recursion</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="../index.html"><i class="fas fa-home"></i></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 4 – User Defined Functions</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#functions-intro">Function Basics</a>
+    <a href="#components">Function Components</a>
+    <a href="#scope">Scope & Storage Class</a>
+    <a href="#parameters">Parameter Passing</a>
+    <a href="#return">Return Values</a>
+    <a href="#recursion">Recursion</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+    <a href="../index.html">← Subject Home</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <h1><i class="fas fa-cogs"></i> Unit 4: User Defined Functions</h1>
+    <p>CST201 — Computer Programming in C | 3rd Semester</p>
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-clock"></i> 10 Hours</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Module C</div>
+      <div class="info-item"><i class="fas fa-signal"></i> Full Depth</div>
+      <div class="info-item"><i class="fas fa-file-code"></i> Language: C</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ======================== OVERVIEW ======================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You Will Learn</div>
+        <p>Unit 4 covers <strong>user-defined functions</strong> — one of the most important features of structured programming in C. Functions allow you to divide a large program into smaller, manageable, and reusable blocks. This unit covers function definition, prototypes, scope, storage classes, parameter passing (call by value vs call by reference), return values, and the powerful concept of <strong>recursion</strong> — a function calling itself.</p>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3><i class="fas fa-puzzle-piece"></i> Function Basics</h3>
+          <p>Definition, advantages, prototype declaration, function call, function body.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-globe"></i> Scope & Storage</h3>
+          <p>Local vs global variables, auto, extern, static, register storage classes.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-exchange-alt"></i> Parameter Passing</h3>
+          <p>Call by value vs call by reference — how arguments are passed to functions.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-reply"></i> Return Values</h3>
+          <p>Return types, the return statement, void functions, returning multiple values.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-redo-alt"></i> Recursion</h3>
+          <p>Recursive functions, call stack, types of recursion, applications, vs iteration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FUNCTION BASICS ======================== -->
+  <section class="section" id="functions-intro">
+    <h2 class="section-title">
+      <i class="fas fa-puzzle-piece"></i> Introduction to Functions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is a Function?</div>
+        <p>A <strong>function</strong> is a self-contained block of code that performs a specific, well-defined task. It can be called (invoked) from anywhere in the program, executes its task, and then returns control (and optionally a value) to the calling code. Every C program has at least one function — <code>main()</code>.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Advantages of Functions</div>
+        <ul>
+          <li><strong>Modular Programming</strong> — Large programs split into smaller, independent modules.</li>
+          <li><strong>Code Reusability</strong> — Write once, call many times from different places.</li>
+          <li><strong>Easier Debugging</strong> — Each function can be tested and debugged independently.</li>
+          <li><strong>Divide and Conquer</strong> — Complex problems broken into simpler subproblems.</li>
+          <li><strong>Reduced Code Duplication</strong> — No need to repeat same logic multiple times.</li>
+          <li><strong>Easier Maintenance</strong> — Changes in one function don't affect others.</li>
+          <li><strong>Improved Readability</strong> — Well-named functions make the program self-documenting.</li>
+          <li><strong>Team Development</strong> — Different team members can work on different functions.</li>
+        </ul>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-layer-group"></i> Types of Functions in C</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Library Functions</td><td>Pre-built functions provided by C standard library</td><td>printf(), scanf(), strlen(), sqrt()</td></tr>
+              <tr><td>User-Defined Functions</td><td>Functions written by the programmer for specific tasks</td><td>add(), factorial(), swap()</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== FUNCTION COMPONENTS ======================== -->
+  <section class="section" id="components">
+    <h2 class="section-title">
+      <i class="fas fa-cubes"></i> Function Components
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> The Three Parts of a Function</div>
+        <p>Every user-defined function in C has three parts: the <strong>prototype (declaration)</strong>, the <strong>definition (body)</strong>, and the <strong>function call</strong>.</p>
+      </div>
+
+      <!-- PROTOTYPE -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-file-signature"></i> 1. Function Prototype (Declaration)</div>
+        <p>The prototype tells the compiler about the function's <strong>name, return type, and parameter types</strong> before the function is actually defined. It ends with a semicolon. It is written before <code>main()</code>.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Prototype Syntax</div>
+          <pre>return_type function_name(parameter_type1, parameter_type2, ...);
+
+/* Examples */
+int add(int, int);          /* two int parameters, returns int */
+void printHello(void);      /* no parameters, returns nothing */
+float average(int[], int);  /* array and int, returns float */
+int factorial(int);         /* one int parameter, returns int */</pre>
+        </div>
+        <div class="tip-box">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> Why Prototype?</div>
+          <p>Without a prototype, if you call a function before it is defined, the compiler gives an error or makes incorrect assumptions about its return type. Prototypes allow you to define functions in any order. Parameter names are optional in prototypes — only types are needed.</p>
+        </div>
+      </div>
+
+      <!-- DEFINITION -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-code"></i> 2. Function Definition (Body)</div>
+        <p>The function definition contains the actual code that executes when the function is called. It includes the <strong>function header</strong> and the <strong>function body</strong>.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Function Definition Syntax</div>
+          <pre>return_type function_name(parameter_type1 param1, parameter_type2 param2) {
+    /* local variable declarations */
+    /* statements */
+    return value;   /* optional for void functions */
+}</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Complete Function Example</div>
+          <pre>#include &lt;stdio.h&gt;
+
+/* PROTOTYPE — declared before main */
+int add(int a, int b);
+float average(int arr[], int n);
+void greet(char name[]);
+
+/* MAIN FUNCTION */
+int main() {
+    int result = add(10, 20);          /* FUNCTION CALL */
+    printf("Sum = %d\n", result);      /* 30 */
+
+    int marks[] = {85, 90, 78, 92};
+    float avg = average(marks, 4);
+    printf("Average = %.2f\n", avg);   /* 86.25 */
+
+    greet("Student");                  /* void function call */
+    return 0;
+}
+
+/* FUNCTION DEFINITIONS */
+int add(int a, int b) {
+    return a + b;                      /* returns sum */
+}
+
+float average(int arr[], int n) {
+    int sum = 0;
+    for (int i = 0; i &lt; n; i++) sum += arr[i];
+    return (float)sum / n;
+}
+
+void greet(char name[]) {
+    printf("Hello, %s!\n", name);      /* no return value */
+}</pre>
+        </div>
+      </div>
+
+      <!-- FUNCTION CALL -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-phone"></i> 3. Function Call</div>
+        <p>A function call invokes the function by its name with actual argument values. Control transfers to the function, it executes, and then returns to the calling location.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Function Call Syntax</div>
+          <pre>/* Calling a function that returns a value */
+variable = function_name(argument1, argument2);
+
+/* Calling a void function */
+function_name(argument1, argument2);
+
+/* Examples */
+int s = add(5, 10);       /* call add, store result in s */
+printf("%d", add(3, 4));  /* call add directly in printf */
+greet("Alice");           /* call void function */</pre>
+        </div>
+        <div class="concept-box">
+          <div class="box-title"><i class="fas fa-info-circle"></i> Formal vs Actual Parameters</div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Term</th><th>Where</th><th>Description</th><th>Example</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Formal Parameters</td>
+                  <td>Function definition</td>
+                  <td>Variable names in the function header that receive values</td>
+                  <td><code>int add(int a, int b)</code> — a, b are formal</td>
+                </tr>
+                <tr>
+                  <td>Actual Parameters (Arguments)</td>
+                  <td>Function call</td>
+                  <td>Actual values or variables passed when calling the function</td>
+                  <td><code>add(10, 20)</code> — 10, 20 are actual</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SCOPE AND STORAGE ======================== -->
+  <section class="section" id="scope">
+    <h2 class="section-title">
+      <i class="fas fa-globe"></i> Scope, Lifetime and Storage Classes
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Scope and Lifetime of Variables</div>
+        <p><strong>Scope</strong> refers to the region of the program where a variable is <strong>visible and accessible</strong>. <strong>Lifetime</strong> refers to the duration for which the variable <strong>exists in memory</strong>.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-map-marker-alt"></i> Local vs Global Variables</div>
+        <div class="scope-grid">
+          <div class="scope-card">
+            <h4><i class="fas fa-lock"></i> Local Variables</h4>
+            <ul>
+              <li>Declared inside a function or block</li>
+              <li>Accessible only within that function/block</li>
+              <li>Created when function is called</li>
+              <li>Destroyed when function returns</li>
+              <li>Default value: garbage</li>
+              <li>Also called: automatic variables</li>
+            </ul>
+          </div>
+          <div class="scope-card">
+            <h4><i class="fas fa-globe"></i> Global Variables</h4>
+            <ul>
+              <li>Declared outside all functions</li>
+              <li>Accessible throughout entire program</li>
+              <li>Created when program starts</li>
+              <li>Destroyed when program ends</li>
+              <li>Default value: 0 (auto-initialized)</li>
+              <li>Should be used sparingly</li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Local vs Global Variable Example</div>
+          <pre>#include &lt;stdio.h&gt;
+
+int globalVar = 100;        /* Global variable — accessible everywhere */
+
+void display() {
+    int localVar = 50;      /* Local variable — only inside display() */
+    printf("Global: %d\n", globalVar);  /* OK — global accessible here */
+    printf("Local:  %d\n", localVar);   /* OK — local accessible here */
+}
+
+int main() {
+    printf("Global: %d\n", globalVar);  /* OK */
+    /* printf("%d", localVar);  ERROR — localVar not accessible here */
+    display();
+    globalVar = 200;        /* Global can be modified from anywhere */
+    printf("Modified Global: %d\n", globalVar);
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-database"></i> Storage Classes in C</div>
+        <p>A <strong>storage class</strong> defines the <strong>scope (visibility)</strong>, <strong>lifetime</strong>, <strong>default value</strong>, and <strong>storage location</strong> of a variable. C has four storage classes:</p>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Storage Class</th><th>Keyword</th><th>Scope</th><th>Lifetime</th><th>Default Value</th><th>Storage</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Automatic</td><td>auto</td><td>Local (block)</td><td>Function execution</td><td>Garbage</td><td>Stack (RAM)</td></tr>
+              <tr><td>External</td><td>extern</td><td>Global (whole program)</td><td>Entire program</td><td>0</td><td>Data segment (RAM)</td></tr>
+              <tr><td>Static</td><td>static</td><td>Local (block)</td><td>Entire program</td><td>0</td><td>Data segment (RAM)</td></tr>
+              <tr><td>Register</td><td>register</td><td>Local (block)</td><td>Function execution</td><td>Garbage</td><td>CPU Register (if available)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> auto — Default Storage Class</div>
+          <pre>#include &lt;stdio.h&gt;
+void autoDemo() {
+    auto int x = 10;    /* 'auto' is the default; rarely written explicitly */
+    int y = 20;         /* same as auto int y = 20; */
+    printf("x = %d, y = %d\n", x, y);
+    /* x and y are destroyed when function returns */
+}
+int main() {
+    autoDemo();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> static — Retains Value Between Calls</div>
+          <pre>#include &lt;stdio.h&gt;
+void counter() {
+    static int count = 0;  /* initialized only ONCE; retains value */
+    count++;
+    printf("Called %d time(s)\n", count);
+}
+int main() {
+    counter();   /* Called 1 time(s) */
+    counter();   /* Called 2 time(s) */
+    counter();   /* Called 3 time(s) */
+    /* Static variable retains its value across multiple calls */
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> extern — Access Global Variable from Another File</div>
+          <pre>/* File1.c */
+int globalScore = 500;     /* defined in File1.c */
+
+/* File2.c */
+extern int globalScore;    /* declared in File2.c — refers to File1.c variable */
+void printScore() {
+    printf("Score = %d\n", globalScore);  /* accesses File1.c's variable */
+}</pre>
+        </div>
+
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> register — Suggest CPU Register Storage</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    register int i;    /* suggest storing i in CPU register for speed */
+    long sum = 0;
+    for (i = 1; i &lt;= 1000000; i++) {
+        sum += i;
+    }
+    printf("Sum = %ld\n", sum);
+    /* NOTE: 'register' is a suggestion only — compiler may ignore it */
+    /* Also: you CANNOT use &(address-of) on register variables */
+    return 0;
+}</pre>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title"><i class="fas fa-exclamation-circle"></i> Key Difference: auto vs static (local)</div>
+          <p>Both <code>auto</code> and <code>static</code> local variables have <strong>local scope</strong> (only accessible inside the function). The difference is <strong>lifetime</strong>: <code>auto</code> variables are created and destroyed every time the function is called; <code>static</code> variables are initialized only once and retain their value between calls.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== PARAMETER PASSING ======================== -->
+  <section class="section" id="parameters">
+    <h2 class="section-title">
+      <i class="fas fa-exchange-alt"></i> Parameter Passing: Call by Value vs Call by Reference
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> How Arguments Are Passed</div>
+        <p>When you call a function with arguments, C can pass those arguments in two ways: <strong>Call by Value</strong> (a copy is passed) or <strong>Call by Reference</strong> (the address is passed using pointers). Understanding the difference is critical for writing correct programs.</p>
+      </div>
+
+      <!-- CALL BY VALUE -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-copy"></i> Call by Value</div>
+        <p>In call by value, a <strong>copy of the actual argument</strong> is passed to the function. The function works with the copy. Any modifications made inside the function do <strong>NOT affect</strong> the original variable in the calling function.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Call by Value — Swap Does NOT Work</div>
+          <pre>#include &lt;stdio.h&gt;
+
+void swap(int a, int b) {     /* a and b are COPIES */
+    int temp = a;
+    a = b;
+    b = temp;
+    printf("Inside swap: a = %d, b = %d\n", a, b);  /* swapped locally */
+}
+
+int main() {
+    int x = 10, y = 20;
+    printf("Before swap: x = %d, y = %d\n", x, y);  /* 10, 20 */
+    swap(x, y);                /* copies of x and y are passed */
+    printf("After swap:  x = %d, y = %d\n", x, y);  /* still 10, 20 */
+    /* Original values NOT changed — swap didn't work! */
+    return 0;
+}</pre>
+        </div>
+        <div class="trace-box">
+          <div class="box-title"><i class="fas fa-table"></i> Trace — Call by Value Memory</div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Variable</th><th>Location</th><th>Before Call</th><th>During swap()</th><th>After Call</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>x (main)</td><td>main's stack</td><td>10</td><td>10 (unchanged)</td><td>10</td></tr>
+                <tr><td>y (main)</td><td>main's stack</td><td>20</td><td>20 (unchanged)</td><td>20</td></tr>
+                <tr><td>a (swap)</td><td>swap's stack</td><td>—</td><td>10 → 20 (copy)</td><td>destroyed</td></tr>
+                <tr><td>b (swap)</td><td>swap's stack</td><td>—</td><td>20 → 10 (copy)</td><td>destroyed</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALL BY REFERENCE -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-map-marker-alt"></i> Call by Reference (Using Pointers)</div>
+        <p>In call by reference, the <strong>memory address</strong> of the actual argument is passed to the function. The function uses a pointer to access and modify the original variable. Changes <strong>DO affect</strong> the original variable.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Call by Reference — Swap WORKS</div>
+          <pre>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b) {   /* a and b are POINTERS to original */
+    int temp = *a;
+    *a = *b;                   /* modify original via pointer */
+    *b = temp;
+    printf("Inside swap: *a = %d, *b = %d\n", *a, *b);
+}
+
+int main() {
+    int x = 10, y = 20;
+    printf("Before swap: x = %d, y = %d\n", x, y);  /* 10, 20 */
+    swap(&x, &y);              /* pass ADDRESSES of x and y */
+    printf("After swap:  x = %d, y = %d\n", x, y);  /* 20, 10 */
+    /* Original values ARE changed! */
+    return 0;
+}</pre>
+        </div>
+        <div class="trace-box">
+          <div class="box-title"><i class="fas fa-table"></i> Trace — Call by Reference Memory</div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Variable</th><th>Address</th><th>Before</th><th>After swap()</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>x (main)</td><td>1000</td><td>10</td><td>20 ← changed!</td></tr>
+                <tr><td>y (main)</td><td>1004</td><td>20</td><td>10 ← changed!</td></tr>
+                <tr><td>a (pointer in swap)</td><td>holds 1000</td><td>points to x</td><td>destroyed after return</td></tr>
+                <tr><td>b (pointer in swap)</td><td>holds 1004</td><td>points to y</td><td>destroyed after return</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">Call by Value vs Call by Reference</caption>
+          <thead>
+            <tr><th>Feature</th><th>Call by Value</th><th>Call by Reference</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>What is passed</td><td>Copy of the value</td><td>Address (pointer) of variable</td></tr>
+            <tr><td>Affects original?</td><td>No — original unchanged</td><td>Yes — original is modified</td></tr>
+            <tr><td>Memory usage</td><td>Extra memory for copy</td><td>No extra copy needed</td></tr>
+            <tr><td>Safety</td><td>Safer — no accidental changes</td><td>Risky if not careful</td></tr>
+            <tr><td>Use case</td><td>When original must be preserved</td><td>When function must modify original</td></tr>
+            <tr><td>Syntax</td><td>swap(x, y)</td><td>swap(&amp;x, &amp;y)</td></tr>
+            <tr><td>Parameter type</td><td>int a, int b</td><td>int *a, int *b</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== RETURN VALUES ======================== -->
+  <section class="section" id="return">
+    <h2 class="section-title">
+      <i class="fas fa-reply"></i> Return Values
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> The return Statement</div>
+        <p>The <code>return</code> statement serves two purposes: (1) it <strong>exits</strong> the function immediately, and (2) it sends a <strong>value back</strong> to the calling code. A function's return type must match the type of the value it returns.</p>
+      </div>
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Return Statement Syntax</div>
+        <pre>return expression;   /* returns a value */
+return;              /* returns nothing (for void functions) */</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Various Return Type Examples</div>
+        <pre>#include &lt;stdio.h&gt;
+
+/* Returns int */
+int square(int n) {
+    return n * n;
+}
+
+/* Returns float */
+float celsiusToFahrenheit(float c) {
+    return (c * 9.0 / 5.0) + 32;
+}
+
+/* Returns char */
+char getGrade(int marks) {
+    if (marks &gt;= 90) return 'A';
+    else if (marks &gt;= 75) return 'B';
+    else if (marks &gt;= 60) return 'C';
+    else if (marks &gt;= 40) return 'D';
+    else return 'F';
+}
+
+/* void — returns nothing */
+void printLine() {
+    printf("----------------------------\n");
+    /* return; is optional here */
+}
+
+/* Early return — exits when condition met */
+int isPositive(int n) {
+    if (n &lt;= 0) return 0;   /* early exit */
+    return 1;
+}
+
+int main() {
+    printf("Square of 7 = %d\n", square(7));           /* 49 */
+    printf("37C in F = %.2f\n", celsiusToFahrenheit(37)); /* 98.60 */
+    printf("Grade for 85 = %c\n", getGrade(85));       /* B */
+    printLine();
+    return 0;
+}</pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Return Type Mistakes</div>
+        <ul>
+          <li>A function declared as <strong>void</strong> must NOT return a value.</li>
+          <li>A function declared with a return type (e.g., int) MUST return a matching value.</li>
+          <li>Returning a <strong>local variable's address</strong> is dangerous — the variable is destroyed after the function returns (dangling pointer).</li>
+          <li>A function can only return <strong>one value</strong> directly. To return multiple values, use pointers or structures.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== RECURSION ======================== -->
+  <section class="section" id="recursion">
+    <h2 class="section-title">
+      <i class="fas fa-redo-alt"></i> Recursion
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is Recursion?</div>
+        <p><strong>Recursion</strong> is the technique where a <strong>function calls itself</strong> to solve a problem. Each recursive call works on a smaller version of the original problem. Recursion continues until a <strong>base case</strong> is reached — a condition where the function stops calling itself and returns directly.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Two Essential Parts of Every Recursive Function</div>
+        <ul>
+          <li><strong>Base Case</strong> — The condition that stops the recursion. Without this, the function calls itself infinitely → stack overflow crash.</li>
+          <li><strong>Recursive Case</strong> — The function calls itself with a simpler/smaller input, moving toward the base case.</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Application 1 — Factorial Using Recursion</div>
+        <pre>#include &lt;stdio.h&gt;
+
+int factorial(int n) {
+    /* BASE CASE */
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    /* RECURSIVE CASE */
+    return n * factorial(n - 1);
+}
+
+int main() {
+    int num = 5;
+    printf("%d! = %d\n", num, factorial(num));  /* 5! = 120 */
+    return 0;
+}</pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Trace — factorial(5) Call Stack</div>
+        <p>How the recursion unfolds and winds back:</p>
+        <div class="recursion-tree">
+factorial(5)
+  → 5 * factorial(4)
+       → 4 * factorial(3)
+            → 3 * factorial(2)
+                 → 2 * factorial(1)
+                      → returns 1        ← BASE CASE
+                 → 2 * 1 = 2             ← returns 2
+            → 3 * 2 = 6                 ← returns 6
+       → 4 * 6 = 24                     ← returns 24
+  → 5 * 24 = 120                        ← Final Answer
+        </div>
+        <div class="stack-arrow"><i class="fas fa-arrow-down"></i> Call Stack Growth</div>
+        <div class="stack-frame"><span class="frame-label">factorial(1)</span> → returns 1 [BASE]</div>
+        <div class="stack-frame"><span class="frame-label">factorial(2)</span> → waits for factorial(1)</div>
+        <div class="stack-frame"><span class="frame-label">factorial(3)</span> → waits for factorial(2)</div>
+        <div class="stack-frame"><span class="frame-label">factorial(4)</span> → waits for factorial(3)</div>
+        <div class="stack-frame"><span class="frame-label">factorial(5)</span> → waits for factorial(4)</div>
+        <div class="stack-frame"><span class="frame-label">main()</span> → called factorial(5)</div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Application 2 — Fibonacci Using Recursion</div>
+        <pre>#include &lt;stdio.h&gt;
+
+/* Fibonacci: F(n) = F(n-1) + F(n-2), F(0)=0, F(1)=1 */
+int fibonacci(int n) {
+    if (n == 0) return 0;          /* base case 1 */
+    if (n == 1) return 1;          /* base case 2 */
+    return fibonacci(n-1) + fibonacci(n-2); /* recursive case */
+}
+
+int main() {
+    printf("Fibonacci series (first 10 terms):\n");
+    for (int i = 0; i &lt; 10; i++) {
+        printf("F(%d) = %d\n", i, fibonacci(i));
+    }
+    return 0;
+}
+/* Output: 0 1 1 2 3 5 8 13 21 34 */</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Application 3 — GCD Using Recursion (Euclid's Algorithm)</div>
+        <pre>#include &lt;stdio.h&gt;
+
+/* GCD(a, b) = GCD(b, a%b)  when b != 0
+   GCD(a, 0) = a            (base case)  */
+int gcd(int a, int b) {
+    if (b == 0) return a;           /* base case */
+    return gcd(b, a % b);           /* recursive case */
+}
+
+int main() {
+    printf("GCD(48, 18) = %d\n", gcd(48, 18));  /* 6 */
+    printf("GCD(100, 75) = %d\n", gcd(100, 75)); /* 25 */
+    return 0;
+}
+/* Trace: gcd(48,18) → gcd(18,12) → gcd(12,6) → gcd(6,0) → 6 */</pre>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-chess-rook"></i> Application 4 — Tower of Hanoi</div>
+        <p>The Tower of Hanoi is a classic recursion problem. Move n disks from source peg to destination peg using an auxiliary peg, following the rule: a larger disk can never be placed on a smaller disk.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Tower of Hanoi</div>
+          <pre>#include &lt;stdio.h&gt;
+
+void hanoi(int n, char src, char dest, char aux) {
+    if (n == 1) {
+        printf("Move disk 1 from %c to %c\n", src, dest);
+        return;                             /* BASE CASE */
+    }
+    hanoi(n-1, src, aux, dest);            /* move n-1 disks to aux */
+    printf("Move disk %d from %c to %c\n", n, src, dest);
+    hanoi(n-1, aux, dest, src);            /* move n-1 disks from aux to dest */
+}
+
+int main() {
+    int n = 3;
+    printf("Tower of Hanoi with %d disks:\n", n);
+    hanoi(n, 'A', 'C', 'B');
+    printf("Total moves = %d\n", (1 &lt;&lt; n) - 1);  /* 2^n - 1 = 7 */
+    return 0;
+}
+/* Output for n=3:
+   Move disk 1 from A to C
+   Move disk 2 from A to B
+   Move disk 1 from C to B
+   Move disk 3 from A to C
+   Move disk 1 from B to A
+   Move disk 2 from B to C
+   Move disk 1 from A to C
+*/</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-sitemap"></i> Types of Recursion</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Direct Recursion</td>
+                <td>Function calls itself directly</td>
+                <td>factorial() calling factorial()</td>
+              </tr>
+              <tr>
+                <td>Indirect Recursion</td>
+                <td>Function A calls Function B, which calls Function A</td>
+                <td>isEven() calls isOdd(), isOdd() calls isEven()</td>
+              </tr>
+              <tr>
+                <td>Tail Recursion</td>
+                <td>Recursive call is the LAST operation in the function (no pending work after return)</td>
+                <td>GCD using Euclid's algorithm</td>
+              </tr>
+              <tr>
+                <td>Non-Tail Recursion</td>
+                <td>Pending operation exists after the recursive call returns</td>
+                <td>factorial(n) = n * factorial(n-1) — multiplication pending</td>
+              </tr>
+              <tr>
+                <td>Linear Recursion</td>
+                <td>Only one recursive call per function call</td>
+                <td>factorial(), GCD</td>
+              </tr>
+              <tr>
+                <td>Tree Recursion</td>
+                <td>More than one recursive call per function call</td>
+                <td>fibonacci() — two recursive calls</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">Recursion vs Iteration</caption>
+          <thead>
+            <tr><th>Feature</th><th>Recursion</th><th>Iteration</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Approach</td><td>Function calls itself</td><td>Uses loops (for/while/do-while)</td></tr>
+            <tr><td>Memory usage</td><td>More — each call uses stack frame</td><td>Less — no stack overhead</td></tr>
+            <tr><td>Speed</td><td>Slower — function call overhead</td><td>Faster — no function call overhead</td></tr>
+            <tr><td>Code size</td><td>Usually shorter and elegant</td><td>Sometimes longer but clear</td></tr>
+            <tr><td>Base case</td><td>Mandatory — else infinite recursion</td><td>Loop condition stops iteration</td></tr>
+            <tr><td>Risk</td><td>Stack overflow if base case missing</td><td>Infinite loop if condition never false</td></tr>
+            <tr><td>Best used for</td><td>Tree traversal, divide-and-conquer, Tower of Hanoi</td><td>Simple repetitive tasks, known iteration count</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-memory"></i> How the Memory Stack Works in Recursion</div>
+        <p>Every function call (including recursive calls) creates a new <strong>stack frame</strong> on the call stack. A stack frame stores the function's local variables, parameters, and the return address. When the function returns, its frame is removed (popped) from the stack.</p>
+        <ul>
+          <li>Too many recursive calls without a base case → stack fills up → <strong>Stack Overflow</strong> error.</li>
+          <li>Each recursive call waits for the next one to return before it can complete.</li>
+          <li>Tail recursion can be optimized by the compiler to avoid creating new stack frames.</li>
+        </ul>
+        <div class="formula-box">
+          <div class="box-title"><i class="fas fa-calculator"></i> Tower of Hanoi Moves Formula</div>
+          <div class="formula">Minimum moves for n disks = 2ⁿ - 1</div>
+          <div class="formula answer">For 3 disks: 2³ - 1 = 7 moves. For 10 disks: 2¹⁰ - 1 = 1023 moves.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== FORMULAS ======================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Key Formulas and Syntax
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Function Prototype Syntax</div>
+        <div class="formula">return_type function_name(param_type1, param_type2, ...);</div>
+        <div class="formula answer">Example: int add(int, int);</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Function Definition Syntax</div>
+        <div class="formula">return_type function_name(type1 p1, type2 p2) { body; return val; }</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Factorial Formula (Recursive)</div>
+        <div class="formula">factorial(n) = n × factorial(n-1), where factorial(0) = 1</div>
+        <div class="formula answer">5! = 5 × 4 × 3 × 2 × 1 = 120</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Fibonacci Formula (Recursive)</div>
+        <div class="formula">F(n) = F(n-1) + F(n-2), where F(0) = 0, F(1) = 1</div>
+        <div class="formula answer">Series: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34 ...</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> GCD — Euclid's Recursive Formula</div>
+        <div class="formula">GCD(a, b) = GCD(b, a % b) when b ≠ 0</div>
+        <div class="formula">GCD(a, 0) = a (base case)</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Tower of Hanoi Formula</div>
+        <div class="formula">Moves(n) = 2ⁿ - 1</div>
+        <div class="formula answer">3 disks → 7 moves. Each additional disk doubles moves + 1.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== DEFINITIONS ======================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Function</div>
+        <p>A self-contained block of code that performs a specific task, can be called from anywhere in the program, and may return a value to the caller.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Function Prototype</div>
+        <p>A declaration of a function that tells the compiler its name, return type, and parameter types before the function is defined. Ends with a semicolon.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Formal Parameter</div>
+        <p>A variable declared in the function header that receives the value passed during a function call. It is local to the function.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Actual Parameter (Argument)</div>
+        <p>The actual value or variable passed to a function when it is called. It corresponds to the formal parameter in the function definition.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Call by Value</div>
+        <p>A parameter passing mechanism where a copy of the actual argument is passed to the function. Changes inside the function do not affect the original variable.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Call by Reference</div>
+        <p>A parameter passing mechanism where the memory address (pointer) of the actual argument is passed. Changes inside the function directly affect the original variable.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Recursion</div>
+        <p>The technique where a function calls itself to solve a problem by breaking it into smaller subproblems, continuing until a base case is reached.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Base Case</div>
+        <p>The condition in a recursive function that stops further recursion and returns a direct value. Every recursive function must have at least one base case to prevent infinite recursion.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Stack Overflow</div>
+        <p>A runtime error that occurs when too many function calls (usually infinite recursion) fill up the call stack memory, causing the program to crash.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Static Variable</div>
+        <p>A variable with local scope but program lifetime. It is initialized only once and retains its value between function calls, unlike auto variables which are reinitialized each call.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== COMPARISONS ======================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">All Four Storage Classes Compared</caption>
+          <thead>
+            <tr><th>Feature</th><th>auto</th><th>static</th><th>extern</th><th>register</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Keyword</td><td>auto</td><td>static</td><td>extern</td><td>register</td></tr>
+            <tr><td>Scope</td><td>Local</td><td>Local</td><td>Global</td><td>Local</td></tr>
+            <tr><td>Lifetime</td><td>Function</td><td>Program</td><td>Program</td><td>Function</td></tr>
+            <tr><td>Default value</td><td>Garbage</td><td>0</td><td>0</td><td>Garbage</td></tr>
+            <tr><td>Storage</td><td>Stack</td><td>Data segment</td><td>Data segment</td><td>CPU Register</td></tr>
+            <tr><td>Retains value?</td><td>No</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+            <tr><td>&amp; operator allowed?</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">Local vs Global Variables</caption>
+          <thead>
+            <tr><th>Feature</th><th>Local Variable</th><th>Global Variable</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Declaration location</td><td>Inside a function or block</td><td>Outside all functions</td></tr>
+            <tr><td>Accessibility</td><td>Only within that function</td><td>Throughout entire program</td></tr>
+            <tr><td>Lifetime</td><td>Function execution only</td><td>Entire program duration</td></tr>
+            <tr><td>Default value</td><td>Garbage (undefined)</td><td>0 (auto-initialized)</td></tr>
+            <tr><td>Memory</td><td>Stack</td><td>Data segment</td></tr>
+            <tr><td>Risk</td><td>Low — confined scope</td><td>High — any function can modify</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">Recursion vs Iteration</caption>
+          <thead>
+            <tr><th>Feature</th><th>Recursion</th><th>Iteration</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mechanism</td><td>Function calls itself</td><td>Loop repeats code block</td></tr>
+            <tr><td>Termination</td><td>Base case</td><td>Loop condition becomes false</td></tr>
+            <tr><td>Memory</td><td>More (stack frames)</td><td>Less (no extra frames)</td></tr>
+            <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+            <tr><td>Code clarity</td><td>Elegant for complex problems</td><td>Clearer for simple loops</td></tr>
+            <tr><td>Risk</td><td>Stack overflow</td><td>Infinite loop</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== MCQs ======================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Which of the following storage classes retains its value between function calls?</p>
+          <ul class="options">
+            <li>a. auto</li>
+            <li>b. register</li>
+            <li>c. static</li>
+            <li>d. extern</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: c. static</strong>
+            <p>A static local variable is initialized only once and retains its value across multiple function calls. Its lifetime spans the entire program, unlike auto/register which are destroyed when the function returns.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>In call by value, changes made to a parameter inside the function:</p>
+          <ul class="options">
+            <li>a. Affect the original argument</li>
+            <li>b. Do not affect the original argument</li>
+            <li>c. Cause a compile error</li>
+            <li>d. Affect only global variables</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: b. Do not affect the original argument</strong>
+            <p>In call by value, a copy of the argument is passed. The function works on this copy. Any changes to the copy inside the function do not modify the original variable in the calling function.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the value of <code>factorial(0)</code> by definition?</p>
+          <ul class="options">
+            <li>a. 0</li>
+            <li>b. -1</li>
+            <li>c. 1</li>
+            <li>d. Undefined</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: c. 1</strong>
+            <p>By mathematical definition, 0! = 1. In recursive factorial programs, this is the base case: if(n == 0) return 1. Without this, the recursion would never terminate.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the purpose of a function prototype in C?</p>
+          <ul class="options">
+            <li>a. To define the function body</li>
+            <li>b. To inform the compiler about function name, return type and parameters before use</li>
+            <li>c. To call the function</li>
+            <li>d. To allocate memory for the function</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: b. To inform the compiler about function name, return type and parameters before use</strong>
+            <p>A prototype is a declaration that tells the compiler the function's signature (name, return type, parameter types) before the actual definition. This allows functions to be called before they are defined.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What happens when a recursive function has no base case?</p>
+          <ul class="options">
+            <li>a. It returns 0</li>
+            <li>b. It runs exactly once</li>
+            <li>c. Stack overflow — infinite recursion</li>
+            <li>d. Compile error</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. Stack overflow — infinite recursion</strong>
+            <p>Without a base case, the function calls itself indefinitely. Each call creates a new stack frame, eventually exhausting all stack memory, causing a Stack Overflow runtime error and program crash.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Which storage class cannot use the address-of operator (&amp;)?</p>
+          <ul class="options">
+            <li>a. auto</li>
+            <li>b. static</li>
+            <li>c. extern</li>
+            <li>d. register</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: d. register</strong>
+            <p>Register variables may be stored in CPU registers rather than RAM. Since CPU registers don't have memory addresses, the & operator cannot be applied to register variables.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is the minimum number of moves required to solve Tower of Hanoi with 4 disks?</p>
+          <ul class="options">
+            <li>a. 8</li>
+            <li>b. 15</li>
+            <li>c. 16</li>
+            <li>d. 7</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: b. 15</strong>
+            <p>Minimum moves = 2ⁿ - 1 where n = number of disks. For 4 disks: 2⁴ - 1 = 16 - 1 = 15 moves.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>In call by reference, what is passed to the function?</p>
+          <ul class="options">
+            <li>a. A copy of the value</li>
+            <li>b. The variable name</li>
+            <li>c. The memory address of the variable</li>
+            <li>d. The data type of the variable</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: c. The memory address of the variable</strong>
+            <p>In call by reference (implemented via pointers in C), the address of the actual argument is passed using the & operator. The function parameter is a pointer that holds this address, allowing direct modification of the original variable.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What is the default storage class of a local variable declared inside a function?</p>
+          <ul class="options">
+            <li>a. static</li>
+            <li>b. extern</li>
+            <li>c. register</li>
+            <li>d. auto</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: d. auto</strong>
+            <p>The default storage class for local variables is auto. The keyword 'auto' is rarely written explicitly because it is the default. These variables are created on the stack when the function is called and destroyed when it returns.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>What is the 6th Fibonacci number (F(5)) in the sequence starting F(0)=0, F(1)=1?</p>
+          <ul class="options">
+            <li>a. 3</li>
+            <li>b. 5</li>
+            <li>c. 8</li>
+            <li>d. 13</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: b. 5</strong>
+            <p>Fibonacci sequence: F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5. Each number is the sum of the two preceding ones. F(5) = F(4)+F(3) = 3+2 = 5.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>A function with return type void:</p>
+          <ul class="options">
+            <li>a. Must return 0</li>
+            <li>b. Must return 1</li>
+            <li>c. Must not return any value</li>
+            <li>d. Can return any integer</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: c. Must not return any value</strong>
+            <p>A void function performs an action but does not return any value to the caller. Using "return value;" in a void function is a compile-time error. A bare "return;" statement is allowed to exit early from a void function.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>Which type of recursion has the recursive call as the LAST statement in the function?</p>
+          <ul class="options">
+            <li>a. Direct recursion</li>
+            <li>b. Indirect recursion</li>
+            <li>c. Tail recursion</li>
+            <li>d. Tree recursion</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: c. Tail recursion</strong>
+            <p>In tail recursion, the recursive call is the very last operation performed before returning. There is no pending computation after the call returns. This is important because tail recursion can be optimized by compilers to avoid creating new stack frames.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SHORT QUESTIONS ======================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is a function prototype? Why is it needed?</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>A <strong>function prototype</strong> is a declaration that tells the compiler the function's name, return type, and parameter types before the function is actually used or defined. It ends with a semicolon. It is needed to: (1) allow functions to be called before they are defined; (2) enable the compiler to check for correct argument types and count; (3) prevent type mismatch errors at compile time.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Differentiate between call by value and call by reference with a simple example.</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p><strong>Call by Value:</strong> A copy of the argument is passed. Changes inside the function do NOT affect the original. Example: <code>void f(int x) { x = 100; } — calling f(a) leaves a unchanged.</code></p>
+            <p><strong>Call by Reference:</strong> The address is passed using a pointer. Changes inside the function DO affect the original. Example: <code>void f(int *x) { *x = 100; } — calling f(&amp;a) changes a to 100.</code></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the difference between auto and static storage classes?</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p>Both <strong>auto</strong> and <strong>static</strong> local variables have local scope. The difference is <strong>lifetime</strong>: <code>auto</code> variables are created when the function is called and destroyed when it returns — they do NOT retain value between calls. <code>static</code> variables are initialized only once and retain their value across multiple function calls — their lifetime is the entire program.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is recursion? What is the role of the base case?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p><strong>Recursion</strong> is the process where a function calls itself to solve a problem by breaking it into smaller subproblems. The <strong>base case</strong> is the condition that terminates the recursion — when reached, the function returns a direct value without calling itself again. Without a base case, the function would call itself infinitely, causing a stack overflow crash.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is stack overflow in the context of recursion?</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p><strong>Stack overflow</strong> is a runtime error that occurs when the call stack memory is exhausted. In recursion, each function call creates a new stack frame storing local variables and return address. If recursion is too deep (e.g., missing base case causing infinite recursion), the stack runs out of space, causing the program to crash with a "stack overflow" error.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the difference between formal parameters and actual parameters?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p><strong>Formal parameters</strong> are the variable names listed in the function definition header — they receive values when the function is called: <code>int add(int a, int b)</code> — a, b are formal. <strong>Actual parameters (arguments)</strong> are the real values or variables passed in the function call: <code>add(10, 20)</code> — 10, 20 are actual. Formal parameters exist only inside the function.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>List four advantages of using functions in C programming.</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p>Four advantages of functions: (1) <strong>Code Reusability</strong> — write once, call multiple times; (2) <strong>Modularity</strong> — large programs divided into manageable modules; (3) <strong>Easier Debugging</strong> — each function tested independently; (4) <strong>Reduced Duplication</strong> — same logic not repeated; (5) <strong>Improved Readability</strong> — meaningful function names make code self-documenting.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the extern storage class? When is it used?</p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>The <strong>extern</strong> storage class is used to declare a variable that is <strong>defined in another file or elsewhere in the same file</strong>. It tells the compiler "this variable exists, but it's defined somewhere else." It is used in multi-file programs to share global variables across files. Scope: global; Lifetime: entire program; Default value: 0.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== LONG QUESTIONS ======================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions (6 Marks)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain call by value and call by reference in C with syntax and programs. Demonstrate a swap function using both methods and explain why only one works.</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p><strong>Call by Value — Swap FAILS:</strong></p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Call by Value Swap (Does Not Work)</div>
+              <pre>void swap(int a, int b) {
+    int t = a; a = b; b = t;  /* only copies swapped */
+}
+int main() {
+    int x=10, y=20;
+    swap(x, y);
+    printf("%d %d", x, y);    /* Still 10 20 — unchanged */
+}</pre>
+            </div>
+            <p><strong>Why it fails:</strong> x and y's copies are passed. The original variables in main() are untouched.</p>
+            <p><strong>Call by Reference — Swap WORKS:</strong></p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Call by Reference Swap (Works)</div>
+              <pre>void swap(int *a, int *b) {
+    int t = *a; *a = *b; *b = t; /* original values swapped */
+}
+int main() {
+    int x=10, y=20;
+    swap(&x, &y);               /* addresses passed */
+    printf("%d %d", x, y);      /* 20 10 — swapped! */
+}</pre>
+            </div>
+            <p><strong>Why it works:</strong> Addresses of x and y are passed. The function modifies the actual memory locations of x and y through pointers.</p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Feature</th><th>Call by Value</th><th>Call by Reference</th></tr></thead>
+                <tbody>
+                  <tr><td>What is passed</td><td>Copy of value</td><td>Memory address</td></tr>
+                  <tr><td>Modifies original</td><td>No</td><td>Yes</td></tr>
+                  <tr><td>Parameter type</td><td>int a</td><td>int *a</td></tr>
+                  <tr><td>Call syntax</td><td>swap(x, y)</td><td>swap(&amp;x, &amp;y)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain recursion in C with a complete program to calculate factorial. Show the call stack trace for factorial(4). Compare recursion with iteration.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p><strong>Recursion</strong> is when a function calls itself with a smaller input to solve a problem. Every recursive function needs: (1) Base case — stops recursion; (2) Recursive case — moves toward base case.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Recursive Factorial</div>
+              <pre>#include &lt;stdio.h&gt;
+int factorial(int n) {
+    if (n == 0 || n == 1) return 1;  /* BASE CASE */
+    return n * factorial(n - 1);     /* RECURSIVE CASE */
+}
+int main() {
+    printf("4! = %d\n", factorial(4));  /* 24 */
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Call Stack Trace for factorial(4):</strong></p>
+            <div class="recursion-tree">
+factorial(4) = 4 * factorial(3)
+factorial(3) = 3 * factorial(2)
+factorial(2) = 2 * factorial(1)
+factorial(1) = 1  ← BASE CASE, returns 1
+factorial(2) = 2 * 1 = 2
+factorial(3) = 3 * 2 = 6
+factorial(4) = 4 * 6 = 24 ← Final Answer
+            </div>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Iterative Factorial (for comparison)</div>
+              <pre>int factIterative(int n) {
+    int result = 1;
+    for (int i = 1; i &lt;= n; i++) result *= i;
+    return result;
+}</pre>
+            </div>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Feature</th><th>Recursion</th><th>Iteration</th></tr></thead>
+                <tbody>
+                  <tr><td>Memory</td><td>More (stack frames)</td><td>Less</td></tr>
+                  <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+                  <tr><td>Code</td><td>Shorter, elegant</td><td>Longer, explicit</td></tr>
+                  <tr><td>Risk</td><td>Stack overflow</td><td>Infinite loop</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain all four storage classes in C (auto, static, extern, register) with their scope, lifetime, default value and a code example for static.</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p>C has four storage classes that determine scope, lifetime, default value, and storage location of variables:</p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Class</th><th>Scope</th><th>Lifetime</th><th>Default</th><th>Storage</th></tr></thead>
+                <tbody>
+                  <tr><td>auto</td><td>Local</td><td>Function only</td><td>Garbage</td><td>Stack</td></tr>
+                  <tr><td>static</td><td>Local</td><td>Full program</td><td>0</td><td>Data segment</td></tr>
+                  <tr><td>extern</td><td>Global</td><td>Full program</td><td>0</td><td>Data segment</td></tr>
+                  <tr><td>register</td><td>Local</td><td>Function only</td><td>Garbage</td><td>CPU Register</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Key difference — static vs auto:</strong></p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Static vs Auto Demonstration</div>
+              <pre>#include &lt;stdio.h&gt;
+void test() {
+    auto int a = 0;    /* reset to 0 each call */
+    static int s = 0;  /* initialized ONCE, retained */
+    a++;
+    s++;
+    printf("auto=%d, static=%d\n", a, s);
+}
+int main() {
+    test();  /* auto=1, static=1 */
+    test();  /* auto=1, static=2 */
+    test();  /* auto=1, static=3 */
+    return 0;
+}</pre>
+            </div>
+            <p>Note how <code>auto</code> resets to 0 every call while <code>static</code> accumulates across calls.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== PRACTICE ======================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a C program with a recursive function to compute the nth Fibonacci number. Test it for n=10.</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Recursive Fibonacci</div>
+              <pre>#include &lt;stdio.h&gt;
+
+int fibonacci(int n) {
+    if (n == 0) return 0;              /* base case 1 */
+    if (n == 1) return 1;              /* base case 2 */
+    return fibonacci(n-1) + fibonacci(n-2); /* recursive */
+}
+
+int main() {
+    int n = 10;
+    printf("First %d Fibonacci numbers:\n", n);
+    for (int i = 0; i &lt; n; i++) {
+        printf("F(%d) = %d\n", i, fibonacci(i));
+    }
+    printf("\nF(10) = %d\n", fibonacci(10)); /* 55 */
+    return 0;
+}
+/* F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5,
+   F(6)=8, F(7)=13, F(8)=21, F(9)=34, F(10)=55 */</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a C program with a function that takes an array and its size, and returns the sum and average. Demonstrate passing array to function.</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Array Passed to Function</div>
+              <pre>#include &lt;stdio.h&gt;
+
+/* Function to calculate sum */
+int arraySum(int arr[], int n) {
+    int sum = 0;
+    for (int i = 0; i &lt; n; i++) sum += arr[i];
+    return sum;
+}
+
+/* Function to calculate average */
+float arrayAverage(int arr[], int n) {
+    return (float)arraySum(arr, n) / n;
+}
+
+/* Function to find max */
+int arrayMax(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i &lt; n; i++)
+        if (arr[i] &gt; max) max = arr[i];
+    return max;
+}
+
+int main() {
+    int marks[] = {85, 90, 78, 92, 88, 76, 95};
+    int n = 7;
+
+    printf("Marks: ");
+    for (int i = 0; i &lt; n; i++) printf("%d ", marks[i]);
+    printf("\n");
+
+    printf("Sum     = %d\n", arraySum(marks, n));
+    printf("Average = %.2f\n", arrayAverage(marks, n));
+    printf("Maximum = %d\n", arrayMax(marks, n));
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Key point:</strong> Arrays are always passed by reference — the function receives a pointer to the first element.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a C program to demonstrate the static storage class by creating a function that counts how many times it has been called.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Static Variable Counter</div>
+              <pre>#include &lt;stdio.h&gt;
+
+void functionCounter() {
+    static int callCount = 0;   /* initialized ONCE */
+    callCount++;                 /* incremented every call */
+    printf("This function has been called %d time(s).\n", callCount);
+}
+
+int main() {
+    functionCounter();   /* Called 1 time(s) */
+    functionCounter();   /* Called 2 time(s) */
+    functionCounter();   /* Called 3 time(s) */
+    functionCounter();   /* Called 4 time(s) */
+    functionCounter();   /* Called 5 time(s) */
+    return 0;
+}
+/* If callCount were auto (not static):
+   it would print "1 time(s)" every single call */</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a C program with a recursive function to find GCD of two numbers using Euclid's algorithm. Show the trace for GCD(48, 18).</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Recursive GCD</div>
+              <pre>#include &lt;stdio.h&gt;
+
+int gcd(int a, int b) {
+    if (b == 0) return a;      /* base case */
+    return gcd(b, a % b);      /* recursive case */
+}
+
+int main() {
+    printf("GCD(48, 18) = %d\n", gcd(48, 18));   /* 6 */
+    printf("GCD(56, 98) = %d\n", gcd(56, 98));   /* 14 */
+    printf("GCD(100, 75) = %d\n", gcd(100, 75)); /* 25 */
+    return 0;
+}</pre>
+            </div>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-table"></i> Trace for GCD(48, 18)</div>
+              <div class="recursion-tree">
+gcd(48, 18) → b≠0, call gcd(18, 48%18) = gcd(18, 12)
+gcd(18, 12) → b≠0, call gcd(12, 18%12) = gcd(12, 6)
+gcd(12,  6) → b≠0, call gcd(6,  12%6)  = gcd(6, 0)
+gcd( 6,  0) → b==0, return 6 ← BASE CASE
+GCD(48, 18) = 6
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a C program demonstrating both call by value and call by reference by trying to modify a variable from inside a function in both ways.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Call by Value vs Reference Demo</div>
+              <pre>#include &lt;stdio.h&gt;
+
+/* Call by Value — cannot modify original */
+void doubleByValue(int x) {
+    x = x * 2;
+    printf("Inside doubleByValue: x = %d\n", x);
+}
+
+/* Call by Reference — CAN modify original */
+void doubleByRef(int *x) {
+    *x = (*x) * 2;
+    printf("Inside doubleByRef: *x = %d\n", *x);
+}
+
+int main() {
+    int a = 10;
+
+    printf("--- Call by Value ---\n");
+    printf("Before: a = %d\n", a);         /* 10 */
+    doubleByValue(a);                       /* Inside: 20 */
+    printf("After:  a = %d\n\n", a);       /* Still 10 */
+
+    printf("--- Call by Reference ---\n");
+    printf("Before: a = %d\n", a);         /* 10 */
+    doubleByRef(&a);                        /* Inside: 20 */
+    printf("After:  a = %d\n", a);         /* Now 20 */
+
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== REVISION ======================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points — Unit 4</div>
+        <ul>
+          <li>Function = <strong>self-contained block</strong> performing a specific task.</li>
+          <li>Three parts: <strong>Prototype</strong>, <strong>Definition</strong>, <strong>Call</strong>.</li>
+          <li>Prototype ends with <strong>semicolon</strong>. Definition does NOT.</li>
+          <li><strong>Formal parameters</strong> — in function definition. <strong>Actual parameters</strong> — in function call.</li>
+          <li><strong>Call by Value</strong> — copy passed; original unchanged.</li>
+          <li><strong>Call by Reference</strong> — address passed using &amp;; original modified via *pointer.</li>
+          <li><strong>auto</strong> — default, local, destroyed after function returns, garbage initial value.</li>
+          <li><strong>static</strong> — local scope, <strong>retains value</strong> between calls, initialized to 0.</li>
+          <li><strong>extern</strong> — global scope, used to share variables across files.</li>
+          <li><strong>register</strong> — suggests CPU register storage; <strong>cannot use &amp; operator</strong>.</li>
+          <li><strong>Local variables</strong> — garbage default, function lifetime. <strong>Global</strong> — 0 default, program lifetime.</li>
+          <li><strong>Recursion</strong> = function calling itself. Needs <strong>base case</strong> + <strong>recursive case</strong>.</li>
+          <li><strong>Base case missing</strong> → infinite recursion → stack overflow crash.</li>
+          <li><strong>Tail recursion</strong> — recursive call is the last operation; can be optimized.</li>
+          <li>Tower of Hanoi: <strong>Moves = 2ⁿ - 1</strong>.</li>
+          <li>Recursion uses more <strong>memory</strong> (stack frames) but code is more <strong>elegant</strong>.</li>
+          <li>Fibonacci: <strong>F(n) = F(n-1) + F(n-2)</strong>, F(0)=0, F(1)=1.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-fire"></i> Must Remember for Exam</div>
+        <ul>
+          <li><strong>static retains value</strong> between calls — extremely common MCQ and short question.</li>
+          <li><strong>Call by value does NOT modify original</strong>; call by reference DOES — swap program is a classic 6-mark question.</li>
+          <li><strong>0! = 1</strong> — base case for factorial recursion; forgetting this is a classic mistake.</li>
+          <li><strong>Tower of Hanoi moves = 2ⁿ - 1</strong> — asked as a numerical question every year.</li>
+          <li><strong>register variables cannot use &amp; operator</strong> — common MCQ trap.</li>
+          <li><strong>Prototype ends with semicolon</strong>; definition body is in braces — no semicolon.</li>
+          <li>Fibonacci sequence: <strong>0, 1, 1, 2, 3, 5, 8, 13, 21, 34</strong> — memorize at least 10 terms.</li>
+          <li><strong>GCD Euclid's algorithm</strong>: GCD(a,b) = GCD(b, a%b), base: GCD(a,0) = a.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Writing a swap function using call by value and expecting it to work — it NEVER works without pointers.</li>
+          <li>Forgetting <strong>&amp;</strong> when calling a function by reference: <code>swap(x,y)</code> instead of <code>swap(&amp;x, &amp;y)</code>.</li>
+          <li>Thinking <code>factorial(0) = 0</code> — wrong! <strong>0! = 1</strong>.</li>
+          <li>Missing the base case in a recursive function — causes infinite recursion and crash.</li>
+          <li>Confusing <strong>scope</strong> (where accessible) with <strong>lifetime</strong> (how long it exists).</li>
+          <li>Thinking <code>register</code> guarantees CPU storage — it is only a <strong>suggestion</strong>; compiler may ignore it.</li>
+          <li>Writing prototype without semicolon: <code>int add(int, int)</code> → compile error.</li>
+          <li>Returning local variable's address from a function — the variable is destroyed, making the pointer dangling.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

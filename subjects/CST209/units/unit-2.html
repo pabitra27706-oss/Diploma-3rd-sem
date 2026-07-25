@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 2 – Sorting | CST209</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="../../units-com/common.css"/>
+  <style>
+    .sort-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .sort-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1rem;
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+    .sort-card h4 {
+      margin: 0 0 0.4rem 0;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .sort-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .complexity-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.78rem;
+      font-family: 'Courier New', monospace;
+      margin-top: 0.4rem;
+    }
+    .trace-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 0.8rem;
+      margin: 0.3rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+    }
+    .trace-step .step-label {
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 0.5rem;
+    }
+    .highlight-el {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 3px;
+      padding: 0 4px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="../index.html" style="text-decoration:none;color:inherit;">
+        <i class="fas fa-arrow-left"></i> CST209
+      </a>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview">Overview</a>
+      <a href="#sorting-problem">Problem</a>
+      <a href="#elementary">Elementary</a>
+      <a href="#efficient">Efficient</a>
+      <a href="#linear">Linear Time</a>
+      <a href="#complexity-analysis">Complexity</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#definitions">Definitions</a>
+      <a href="#comparisons">Comparisons</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#short-questions">Short Qs</a>
+      <a href="#long-questions">Long Qs</a>
+      <a href="#practice">Practice</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 2 – Sorting</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#sorting-problem">The Sorting Problem</a>
+    <a href="#elementary">Elementary Sorting</a>
+    <a href="#efficient">Efficient Sorting</a>
+    <a href="#linear">Linear Time Sorting</a>
+    <a href="#complexity-analysis">Complexity Analysis</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Key Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice Problems</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-code-branch"></i> CST209 – Algorithms</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Unit 2 of 5</div>
+      <div class="info-item"><i class="fas fa-clock"></i> 16 Hours</div>
+      <div class="info-item"><i class="fas fa-graduation-cap"></i> Diploma 3rd Semester</div>
+    </div>
+    <h1><i class="fas fa-sort-amount-up"></i> Sorting Algorithms</h1>
+    <p>Elementary, efficient, and linear-time sorting algorithms with full complexity analysis and step-by-step traces.</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- =================== SECTION 1: OVERVIEW =================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What is this unit about?</div>
+        <p>Sorting is one of the most fundamental operations in computer science. This unit covers <strong>all major sorting algorithms</strong> classified by their strategy and efficiency.</p>
+        <ul>
+          <li><strong>Elementary sorts:</strong> Bubble, Selection, Insertion, Shell Sort.</li>
+          <li><strong>Efficient sorts:</strong> Merge Sort, Quick Sort, Heap Sort — all O(n log n).</li>
+          <li><strong>Linear-time sorts:</strong> Count Sort, Bucket Sort, Radix Sort — beat O(n log n) lower bound.</li>
+          <li>Complete <strong>best, average, worst-case</strong> complexity analysis for every algorithm.</li>
+        </ul>
+      </div>
+      <div class="sort-grid" style="margin-top:1rem;">
+        <div class="sort-card">
+          <h4><i class="fas fa-circle"></i> Bubble Sort</h4>
+          <p>Swap adjacent elements repeatedly.</p>
+          <span class="complexity-badge">O(n²)</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-circle"></i> Selection Sort</h4>
+          <p>Find min, place at front.</p>
+          <span class="complexity-badge">O(n²)</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-circle"></i> Insertion Sort</h4>
+          <p>Build sorted array one element at a time.</p>
+          <span class="complexity-badge">O(n²)</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-circle"></i> Shell Sort</h4>
+          <p>Gap-based insertion sort.</p>
+          <span class="complexity-badge">O(n^1.5) avg</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-star"></i> Merge Sort</h4>
+          <p>Divide and conquer, stable.</p>
+          <span class="complexity-badge">O(n log n)</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-star"></i> Quick Sort</h4>
+          <p>Partition around pivot.</p>
+          <span class="complexity-badge">O(n log n) avg</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-star"></i> Heap Sort</h4>
+          <p>Uses max-heap structure.</p>
+          <span class="complexity-badge">O(n log n)</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-bolt"></i> Count Sort</h4>
+          <p>Integer keys, counting array.</p>
+          <span class="complexity-badge">O(n + k)</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-bolt"></i> Radix Sort</h4>
+          <p>Digit by digit sorting.</p>
+          <span class="complexity-badge">O(d(n+k))</span>
+        </div>
+        <div class="sort-card">
+          <h4><i class="fas fa-bolt"></i> Bucket Sort</h4>
+          <p>Distribute into buckets.</p>
+          <span class="complexity-badge">O(n) avg</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 2: SORTING PROBLEM =================== -->
+  <section class="section" id="sorting-problem">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> The Sorting Problem
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Formal Definition</div>
+        <p><strong>Input:</strong> A sequence of n numbers ⟨a₁, a₂, ..., aₙ⟩.</p>
+        <p style="margin-top:0.5rem;"><strong>Output:</strong> A permutation (reordering) ⟨a'₁, a'₂, ..., a'ₙ⟩ such that a'₁ ≤ a'₂ ≤ ... ≤ a'ₙ.</p>
+      </div>
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-tags"></i> Key Properties of Sorting Algorithms</div>
+        <ul>
+          <li><strong>Stable:</strong> Preserves the relative order of equal elements. Example: Merge Sort, Bubble Sort, Insertion Sort, Count Sort.</li>
+          <li><strong>Unstable:</strong> May not preserve relative order. Example: Quick Sort, Heap Sort, Selection Sort.</li>
+          <li><strong>In-place:</strong> Uses O(1) extra memory. Example: Bubble, Selection, Insertion, Heap Sort.</li>
+          <li><strong>Not in-place:</strong> Uses O(n) extra memory. Example: Merge Sort, Count Sort.</li>
+          <li><strong>Comparison-based:</strong> Sorts by comparing elements. Lower bound is Ω(n log n). Example: All elementary and efficient sorts.</li>
+          <li><strong>Non-comparison-based:</strong> Does not compare elements directly. Can beat Ω(n log n). Example: Count Sort, Radix Sort, Bucket Sort.</li>
+        </ul>
+      </div>
+      <div class="important-note" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Theoretical Lower Bound</div>
+        <p>Any comparison-based sorting algorithm requires at least <strong>Ω(n log n)</strong> comparisons in the worst case. This is proven using decision trees. This is why Merge Sort, Quick Sort (avg), and Heap Sort are considered optimal among comparison sorts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 3: ELEMENTARY SORTING =================== -->
+  <section class="section" id="elementary">
+    <h2 class="section-title">
+      <i class="fas fa-sort"></i> Elementary Sorting Algorithms
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- BUBBLE SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-circle"></i> 1. Bubble Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Repeatedly compare adjacent elements and <strong>swap</strong> them if they are in the wrong order. After each pass, the largest unsorted element "bubbles up" to its correct position. Perform n-1 passes total.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Bubble Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BUBBLE-SORT(A, n)
+  for i = 0 to n-2
+    swapped = false
+    for j = 0 to n-2-i
+      if A[j] > A[j+1]
+        swap(A[j], A[j+1])
+        swapped = true
+    if swapped == false
+      break   // Array already sorted — optimization
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [64, 34, 25, 12]</div>
+        <div class="trace-step"><span class="step-label">Pass 1:</span> [34, 25, 12, <span class="highlight-el">64</span>] — 64 bubbles to end</div>
+        <div class="trace-step"><span class="step-label">Pass 2:</span> [25, 12, <span class="highlight-el">34</span>, 64] — 34 in place</div>
+        <div class="trace-step"><span class="step-label">Pass 3:</span> [12, <span class="highlight-el">25</span>, 34, 64] — 25 in place</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [12, 25, 34, 64] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Bubble Sort</div>
+        <ul>
+          <li><strong>Best Case:</strong> O(n) — array already sorted, only 1 pass needed (with swapped flag).</li>
+          <li><strong>Average Case:</strong> O(n²)</li>
+          <li><strong>Worst Case:</strong> O(n²) — array in reverse order, all swaps happen.</li>
+          <li><strong>Space:</strong> O(1) — in-place.</li>
+          <li><strong>Stable:</strong> Yes (equal elements are not swapped).</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px dashed var(--border);">
+
+      <!-- SELECTION SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-circle"></i> 2. Selection Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Divide the array into a <strong>sorted part</strong> (left) and an <strong>unsorted part</strong> (right). In each pass, find the <strong>minimum element</strong> in the unsorted part and swap it with the first unsorted element.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Selection Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+SELECTION-SORT(A, n)
+  for i = 0 to n-2
+    minIdx = i
+    for j = i+1 to n-1
+      if A[j] < A[minIdx]
+        minIdx = j
+    if minIdx != i
+      swap(A[i], A[minIdx])
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [64, 25, 12, 22]</div>
+        <div class="trace-step"><span class="step-label">Pass 1:</span> Min=12 at idx 2 → swap with idx 0 → [<span class="highlight-el">12</span>, 25, 64, 22]</div>
+        <div class="trace-step"><span class="step-label">Pass 2:</span> Min=22 at idx 3 → swap with idx 1 → [12, <span class="highlight-el">22</span>, 64, 25]</div>
+        <div class="trace-step"><span class="step-label">Pass 3:</span> Min=25 at idx 3 → swap with idx 2 → [12, 22, <span class="highlight-el">25</span>, 64]</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [12, 22, 25, 64] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Selection Sort</div>
+        <ul>
+          <li><strong>Best Case:</strong> O(n²) — always scans entire unsorted portion.</li>
+          <li><strong>Average Case:</strong> O(n²)</li>
+          <li><strong>Worst Case:</strong> O(n²)</li>
+          <li><strong>Space:</strong> O(1) — in-place.</li>
+          <li><strong>Stable:</strong> No (swapping may change relative order).</li>
+          <li><strong>Note:</strong> Makes at most n-1 swaps — good when swaps are expensive.</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px dashed var(--border);">
+
+      <!-- INSERTION SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-circle"></i> 3. Insertion Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Build a sorted array one element at a time. For each element, <strong>find its correct position</strong> in the sorted portion and insert it there by shifting larger elements to the right. Similar to how you sort playing cards in your hand.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Insertion Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+INSERTION-SORT(A, n)
+  for i = 1 to n-1
+    key = A[i]
+    j = i - 1
+    while j >= 0 and A[j] > key
+      A[j+1] = A[j]
+      j = j - 1
+    A[j+1] = key
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [5, 2, 4, 1]</div>
+        <div class="trace-step"><span class="step-label">i=1:</span> key=2, shift 5 right → [2, 5, 4, 1]</div>
+        <div class="trace-step"><span class="step-label">i=2:</span> key=4, shift 5 right → [2, 4, 5, 1]</div>
+        <div class="trace-step"><span class="step-label">i=3:</span> key=1, shift 5,4,2 right → [1, 2, 4, 5]</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [1, 2, 4, 5] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Insertion Sort</div>
+        <ul>
+          <li><strong>Best Case:</strong> O(n) — array already sorted, inner while loop never executes.</li>
+          <li><strong>Average Case:</strong> O(n²)</li>
+          <li><strong>Worst Case:</strong> O(n²) — reverse sorted array, maximum shifts.</li>
+          <li><strong>Space:</strong> O(1) — in-place.</li>
+          <li><strong>Stable:</strong> Yes.</li>
+          <li><strong>Best for:</strong> Small arrays or nearly-sorted arrays.</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px dashed var(--border);">
+
+      <!-- SHELL SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-circle"></i> 4. Shell Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>An improved version of Insertion Sort. Instead of comparing adjacent elements, compare elements separated by a <strong>gap</strong>. Start with a large gap, reduce the gap each pass, and finally perform a standard insertion sort (gap=1). This moves elements faster to their correct positions.</p>
+        <p style="margin-top:0.5rem;"><strong>Gap sequence (Shell's original):</strong> n/2, n/4, ..., 1</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Shell Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+SHELL-SORT(A, n)
+  gap = n / 2
+  while gap > 0
+    for i = gap to n-1
+      temp = A[i]
+      j = i
+      while j >= gap and A[j - gap] > temp
+        A[j] = A[j - gap]
+        j = j - gap
+      A[j] = temp
+    gap = gap / 2
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [8, 3, 6, 1, 5], gap=2 then gap=1</div>
+        <div class="trace-step"><span class="step-label">gap=2:</span> Compare positions 0&2, 1&3, 2&4 → [6, 1, 8, 3, 5] → partial ordering</div>
+        <div class="trace-step"><span class="step-label">gap=1:</span> Standard insertion sort on nearly-sorted array → [1, 3, 5, 6, 8]</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [1, 3, 5, 6, 8] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Shell Sort</div>
+        <ul>
+          <li><strong>Best Case:</strong> O(n log n)</li>
+          <li><strong>Average Case:</strong> O(n^1.5) or O(n log² n) depending on gap sequence.</li>
+          <li><strong>Worst Case:</strong> O(n²) with Shell's original gap; O(n log² n) with Hibbard's gap.</li>
+          <li><strong>Space:</strong> O(1) — in-place.</li>
+          <li><strong>Stable:</strong> No.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 4: EFFICIENT SORTING =================== -->
+  <section class="section" id="efficient">
+    <h2 class="section-title">
+      <i class="fas fa-rocket"></i> Efficient Sorting Algorithms
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- MERGE SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-star"></i> 1. Merge Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>A classic <strong>Divide and Conquer</strong> algorithm. Divide the array into two halves, recursively sort each half, then <strong>merge</strong> the two sorted halves. The merge step is the key operation that combines two sorted arrays into one sorted array in O(n) time.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Merge Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+MERGE-SORT(A, left, right)
+  if left < right
+    mid = (left + right) / 2
+    MERGE-SORT(A, left, mid)
+    MERGE-SORT(A, mid+1, right)
+    MERGE(A, left, mid, right)
+
+MERGE(A, left, mid, right)
+  n1 = mid - left + 1
+  n2 = right - mid
+  Create arrays L[0..n1] and R[0..n2]
+  Copy A[left..mid] to L[]
+  Copy A[mid+1..right] to R[]
+  i = 0, j = 0, k = left
+  while i < n1 and j < n2
+    if L[i] <= R[j]: A[k++] = L[i++]
+    else: A[k++] = R[j++]
+  Copy remaining L[] or R[] elements to A[]
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [38, 27, 43, 3]</div>
+        <div class="trace-step"><span class="step-label">Divide:</span> [38,27] and [43,3]</div>
+        <div class="trace-step"><span class="step-label">Divide:</span> [38],[27] and [43],[3]</div>
+        <div class="trace-step"><span class="step-label">Merge:</span> [27,38] and [3,43]</div>
+        <div class="trace-step"><span class="step-label">Merge:</span> Compare 27&3 → 3; 27&43 → 27; 38&43 → 38; 43 remaining</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [3, 27, 38, 43] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Merge Sort</div>
+        <ul>
+          <li><strong>Recurrence:</strong> T(n) = 2T(n/2) + O(n)</li>
+          <li><strong>Best Case:</strong> O(n log n)</li>
+          <li><strong>Average Case:</strong> O(n log n)</li>
+          <li><strong>Worst Case:</strong> O(n log n) — consistent for all inputs.</li>
+          <li><strong>Space:</strong> O(n) — needs extra array for merging.</li>
+          <li><strong>Stable:</strong> Yes.</li>
+          <li><strong>Best for:</strong> Linked lists, external sorting, when stability is needed.</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px dashed var(--border);">
+
+      <!-- QUICK SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-star"></i> 2. Quick Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>A <strong>Divide and Conquer</strong> algorithm that selects a <strong>pivot</strong> element and partitions the array into two sub-arrays: elements less than pivot (left) and elements greater than pivot (right). Then recursively sorts each sub-array. The partition step rearranges elements in O(n) time.</p>
+        <p style="margin-top:0.5rem;"><strong>Pivot selection strategies:</strong> First element, Last element, Random element, Median-of-three.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Quick Sort (Lomuto partition)</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+QUICK-SORT(A, low, high)
+  if low < high
+    pi = PARTITION(A, low, high)
+    QUICK-SORT(A, low, pi-1)
+    QUICK-SORT(A, pi+1, high)
+
+PARTITION(A, low, high)
+  pivot = A[high]
+  i = low - 1
+  for j = low to high-1
+    if A[j] <= pivot
+      i = i + 1
+      swap(A[i], A[j])
+  swap(A[i+1], A[high])
+  return i + 1
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [10, 7, 8, 9, 1, 5], pivot=5 (last)</div>
+        <div class="trace-step"><span class="step-label">Partition:</span> Elements ≤ 5: {1,5}, Elements > 5: {10,7,8,9}</div>
+        <div class="trace-step"><span class="step-label">After partition:</span> [1, <span class="highlight-el">5</span>, 10, 7, 8, 9] — pivot 5 at index 1</div>
+        <div class="trace-step"><span class="step-label">Recurse left:</span> [1] — sorted</div>
+        <div class="trace-step"><span class="step-label">Recurse right:</span> [10,7,8,9] → partition → [7,8,9,10]</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [1, 5, 7, 8, 9, 10] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Quick Sort</div>
+        <ul>
+          <li><strong>Recurrence (avg):</strong> T(n) = 2T(n/2) + O(n) → O(n log n)</li>
+          <li><strong>Best Case:</strong> O(n log n) — pivot always divides array equally.</li>
+          <li><strong>Average Case:</strong> O(n log n)</li>
+          <li><strong>Worst Case:</strong> O(n²) — pivot is always min or max (sorted/reverse-sorted array).</li>
+          <li><strong>Space:</strong> O(log n) average for recursion stack; O(n) worst case.</li>
+          <li><strong>Stable:</strong> No.</li>
+          <li><strong>Best for:</strong> General-purpose, in-memory sorting — fastest in practice despite O(n²) worst case.</li>
+        </ul>
+      </div>
+      <div class="warning-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Worst Case of Quick Sort</div>
+        <p>When the pivot always picks the smallest or largest element (e.g., array already sorted and pivot = last element), Quick Sort degrades to O(n²). This is why randomized pivot selection or median-of-three is used in practice.</p>
+      </div>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px dashed var(--border);">
+
+      <!-- HEAP SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-star"></i> 3. Heap Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Uses a <strong>Binary Max-Heap</strong> data structure. A max-heap is a complete binary tree where every parent node is ≥ its children. Heap Sort works in two phases:</p>
+        <ol style="margin:0.5rem 0 0 1rem; line-height:1.9;">
+          <li><strong>Build Max-Heap:</strong> Convert array into a max-heap in O(n) time.</li>
+          <li><strong>Extract Max Repeatedly:</strong> Swap root (max) with last element, reduce heap size, call Heapify to restore heap property. Repeat n-1 times.</li>
+        </ol>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Heap Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+HEAPIFY(A, n, i)
+  largest = i
+  left = 2*i + 1
+  right = 2*i + 2
+  if left < n and A[left] > A[largest]: largest = left
+  if right < n and A[right] > A[largest]: largest = right
+  if largest != i
+    swap(A[i], A[largest])
+    HEAPIFY(A, n, largest)
+
+HEAP-SORT(A, n)
+  // Build max heap
+  for i = n/2 - 1 downto 0
+    HEAPIFY(A, n, i)
+  // Extract elements
+  for i = n-1 downto 1
+    swap(A[0], A[i])
+    HEAPIFY(A, i, 0)
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [4, 10, 3, 5, 1]</div>
+        <div class="trace-step"><span class="step-label">Build Max-Heap:</span> [10, 5, 3, 4, 1]</div>
+        <div class="trace-step"><span class="step-label">Extract 1:</span> Swap 10↔1 → [1,5,3,4,<span class="highlight-el">10</span>] → Heapify → [5,4,3,1,10]</div>
+        <div class="trace-step"><span class="step-label">Extract 2:</span> Swap 5↔1 → [1,4,3,<span class="highlight-el">5</span>,10] → Heapify → [4,1,3,5,10]</div>
+        <div class="trace-step"><span class="step-label">Extract 3:</span> Swap 4↔3 → [3,1,<span class="highlight-el">4</span>,5,10] → Heapify → [3,1,4,5,10]</div>
+        <div class="trace-step"><span class="step-label">Extract 4:</span> Swap 3↔1 → [<span class="highlight-el">1</span>,3,4,5,10]</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [1, 3, 4, 5, 10] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Heap Sort</div>
+        <ul>
+          <li><strong>Build Heap:</strong> O(n)</li>
+          <li><strong>Each Heapify:</strong> O(log n)</li>
+          <li><strong>Best Case:</strong> O(n log n)</li>
+          <li><strong>Average Case:</strong> O(n log n)</li>
+          <li><strong>Worst Case:</strong> O(n log n) — guaranteed.</li>
+          <li><strong>Space:</strong> O(1) — in-place (no extra array needed).</li>
+          <li><strong>Stable:</strong> No.</li>
+          <li><strong>Best for:</strong> When O(n log n) worst-case and O(1) space are both required.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 5: LINEAR TIME SORTING =================== -->
+  <section class="section" id="linear">
+    <h2 class="section-title">
+      <i class="fas fa-bolt"></i> Linear Time Sorting Algorithms
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Why Linear Time?</div>
+        <p>These algorithms are <strong>non-comparison-based</strong>. They exploit additional structure in the input (e.g., integer keys within a range). They can sort in O(n) or O(n+k) time, beating the Ω(n log n) lower bound for comparison sorts. The trade-off is they work only for specific input types.</p>
+      </div>
+
+      <!-- COUNT SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin:1rem 0 0.6rem;"><i class="fas fa-bolt"></i> 1. Count Sort (Counting Sort)</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>For integer keys in range [0, k]: Count the frequency of each key, compute cumulative counts (prefix sums) to determine the position of each element in the output array, then place elements in their correct positions.</p>
+        <p style="margin-top:0.5rem;"><strong>Requirement:</strong> Integer keys in known range [0, k].</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Count Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+COUNT-SORT(A, n, k)
+  Create count array C[0..k] initialized to 0
+  // Step 1: Count frequencies
+  for i = 0 to n-1: C[A[i]]++
+  // Step 2: Prefix sums
+  for i = 1 to k: C[i] += C[i-1]
+  // Step 3: Build output
+  Create output array B[0..n-1]
+  for i = n-1 downto 0
+    B[C[A[i]] - 1] = A[i]
+    C[A[i]]--
+  Copy B to A
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [4, 2, 2, 8, 3, 3, 1], k=8</div>
+        <div class="trace-step"><span class="step-label">Count:</span> C = [0,1,2,2,1,0,0,0,1] (index = value)</div>
+        <div class="trace-step"><span class="step-label">Prefix:</span> C = [0,1,3,5,6,6,6,6,7]</div>
+        <div class="trace-step"><span class="step-label">Output:</span> B = [1, 2, 2, 3, 3, 4, 8]</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [1, 2, 2, 3, 3, 4, 8] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Count Sort</div>
+        <ul>
+          <li><strong>Time:</strong> O(n + k) where n = number of elements, k = range of values.</li>
+          <li><strong>Space:</strong> O(n + k) — extra arrays needed.</li>
+          <li><strong>Stable:</strong> Yes (when implemented with backward pass).</li>
+          <li><strong>Limitation:</strong> Only for integer keys; if k is large, space is wasted.</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px dashed var(--border);">
+
+      <!-- RADIX SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-bolt"></i> 2. Radix Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Sort numbers <strong>digit by digit</strong>, from the <strong>least significant digit (LSD)</strong> to the most significant digit (MSD). Uses a stable sort (Count Sort) as a subroutine at each digit position. After d passes (one per digit), the array is fully sorted.</p>
+        <p style="margin-top:0.5rem;"><strong>LSD Radix Sort:</strong> Process from rightmost digit to leftmost. More common.</p>
+        <p><strong>MSD Radix Sort:</strong> Process from leftmost digit. Useful for strings.</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Radix Sort (LSD)</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+RADIX-SORT(A, n, d)
+  // d = number of digits
+  for i = 1 to d
+    Use COUNT-SORT to sort A on digit i
+    // (using 10 buckets for decimal digits)
+        </pre>
+      </div>
+      <div class="trace-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [170, 45, 75, 90, 802, 24, 2, 66]</div>
+        <div class="trace-step"><span class="step-label">Sort by ones digit:</span> [170, 90, 802, 2, 24, 45, 75, 66]</div>
+        <div class="trace-step"><span class="step-label">Sort by tens digit:</span> [802, 2, 24, 45, 66, 170, 75, 90]</div>
+        <div class="trace-step"><span class="step-label">Sort by hundreds digit:</span> [2, 24, 45, 66, 75, 90, 170, 802]</div>
+        <div class="trace-step"><span class="step-label">Result:</span> [2, 24, 45, 66, 75, 90, 170, 802] ✅</div>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Radix Sort</div>
+        <ul>
+          <li><strong>Time:</strong> O(d × (n + k)) where d = digits, k = base (10 for decimal).</li>
+          <li>If d is constant: O(n).</li>
+          <li><strong>Space:</strong> O(n + k).</li>
+          <li><strong>Stable:</strong> Yes (uses stable Count Sort internally).</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px dashed var(--border);">
+
+      <!-- BUCKET SORT -->
+      <h3 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.6rem;"><i class="fas fa-bolt"></i> 3. Bucket Sort</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Distribute n elements into n <strong>buckets</strong> based on their value range. Sort each bucket individually (using insertion sort or any stable sort), then concatenate all buckets. Works best when input is <strong>uniformly distributed</strong> over [0, 1).</p>
+      </div>
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Bucket Sort</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BUCKET-SORT(A, n)
+  Create n empty buckets B[0..n-1]
+  for i = 0 to n-1
+    Insert A[i] into bucket B[floor(n * A[i])]
+  for i = 0 to n-1
+    Sort bucket B[i] using insertion sort
+  Concatenate B[0], B[1], ..., B[n-1] into A
+        </pre>
+      </div>
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Bucket Sort</div>
+        <ul>
+          <li><strong>Best/Average Case:</strong> O(n) — uniform distribution, each bucket has ~1 element.</li>
+          <li><strong>Worst Case:</strong> O(n²) — all elements in one bucket → degrades to insertion sort.</li>
+          <li><strong>Space:</strong> O(n + k) where k = number of buckets.</li>
+          <li><strong>Stable:</strong> Yes (if stable sort used within buckets).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 6: COMPLEXITY ANALYSIS =================== -->
+  <section class="section" id="complexity-analysis">
+    <h2 class="section-title">
+      <i class="fas fa-table"></i> Complete Complexity Analysis
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Algorithm</th>
+              <th>Best Case</th>
+              <th>Average Case</th>
+              <th>Worst Case</th>
+              <th>Space</th>
+              <th>Stable</th>
+              <th>In-place</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bubble Sort</strong></td>
+              <td>O(n)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+              <td>✅ Yes</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Selection Sort</strong></td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+              <td>❌ No</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Insertion Sort</strong></td>
+              <td>O(n)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+              <td>✅ Yes</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Shell Sort</strong></td>
+              <td>O(n log n)</td>
+              <td>O(n^1.5)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+              <td>❌ No</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Merge Sort</strong></td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n)</td>
+              <td>✅ Yes</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td><strong>Quick Sort</strong></td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n²)</td>
+              <td>O(log n)</td>
+              <td>❌ No</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Heap Sort</strong></td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(1)</td>
+              <td>❌ No</td>
+              <td>✅ Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Count Sort</strong></td>
+              <td>O(n+k)</td>
+              <td>O(n+k)</td>
+              <td>O(n+k)</td>
+              <td>O(n+k)</td>
+              <td>✅ Yes</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td><strong>Radix Sort</strong></td>
+              <td>O(d(n+k))</td>
+              <td>O(d(n+k))</td>
+              <td>O(d(n+k))</td>
+              <td>O(n+k)</td>
+              <td>✅ Yes</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td><strong>Bucket Sort</strong></td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>O(n²)</td>
+              <td>O(n+k)</td>
+              <td>✅ Yes</td>
+              <td>❌ No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Which Sort to Use When?</div>
+        <ul>
+          <li><strong>Small n or nearly sorted:</strong> Insertion Sort.</li>
+          <li><strong>Guaranteed O(n log n), stable:</strong> Merge Sort.</li>
+          <li><strong>Fastest in practice, general:</strong> Quick Sort (with random pivot).</li>
+          <li><strong>O(n log n) worst-case + in-place:</strong> Heap Sort.</li>
+          <li><strong>Integer keys, small range:</strong> Count Sort.</li>
+          <li><strong>Large integers, fixed digits:</strong> Radix Sort.</li>
+          <li><strong>Uniformly distributed floats [0,1):</strong> Bucket Sort.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 7: FORMULAS =================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Formulas &amp; Quick References
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-superscript"></i> Merge Sort Recurrence</div>
+        <div class="formula">T(n) = 2T(n/2) + Θ(n)  →  T(n) = Θ(n log n)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Quick Sort Recurrence (Average)</div>
+        <div class="formula">T(n) = T(k) + T(n-k-1) + Θ(n)  →  T(n) = Θ(n log n) on average</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Heap Sort — Heapify</div>
+        <div class="formula">Build Heap: O(n)   |   Each Heapify: O(log n)   |   Total: O(n log n)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Count Sort Complexity</div>
+        <div class="formula">Time: O(n + k)   |   Space: O(n + k)   where k = max value</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Radix Sort Complexity</div>
+        <div class="formula">Time: O(d × (n + k))   where d = digits, k = base (10)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Lower Bound for Comparison Sorts</div>
+        <div class="formula">Any comparison-based sort: Ω(n log n) in worst case</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Heap — Parent/Child Index Relations</div>
+        <div class="formula">Parent(i) = ⌊(i-1)/2⌋   |   Left(i) = 2i+1   |   Right(i) = 2i+2</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 8: DEFINITIONS =================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-spell-check"></i> All Key Terms</div>
+        <ul style="line-height:2.2;">
+          <li><strong>Sorting:</strong> Rearranging elements of a sequence in a specific (ascending/descending) order.</li>
+          <li><strong>Stable Sort:</strong> Preserves relative order of equal elements.</li>
+          <li><strong>In-place Sort:</strong> Requires O(1) auxiliary space.</li>
+          <li><strong>Comparison Sort:</strong> Determines order only by comparing pairs of elements.</li>
+          <li><strong>Bubble Sort:</strong> Repeatedly swaps adjacent elements until sorted.</li>
+          <li><strong>Selection Sort:</strong> Finds minimum and places at the beginning each pass.</li>
+          <li><strong>Insertion Sort:</strong> Inserts each element into its correct position in the sorted portion.</li>
+          <li><strong>Shell Sort:</strong> Insertion sort with decreasing gap sequence.</li>
+          <li><strong>Merge Sort:</strong> Divide-and-conquer sort with stable O(n log n) performance.</li>
+          <li><strong>Quick Sort:</strong> Partition-based divide-and-conquer; fastest in practice.</li>
+          <li><strong>Pivot:</strong> The element chosen to partition the array in Quick Sort.</li>
+          <li><strong>Heap Sort:</strong> Sorting using a binary max-heap; O(n log n) guaranteed.</li>
+          <li><strong>Max-Heap:</strong> A complete binary tree where every parent ≥ its children.</li>
+          <li><strong>Heapify:</strong> Restoring heap property at a node — O(log n).</li>
+          <li><strong>Count Sort:</strong> Non-comparison sort using frequency counting; O(n+k).</li>
+          <li><strong>Radix Sort:</strong> Sorts digit by digit using a stable subroutine; O(d(n+k)).</li>
+          <li><strong>Bucket Sort:</strong> Distributes elements into buckets then sorts each bucket.</li>
+          <li><strong>LSD Radix Sort:</strong> Processes digits from least significant to most significant.</li>
+          <li><strong>MSD Radix Sort:</strong> Processes digits from most significant to least significant.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 9: COMPARISONS =================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3 style="font-size:1rem; color:var(--accent); margin-bottom:0.6rem;"><i class="fas fa-table"></i> Merge Sort vs Quick Sort vs Heap Sort</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr><th>Feature</th><th>Merge Sort</th><th>Quick Sort</th><th>Heap Sort</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Worst Case</td><td>O(n log n)</td><td>O(n²)</td><td>O(n log n)</td></tr>
+            <tr><td>Average Case</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td></tr>
+            <tr><td>Space</td><td>O(n)</td><td>O(log n)</td><td>O(1)</td></tr>
+            <tr><td>Stable</td><td>✅ Yes</td><td>❌ No</td><td>❌ No</td></tr>
+            <tr><td>In-place</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+            <tr><td>Practical speed</td><td>Moderate</td><td>Fastest</td><td>Slow (cache miss)</td></tr>
+            <tr><td>Paradigm</td><td>Divide &amp; Conquer</td><td>Divide &amp; Conquer</td><td>Heap ADT</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:1rem; color:var(--accent); margin:1.2rem 0 0.6rem;"><i class="fas fa-table"></i> Bubble vs Selection vs Insertion</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr><th>Feature</th><th>Bubble</th><th>Selection</th><th>Insertion</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Best Case</td><td>O(n)</td><td>O(n²)</td><td>O(n)</td></tr>
+            <tr><td>Worst Case</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td></tr>
+            <tr><td>Stable</td><td>✅ Yes</td><td>❌ No</td><td>✅ Yes</td></tr>
+            <tr><td>Swaps</td><td>Many (O(n²))</td><td>Few (O(n))</td><td>Shifts (O(n²))</td></tr>
+            <tr><td>Best for</td><td>Learning only</td><td>Swap-expensive</td><td>Nearly sorted</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:1rem; color:var(--accent); margin:1.2rem 0 0.6rem;"><i class="fas fa-table"></i> Comparison vs Non-comparison Sorts</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr><th>Property</th><th>Comparison Sorts</th><th>Non-Comparison Sorts</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Examples</td><td>Bubble, Merge, Quick, Heap</td><td>Count, Radix, Bucket</td></tr>
+            <tr><td>Lower bound</td><td>Ω(n log n)</td><td>Can be O(n)</td></tr>
+            <tr><td>Works on</td><td>Any comparable data</td><td>Integer keys / specific types</td></tr>
+            <tr><td>Space</td><td>Usually O(1) or O(log n)</td><td>O(n + k)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 10: MCQs =================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Which sorting algorithm has the best average-case time complexity?</p>
+          <ul class="options">
+            <li>a. Bubble Sort</li>
+            <li>b. Selection Sort</li>
+            <li>c. Merge Sort</li>
+            <li>d. Insertion Sort</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-1">
+            <strong>Answer: c. Merge Sort</strong>
+            <p>Merge Sort has O(n log n) average-case complexity. Bubble, Selection, and Insertion Sort all have O(n²) average case.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the worst-case time complexity of Quick Sort?</p>
+          <ul class="options">
+            <li>a. O(n log n)</li>
+            <li>b. O(n)</li>
+            <li>c. O(n²)</li>
+            <li>d. O(log n)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-2">
+            <strong>Answer: c. O(n²)</strong>
+            <p>Quick Sort degrades to O(n²) when the pivot is always the smallest or largest element (e.g., sorted array with last-element pivot).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Which sorting algorithm is stable AND in-place?</p>
+          <ul class="options">
+            <li>a. Merge Sort</li>
+            <li>b. Heap Sort</li>
+            <li>c. Insertion Sort</li>
+            <li>d. Quick Sort</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-3">
+            <strong>Answer: c. Insertion Sort</strong>
+            <p>Insertion Sort is both stable (preserves order of equal elements) and in-place (O(1) extra space). Merge Sort is stable but not in-place; Heap Sort and Quick Sort are in-place but not stable.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the time complexity of building a max-heap from an unsorted array of n elements?</p>
+          <ul class="options">
+            <li>a. O(n log n)</li>
+            <li>b. O(n)</li>
+            <li>c. O(log n)</li>
+            <li>d. O(n²)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-4">
+            <strong>Answer: b. O(n)</strong>
+            <p>Building a heap using the bottom-up approach (calling Heapify on all non-leaf nodes) takes O(n) time, not O(n log n).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Which sorting algorithm's best case is O(n)?</p>
+          <ul class="options">
+            <li>a. Selection Sort</li>
+            <li>b. Merge Sort</li>
+            <li>c. Bubble Sort</li>
+            <li>d. Heap Sort</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-5">
+            <strong>Answer: c. Bubble Sort</strong>
+            <p>With the "swapped" flag optimization, Bubble Sort detects an already-sorted array in one pass → O(n) best case. Insertion Sort also achieves O(n) best case. Selection Sort always does O(n²).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Count Sort can sort n integers in range [0, k] in:</p>
+          <ul class="options">
+            <li>a. O(n log n)</li>
+            <li>b. O(n²)</li>
+            <li>c. O(n + k)</li>
+            <li>d. O(k log k)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-6">
+            <strong>Answer: c. O(n + k)</strong>
+            <p>Count Sort runs in O(n + k) time and space, where n is the number of elements and k is the maximum value.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Radix Sort sorts numbers digit by digit starting from:</p>
+          <ul class="options">
+            <li>a. Most significant digit (MSD)</li>
+            <li>b. Least significant digit (LSD)</li>
+            <li>c. Middle digit</li>
+            <li>d. Random digit</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-7">
+            <strong>Answer: b. Least significant digit (LSD)</strong>
+            <p>The standard LSD Radix Sort processes from the rightmost (least significant) digit to the leftmost (most significant) digit, using a stable sort at each pass.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Which of the following is NOT a stable sorting algorithm?</p>
+          <ul class="options">
+            <li>a. Merge Sort</li>
+            <li>b. Bubble Sort</li>
+            <li>c. Heap Sort</li>
+            <li>d. Insertion Sort</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-8">
+            <strong>Answer: c. Heap Sort</strong>
+            <p>Heap Sort is NOT stable. The heap operations can change the relative order of equal elements. Merge Sort, Bubble Sort, and Insertion Sort are all stable.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What is the main advantage of Merge Sort over Quick Sort?</p>
+          <ul class="options">
+            <li>a. Uses less memory</li>
+            <li>b. Faster in practice</li>
+            <li>c. Guaranteed O(n log n) worst case</li>
+            <li>d. In-place sorting</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-9">
+            <strong>Answer: c. Guaranteed O(n log n) worst case</strong>
+            <p>Merge Sort always runs in O(n log n) in all cases. Quick Sort has O(n²) worst case. However, Quick Sort uses less space (O(log n) vs O(n)) and is faster in practice.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>Shell Sort is an improvement over which sorting algorithm?</p>
+          <ul class="options">
+            <li>a. Bubble Sort</li>
+            <li>b. Selection Sort</li>
+            <li>c. Insertion Sort</li>
+            <li>d. Merge Sort</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-10">
+            <strong>Answer: c. Insertion Sort</strong>
+            <p>Shell Sort is an extension of Insertion Sort. It uses a diminishing gap sequence to move elements farther in fewer steps before performing a final Insertion Sort pass (gap=1).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>The theoretical lower bound for any comparison-based sorting algorithm is:</p>
+          <ul class="options">
+            <li>a. O(n)</li>
+            <li>b. Ω(n log n)</li>
+            <li>c. O(n²)</li>
+            <li>d. Ω(n²)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-11">
+            <strong>Answer: b. Ω(n log n)</strong>
+            <p>Any comparison-based sorting algorithm requires at least Ω(n log n) comparisons in the worst case. This is proven using a decision tree argument — there are n! possible permutations and a binary tree of height h can have at most 2ʰ leaves, so h ≥ log₂(n!) = Ω(n log n).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>Bucket Sort works best when the input is:</p>
+          <ul class="options">
+            <li>a. Already sorted</li>
+            <li>b. In reverse order</li>
+            <li>c. Uniformly distributed over a range</li>
+            <li>d. All same values</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-12">
+            <strong>Answer: c. Uniformly distributed over a range</strong>
+            <p>Bucket Sort achieves O(n) average case when elements are uniformly distributed — each bucket gets approximately equal elements, making each bucket sort O(1).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 13</h4>
+          <p>Which algorithm has guaranteed O(n log n) worst case AND O(1) space?</p>
+          <ul class="options">
+            <li>a. Merge Sort</li>
+            <li>b. Quick Sort</li>
+            <li>c. Heap Sort</li>
+            <li>d. Shell Sort</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-13"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-13">
+            <strong>Answer: c. Heap Sort</strong>
+            <p>Heap Sort guarantees O(n log n) in all cases (best, average, worst) and sorts in-place using O(1) extra space. Merge Sort needs O(n) space; Quick Sort has O(n²) worst case.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 14</h4>
+          <p>In Quick Sort, the worst case occurs when:</p>
+          <ul class="options">
+            <li>a. Array is random</li>
+            <li>b. Pivot always divides array equally</li>
+            <li>c. Pivot is always the median</li>
+            <li>d. Pivot is always the smallest or largest element</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-14"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-14">
+            <strong>Answer: d. Pivot is always the smallest or largest element</strong>
+            <p>When pivot is always min or max, partitioning produces one sub-array of size n-1 and one of size 0. This gives T(n) = T(n-1) + O(n) → O(n²). This happens with sorted arrays when pivot = last element.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 15</h4>
+          <p>Which of the following sorting algorithms can sort in O(n) time?</p>
+          <ul class="options">
+            <li>a. Merge Sort</li>
+            <li>b. Quick Sort</li>
+            <li>c. Insertion Sort</li>
+            <li>d. Count Sort</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2-15"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2-15">
+            <strong>Answer: d. Count Sort</strong>
+            <p>Count Sort is a non-comparison-based sort that runs in O(n + k) time — effectively O(n) when k is constant. Comparison-based sorts like Merge, Quick, and Insertion Sort cannot do better than Ω(n log n) in the worst case.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 11: SHORT QUESTIONS =================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is a stable sorting algorithm? Give two examples.</p>
+          <button class="toggle-btn" data-target="sq2-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-1">
+            <p>A <strong>stable sorting algorithm</strong> preserves the relative order of elements with equal keys. If two elements A[i] and A[j] have the same value and i &lt; j before sorting, then A[i] will still appear before A[j] after sorting.</p>
+            <p><strong>Examples:</strong> Merge Sort, Insertion Sort, Bubble Sort, Count Sort.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Why is Quick Sort preferred in practice despite having O(n²) worst case?</p>
+          <button class="toggle-btn" data-target="sq2-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-2">
+            <p>Quick Sort is preferred because:</p>
+            <ul>
+              <li>Its <strong>average case is O(n log n)</strong> with a very small constant factor.</li>
+              <li>It is <strong>in-place</strong> (O(log n) space) — good cache performance.</li>
+              <li>With <strong>randomized pivot</strong>, worst case is extremely unlikely.</li>
+              <li>In practice, it outperforms Merge Sort and Heap Sort on most inputs.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the difference between in-place and not-in-place sorting?</p>
+          <button class="toggle-btn" data-target="sq2-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-3">
+            <p><strong>In-place sort:</strong> Uses O(1) extra memory — sorts within the original array. Examples: Bubble, Selection, Insertion, Heap, Quick Sort.</p>
+            <p><strong>Not in-place:</strong> Uses O(n) or more extra memory — creates additional arrays. Examples: Merge Sort (needs O(n) temp array), Count Sort (needs count + output arrays).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the role of the pivot in Quick Sort?</p>
+          <button class="toggle-btn" data-target="sq2-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-4">
+            <p>The <strong>pivot</strong> is a chosen element used to <strong>partition</strong> the array into two sub-arrays:</p>
+            <ul>
+              <li>Elements <strong>less than or equal</strong> to pivot → left sub-array.</li>
+              <li>Elements <strong>greater than</strong> pivot → right sub-array.</li>
+            </ul>
+            <p>After partitioning, the pivot is in its final sorted position. The sub-arrays are then recursively sorted.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Why can't Count Sort be used for sorting floating-point numbers?</p>
+          <button class="toggle-btn" data-target="sq2-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-5">
+            <p>Count Sort requires <strong>integer keys</strong> in a known finite range [0, k] to index into the counting array. Floating-point numbers:</p>
+            <ul>
+              <li>Are not integers — cannot be used as array indices directly.</li>
+              <li>Can have an infinite range — the counting array would be impractical.</li>
+            </ul>
+            <p>For floating-point numbers uniformly in [0,1), <strong>Bucket Sort</strong> is used instead.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>State the recurrence relation for Merge Sort and solve it.</p>
+          <button class="toggle-btn" data-target="sq2-6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-6">
+            <p><strong>Recurrence:</strong> T(n) = 2T(n/2) + Θ(n)</p>
+            <p><strong>Solving using Master Theorem:</strong></p>
+            <ul>
+              <li>a = 2, b = 2, f(n) = Θ(n)</li>
+              <li>n^(log_b a) = n^(log₂ 2) = n^1 = n</li>
+              <li>f(n) = Θ(n) = Θ(n^log_b a) → Case 2</li>
+              <li><strong>T(n) = Θ(n log n)</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is the difference between LSD and MSD Radix Sort?</p>
+          <button class="toggle-btn" data-target="sq2-7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-7">
+            <p><strong>LSD (Least Significant Digit):</strong> Starts sorting from the rightmost digit to the leftmost. Simpler to implement, used for fixed-length integers.</p>
+            <p><strong>MSD (Most Significant Digit):</strong> Starts from the leftmost digit. Naturally handles variable-length strings. More complex — requires recursive processing of sub-groups.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Why is Selection Sort considered better than Bubble Sort when swaps are expensive?</p>
+          <button class="toggle-btn" data-target="sq2-8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-8">
+            <p>Selection Sort makes at most <strong>n-1 swaps</strong> (one per pass — swaps minimum to front). Bubble Sort can make up to <strong>O(n²) swaps</strong> (swaps every adjacent pair that is out of order). When swaps are costly (e.g., writing to flash memory), Selection Sort is more efficient.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What is a max-heap? State the heap property.</p>
+          <button class="toggle-btn" data-target="sq2-9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-9">
+            <p>A <strong>max-heap</strong> is a complete binary tree where every node is greater than or equal to its children.</p>
+            <p><strong>Max-heap property:</strong> A[parent(i)] ≥ A[i] for every node i.</p>
+            <p>The root always contains the <strong>maximum element</strong>. This property enables Heap Sort to extract the maximum in O(log n) time, repeated n times → O(n log n) total.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>In what scenario does Insertion Sort outperform Merge Sort?</p>
+          <button class="toggle-btn" data-target="sq2-10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2-10">
+            <p>Insertion Sort outperforms Merge Sort when:</p>
+            <ul>
+              <li>The array is <strong>small</strong> (n &lt; ~10-20) — constant factors dominate.</li>
+              <li>The array is <strong>nearly sorted</strong> — Insertion Sort approaches O(n) while Merge Sort always does O(n log n).</li>
+            </ul>
+            <p>This is why many real implementations (e.g., Python's Timsort) use Insertion Sort for small sub-arrays within a larger Merge Sort framework.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 12: LONG QUESTIONS =================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain Merge Sort with algorithm, example trace on [38, 27, 43, 3, 9, 82, 10], and complete complexity analysis.</p>
+          <button class="toggle-btn" data-target="lq2-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2-1">
+            <p><strong>Merge Sort</strong> is a divide-and-conquer algorithm that splits the array into halves, recursively sorts them, and merges the sorted halves.</p>
+            <div class="algo-box">
+              <div class="box-title"><i class="fas fa-list-ol"></i> Steps</div>
+              <ol style="margin:0.5rem 0 0 1rem;line-height:1.9;">
+                <li><strong>Divide:</strong> Split array at midpoint into left and right halves.</li>
+                <li><strong>Conquer:</strong> Recursively sort each half (base case: size 1).</li>
+                <li><strong>Combine:</strong> Merge two sorted halves into one sorted array by comparing elements.</li>
+              </ol>
+            </div>
+            <div class="trace-box" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: [38, 27, 43, 3, 9, 82, 10]</div>
+              <div class="trace-step"><span class="step-label">Split:</span> [38,27,43,3] | [9,82,10]</div>
+              <div class="trace-step"><span class="step-label">Split:</span> [38,27] [43,3] | [9,82] [10]</div>
+              <div class="trace-step"><span class="step-label">Split:</span> [38][27] [43][3] | [9][82] [10]</div>
+              <div class="trace-step"><span class="step-label">Merge:</span> [27,38] [3,43] | [9,82] [10]</div>
+              <div class="trace-step"><span class="step-label">Merge:</span> [3,27,38,43] | [9,10,82]</div>
+              <div class="trace-step"><span class="step-label">Final Merge:</span> [3,9,10,27,38,43,82] ✅</div>
+            </div>
+            <div class="complexity-box" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-chart-line"></i> Complexity Analysis</div>
+              <ul>
+                <li><strong>Recurrence:</strong> T(n) = 2T(n/2) + O(n)</li>
+                <li><strong>By Master Theorem (Case 2):</strong> T(n) = Θ(n log n)</li>
+                <li><strong>Best/Avg/Worst:</strong> All O(n log n) — consistent.</li>
+                <li><strong>Space:</strong> O(n) for temporary merge array.</li>
+                <li><strong>Stable:</strong> Yes.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain Quick Sort with Lomuto partition scheme. Trace on [10, 80, 30, 90, 40, 50, 70]. Analyze best, average, worst case complexity.</p>
+          <button class="toggle-btn" data-target="lq2-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2-2">
+            <p><strong>Quick Sort</strong> selects a pivot, partitions the array so all elements less than pivot come before it and all greater elements come after it, then recursively sorts sub-arrays.</p>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A=[10,80,30,90,40,50,70], pivot=70 (last)</div>
+              <div class="trace-step"><span class="step-label">Partition:</span> i starts at -1. Scan j=0 to 5: 10≤70→swap(i=0,j=0):[10,...], 80>70 skip, 30≤70→swap(i=1,j=2):[10,30,80,90,40,50,70], 90>70 skip, 40≤70→i=2,swap:[10,30,40,90,80,50,70], 50≤70→i=3,swap:[10,30,40,50,80,90,70]</div>
+              <div class="trace-step"><span class="step-label">Place pivot:</span> swap(A[4],A[6]) → [10,30,40,50,<span class="highlight-el">70</span>,90,80], pivot at index 4</div>
+              <div class="trace-step"><span class="step-label">Recurse:</span> Left=[10,30,40,50] → sorted. Right=[90,80] → [80,90]</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [10, 30, 40, 50, 70, 80, 90] ✅</div>
+            </div>
+            <div class="complexity-box" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-chart-line"></i> Complexity</div>
+              <ul>
+                <li><strong>Best Case:</strong> O(n log n) — pivot always splits array in half.</li>
+                <li><strong>Average Case:</strong> O(n log n) — random pivot, expected equal splits.</li>
+                <li><strong>Worst Case:</strong> O(n²) — sorted array with last-element pivot → T(n)=T(n-1)+O(n).</li>
+                <li><strong>Space:</strong> O(log n) avg, O(n) worst (recursion stack).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain Count Sort and Radix Sort. When should each be used? Trace Count Sort on [4, 2, 2, 8, 3, 3, 1].</p>
+          <button class="toggle-btn" data-target="lq2-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2-3">
+            <p><strong>Count Sort:</strong> Non-comparison integer sort using frequency counting.</p>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A=[4,2,2,8,3,3,1], k=8</div>
+              <div class="trace-step"><span class="step-label">Step 1 Count:</span> C[1]=1, C[2]=2, C[3]=2, C[4]=1, C[8]=1</div>
+              <div class="trace-step"><span class="step-label">Step 2 Prefix:</span> C[1]=1, C[2]=3, C[3]=5, C[4]=6, C[5..7]=6, C[8]=7</div>
+              <div class="trace-step"><span class="step-label">Step 3 Output (backward):</span> Place 1 at B[0], 2 at B[1], 2 at B[2], 3 at B[3], 3 at B[4], 4 at B[5], 8 at B[6]</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [1, 2, 2, 3, 3, 4, 8] ✅</div>
+            </div>
+            <p style="margin-top:0.6rem;"><strong>Radix Sort:</strong> Applies Count Sort digit-by-digit from LSD to MSD.</p>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="data-table">
+                <thead><tr><th>Use Case</th><th>Count Sort</th><th>Radix Sort</th></tr></thead>
+                <tbody>
+                  <tr><td>When</td><td>Small integer range k</td><td>Large integers, fixed digits d</td></tr>
+                  <tr><td>Time</td><td>O(n+k)</td><td>O(d(n+k))</td></tr>
+                  <tr><td>Space</td><td>O(n+k)</td><td>O(n+k)</td></tr>
+                  <tr><td>Best for</td><td>k ≈ n</td><td>d is small, k=10</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Explain Heap Sort with algorithm. Trace on A=[4,10,3,5,1]. What is the time and space complexity?</p>
+          <button class="toggle-btn" data-target="lq2-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2-4">
+            <p><strong>Heap Sort</strong> uses a binary max-heap. Works in two phases: Build Max-Heap, then repeatedly extract maximum.</p>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A=[4,10,3,5,1]</div>
+              <div class="trace-step"><span class="step-label">Build Max-Heap:</span> Start from i=1 (floor(5/2)-1). Heapify(1): 10 vs 5,1 → 10 ok. Heapify(0): 4 vs 10,3 → swap 4,10 → [10,4,3,5,1] → Heapify(1): 4 vs 5,1 → swap → [10,5,3,4,1]</div>
+              <div class="trace-step"><span class="step-label">Max-Heap:</span> [10, 5, 3, 4, 1]</div>
+              <div class="trace-step"><span class="step-label">Extract 1:</span> Swap A[0]↔A[4] → [1,5,3,4,<span class="highlight-el">10</span>] → Heapify(4) → [5,4,3,1,10]</div>
+              <div class="trace-step"><span class="step-label">Extract 2:</span> Swap A[0]↔A[3] → [1,4,3,<span class="highlight-el">5</span>,10] → Heapify(3) → [4,1,3,5,10]</div>
+              <div class="trace-step"><span class="step-label">Extract 3:</span> Swap A[0]↔A[2] → [3,1,<span class="highlight-el">4</span>,5,10] → Heapify(2) → [3,1,4,5,10]</div>
+              <div class="trace-step"><span class="step-label">Extract 4:</span> Swap A[0]↔A[1] → [<span class="highlight-el">1</span>,3,4,5,10]</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [1, 3, 4, 5, 10] ✅</div>
+            </div>
+            <div class="complexity-box" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-chart-line"></i> Complexity</div>
+              <ul>
+                <li><strong>Build Heap:</strong> O(n)</li>
+                <li><strong>n-1 Heapify calls:</strong> O(n log n)</li>
+                <li><strong>Total — Best/Avg/Worst:</strong> O(n log n)</li>
+                <li><strong>Space:</strong> O(1) — in-place.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Compare all sorting algorithms studied in this unit. Discuss their suitability for different scenarios.</p>
+          <button class="toggle-btn" data-target="lq2-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2-5">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Algorithm</th><th>Best</th><th>Worst</th><th>Space</th><th>Stable</th><th>Best Scenario</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Bubble</td><td>O(n)</td><td>O(n²)</td><td>O(1)</td><td>✅</td><td>Teaching only</td></tr>
+                  <tr><td>Selection</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>❌</td><td>Minimizing swaps</td></tr>
+                  <tr><td>Insertion</td><td>O(n)</td><td>O(n²)</td><td>O(1)</td><td>✅</td><td>Small/nearly sorted</td></tr>
+                  <tr><td>Shell</td><td>O(n log n)</td><td>O(n²)</td><td>O(1)</td><td>❌</td><td>Medium arrays</td></tr>
+                  <tr><td>Merge</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>✅</td><td>Stability needed, linked lists</td></tr>
+                  <tr><td>Quick</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td><td>❌</td><td>General purpose, fastest avg</td></tr>
+                  <tr><td>Heap</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td><td>❌</td><td>Guaranteed O(n log n) + O(1) space</td></tr>
+                  <tr><td>Count</td><td>O(n+k)</td><td>O(n+k)</td><td>O(n+k)</td><td>✅</td><td>Small integer range</td></tr>
+                  <tr><td>Radix</td><td>O(d(n+k))</td><td>O(d(n+k))</td><td>O(n+k)</td><td>✅</td><td>Fixed-width integers</td></tr>
+                  <tr><td>Bucket</td><td>O(n)</td><td>O(n²)</td><td>O(n+k)</td><td>✅</td><td>Uniform float distribution</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="important-note" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-star"></i> Practical Recommendation</div>
+              <p>Most real systems use <strong>Introsort</strong> (hybrid of Quick Sort + Heap Sort + Insertion Sort) — gives O(n log n) guaranteed with good cache performance. Python uses <strong>Timsort</strong> (Merge + Insertion) which is stable and O(n log n).</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 13: PRACTICE =================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Apply Bubble Sort on A = [5, 1, 4, 2, 8]. Show all passes and the final sorted array.</p>
+          <button class="toggle-btn" data-target="pp2-1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-1">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Bubble Sort Trace: [5, 1, 4, 2, 8]</div>
+              <div class="trace-step"><span class="step-label">Pass 1:</span> (5,1)→swap,[1,5,4,2,8] | (5,4)→swap,[1,4,5,2,8] | (5,2)→swap,[1,4,2,5,8] | (5,8)→no swap → [1,4,2,5,<span class="highlight-el">8</span>]</div>
+              <div class="trace-step"><span class="step-label">Pass 2:</span> (1,4)→no | (4,2)→swap,[1,2,4,5,8] | (4,5)→no | → [1,2,4,<span class="highlight-el">5</span>,8]</div>
+              <div class="trace-step"><span class="step-label">Pass 3:</span> (1,2)→no | (2,4)→no → no swaps, <span class="highlight-el">done</span></div>
+              <div class="trace-step"><span class="step-label">Result:</span> [1, 2, 4, 5, 8] ✅</div>
+            </div>
+            <div class="complexity-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-chart-line"></i> Analysis</div>
+              <p>n=5, passes needed = 2 (early termination). Without optimization = n-1 = 4 passes max. Comparisons in Pass 1 = 4, Pass 2 = 3, etc. Total worst-case = n(n-1)/2 = 10.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Apply Insertion Sort on A = [12, 11, 13, 5, 6]. Show each step.</p>
+          <button class="toggle-btn" data-target="pp2-2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-2">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Insertion Sort Trace: [12, 11, 13, 5, 6]</div>
+              <div class="trace-step"><span class="step-label">i=1, key=11:</span> 12 > 11 → shift → [<span class="highlight-el">11</span>, 12, 13, 5, 6]</div>
+              <div class="trace-step"><span class="step-label">i=2, key=13:</span> 12 &lt; 13 → no shift → [11, 12, <span class="highlight-el">13</span>, 5, 6]</div>
+              <div class="trace-step"><span class="step-label">i=3, key=5:</span> 13,12,11 all > 5 → shift all → [<span class="highlight-el">5</span>, 11, 12, 13, 6]</div>
+              <div class="trace-step"><span class="step-label">i=4, key=6:</span> 13,12,11 > 6 → shift → [5, <span class="highlight-el">6</span>, 11, 12, 13]</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [5, 6, 11, 12, 13] ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Apply Radix Sort (LSD) on A = [329, 457, 657, 839, 436, 720, 355]. Show each pass.</p>
+          <button class="toggle-btn" data-target="pp2-3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-3">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Radix Sort LSD Trace</div>
+              <div class="trace-step"><span class="step-label">Pass 1 (ones):</span> Sort by digit: 0→[720], 5→[355], 6→[436], 7→[457,657], 9→[329,839] → [720, 355, 436, 457, 657, 329, 839]</div>
+              <div class="trace-step"><span class="step-label">Pass 2 (tens):</span> Sort by tens digit: 2→[720,329], 3→[436,839], 5→[355,457,657] → [720, 329, 436, 839, 355, 457, 657]</div>
+              <div class="trace-step"><span class="step-label">Pass 3 (hundreds):</span> Sort by hundreds: 3→[329,355], 4→[436,457], 6→[657], 7→[720], 8→[839] → [329, 355, 436, 457, 657, 720, 839]</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [329, 355, 436, 457, 657, 720, 839] ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Apply Selection Sort on A = [29, 10, 14, 37, 13]. Show each pass.</p>
+          <button class="toggle-btn" data-target="pp2-4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-4">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Selection Sort Trace: [29,10,14,37,13]</div>
+              <div class="trace-step"><span class="step-label">Pass 1:</span> Min of [29,10,14,37,13]=10 at idx 1 → swap with idx 0 → [<span class="highlight-el">10</span>,29,14,37,13]</div>
+              <div class="trace-step"><span class="step-label">Pass 2:</span> Min of [29,14,37,13]=13 at idx 4 → swap with idx 1 → [10,<span class="highlight-el">13</span>,14,37,29]</div>
+              <div class="trace-step"><span class="step-label">Pass 3:</span> Min of [14,37,29]=14 at idx 2 → no swap → [10,13,<span class="highlight-el">14</span>,37,29]</div>
+              <div class="trace-step"><span class="step-label">Pass 4:</span> Min of [37,29]=29 at idx 4 → swap with idx 3 → [10,13,14,<span class="highlight-el">29</span>,37]</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [10, 13, 14, 29, 37] ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Perform Count Sort on A = [2, 5, 3, 0, 2, 3, 0, 3]. Show counting array, prefix array, and output.</p>
+          <button class="toggle-btn" data-target="pp2-5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-5">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Count Sort Trace: A=[2,5,3,0,2,3,0,3], k=5</div>
+              <div class="trace-step"><span class="step-label">Count C:</span> C[0]=2, C[1]=0, C[2]=2, C[3]=3, C[4]=0, C[5]=1</div>
+              <div class="trace-step"><span class="step-label">Prefix C:</span> C[0]=2, C[1]=2, C[2]=4, C[3]=7, C[4]=7, C[5]=8</div>
+              <div class="trace-step"><span class="step-label">Output (scan backward):</span></div>
+              <div class="trace-step">A[7]=3 → B[C[3]-1]=B[6]=3, C[3]=6</div>
+              <div class="trace-step">A[6]=0 → B[C[0]-1]=B[1]=0, C[0]=1</div>
+              <div class="trace-step">A[5]=3 → B[C[3]-1]=B[5]=3, C[3]=5</div>
+              <div class="trace-step">A[4]=2 → B[C[2]-1]=B[3]=2, C[2]=3</div>
+              <div class="trace-step">A[3]=0 → B[C[0]-1]=B[0]=0, C[0]=0</div>
+              <div class="trace-step">A[2]=3 → B[4]=3</div>
+              <div class="trace-step">A[1]=5 → B[7]=5</div>
+              <div class="trace-step">A[0]=2 → B[2]=2</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [0, 0, 2, 2, 3, 3, 3, 5] ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>For Quick Sort with pivot as last element, trace on A = [3, 6, 8, 10, 1, 2, 1]. Show partitioning step.</p>
+          <button class="toggle-btn" data-target="pp2-6"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-6">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Quick Sort Partition: A=[3,6,8,10,1,2,1], pivot=1</div>
+              <div class="trace-step"><span class="step-label">pivot=A[6]=1, i=-1</span></div>
+              <div class="trace-step">j=0: A[0]=3 > 1 → skip</div>
+              <div class="trace-step">j=1: A[1]=6 > 1 → skip</div>
+              <div class="trace-step">j=2: A[2]=8 > 1 → skip</div>
+              <div class="trace-step">j=3: A[3]=10 > 1 → skip</div>
+              <div class="trace-step">j=4: A[4]=1 ≤ 1 → i=0, swap(A[0],A[4]) → [1,6,8,10,3,2,1]</div>
+              <div class="trace-step">j=5: A[5]=2 > 1 → skip</div>
+              <div class="trace-step"><span class="step-label">Place pivot:</span> swap(A[1],A[6]) → [1,<span class="highlight-el">1</span>,8,10,3,2,6], pivot at index 1</div>
+              <div class="trace-step"><span class="step-label">Recurse left:</span> [1] — single element</div>
+              <div class="trace-step"><span class="step-label">Recurse right:</span> [8,10,3,2,6] → further partition</div>
+              <div class="trace-step"><span class="step-label">Final:</span> [1, 1, 2, 3, 6, 8, 10] ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Apply Shell Sort with gap sequence [4, 2, 1] on A = [9, 8, 3, 7, 5, 6, 4, 1].</p>
+          <button class="toggle-btn" data-target="pp2-7"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-7">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Shell Sort: A=[9,8,3,7,5,6,4,1], gaps=[4,2,1]</div>
+              <div class="trace-step"><span class="step-label">gap=4:</span> Compare pairs (0,4),(1,5),(2,6),(3,7): (9,5)→swap,(8,6)→swap,(3,4)→no,(7,1)→swap → [5,6,3,1,9,8,4,7]</div>
+              <div class="trace-step"><span class="step-label">gap=2:</span> Sort subsequences at step 2: [5,3,9,4] → [3,4,5,9] and [6,1,8,7] → [1,6,7,8] → interleaved: [3,1,4,6,5,7,9,8]</div>
+              <div class="trace-step"><span class="step-label">gap=1:</span> Standard insertion sort on nearly sorted: [1,3,4,5,6,7,8,9]</div>
+              <div class="trace-step"><span class="step-label">Result:</span> [1, 3, 4, 5, 6, 7, 8, 9] ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Compute the exact number of comparisons made by Bubble Sort (without optimization) on an array of n=5 elements in the worst case.</p>
+          <button class="toggle-btn" data-target="pp2-8"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2-8">
+            <p><strong>Worst case:</strong> Array in reverse order — every pair needs to be swapped.</p>
+            <p><strong>Pass 1:</strong> n-1 = 4 comparisons</p>
+            <p><strong>Pass 2:</strong> n-2 = 3 comparisons</p>
+            <p><strong>Pass 3:</strong> n-3 = 2 comparisons</p>
+            <p><strong>Pass 4:</strong> n-4 = 1 comparison</p>
+            <div class="formula">
+              Total = (n-1) + (n-2) + ... + 1 = n(n-1)/2 = 5×4/2 = <strong>10 comparisons</strong>
+            </div>
+            <p>This confirms the O(n²) worst-case analysis for Bubble Sort.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 14: REVISION =================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul style="line-height:2.2;">
+          <li><strong>Bubble Sort:</strong> Swap adjacent; O(n²) worst, O(n) best (with flag); stable; in-place.</li>
+          <li><strong>Selection Sort:</strong> Find min, place at front; always O(n²); NOT stable; in-place; ≤ n-1 swaps.</li>
+          <li><strong>Insertion Sort:</strong> Insert each into sorted portion; O(n²) worst, O(n) best; stable; in-place. Best for small/nearly sorted.</li>
+          <li><strong>Shell Sort:</strong> Insertion with gap; better than O(n²); NOT stable; in-place.</li>
+          <li><strong>Merge Sort:</strong> Divide-conquer; always O(n log n); stable; NOT in-place (O(n) space).</li>
+          <li><strong>Quick Sort:</strong> Pivot-partition; O(n log n) avg, O(n²) worst; NOT stable; in-place. Fastest in practice.</li>
+          <li><strong>Heap Sort:</strong> Max-heap; always O(n log n); NOT stable; in-place (O(1) space). Build heap: O(n).</li>
+          <li><strong>Count Sort:</strong> Integer keys; O(n+k); stable; NOT in-place. Limited to integers.</li>
+          <li><strong>Radix Sort:</strong> Digit by digit; O(d(n+k)); stable; NOT in-place.</li>
+          <li><strong>Bucket Sort:</strong> Distribute to buckets; O(n) avg, O(n²) worst; stable; NOT in-place.</li>
+          <li>Comparison sorts: lower bound Ω(n log n).</li>
+          <li>Non-comparison sorts can beat Ω(n log n) but need special input types.</li>
+          <li>Heap parent: ⌊(i-1)/2⌋; left child: 2i+1; right child: 2i+2.</li>
+          <li>Merge Sort recurrence: T(n) = 2T(n/2) + O(n) → O(n log n).</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exam</div>
+        <ul style="line-height:2.2;">
+          <li>Only <strong>Merge Sort</strong> is stable AND O(n log n) — but uses O(n) space.</li>
+          <li>Only <strong>Heap Sort</strong> is O(n log n) worst-case AND in-place (O(1) space) — but NOT stable.</li>
+          <li><strong>Quick Sort worst case is O(n²)</strong> — occurs on sorted array with bad pivot.</li>
+          <li><strong>Selection Sort</strong> always O(n²) even for sorted arrays — never improves.</li>
+          <li><strong>Build heap</strong> = O(n), NOT O(n log n) — common exam trick question.</li>
+          <li>Comparison sort lower bound: <strong>Ω(n log n)</strong>.</li>
+          <li>Count Sort time: <strong>O(n + k)</strong>; Radix Sort: <strong>O(d(n+k))</strong>.</li>
+          <li>Bubble/Insertion best case: <strong>O(n)</strong>; Selection best case: <strong>O(n²)</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+        <ul style="line-height:2.2;">
+          <li>Saying Selection Sort best case is O(n) — it is ALWAYS <strong>O(n²)</strong>.</li>
+          <li>Saying Merge Sort is in-place — it is <strong>NOT</strong> (needs O(n) extra space).</li>
+          <li>Saying Heap Sort is stable — it is <strong>NOT stable</strong>.</li>
+          <li>Forgetting that Quick Sort worst case is <strong>O(n²)</strong>, not O(n log n).</li>
+          <li>Writing O(n log n) for building a heap — it's <strong>O(n)</strong>.</li>
+          <li>Confusing LSD and MSD Radix Sort directions.</li>
+          <li>Applying Count Sort on floating-point numbers — it only works for <strong>integers</strong>.</li>
+          <li>Writing wrong complexity for Count Sort as O(n) — it is <strong>O(n + k)</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB BUTTONS -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

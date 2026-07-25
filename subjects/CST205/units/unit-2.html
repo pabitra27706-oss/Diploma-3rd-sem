@@ -1,0 +1,2322 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 2 - Linear Data Structures | CST205</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-layer-group"></i>
+      <span>CST205 - Unit 2</span>
+    </div>
+    <div class="nav-links">
+      <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="#overview">Overview</a>
+      <a href="#stacks">Stacks</a>
+      <a href="#queues">Queues</a>
+      <a href="#recursion">Recursion</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 2</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="#overview"><i class="fas fa-info-circle"></i> Overview</a>
+    <a href="#stacks"><i class="fas fa-layer-group"></i> Stacks</a>
+    <a href="#queues"><i class="fas fa-list"></i> Queues</a>
+    <a href="#recursion"><i class="fas fa-sync"></i> Recursion</a>
+    <a href="#mcqs"><i class="fas fa-question-circle"></i> MCQs</a>
+    <a href="#revision"><i class="fas fa-check-circle"></i> Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <div class="info-item">
+        <i class="fas fa-code"></i>
+        <span>CST205</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-bookmark"></i>
+        <span>Unit 2</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-clock"></i>
+        <span>12 Hours</span>
+      </div>
+    </div>
+    <h1><i class="fas fa-layer-group"></i> Linear Data Structures</h1>
+    <p>Master Stacks, Queues, and Recursion — the fundamental linear data structures and programming techniques.</p>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="container">
+
+  <!-- Overview Section -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-info-circle"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You'll Learn</div>
+        <p>This unit covers three critical topics in computer science: Stacks, Queues, and Recursion. These are fundamental building blocks for understanding algorithms and data manipulation.</p>
+        <ul>
+          <li><strong>Stacks:</strong> LIFO (Last In First Out) structure, array implementation, push/pop operations, infix-to-postfix conversion, postfix evaluation</li>
+          <li><strong>Queues:</strong> FIFO (First In First Out) structure, array implementation, enqueue/dequeue operations, circular queues, deques, Round Robin scheduling</li>
+          <li><strong>Recursion:</strong> Self-calling functions, base case and recursive step, GCD algorithm, Tower of Hanoi problem</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Why This Matters</div>
+        <ul>
+          <li>Stacks are used in function call management, undo operations, expression evaluation, backtracking algorithms</li>
+          <li>Queues are used in CPU scheduling, printer job management, breadth-first search, buffer management</li>
+          <li>Recursion is essential for tree traversal, divide-and-conquer algorithms, and solving complex problems elegantly</li>
+          <li>These concepts are heavily tested in WBSCTE exams and technical interviews</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stacks Section -->
+  <section class="section" id="stacks">
+    <h2 class="section-title">
+      <i class="fas fa-layer-group"></i> Stacks
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> Introduction to Stack</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Stack</strong> is a linear data structure that follows the <strong>LIFO (Last In First Out)</strong> principle. This means the element that is inserted last is the first one to be removed.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Real-World Analogy</div>
+        <p>Think of a <strong>stack of plates</strong> in a cafeteria:</p>
+        <ul>
+          <li>You can only add a plate on top (push)</li>
+          <li>You can only remove the top plate (pop)</li>
+          <li>The last plate placed is the first one taken out</li>
+          <li>You cannot access plates in the middle without removing the ones on top</li>
+        </ul>
+        <p><strong>Other examples:</strong> Stack of books, stack of trays, undo operation in text editors, browser back button.</p>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Key Characteristics</div>
+        <ul>
+          <li>Only one end is open for insertion and deletion (called the <strong>top</strong>)</li>
+          <li>Operations are performed only at the top</li>
+          <li>No random access — you cannot access the middle element directly</li>
+          <li>Time complexity: O(1) for push and pop operations</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Array Representation of Stack</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-database"></i> How Stack is Stored in Memory</div>
+        <p>A stack can be implemented using a static array with the following components:</p>
+        <ul>
+          <li><strong>Array:</strong> A fixed-size array to store elements (e.g., <code>int stack[MAX]</code>)</li>
+          <li><strong>top:</strong> An integer variable that keeps track of the index of the topmost element</li>
+          <li><strong>MAX:</strong> The maximum capacity of the stack (e.g., 100)</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Stack Structure in C</div>
+        <pre><code>#define MAX 100
+
+int stack[MAX];
+int top = -1;  // Initialize to -1 to indicate empty stack</code></pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Understanding 'top' Variable</div>
+        <ul>
+          <li><code>top = -1</code> → Stack is empty</li>
+          <li><code>top = 0</code> → One element in stack at index 0</li>
+          <li><code>top = MAX-1</code> → Stack is full</li>
+          <li><code>top</code> always points to the last inserted element</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Operations on Stack</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. push(item) — Insert Element</h4>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>push(item)</strong> adds an element to the top of the stack.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: push(item)</div>
+        <pre>1. Check if stack is full (top == MAX-1)
+2. If full, print "Stack Overflow" and exit
+3. Otherwise, increment top by 1
+4. Place item at stack[top]
+5. End</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Implementation of push()</div>
+        <pre><code>void push(int item) {
+    if(top == MAX - 1) {
+        printf("Stack Overflow! Cannot push %d\n", item);
+        return;
+    }
+    top++;
+    stack[top] = item;
+    printf("%d pushed to stack\n", item);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. pop() — Delete Element</h4>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>pop()</strong> removes and returns the top element from the stack.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: pop()</div>
+        <pre>1. Check if stack is empty (top == -1)
+2. If empty, print "Stack Underflow" and exit
+3. Otherwise, retrieve item from stack[top]
+4. Decrement top by 1
+5. Return the retrieved item
+6. End</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Implementation of pop()</div>
+        <pre><code>int pop() {
+    if(top == -1) {
+        printf("Stack Underflow! Stack is empty\n");
+        return -1;
+    }
+    int item = stack[top];
+    top--;
+    return item;
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 3. peek() / top() — View Top Element</h4>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Implementation of peek()</div>
+        <pre><code>int peek() {
+    if(top == -1) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+    return stack[top];
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 4. isEmpty() — Check if Empty</h4>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Implementation of isEmpty()</div>
+        <pre><code>int isEmpty() {
+    return (top == -1);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 5. isFull() — Check if Full</h4>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Implementation of isFull()</div>
+        <pre><code>int isFull() {
+    return (top == MAX - 1);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> Complete Stack Program</h4>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Complete Stack Implementation in C</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void push(int item) {
+    if(top == MAX - 1) {
+        printf("Stack Overflow!\n");
+        return;
+    }
+    stack[++top] = item;
+    printf("%d pushed\n", item);
+}
+
+int pop() {
+    if(top == -1) {
+        printf("Stack Underflow!\n");
+        return -1;
+    }
+    return stack[top--];
+}
+
+int peek() {
+    if(top == -1) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+    return stack[top];
+}
+
+void display() {
+    if(top == -1) {
+        printf("Stack is empty\n");
+        return;
+    }
+    printf("Stack elements: ");
+    for(int i = top; i >= 0; i--) {
+        printf("%d ", stack[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    push(10);
+    push(20);
+    push(30);
+    display();
+    printf("Top element: %d\n", peek());
+    printf("Popped: %d\n", pop());
+    display();
+    return 0;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Applications of Stack</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Infix to Postfix Conversion</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Understanding Notations</div>
+        <p><strong>Infix Notation:</strong> Operators are placed between operands (e.g., A + B)</p>
+        <p><strong>Postfix Notation (Reverse Polish Notation):</strong> Operators are placed after operands (e.g., A B +)</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Infix</th>
+                <th>Postfix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>A + B</td><td>A B +</td></tr>
+              <tr><td>A + B * C</td><td>A B C * +</td></tr>
+              <tr><td>(A + B) * C</td><td>A B + C *</td></tr>
+              <tr><td>A * B + C / D</td><td>A B * C D / +</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Why Convert to Postfix?</div>
+        <ul>
+          <li>No need for parentheses</li>
+          <li>No ambiguity in operator precedence</li>
+          <li>Easier for computers to evaluate</li>
+          <li>Used in compilers and calculators</li>
+        </ul>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: Infix to Postfix</div>
+        <pre>1. Initialize an empty stack and an empty output string
+2. Scan the infix expression from left to right
+3. For each character:
+   a. If operand (A-Z, a-z, 0-9), add to output
+   b. If '(', push to stack
+   c. If ')', pop from stack and add to output until '(' is found
+   d. If operator (+, -, *, /, ^):
+      - Pop operators from stack with higher or equal precedence
+      - Add them to output
+      - Push current operator to stack
+4. After scanning, pop all remaining operators from stack to output
+5. Return output as postfix expression</pre>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Operator Precedence (High to Low)</div>
+        <p>1. <strong>^</strong> (Exponentiation) — Highest</p>
+        <p>2. <strong>* /</strong> (Multiplication, Division)</p>
+        <p>3. <strong>+ -</strong> (Addition, Subtraction) — Lowest</p>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Trace: Convert A + B * C to Postfix</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Input</th>
+                <th>Stack</th>
+                <th>Output</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>A</td><td>-</td><td>A</td><td>Operand, add to output</td></tr>
+              <tr><td>+</td><td>+</td><td>A</td><td>Operator, push to stack</td></tr>
+              <tr><td>B</td><td>+</td><td>A B</td><td>Operand, add to output</td></tr>
+              <tr><td>*</td><td>+ *</td><td>A B</td><td>* has higher precedence, push</td></tr>
+              <tr><td>C</td><td>+ *</td><td>A B C</td><td>Operand, add to output</td></tr>
+              <tr><td>End</td><td>+</td><td>A B C *</td><td>Pop *, add to output</td></tr>
+              <tr><td>End</td><td>-</td><td>A B C * +</td><td>Pop +, add to output</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="formula answer"><strong>Result:</strong> A B C * +</p>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Evaluating Postfix Expressions</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> How Postfix Evaluation Works</div>
+        <p>Postfix expressions are easier for computers to evaluate because they don't require parentheses and operator precedence rules are implicit.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: Evaluate Postfix</div>
+        <pre>1. Initialize an empty stack
+2. Scan the postfix expression from left to right
+3. For each character:
+   a. If operand (number), push it to stack
+   b. If operator (+, -, *, /, ^):
+      - Pop two operands from stack (op2 = pop(), op1 = pop())
+      - Perform operation: result = op1 operator op2
+      - Push result back to stack
+4. After scanning, the stack contains one element — the final result
+5. Pop and return the result</pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Trace: Evaluate 5 3 + 2 *</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Input</th>
+                <th>Stack</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>5</td><td>5</td><td>Push operand</td></tr>
+              <tr><td>3</td><td>5, 3</td><td>Push operand</td></tr>
+              <tr><td>+</td><td>8</td><td>Pop 3, 5; compute 5+3=8; push 8</td></tr>
+              <tr><td>2</td><td>8, 2</td><td>Push operand</td></tr>
+              <tr><td>*</td><td>16</td><td>Pop 2, 8; compute 8*2=16; push 16</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="formula answer"><strong>Final Result:</strong> 16</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Evaluate Postfix</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+#define MAX 50
+
+int stack[MAX];
+int top = -1;
+
+void push(int x) {
+    stack[++top] = x;
+}
+
+int pop() {
+    return stack[top--];
+}
+
+int evaluatePostfix(char* exp) {
+    for(int i = 0; exp[i] != '\0'; i++) {
+        if(isdigit(exp[i])) {
+            push(exp[i] - '0');  // Convert char to int
+        }
+        else {
+            int op2 = pop();
+            int op1 = pop();
+            switch(exp[i]) {
+                case '+': push(op1 + op2); break;
+                case '-': push(op1 - op2); break;
+                case '*': push(op1 * op2); break;
+                case '/': push(op1 / op2); break;
+            }
+        }
+    }
+    return pop();
+}
+
+int main() {
+    char exp[] = "53+2*";
+    printf("Result: %d\n", evaluatePostfix(exp));
+    return 0;
+}</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Queues Section -->
+  <section class="section" id="queues">
+    <h2 class="section-title">
+      <i class="fas fa-list"></i> Queues
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> Introduction to Queue</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Queue</strong> is a linear data structure that follows the <strong>FIFO (First In First Out)</strong> principle. This means the element that is inserted first is the first one to be removed.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Real-World Analogy</div>
+        <p>Think of a <strong>queue of people at a ticket counter</strong>:</p>
+        <ul>
+          <li>People join the queue at the rear (back)</li>
+          <li>The person at the front gets served first</li>
+          <li>The first person to arrive is the first to leave</li>
+          <li>No one can cut the line — everyone waits their turn</li>
+        </ul>
+        <p><strong>Other examples:</strong> Printer job queue, CPU task scheduling, call center waiting line, breadth-first search in graphs.</p>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Key Characteristics</div>
+        <ul>
+          <li>Two ends: <strong>front</strong> (for deletion) and <strong>rear</strong> (for insertion)</li>
+          <li>Insertion happens at the rear</li>
+          <li>Deletion happens at the front</li>
+          <li>Time complexity: O(1) for enqueue and dequeue operations</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Array Representation of Queue</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-database"></i> How Queue is Stored in Memory</div>
+        <p>A queue can be implemented using a static array with the following components:</p>
+        <ul>
+          <li><strong>Array:</strong> A fixed-size array to store elements (e.g., <code>int queue[MAX]</code>)</li>
+          <li><strong>front:</strong> Index of the first element (the one to be removed)</li>
+          <li><strong>rear:</strong> Index of the last element (the one just inserted)</li>
+          <li><strong>MAX:</strong> Maximum capacity of the queue</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Queue Structure in C</div>
+        <pre><code>#define MAX 100
+
+int queue[MAX];
+int front = -1;
+int rear = -1;</code></pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Understanding front and rear</div>
+        <ul>
+          <li><code>front = -1</code> and <code>rear = -1</code> → Queue is empty</li>
+          <li><code>rear = MAX-1</code> → Queue is full (in linear queue)</li>
+          <li><code>front > rear</code> → Queue has become empty after deletions</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Operations on Queue</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. enqueue(item) — Insert Element</h4>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>enqueue(item)</strong> adds an element to the rear of the queue.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: enqueue(item)</div>
+        <pre>1. Check if queue is full (rear == MAX-1)
+2. If full, print "Queue Overflow" and exit
+3. If queue is empty (front == -1), set front = 0
+4. Increment rear by 1
+5. Place item at queue[rear]
+6. End</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Implementation of enqueue()</div>
+        <pre><code>void enqueue(int item) {
+    if(rear == MAX - 1) {
+        printf("Queue Overflow!\n");
+        return;
+    }
+    if(front == -1) {
+        front = 0;  // First element
+    }
+    rear++;
+    queue[rear] = item;
+    printf("%d enqueued\n", item);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. dequeue() — Delete Element</h4>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>dequeue()</strong> removes and returns the front element from the queue.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: dequeue()</div>
+        <pre>1. Check if queue is empty (front == -1 or front > rear)
+2. If empty, print "Queue Underflow" and exit
+3. Retrieve item from queue[front]
+4. Increment front by 1
+5. If queue becomes empty (front > rear), reset front = rear = -1
+6. Return the retrieved item
+7. End</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Implementation of dequeue()</div>
+        <pre><code>int dequeue() {
+    if(front == -1 || front > rear) {
+        printf("Queue Underflow!\n");
+        return -1;
+    }
+    int item = queue[front];
+    front++;
+    if(front > rear) {
+        front = rear = -1;  // Reset queue
+    }
+    return item;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Types of Queues</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Circular Queue</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Why Circular Queue?</div>
+        <p><strong>Problem with Linear Queue:</strong> After several enqueue and dequeue operations, even if the queue has space at the beginning, we cannot insert new elements if rear reaches MAX-1. This is called <strong>false overflow</strong>.</p>
+        <p><strong>Solution:</strong> Circular Queue — the last position is connected back to the first position to form a circle. We use modulo arithmetic to wrap around.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Circular Queue Formulas</div>
+        <p class="formula">rear = (rear + 1) % MAX</p>
+        <p class="formula">front = (front + 1) % MAX</p>
+        <p class="formula">Full condition: (rear + 1) % MAX == front</p>
+        <p class="formula">Empty condition: front == -1</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Circular Queue enqueue()</div>
+        <pre><code>void enqueue(int item) {
+    int nextRear = (rear + 1) % MAX;
+    if(nextRear == front) {
+        printf("Queue is full\n");
+        return;
+    }
+    if(front == -1) {
+        front = 0;
+    }
+    rear = nextRear;
+    queue[rear] = item;
+}</code></pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Circular Queue dequeue()</div>
+        <pre><code>int dequeue() {
+    if(front == -1) {
+        printf("Queue is empty\n");
+        return -1;
+    }
+    int item = queue[front];
+    if(front == rear) {
+        front = rear = -1;  // Last element removed
+    } else {
+        front = (front + 1) % MAX;
+    }
+    return item;
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Double Ended Queue (Deque)</h4>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Deque (Double Ended Queue)</strong> is a queue where insertion and deletion can be performed at both ends — front and rear.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Types of Deque</div>
+        <p><strong>1. Input Restricted Deque:</strong></p>
+        <ul>
+          <li>Insertion is allowed only at the rear</li>
+          <li>Deletion is allowed at both front and rear</li>
+        </ul>
+        <p><strong>2. Output Restricted Deque:</strong></p>
+        <ul>
+          <li>Deletion is allowed only at the front</li>
+          <li>Insertion is allowed at both front and rear</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Application: Round Robin CPU Scheduling</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What is Round Robin?</div>
+        <p><strong>Round Robin</strong> is a CPU scheduling algorithm used in operating systems where each process is given a fixed time slice (called a <strong>quantum</strong>) to execute.</p>
+        <p><strong>How it works:</strong></p>
+        <ol>
+          <li>Processes are kept in a ready queue (FIFO)</li>
+          <li>CPU picks the first process from the queue</li>
+          <li>Process runs for the quantum time (e.g., 2 ms)</li>
+          <li>If the process is not finished, it is moved to the rear of the queue</li>
+          <li>Next process from the front gets CPU time</li>
+          <li>This continues until all processes are complete</li>
+        </ol>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Advantages of Round Robin</div>
+        <ul>
+          <li>Fair allocation of CPU time to all processes</li>
+          <li>No starvation — every process gets a turn</li>
+          <li>Good response time for time-sharing systems</li>
+          <li>Simple to implement using a circular queue</li>
+        </ul>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Round Robin Example (Quantum = 2 ms)</div>
+        <p>Processes: P1 (5 ms), P2 (3 ms), P3 (4 ms)</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Process</th>
+                <th>Remaining Time</th>
+                <th>Queue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>0-2</td><td>P1</td><td>3 ms</td><td>P2, P3, P1</td></tr>
+              <tr><td>2-4</td><td>P2</td><td>1 ms</td><td>P3, P1, P2</td></tr>
+              <tr><td>4-6</td><td>P3</td><td>2 ms</td><td>P1, P2, P3</td></tr>
+              <tr><td>6-8</td><td>P1</td><td>1 ms</td><td>P2, P3, P1</td></tr>
+              <tr><td>8-9</td><td>P2</td><td>0 ms (Done)</td><td>P3, P1</td></tr>
+              <tr><td>9-11</td><td>P3</td><td>0 ms (Done)</td><td>P1</td></tr>
+              <tr><td>11-12</td><td>P1</td><td>0 ms (Done)</td><td>Empty</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Recursion Section -->
+  <section class="section" id="recursion">
+    <h2 class="section-title">
+      <i class="fas fa-sync"></i> Recursion
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> Introduction to Recursion</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Recursion</strong> is a programming technique where a function calls itself directly or indirectly. It is a powerful tool for solving problems that can be broken down into smaller, identical sub-problems.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> How Recursion Works</div>
+        <p>A recursive function has two key components:</p>
+        <p><strong>1. Base Case:</strong> The simplest instance of the problem that can be solved directly without further recursion. This is the stopping condition that prevents infinite recursion.</p>
+        <p><strong>2. Recursive Step:</strong> The part of the function that breaks the problem down into a smaller sub-problem and calls itself with the reduced input.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Recursion vs Iteration</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Recursion</th>
+                <th>Iteration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Approach</strong></td><td>Function calls itself</td><td>Loop repeats statements</td></tr>
+              <tr><td><strong>Termination</strong></td><td>Base case</td><td>Loop condition</td></tr>
+              <tr><td><strong>Memory</strong></td><td>Uses call stack (more memory)</td><td>Uses loop variables (less memory)</td></tr>
+              <tr><td><strong>Code</strong></td><td>Often shorter, elegant</td><td>Often longer</td></tr>
+              <tr><td><strong>Speed</strong></td><td>Slower (function call overhead)</td><td>Faster</td></tr>
+              <tr><td><strong>Use Case</strong></td><td>Tree traversal, divide-and-conquer</td><td>Simple loops, counting</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Simple Recursion Example: Factorial</div>
+        <pre><code>// Factorial: n! = n × (n-1) × (n-2) × ... × 1
+// Base case: 0! = 1
+
+int factorial(int n) {
+    if(n == 0) {
+        return 1;  // Base case
+    }
+    return n * factorial(n - 1);  // Recursive step
+}
+
+// Example: factorial(5) = 5 × 4 × 3 × 2 × 1 = 120</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Trace: factorial(4)</div>
+        <pre>factorial(4)
+  = 4 * factorial(3)
+      = 3 * factorial(2)
+          = 2 * factorial(1)
+              = 1 * factorial(0)
+                  = 1  (base case)
+              = 1 * 1 = 1
+          = 2 * 1 = 2
+      = 3 * 2 = 6
+  = 4 * 6 = 24
+
+Result: 24</pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Example 1: GCD using Euclidean Algorithm</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What is GCD?</div>
+        <p><strong>GCD (Greatest Common Divisor)</strong> of two numbers is the largest positive integer that divides both numbers without a remainder.</p>
+        <p><strong>Example:</strong> GCD(48, 18) = 6</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Euclidean Algorithm</div>
+        <p>The Euclidean algorithm is based on the principle:</p>
+        <p class="formula">gcd(a, b) = gcd(b, a % b)</p>
+        <p class="formula">Base case: gcd(a, 0) = a</p>
+        <pre>Algorithm:
+1. If b == 0, return a (base case)
+2. Otherwise, return gcd(b, a % b) (recursive step)</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: GCD Recursion</div>
+        <pre><code>int gcd(int a, int b) {
+    if(b == 0) {
+        return a;  // Base case
+    }
+    return gcd(b, a % b);  // Recursive step
+}
+
+int main() {
+    int result = gcd(48, 18);
+    printf("GCD = %d\n", result);
+    return 0;
+}</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Trace: gcd(48, 18)</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Call</th>
+                <th>a</th>
+                <th>b</th>
+                <th>a % b</th>
+                <th>Next Call</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>gcd(48, 18)</td><td>48</td><td>18</td><td>12</td><td>gcd(18, 12)</td></tr>
+              <tr><td>gcd(18, 12)</td><td>18</td><td>12</td><td>6</td><td>gcd(12, 6)</td></tr>
+              <tr><td>gcd(12, 6)</td><td>12</td><td>6</td><td>0</td><td>gcd(6, 0)</td></tr>
+              <tr><td>gcd(6, 0)</td><td>6</td><td>0</td><td>-</td><td>Return 6 (base case)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="formula answer"><strong>GCD(48, 18) = 6</strong></p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Example 2: Tower of Hanoi</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> The Tower of Hanoi Problem</div>
+        <p>The <strong>Tower of Hanoi</strong> is a classic mathematical puzzle with three rods and n disks of different sizes.</p>
+        <p><strong>Rules:</strong></p>
+        <ul>
+          <li>Only one disk can be moved at a time</li>
+          <li>Each move consists of taking the top disk from one rod and placing it on another rod</li>
+          <li>No disk may be placed on top of a smaller disk</li>
+        </ul>
+        <p><strong>Goal:</strong> Move all disks from the source rod to the destination rod using an auxiliary rod.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Recursive Solution</div>
+        <p>To move n disks from source (A) to destination (C) using auxiliary (B):</p>
+        <pre>1. Move n-1 disks from A to B using C (recursive call)
+2. Move the largest disk from A to C (base operation)
+3. Move n-1 disks from B to C using A (recursive call)
+
+Base case: If n == 1, move the disk directly from source to destination</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Tower of Hanoi</div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+void towerOfHanoi(int n, char source, char dest, char aux) {
+    if(n == 1) {
+        printf("Move disk 1 from %c to %c\n", source, dest);
+        return;
+    }
+    towerOfHanoi(n-1, source, aux, dest);
+    printf("Move disk %d from %c to %c\n", n, source, dest);
+    towerOfHanoi(n-1, aux, dest, source);
+}
+
+int main() {
+    int n = 3;
+    printf("Tower of Hanoi for %d disks:\n", n);
+    towerOfHanoi(n, 'A', 'C', 'B');
+    return 0;
+}</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Output: Tower of Hanoi (n=3)</div>
+        <pre>Move disk 1 from A to C
+Move disk 2 from A to B
+Move disk 1 from C to B
+Move disk 3 from A to C
+Move disk 1 from B to A
+Move disk 2 from B to C
+Move disk 1 from A to C
+
+Total moves = 7 (which is 2^3 - 1)</pre>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Number of Moves</div>
+        <p class="formula">For n disks: Total moves = 2^n - 1</p>
+        <p>Example: For 3 disks = 2³ - 1 = 7 moves</p>
+        <p>Example: For 4 disks = 2⁴ - 1 = 15 moves</p>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Recursion Pitfalls</div>
+        <ul>
+          <li><strong>Missing Base Case:</strong> Leads to infinite recursion and stack overflow</li>
+          <li><strong>Incorrect Base Case:</strong> Never reaches the termination condition</li>
+          <li><strong>Not reducing problem size:</strong> Recursive call doesn't move toward base case</li>
+          <li><strong>Stack Overflow:</strong> Too many recursive calls exhaust memory</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Formulas Section -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Key Formulas
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-layer-group"></i> Stack Conditions</div>
+        <p class="formula">Empty: top == -1</p>
+        <p class="formula">Full: top == MAX - 1</p>
+        <p class="formula">Push: stack[++top] = item</p>
+        <p class="formula">Pop: item = stack[top--]</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-list"></i> Queue Conditions (Linear)</div>
+        <p class="formula">Empty: front == -1 or front > rear</p>
+        <p class="formula">Full: rear == MAX - 1</p>
+        <p class="formula">Enqueue: queue[++rear] = item</p>
+        <p class="formula">Dequeue: item = queue[front++]</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-redo"></i> Circular Queue Conditions</div>
+        <p class="formula">Empty: front == -1</p>
+        <p class="formula">Full: (rear + 1) % MAX == front</p>
+        <p class="formula">Enqueue: rear = (rear + 1) % MAX</p>
+        <p class="formula">Dequeue: front = (front + 1) % MAX</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-sync"></i> Recursion Formulas</div>
+        <p class="formula">GCD: gcd(a, b) = gcd(b, a % b), Base: gcd(a, 0) = a</p>
+        <p class="formula">Factorial: n! = n × (n-1)!, Base: 0! = 1</p>
+        <p class="formula">Tower of Hanoi moves: 2^n - 1</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Operator Precedence</div>
+        <p class="formula">Highest: ^ (Exponentiation)</p>
+        <p class="formula">Medium: *, / (Multiplication, Division)</p>
+        <p class="formula">Lowest: +, - (Addition, Subtraction)</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Definitions Section -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-bookmark"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="tag-grid">
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Stack</div>
+          <p>A linear data structure following LIFO (Last In First Out) principle.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Queue</div>
+          <p>A linear data structure following FIFO (First In First Out) principle.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Push</div>
+          <p>Operation to insert an element onto the top of a stack.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Pop</div>
+          <p>Operation to remove and return the top element from a stack.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Enqueue</div>
+          <p>Operation to insert an element at the rear of a queue.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Dequeue</div>
+          <p>Operation to remove and return the front element from a queue.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Overflow</div>
+          <p>Condition when trying to insert into a full data structure.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Underflow</div>
+          <p>Condition when trying to delete from an empty data structure.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Infix</div>
+          <p>Notation where operator is placed between operands (A + B).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Postfix</div>
+          <p>Notation where operator is placed after operands (A B +).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Circular Queue</div>
+          <p>Queue where last position connects back to first, forming a circle.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Deque</div>
+          <p>Double Ended Queue — insertion/deletion allowed at both ends.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Recursion</div>
+          <p>Technique where a function calls itself to solve a problem.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Base Case</div>
+          <p>The termination condition that stops recursion.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> GCD</div>
+          <p>Greatest Common Divisor — largest number dividing both operands.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Round Robin</div>
+          <p>CPU scheduling where each process gets a fixed time quantum.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparisons Section -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> Stack vs Queue</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Stack</th>
+              <th>Queue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Principle</strong></td>
+              <td>LIFO (Last In First Out)</td>
+              <td>FIFO (First In First Out)</td>
+            </tr>
+            <tr>
+              <td><strong>Insertion</strong></td>
+              <td>At top only (push)</td>
+              <td>At rear only (enqueue)</td>
+            </tr>
+            <tr>
+              <td><strong>Deletion</strong></td>
+              <td>From top only (pop)</td>
+              <td>From front only (dequeue)</td>
+            </tr>
+            <tr>
+              <td><strong>Pointer(s)</strong></td>
+              <td>One pointer: top</td>
+              <td>Two pointers: front, rear</td>
+            </tr>
+            <tr>
+              <td><strong>Analogy</strong></td>
+              <td>Stack of plates</td>
+              <td>Queue at ticket counter</td>
+            </tr>
+            <tr>
+              <td><strong>Applications</strong></td>
+              <td>Function calls, expression evaluation, undo</td>
+              <td>CPU scheduling, printer queue, BFS</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Linear Queue vs Circular Queue</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Linear Queue</th>
+              <th>Circular Queue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Structure</strong></td>
+              <td>Linear, one-way</td>
+              <td>Circular, last connects to first</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Use</strong></td>
+              <td>Wasteful after deletions</td>
+              <td>Efficient, reuses space</td>
+            </tr>
+            <tr>
+              <td><strong>Full Condition</strong></td>
+              <td>rear == MAX - 1</td>
+              <td>(rear + 1) % MAX == front</td>
+            </tr>
+            <tr>
+              <td><strong>False Overflow</strong></td>
+              <td>Possible</td>
+              <td>Not possible</td>
+            </tr>
+            <tr>
+              <td><strong>Complexity</strong></td>
+              <td>Simpler to implement</td>
+              <td>Slightly complex (modulo arithmetic)</td>
+            </tr>
+            <tr>
+              <td><strong>Use Case</strong></td>
+              <td>Simple applications</td>
+              <td>Real-world systems (buffers, scheduling)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Recursion vs Iteration</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Recursion</th>
+              <th>Iteration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Definition</strong></td>
+              <td>Function calls itself</td>
+              <td>Loop repeats statements</td>
+            </tr>
+            <tr>
+              <td><strong>Termination</strong></td>
+              <td>Base case</td>
+              <td>Loop condition becomes false</td>
+            </tr>
+            <tr>
+              <td><strong>Memory</strong></td>
+              <td>Uses call stack (higher)</td>
+              <td>Uses loop variables (lower)</td>
+            </tr>
+            <tr>
+              <td><strong>Speed</strong></td>
+              <td>Slower (overhead)</td>
+              <td>Faster</td>
+            </tr>
+            <tr>
+              <td><strong>Code Size</strong></td>
+              <td>Usually shorter, elegant</td>
+              <td>Usually longer</td>
+            </tr>
+            <tr>
+              <td><strong>Best For</strong></td>
+              <td>Tree/graph traversal, divide-and-conquer</td>
+              <td>Simple loops, counting</td>
+            </tr>
+            <tr>
+              <td><strong>Risk</strong></td>
+              <td>Stack overflow if deep recursion</td>
+              <td>Infinite loop if condition wrong</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Infix vs Postfix Notation</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Infix</th>
+              <th>Postfix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Operator Position</strong></td>
+              <td>Between operands</td>
+              <td>After operands</td>
+            </tr>
+            <tr>
+              <td><strong>Example</strong></td>
+              <td>A + B</td>
+              <td>A B +</td>
+            </tr>
+            <tr>
+              <td><strong>Parentheses</strong></td>
+              <td>Required for precedence</td>
+              <td>Not required</td>
+            </tr>
+            <tr>
+              <td><strong>Evaluation</strong></td>
+              <td>Complex, needs precedence rules</td>
+              <td>Simple, left-to-right scan</td>
+            </tr>
+            <tr>
+              <td><strong>Used By</strong></td>
+              <td>Humans (easier to read)</td>
+              <td>Computers (easier to evaluate)</td>
+            </tr>
+            <tr>
+              <td><strong>Stack Needed</strong></td>
+              <td>For conversion</td>
+              <td>For evaluation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCQs Section -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Stack follows which principle?</p>
+          <ul class="options">
+            <li>a. FIFO</li>
+            <li>b. LIFO</li>
+            <li>c. LILO</li>
+            <li>d. FILO</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: b. LIFO</strong>
+            <p>Stack follows Last In First Out (LIFO) principle — the last element inserted is the first to be removed.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Queue follows which principle?</p>
+          <ul class="options">
+            <li>a. LIFO</li>
+            <li>b. FIFO</li>
+            <li>c. Random</li>
+            <li>d. None of the above</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: b. FIFO</strong>
+            <p>Queue follows First In First Out (FIFO) principle — the first element inserted is the first to be removed.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Which operation is used to insert an element into a stack?</p>
+          <ul class="options">
+            <li>a. enqueue</li>
+            <li>b. push</li>
+            <li>c. insert</li>
+            <li>d. add</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: b. push</strong>
+            <p>The push operation is used to insert an element onto the top of a stack.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Which operation removes an element from a queue?</p>
+          <ul class="options">
+            <li>a. pop</li>
+            <li>b. dequeue</li>
+            <li>c. delete</li>
+            <li>d. remove</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: b. dequeue</strong>
+            <p>The dequeue operation removes and returns the front element from a queue.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>What is the postfix form of A + B * C?</p>
+          <ul class="options">
+            <li>a. ABC*+</li>
+            <li>b. AB+C*</li>
+            <li>c. ABC+*</li>
+            <li>d. A+BC*</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: a. ABC*+</strong>
+            <p>Since * has higher precedence than +, we first write BC*, then add A: ABC*+</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>In a circular queue, what is the formula for the next rear position?</p>
+          <ul class="options">
+            <li>a. rear + 1</li>
+            <li>b. (rear + 1) % MAX</li>
+            <li>c. rear % MAX</li>
+            <li>d. (rear - 1) % MAX</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: b. (rear + 1) % MAX</strong>
+            <p>Circular queue uses modulo arithmetic to wrap around: rear = (rear + 1) % MAX</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>What is the condition for an empty stack?</p>
+          <ul class="options">
+            <li>a. top == 0</li>
+            <li>b. top == -1</li>
+            <li>c. top == MAX</li>
+            <li>d. top == MAX-1</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: b. top == -1</strong>
+            <p>top is initialized to -1 to indicate an empty stack.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>Which data structure is used for function call management?</p>
+          <ul class="options">
+            <li>a. Queue</li>
+            <li>b. Stack</li>
+            <li>c. Array</li>
+            <li>d. Tree</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: b. Stack</strong>
+            <p>Stack is used for function call management (call stack). LIFO ensures the last function called is the first to return.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q9</h4>
+          <p>In recursion, what prevents infinite recursion?</p>
+          <ul class="options">
+            <li>a. Loop condition</li>
+            <li>b. Base case</li>
+            <li>c. Recursive step</li>
+            <li>d. Function call</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: b. Base case</strong>
+            <p>The base case is the termination condition that stops recursion and prevents infinite loops.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q10</h4>
+          <p>GCD(48, 18) using Euclidean algorithm equals?</p>
+          <ul class="options">
+            <li>a. 2</li>
+            <li>b. 6</li>
+            <li>c. 12</li>
+            <li>d. 18</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: b. 6</strong>
+            <p>Using Euclidean algorithm: gcd(48,18) → gcd(18,12) → gcd(12,6) → gcd(6,0) = 6</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q11</h4>
+          <p>How many moves are needed to solve Tower of Hanoi with 4 disks?</p>
+          <ul class="options">
+            <li>a. 7</li>
+            <li>b. 15</li>
+            <li>c. 31</li>
+            <li>d. 63</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: b. 15</strong>
+            <p>Formula: 2^n - 1. For 4 disks: 2^4 - 1 = 16 - 1 = 15 moves.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q12</h4>
+          <p>Which CPU scheduling algorithm uses a queue?</p>
+          <ul class="options">
+            <li>a. Shortest Job First</li>
+            <li>b. Round Robin</li>
+            <li>c. Priority Scheduling</li>
+            <li>d. LIFO Scheduling</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: b. Round Robin</strong>
+            <p>Round Robin scheduling uses a FIFO queue to manage processes with time quantum.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Short Questions Section -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-clipboard-question"></i> Short Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Define Stack.</p>
+          <button class="toggle-btn" data-target="sq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq1">
+            <p>A stack is a linear data structure that follows the LIFO (Last In First Out) principle. The element inserted last is removed first. Operations are performed only at one end called the top.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Define Queue.</p>
+          <button class="toggle-btn" data-target="sq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq2">
+            <p>A queue is a linear data structure that follows the FIFO (First In First Out) principle. The element inserted first is removed first. Insertion happens at the rear and deletion at the front.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>What is Stack Overflow?</p>
+          <button class="toggle-btn" data-target="sq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq3">
+            <p>Stack Overflow is a condition that occurs when we try to push an element onto a stack that is already full (top == MAX-1). It indicates there is no space to insert a new element.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>What is Queue Underflow?</p>
+          <button class="toggle-btn" data-target="sq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq4">
+            <p>Queue Underflow occurs when we try to dequeue an element from an empty queue (front == -1 or front > rear). It means there are no elements to remove.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>What is a Circular Queue?</p>
+          <button class="toggle-btn" data-target="sq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq5">
+            <p>A circular queue is a queue where the last position is connected back to the first position to form a circle. This overcomes the limitation of linear queue's false overflow by reusing empty spaces using modulo arithmetic.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>What is Recursion?</p>
+          <button class="toggle-btn" data-target="sq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq6">
+            <p>Recursion is a programming technique where a function calls itself directly or indirectly to solve a problem. It requires a base case (termination condition) and a recursive step (function calling itself with smaller input).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>What is the difference between push and pop?</p>
+          <button class="toggle-btn" data-target="sq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq7">
+            <p><strong>Push:</strong> Adds an element to the top of the stack (insertion operation).</p>
+            <p><strong>Pop:</strong> Removes and returns the top element from the stack (deletion operation).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>Convert A + B to postfix notation.</p>
+          <button class="toggle-btn" data-target="sq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq8">
+            <p>Postfix form: <strong>AB+</strong></p>
+            <p>Operands A and B come first, followed by operator +.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q9</h4>
+          <p>What is a Deque?</p>
+          <button class="toggle-btn" data-target="sq9">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq9">
+            <p>Deque (Double Ended Queue) is a queue where insertion and deletion can be performed at both ends (front and rear). It can be input-restricted or output-restricted.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q10</h4>
+          <p>What is the base case in recursion?</p>
+          <button class="toggle-btn" data-target="sq10">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq10">
+            <p>The base case is the simplest instance of the problem that can be solved directly without further recursion. It is the termination condition that prevents infinite recursion.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Long Questions Section -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Explain stack operations (push and pop) with algorithms and C code.</p>
+          <button class="toggle-btn" data-target="lq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq1">
+            <h4>Stack Operations</h4>
+            <p><strong>1. Push Operation:</strong></p>
+            <p>Algorithm:</p>
+            <pre>1. Check if top == MAX-1 (stack full)
+2. If full, print "Stack Overflow"
+3. Else, increment top
+4. Place item at stack[top]</pre>
+            <div class="code-box">
+              <pre><code>void push(int item) {
+    if(top == MAX - 1) {
+        printf("Stack Overflow\n");
+        return;
+    }
+    stack[++top] = item;
+}</code></pre>
+            </div>
+            <p><strong>2. Pop Operation:</strong></p>
+            <p>Algorithm:</p>
+            <pre>1. Check if top == -1 (stack empty)
+2. If empty, print "Stack Underflow"
+3. Else, retrieve item from stack[top]
+4. Decrement top
+5. Return item</pre>
+            <div class="code-box">
+              <pre><code>int pop() {
+    if(top == -1) {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+    return stack[top--];
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Explain queue operations (enqueue and dequeue) with algorithms.</p>
+          <button class="toggle-btn" data-target="lq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq2">
+            <h4>Queue Operations</h4>
+            <p><strong>1. Enqueue Operation:</strong></p>
+            <p>Algorithm:</p>
+            <pre>1. Check if rear == MAX-1 (queue full)
+2. If full, print "Queue Overflow"
+3. If front == -1, set front = 0
+4. Increment rear
+5. Place item at queue[rear]</pre>
+            <p><strong>2. Dequeue Operation:</strong></p>
+            <p>Algorithm:</p>
+            <pre>1. Check if front == -1 or front > rear (queue empty)
+2. If empty, print "Queue Underflow"
+3. Retrieve item from queue[front]
+4. Increment front
+5. If front > rear, reset front = rear = -1
+6. Return item</pre>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Explain the algorithm for converting infix to postfix notation with an example.</p>
+          <button class="toggle-btn" data-target="lq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq3">
+            <h4>Infix to Postfix Conversion</h4>
+            <p><strong>Algorithm:</strong></p>
+            <pre>1. Initialize empty stack and output string
+2. Scan infix expression left to right
+3. For each character:
+   - If operand, add to output
+   - If '(', push to stack
+   - If ')', pop until '(' and add to output
+   - If operator:
+     * Pop operators with >= precedence
+     * Add them to output
+     * Push current operator to stack
+4. Pop all remaining operators to output
+5. Return output</pre>
+            <p><strong>Example: Convert (A + B) * C to postfix</strong></p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Input</th><th>Stack</th><th>Output</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>(</td><td>(</td><td></td></tr>
+                  <tr><td>A</td><td>(</td><td>A</td></tr>
+                  <tr><td>+</td><td>( +</td><td>A</td></tr>
+                  <tr><td>B</td><td>( +</td><td>A B</td></tr>
+                  <tr><td>)</td><td></td><td>A B +</td></tr>
+                  <tr><td>*</td><td>*</td><td>A B +</td></tr>
+                  <tr><td>C</td><td>*</td><td>A B + C</td></tr>
+                  <tr><td>End</td><td></td><td>A B + C *</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="formula answer"><strong>Result: AB+C*</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Explain the algorithm for evaluating postfix expressions with an example.</p>
+          <button class="toggle-btn" data-target="lq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq4">
+            <h4>Postfix Evaluation</h4>
+            <p><strong>Algorithm:</strong></p>
+            <pre>1. Initialize empty stack
+2. Scan postfix expression left to right
+3. For each character:
+   - If operand, push to stack
+   - If operator:
+     * Pop two operands (op2, op1)
+     * Compute result = op1 operator op2
+     * Push result to stack
+4. Final stack element is the result</pre>
+            <p><strong>Example: Evaluate 5 6 + 2 *</strong></p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Input</th><th>Stack</th><th>Operation</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>5</td><td>5</td><td>Push 5</td></tr>
+                  <tr><td>6</td><td>5, 6</td><td>Push 6</td></tr>
+                  <tr><td>+</td><td>11</td><td>Pop 6,5; 5+6=11; Push 11</td></tr>
+                  <tr><td>2</td><td>11, 2</td><td>Push 2</td></tr>
+                  <tr><td>*</td><td>22</td><td>Pop 2,11; 11*2=22; Push 22</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="formula answer"><strong>Result: 22</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>What is a circular queue? Explain its advantages over a linear queue.</p>
+          <button class="toggle-btn" data-target="lq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq5">
+            <h4>Circular Queue</h4>
+            <p><strong>Definition:</strong> A circular queue is a queue where the last position is connected back to the first position to form a circle. It uses modulo arithmetic to wrap around indices.</p>
+            <p><strong>Advantages over Linear Queue:</strong></p>
+            <ul>
+              <li><strong>Efficient Memory Use:</strong> Reuses empty spaces left after dequeue operations</li>
+              <li><strong>No False Overflow:</strong> Even if rear reaches MAX-1, queue can accept elements if front has moved</li>
+              <li><strong>Continuous Operation:</strong> Better for systems requiring continuous data processing (buffers, scheduling)</li>
+            </ul>
+            <p><strong>Key Formulas:</strong></p>
+            <p class="formula">rear = (rear + 1) % MAX</p>
+            <p class="formula">front = (front + 1) % MAX</p>
+            <p class="formula">Full condition: (rear + 1) % MAX == front</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Explain recursion with GCD example using Euclidean algorithm.</p>
+          <button class="toggle-btn" data-target="lq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq6">
+            <h4>Recursion and GCD</h4>
+            <p><strong>Recursion:</strong> A technique where a function calls itself. It requires a base case and recursive step.</p>
+            <p><strong>GCD using Euclidean Algorithm:</strong></p>
+            <p class="formula">gcd(a, b) = gcd(b, a % b)</p>
+            <p class="formula">Base case: gcd(a, 0) = a</p>
+            <div class="code-box">
+              <pre><code>int gcd(int a, int b) {
+    if(b == 0)
+        return a;  // Base case
+    return gcd(b, a % b);  // Recursive step
+}</code></pre>
+            </div>
+            <p><strong>Trace: gcd(48, 18)</strong></p>
+            <pre>gcd(48, 18) → gcd(18, 12) → gcd(12, 6) → gcd(6, 0) = 6</pre>
+            <p class="formula answer"><strong>GCD(48, 18) = 6</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Explain the Tower of Hanoi problem and its recursive solution.</p>
+          <button class="toggle-btn" data-target="lq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq7">
+            <h4>Tower of Hanoi</h4>
+            <p><strong>Problem:</strong> Move n disks from source rod to destination rod using an auxiliary rod, with the rule that no larger disk can be placed on a smaller disk.</p>
+            <p><strong>Recursive Solution:</strong></p>
+            <pre>To move n disks from A to C using B:
+1. Move n-1 disks from A to B using C
+2. Move largest disk from A to C
+3. Move n-1 disks from B to C using A
+
+Base case: If n == 1, move directly from A to C</pre>
+            <div class="code-box">
+              <pre><code>void hanoi(int n, char from, char to, char aux) {
+    if(n == 1) {
+        printf("Move disk 1 from %c to %c\n", from, to);
+        return;
+    }
+    hanoi(n-1, from, aux, to);
+    printf("Move disk %d from %c to %c\n", n, from, to);
+    hanoi(n-1, aux, to, from);
+}</code></pre>
+            </div>
+            <p class="formula">Total moves = 2^n - 1</p>
+            <p>For 3 disks: 2³ - 1 = 7 moves</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Practice Section -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-laptop-code"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Write a C program to implement stack with push, pop, and display operations.</p>
+          <button class="toggle-btn" data-target="pp1">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void push(int item) {
+    if(top == MAX - 1) {
+        printf("Stack Overflow\n");
+        return;
+    }
+    stack[++top] = item;
+    printf("%d pushed\n", item);
+}
+
+int pop() {
+    if(top == -1) {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+    return stack[top--];
+}
+
+void display() {
+    if(top == -1) {
+        printf("Stack is empty\n");
+        return;
+    }
+    printf("Stack: ");
+    for(int i = top; i >= 0; i--)
+        printf("%d ", stack[i]);
+    printf("\n");
+}
+
+int main() {
+    push(10);
+    push(20);
+    push(30);
+    display();
+    printf("Popped: %d\n", pop());
+    display();
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Write a C program to implement queue with enqueue and dequeue operations.</p>
+          <button class="toggle-btn" data-target="pp2">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int queue[MAX];
+int front = -1, rear = -1;
+
+void enqueue(int item) {
+    if(rear == MAX - 1) {
+        printf("Queue Overflow\n");
+        return;
+    }
+    if(front == -1) front = 0;
+    queue[++rear] = item;
+    printf("%d enqueued\n", item);
+}
+
+int dequeue() {
+    if(front == -1 || front > rear) {
+        printf("Queue Underflow\n");
+        return -1;
+    }
+    int item = queue[front++];
+    if(front > rear)
+        front = rear = -1;
+    return item;
+}
+
+void display() {
+    if(front == -1) {
+        printf("Queue is empty\n");
+        return;
+    }
+    printf("Queue: ");
+    for(int i = front; i <= rear; i++)
+        printf("%d ", queue[i]);
+    printf("\n");
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    display();
+    printf("Dequeued: %d\n", dequeue());
+    display();
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Write a C program to evaluate a postfix expression.</p>
+          <button class="toggle-btn" data-target="pp3">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+#define MAX 50
+
+int stack[MAX];
+int top = -1;
+
+void push(int x) {
+    stack[++top] = x;
+}
+
+int pop() {
+    return stack[top--];
+}
+
+int evaluate(char* exp) {
+    for(int i = 0; exp[i] != '\0'; i++) {
+        if(isdigit(exp[i])) {
+            push(exp[i] - '0');
+        }
+        else {
+            int op2 = pop();
+            int op1 = pop();
+            switch(exp[i]) {
+                case '+': push(op1 + op2); break;
+                case '-': push(op1 - op2); break;
+                case '*': push(op1 * op2); break;
+                case '/': push(op1 / op2); break;
+            }
+        }
+    }
+    return pop();
+}
+
+int main() {
+    char exp[] = "53+2*";
+    printf("Result: %d\n", evaluate(exp));
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Write a C program to find GCD of two numbers using recursion.</p>
+          <button class="toggle-btn" data-target="pp4">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int gcd(int a, int b) {
+    if(b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int main() {
+    int num1 = 48, num2 = 18;
+    printf("GCD of %d and %d = %d\n", num1, num2, gcd(num1, num2));
+    return 0;
+}
+
+// Output: GCD of 48 and 18 = 6</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>Write a C program to solve Tower of Hanoi problem using recursion.</p>
+          <button class="toggle-btn" data-target="pp5">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp5">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+
+void hanoi(int n, char from, char to, char aux) {
+    if(n == 1) {
+        printf("Move disk 1 from %c to %c\n", from, to);
+        return;
+    }
+    hanoi(n-1, from, aux, to);
+    printf("Move disk %d from %c to %c\n", n, from, to);
+    hanoi(n-1, aux, to, from);
+}
+
+int main() {
+    int n = 3;
+    printf("Tower of Hanoi for %d disks:\n", n);
+    hanoi(n, 'A', 'C', 'B');
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Write a C program to implement circular queue.</p>
+          <button class="toggle-btn" data-target="pp6">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp6">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int queue[MAX];
+int front = -1, rear = -1;
+
+void enqueue(int item) {
+    int nextRear = (rear + 1) % MAX;
+    if(nextRear == front) {
+        printf("Queue is full\n");
+        return;
+    }
+    if(front == -1) front = 0;
+    rear = nextRear;
+    queue[rear] = item;
+    printf("%d enqueued\n", item);
+}
+
+int dequeue() {
+    if(front == -1) {
+        printf("Queue is empty\n");
+        return -1;
+    }
+    int item = queue[front];
+    if(front == rear) {
+        front = rear = -1;
+    } else {
+        front = (front + 1) % MAX;
+    }
+    return item;
+}
+
+void display() {
+    if(front == -1) {
+        printf("Queue is empty\n");
+        return;
+    }
+    printf("Queue: ");
+    int i = front;
+    while(1) {
+        printf("%d ", queue[i]);
+        if(i == rear) break;
+        i = (i + 1) % MAX;
+    }
+    printf("\n");
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    display();
+    printf("Dequeued: %d\n", dequeue());
+    display();
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Write a C program to calculate factorial using recursion.</p>
+          <button class="toggle-btn" data-target="pp7">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp7">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int factorial(int n) {
+    if(n == 0 || n == 1)
+        return 1;
+    return n * factorial(n - 1);
+}
+
+int main() {
+    int num = 5;
+    printf("Factorial of %d = %d\n", num, factorial(num));
+    return 0;
+}
+
+// Output: Factorial of 5 = 120</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Revision Section -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-check-circle"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Quick Revision Points</div>
+        <ul>
+          <li><strong>Stack:</strong> LIFO structure; operations at top only; push, pop, peek; top = -1 for empty.</li>
+          <li><strong>Queue:</strong> FIFO structure; enqueue at rear, dequeue from front; front and rear pointers.</li>
+          <li><strong>Stack Overflow:</strong> top == MAX-1 (full stack).</li>
+          <li><strong>Queue Underflow:</strong> front == -1 or front > rear (empty queue).</li>
+          <li><strong>Circular Queue:</strong> Last connects to first; uses modulo: (rear+1) % MAX; no false overflow.</li>
+          <li><strong>Deque:</strong> Double ended queue; insertion/deletion at both ends; input-restricted or output-restricted.</li>
+          <li><strong>Infix:</strong> A + B (operator between operands).</li>
+          <li><strong>Postfix:</strong> A B + (operator after operands); no parentheses needed.</li>
+          <li><strong>Recursion:</strong> Function calls itself; needs base case + recursive step.</li>
+          <li><strong>GCD:</strong> gcd(a, b) = gcd(b, a % b); base: gcd(a, 0) = a.</li>
+          <li><strong>Tower of Hanoi:</strong> Move n disks; 2^n - 1 moves; 3 steps: move n-1, move largest, move n-1.</li>
+          <li><strong>Round Robin:</strong> CPU scheduling; uses queue; each process gets time quantum.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exams</div>
+        <ul>
+          <li>Push/Pop algorithms — know step-by-step for 6-mark questions.</li>
+          <li>Enqueue/Dequeue algorithms — frequently asked.</li>
+          <li>Infix to Postfix conversion — practice at least 3 examples; know operator precedence.</li>
+          <li>Postfix evaluation — trace with stack, show each step in table format.</li>
+          <li>Circular queue formulas: (rear+1) % MAX, (front+1) % MAX — very important.</li>
+          <li>GCD trace — show all recursive calls in table.</li>
+          <li>Tower of Hanoi output — for n=3, write all 7 moves.</li>
+          <li>Stack vs Queue comparison table — frequently asked in 2-mark questions.</li>
+          <li>Recursion vs Iteration differences — know at least 4 points.</li>
+          <li>Applications: Stack for function calls/expression eval; Queue for Round Robin.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</div>
+        <ul>
+          <li>Confusing LIFO (stack) with FIFO (queue) — remember plate stack vs ticket queue analogy.</li>
+          <li>Forgetting to check overflow/underflow conditions in code — always check before push/pop.</li>
+          <li>Wrong operator precedence in infix-to-postfix (^ > * / > + -).</li>
+          <li>Forgetting to increment top BEFORE push: should be stack[++top], not stack[top++].</li>
+          <li>In circular queue, using rear+1 instead of (rear+1) % MAX — always use modulo.</li>
+          <li>In recursion, missing base case leads to infinite recursion and stack overflow.</li>
+          <li>In postfix evaluation, wrong order: pop() gives op2 first, then op1; compute op1 operator op2.</li>
+          <li>Tower of Hanoi: forgetting the formula 2^n - 1 for total moves.</li>
+          <li>Not resetting front = rear = -1 when queue becomes empty after dequeue.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

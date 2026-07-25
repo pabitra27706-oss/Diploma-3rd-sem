@@ -1,0 +1,3123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 4 - Non-Linear Data Structures | CST205</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .tree-diagram {
+      font-family: monospace;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      white-space: pre;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .graph-diagram {
+      font-family: monospace;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      white-space: pre;
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+    .term-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--primary-color);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+    }
+    .term-card strong {
+      color: var(--primary-color);
+      font-size: 0.95rem;
+    }
+    .term-card p {
+      margin: 0.3rem 0 0;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-project-diagram"></i>
+      <span>CST205 - Unit 4</span>
+    </div>
+    <div class="nav-links">
+      <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="#overview">Overview</a>
+      <a href="#trees">Trees</a>
+      <a href="#binary-trees">Binary Trees</a>
+      <a href="#traversals">Traversals</a>
+      <a href="#tree-types">Tree Types</a>
+      <a href="#graphs">Graphs</a>
+      <a href="#graph-traversals">Graph Traversal</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 4</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="#overview"><i class="fas fa-info-circle"></i> Overview</a>
+    <a href="#trees"><i class="fas fa-tree"></i> Trees</a>
+    <a href="#binary-trees"><i class="fas fa-code-branch"></i> Binary Trees</a>
+    <a href="#traversals"><i class="fas fa-route"></i> Traversals</a>
+    <a href="#tree-types"><i class="fas fa-sitemap"></i> Tree Types</a>
+    <a href="#graphs"><i class="fas fa-project-diagram"></i> Graphs</a>
+    <a href="#graph-traversals"><i class="fas fa-search"></i> Graph Traversal</a>
+    <a href="#mcqs"><i class="fas fa-question-circle"></i> MCQs</a>
+    <a href="#revision"><i class="fas fa-check-circle"></i> Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <div class="info-item">
+        <i class="fas fa-code"></i>
+        <span>CST205</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-bookmark"></i>
+        <span>Unit 4</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-clock"></i>
+        <span>15 Hours</span>
+      </div>
+    </div>
+    <h1><i class="fas fa-project-diagram"></i> Non-Linear Data Structures</h1>
+    <p>Master Trees, Binary Trees, Traversals, AVL Trees, B-Trees, Graphs, BFS and DFS — the most powerful data structures in computer science.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Overview -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-info-circle"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You'll Learn</div>
+        <p>This unit covers non-linear data structures — Trees and Graphs — which are used to represent hierarchical and network-based relationships. These are among the most widely used data structures in real-world applications.</p>
+        <ul>
+          <li><strong>Trees:</strong> Terminology, binary trees, array and linked representations, insertion and deletion</li>
+          <li><strong>Tree Traversals:</strong> Pre-order, In-order, Post-order, Level-order</li>
+          <li><strong>Types of Trees:</strong> Full, Complete, Perfect, Balanced, Skewed, AVL Tree, B-Tree</li>
+          <li><strong>Graphs:</strong> Terminology, directed/undirected, weighted, degree, path, cycle</li>
+          <li><strong>Graph Representations:</strong> Adjacency Matrix, Adjacency List, Set representation</li>
+          <li><strong>Graph Traversals:</strong> BFS (Breadth-First Search), DFS (Depth-First Search)</li>
+        </ul>
+      </div>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Why Non-Linear Structures?</div>
+        <ul>
+          <li>Trees model file systems, organization hierarchies, XML/HTML DOM</li>
+          <li>Binary Search Trees enable O(log n) search</li>
+          <li>AVL Trees provide self-balancing for guaranteed O(log n) operations</li>
+          <li>Graphs model social networks, road maps, internet routing, dependency graphs</li>
+          <li>BFS and DFS are foundation algorithms for dozens of graph problems</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trees Section -->
+  <section class="section" id="trees">
+    <h2 class="section-title">
+      <i class="fas fa-tree"></i> Trees
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Tree</strong> is a non-linear hierarchical data structure consisting of nodes connected by edges. It is a collection of nodes linked together to simulate a hierarchy, with one node designated as the <strong>root</strong> and zero or more sub-trees hanging from it.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Real-World Examples</div>
+        <ul>
+          <li><strong>File System:</strong> Root directory → sub-directories → files</li>
+          <li><strong>Organization Chart:</strong> CEO → Managers → Employees</li>
+          <li><strong>HTML DOM:</strong> html → head/body → elements</li>
+          <li><strong>Decision Tree:</strong> Root question → branches → leaf answers</li>
+        </ul>
+      </div>
+
+      <div class="tree-diagram">
+                    A          ← Root (Level 0)
+                  /   \
+                B       C      ← Level 1
+               / \     / \
+              D   E   F   G    ← Level 2 (Leaves)
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Tree Terminology</h3>
+      <div class="term-grid">
+
+        <div class="term-card">
+          <strong>Node</strong>
+          <p>A fundamental unit of a tree containing data and links to child nodes. Example: A, B, C above.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Root</strong>
+          <p>The topmost node of a tree. Has no parent. There is exactly one root. Example: A.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Leaf (External Node)</strong>
+          <p>A node with no children. Example: D, E, F, G in the diagram above.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Internal Node</strong>
+          <p>A node that has at least one child. Example: A, B, C are internal nodes.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Parent</strong>
+          <p>A node that has one or more children. Example: B is the parent of D and E.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Child</strong>
+          <p>A node directly connected to its parent. Example: D and E are children of B.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Sibling</strong>
+          <p>Nodes that share the same parent. Example: D and E are siblings (both children of B).</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Level</strong>
+          <p>Number of edges from root to that node. Root is at level 0. Example: B and C are at level 1.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Height of Node</strong>
+          <p>Number of edges on the longest path from that node down to a leaf. Height of a leaf = 0.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Depth of Node</strong>
+          <p>Number of edges from the root to that node. Root depth = 0. Same as level.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Degree of Node</strong>
+          <p>Number of children a node has. Example: Degree of B = 2 (children D, E).</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Edge</strong>
+          <p>A link or connection between a parent node and its child node.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Path</strong>
+          <p>A sequence of nodes where each adjacent pair is connected by an edge. Example: A→B→D.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Subtree</strong>
+          <p>A tree formed by a node and all its descendants. Example: B with D and E is a subtree of A.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Height of Tree</strong>
+          <p>Height of the root node, i.e., the longest path from root to any leaf.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Forest</strong>
+          <p>A collection of disjoint trees. Removing the root creates a forest of subtrees.</p>
+        </div>
+
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Key Properties of a Tree</div>
+        <ul>
+          <li>A tree with n nodes has exactly <strong>n-1 edges</strong></li>
+          <li>There is exactly <strong>one path</strong> between any two nodes</li>
+          <li>A tree has exactly <strong>one root</strong></li>
+          <li>Every node (except root) has exactly <strong>one parent</strong></li>
+          <li>A tree is a <strong>connected acyclic graph</strong> (no cycles)</li>
+        </ul>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Tree Properties Formulas</div>
+        <p class="formula">Number of edges in a tree = n - 1 (where n = number of nodes)</p>
+        <p class="formula">Maximum nodes at level i = 2^i</p>
+        <p class="formula">Maximum nodes in binary tree of height h = 2^(h+1) - 1</p>
+        <p class="formula">Minimum height of binary tree with n nodes = ⌊log₂(n)⌋</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Binary Trees Section -->
+  <section class="section" id="binary-trees">
+    <h2 class="section-title">
+      <i class="fas fa-code-branch"></i> Binary Trees
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Binary Tree</strong> is a tree in which each node has <strong>at most two children</strong>, referred to as the <strong>left child</strong> and the <strong>right child</strong>. A node can have 0, 1, or 2 children. It is the most common and widely used type of tree in computer science.</p>
+      </div>
+
+      <div class="tree-diagram">
+                    10         ← Root
+                  /    \
+                6        15   ← Level 1
+               / \      /  \
+              3   8   12    20  ← Level 2 (Leaves)
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Representation of Binary Tree</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Array Representation</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-database"></i> How Array Representation Works</div>
+        <p>For a binary tree stored in an array (1-indexed):</p>
+        <ul>
+          <li>Root is stored at index <strong>1</strong></li>
+          <li>For a node at index <strong>i</strong>:
+            <ul>
+              <li>Left child is at index <strong>2i</strong></li>
+              <li>Right child is at index <strong>2i + 1</strong></li>
+              <li>Parent is at index <strong>⌊i/2⌋</strong></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Array Representation Formulas (1-indexed)</div>
+        <p class="formula">Root: index 1</p>
+        <p class="formula">Left child of node at i: 2 × i</p>
+        <p class="formula">Right child of node at i: 2 × i + 1</p>
+        <p class="formula">Parent of node at i: ⌊i / 2⌋</p>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Array Representation Example</div>
+        <p>Tree: Root=10, Left=6, Right=15, 6's Left=3, 6's Right=8</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Index</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Value</strong></td>
+                <td>10 (Root)</td>
+                <td>6 (Left of Root)</td>
+                <td>15 (Right of Root)</td>
+                <td>3 (Left of 6)</td>
+                <td>8 (Right of 6)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Verification:</strong> Node at i=2 (value=6): Left child = 2×2 = index 4 (value=3) ✓, Right child = 2×2+1 = index 5 (value=8) ✓</p>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> When to Use Array Representation</div>
+        <ul>
+          <li><strong>Best for:</strong> Complete binary trees (no gaps in the array)</li>
+          <li><strong>Wasteful for:</strong> Skewed or sparse trees (many null positions wasted)</li>
+          <li><strong>Advantage:</strong> O(1) access to parent/child using formula</li>
+          <li><strong>Disadvantage:</strong> Fixed size, memory waste for non-complete trees</li>
+        </ul>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Linked List Representation</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Node Structure</div>
+        <p>Each node in a linked binary tree contains three fields:</p>
+        <ul>
+          <li><strong>left:</strong> Pointer to left child (NULL if no left child)</li>
+          <li><strong>data:</strong> The value stored in the node</li>
+          <li><strong>right:</strong> Pointer to right child (NULL if no right child)</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Binary Tree Node in C</div>
+        <pre><code>struct TreeNode {
+    int data;
+    struct TreeNode* left;   // Pointer to left child
+    struct TreeNode* right;  // Pointer to right child
+};
+
+// Create a new tree node
+struct TreeNode* createNode(int data) {
+    struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    node->data  = data;
+    node->left  = NULL;
+    node->right = NULL;
+    return node;
+}
+
+// Build the tree from the diagram above
+struct TreeNode* buildTree() {
+    struct TreeNode* root = createNode(10);
+    root->left            = createNode(6);
+    root->right           = createNode(15);
+    root->left->left      = createNode(3);
+    root->left->right     = createNode(8);
+    root->right->left     = createNode(12);
+    root->right->right    = createNode(20);
+    return root;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Insertion in Binary Tree</h3>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: Insert in Level Order</div>
+        <pre>1. If tree is empty, new node becomes root
+2. Use a queue for level-order traversal
+3. For each node dequeued:
+   a. If left child is NULL, insert new node as left child → done
+   b. Else, enqueue left child
+   c. If right child is NULL, insert new node as right child → done
+   d. Else, enqueue right child
+4. Continue until insertion is done</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Insert in Binary Tree (Level Order)</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left, *right;
+};
+
+// Queue for level order insertion
+struct QNode { struct TreeNode* tnode; struct QNode* next; };
+struct QNode *qfront = NULL, *qrear = NULL;
+
+void enqueue(struct TreeNode* t) {
+    struct QNode* q = malloc(sizeof(struct QNode));
+    q->tnode = t; q->next = NULL;
+    if(!qrear) { qfront = qrear = q; return; }
+    qrear->next = q; qrear = q;
+}
+
+struct TreeNode* dequeue() {
+    if(!qfront) return NULL;
+    struct QNode* q = qfront;
+    struct TreeNode* t = q->tnode;
+    qfront = qfront->next;
+    if(!qfront) qrear = NULL;
+    free(q); return t;
+}
+
+struct TreeNode* insert(struct TreeNode* root, int data) {
+    struct TreeNode* newNode = malloc(sizeof(struct TreeNode));
+    newNode->data = data; newNode->left = newNode->right = NULL;
+    if(!root) return newNode;
+    enqueue(root);
+    while(qfront) {
+        struct TreeNode* curr = dequeue();
+        if(!curr->left) { curr->left = newNode; return root; }
+        else enqueue(curr->left);
+        if(!curr->right) { curr->right = newNode; return root; }
+        else enqueue(curr->right);
+    }
+    return root;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Deletion in Binary Tree</h3>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: Delete a Node</div>
+        <pre>1. Find the node to be deleted (target)
+2. Find the deepest rightmost node in the tree
+3. Copy the data of deepest rightmost node into target node
+4. Delete the deepest rightmost node
+Steps to find deepest rightmost node:
+  - Use level-order traversal (BFS with queue)
+  - Last node visited is the deepest rightmost node</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Delete Node from Binary Tree</div>
+        <pre><code>void deleteDeepest(struct TreeNode* root, struct TreeNode* delNode) {
+    // Queue-based BFS to find and remove deepest node
+    enqueue(root);
+    while(qfront) {
+        struct TreeNode* curr = dequeue();
+        if(curr == delNode) { curr = NULL; free(delNode); return; }
+        if(curr->right) {
+            if(curr->right == delNode) { curr->right = NULL; free(delNode); return; }
+            else enqueue(curr->right);
+        }
+        if(curr->left) {
+            if(curr->left == delNode) { curr->left = NULL; free(delNode); return; }
+            else enqueue(curr->left);
+        }
+    }
+}
+
+struct TreeNode* deleteNode(struct TreeNode* root, int key) {
+    if(!root) return NULL;
+    if(!root->left && !root->right) {
+        if(root->data == key) return NULL;
+        return root;
+    }
+    struct TreeNode* keyNode = NULL;
+    struct TreeNode* last = NULL;
+    enqueue(root);
+    while(qfront) {
+        last = dequeue();
+        if(last->data == key) keyNode = last;
+        if(last->left)  enqueue(last->left);
+        if(last->right) enqueue(last->right);
+    }
+    if(keyNode) {
+        keyNode->data = last->data;
+        deleteDeepest(root, last);
+    }
+    return root;
+}</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Traversals Section -->
+  <section class="section" id="traversals">
+    <h2 class="section-title">
+      <i class="fas fa-route"></i> Tree Traversals
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What is Tree Traversal?</div>
+        <p>Tree traversal is the process of visiting each node of the tree exactly once in a specific order. Unlike linear data structures (where traversal is straightforward), trees can be traversed in multiple ways.</p>
+      </div>
+
+      <div class="tree-diagram">
+              1              ← Use this tree for all traversal examples
+            /   \
+           2     3
+          / \   / \
+         4   5 6   7
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 1. Pre-order Traversal (Root → Left → Right)</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Pre-order</strong> traversal visits the root first, then recursively traverses the left subtree, then the right subtree. Order: <strong>Root → Left → Right</strong></p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: Pre-order</div>
+        <pre>preorder(node):
+1. If node is NULL, return
+2. Visit (print) node
+3. preorder(node->left)
+4. preorder(node->right)</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Pre-order</div>
+        <pre><code>void preorder(struct TreeNode* node) {
+    if(node == NULL) return;
+    printf("%d ", node->data);   // Visit root
+    preorder(node->left);        // Traverse left
+    preorder(node->right);       // Traverse right
+}
+// Output for example tree: 1 2 4 5 3 6 7</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Pre-order Trace</div>
+        <pre>preorder(1):  Print 1 → preorder(2) → preorder(3)
+preorder(2):  Print 2 → preorder(4) → preorder(5)
+preorder(4):  Print 4 → NULL → NULL
+preorder(5):  Print 5 → NULL → NULL
+preorder(3):  Print 3 → preorder(6) → preorder(7)
+preorder(6):  Print 6 → NULL → NULL
+preorder(7):  Print 7 → NULL → NULL
+
+Result: 1 2 4 5 3 6 7</pre>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Use of Pre-order</div>
+        <ul>
+          <li>Used to <strong>copy</strong> a tree (process root before children)</li>
+          <li>Used to <strong>serialize</strong> a tree (store in a file)</li>
+          <li>Used in <strong>prefix expression</strong> evaluation</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 2. In-order Traversal (Left → Root → Right)</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>In-order</strong> traversal first recursively traverses the left subtree, then visits the root, then recursively traverses the right subtree. Order: <strong>Left → Root → Right</strong></p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: In-order</div>
+        <pre>inorder(node):
+1. If node is NULL, return
+2. inorder(node->left)
+3. Visit (print) node
+4. inorder(node->right)</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: In-order</div>
+        <pre><code>void inorder(struct TreeNode* node) {
+    if(node == NULL) return;
+    inorder(node->left);         // Traverse left
+    printf("%d ", node->data);   // Visit root
+    inorder(node->right);        // Traverse right
+}
+// Output for example tree: 4 2 5 1 6 3 7</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> In-order Trace</div>
+        <pre>inorder(1):  inorder(2) → Print 1 → inorder(3)
+inorder(2):  inorder(4) → Print 2 → inorder(5)
+inorder(4):  NULL → Print 4 → NULL
+inorder(5):  NULL → Print 5 → NULL
+inorder(3):  inorder(6) → Print 3 → inorder(7)
+inorder(6):  NULL → Print 6 → NULL
+inorder(7):  NULL → Print 7 → NULL
+
+Result: 4 2 5 1 6 3 7</pre>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Use of In-order</div>
+        <ul>
+          <li>For <strong>Binary Search Trees (BST)</strong>, in-order gives elements in <strong>sorted ascending order</strong></li>
+          <li>Used to <strong>validate</strong> if a binary tree is a BST</li>
+          <li>Used in <strong>infix expression</strong> printing</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 3. Post-order Traversal (Left → Right → Root)</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Post-order</strong> traversal first recursively traverses the left subtree, then the right subtree, and finally visits the root. Order: <strong>Left → Right → Root</strong></p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: Post-order</div>
+        <pre>postorder(node):
+1. If node is NULL, return
+2. postorder(node->left)
+3. postorder(node->right)
+4. Visit (print) node</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Post-order</div>
+        <pre><code>void postorder(struct TreeNode* node) {
+    if(node == NULL) return;
+    postorder(node->left);       // Traverse left
+    postorder(node->right);      // Traverse right
+    printf("%d ", node->data);   // Visit root
+}
+// Output for example tree: 4 5 2 6 7 3 1</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Post-order Trace</div>
+        <pre>postorder(1): postorder(2) → postorder(3) → Print 1
+postorder(2): postorder(4) → postorder(5) → Print 2
+postorder(4): NULL → NULL → Print 4
+postorder(5): NULL → NULL → Print 5
+postorder(3): postorder(6) → postorder(7) → Print 3
+postorder(6): NULL → NULL → Print 6
+postorder(7): NULL → NULL → Print 7
+
+Result: 4 5 2 6 7 3 1</pre>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Use of Post-order</div>
+        <ul>
+          <li>Used to <strong>delete</strong> a tree (children deleted before parent)</li>
+          <li>Used to <strong>evaluate</strong> postfix (RPN) expressions</li>
+          <li>Used to compute <strong>size/height</strong> of tree</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 4. Level-order Traversal (BFS)</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>Level-order</strong> traversal visits all nodes at each level from left to right, starting from the root. It uses a <strong>queue</strong> and is essentially Breadth-First Search (BFS) applied to trees.</p>
+      </div>
+
+      <div name="algo-box" class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm: Level-order</div>
+        <pre>1. If root is NULL, return
+2. Enqueue root
+3. While queue is not empty:
+   a. Dequeue front node, print it
+   b. If it has a left child, enqueue left child
+   c. If it has a right child, enqueue right child
+4. End</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Level-order Traversal</div>
+        <pre><code>void levelOrder(struct TreeNode* root) {
+    if(!root) return;
+    enqueue(root);
+    while(qfront) {
+        struct TreeNode* curr = dequeue();
+        printf("%d ", curr->data);
+        if(curr->left)  enqueue(curr->left);
+        if(curr->right) enqueue(curr->right);
+    }
+}
+// Output for example tree: 1 2 3 4 5 6 7</code></pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Summary of All Traversals</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Traversal</th>
+                <th>Order</th>
+                <th>Output (Example Tree)</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pre-order</strong></td>
+                <td>Root → Left → Right</td>
+                <td>1 2 4 5 3 6 7</td>
+                <td>Copy tree, prefix expression</td>
+              </tr>
+              <tr>
+                <td><strong>In-order</strong></td>
+                <td>Left → Root → Right</td>
+                <td>4 2 5 1 6 3 7</td>
+                <td>BST sorted output, infix expression</td>
+              </tr>
+              <tr>
+                <td><strong>Post-order</strong></td>
+                <td>Left → Right → Root</td>
+                <td>4 5 2 6 7 3 1</td>
+                <td>Delete tree, postfix expression</td>
+              </tr>
+              <tr>
+                <td><strong>Level-order</strong></td>
+                <td>Level by level</td>
+                <td>1 2 3 4 5 6 7</td>
+                <td>BFS, shortest path in unweighted tree</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Types of Trees -->
+  <section class="section" id="tree-types">
+    <h2 class="section-title">
+      <i class="fas fa-sitemap"></i> Types of Binary Trees
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> 1. Full Binary Tree</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Full Binary Tree</strong> is a binary tree where every node has either <strong>0 or 2 children</strong>. No node has exactly 1 child.</p>
+      </div>
+      <div class="tree-diagram">
+          1
+        /   \
+       2     3
+      / \
+     4   5
+
+    Full: Every node has 0 or 2 children ✓</div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Full Binary Tree Properties</div>
+        <p class="formula">If there are L leaf nodes, then internal nodes = L - 1</p>
+        <p class="formula">Total nodes = 2L - 1</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 2. Complete Binary Tree</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Complete Binary Tree</strong> is a binary tree where all levels are completely filled except possibly the <strong>last level</strong>, which is filled from <strong>left to right</strong>.</p>
+      </div>
+      <div class="tree-diagram">
+          1
+        /   \
+       2     3
+      / \   /
+     4   5 6
+
+    Complete: Last level filled left to right ✓</div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Array Representation Best For</div>
+        <p>Array representation is most efficient for <strong>complete binary trees</strong> because there are no gaps in the array — every index from 1 to n is used.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 3. Perfect Binary Tree</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Perfect Binary Tree</strong> is a binary tree where all internal nodes have exactly <strong>2 children</strong> and all <strong>leaves are at the same level</strong>.</p>
+      </div>
+      <div class="tree-diagram">
+          1
+        /   \
+       2     3
+      / \   / \
+     4   5 6   7
+
+    Perfect: All leaves at same level, all internals have 2 children ✓</div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Perfect Binary Tree Properties</div>
+        <p class="formula">Total nodes = 2^(h+1) - 1 (where h = height)</p>
+        <p class="formula">Number of leaves = 2^h</p>
+        <p class="formula">Number of internal nodes = 2^h - 1</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 4. Balanced Binary Tree</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Balanced Binary Tree</strong> is a binary tree where for every node, the heights of the left and right subtrees differ by <strong>at most 1</strong>. AVL trees are self-balancing binary search trees.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-square-root-alt"></i> Balance Factor</div>
+        <p class="formula">Balance Factor = Height(Left Subtree) - Height(Right Subtree)</p>
+        <p class="formula">For balanced tree: Balance Factor ∈ {-1, 0, +1}</p>
+        <p>If Balance Factor &lt; -1 or &gt; +1, the tree is unbalanced and needs rotation.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 5. Degenerate (Skewed) Tree</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Degenerate or Skewed Tree</strong> is a tree where every internal node has only one child. It essentially behaves like a linked list. This is the worst case for a binary tree.</p>
+      </div>
+      <div class="tree-diagram">
+    Left-Skewed:          Right-Skewed:
+         1                    1
+        /                      \
+       2                        2
+      /                          \
+     3                            3
+
+    Like a linked list — O(n) search time!</div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Why Skewed Trees are Bad</div>
+        <p>In a degenerate tree, operations like search, insert, and delete degrade to <strong>O(n)</strong> instead of O(log n), completely defeating the purpose of using a tree structure. This is why self-balancing trees like AVL were invented.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 6. AVL Tree</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>An <strong>AVL Tree</strong> (named after Adelson-Velsky and Landis) is a self-balancing Binary Search Tree where the heights of the two child subtrees of any node differ by at most one. If at any time this property is violated, the tree is rebalanced through <strong>rotations</strong>.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-sync"></i> AVL Tree Rotations</div>
+        <p>When the balance factor becomes less than -1 or greater than +1, one of four rotations is applied:</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>Imbalance Condition</th>
+                <th>Rotation Applied</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>LL Case</strong></td>
+                <td>Left-Left (BF &gt; 1, left child BF ≥ 0)</td>
+                <td>Right Rotation</td>
+              </tr>
+              <tr>
+                <td><strong>RR Case</strong></td>
+                <td>Right-Right (BF &lt; -1, right child BF ≤ 0)</td>
+                <td>Left Rotation</td>
+              </tr>
+              <tr>
+                <td><strong>LR Case</strong></td>
+                <td>Left-Right (BF &gt; 1, left child BF &lt; 0)</td>
+                <td>Left-Right Rotation</td>
+              </tr>
+              <tr>
+                <td><strong>RL Case</strong></td>
+                <td>Right-Left (BF &lt; -1, right child BF &gt; 0)</td>
+                <td>Right-Left Rotation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="complexity-box">
+        <div class="box-title"><i class="fas fa-tachometer-alt"></i> AVL Tree Complexity</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Operation</th><th>Average</th><th>Worst Case</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Search</td><td>O(log n)</td><td>O(log n)</td></tr>
+              <tr><td>Insert</td><td>O(log n)</td><td>O(log n)</td></tr>
+              <tr><td>Delete</td><td>O(log n)</td><td>O(log n)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Note:</strong> Unlike regular BST (O(n) worst case), AVL guarantees O(log n) always.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 7. B-Tree</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>B-Tree</strong> is a self-balancing, multi-way search tree designed for systems that read and write large blocks of data (like databases and file systems). Unlike binary trees, B-Tree nodes can have <strong>more than two children</strong>.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-database"></i> B-Tree Properties (Order m)</div>
+        <ul>
+          <li>Every node has at most <strong>m children</strong></li>
+          <li>Every non-leaf node (except root) has at least <strong>⌈m/2⌉ children</strong></li>
+          <li>Root has at least <strong>2 children</strong> (if not a leaf)</li>
+          <li>All leaves appear at the <strong>same level</strong></li>
+          <li>A non-leaf node with k children has <strong>k-1 keys</strong></li>
+        </ul>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Why B-Tree for Databases?</div>
+        <ul>
+          <li>Minimizes disk I/O — each node is a disk block (large, stores many keys)</li>
+          <li>All leaves at same level — guaranteed O(log n) search</li>
+          <li>Used in MySQL, PostgreSQL, file systems like NTFS, ext4</li>
+          <li>Reduces tree height significantly compared to binary trees</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Comparison of Tree Types</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tree Type</th>
+                <th>Property</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Full BT</strong></td><td>0 or 2 children per node</td><td>Huffman coding</td></tr>
+              <tr><td><strong>Complete BT</strong></td><td>Filled left to right</td><td>Heap implementation</td></tr>
+              <tr><td><strong>Perfect BT</strong></td><td>All leaves same level</td><td>Theoretical analysis</td></tr>
+              <tr><td><strong>Balanced BT</strong></td><td>Height diff ≤ 1 at every node</td><td>Efficient search</td></tr>
+              <tr><td><strong>Skewed BT</strong></td><td>Only one child per node</td><td>Worst case BST</td></tr>
+              <tr><td><strong>AVL Tree</strong></td><td>Self-balancing BST</td><td>Guaranteed O(log n)</td></tr>
+              <tr><td><strong>B-Tree</strong></td><td>Multi-way, disk-optimized</td><td>Databases, file systems</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Graphs Section -->
+  <section class="section" id="graphs">
+    <h2 class="section-title">
+      <i class="fas fa-project-diagram"></i> Graphs
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Graph</strong> is a non-linear data structure consisting of a finite set of <strong>vertices (nodes)</strong> and a set of <strong>edges</strong> that connect pairs of vertices. A graph G is defined as G = (V, E) where V is the set of vertices and E is the set of edges.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Real-World Examples</div>
+        <ul>
+          <li><strong>Social Network:</strong> People = vertices, Friendships = edges</li>
+          <li><strong>Road Map:</strong> Cities = vertices, Roads = edges (with distances as weights)</li>
+          <li><strong>Internet:</strong> Computers = vertices, Connections = edges</li>
+          <li><strong>Circuit Board:</strong> Components = vertices, Wires = edges</li>
+          <li><strong>Flight Network:</strong> Airports = vertices, Routes = edges</li>
+        </ul>
+      </div>
+
+      <div class="graph-diagram">
+    Undirected Graph:          Directed Graph (Digraph):
+    V = {1,2,3,4}             V = {A,B,C,D}
+    E = {(1,2),(2,3),(3,4)}   E = {(A→B),(B→C),(C→D),(D→A)}
+
+      1 ─── 2                    A ──→ B
+      |     |                    ↑     |
+      4 ─── 3                    D ←── C
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Graph Terminology</h3>
+      <div class="term-grid">
+
+        <div class="term-card">
+          <strong>Vertex (Node)</strong>
+          <p>A fundamental unit of a graph representing an entity (person, city, computer). V = {1, 2, 3, 4}.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Edge</strong>
+          <p>A connection between two vertices representing a relationship. E = {(1,2), (2,3)}.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Directed Graph (Digraph)</strong>
+          <p>Edges have a direction (A → B means edge from A to B only, not B to A). Example: Twitter follows.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Undirected Graph</strong>
+          <p>Edges have no direction (bidirectional). A-B means edge between A and B in both directions. Example: Facebook friendship.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Weighted Graph</strong>
+          <p>Edges have weights (costs). Example: Road map where weight = distance between cities.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Degree of Vertex</strong>
+          <p>Number of edges incident on the vertex. In digraphs: in-degree (edges coming in) + out-degree (edges going out).</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Path</strong>
+          <p>A sequence of vertices where each adjacent pair is connected by an edge. Example: 1→2→3→4.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Cycle</strong>
+          <p>A path that starts and ends at the same vertex with no repeated edges. Example: 1→2→3→1.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Connected Graph</strong>
+          <p>There is a path between every pair of vertices. All vertices are reachable from any vertex.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Disconnected Graph</strong>
+          <p>Not all vertices are connected. Some vertices cannot be reached from others.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Strongly Connected</strong>
+          <p>In directed graphs: there is a directed path from every vertex to every other vertex.</p>
+        </div>
+
+        <div class="term-card">
+          <strong>Adjacent Vertices</strong>
+          <p>Two vertices are adjacent if they are connected by a direct edge.</p>
+        </div>
+
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Graph Representations</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Set Representation</h4>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Set Representation</div>
+        <p>A graph is represented mathematically as two sets:</p>
+        <ul>
+          <li><strong>V:</strong> Set of all vertices</li>
+          <li><strong>E:</strong> Set of all edges (pairs of vertices)</li>
+        </ul>
+        <p><strong>Example:</strong> G = (V, E) where V = {1, 2, 3, 4} and E = {(1,2), (2,3), (3,4), (4,1)}</p>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Adjacency Matrix</h4>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>An <strong>Adjacency Matrix</strong> is a 2D array of size n×n (where n = number of vertices). matrix[i][j] = 1 if there is an edge from vertex i to vertex j, else 0. For weighted graphs, matrix[i][j] = weight of edge.</p>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Adjacency Matrix Example</div>
+        <p>Graph: Vertices {1,2,3,4}, Edges: 1-2, 2-3, 3-4, 4-1 (undirected)</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>1</strong></td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td><strong>2</strong></td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+              <tr><td><strong>3</strong></td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td><strong>4</strong></td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Note:</strong> For undirected graphs, the matrix is symmetric (matrix[i][j] = matrix[j][i]).</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Adjacency Matrix in C</div>
+        <pre><code>#define V 4
+
+int graph[V][V] = {
+    {0, 1, 0, 1},  // Vertex 1: connected to 2, 4
+    {1, 0, 1, 0},  // Vertex 2: connected to 1, 3
+    {0, 1, 0, 1},  // Vertex 3: connected to 2, 4
+    {1, 0, 1, 0}   // Vertex 4: connected to 1, 3
+};
+
+void printMatrix() {
+    printf("Adjacency Matrix:\n");
+    for(int i = 0; i &lt; V; i++) {
+        for(int j = 0; j &lt; V; j++) {
+            printf("%d ", graph[i][j]);
+        }
+        printf("\n");
+    }
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 3. Adjacency List</h4>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>An <strong>Adjacency List</strong> represents a graph as an array of linked lists. For each vertex i, the list at index i contains all vertices adjacent to vertex i. It is memory-efficient for sparse graphs.</p>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Adjacency List Example</div>
+        <p>Same graph: Vertices {1,2,3,4}, Edges: 1-2, 2-3, 3-4, 4-1</p>
+        <pre>Vertex 1: → 2 → 4 → NULL
+Vertex 2: → 1 → 3 → NULL
+Vertex 3: → 2 → 4 → NULL
+Vertex 4: → 3 → 1 → NULL</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Adjacency List in C</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#define V 5
+
+struct AdjNode {
+    int dest;
+    struct AdjNode* next;
+};
+
+struct AdjList {
+    struct AdjNode* head;
+};
+
+struct Graph {
+    int numVertices;
+    struct AdjList* array;
+};
+
+struct Graph* createGraph(int v) {
+    struct Graph* graph = malloc(sizeof(struct Graph));
+    graph->numVertices = v;
+    graph->array = malloc(v * sizeof(struct AdjList));
+    for(int i = 0; i &lt; v; i++)
+        graph->array[i].head = NULL;
+    return graph;
+}
+
+void addEdge(struct Graph* graph, int src, int dest) {
+    // Add edge src → dest
+    struct AdjNode* n = malloc(sizeof(struct AdjNode));
+    n->dest = dest;
+    n->next = graph->array[src].head;
+    graph->array[src].head = n;
+    // For undirected: also add dest → src
+    n = malloc(sizeof(struct AdjNode));
+    n->dest = src;
+    n->next = graph->array[dest].head;
+    graph->array[dest].head = n;
+}
+
+void printGraph(struct Graph* graph) {
+    for(int i = 0; i &lt; graph->numVertices; i++) {
+        struct AdjNode* curr = graph->array[i].head;
+        printf("Vertex %d: ", i);
+        while(curr) {
+            printf("→ %d ", curr->dest);
+            curr = curr->next;
+        }
+        printf("NULL\n");
+    }
+}</code></pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Adjacency Matrix vs Adjacency List</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Adjacency Matrix</th>
+                <th>Adjacency List</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Space</strong></td><td>O(V²)</td><td>O(V + E)</td></tr>
+              <tr><td><strong>Add Edge</strong></td><td>O(1)</td><td>O(1)</td></tr>
+              <tr><td><strong>Check Edge</strong></td><td>O(1)</td><td>O(degree)</td></tr>
+              <tr><td><strong>Find Neighbors</strong></td><td>O(V)</td><td>O(degree)</td></tr>
+              <tr><td><strong>Best For</strong></td><td>Dense graphs (many edges)</td><td>Sparse graphs (few edges)</td></tr>
+              <tr><td><strong>Memory</strong></td><td>Wastes for sparse</td><td>Efficient always</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Graph Traversals Section -->
+  <section class="section" id="graph-traversals">
+    <h2 class="section-title">
+      <i class="fas fa-search"></i> Graph Traversals
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Graph Traversal Overview</div>
+        <p>Graph traversal means visiting all vertices of a graph systematically. Unlike trees, graphs may have cycles, so we need to track <strong>visited vertices</strong> to avoid infinite loops. Two standard traversal algorithms are:</p>
+        <ul>
+          <li><strong>BFS</strong> — Breadth-First Search (uses a Queue)</li>
+          <li><strong>DFS</strong> — Depth-First Search (uses a Stack or Recursion)</li>
+        </ul>
+      </div>
+
+      <div class="graph-diagram">
+    Example Graph for BFS and DFS:
+        0
+       / \
+      1   2
+     / \   \
+    3   4   5
+
+    Adjacency: 0→{1,2}, 1→{3,4}, 2→{5}</div>
+
+      <h3><i class="fas fa-angle-right"></i> BFS — Breadth-First Search</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>BFS (Breadth-First Search)</strong> traverses a graph level by level. It starts from a source vertex and visits all its neighbors first, then all the neighbors of those neighbors, and so on. It uses a <strong>Queue</strong> (FIFO).</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> BFS Algorithm</div>
+        <pre>BFS(graph, start):
+1. Create a visited[] array, initialize all to false
+2. Create an empty queue
+3. Mark start as visited; enqueue start
+4. While queue is not empty:
+   a. Dequeue front vertex v; print v
+   b. For each neighbor u of v:
+      - If u is not visited:
+        * Mark u as visited
+        * Enqueue u
+5. End</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> BFS in C (Adjacency Matrix)</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#define V 6
+
+int graph[V][V] = {
+    {0,1,1,0,0,0},  // 0: connected to 1,2
+    {1,0,0,1,1,0},  // 1: connected to 0,3,4
+    {1,0,0,0,0,1},  // 2: connected to 0,5
+    {0,1,0,0,0,0},  // 3: connected to 1
+    {0,1,0,0,0,0},  // 4: connected to 1
+    {0,0,1,0,0,0}   // 5: connected to 2
+};
+
+int visited[V];
+int queue[V];
+int front = -1, rear = -1;
+
+void enqueue(int v) { queue[++rear] = v; }
+int  dequeue()      { return queue[++front]; }
+int  isEmpty()      { return front == rear; }
+
+void BFS(int start) {
+    for(int i = 0; i &lt; V; i++) visited[i] = 0;
+    front = rear = -1;
+
+    visited[start] = 1;
+    enqueue(start);
+    printf("BFS: ");
+    while(!isEmpty()) {
+        int v = dequeue();
+        printf("%d ", v);
+        for(int u = 0; u &lt; V; u++) {
+            if(graph[v][u] == 1 && !visited[u]) {
+                visited[u] = 1;
+                enqueue(u);
+            }
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    BFS(0);
+    return 0;
+}
+// Output: BFS: 0 1 2 3 4 5</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> BFS Trace (Start from 0)</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Queue</th>
+                <th>Dequeued</th>
+                <th>Visited</th>
+                <th>Enqueued</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>[0]</td><td>0</td><td>0</td><td>1, 2</td></tr>
+              <tr><td>2</td><td>[1,2]</td><td>1</td><td>1</td><td>3, 4</td></tr>
+              <tr><td>3</td><td>[2,3,4]</td><td>2</td><td>2</td><td>5</td></tr>
+              <tr><td>4</td><td>[3,4,5]</td><td>3</td><td>3</td><td>(none)</td></tr>
+              <tr><td>5</td><td>[4,5]</td><td>4</td><td>4</td><td>(none)</td></tr>
+              <tr><td>6</td><td>[5]</td><td>5</td><td>5</td><td>(none)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="formula answer"><strong>BFS Output: 0 1 2 3 4 5</strong></p>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Applications of BFS</div>
+        <ul>
+          <li>Finding the <strong>shortest path</strong> in an unweighted graph</li>
+          <li>Level-order traversal of a tree</li>
+          <li>Finding all connected components of a graph</li>
+          <li>Web crawlers (crawling level by level from a seed URL)</li>
+          <li>Peer-to-peer networks for finding nodes</li>
+          <li>GPS navigation — finding nearest locations</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> DFS — Depth-First Search</h3>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p><strong>DFS (Depth-First Search)</strong> traverses as far as possible along each branch before backtracking. It starts from a source vertex and goes deeper into the graph until it reaches a dead end, then backtracks. It uses a <strong>Stack</strong> (or recursion).</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> DFS Algorithm (Recursive)</div>
+        <pre>DFS(graph, v, visited[]):
+1. Mark v as visited; print v
+2. For each neighbor u of v:
+   - If u is not visited:
+     * DFS(graph, u, visited)
+3. End
+
+Main:
+1. Create visited[] array, all false
+2. Call DFS(graph, start, visited)</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> DFS in C (Recursive)</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#define V 6
+
+int graph[V][V] = {
+    {0,1,1,0,0,0},
+    {1,0,0,1,1,0},
+    {1,0,0,0,0,1},
+    {0,1,0,0,0,0},
+    {0,1,0,0,0,0},
+    {0,0,1,0,0,0}
+};
+
+int visited[V];
+
+void DFS(int v) {
+    visited[v] = 1;
+    printf("%d ", v);
+    for(int u = 0; u &lt; V; u++) {
+        if(graph[v][u] == 1 && !visited[u]) {
+            DFS(u);  // Recursive call
+        }
+    }
+}
+
+int main() {
+    for(int i = 0; i &lt; V; i++) visited[i] = 0;
+    printf("DFS: ");
+    DFS(0);
+    printf("\n");
+    return 0;
+}
+// Output: DFS: 0 1 3 4 2 5</code></pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> DFS Trace (Start from 0)</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Current</th>
+                <th>Action</th>
+                <th>Stack (Call)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>0</td><td>Visit 0</td><td>[0]</td></tr>
+              <tr><td>2</td><td>1</td><td>Visit 1 (neighbor of 0)</td><td>[0,1]</td></tr>
+              <tr><td>3</td><td>3</td><td>Visit 3 (neighbor of 1)</td><td>[0,1,3]</td></tr>
+              <tr><td>4</td><td>-</td><td>Backtrack (3 has no unvisited neighbors)</td><td>[0,1]</td></tr>
+              <tr><td>5</td><td>4</td><td>Visit 4 (neighbor of 1)</td><td>[0,1,4]</td></tr>
+              <tr><td>6</td><td>-</td><td>Backtrack from 4 and 1</td><td>[0]</td></tr>
+              <tr><td>7</td><td>2</td><td>Visit 2 (neighbor of 0)</td><td>[0,2]</td></tr>
+              <tr><td>8</td><td>5</td><td>Visit 5 (neighbor of 2)</td><td>[0,2,5]</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="formula answer"><strong>DFS Output: 0 1 3 4 2 5</strong></p>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Applications of DFS</div>
+        <ul>
+          <li><strong>Topological sorting</strong> of directed acyclic graphs (DAG)</li>
+          <li><strong>Detecting cycles</strong> in a graph</li>
+          <li>Solving mazes and puzzles</li>
+          <li>Finding <strong>connected components</strong> in a graph</li>
+          <li>Generating <strong>spanning trees</strong></li>
+          <li>Finding strongly connected components (Kosaraju's algorithm)</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> BFS vs DFS Comparison</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>BFS</th>
+                <th>DFS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Data Structure</strong></td><td>Queue (FIFO)</td><td>Stack (LIFO) / Recursion</td></tr>
+              <tr><td><strong>Traversal</strong></td><td>Level by level</td><td>Deep branch first</td></tr>
+              <tr><td><strong>Shortest Path</strong></td><td>Yes (unweighted)</td><td>Not guaranteed</td></tr>
+              <tr><td><strong>Memory</strong></td><td>More (stores all neighbors)</td><td>Less (stores one path)</td></tr>
+              <tr><td><strong>Time</strong></td><td>O(V + E)</td><td>O(V + E)</td></tr>
+              <tr><td><strong>Space</strong></td><td>O(V) queue</td><td>O(V) stack</td></tr>
+              <tr><td><strong>Completeness</strong></td><td>Complete (finds solution if exists)</td><td>Complete for finite graphs</td></tr>
+              <tr><td><strong>Use Case</strong></td><td>Shortest path, web crawling</td><td>Topological sort, cycle detection</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+    <!-- Formulas Section -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Key Formulas
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-tree"></i> Tree Formulas</div>
+        <p class="formula">Number of edges = n - 1 (n = number of nodes)</p>
+        <p class="formula">Maximum nodes at level i = 2^i</p>
+        <p class="formula">Maximum nodes in binary tree of height h = 2^(h+1) - 1</p>
+        <p class="formula">Minimum height with n nodes = ⌊log₂(n)⌋</p>
+        <p class="formula">Number of leaf nodes in full BT = (n+1)/2</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code-branch"></i> Array Representation of Binary Tree (1-indexed)</div>
+        <p class="formula">Root: index 1</p>
+        <p class="formula">Left child of node i: 2 × i</p>
+        <p class="formula">Right child of node i: 2 × i + 1</p>
+        <p class="formula">Parent of node i: ⌊i / 2⌋</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-sitemap"></i> Perfect Binary Tree</div>
+        <p class="formula">Total nodes = 2^(h+1) - 1</p>
+        <p class="formula">Leaf nodes = 2^h</p>
+        <p class="formula">Internal nodes = 2^h - 1</p>
+        <p class="formula">Height h = log₂(n+1) - 1</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> AVL Tree Balance Factor</div>
+        <p class="formula">Balance Factor = Height(Left Subtree) - Height(Right Subtree)</p>
+        <p class="formula">Valid AVL BF values: -1, 0, +1</p>
+        <p class="formula">If BF = +2 → Left heavy → Right rotation or Left-Right rotation</p>
+        <p class="formula">If BF = -2 → Right heavy → Left rotation or Right-Left rotation</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Graph Formulas</div>
+        <p class="formula">Maximum edges in undirected graph = V(V-1)/2</p>
+        <p class="formula">Maximum edges in directed graph = V(V-1)</p>
+        <p class="formula">Sum of degrees = 2 × |E| (Handshaking Lemma)</p>
+        <p class="formula">Adjacency Matrix size = V × V</p>
+        <p class="formula">Adjacency List space = O(V + E)</p>
+        <p class="formula">BFS and DFS Time Complexity = O(V + E)</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-clock"></i> Time Complexity Summary</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Operation</th><th>Binary Tree</th><th>BST (avg)</th><th>AVL Tree</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Search</td><td>O(n)</td><td>O(log n)</td><td>O(log n)</td></tr>
+              <tr><td>Insert</td><td>O(n)</td><td>O(log n)</td><td>O(log n)</td></tr>
+              <tr><td>Delete</td><td>O(n)</td><td>O(log n)</td><td>O(log n)</td></tr>
+              <tr><td>Traversal</td><td>O(n)</td><td>O(n)</td><td>O(n)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Definitions Section -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-bookmark"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="tag-grid">
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Tree</div>
+          <p>A non-linear hierarchical data structure with nodes connected by edges. Has one root and no cycles.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Root</div>
+          <p>The topmost node of a tree. Has no parent. There is exactly one root per tree.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Leaf Node</div>
+          <p>A node with no children. Also called an external node or terminal node.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Height of Tree</div>
+          <p>The number of edges on the longest path from root to any leaf node.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Depth of Node</div>
+          <p>Number of edges from the root to that node. Root has depth 0.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Binary Tree</div>
+          <p>A tree where each node has at most two children: left child and right child.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Full Binary Tree</div>
+          <p>Every node has 0 or 2 children. No node has exactly 1 child.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Complete Binary Tree</div>
+          <p>All levels filled except possibly last, which is filled left to right.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Perfect Binary Tree</div>
+          <p>All internal nodes have 2 children and all leaves are at the same level.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Skewed Tree</div>
+          <p>Every node has only one child. Behaves like a linked list. Worst case for BST.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> AVL Tree</div>
+          <p>Self-balancing BST where height difference between left and right subtrees ≤ 1.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> B-Tree</div>
+          <p>Self-balancing multi-way tree. All leaves at same level. Used in databases/file systems.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Pre-order</div>
+          <p>Tree traversal: Visit Root, then Left subtree, then Right subtree. (Root→Left→Right)</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> In-order</div>
+          <p>Tree traversal: Left subtree, then Root, then Right subtree. (Left→Root→Right)</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Post-order</div>
+          <p>Tree traversal: Left subtree, Right subtree, then Root. (Left→Right→Root)</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Level-order</div>
+          <p>Tree traversal level by level using a queue. Also known as BFS for trees.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Graph</div>
+          <p>A non-linear data structure G=(V,E) with set of vertices V connected by edges E.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Directed Graph</div>
+          <p>A graph where edges have direction (one-way connection). Also called Digraph.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Undirected Graph</div>
+          <p>A graph where edges have no direction (bidirectional connection).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Weighted Graph</div>
+          <p>A graph where edges have weights/costs associated with them.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Adjacency Matrix</div>
+          <p>V×V 2D array where matrix[i][j]=1 if edge exists between i and j, else 0.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Adjacency List</div>
+          <p>Array of linked lists where each list stores neighbors of a vertex. Space: O(V+E).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> BFS</div>
+          <p>Breadth-First Search — graph traversal level by level using a queue.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> DFS</div>
+          <p>Depth-First Search — graph traversal along each branch using stack/recursion.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Cycle</div>
+          <p>A path in a graph that starts and ends at the same vertex.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Connected Graph</div>
+          <p>A graph where there is a path between every pair of vertices.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Degree of Vertex</div>
+          <p>Number of edges incident on the vertex. In digraphs: in-degree + out-degree.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Balance Factor</div>
+          <p>Height(left subtree) - Height(right subtree) of a node. Must be -1, 0, or +1 in AVL.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparisons Section -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> Tree vs Graph</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Tree</th>
+              <th>Graph</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Structure</strong></td>
+              <td>Hierarchical, acyclic</td>
+              <td>Network, may have cycles</td>
+            </tr>
+            <tr>
+              <td><strong>Root</strong></td>
+              <td>Has exactly one root</td>
+              <td>No root concept</td>
+            </tr>
+            <tr>
+              <td><strong>Edges</strong></td>
+              <td>n-1 edges for n nodes</td>
+              <td>Any number of edges</td>
+            </tr>
+            <tr>
+              <td><strong>Parent</strong></td>
+              <td>Each node has one parent (except root)</td>
+              <td>No parent concept</td>
+            </tr>
+            <tr>
+              <td><strong>Cycles</strong></td>
+              <td>No cycles allowed</td>
+              <td>Cycles allowed</td>
+            </tr>
+            <tr>
+              <td><strong>Traversal</strong></td>
+              <td>Pre/In/Post/Level-order</td>
+              <td>BFS, DFS</td>
+            </tr>
+            <tr>
+              <td><strong>Examples</strong></td>
+              <td>File system, org chart, BST</td>
+              <td>Social network, road map, internet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> All Tree Traversals Compared</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Traversal</th>
+              <th>Order</th>
+              <th>Data Structure</th>
+              <th>Output (Tree: 1 root, 2 left, 3 right)</th>
+              <th>Best Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Pre-order</strong></td>
+              <td>Root→Left→Right</td>
+              <td>Stack/Recursion</td>
+              <td>1 2 4 5 3 6 7</td>
+              <td>Copy tree, serialize</td>
+            </tr>
+            <tr>
+              <td><strong>In-order</strong></td>
+              <td>Left→Root→Right</td>
+              <td>Stack/Recursion</td>
+              <td>4 2 5 1 6 3 7</td>
+              <td>BST sorted output</td>
+            </tr>
+            <tr>
+              <td><strong>Post-order</strong></td>
+              <td>Left→Right→Root</td>
+              <td>Stack/Recursion</td>
+              <td>4 5 2 6 7 3 1</td>
+              <td>Delete tree</td>
+            </tr>
+            <tr>
+              <td><strong>Level-order</strong></td>
+              <td>Level by level</td>
+              <td>Queue</td>
+              <td>1 2 3 4 5 6 7</td>
+              <td>BFS, shortest path</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> BFS vs DFS</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>BFS</th>
+              <th>DFS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Full Form</strong></td>
+              <td>Breadth-First Search</td>
+              <td>Depth-First Search</td>
+            </tr>
+            <tr>
+              <td><strong>Data Structure</strong></td>
+              <td>Queue (FIFO)</td>
+              <td>Stack (LIFO) or Recursion</td>
+            </tr>
+            <tr>
+              <td><strong>Traversal Style</strong></td>
+              <td>Level by level (wide)</td>
+              <td>Deep branch first (deep)</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Usage</strong></td>
+              <td>More (entire level in queue)</td>
+              <td>Less (one path at a time)</td>
+            </tr>
+            <tr>
+              <td><strong>Shortest Path</strong></td>
+              <td>Guaranteed for unweighted</td>
+              <td>Not guaranteed</td>
+            </tr>
+            <tr>
+              <td><strong>Time Complexity</strong></td>
+              <td>O(V + E)</td>
+              <td>O(V + E)</td>
+            </tr>
+            <tr>
+              <td><strong>Space Complexity</strong></td>
+              <td>O(V)</td>
+              <td>O(V)</td>
+            </tr>
+            <tr>
+              <td><strong>Applications</strong></td>
+              <td>Shortest path, web crawler, GPS</td>
+              <td>Topological sort, cycle detection, maze</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Binary Tree vs BST vs AVL Tree</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Binary Tree</th>
+              <th>BST</th>
+              <th>AVL Tree</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ordering</strong></td>
+              <td>No ordering</td>
+              <td>Left &lt; Root &lt; Right</td>
+              <td>Left &lt; Root &lt; Right + Balanced</td>
+            </tr>
+            <tr>
+              <td><strong>Search</strong></td>
+              <td>O(n)</td>
+              <td>O(log n) avg, O(n) worst</td>
+              <td>O(log n) always</td>
+            </tr>
+            <tr>
+              <td><strong>Insert</strong></td>
+              <td>O(n)</td>
+              <td>O(log n) avg, O(n) worst</td>
+              <td>O(log n) always</td>
+            </tr>
+            <tr>
+              <td><strong>Self-Balancing</strong></td>
+              <td>No</td>
+              <td>No</td>
+              <td>Yes (rotations)</td>
+            </tr>
+            <tr>
+              <td><strong>Worst Case Shape</strong></td>
+              <td>Any shape</td>
+              <td>Skewed (linked list)</td>
+              <td>Never skewed</td>
+            </tr>
+            <tr>
+              <td><strong>In-order Output</strong></td>
+              <td>Not sorted</td>
+              <td>Sorted ascending</td>
+              <td>Sorted ascending</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Adjacency Matrix vs Adjacency List</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Adjacency Matrix</th>
+              <th>Adjacency List</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Space</strong></td>
+              <td>O(V²)</td>
+              <td>O(V + E)</td>
+            </tr>
+            <tr>
+              <td><strong>Add Edge</strong></td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td><strong>Check Edge (u,v)</strong></td>
+              <td>O(1)</td>
+              <td>O(degree of u)</td>
+            </tr>
+            <tr>
+              <td><strong>Find All Neighbors</strong></td>
+              <td>O(V)</td>
+              <td>O(degree)</td>
+            </tr>
+            <tr>
+              <td><strong>Sparse Graph</strong></td>
+              <td>Wastes space</td>
+              <td>Memory efficient</td>
+            </tr>
+            <tr>
+              <td><strong>Dense Graph</strong></td>
+              <td>Efficient</td>
+              <td>Slightly more overhead</td>
+            </tr>
+            <tr>
+              <td><strong>Implementation</strong></td>
+              <td>Simple 2D array</td>
+              <td>Array of linked lists</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCQs Section -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Which of the following is a non-linear data structure?</p>
+          <ul class="options">
+            <li>a. Array</li>
+            <li>b. Stack</li>
+            <li>c. Queue</li>
+            <li>d. Tree</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: d. Tree</strong>
+            <p>Tree is a non-linear hierarchical data structure. Array, Stack, and Queue are all linear data structures.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>The topmost node of a tree is called:</p>
+          <ul class="options">
+            <li>a. Leaf</li>
+            <li>b. Child</li>
+            <li>c. Root</li>
+            <li>d. Parent</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: c. Root</strong>
+            <p>The root is the topmost node of a tree. It has no parent and there is exactly one root per tree.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>In a binary tree stored in an array (1-indexed), the right child of node at index i is at:</p>
+          <ul class="options">
+            <li>a. 2i</li>
+            <li>b. 2i - 1</li>
+            <li>c. 2i + 1</li>
+            <li>d. i/2</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: c. 2i + 1</strong>
+            <p>In 1-indexed array representation: Left child = 2i, Right child = 2i+1, Parent = ⌊i/2⌋.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>In-order traversal of a BST gives elements in:</p>
+          <ul class="options">
+            <li>a. Random order</li>
+            <li>b. Descending order</li>
+            <li>c. Ascending sorted order</li>
+            <li>d. Level order</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. Ascending sorted order</strong>
+            <p>In-order traversal (Left→Root→Right) of a BST always visits nodes in ascending sorted order.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>Pre-order traversal visits nodes in which order?</p>
+          <ul class="options">
+            <li>a. Left → Root → Right</li>
+            <li>b. Left → Right → Root</li>
+            <li>c. Root → Left → Right</li>
+            <li>d. Root → Right → Left</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. Root → Left → Right</strong>
+            <p>Pre-order visits the root first, then left subtree, then right subtree.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Which traversal is used to delete a tree?</p>
+          <ul class="options">
+            <li>a. Pre-order</li>
+            <li>b. In-order</li>
+            <li>c. Post-order</li>
+            <li>d. Level-order</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: c. Post-order</strong>
+            <p>Post-order visits children before parent, so children are deleted first, then the parent — correct order for deletion.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>A tree with n nodes has how many edges?</p>
+          <ul class="options">
+            <li>a. n</li>
+            <li>b. n + 1</li>
+            <li>c. n - 1</li>
+            <li>d. 2n</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: c. n - 1</strong>
+            <p>A tree with n nodes always has exactly n-1 edges. This is a fundamental property of trees.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>BFS uses which data structure?</p>
+          <ul class="options">
+            <li>a. Stack</li>
+            <li>b. Queue</li>
+            <li>c. Array</li>
+            <li>d. Tree</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: b. Queue</strong>
+            <p>BFS uses a Queue (FIFO) to process nodes level by level — neighbors are enqueued and visited in order.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q9</h4>
+          <p>DFS uses which data structure?</p>
+          <ul class="options">
+            <li>a. Queue</li>
+            <li>b. Priority Queue</li>
+            <li>c. Stack or Recursion</li>
+            <li>d. Array</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: c. Stack or Recursion</strong>
+            <p>DFS uses a Stack (LIFO) explicitly or uses the call stack through recursion to explore deeply before backtracking.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q10</h4>
+          <p>In AVL tree, the balance factor of every node must be:</p>
+          <ul class="options">
+            <li>a. 0 only</li>
+            <li>b. -1, 0, or +1</li>
+            <li>c. -2 to +2</li>
+            <li>d. Any value</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: b. -1, 0, or +1</strong>
+            <p>AVL tree maintains balance factor (Height of Left - Height of Right) within -1, 0, or +1 for every node.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q11</h4>
+          <p>Which graph representation is best for dense graphs?</p>
+          <ul class="options">
+            <li>a. Adjacency List</li>
+            <li>b. Adjacency Matrix</li>
+            <li>c. Edge List</li>
+            <li>d. Linked List</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: b. Adjacency Matrix</strong>
+            <p>Adjacency Matrix is best for dense graphs (many edges) because checking edge existence is O(1). Adjacency List is better for sparse graphs.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q12</h4>
+          <p>The space complexity of an Adjacency Matrix is:</p>
+          <ul class="options">
+            <li>a. O(V + E)</li>
+            <li>b. O(E)</li>
+            <li>c. O(V²)</li>
+            <li>d. O(V log V)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: c. O(V²)</strong>
+            <p>Adjacency Matrix needs V×V space regardless of the number of edges, so its space complexity is O(V²).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q13</h4>
+          <p>Which type of binary tree has all leaves at the same level?</p>
+          <ul class="options">
+            <li>a. Full Binary Tree</li>
+            <li>b. Complete Binary Tree</li>
+            <li>c. Perfect Binary Tree</li>
+            <li>d. Skewed Tree</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq13">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq13">
+            <strong>Answer: c. Perfect Binary Tree</strong>
+            <p>In a Perfect Binary Tree, all internal nodes have exactly 2 children and all leaves are at the same level.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q14</h4>
+          <p>Which algorithm finds the shortest path in an unweighted graph?</p>
+          <ul class="options">
+            <li>a. DFS</li>
+            <li>b. Post-order traversal</li>
+            <li>c. BFS</li>
+            <li>d. Pre-order traversal</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq14">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq14">
+            <strong>Answer: c. BFS</strong>
+            <p>BFS explores vertices level by level, guaranteeing that the first time a vertex is reached, it is via the shortest path in an unweighted graph.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q15</h4>
+          <p>A degenerate (skewed) tree with n nodes behaves like:</p>
+          <ul class="options">
+            <li>a. A perfect binary tree</li>
+            <li>b. A complete binary tree</li>
+            <li>c. A linked list</li>
+            <li>d. A graph</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq15">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq15">
+            <strong>Answer: c. A linked list</strong>
+            <p>A degenerate tree where each node has only one child behaves exactly like a linked list, causing O(n) search time.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Short Questions Section -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-clipboard-question"></i> Short Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Define Tree and state its properties.</p>
+          <button class="toggle-btn" data-target="sq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq1">
+            <p>A tree is a non-linear hierarchical data structure consisting of nodes connected by edges. Properties: (1) One root node, (2) n nodes have n-1 edges, (3) no cycles, (4) exactly one path between any two nodes, (5) every node except root has one parent.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Define Binary Tree.</p>
+          <button class="toggle-btn" data-target="sq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq2">
+            <p>A binary tree is a tree where each node has at most two children, called the left child and right child. A node can have 0, 1, or 2 children maximum.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Write the pre-order traversal of the following tree: Root=A, A's Left=B, A's Right=C, B's Left=D, B's Right=E.</p>
+          <button class="toggle-btn" data-target="sq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq3">
+            <p><strong>Pre-order (Root→Left→Right):</strong></p>
+            <p>Visit A → Go Left: Visit B → Go Left: Visit D → Backtrack → Go Right: Visit E → Backtrack → Go Right: Visit C</p>
+            <p class="formula answer"><strong>Result: A B D E C</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Write the in-order traversal of the same tree (A root, B left, C right, D left of B, E right of B).</p>
+          <button class="toggle-btn" data-target="sq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq4">
+            <p><strong>In-order (Left→Root→Right):</strong></p>
+            <p>Go Left: D → Visit B → Go Right: E → Visit A → Visit C</p>
+            <p class="formula answer"><strong>Result: D B E A C</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>What is the difference between a Full and Complete Binary Tree?</p>
+          <button class="toggle-btn" data-target="sq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq5">
+            <p><strong>Full Binary Tree:</strong> Every node has exactly 0 or 2 children. No node has exactly 1 child.</p>
+            <p><strong>Complete Binary Tree:</strong> All levels are completely filled except possibly the last, which is filled from left to right.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>What is an AVL Tree?</p>
+          <button class="toggle-btn" data-target="sq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq6">
+            <p>An AVL Tree is a self-balancing Binary Search Tree where the heights of left and right subtrees of any node differ by at most 1. Balance Factor = Height(Left) - Height(Right) must be -1, 0, or +1. When violated, rotations restore balance.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Define Graph. Give its mathematical representation.</p>
+          <button class="toggle-btn" data-target="sq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq7">
+            <p>A graph is a non-linear data structure consisting of a set of vertices and edges connecting pairs of vertices.</p>
+            <p><strong>Mathematical representation:</strong> G = (V, E) where V = set of vertices, E = set of edges.</p>
+            <p><strong>Example:</strong> V = {1,2,3}, E = {(1,2),(2,3)} represents a simple path graph.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>Differentiate between directed and undirected graphs.</p>
+          <button class="toggle-btn" data-target="sq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq8">
+            <p><strong>Directed Graph (Digraph):</strong> Edges have direction. Edge (A→B) means connection from A to B only, not from B to A. Example: Twitter followers.</p>
+            <p><strong>Undirected Graph:</strong> Edges have no direction. Edge (A-B) means bidirectional connection. Example: Facebook friendship.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q9</h4>
+          <p>What is the difference between BFS and DFS?</p>
+          <button class="toggle-btn" data-target="sq9">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq9">
+            <p><strong>BFS:</strong> Uses Queue; traverses level by level; finds shortest path in unweighted graph.</p>
+            <p><strong>DFS:</strong> Uses Stack/Recursion; goes deep along each branch before backtracking; used for cycle detection, topological sort.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q10</h4>
+          <p>State the advantages of B-Tree over Binary Tree.</p>
+          <button class="toggle-btn" data-target="sq10">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq10">
+            <p>1. B-Tree nodes can have more than 2 children (multi-way), reducing tree height significantly.</p>
+            <p>2. All leaves at same level — guaranteed O(log n) for all operations.</p>
+            <p>3. Each node stores multiple keys — minimizes disk I/O in databases.</p>
+            <p>4. Designed for block storage systems (databases, file systems).</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Long Questions Section -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Explain tree terminology with a diagram. Define: root, leaf, internal node, height, depth, degree, path, subtree.</p>
+          <button class="toggle-btn" data-target="lq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq1">
+            <div class="tree-diagram">
+                        A           ← Root, Level 0
+                      /   \
+                     B     C        ← Level 1, internal nodes
+                    / \   / \
+                   D   E F   G      ← Level 2, Leaf nodes</div>
+            <ul>
+              <li><strong>Root:</strong> A — topmost node, no parent</li>
+              <li><strong>Leaf:</strong> D, E, F, G — nodes with no children</li>
+              <li><strong>Internal Node:</strong> A, B, C — have at least one child</li>
+              <li><strong>Height of A (tree):</strong> 2 (longest path root to leaf)</li>
+              <li><strong>Depth of D:</strong> 2 (edges from root to D)</li>
+              <li><strong>Degree of B:</strong> 2 (children: D and E)</li>
+              <li><strong>Path A to G:</strong> A → C → G</li>
+              <li><strong>Subtree of B:</strong> B with children D and E</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Write C code for all three recursive tree traversals (pre-order, in-order, post-order) and show output for a given tree.</p>
+          <button class="toggle-btn" data-target="lq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq2">
+            <div class="tree-diagram">
+    Tree:      1
+             /   \
+            2     3
+           / \
+          4   5</div>
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left, *right;
+};
+
+struct TreeNode* newNode(int d) {
+    struct TreeNode* n = malloc(sizeof(struct TreeNode));
+    n->data = d; n->left = n->right = NULL;
+    return n;
+}
+
+void preorder(struct TreeNode* node) {
+    if(!node) return;
+    printf("%d ", node->data);
+    preorder(node->left);
+    preorder(node->right);
+}
+
+void inorder(struct TreeNode* node) {
+    if(!node) return;
+    inorder(node->left);
+    printf("%d ", node->data);
+    inorder(node->right);
+}
+
+void postorder(struct TreeNode* node) {
+    if(!node) return;
+    postorder(node->left);
+    postorder(node->right);
+    printf("%d ", node->data);
+}
+
+int main() {
+    struct TreeNode* root = newNode(1);
+    root->left  = newNode(2);
+    root->right = newNode(3);
+    root->left->left  = newNode(4);
+    root->left->right = newNode(5);
+
+    printf("Pre-order:  "); preorder(root);  printf("\n");
+    printf("In-order:   "); inorder(root);   printf("\n");
+    printf("Post-order: "); postorder(root); printf("\n");
+    return 0;
+}
+// Pre-order:  1 2 4 5 3
+// In-order:   4 2 5 1 3
+// Post-order: 4 5 2 3 1</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Explain BFS algorithm with example, trace table, and C code.</p>
+          <button class="toggle-btn" data-target="lq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq3">
+            <h4>BFS — Breadth-First Search</h4>
+            <p><strong>Algorithm:</strong> Use a queue. Mark start as visited, enqueue it. While queue not empty: dequeue, print, enqueue unvisited neighbors.</p>
+            <div class="graph-diagram">
+    Graph: 0-1, 0-2, 1-3, 1-4, 2-5 (undirected)</div>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Step</th><th>Dequeued</th><th>Queue After</th><th>Visited</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>0</td><td>[1,2]</td><td>{0,1,2}</td></tr>
+                  <tr><td>2</td><td>1</td><td>[2,3,4]</td><td>{0,1,2,3,4}</td></tr>
+                  <tr><td>3</td><td>2</td><td>[3,4,5]</td><td>{0,1,2,3,4,5}</td></tr>
+                  <tr><td>4</td><td>3</td><td>[4,5]</td><td>No new</td></tr>
+                  <tr><td>5</td><td>4</td><td>[5]</td><td>No new</td></tr>
+                  <tr><td>6</td><td>5</td><td>[]</td><td>Done</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="formula answer"><strong>BFS Output: 0 1 2 3 4 5</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Explain DFS algorithm with example, trace, and C code.</p>
+          <button class="toggle-btn" data-target="lq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq4">
+            <h4>DFS — Depth-First Search</h4>
+            <p><strong>Algorithm (Recursive):</strong> Mark v as visited and print it. For each unvisited neighbor u, recursively call DFS(u).</p>
+            <div class="graph-diagram">
+    Graph: 0-1, 0-2, 1-3, 1-4, 2-5</div>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Step</th><th>Current</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>0</td><td>Visit 0 → recurse into 1</td></tr>
+                  <tr><td>2</td><td>1</td><td>Visit 1 → recurse into 3</td></tr>
+                  <tr><td>3</td><td>3</td><td>Visit 3 → no unvisited neighbors, backtrack</td></tr>
+                  <tr><td>4</td><td>1</td><td>Recurse into 4</td></tr>
+                  <tr><td>5</td><td>4</td><td>Visit 4 → backtrack to 0</td></tr>
+                  <tr><td>6</td><td>0</td><td>Recurse into 2 → visit 2 → recurse into 5</td></tr>
+                  <tr><td>7</td><td>5</td><td>Visit 5 → done</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="formula answer"><strong>DFS Output: 0 1 3 4 2 5</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>Explain the adjacency matrix representation of a graph with an example. Write its advantages and disadvantages.</p>
+          <button class="toggle-btn" data-target="lq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq5">
+            <h4>Adjacency Matrix</h4>
+            <p>A V×V 2D array where matrix[i][j] = 1 if edge exists between vertex i and j.</p>
+            <p><strong>Example:</strong> Graph with 4 vertices: 1-2, 2-3, 3-4, 4-1</p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1</strong></td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                  <tr><td><strong>2</strong></td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                  <tr><td><strong>3</strong></td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                  <tr><td><strong>4</strong></td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Advantages:</strong></p>
+            <ul>
+              <li>O(1) edge lookup — matrix[i][j] gives instant answer</li>
+              <li>Simple implementation using 2D array</li>
+              <li>Best for dense graphs</li>
+            </ul>
+            <p><strong>Disadvantages:</strong></p>
+            <ul>
+              <li>O(V²) space — wasteful for sparse graphs</li>
+              <li>Adding a vertex requires resizing the entire matrix</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Compare all types of binary trees: Full, Complete, Perfect, Balanced, and Skewed with examples.</p>
+          <button class="toggle-btn" data-target="lq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq6">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Type</th><th>Definition</th><th>Property</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Full</strong></td><td>Every node has 0 or 2 children</td><td>No single-child nodes</td></tr>
+                  <tr><td><strong>Complete</strong></td><td>All levels filled except last (left to right)</td><td>Best for array storage</td></tr>
+                  <tr><td><strong>Perfect</strong></td><td>All internal nodes have 2 children + all leaves same level</td><td>Total nodes = 2^(h+1)-1</td></tr>
+                  <tr><td><strong>Balanced</strong></td><td>Height diff ≤ 1 at every node</td><td>O(log n) operations</td></tr>
+                  <tr><td><strong>Skewed</strong></td><td>Every node has only one child</td><td>Behaves like linked list, O(n)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Explain AVL trees with balance factor and types of rotations required for rebalancing.</p>
+          <button class="toggle-btn" data-target="lq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq7">
+            <h4>AVL Tree</h4>
+            <p><strong>Definition:</strong> Self-balancing BST where Balance Factor = Height(Left) - Height(Right) must be -1, 0, or +1 for every node.</p>
+            <p class="formula">Balance Factor = Height(Left Subtree) - Height(Right Subtree)</p>
+            <p><strong>Four Rotation Types:</strong></p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Case</th><th>Condition</th><th>Rotation</th></tr></thead>
+                <tbody>
+                  <tr><td>LL</td><td>BF &gt; 1, left child BF ≥ 0</td><td>Single Right Rotation</td></tr>
+                  <tr><td>RR</td><td>BF &lt; -1, right child BF ≤ 0</td><td>Single Left Rotation</td></tr>
+                  <tr><td>LR</td><td>BF &gt; 1, left child BF &lt; 0</td><td>Left then Right Rotation</td></tr>
+                  <tr><td>RL</td><td>BF &lt; -1, right child BF &gt; 0</td><td>Right then Left Rotation</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Advantage:</strong> Guarantees O(log n) for search, insert, and delete — no degeneration into skewed tree.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>Explain adjacency list representation of a graph with example and write C code.</p>
+          <button class="toggle-btn" data-target="lq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq8">
+            <h4>Adjacency List</h4>
+            <p>An array of linked lists where each index i stores a list of all vertices adjacent to vertex i.</p>
+            <p><strong>Example:</strong> Graph V={0,1,2,3}, Edges: 0-1, 0-2, 1-3, 2-3</p>
+            <pre>Vertex 0: → 1 → 2 → NULL
+Vertex 1: → 0 → 3 → NULL
+Vertex 2: → 0 → 3 → NULL
+Vertex 3: → 1 → 2 → NULL</pre>
+            <div class="code-box">
+              <pre><code>struct AdjNode { int dest; struct AdjNode* next; };
+struct AdjList  { struct AdjNode* head; };
+struct Graph    { int V; struct AdjList* array; };
+
+void addEdge(struct Graph* g, int src, int dest) {
+    struct AdjNode* n = malloc(sizeof(struct AdjNode));
+    n->dest = dest;
+    n->next = g->array[src].head;
+    g->array[src].head = n;
+    // undirected — add reverse too
+    n = malloc(sizeof(struct AdjNode));
+    n->dest = src;
+    n->next = g->array[dest].head;
+    g->array[dest].head = n;
+}</code></pre>
+            </div>
+            <p><strong>Advantages:</strong> Space O(V+E) — efficient for sparse graphs. Faster to iterate over neighbors.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Practice Section -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-laptop-code"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Given the tree: Root=10, Left=5, Right=20, 5's Left=3, 5's Right=8. Write all four traversals.</p>
+          <button class="toggle-btn" data-target="pp1">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp1">
+            <div class="tree-diagram">
+          10
+         /  \
+        5    20
+       / \
+      3   8</div>
+            <p><strong>Pre-order (Root→Left→Right):</strong> 10 5 3 8 20</p>
+            <p><strong>In-order (Left→Root→Right):</strong> 3 5 8 10 20</p>
+            <p><strong>Post-order (Left→Right→Root):</strong> 3 8 5 20 10</p>
+            <p><strong>Level-order:</strong> 10 5 20 3 8</p>
+            <div class="important-note">
+              <div class="box-title"><i class="fas fa-star"></i> Note</div>
+              <p>In-order of this tree gives <strong>3 5 8 10 20</strong> — which is ascending sorted order, confirming this is a valid BST!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>For a complete binary tree stored in array: [-, 10, 5, 20, 3, 8, 15, 25], find parent and children of node at index 3.</p>
+          <button class="toggle-btn" data-target="pp2">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp2">
+            <p><strong>Node at index 3:</strong> Value = 20</p>
+            <p><strong>Parent:</strong> index = ⌊3/2⌋ = 1 → Value = 10</p>
+            <p><strong>Left Child:</strong> index = 2×3 = 6 → Value = 15</p>
+            <p><strong>Right Child:</strong> index = 2×3+1 = 7 → Value = 25</p>
+            <div class="tree-diagram">
+         10(1)
+        /      \
+      5(2)    20(3)  ← Our node
+      / \     /   \
+    3(4) 8(5) 15(6) 25(7)</div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Write a C program to perform BFS on a graph with 5 vertices.</p>
+          <button class="toggle-btn" data-target="pp3">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#define V 5
+
+int graph[V][V] = {
+    {0,1,1,0,0},
+    {1,0,0,1,0},
+    {1,0,0,0,1},
+    {0,1,0,0,0},
+    {0,0,1,0,0}
+};
+
+int visited[V];
+int queue[V];
+int front = -1, rear = -1;
+
+void enq(int v) { queue[++rear] = v; }
+int  deq()      { return queue[++front]; }
+int  empty()    { return front == rear; }
+
+void BFS(int s) {
+    for(int i = 0; i &lt; V; i++) visited[i] = 0;
+    front = rear = -1;
+    visited[s] = 1;
+    enq(s);
+    printf("BFS from %d: ", s);
+    while(!empty()) {
+        int v = deq();
+        printf("%d ", v);
+        for(int u = 0; u &lt; V; u++) {
+            if(graph[v][u] && !visited[u]) {
+                visited[u] = 1;
+                enq(u);
+            }
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    BFS(0);
+    return 0;
+}
+// Output: BFS from 0: 0 1 2 3 4</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Write a C program to perform DFS on a graph with 5 vertices.</p>
+          <button class="toggle-btn" data-target="pp4">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#define V 5
+
+int graph[V][V] = {
+    {0,1,1,0,0},
+    {1,0,0,1,0},
+    {1,0,0,0,1},
+    {0,1,0,0,0},
+    {0,0,1,0,0}
+};
+
+int visited[V];
+
+void DFS(int v) {
+    visited[v] = 1;
+    printf("%d ", v);
+    for(int u = 0; u &lt; V; u++) {
+        if(graph[v][u] && !visited[u]) {
+            DFS(u);
+        }
+    }
+}
+
+int main() {
+    for(int i = 0; i &lt; V; i++) visited[i] = 0;
+    printf("DFS from 0: ");
+    DFS(0);
+    printf("\n");
+    return 0;
+}
+// Output: DFS from 0: 0 1 3 2 4</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>Draw the adjacency matrix for the following graph: Vertices {A,B,C,D}, Edges: A-B, A-C, B-D, C-D (undirected).</p>
+          <button class="toggle-btn" data-target="pp5">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp5">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>A</strong></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                  <tr><td><strong>B</strong></td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                  <tr><td><strong>C</strong></td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                  <tr><td><strong>D</strong></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Explanation:</strong> matrix[i][j] = 1 if edge between i and j. For undirected graph, matrix is symmetric.</p>
+            <p><strong>Total edges = 4</strong> (A-B, A-C, B-D, C-D)</p>
+            <p><strong>Verification using Handshaking Lemma:</strong> Sum of degrees = 2+2+2+2 = 8 = 2 × |E| = 2×4 = 8 ✓</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Write a C program to build a binary tree and perform all three traversals.</p>
+          <button class="toggle-btn" data-target="pp6">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp6">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* newNode(int d) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = d; n->left = n->right = NULL;
+    return n;
+}
+
+void preorder(struct Node* r) {
+    if(!r) return;
+    printf("%d ", r->data);
+    preorder(r->left); preorder(r->right);
+}
+
+void inorder(struct Node* r) {
+    if(!r) return;
+    inorder(r->left);
+    printf("%d ", r->data);
+    inorder(r->right);
+}
+
+void postorder(struct Node* r) {
+    if(!r) return;
+    postorder(r->left); postorder(r->right);
+    printf("%d ", r->data);
+}
+
+int main() {
+    struct Node* root = newNode(1);
+    root->left        = newNode(2);
+    root->right       = newNode(3);
+    root->left->left  = newNode(4);
+    root->left->right = newNode(5);
+    root->right->left = newNode(6);
+    root->right->right= newNode(7);
+
+    printf("Pre-order:  "); preorder(root);  printf("\n");
+    printf("In-order:   "); inorder(root);   printf("\n");
+    printf("Post-order: "); postorder(root); printf("\n");
+    return 0;
+}
+// Pre-order:  1 2 4 5 3 6 7
+// In-order:   4 2 5 1 6 3 7
+// Post-order: 4 5 2 6 7 3 1</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Calculate the balance factor of each node and determine if the following tree is an AVL tree: Root=10, Left=5, Right=20, 5's Left=3.</p>
+          <button class="toggle-btn" data-target="pp7">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp7">
+            <div class="tree-diagram">
+         10
+        /  \
+       5    20
+      /
+     3</div>
+            <p><strong>Calculate Balance Factors:</strong></p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Node</th><th>Left Height</th><th>Right Height</th><th>Balance Factor</th><th>Valid?</th></tr></thead>
+                <tbody>
+                  <tr><td>3</td><td>-1 (no child)</td><td>-1</td><td>0</td><td>✓</td></tr>
+                  <tr><td>5</td><td>0 (leaf: 3)</td><td>-1 (no right)</td><td>1</td><td>✓</td></tr>
+                  <tr><td>20</td><td>-1</td><td>-1</td><td>0</td><td>✓</td></tr>
+                  <tr><td>10</td><td>1 (height of 5's subtree)</td><td>0 (height of 20)</td><td>1</td><td>✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="formula answer"><strong>All balance factors are -1, 0, or +1 → This IS an AVL Tree ✓</strong></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>Write adjacency list representation for graph: V={0,1,2,3,4}, E={(0,1),(0,2),(1,3),(2,4),(3,4)}.</p>
+          <button class="toggle-btn" data-target="pp8">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp8">
+            <p><strong>Adjacency List (Undirected Graph):</strong></p>
+            <pre>Vertex 0: → 1 → 2 → NULL
+Vertex 1: → 0 → 3 → NULL
+Vertex 2: → 0 → 4 → NULL
+Vertex 3: → 1 → 4 → NULL
+Vertex 4: → 2 → 3 → NULL</pre>
+            <p><strong>Properties:</strong></p>
+            <ul>
+              <li>Total vertices: 5</li>
+              <li>Total edges: 5</li>
+              <li>Space required: O(V + E) = O(5 + 5) = O(10)</li>
+              <li>Degree of vertex 0: 2 (connected to 1 and 2)</li>
+              <li>Degree of vertex 4: 2 (connected to 2 and 3)</li>
+            </ul>
+            <p><strong>Handshaking Lemma:</strong> Sum of degrees = 2+2+2+2+2 = 10 = 2 × |E| = 2×5 = 10 ✓</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Revision Section -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-check-circle"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Quick Revision Points</div>
+        <ul>
+          <li><strong>Tree:</strong> Hierarchical, acyclic; n nodes → n-1 edges; one root.</li>
+          <li><strong>Binary Tree:</strong> Each node has at most 2 children (left, right).</li>
+          <li><strong>Array Representation (1-indexed):</strong> Left child = 2i, Right child = 2i+1, Parent = i/2.</li>
+          <li><strong>Pre-order:</strong> Root→Left→Right. Used for copying tree.</li>
+          <li><strong>In-order:</strong> Left→Root→Right. BST gives sorted output.</li>
+          <li><strong>Post-order:</strong> Left→Right→Root. Used for deleting tree.</li>
+          <li><strong>Level-order:</strong> Uses Queue, visits level by level.</li>
+          <li><strong>Full BT:</strong> 0 or 2 children per node.</li>
+          <li><strong>Complete BT:</strong> All levels filled; last level left to right.</li>
+          <li><strong>Perfect BT:</strong> All leaves same level; total nodes = 2^(h+1)-1.</li>
+          <li><strong>Skewed BT:</strong> Only one child per node; behaves like linked list.</li>
+          <li><strong>AVL Tree:</strong> Self-balancing BST; Balance Factor ∈ {-1,0,+1}; 4 rotation types.</li>
+          <li><strong>B-Tree:</strong> Multi-way, disk-optimized; all leaves at same level; used in databases.</li>
+          <li><strong>Graph:</strong> G=(V,E); vertices + edges; may have cycles.</li>
+          <li><strong>Directed Graph:</strong> Edges have direction (one-way).</li>
+          <li><strong>Undirected Graph:</strong> Edges bidirectional; matrix is symmetric.</li>
+          <li><strong>Adjacency Matrix:</strong> V×V array; O(V²) space; O(1) edge check.</li>
+          <li><strong>Adjacency List:</strong> O(V+E) space; best for sparse graphs.</li>
+          <li><strong>BFS:</strong> Uses Queue; level by level; finds shortest path.</li>
+          <li><strong>DFS:</strong> Uses Stack/Recursion; deep first; cycle detection, topological sort.</li>
+          <li><strong>BFS/DFS Time:</strong> O(V+E) for both.</li>
+          <li><strong>Handshaking Lemma:</strong> Sum of all degrees = 2 × |E|.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exams</div>
+        <ul>
+          <li>Tree has n nodes → exactly n-1 edges — frequently asked in MCQs.</li>
+          <li>Array representation formulas: Left=2i, Right=2i+1, Parent=i/2 — memorize these.</li>
+          <li>All four traversals — practice writing them for any given tree.</li>
+          <li>Pre-order = Copy; In-order = Sort (BST); Post-order = Delete — remember these uses.</li>
+          <li>AVL Balance Factor must be -1, 0, or +1 — know the 4 rotation types.</li>
+          <li>BFS uses Queue (FIFO); DFS uses Stack/Recursion — very commonly asked.</li>
+          <li>BFS finds shortest path in unweighted graphs — important application.</li>
+          <li>DFS used for topological sorting and cycle detection — important application.</li>
+          <li>Adjacency Matrix: O(V²) space; Adjacency List: O(V+E) space — comparison table.</li>
+          <li>Skewed tree worst case = O(n) operations — reason AVL trees were invented.</li>
+          <li>Perfect BT: nodes = 2^(h+1) - 1; leaves = 2^h — important formulas.</li>
+          <li>B-Tree: all leaves at same level; used in MySQL, PostgreSQL, file systems.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</div>
+        <ul>
+          <li>Confusing pre-order with post-order — pre visits ROOT first, post visits ROOT last.</li>
+          <li>In-order is Left→Root→Right, NOT Root→Left→Right — common mix-up.</li>
+          <li>Forgetting to mark nodes as visited in BFS/DFS — causes infinite loop in cyclic graphs.</li>
+          <li>Using wrong array index formula — always start index from 1 for standard formula.</li>
+          <li>Confusing Full BT (0 or 2 children) with Complete BT (filled left to right).</li>
+          <li>Thinking AVL tree rotation is always one type — there are 4 types (LL, RR, LR, RL).</li>
+          <li>Writing adjacency matrix as V×E instead of V×V — it is always V×V.</li>
+          <li>Treating a Tree as a Graph — trees are a special case of graphs (connected, acyclic).</li>
+          <li>Forgetting that undirected adjacency matrix is symmetric — matrix[i][j] = matrix[j][i].</li>
+          <li>Claiming BFS finds shortest path in weighted graphs — it only works for unweighted graphs.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

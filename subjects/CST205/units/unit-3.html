@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 3 - Linked Lists | CST205</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .node-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .node-box {
+      display: flex;
+      border: 2px solid var(--primary-color);
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .node-data {
+      padding: 0.4rem 0.8rem;
+      background: var(--primary-color);
+      color: #fff;
+    }
+    .node-ptr {
+      padding: 0.4rem 0.8rem;
+      background: var(--card-bg);
+      color: var(--text-primary);
+      border-left: 2px solid var(--primary-color);
+    }
+    .node-arrow {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      padding: 0 0.4rem;
+      align-self: center;
+    }
+    .null-box {
+      padding: 0.4rem 0.8rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-link"></i>
+      <span>CST205 - Unit 3</span>
+    </div>
+    <div class="nav-links">
+      <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="#overview">Overview</a>
+      <a href="#introduction">Introduction</a>
+      <a href="#singly">Singly LL</a>
+      <a href="#circular-singly">Circular LL</a>
+      <a href="#doubly">Doubly LL</a>
+      <a href="#circular-doubly">Circular Doubly</a>
+      <a href="#applications">Applications</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 3</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="#overview"><i class="fas fa-info-circle"></i> Overview</a>
+    <a href="#introduction"><i class="fas fa-book"></i> Introduction</a>
+    <a href="#singly"><i class="fas fa-link"></i> Singly LL</a>
+    <a href="#circular-singly"><i class="fas fa-circle"></i> Circular LL</a>
+    <a href="#doubly"><i class="fas fa-exchange-alt"></i> Doubly LL</a>
+    <a href="#circular-doubly"><i class="fas fa-redo"></i> Circular Doubly</a>
+    <a href="#applications"><i class="fas fa-cogs"></i> Applications</a>
+    <a href="#mcqs"><i class="fas fa-question-circle"></i> MCQs</a>
+    <a href="#revision"><i class="fas fa-check-circle"></i> Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <div class="info-item">
+        <i class="fas fa-code"></i>
+        <span>CST205</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-bookmark"></i>
+        <span>Unit 3</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-clock"></i>
+        <span>15 Hours</span>
+      </div>
+    </div>
+    <h1><i class="fas fa-link"></i> Linked Lists</h1>
+    <p>Master Singly, Circular, Doubly, and Circular Doubly Linked Lists with complete operations and applications.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Overview -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-info-circle"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You'll Learn</div>
+        <p>This unit covers Linked Lists in complete depth — one of the most important dynamic data structures in computer science. You will learn about four types of linked lists and all operations on each.</p>
+        <ul>
+          <li><strong>Introduction:</strong> Nodes, head pointer, advantages and disadvantages over arrays</li>
+          <li><strong>Singly Linked List:</strong> Insert at front, middle, end; Delete from front, middle, end</li>
+          <li><strong>Circular Singly Linked List:</strong> Structure, insert, delete with circular link maintenance</li>
+          <li><strong>Doubly Linked List:</strong> Bidirectional traversal, insert and delete with prev and next pointers</li>
+          <li><strong>Circular Doubly Linked List:</strong> Combining circular and doubly properties</li>
+          <li><strong>Applications:</strong> Linked list implementation of Stack and Queue</li>
+        </ul>
+      </div>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Why Linked Lists?</div>
+        <ul>
+          <li>Dynamic size — grows and shrinks at runtime unlike arrays</li>
+          <li>Efficient insertion/deletion — no shifting of elements required</li>
+          <li>Foundation for building stacks, queues, and other complex data structures</li>
+          <li>Used in operating systems, compilers, file systems, and browser history</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introduction -->
+  <section class="section" id="introduction">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Introduction to Linked Lists
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Linked List</strong> is a linear data structure where elements (called <strong>nodes</strong>) are not stored in contiguous memory locations. Instead, each node contains data and a pointer to the next node in the sequence.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Structure of a Node</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-cube"></i> Node Components</div>
+        <p>Every node in a linked list has two parts:</p>
+        <ul>
+          <li><strong>Data:</strong> The actual value stored in the node</li>
+          <li><strong>Pointer (next/link):</strong> The memory address of the next node</li>
+        </ul>
+        <div class="node-diagram">
+          <div class="node-box">
+            <span class="node-data">10</span>
+            <span class="node-ptr">next →</span>
+          </div>
+          <span class="node-arrow">→</span>
+          <div class="node-box">
+            <span class="node-data">20</span>
+            <span class="node-ptr">next →</span>
+          </div>
+          <span class="node-arrow">→</span>
+          <div class="node-box">
+            <span class="node-data">30</span>
+            <span class="node-ptr">next →</span>
+          </div>
+          <span class="node-arrow">→</span>
+          <span class="null-box">NULL</span>
+        </div>
+        <p>The <strong>head</strong> pointer stores the address of the first node. The last node's next pointer is <strong>NULL</strong>.</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Node Structure in C</div>
+        <pre><code>struct Node {
+    int data;           // Data part
+    struct Node* next;  // Pointer to next node
+};
+
+// Create the head pointer
+struct Node* head = NULL;</code></pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Creating a New Node</div>
+        <pre><code>#include &lt;stdlib.h&gt;
+
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Advantages vs Disadvantages</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Advantages over Arrays</th>
+              <th>Disadvantages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dynamic size — grows/shrinks at runtime</td>
+              <td>No random access — must traverse from head</td>
+            </tr>
+            <tr>
+              <td>Efficient insertion/deletion (no shifting)</td>
+              <td>Extra memory for pointer in each node</td>
+            </tr>
+            <tr>
+              <td>Memory allocated only when needed</td>
+              <td>Cache unfriendly — nodes scattered in memory</td>
+            </tr>
+            <tr>
+              <td>Multiple lists can share memory pool</td>
+              <td>Reverse traversal not possible in singly LL</td>
+            </tr>
+            <tr>
+              <td>No pre-defined size limit (until RAM exhausted)</td>
+              <td>More complex code compared to arrays</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Array vs Linked List</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Array</th>
+              <th>Linked List</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Memory</strong></td>
+              <td>Contiguous (sequential)</td>
+              <td>Non-contiguous (scattered)</td>
+            </tr>
+            <tr>
+              <td><strong>Size</strong></td>
+              <td>Fixed at compile time</td>
+              <td>Dynamic (runtime)</td>
+            </tr>
+            <tr>
+              <td><strong>Access</strong></td>
+              <td>Random O(1) — arr[i]</td>
+              <td>Sequential O(n) — traverse from head</td>
+            </tr>
+            <tr>
+              <td><strong>Insertion</strong></td>
+              <td>O(n) — shifting needed</td>
+              <td>O(1) — only pointer update</td>
+            </tr>
+            <tr>
+              <td><strong>Deletion</strong></td>
+              <td>O(n) — shifting needed</td>
+              <td>O(1) — only pointer update</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Waste</strong></td>
+              <td>May waste if unused</td>
+              <td>Extra memory for pointers</td>
+            </tr>
+            <tr>
+              <td><strong>Searching</strong></td>
+              <td>O(log n) if sorted (binary search)</td>
+              <td>O(n) — linear only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Singly Linked List -->
+  <section class="section" id="singly">
+    <h2 class="section-title">
+      <i class="fas fa-link"></i> Singly Linked List
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Singly Linked List</strong> is a linked list where each node has only one pointer — <code>next</code> — pointing to the next node. Traversal is possible in only one direction (forward). The last node points to <strong>NULL</strong>.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Visual Representation</div>
+        <div class="node-diagram">
+          <span style="font-weight:700;color:var(--primary-color);margin-right:0.3rem;">head →</span>
+          <div class="node-box"><span class="node-data">10</span><span class="node-ptr">next</span></div>
+          <span class="node-arrow">→</span>
+          <div class="node-box"><span class="node-data">20</span><span class="node-ptr">next</span></div>
+          <span class="node-arrow">→</span>
+          <div class="node-box"><span class="node-data">30</span><span class="node-ptr">next</span></div>
+          <span class="node-arrow">→</span>
+          <span class="null-box">NULL</span>
+        </div>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Insertion Operations</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Insert at Beginning (Front)</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Create a new node with given data
+2. Set newNode->next = head
+3. Update head = newNode
+4. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Insert at Beginning</div>
+        <pre><code>void insertAtBeginning(int data) {
+    struct Node* newNode = createNode(data);
+    newNode->next = head;
+    head = newNode;
+    printf("%d inserted at beginning\n", data);
+}</code></pre>
+      </div>
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Trace: Insert 5 at Beginning of [10→20→30→NULL]</div>
+        <pre>Before: head → 10 → 20 → 30 → NULL
+Step 1: newNode = [5|next]
+Step 2: newNode->next = head (points to 10)
+Step 3: head = newNode
+After:  head → 5 → 10 → 20 → 30 → NULL</pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Insert at End</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Create a new node with given data
+2. If head == NULL, set head = newNode and return
+3. Traverse to the last node (where node->next == NULL)
+4. Set last->next = newNode
+5. newNode->next = NULL
+6. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Insert at End</div>
+        <pre><code>void insertAtEnd(int data) {
+    struct Node* newNode = createNode(data);
+    if(head == NULL) {
+        head = newNode;
+        return;
+    }
+    struct Node* temp = head;
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("%d inserted at end\n", data);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 3. Insert at Middle (After Given Position)</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Create newNode with given data
+2. Traverse to position (pos-1) node
+3. newNode->next = current->next
+4. current->next = newNode
+5. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Insert After Position</div>
+        <pre><code>void insertAtPosition(int data, int pos) {
+    struct Node* newNode = createNode(data);
+    struct Node* temp = head;
+    for(int i = 1; i < pos && temp != NULL; i++) {
+        temp = temp->next;
+    }
+    if(temp == NULL) {
+        printf("Position out of range\n");
+        return;
+    }
+    newNode->next = temp->next;
+    temp->next = newNode;
+    printf("%d inserted at position %d\n", data, pos);
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Deletion Operations</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Delete First Node</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. If head == NULL, print "List is empty" and return
+2. Store temp = head
+3. Update head = head->next
+4. Free(temp)
+5. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Delete First Node</div>
+        <pre><code>void deleteFirst() {
+    if(head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = head;
+    head = head->next;
+    free(temp);
+    printf("First node deleted\n");
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Delete Last Node</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. If head == NULL, print "Empty list" and return
+2. If head->next == NULL, free(head), head = NULL, return
+3. Traverse to second-last node (where node->next->next == NULL)
+4. Free(second_last->next)
+5. second_last->next = NULL
+6. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Delete Last Node</div>
+        <pre><code>void deleteLast() {
+    if(head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    if(head->next == NULL) {
+        free(head);
+        head = NULL;
+        return;
+    }
+    struct Node* temp = head;
+    while(temp->next->next != NULL) {
+        temp = temp->next;
+    }
+    free(temp->next);
+    temp->next = NULL;
+    printf("Last node deleted\n");
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 3. Delete Middle Node (By Value)</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. If head == NULL, return
+2. If head->data == key, call deleteFirst() and return
+3. Traverse list to find node with key, keeping track of prev node
+4. If found: prev->next = current->next
+5. Free(current)
+6. If not found, print "Node not found"
+7. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Delete by Value</div>
+        <pre><code>void deleteByValue(int key) {
+    if(head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    if(head->data == key) {
+        deleteFirst();
+        return;
+    }
+    struct Node* prev = head;
+    struct Node* curr = head->next;
+    while(curr != NULL && curr->data != key) {
+        prev = curr;
+        curr = curr->next;
+    }
+    if(curr == NULL) {
+        printf("Node %d not found\n", key);
+        return;
+    }
+    prev->next = curr->next;
+    free(curr);
+    printf("Node %d deleted\n", key);
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Traversal and Display</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Display Linked List</div>
+        <pre><code>void display() {
+    if(head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = head;
+    printf("List: ");
+    while(temp != NULL) {
+        printf("%d → ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Complete Singly Linked List Program</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Complete C Program</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void insertAtBeginning(int data) {
+    struct Node* newNode = createNode(data);
+    newNode->next = head;
+    head = newNode;
+}
+
+void insertAtEnd(int data) {
+    struct Node* newNode = createNode(data);
+    if(head == NULL) { head = newNode; return; }
+    struct Node* temp = head;
+    while(temp->next != NULL) temp = temp->next;
+    temp->next = newNode;
+}
+
+void deleteFirst() {
+    if(head == NULL) return;
+    struct Node* temp = head;
+    head = head->next;
+    free(temp);
+}
+
+void display() {
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d → ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    insertAtEnd(10);
+    insertAtEnd(20);
+    insertAtEnd(30);
+    insertAtBeginning(5);
+    display();         // 5 → 10 → 20 → 30 → NULL
+    deleteFirst();
+    display();         // 10 → 20 → 30 → NULL
+    return 0;
+}</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Circular Singly Linked List -->
+  <section class="section" id="circular-singly">
+    <h2 class="section-title">
+      <i class="fas fa-circle"></i> Circular Singly Linked List
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Circular Singly Linked List</strong> is similar to a singly linked list, but the <code>next</code> pointer of the last node points back to the <strong>head</strong> node instead of NULL. This forms a circular chain.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Visual Representation</div>
+        <div class="node-diagram">
+          <span style="font-weight:700;color:var(--primary-color);margin-right:0.3rem;">head →</span>
+          <div class="node-box"><span class="node-data">10</span><span class="node-ptr">next</span></div>
+          <span class="node-arrow">→</span>
+          <div class="node-box"><span class="node-data">20</span><span class="node-ptr">next</span></div>
+          <span class="node-arrow">→</span>
+          <div class="node-box"><span class="node-data">30</span><span class="node-ptr">next</span></div>
+          <span class="node-arrow">→ (back to head)</span>
+        </div>
+        <p>The last node (30) points back to head (10), forming a circle.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Key Difference from Singly LL</div>
+        <ul>
+          <li>No NULL pointer — last node's next = head</li>
+          <li>Can traverse from any node and reach any other node</li>
+          <li>Traversal stops when we reach the head again</li>
+          <li>Useful in applications requiring round-robin access (Round Robin scheduling)</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Insertion Operations</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Insert at Beginning</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Create newNode
+2. If head == NULL:
+   - head = newNode
+   - newNode->next = head (point to itself)
+   - return
+3. Traverse to last node (where node->next == head)
+4. newNode->next = head
+5. last->next = newNode
+6. head = newNode
+7. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular LL Insert at Beginning</div>
+        <pre><code>void insertAtBeginningCL(int data) {
+    struct Node* newNode = createNode(data);
+    if(head == NULL) {
+        head = newNode;
+        newNode->next = head;
+        return;
+    }
+    // Find last node
+    struct Node* last = head;
+    while(last->next != head) {
+        last = last->next;
+    }
+    newNode->next = head;
+    last->next = newNode;
+    head = newNode;
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Insert at End</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Create newNode
+2. If head == NULL:
+   - head = newNode
+   - newNode->next = head
+   - return
+3. Traverse to last node (where node->next == head)
+4. last->next = newNode
+5. newNode->next = head
+6. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular LL Insert at End</div>
+        <pre><code>void insertAtEndCL(int data) {
+    struct Node* newNode = createNode(data);
+    if(head == NULL) {
+        head = newNode;
+        newNode->next = head;
+        return;
+    }
+    struct Node* last = head;
+    while(last->next != head) {
+        last = last->next;
+    }
+    last->next = newNode;
+    newNode->next = head;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Deletion Operations</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Delete First Node</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. If head == NULL, return
+2. If only one node (head->next == head):
+   - Free head, head = NULL, return
+3. Traverse to last node
+4. last->next = head->next
+5. Free(head)
+6. head = last->next
+7. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular LL Delete First</div>
+        <pre><code>void deleteFirstCL() {
+    if(head == NULL) return;
+    if(head->next == head) {
+        free(head);
+        head = NULL;
+        return;
+    }
+    struct Node* last = head;
+    while(last->next != head) {
+        last = last->next;
+    }
+    struct Node* temp = head;
+    last->next = head->next;
+    head = head->next;
+    free(temp);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Delete Last Node</h4>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular LL Delete Last</div>
+        <pre><code>void deleteLastCL() {
+    if(head == NULL) return;
+    if(head->next == head) {
+        free(head);
+        head = NULL;
+        return;
+    }
+    struct Node* prev = head;
+    struct Node* curr = head->next;
+    while(curr->next != head) {
+        prev = curr;
+        curr = curr->next;
+    }
+    prev->next = head;
+    free(curr);
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Traversal of Circular Linked List</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Display Circular LL</div>
+        <pre><code>void displayCL() {
+    if(head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = head;
+    printf("Circular List: ");
+    do {
+        printf("%d → ", temp->data);
+        temp = temp->next;
+    } while(temp != head);
+    printf("(back to head)\n");
+}</code></pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Important Warning</div>
+        <p>When traversing a circular linked list, use a <code>do-while</code> loop that checks <code>temp != head</code> as the stopping condition — not <code>temp != NULL</code>, because there is no NULL in a circular list. Using <code>while(temp != NULL)</code> will cause an infinite loop!</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Doubly Linked List -->
+  <section class="section" id="doubly">
+    <h2 class="section-title">
+      <i class="fas fa-exchange-alt"></i> Doubly Linked List
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Doubly Linked List</strong> is a linked list where each node has <strong>two pointers</strong>: <code>prev</code> (pointing to the previous node) and <code>next</code> (pointing to the next node). This allows traversal in <strong>both directions</strong> — forward and backward.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Node Structure</div>
+        <div class="node-diagram">
+          <span class="null-box">NULL</span>
+          <span class="node-arrow">←</span>
+          <div class="node-box">
+            <span class="node-ptr">← prev</span>
+            <span class="node-data">10</span>
+            <span class="node-ptr">next →</span>
+          </div>
+          <span class="node-arrow">⇌</span>
+          <div class="node-box">
+            <span class="node-ptr">← prev</span>
+            <span class="node-data">20</span>
+            <span class="node-ptr">next →</span>
+          </div>
+          <span class="node-arrow">⇌</span>
+          <div class="node-box">
+            <span class="node-ptr">← prev</span>
+            <span class="node-data">30</span>
+            <span class="node-ptr">next →</span>
+          </div>
+          <span class="node-arrow">→</span>
+          <span class="null-box">NULL</span>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Doubly Node Structure in C</div>
+        <pre><code>struct DNode {
+    int data;
+    struct DNode* prev;  // Pointer to previous node
+    struct DNode* next;  // Pointer to next node
+};
+
+struct DNode* head = NULL;
+
+struct DNode* createDNode(int data) {
+    struct DNode* newNode = (struct DNode*)malloc(sizeof(struct DNode));
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+    return newNode;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Advantages over Singly LL</h3>
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Doubly LL Advantages</div>
+        <ul>
+          <li>Traversal in both directions (forward and backward)</li>
+          <li>Deletion of a given node is easier — no need to find prev separately</li>
+          <li>Can traverse from tail to head</li>
+          <li>Suitable for implementing deque (double-ended queue)</li>
+          <li>Useful in browser history (back/forward navigation)</li>
+        </ul>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Insertion Operations</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Insert at Beginning</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Create newNode
+2. newNode->next = head
+3. newNode->prev = NULL
+4. If head != NULL, set head->prev = newNode
+5. head = newNode
+6. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Doubly LL Insert at Beginning</div>
+        <pre><code>void insertAtBeginningDL(int data) {
+    struct DNode* newNode = createDNode(data);
+    newNode->next = head;
+    newNode->prev = NULL;
+    if(head != NULL) {
+        head->prev = newNode;
+    }
+    head = newNode;
+    printf("%d inserted at beginning\n", data);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Insert at End</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Create newNode
+2. If head == NULL, head = newNode, return
+3. Traverse to last node (where node->next == NULL)
+4. last->next = newNode
+5. newNode->prev = last
+6. newNode->next = NULL
+7. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Doubly LL Insert at End</div>
+        <pre><code>void insertAtEndDL(int data) {
+    struct DNode* newNode = createDNode(data);
+    if(head == NULL) {
+        head = newNode;
+        return;
+    }
+    struct DNode* temp = head;
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    newNode->prev = temp;
+    newNode->next = NULL;
+    printf("%d inserted at end\n", data);
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 3. Insert After Given Node</h4>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Insert After Specific Node</div>
+        <pre><code>void insertAfterDL(struct DNode* prevNode, int data) {
+    if(prevNode == NULL) return;
+    struct DNode* newNode = createDNode(data);
+    newNode->next = prevNode->next;
+    newNode->prev = prevNode;
+    if(prevNode->next != NULL) {
+        prevNode->next->prev = newNode;
+    }
+    prevNode->next = newNode;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Deletion Operations</h3>
+
+      <h4><i class="fas fa-caret-right"></i> 1. Delete First Node</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. If head == NULL, return
+2. temp = head
+3. head = head->next
+4. If head != NULL, head->prev = NULL
+5. free(temp)
+6. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Doubly LL Delete First</div>
+        <pre><code>void deleteFirstDL() {
+    if(head == NULL) return;
+    struct DNode* temp = head;
+    head = head->next;
+    if(head != NULL) {
+        head->prev = NULL;
+    }
+    free(temp);
+    printf("First node deleted\n");
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 2. Delete Last Node</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. If head == NULL, return
+2. If head->next == NULL, free(head), head = NULL, return
+3. Traverse to last node
+4. second_last = last->prev
+5. second_last->next = NULL
+6. free(last)
+7. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Doubly LL Delete Last</div>
+        <pre><code>void deleteLastDL() {
+    if(head == NULL) return;
+    if(head->next == NULL) {
+        free(head);
+        head = NULL;
+        return;
+    }
+    struct DNode* temp = head;
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->prev->next = NULL;
+    free(temp);
+    printf("Last node deleted\n");
+}</code></pre>
+      </div>
+
+      <h4><i class="fas fa-caret-right"></i> 3. Delete Middle Node (By Value)</h4>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+        <pre>1. Traverse to find node with given key
+2. If not found, return
+3. If node->prev != NULL: node->prev->next = node->next
+4. If node->next != NULL: node->next->prev = node->prev
+5. If deleting head: head = node->next
+6. free(node)
+7. End</pre>
+      </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Doubly LL Delete by Value</div>
+        <pre><code>void deleteByValueDL(int key) {
+    struct DNode* temp = head;
+    while(temp != NULL && temp->data != key) {
+        temp = temp->next;
+    }
+    if(temp == NULL) {
+        printf("Node %d not found\n", key);
+        return;
+    }
+    if(temp->prev != NULL)
+        temp->prev->next = temp->next;
+    else
+        head = temp->next;  // Deleting head
+    if(temp->next != NULL)
+        temp->next->prev = temp->prev;
+    free(temp);
+    printf("Node %d deleted\n", key);
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Forward and Backward Traversal</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Forward and Backward Display</div>
+        <pre><code>void displayForward() {
+    struct DNode* temp = head;
+    printf("Forward: ");
+    while(temp != NULL) {
+        printf("%d → ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+void displayBackward() {
+    struct DNode* temp = head;
+    // Go to last node
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+    printf("Backward: ");
+    while(temp != NULL) {
+        printf("%d → ", temp->data);
+        temp = temp->prev;
+    }
+    printf("NULL\n");
+}</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Circular Doubly Linked List -->
+  <section class="section" id="circular-doubly">
+    <h2 class="section-title">
+      <i class="fas fa-redo"></i> Circular Doubly Linked List
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
+        <p>A <strong>Circular Doubly Linked List</strong> combines the properties of a doubly linked list and a circular linked list. Each node has <code>prev</code> and <code>next</code> pointers. The <code>prev</code> of the head points to the last node, and the <code>next</code> of the last node points back to the head.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Visual Representation</div>
+        <div class="node-diagram">
+          <div class="node-box"><span class="node-ptr">← prev</span><span class="node-data">10</span><span class="node-ptr">next →</span></div>
+          <span class="node-arrow">⇌</span>
+          <div class="node-box"><span class="node-ptr">← prev</span><span class="node-data">20</span><span class="node-ptr">next →</span></div>
+          <span class="node-arrow">⇌</span>
+          <div class="node-box"><span class="node-ptr">← prev</span><span class="node-data">30</span><span class="node-ptr">next →</span></div>
+        </div>
+        <p>The prev of node 10 (head) points to node 30 (last). The next of node 30 points to node 10 (head).</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Key Properties</div>
+        <ul>
+          <li><strong>head→prev</strong> always points to the last node</li>
+          <li><strong>last→next</strong> always points to the head</li>
+          <li>No NULL pointers anywhere in the list</li>
+          <li>Can traverse in both directions starting from any node</li>
+          <li>Most flexible type of linked list</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Circular Doubly Node Structure</div>
+        <pre><code>struct CDNode {
+    int data;
+    struct CDNode* prev;
+    struct CDNode* next;
+};
+
+struct CDNode* head = NULL;</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Insert at Beginning</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular Doubly Insert at Beginning</div>
+        <pre><code>void insertAtBeginningCDL(int data) {
+    struct CDNode* newNode = (struct CDNode*)malloc(sizeof(struct CDNode));
+    newNode->data = data;
+    if(head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+        return;
+    }
+    struct CDNode* last = head->prev;
+    newNode->next = head;
+    newNode->prev = last;
+    last->next = newNode;
+    head->prev = newNode;
+    head = newNode;
+    printf("%d inserted at beginning\n", data);
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Insert at End</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular Doubly Insert at End</div>
+        <pre><code>void insertAtEndCDL(int data) {
+    struct CDNode* newNode = (struct CDNode*)malloc(sizeof(struct CDNode));
+    newNode->data = data;
+    if(head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+        return;
+    }
+    struct CDNode* last = head->prev;
+    newNode->next = head;
+    newNode->prev = last;
+    last->next = newNode;
+    head->prev = newNode;
+    printf("%d inserted at end\n", data);
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Delete a Node</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular Doubly Delete by Value</div>
+        <pre><code>void deleteNodeCDL(int key) {
+    if(head == NULL) return;
+    struct CDNode* temp = head;
+    do {
+        if(temp->data == key) break;
+        temp = temp->next;
+    } while(temp != head);
+    if(temp->data != key) {
+        printf("Node not found\n");
+        return;
+    }
+    // Only one node
+    if(temp->next == temp) {
+        free(temp);
+        head = NULL;
+        return;
+    }
+    temp->prev->next = temp->next;
+    temp->next->prev = temp->prev;
+    if(temp == head) {
+        head = temp->next;
+    }
+    free(temp);
+    printf("Node %d deleted\n", key);
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Traversal</h3>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> C Code: Circular Doubly Display</div>
+        <pre><code>void displayCDL() {
+    if(head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct CDNode* temp = head;
+    printf("Circular Doubly List: ");
+    do {
+        printf("%d ⇌ ", temp->data);
+        temp = temp->next;
+    } while(temp != head);
+    printf("(back to head)\n");
+}</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Applications Section -->
+  <section class="section" id="applications">
+    <h2 class="section-title">
+      <i class="fas fa-cogs"></i> Applications of Linked Lists
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Overview</div>
+        <p>Linked lists are used to implement many other important data structures dynamically. The most important application for this syllabus is the implementation of <strong>Stack</strong> and <strong>Queue</strong> using linked lists.</p>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 1. Stack Using Linked List</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-layer-group"></i> How It Works</div>
+        <p>Instead of a fixed-size array, a linked list can implement a dynamic stack. The <strong>head of the linked list acts as the top of the stack</strong>.</p>
+        <ul>
+          <li><strong>Push:</strong> Insert new node at the beginning (head) — O(1)</li>
+          <li><strong>Pop:</strong> Delete node from the beginning (head) — O(1)</li>
+          <li><strong>Peek:</strong> Return head→data — O(1)</li>
+          <li><strong>Overflow:</strong> Never occurs (until RAM is exhausted)</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Stack Using Linked List in C</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* top = NULL;
+
+void push(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = top;
+    top = newNode;
+    printf("%d pushed\n", data);
+}
+
+int pop() {
+    if(top == NULL) {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+    struct Node* temp = top;
+    int val = top->data;
+    top = top->next;
+    free(temp);
+    return val;
+}
+
+int peek() {
+    if(top == NULL) return -1;
+    return top->data;
+}
+
+int isEmpty() {
+    return (top == NULL);
+}
+
+void display() {
+    struct Node* temp = top;
+    printf("Stack (top to bottom): ");
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    push(10);
+    push(20);
+    push(30);
+    display();
+    printf("Popped: %d\n", pop());
+    printf("Top: %d\n", peek());
+    display();
+    return 0;
+}</code></pre>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> 2. Queue Using Linked List</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list"></i> How It Works</div>
+        <p>A queue can be implemented using a linked list with two pointers — <strong>front</strong> (for deletion/dequeue) and <strong>rear</strong> (for insertion/enqueue).</p>
+        <ul>
+          <li><strong>Enqueue:</strong> Insert new node at rear — O(1)</li>
+          <li><strong>Dequeue:</strong> Delete node from front — O(1)</li>
+          <li><strong>Overflow:</strong> Never occurs (until RAM is exhausted)</li>
+          <li><strong>Underflow:</strong> When front == NULL (queue is empty)</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Queue Using Linked List in C</div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* front = NULL;
+struct Node* rear  = NULL;
+
+void enqueue(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    if(rear == NULL) {
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+    printf("%d enqueued\n", data);
+}
+
+int dequeue() {
+    if(front == NULL) {
+        printf("Queue Underflow\n");
+        return -1;
+    }
+    struct Node* temp = front;
+    int val = front->data;
+    front = front->next;
+    if(front == NULL) rear = NULL;
+    free(temp);
+    return val;
+}
+
+void displayQueue() {
+    struct Node* temp = front;
+    printf("Queue (front to rear): ");
+    while(temp != NULL) {
+        printf("%d → ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    displayQueue();
+    printf("Dequeued: %d\n", dequeue());
+    displayQueue();
+    return 0;
+}</code></pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Array vs Linked List Implementation of Stack/Queue</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Array Implementation</th>
+                <th>Linked List Implementation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Size</strong></td>
+                <td>Fixed at compile time</td>
+                <td>Dynamic (grows/shrinks at runtime)</td>
+              </tr>
+              <tr>
+                <td><strong>Overflow</strong></td>
+                <td>Possible when array is full</td>
+                <td>Not possible (until RAM is exhausted)</td>
+              </tr>
+              <tr>
+                <td><strong>Memory</strong></td>
+                <td>Contiguous block</td>
+                <td>Scattered, extra memory for pointers</td>
+              </tr>
+              <tr>
+                <td><strong>Speed</strong></td>
+                <td>Slightly faster (no malloc/free)</td>
+                <td>Slightly slower (dynamic allocation)</td>
+              </tr>
+              <tr>
+                <td><strong>Complexity</strong></td>
+                <td>Simpler to implement</td>
+                <td>Slightly more complex</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Other Applications of Linked Lists</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-check"></i> Real-World Uses</div>
+        <ul>
+          <li><strong>Browser History:</strong> Doubly linked list enables back/forward navigation</li>
+          <li><strong>Music Playlist:</strong> Circular doubly linked list for looping through songs</li>
+          <li><strong>Undo/Redo:</strong> Doubly linked list for undo/redo operations in editors</li>
+          <li><strong>Memory Management:</strong> OS uses linked lists to manage free memory blocks</li>
+          <li><strong>Polynomial Representation:</strong> Each term is a node with coefficient and exponent</li>
+          <li><strong>Sparse Matrix:</strong> Store only non-zero elements using linked list</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+    <!-- Formulas Section -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Key Formulas & Rules
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-link"></i> Singly Linked List</div>
+        <p class="formula">Insert at front: newNode→next = head; head = newNode</p>
+        <p class="formula">Insert at end: last→next = newNode; newNode→next = NULL</p>
+        <p class="formula">Delete first: temp = head; head = head→next; free(temp)</p>
+        <p class="formula">Delete last: traverse to second-last; second_last→next = NULL</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-circle"></i> Circular Singly Linked List</div>
+        <p class="formula">Last node: last→next = head (not NULL)</p>
+        <p class="formula">Traversal stop: when temp == head again</p>
+        <p class="formula">Insert at end: last→next = newNode; newNode→next = head</p>
+        <p class="formula">Delete first: find last; last→next = head→next; head = head→next</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-exchange-alt"></i> Doubly Linked List</div>
+        <p class="formula">Insert at front: newNode→next = head; head→prev = newNode; head = newNode</p>
+        <p class="formula">Delete middle: node→prev→next = node→next; node→next→prev = node→prev</p>
+        <p class="formula">Delete first: head = head→next; head→prev = NULL</p>
+        <p class="formula">Delete last: last→prev→next = NULL</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-redo"></i> Circular Doubly Linked List</div>
+        <p class="formula">head→prev = last node always</p>
+        <p class="formula">last→next = head always</p>
+        <p class="formula">Single node: node→next = node→prev = node (itself)</p>
+        <p class="formula">Traversal stop: when temp == head again (do-while)</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-layer-group"></i> Stack/Queue via Linked List</div>
+        <p class="formula">Stack Push: newNode→next = top; top = newNode</p>
+        <p class="formula">Stack Pop: temp = top; top = top→next; free(temp)</p>
+        <p class="formula">Queue Enqueue: rear→next = newNode; rear = newNode</p>
+        <p class="formula">Queue Dequeue: temp = front; front = front→next; free(temp)</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Definitions Section -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-bookmark"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="tag-grid">
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Linked List</div>
+          <p>A linear data structure where elements (nodes) are stored in non-contiguous memory locations connected by pointers.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Node</div>
+          <p>Basic unit of a linked list containing data and one or more pointers to adjacent nodes.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Head Pointer</div>
+          <p>A pointer that stores the address of the first node in the linked list.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> NULL Pointer</div>
+          <p>The next pointer of the last node in a singly or doubly linked list, indicating the end of the list.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Singly Linked List</div>
+          <p>Each node has one pointer (next). Traversal in one direction only (forward).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Doubly Linked List</div>
+          <p>Each node has two pointers (prev and next). Traversal in both directions.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Circular Linked List</div>
+          <p>Last node's next points to head instead of NULL, forming a circle.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Circular Doubly LL</div>
+          <p>Combines doubly and circular properties. head→prev = last, last→next = head.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Traversal</div>
+          <p>Visiting each node of the linked list starting from head to last node (or back to head for circular).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Dynamic Memory</div>
+          <p>Memory allocated at runtime using malloc(). Each new node gets memory from heap.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> malloc()</div>
+          <p>Memory allocation function in C used to dynamically allocate a block of memory of given size.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> free()</div>
+          <p>Deallocates memory previously allocated by malloc(). Used when deleting a node.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Insertion</div>
+          <p>Adding a new node at the beginning, middle, or end of a linked list by adjusting pointers.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Deletion</div>
+          <p>Removing a node from the linked list by adjusting pointers of surrounding nodes and freeing memory.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Overflow (LL)</div>
+          <p>In linked list, overflow occurs only when system RAM is completely exhausted. Unlike arrays, no fixed size limit.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-tag"></i> Underflow (LL)</div>
+          <p>Occurs when trying to delete from an empty linked list (head == NULL).</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparisons Section -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3><i class="fas fa-angle-right"></i> All Four Types of Linked Lists</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Singly LL</th>
+              <th>Circular Singly LL</th>
+              <th>Doubly LL</th>
+              <th>Circular Doubly LL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Pointers per Node</strong></td>
+              <td>1 (next)</td>
+              <td>1 (next)</td>
+              <td>2 (prev, next)</td>
+              <td>2 (prev, next)</td>
+            </tr>
+            <tr>
+              <td><strong>Last Node Points To</strong></td>
+              <td>NULL</td>
+              <td>Head</td>
+              <td>NULL</td>
+              <td>Head</td>
+            </tr>
+            <tr>
+              <td><strong>Head→prev Points To</strong></td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>NULL</td>
+              <td>Last Node</td>
+            </tr>
+            <tr>
+              <td><strong>Traversal Direction</strong></td>
+              <td>Forward only</td>
+              <td>Forward only (circular)</td>
+              <td>Both directions</td>
+              <td>Both directions (circular)</td>
+            </tr>
+            <tr>
+              <td><strong>Memory per Node</strong></td>
+              <td>data + 1 ptr</td>
+              <td>data + 1 ptr</td>
+              <td>data + 2 ptrs</td>
+              <td>data + 2 ptrs</td>
+            </tr>
+            <tr>
+              <td><strong>Traversal Stop</strong></td>
+              <td>temp == NULL</td>
+              <td>temp == head</td>
+              <td>temp == NULL</td>
+              <td>temp == head</td>
+            </tr>
+            <tr>
+              <td><strong>Reverse Traversal</strong></td>
+              <td>Not possible</td>
+              <td>Not possible</td>
+              <td>Possible</td>
+              <td>Possible</td>
+            </tr>
+            <tr>
+              <td><strong>Use Case</strong></td>
+              <td>Simple list operations</td>
+              <td>Round robin, circular buffers</td>
+              <td>Browser history, undo/redo</td>
+              <td>Playlists, OS scheduling</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Array vs Linked List</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Array</th>
+              <th>Linked List</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Memory Layout</strong></td>
+              <td>Contiguous</td>
+              <td>Non-contiguous</td>
+            </tr>
+            <tr>
+              <td><strong>Size</strong></td>
+              <td>Fixed (static)</td>
+              <td>Dynamic</td>
+            </tr>
+            <tr>
+              <td><strong>Access Time</strong></td>
+              <td>O(1) — random access</td>
+              <td>O(n) — sequential</td>
+            </tr>
+            <tr>
+              <td><strong>Insertion/Deletion</strong></td>
+              <td>O(n) — shifting needed</td>
+              <td>O(1) — pointer update</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Overhead</strong></td>
+              <td>No extra for pointers</td>
+              <td>Extra memory for pointers</td>
+            </tr>
+            <tr>
+              <td><strong>Overflow Risk</strong></td>
+              <td>When array is full</td>
+              <td>Only when RAM exhausted</td>
+            </tr>
+            <tr>
+              <td><strong>Cache Performance</strong></td>
+              <td>Better (contiguous)</td>
+              <td>Worse (scattered)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><i class="fas fa-angle-right"></i> Stack via Array vs Stack via Linked List</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Array Stack</th>
+              <th>Linked List Stack</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Size</strong></td>
+              <td>Fixed (MAX)</td>
+              <td>Dynamic</td>
+            </tr>
+            <tr>
+              <td><strong>Overflow</strong></td>
+              <td>Possible (top == MAX-1)</td>
+              <td>Not possible</td>
+            </tr>
+            <tr>
+              <td><strong>Memory</strong></td>
+              <td>Allocated at compile time</td>
+              <td>Allocated at runtime</td>
+            </tr>
+            <tr>
+              <td><strong>Push/Pop Time</strong></td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td><strong>Implementation</strong></td>
+              <td>Simpler</td>
+              <td>More complex</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCQs Section -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>In a linked list, each node contains:</p>
+          <ul class="options">
+            <li>a. Only data</li>
+            <li>b. Only pointer</li>
+            <li>c. Data and pointer</li>
+            <li>d. Index and data</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: c. Data and pointer</strong>
+            <p>Each node in a linked list contains two parts: data (the value) and a pointer (address of the next node).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>What does the head pointer of a linked list store?</p>
+          <ul class="options">
+            <li>a. Address of the last node</li>
+            <li>b. Address of the first node</li>
+            <li>c. Data of the first node</li>
+            <li>d. NULL always</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: b. Address of the first node</strong>
+            <p>The head pointer always stores the memory address of the first node in the linked list.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>In a singly linked list, the last node's next pointer contains:</p>
+          <ul class="options">
+            <li>a. Address of head</li>
+            <li>b. Address of first node</li>
+            <li>c. NULL</li>
+            <li>d. 0</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: c. NULL</strong>
+            <p>In a singly linked list, the last node's next pointer is NULL, indicating the end of the list.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Which linked list allows traversal in both directions?</p>
+          <ul class="options">
+            <li>a. Singly Linked List</li>
+            <li>b. Circular Singly Linked List</li>
+            <li>c. Doubly Linked List</li>
+            <li>d. None of the above</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. Doubly Linked List</strong>
+            <p>Doubly linked list has both prev and next pointers, enabling traversal in both forward and backward directions.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>In a circular singly linked list, the last node points to:</p>
+          <ul class="options">
+            <li>a. NULL</li>
+            <li>b. Itself</li>
+            <li>c. Head node</li>
+            <li>d. Second node</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. Head node</strong>
+            <p>In a circular linked list, the last node's next pointer points back to the head node, forming a circle.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>To insert a new node at the beginning of a singly linked list:</p>
+          <ul class="options">
+            <li>a. Traverse to last node first</li>
+            <li>b. Set newNode→next = head, then head = newNode</li>
+            <li>c. Set head = newNode first, then newNode→next = head</li>
+            <li>d. No pointer update needed</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: b. Set newNode→next = head, then head = newNode</strong>
+            <p>First link the new node to current head, then update head to point to the new node.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Which function is used to allocate dynamic memory in C?</p>
+          <ul class="options">
+            <li>a. alloc()</li>
+            <li>b. new()</li>
+            <li>c. malloc()</li>
+            <li>d. create()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: c. malloc()</strong>
+            <p>malloc() (Memory ALLOCation) is the standard C function for dynamic memory allocation from the heap.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>What is the main advantage of linked list over array?</p>
+          <ul class="options">
+            <li>a. Faster random access</li>
+            <li>b. Dynamic size</li>
+            <li>c. Better cache performance</li>
+            <li>d. Less memory usage</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: b. Dynamic size</strong>
+            <p>Linked lists can grow and shrink at runtime unlike arrays which have a fixed size defined at compile time.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q9</h4>
+          <p>In a doubly linked list, how many pointers does each node have?</p>
+          <ul class="options">
+            <li>a. 1</li>
+            <li>b. 2</li>
+            <li>c. 3</li>
+            <li>d. 4</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: b. 2</strong>
+            <p>Each node in a doubly linked list has two pointers: prev (to previous node) and next (to next node).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q10</h4>
+          <p>Which traversal loop is correct for a circular linked list?</p>
+          <ul class="options">
+            <li>a. while(temp != NULL)</li>
+            <li>b. while(temp != head)</li>
+            <li>c. do { } while(temp != head)</li>
+            <li>d. for(int i=0; i &lt; n; i++)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: c. do { } while(temp != head)</strong>
+            <p>A do-while loop starting from head and stopping when temp equals head again is the correct way to traverse a circular linked list.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q11</h4>
+          <p>In a stack implemented using linked list, push operation inserts at:</p>
+          <ul class="options">
+            <li>a. End of list</li>
+            <li>b. Middle of list</li>
+            <li>c. Beginning of list (head)</li>
+            <li>d. Random position</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: c. Beginning of list (head)</strong>
+            <p>In a linked list stack, the head acts as the top. Push inserts at head (beginning) for O(1) time complexity.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q12</h4>
+          <p>In a queue implemented using linked list, enqueue inserts at:</p>
+          <ul class="options">
+            <li>a. Front (head)</li>
+            <li>b. Rear (tail)</li>
+            <li>c. Middle</li>
+            <li>d. Random position</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: b. Rear (tail)</strong>
+            <p>In a linked list queue, enqueue inserts at the rear pointer and dequeue removes from the front pointer.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q13</h4>
+          <p>In a circular doubly linked list with single node, node→next and node→prev point to:</p>
+          <ul class="options">
+            <li>a. NULL</li>
+            <li>b. Head</li>
+            <li>c. Itself</li>
+            <li>d. Last node</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq13">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq13">
+            <strong>Answer: c. Itself</strong>
+            <p>When a circular doubly linked list has only one node, both its next and prev pointers point to itself.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q14</h4>
+          <p>What is the time complexity of inserting a node at the beginning of a linked list?</p>
+          <ul class="options">
+            <li>a. O(n)</li>
+            <li>b. O(log n)</li>
+            <li>c. O(1)</li>
+            <li>d. O(n²)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq14">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq14">
+            <strong>Answer: c. O(1)</strong>
+            <p>Inserting at the beginning only requires updating the head pointer and newNode→next. No traversal needed — constant time O(1).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q15</h4>
+          <p>Which function frees dynamically allocated memory in C?</p>
+          <ul class="options">
+            <li>a. delete()</li>
+            <li>b. remove()</li>
+            <li>c. clear()</li>
+            <li>d. free()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq15">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="mcq15">
+            <strong>Answer: d. free()</strong>
+            <p>free() is used in C to release dynamically allocated memory back to the system. Always call free() when deleting a node.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Short Questions Section -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-clipboard-question"></i> Short Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Define Linked List.</p>
+          <button class="toggle-btn" data-target="sq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq1">
+            <p>A linked list is a linear data structure where elements called nodes are stored in non-contiguous memory locations. Each node contains data and a pointer to the next node. The first node is accessed through the head pointer and the last node points to NULL.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>What is a node in a linked list?</p>
+          <button class="toggle-btn" data-target="sq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq2">
+            <p>A node is the basic unit of a linked list. Each node contains two parts: (1) Data — the actual value stored, and (2) Pointer (next) — the memory address of the next node in the list.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>What is the difference between singly and doubly linked list?</p>
+          <button class="toggle-btn" data-target="sq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq3">
+            <p><strong>Singly:</strong> One pointer per node (next). Traversal in forward direction only.</p>
+            <p><strong>Doubly:</strong> Two pointers per node (prev and next). Traversal in both directions possible.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>What is a Circular Linked List?</p>
+          <button class="toggle-btn" data-target="sq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq4">
+            <p>A circular linked list is a linked list where the last node's next pointer points back to the head node instead of NULL, forming a circular chain. There is no NULL pointer in the list.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>State two advantages of linked list over array.</p>
+          <button class="toggle-btn" data-target="sq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq5">
+            <p>1. <strong>Dynamic Size:</strong> Linked list can grow and shrink at runtime; arrays have fixed size.</p>
+            <p>2. <strong>Efficient Insertion/Deletion:</strong> No shifting of elements required; only pointer updates needed.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>State two disadvantages of linked list.</p>
+          <button class="toggle-btn" data-target="sq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq6">
+            <p>1. <strong>No Random Access:</strong> Cannot access an element directly by index; must traverse from head.</p>
+            <p>2. <strong>Extra Memory:</strong> Each node requires additional memory for storing the pointer.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>How is a stack implemented using a linked list?</p>
+          <button class="toggle-btn" data-target="sq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq7">
+            <p>In a linked list stack, the head acts as the top of the stack. Push inserts a new node at the beginning (head). Pop removes the node at the beginning (head). Both operations are O(1). No overflow occurs until RAM is exhausted.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>What is the role of the head pointer in a linked list?</p>
+          <button class="toggle-btn" data-target="sq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq8">
+            <p>The head pointer stores the memory address of the first node in the linked list. It is the entry point to access the list. If head == NULL, the list is empty. All traversals and operations begin from the head pointer.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q9</h4>
+          <p>How does insertion at beginning differ in singly LL vs doubly LL?</p>
+          <button class="toggle-btn" data-target="sq9">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq9">
+            <p><strong>Singly LL:</strong> newNode→next = head; head = newNode (2 pointer updates)</p>
+            <p><strong>Doubly LL:</strong> newNode→next = head; newNode→prev = NULL; head→prev = newNode; head = newNode (4 pointer updates — must also set prev of old head)</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q10</h4>
+          <p>What is a Circular Doubly Linked List?</p>
+          <button class="toggle-btn" data-target="sq10">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="sq10">
+            <p>A circular doubly linked list combines doubly and circular linked list properties. Each node has prev and next pointers. The head→prev points to the last node and the last node's next points to head. No NULL pointers exist anywhere in the list.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Long Questions Section -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Explain the structure of a singly linked list and write C code for insertion at beginning, end, and deletion of first node.</p>
+          <button class="toggle-btn" data-target="lq1">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq1">
+            <h4>Singly Linked List</h4>
+            <p><strong>Structure:</strong> A singly linked list consists of nodes where each node has two fields: data and next pointer. The head pointer holds the address of the first node. The last node's next = NULL.</p>
+            <div class="code-box">
+              <pre><code>struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head = NULL;
+
+// Insert at beginning
+void insertFront(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data;
+    n->next = head;
+    head = n;
+}
+
+// Insert at end
+void insertEnd(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data; n->next = NULL;
+    if(!head) { head = n; return; }
+    struct Node* t = head;
+    while(t->next) t = t->next;
+    t->next = n;
+}
+
+// Delete first
+void deleteFirst() {
+    if(!head) return;
+    struct Node* t = head;
+    head = head->next;
+    free(t);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Explain doubly linked list with insertion at beginning and end, and deletion of a node by value.</p>
+          <button class="toggle-btn" data-target="lq2">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq2">
+            <h4>Doubly Linked List</h4>
+            <p><strong>Structure:</strong> Each node has three fields: prev pointer, data, and next pointer. The head→prev = NULL and last→next = NULL. Allows bidirectional traversal.</p>
+            <div class="code-box">
+              <pre><code>struct DNode { int data; struct DNode *prev, *next; };
+struct DNode* head = NULL;
+
+void insertFront(int data) {
+    struct DNode* n = malloc(sizeof(struct DNode));
+    n->data = data; n->prev = NULL;
+    n->next = head;
+    if(head) head->prev = n;
+    head = n;
+}
+
+void insertEnd(int data) {
+    struct DNode* n = malloc(sizeof(struct DNode));
+    n->data = data; n->next = NULL;
+    if(!head) { n->prev = NULL; head = n; return; }
+    struct DNode* t = head;
+    while(t->next) t = t->next;
+    t->next = n; n->prev = t;
+}
+
+void deleteByVal(int key) {
+    struct DNode* t = head;
+    while(t && t->data != key) t = t->next;
+    if(!t) return;
+    if(t->prev) t->prev->next = t->next;
+    else head = t->next;
+    if(t->next) t->next->prev = t->prev;
+    free(t);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Compare array and linked list as data structures with at least 6 points.</p>
+          <button class="toggle-btn" data-target="lq3">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq3">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Aspect</th><th>Array</th><th>Linked List</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Memory</td><td>Contiguous</td><td>Non-contiguous</td></tr>
+                  <tr><td>Size</td><td>Fixed</td><td>Dynamic</td></tr>
+                  <tr><td>Access</td><td>O(1) random</td><td>O(n) sequential</td></tr>
+                  <tr><td>Insertion</td><td>O(n) shifting</td><td>O(1) pointer update</td></tr>
+                  <tr><td>Memory overhead</td><td>None for pointers</td><td>Extra pointer per node</td></tr>
+                  <tr><td>Overflow risk</td><td>When array full</td><td>Only RAM exhaustion</td></tr>
+                  <tr><td>Cache performance</td><td>Better</td><td>Worse</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Explain circular singly linked list with insert at beginning and end operations with C code.</p>
+          <button class="toggle-btn" data-target="lq4">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq4">
+            <h4>Circular Singly Linked List</h4>
+            <p>In a circular singly linked list the last node's next pointer points to head instead of NULL.</p>
+            <div class="code-box">
+              <pre><code>struct Node { int data; struct Node* next; };
+struct Node* head = NULL;
+
+void insertFront(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data;
+    if(!head) { n->next = n; head = n; return; }
+    struct Node* last = head;
+    while(last->next != head) last = last->next;
+    n->next = head;
+    last->next = n;
+    head = n;
+}
+
+void insertEnd(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data;
+    if(!head) { n->next = n; head = n; return; }
+    struct Node* last = head;
+    while(last->next != head) last = last->next;
+    last->next = n;
+    n->next = head;
+}
+
+void display() {
+    if(!head) return;
+    struct Node* t = head;
+    do { printf("%d → ", t->data); t = t->next; }
+    while(t != head);
+    printf("(head)\n");
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>Explain stack implementation using linked list with push, pop operations and C code.</p>
+          <button class="toggle-btn" data-target="lq5">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq5">
+            <h4>Stack Using Linked List</h4>
+            <p>The head of the linked list acts as the top of the stack. No fixed size limit exists.</p>
+            <div class="code-box">
+              <pre><code>struct Node { int data; struct Node* next; };
+struct Node* top = NULL;
+
+void push(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data;
+    n->next = top;
+    top = n;
+    printf("%d pushed\n", data);
+}
+
+int pop() {
+    if(!top) { printf("Underflow\n"); return -1; }
+    struct Node* t = top;
+    int val = t->data;
+    top = top->next;
+    free(t);
+    return val;
+}
+
+void display() {
+    struct Node* t = top;
+    while(t) { printf("%d ", t->data); t = t->next; }
+    printf("\n");
+}</code></pre>
+            </div>
+            <p><strong>Advantages:</strong></p>
+            <ul>
+              <li>No overflow (dynamic size)</li>
+              <li>Memory used only as needed</li>
+              <li>Both push and pop are O(1)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Explain queue implementation using linked list with enqueue and dequeue operations.</p>
+          <button class="toggle-btn" data-target="lq6">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq6">
+            <h4>Queue Using Linked List</h4>
+            <p>Two pointers: front (for dequeue) and rear (for enqueue). FIFO maintained.</p>
+            <div class="code-box">
+              <pre><code>struct Node { int data; struct Node* next; };
+struct Node *front = NULL, *rear = NULL;
+
+void enqueue(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data; n->next = NULL;
+    if(!rear) { front = rear = n; return; }
+    rear->next = n;
+    rear = n;
+    printf("%d enqueued\n", data);
+}
+
+int dequeue() {
+    if(!front) { printf("Underflow\n"); return -1; }
+    struct Node* t = front;
+    int val = t->data;
+    front = front->next;
+    if(!front) rear = NULL;
+    free(t);
+    return val;
+}</code></pre>
+            </div>
+            <p><strong>Key Points:</strong></p>
+            <ul>
+              <li>Enqueue at rear — O(1)</li>
+              <li>Dequeue from front — O(1)</li>
+              <li>No size limit until RAM exhausted</li>
+              <li>When last element is dequeued, set both front and rear to NULL</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Compare all four types of linked lists with a table and explain their use cases.</p>
+          <button class="toggle-btn" data-target="lq7">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq7">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Type</th><th>Pointers</th><th>Last→next</th><th>Traversal</th><th>Use Case</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Singly LL</td><td>1 (next)</td><td>NULL</td><td>Forward only</td><td>Simple lists, stack</td></tr>
+                  <tr><td>Circular Singly</td><td>1 (next)</td><td>Head</td><td>Forward circular</td><td>Round robin, buffers</td></tr>
+                  <tr><td>Doubly LL</td><td>2 (prev,next)</td><td>NULL</td><td>Both directions</td><td>Browser history, undo/redo</td></tr>
+                  <tr><td>Circular Doubly</td><td>2 (prev,next)</td><td>Head</td><td>Both, circular</td><td>Playlists, OS scheduling</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Conclusion:</strong> The choice of linked list type depends on the application requirements. Singly LL is simplest, circular doubly LL is the most flexible but uses more memory per node.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>Write a C program to delete a node by value from a doubly linked list.</p>
+          <button class="toggle-btn" data-target="lq8">
+            <i class="fas fa-eye"></i> Show Answer
+          </button>
+          <div class="answer-reveal" id="lq8">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct DNode {
+    int data;
+    struct DNode *prev, *next;
+};
+struct DNode* head = NULL;
+
+void deleteByValue(int key) {
+    struct DNode* temp = head;
+    // Search for node
+    while(temp != NULL && temp->data != key) {
+        temp = temp->next;
+    }
+    if(temp == NULL) {
+        printf("Node %d not found\n", key);
+        return;
+    }
+    // Adjust prev pointer of next node
+    if(temp->next != NULL)
+        temp->next->prev = temp->prev;
+    // Adjust next pointer of prev node
+    if(temp->prev != NULL)
+        temp->prev->next = temp->next;
+    else
+        head = temp->next; // Deleting head
+    free(temp);
+    printf("Node %d deleted\n", key);
+}</code></pre>
+            </div>
+            <p><strong>Key Steps:</strong></p>
+            <ol>
+              <li>Traverse to find the node with given key</li>
+              <li>Adjust next pointer of previous node</li>
+              <li>Adjust prev pointer of next node</li>
+              <li>Handle special case if deleting head</li>
+              <li>Free the deleted node's memory</li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Practice Section -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-laptop-code"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q1</h4>
+          <p>Write a complete C program to create a singly linked list and display it.</p>
+          <button class="toggle-btn" data-target="pp1">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+void insertEnd(int data) {
+    struct Node* n = (struct Node*)malloc(sizeof(struct Node));
+    n->data = data;
+    n->next = NULL;
+    if(head == NULL) { head = n; return; }
+    struct Node* t = head;
+    while(t->next != NULL) t = t->next;
+    t->next = n;
+}
+
+void display() {
+    struct Node* t = head;
+    printf("List: ");
+    while(t != NULL) {
+        printf("%d → ", t->data);
+        t = t->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    insertEnd(10);
+    insertEnd(20);
+    insertEnd(30);
+    insertEnd(40);
+    display();
+    return 0;
+}
+// Output: List: 10 → 20 → 30 → 40 → NULL</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q2</h4>
+          <p>Write a C program to count the number of nodes in a linked list.</p>
+          <button class="toggle-btn" data-target="pp2">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+int countNodes() {
+    int count = 0;
+    struct Node* temp = head;
+    while(temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
+int main() {
+    // Create list manually for demo
+    struct Node* n1 = malloc(sizeof(struct Node));
+    struct Node* n2 = malloc(sizeof(struct Node));
+    struct Node* n3 = malloc(sizeof(struct Node));
+    n1->data = 10; n1->next = n2;
+    n2->data = 20; n2->next = n3;
+    n3->data = 30; n3->next = NULL;
+    head = n1;
+
+    printf("Number of nodes: %d\n", countNodes());
+    return 0;
+}
+// Output: Number of nodes: 3</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q3</h4>
+          <p>Write a C program to search for an element in a linked list.</p>
+          <button class="toggle-btn" data-target="pp3">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+int search(int key) {
+    struct Node* temp = head;
+    int pos = 1;
+    while(temp != NULL) {
+        if(temp->data == key)
+            return pos;
+        temp = temp->next;
+        pos++;
+    }
+    return -1;
+}
+
+int main() {
+    // Build list: 10 → 20 → 30 → 40
+    // (insert nodes)
+    int result = search(30);
+    if(result != -1)
+        printf("Element found at position %d\n", result);
+    else
+        printf("Element not found\n");
+    return 0;
+}
+// Output: Element found at position 3</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q4</h4>
+          <p>Write a C program to reverse a singly linked list.</p>
+          <button class="toggle-btn" data-target="pp4">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+void reverseList() {
+    struct Node* prev = NULL;
+    struct Node* curr = head;
+    struct Node* next = NULL;
+    while(curr != NULL) {
+        next = curr->next;  // Store next
+        curr->next = prev;  // Reverse link
+        prev = curr;        // Move prev forward
+        curr = next;        // Move curr forward
+    }
+    head = prev;
+}
+
+void display() {
+    struct Node* t = head;
+    while(t) { printf("%d → ", t->data); t = t->next; }
+    printf("NULL\n");
+}
+
+// Before: 10 → 20 → 30 → 40 → NULL
+// After:  40 → 30 → 20 → 10 → NULL</code></pre>
+            </div>
+            <p><strong>Explanation:</strong> Use three pointers (prev, curr, next) to reverse each link one by one.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q5</h4>
+          <p>Write a C program to implement a doubly linked list with forward and backward traversal.</p>
+          <button class="toggle-btn" data-target="pp5">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp5">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct DNode {
+    int data;
+    struct DNode *prev, *next;
+};
+
+struct DNode* head = NULL;
+
+void insertEnd(int data) {
+    struct DNode* n = malloc(sizeof(struct DNode));
+    n->data = data; n->next = NULL;
+    if(!head) { n->prev = NULL; head = n; return; }
+    struct DNode* t = head;
+    while(t->next) t = t->next;
+    t->next = n; n->prev = t;
+}
+
+void displayForward() {
+    struct DNode* t = head;
+    printf("Forward: ");
+    while(t) { printf("%d → ", t->data); t = t->next; }
+    printf("NULL\n");
+}
+
+void displayBackward() {
+    struct DNode* t = head;
+    while(t->next) t = t->next;
+    printf("Backward: ");
+    while(t) { printf("%d → ", t->data); t = t->prev; }
+    printf("NULL\n");
+}
+
+int main() {
+    insertEnd(10); insertEnd(20); insertEnd(30);
+    displayForward();   // 10 → 20 → 30 → NULL
+    displayBackward();  // 30 → 20 → 10 → NULL
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q6</h4>
+          <p>Write a C program to implement a queue using linked list.</p>
+          <button class="toggle-btn" data-target="pp6">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp6">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node { int data; struct Node* next; };
+struct Node *front = NULL, *rear = NULL;
+
+void enqueue(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data; n->next = NULL;
+    if(!rear) { front = rear = n; return; }
+    rear->next = n; rear = n;
+    printf("%d enqueued\n", data);
+}
+
+int dequeue() {
+    if(!front) { printf("Underflow\n"); return -1; }
+    struct Node* t = front;
+    int val = t->data;
+    front = front->next;
+    if(!front) rear = NULL;
+    free(t);
+    return val;
+}
+
+void display() {
+    struct Node* t = front;
+    printf("Queue: ");
+    while(t) { printf("%d → ", t->data); t = t->next; }
+    printf("NULL\n");
+}
+
+int main() {
+    enqueue(10); enqueue(20); enqueue(30);
+    display();
+    printf("Dequeued: %d\n", dequeue());
+    display();
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q7</h4>
+          <p>Write a C program to find the middle element of a linked list.</p>
+          <button class="toggle-btn" data-target="pp7">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp7">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node { int data; struct Node* next; };
+struct Node* head = NULL;
+
+// Floyd's slow-fast pointer technique
+int findMiddle() {
+    struct Node* slow = head;
+    struct Node* fast = head;
+    while(fast != NULL && fast->next != NULL) {
+        slow = slow->next;        // Move 1 step
+        fast = fast->next->next;  // Move 2 steps
+    }
+    return slow->data;
+}
+
+// For list: 10 → 20 → 30 → 40 → 50
+// Middle = 30</code></pre>
+            </div>
+            <p><strong>Explanation:</strong> Use two pointers — slow moves 1 step, fast moves 2 steps. When fast reaches end, slow is at middle.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q8</h4>
+          <p>Write a C program to implement circular singly linked list and display it.</p>
+          <button class="toggle-btn" data-target="pp8">
+            <i class="fas fa-eye"></i> Show Solution
+          </button>
+          <div class="answer-reveal" id="pp8">
+            <div class="code-box">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node { int data; struct Node* next; };
+struct Node* head = NULL;
+
+void insertEnd(int data) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n->data = data;
+    if(!head) { n->next = n; head = n; return; }
+    struct Node* last = head;
+    while(last->next != head) last = last->next;
+    last->next = n;
+    n->next = head;
+}
+
+void display() {
+    if(!head) return;
+    struct Node* t = head;
+    printf("Circular List: ");
+    do {
+        printf("%d → ", t->data);
+        t = t->next;
+    } while(t != head);
+    printf("(back to %d)\n", head->data);
+}
+
+int main() {
+    insertEnd(10); insertEnd(20); insertEnd(30);
+    display();
+    return 0;
+}
+// Output: Circular List: 10 → 20 → 30 → (back to 10)</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Revision Section -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-check-circle"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Quick Revision Points</div>
+        <ul>
+          <li><strong>Linked List:</strong> Non-contiguous nodes connected by pointers; head stores address of first node.</li>
+          <li><strong>Node:</strong> Contains data + pointer(s) to adjacent nodes.</li>
+          <li><strong>Singly LL:</strong> 1 pointer (next); last→next = NULL; forward traversal only.</li>
+          <li><strong>Circular Singly LL:</strong> 1 pointer; last→next = head; no NULL; use do-while for traversal.</li>
+          <li><strong>Doubly LL:</strong> 2 pointers (prev, next); head→prev = NULL; last→next = NULL; bidirectional.</li>
+          <li><strong>Circular Doubly LL:</strong> 2 pointers; head→prev = last; last→next = head; most flexible.</li>
+          <li><strong>Insert at front:</strong> newNode→next = head; head = newNode; O(1).</li>
+          <li><strong>Insert at end:</strong> Traverse to last; last→next = newNode; O(n).</li>
+          <li><strong>Delete first:</strong> temp = head; head = head→next; free(temp); O(1).</li>
+          <li><strong>Stack via LL:</strong> head = top; push at head; pop from head; no overflow.</li>
+          <li><strong>Queue via LL:</strong> front = dequeue end; rear = enqueue end; no overflow.</li>
+          <li><strong>malloc():</strong> Allocate dynamic memory; <strong>free():</strong> Release memory.</li>
+          <li><strong>Array vs LL:</strong> Array = O(1) access, O(n) insert; LL = O(n) access, O(1) insert.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exams</div>
+        <ul>
+          <li>Insertion at beginning: Always update head AFTER setting newNode→next = head — not before.</li>
+          <li>Insertion at end: Traverse until node→next == NULL (singly) or node→next == head (circular).</li>
+          <li>Doubly LL delete: Must update BOTH prev and next pointers of adjacent nodes.</li>
+          <li>Circular LL traversal: Use do-while loop with condition temp != head — never temp != NULL.</li>
+          <li>Circular Doubly: Single node has node→next = node and node→prev = node (points to itself).</li>
+          <li>Stack LL: head acts as top; push = insert at beginning; pop = delete from beginning.</li>
+          <li>Queue LL: rear = insertion end; front = deletion end; when last element removed, set front = rear = NULL.</li>
+          <li>Always call free() after deleting a node to prevent memory leaks.</li>
+          <li>Always check if head == NULL before any deletion operation.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</div>
+        <ul>
+          <li>Setting head = newNode BEFORE setting newNode→next = head — this breaks the link!</li>
+          <li>Using while(temp != NULL) for circular linked list traversal — causes infinite loop!</li>
+          <li>Forgetting to update head→prev when inserting at front of doubly LL.</li>
+          <li>Not calling free() after deleting a node — causes memory leak.</li>
+          <li>Forgetting to handle the single-node special case in circular LL deletion.</li>
+          <li>In doubly LL delete, not checking if prev or next is NULL before dereferencing.</li>
+          <li>Forgetting to set rear = NULL when queue becomes empty in linked list queue.</li>
+          <li>Traversing to last node using node→next != NULL instead of node→next != head in circular LL.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

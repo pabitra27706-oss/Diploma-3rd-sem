@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Feedback - Study Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/professional.css">
+    <style>
+        .feedback-form {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .feedback-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .type-card {
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #eee;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .type-card.selected {
+            border-color: #3498db;
+            background: #ebf5fb;
+        }
+        
+        .type-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .char-count {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: #e8f6ef;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .thank-you-icon {
+            font-size: 60px;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="professional-container">
+        <a href="professional-hub.html" class="back-to-study">
+            <i class="fas fa-arrow-left"></i> Back to Hub
+        </a>
+        
+        <header class="professional-hero" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+            <div class="hero-icon">💬</div>
+            <h1>Send Feedback</h1>
+            <p class="hero-subtitle">Your voice makes the app better</p>
+        </header>
+        
+        <div class="content-card" style="text-align: center; margin-bottom: 20px;">
+            <h2 style="color: #2c3e50;">
+                <i class="fas fa-comment-medical"></i> Help Improve the App
+            </h2>
+            <p style="color: #666; line-height: 1.6;">
+                Found a bug? Have a feature idea? Want to share your experience? 
+                Your feedback helps make this app better for all students.
+            </p>
+        </div>
+        
+        <div class="feedback-form">
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Feedback Type</label>
+                <div class="feedback-types">
+                    <div class="type-card" onclick="selectType('bug')">
+                        <div class="type-icon">🐛</div>
+                        <h4>Bug Report</h4>
+                        <p>Something's not working</p>
+                    </div>
+                    
+                    <div class="type-card" onclick="selectType('feature')">
+                        <div class="type-icon">💡</div>
+                        <h4>Feature Request</h4>
+                        <p>Suggest new features</p>
+                    </div>
+                    
+                    <div class="type-card" onclick="selectType('content')">
+                        <div class="type-icon">📚</div>
+                        <h4>Content Request</h4>
+                        <p>Need more study materials</p>
+                    </div>
+                    
+                    <div class="type-card" onclick="selectType('other')">
+                        <div class="type-card" onclick="selectType('other')">
+                        <div class="type-icon">💬</div>
+                        <h4>General Feedback</h4>
+                        <p>Share your experience</p>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="feedbackType" value="">
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-pencil-alt"></i> Your Feedback</label>
+                <textarea id="feedbackMessage" placeholder="Please describe your feedback in detail...
+• For bugs: What were you doing? What happened? What should have happened?
+• For features: How would this feature help you?
+• For content: Which subjects/materials do you need?
+
+Thank you for helping improve the app! 😊" 
+                         oninput="updateCharCount()"></textarea>
+                <div class="char-count">
+                    <span id="charCount">0</span> / 2000 characters
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Contact Email (Optional)</label>
+                <input type="email" id="userEmail" placeholder="your.email@example.com" 
+                       style="width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 10px;">
+                <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">
+                    Provide your email if you'd like a response
+                </p>
+            </div>
+            
+            <button class="submit-btn" onclick="submitFeedback()">
+                <i class="fas fa-paper-plane"></i> Send Feedback
+            </button>
+        </div>
+        
+        <div class="thank-you" id="thankYouMessage">
+            <div class="thank-you-icon">🎉</div>
+            <h2 style="color: #27ae60;">Thank You!</h2>
+            <p style="color: #666; line-height: 1.6; margin: 20px 0;">
+                Your feedback has been recorded. I'll review it and work on improvements.<br>
+                If you provided an email, I'll contact you if needed.
+            </p>
+            <a href="professional-hub.html" class="contact-btn" 
+               style="background: #27ae60; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; display: inline-block;">
+                Back to Hub
+            </a>
+        </div>
+        
+        <div class="faq-section" style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 30px 0;">
+            <h3 style="color: #2c3e50; margin-bottom: 20px;">
+                <i class="fas fa-lightbulb"></i> Tips for Effective Feedback
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #3498db;">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">🔍 Be Specific</h4>
+                    <p style="color: #666; margin: 0; font-size: 0.95rem;">
+                        Instead of "app is slow", say "loading screen 2 takes 10 seconds"
+                    </p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #9b59b6;">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">📸 Include Screenshots</h4>
+                    <p style="color: #666; margin: 0; font-size: 0.95rem;">
+                        Screenshots help understand issues better
+                    </p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #2ecc71;">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">🎯 Explain the Benefit</h4>
+                    <p style="color: #666; margin: 0; font-size: 0.95rem;">
+                        "This feature would help me save time while studying"
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #fff3cd; padding: 20px; border-radius: 15px; margin: 30px 0; text-align: center;">
+            <h4 style="color: #856404; margin-bottom: 10px;">
+                <i class="fas fa-users"></i> Community Driven
+            </h4>
+            <p style="color: #856404; margin: 0;">
+                Every week, I review feedback and implement the most requested features. 
+                Your suggestions directly shape the app's future!
+            </p>
+        </div>
+        
+        <footer class="professional-footer">
+            <p>Together, we build better learning tools</p>
+            <div class="footer-links">
+                <a href="contact-support.html">Contact Support</a> •
+                <a href="professional-hub.html">Back to Hub</a> •
+                <a href="../../index.html">Study Now</a>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        let selectedType = '';
+        
+        function selectType(type) {
+            selectedType = type;
+            document.getElementById('feedbackType').value = type;
+            
+            // Remove selected class from all
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add to clicked
+            event.currentTarget.classList.add('selected');
+            
+            // Update placeholder based on type
+            const textarea = document.getElementById('feedbackMessage');
+            switch(type) {
+                case 'bug':
+                    textarea.placeholder = 'Please describe the bug in detail...\n\n• What were you doing when it happened?\n• What exactly went wrong?\n• What should have happened instead?\n\nApp Version: [Automatically included]\nDevice: [Optional - e.g., Samsung Galaxy M32]\n\nScreenshots help a lot if you can attach them via email!';
+                    break;
+                case 'feature':
+                    textarea.placeholder = 'Tell us about your feature idea...\n\n• What feature would you like?\n• How would it help your studying?\n• Any examples from other apps?\n\nThank you for your creative ideas! 💡';
+                    break;
+                case 'content':
+                    textarea.placeholder = 'What study materials do you need?...\n\n• Which subject/topic?\n• Specific chapters or question types?\n• Any particular difficulty level?\n\nI\'ll try to add them in future updates! 📚';
+                    break;
+                default:
+                    textarea.placeholder = 'Share your thoughts...\n\n• What do you like about the app?\n• What could be improved?\n• Any general suggestions?\n\nYour feedback is valuable! 😊';
+            }
+        }
+        
+        function updateCharCount() {
+            const textarea = document.getElementById('feedbackMessage');
+            const charCount = document.getElementById('charCount');
+            charCount.textContent = textarea.value.length;
+            
+            if (textarea.value.length > 2000) {
+                charCount.style.color = '#e74c3c';
+            } else if (textarea.value.length > 1500) {
+                charCount.style.color = '#f39c12';
+            } else {
+                charCount.style.color = '#666';
+            }
+        }
+        
+        function submitFeedback() {
+            const message = document.getElementById('feedbackMessage').value;
+            const email = document.getElementById('userEmail').value;
+            const type = selectedType || 'other';
+            
+            if (!message.trim()) {
+                alert('Please enter your feedback message');
+                return;
+            }
+            
+            if (message.length < 10) {
+                alert('Please provide more details (at least 10 characters)');
+                return;
+            }
+            
+            // Prepare email
+            const subject = `Study Hub Feedback: ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            let body = `Feedback Type: ${type}\n\n`;
+            body += `Message:\n${message}\n\n`;
+            body += `Email: ${email || 'Not provided'}\n`;
+            body += `Submitted on: ${new Date().toLocaleString()}\n`;
+            body += `---\nApp Version: 1.0\n`;
+            
+            // Encode for mailto
+            const mailtoLink = `mailto:chakraborttypabi2772006@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Show thank you message
+            document.querySelector('.feedback-form').style.display = 'none';
+            document.getElementById('thankYouMessage').style.display = 'block';
+            
+            // Open email client after a delay
+            setTimeout(() => {
+                window.location.href = mailtoLink;
+            }, 1500);
+        }
+        
+        document.querySelector('.back-to-study').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'professional-hub.html';
+        });
+        
+        // Initialize
+        updateCharCount();
+    </script>
+</body>
+</html>

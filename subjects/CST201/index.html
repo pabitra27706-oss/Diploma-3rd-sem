@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CST201 – Computer Programming in C</title>
+  <link rel="stylesheet" href="../units-com/common.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ---- consistent subject-specific overrides ---- */
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .unit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .unit-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+    }
+    .unit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.8rem;
+      border-radius: 20px;
+      width: fit-content;
+      letter-spacing: 0.02em;
+    }
+    .unit-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.3;
+    }
+    .unit-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .unit-card ul li {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .unit-card ul li::before {
+      content: "▸";
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .unit-hours {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .unit-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: auto;
+      width: fit-content;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .unit-link-btn:hover {
+      background: var(--primary-dark, #1a56db);
+      transform: translateX(3px);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .about-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .about-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .about-card p, .about-card ul {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .about-card ul {
+      padding-left: 1.2rem;
+    }
+    .about-card ul li {
+      margin-bottom: 0.3rem;
+    }
+    .exam-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+    }
+    .exam-table th {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .exam-table td {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .exam-table tr:nth-child(even) td {
+      background: var(--hover-bg);
+    }
+    .book-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .book-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      font-size: 0.86rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .book-list li i {
+      color: var(--primary);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .course-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding: 0.9rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+    .meta-item i {
+      color: var(--primary);
+    }
+    .meta-item strong {
+      color: var(--text);
+    }
+    .header .course-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.5rem;
+    }
+    .header .course-info .info-item {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .header .course-info .info-item i {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-code"></i>
+      <span>CST201 – Computer Programming in C</span>
+    </div>
+    <div class="nav-links">
+      <a href="#units"><i class="fas fa-layer-group"></i> Units</a>
+      <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#exam"><i class="fas fa-file-alt"></i> Exam</a>
+      <a href="#books"><i class="fas fa-book"></i> Books</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>CST201</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#units"><i class="fas fa-layer-group"></i> Units</a>
+    <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+    <a href="#exam"><i class="fas fa-file-alt"></i> Exam</a>
+    <a href="#books"><i class="fas fa-book"></i> Books</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <h1><i class="fas fa-terminal"></i> Computer Programming in C</h1>
+    <p>CST201 &nbsp;|&nbsp; Diploma 3rd Semester &nbsp;|&nbsp; WBSCTE</p>
+    <div class="course-info">
+      <span class="info-item"><i class="fas fa-credit-card"></i> Credits: 2</span>
+      <span class="info-item"><i class="fas fa-chalkboard-teacher"></i> L:2 T:0 P:0</span>
+      <span class="info-item"><i class="fas fa-layer-group"></i> 5 Units</span>
+      <span class="info-item"><i class="fas fa-clock"></i> 45 Hours Total</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Course Meta Bar -->
+  <div class="course-meta-bar">
+    <div class="meta-item"><i class="fas fa-check-circle"></i> <strong>Prerequisites:</strong>&nbsp; NIL</div>
+    <div class="meta-item"><i class="fas fa-language"></i> <strong>Language:</strong>&nbsp; C (ISO C99)</div>
+    <div class="meta-item"><i class="fas fa-university"></i> <strong>Board:</strong>&nbsp; WBSCTE</div>
+    <div class="meta-item"><i class="fas fa-calendar-alt"></i> <strong>Semester:</strong>&nbsp; 3rd</div>
+    <div class="meta-item"><i class="fas fa-code-branch"></i> <strong>Subject Code:</strong>&nbsp; CST201</div>
+  </div>
+
+  <!-- ===== SECTION 1: UNITS ===== -->
+  <section class="section" id="units">
+    <h2 class="section-title">
+      <i class="fas fa-layer-group"></i> Units
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="unit-grid">
+
+        <!-- Unit 1 -->
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 1</span>
+          <h3>Basics of C</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 8 Hours</div>
+          <ul>
+            <li>History &amp; Structure of C</li>
+            <li>Data Types &amp; Operators</li>
+            <li>Typecasting</li>
+            <li>Formatted I/O</li>
+          </ul>
+          <a href="units/unit-1.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 1
+          </a>
+        </div>
+
+        <!-- Unit 2 -->
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 2</span>
+          <h3>Decision &amp; Looping</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 8 Hours</div>
+          <ul>
+            <li>if-else &amp; Switch</li>
+            <li>goto Statement</li>
+            <li>while, do-while, for</li>
+            <li>break &amp; continue</li>
+          </ul>
+          <a href="units/unit-2.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 2
+          </a>
+        </div>
+
+        <!-- Unit 3 -->
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 3</span>
+          <h3>Arrays &amp; Strings</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 10 Hours</div>
+          <ul>
+            <li>1D &amp; 2D Arrays</li>
+            <li>Multidimensional Arrays</li>
+            <li>String Functions</li>
+          </ul>
+          <a href="units/unit-3.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 3
+          </a>
+        </div>
+
+        <!-- Unit 4 -->
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 4</span>
+          <h3>User Defined Functions</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 10 Hours</div>
+          <ul>
+            <li>Prototype &amp; Definition</li>
+            <li>Storage Classes</li>
+            <li>Call by Value/Reference</li>
+            <li>Recursion</li>
+          </ul>
+          <a href="units/unit-4.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 4
+          </a>
+        </div>
+
+        <!-- Unit 5 -->
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 5</span>
+          <h3>Pointers in C</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 9 Hours</div>
+          <ul>
+            <li>Pointer Basics</li>
+            <li>Pointer Arithmetic</li>
+            <li>Dynamic Memory Allocation</li>
+            <li>Function &amp; Double Pointers</li>
+          </ul>
+          <a href="units/unit-5.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 5
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 2: ABOUT ===== -->
+  <section class="section" id="about">
+    <h2 class="section-title">
+      <i class="fas fa-info-circle"></i> About This Course
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="about-grid">
+        <div class="about-card">
+          <h4><i class="fas fa-bullseye"></i> Course Aim</h4>
+          <p>To develop structured problem‑solving skills using C programming. This course builds strong fundamentals required for Data Structures, Algorithms, and advanced programming.</p>
+        </div>
+        <div class="about-card">
+          <h4><i class="fas fa-list-check"></i> Learning Outcomes</h4>
+          <ul>
+            <li>Write structured C programs.</li>
+            <li>Understand arrays, functions, and recursion.</li>
+            <li>Master pointers and memory management.</li>
+            <li>Prepare foundation for Data Structures.</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h4><i class="fas fa-tools"></i> Prerequisites</h4>
+          <p>No formal prerequisites. Basic familiarity with computers and logic is helpful.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: EXAM PATTERN ===== -->
+  <section class="section" id="exam">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Exam Pattern
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="exam-table data-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>MCQ</td><td>10</td></tr>
+            <tr><td>Fill in the blanks</td><td>10</td></tr>
+            <tr><td>Short Answer</td><td>10</td></tr>
+            <tr><td>Subjective (2 marks)</td><td>12</td></tr>
+            <tr><td>Subjective (6 marks)</td><td>18</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>60</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 4: REFERENCE BOOKS ===== -->
+  <section class="section" id="books">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Reference Books
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <ul class="book-list">
+        <li><i class="fas fa-book-open"></i> <strong>Let Us C</strong> — Yashavant Kanetkar</li>
+        <li><i class="fas fa-book-open"></i> <strong>Programming in ANSI C</strong> — E. Balagurusamy</li>
+        <li><i class="fas fa-book-open"></i> <strong>The C Programming Language</strong> — Kernighan &amp; Ritchie</li>
+        <li><i class="fas fa-book-open"></i> <strong>Computer Fundamentals &amp; Programming in C</strong> — Reema Thareja</li>
+      </ul>
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../units-com/common.js"></script>
+</body>
+</html>

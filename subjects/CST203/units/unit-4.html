@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 4 – File I/O, Text Processing, Regular Expressions | CST203</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .io-table { width:100%; border-collapse:collapse; font-size:0.87rem; margin-top:0.5rem; }
+    .io-table th { background:var(--primary); color:#fff; padding:0.55rem 0.8rem; text-align:left; }
+    .io-table td { padding:0.5rem 0.8rem; border-bottom:1px solid var(--border); color:var(--text); }
+    .io-table tr:nth-child(even) td { background:var(--card-bg); }
+    .meta-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.75rem; margin-top:0.75rem; }
+    .meta-card { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:0.85rem; text-align:center; }
+    .meta-card code { font-size:1rem; color:var(--primary); font-weight:700; }
+    .meta-card p { font-size:0.78rem; color:var(--text-muted); margin:0.3rem 0 0 0; }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fab fa-python"></i>
+      <span>CST203 — Unit 4</span>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#inputoutput">I/O</a>
+      <a href="#fileio">File I/O</a>
+      <a href="#regex">Regex</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 4 – File I/O &amp; Regex</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#inputoutput">I/O</a>
+    <a href="#fileio">File I/O</a>
+    <a href="#regex">Regex</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle"><i class="fas fa-moon"></i> Theme</button>
+    <button id="drawerPrint"><i class="fas fa-print"></i> Print</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <h1><i class="fas fa-file-code"></i> Unit 4: File I/O, Text Processing, Regular Expressions</h1>
+      <p>CST203 — Scripting Languages (Python) &nbsp;|&nbsp; 6 Hours</p>
+      <div class="course-info">
+        <span class="info-item"><i class="fas fa-clock"></i> 6 Hours</span>
+        <span class="info-item"><i class="fas fa-signal"></i> Full Depth</span>
+        <span class="info-item"><i class="fas fa-list"></i> 3 Topics</span>
+        <span class="info-item"><a href="../index.html" style="color:inherit;text-decoration:none;"><i class="fas fa-home"></i> Subject Home</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== OVERVIEW ========== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What This Unit Covers</div>
+        <ul>
+          <li><strong>Keyboard I/O:</strong> <code>input()</code> to read from keyboard, <code>print()</code> to display output.</li>
+          <li><strong>File I/O:</strong> Opening, reading, writing, appending, and closing files. File modes and file functions.</li>
+          <li><strong>Regular Expressions:</strong> Pattern matching using the <code>re</code> module. Metacharacters, functions, and substitution.</li>
+        </ul>
+      </div>
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Study Tip</div>
+        <p>File modes ('r', 'w', 'a', 'x', 'b', 't') and the difference between <code>read()</code>, <code>readline()</code>, and <code>readlines()</code> are very commonly asked. For regex, memorize the key metacharacters and the 4 main functions: <code>match</code>, <code>search</code>, <code>findall</code>, <code>sub</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== KEYBOARD I/O ========== -->
+  <section class="section" id="inputoutput">
+    <h2 class="section-title">
+      <i class="fas fa-keyboard"></i> Keyboard Input and Output
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-book"></i> input() Function</div>
+        <p>The <code>input()</code> function reads a line of text from the keyboard. It always returns a <strong>string</strong>. To use as a number, you must explicitly convert using <code>int()</code> or <code>float()</code>.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> input() Examples</div>
+        <pre>
+# Basic input — always returns string
+name = input("Enter your name: ")
+print(f"Hello, {name}!")
+
+# Convert to integer
+age = int(input("Enter your age: "))
+print(f"You are {age} years old.")
+
+# Convert to float
+price = float(input("Enter price: "))
+print(f"Price with tax: {price * 1.18:.2f}")
+
+# Multiple inputs on one line
+x, y = input("Enter two numbers separated by space: ").split()
+x, y = int(x), int(y)
+print(f"Sum: {x + y}")
+
+# Using map for cleaner input
+a, b = map(int, input("Enter two integers: ").split())
+print(f"Product: {a * b}")
+        </pre>
+      </div>
+
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-print"></i> print() Function</div>
+        <p>The <code>print()</code> function outputs data to the screen (standard output). It can print multiple values, use custom separators and end characters, and redirect output to files.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> print() Examples</div>
+        <pre>
+# Basic print
+print("Hello, World!")
+
+# Multiple values
+print("Name:", "Alice", "Age:", 20)
+# Name: Alice Age: 20
+
+# Custom separator
+print("A", "B", "C", sep="-")   # A-B-C
+
+# Custom end (default is newline)
+print("Hello", end=" ")
+print("World")   # Hello World (on same line)
+
+# Print nothing (just newline)
+print()
+
+# Print to a file
+with open("output.txt", "w") as f:
+    print("Hello, file!", file=f)
+
+# Formatted output
+pi = 3.14159
+print(f"Pi is approximately {pi:.2f}")   # Pi is approximately 3.14
+print("Value: {:>10.3f}".format(pi))     # Right-aligned, 3 decimal places
+        </pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== FILE I/O ========== -->
+  <section class="section" id="fileio">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> File I/O Operations
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- File Modes -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-folder-open"></i> File Modes</div>
+        <p>When opening a file with <code>open()</code>, you must specify a <strong>mode</strong> that determines how the file will be used.</p>
+      </div>
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <table class="io-table">
+          <thead><tr><th>Mode</th><th>Name</th><th>Description</th><th>File exists?</th><th>File not exists?</th></tr></thead>
+          <tbody>
+            <tr><td><code>'r'</code></td><td>Read</td><td>Open for reading only</td><td>Opens normally</td><td>FileNotFoundError</td></tr>
+            <tr><td><code>'w'</code></td><td>Write</td><td>Open for writing. Clears file content</td><td>Overwrites content</td><td>Creates new file</td></tr>
+            <tr><td><code>'a'</code></td><td>Append</td><td>Open for writing at end of file</td><td>Adds to end</td><td>Creates new file</td></tr>
+            <tr><td><code>'x'</code></td><td>Exclusive</td><td>Create new file only</td><td>FileExistsError</td><td>Creates new file</td></tr>
+            <tr><td><code>'b'</code></td><td>Binary</td><td>Binary mode (combine: 'rb', 'wb')</td><td colspan="2">Use for images, audio, etc.</td></tr>
+            <tr><td><code>'t'</code></td><td>Text</td><td>Text mode (default)</td><td colspan="2">For text files (default)</td></tr>
+            <tr><td><code>'r+'</code></td><td>Read+Write</td><td>Open for both reading and writing</td><td>Opens normally</td><td>FileNotFoundError</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- open() and close() -->
+      <div class="syntax-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> open() and close() Syntax</div>
+        <div class="formula">file_object = open("filename", "mode")</div>
+        <div class="formula">file_object = open("filename", "mode", encoding="utf-8")</div>
+        <div class="formula">file_object.close()   → always close after use</div>
+        <div class="formula answer">Best practice: use with statement — auto closes file</div>
+        <div class="formula">with open("filename", "mode") as f:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# file operations here</div>
+        <div class="formula"># file automatically closed after with block</div>
+      </div>
+
+      <!-- Reading -->
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-book-reader"></i> Reading Functions</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Function</th><th>Returns</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>read()</code></td><td>String</td><td>Reads entire file content as one string</td></tr>
+              <tr><td><code>read(n)</code></td><td>String</td><td>Reads n characters</td></tr>
+              <tr><td><code>readline()</code></td><td>String</td><td>Reads one line (including newline)</td></tr>
+              <tr><td><code>readlines()</code></td><td>List of strings</td><td>Reads all lines as a list</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> File Reading Examples</div>
+        <pre>
+# read() — entire file as one string
+with open("sample.txt", "r") as f:
+    content = f.read()
+    print(content)
+
+# read(n) — read n characters
+with open("sample.txt", "r") as f:
+    chunk = f.read(50)   # first 50 characters
+    print(chunk)
+
+# readline() — one line at a time
+with open("sample.txt", "r") as f:
+    line1 = f.readline()
+    line2 = f.readline()
+    print(line1, end="")
+    print(line2, end="")
+
+# readlines() — all lines as a list
+with open("sample.txt", "r") as f:
+    lines = f.readlines()
+    for line in lines:
+        print(line.strip())   # strip removes \n
+
+# Iterating line by line (most memory-efficient)
+with open("sample.txt", "r") as f:
+    for line in f:
+        print(line.strip())
+        </pre>
+      </div>
+
+      <!-- Writing -->
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-pen"></i> Writing Functions</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Function</th><th>Argument</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>write(s)</code></td><td>String</td><td>Writes a single string to file. Does NOT add newline automatically.</td></tr>
+              <tr><td><code>writelines(lines)</code></td><td>List of strings</td><td>Writes a list of strings. Does NOT add newlines between items.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> File Writing Examples</div>
+        <pre>
+# write() — write a string
+with open("output.txt", "w") as f:
+    f.write("Hello, World!\n")
+    f.write("Second line\n")
+    f.write("Third line\n")
+
+# writelines() — write list of strings
+lines = ["Line 1\n", "Line 2\n", "Line 3\n"]
+with open("output.txt", "w") as f:
+    f.writelines(lines)
+
+# Append mode — add to end without overwriting
+with open("output.txt", "a") as f:
+    f.write("This line is appended.\n")
+
+# Write and verify
+with open("output.txt", "r") as f:
+    print(f.read())
+        </pre>
+      </div>
+
+      <!-- Other File Operations -->
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-tools"></i> Other File Operations</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Function/Method</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>open(name, mode)</code></td><td>Opens a file and returns a file object</td></tr>
+              <tr><td><code>close()</code></td><td>Closes the file. Frees system resources</td></tr>
+              <tr><td><code>tell()</code></td><td>Returns current position (byte offset) in the file</td></tr>
+              <tr><td><code>seek(pos)</code></td><td>Moves file pointer to given byte position</td></tr>
+              <tr><td><code>seek(0)</code></td><td>Move to beginning of file</td></tr>
+              <tr><td><code>flush()</code></td><td>Flushes internal buffer — forces write to disk immediately</td></tr>
+              <tr><td><code>fileno()</code></td><td>Returns the integer file descriptor</td></tr>
+              <tr><td><code>isatty()</code></td><td>Returns True if file is connected to a terminal</td></tr>
+              <tr><td><code>next(f)</code></td><td>Reads the next line (same as readline() in iteration)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> tell() and seek() Examples</div>
+        <pre>
+with open("sample.txt", "r") as f:
+    print(f.tell())        # 0 — at beginning
+
+    content = f.read(10)   # Read 10 chars
+    print(content)
+    print(f.tell())        # 10 — moved 10 bytes
+
+    f.seek(0)              # Back to beginning
+    print(f.tell())        # 0
+
+    f.seek(5)              # Move to position 5
+    print(f.read(5))       # Read 5 chars from position 5
+
+# flush() — ensure data is written immediately
+with open("log.txt", "w") as f:
+    f.write("Starting process...\n")
+    f.flush()              # Force write to disk now
+    # ... other operations ...
+    f.write("Process complete.\n")
+        </pre>
+      </div>
+
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Redirecting Output to File</div>
+        <p>You can redirect <code>print()</code> output directly to a file using the <code>file</code> parameter:</p>
+        <pre style="background:var(--code-bg,#f4f4f4);padding:0.75rem;border-radius:6px;font-size:0.84rem;">
+with open("results.txt", "w") as f:
+    print("Result 1: 42", file=f)
+    print("Result 2: 85", file=f)
+# Both print statements go to results.txt, not screen
+        </pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== REGULAR EXPRESSIONS ========== -->
+  <section class="section" id="regex">
+    <h2 class="section-title">
+      <i class="fas fa-search"></i> Regular Expressions (Regex)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-book"></i> What is a Regular Expression?</div>
+        <p>A <strong>regular expression</strong> (regex) is a sequence of characters that defines a <strong>search pattern</strong>. It is used for pattern matching, searching, validation, and text manipulation. Python provides regex support through the built-in <code>re</code> module.</p>
+      </div>
+
+      <!-- Metacharacters -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Regex Metacharacters</div>
+        <p>Metacharacters are special characters with a specific meaning in regex patterns.</p>
+        <div class="meta-grid">
+          <div class="meta-card"><code>.</code><p>Any character except newline</p></div>
+          <div class="meta-card"><code>^</code><p>Start of string</p></div>
+          <div class="meta-card"><code>$</code><p>End of string</p></div>
+          <div class="meta-card"><code>*</code><p>0 or more repetitions</p></div>
+          <div class="meta-card"><code>+</code><p>1 or more repetitions</p></div>
+          <div class="meta-card"><code>?</code><p>0 or 1 repetition (optional)</p></div>
+          <div class="meta-card"><code>{n}</code><p>Exactly n repetitions</p></div>
+          <div class="meta-card"><code>{n,m}</code><p>n to m repetitions</p></div>
+          <div class="meta-card"><code>[]</code><p>Character set</p></div>
+          <div class="meta-card"><code>()</code><p>Grouping</p></div>
+          <div class="meta-card"><code>|</code><p>OR — either pattern</p></div>
+          <div class="meta-card"><code>\d</code><p>Any digit [0-9]</p></div>
+          <div class="meta-card"><code>\w</code><p>Word char [a-zA-Z0-9_]</p></div>
+          <div class="meta-card"><code>\s</code><p>Whitespace</p></div>
+          <div class="meta-card"><code>\b</code><p>Word boundary</p></div>
+          <div class="meta-card"><code>\D</code><p>Non-digit</p></div>
+        </div>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <table class="io-table">
+          <thead><tr><th>Pattern</th><th>Matches</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><code>.</code></td><td>Any single character (except newline)</td><td><code>a.c</code> matches "abc", "axc", "a1c"</td></tr>
+            <tr><td><code>^hello</code></td><td>String starting with "hello"</td><td>Matches "hello world" not "say hello"</td></tr>
+            <tr><td><code>world$</code></td><td>String ending with "world"</td><td>Matches "hello world" not "world peace"</td></tr>
+            <tr><td><code>ab*</code></td><td>"a" followed by 0 or more "b"s</td><td>Matches "a", "ab", "abb", "abbb"</td></tr>
+            <tr><td><code>ab+</code></td><td>"a" followed by 1 or more "b"s</td><td>Matches "ab", "abb" but NOT "a"</td></tr>
+            <tr><td><code>ab?</code></td><td>"a" optionally followed by "b"</td><td>Matches "a" or "ab"</td></tr>
+            <tr><td><code>\d{3}</code></td><td>Exactly 3 digits</td><td>Matches "123", "456"</td></tr>
+            <tr><td><code>[aeiou]</code></td><td>Any vowel character</td><td>Matches "a", "e", "i", "o", "u"</td></tr>
+            <tr><td><code>[^aeiou]</code></td><td>Any non-vowel</td><td>Matches consonants, digits, etc.</td></tr>
+            <tr><td><code>cat|dog</code></td><td>"cat" or "dog"</td><td>Matches "cat" or "dog"</td></tr>
+            <tr><td><code>\d+</code></td><td>One or more digits</td><td>Matches "123", "4567"</td></tr>
+            <tr><td><code>\w+</code></td><td>One or more word characters</td><td>Matches "hello", "Python3"</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- re Functions -->
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-tools"></i> re Module Functions</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Function</th><th>Description</th><th>Returns</th></tr></thead>
+            <tbody>
+              <tr><td><code>re.match(pattern, string)</code></td><td>Match pattern at the <strong>beginning</strong> of string only</td><td>Match object or None</td></tr>
+              <tr><td><code>re.search(pattern, string)</code></td><td>Search for pattern <strong>anywhere</strong> in string</td><td>First match object or None</td></tr>
+              <tr><td><code>re.findall(pattern, string)</code></td><td>Find <strong>all matches</strong> in string</td><td>List of all matching strings</td></tr>
+              <tr><td><code>re.finditer(pattern, string)</code></td><td>Find all matches as an <strong>iterator</strong></td><td>Iterator of match objects</td></tr>
+              <tr><td><code>re.compile(pattern)</code></td><td>Compile pattern into a reusable pattern object</td><td>Pattern object</td></tr>
+              <tr><td><code>re.sub(pattern, repl, string)</code></td><td>Replace all matches with replacement string</td><td>New string</td></tr>
+              <tr><td><code>re.subn(pattern, repl, string)</code></td><td>Replace matches and return count of replacements</td><td>Tuple (new_string, count)</td></tr>
+              <tr><td><code>re.split(pattern, string)</code></td><td>Split string by pattern matches</td><td>List of substrings</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="code-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> re.match() and re.search()</div>
+        <pre>
+import re
+
+text = "Hello, Python 3.11 is great!"
+
+# re.match() — only matches at beginning
+m = re.match(r"Hello", text)
+if m:
+    print("match found:", m.group())   # Hello
+    print("Start:", m.start())         # 0
+    print("End:", m.end())             # 5
+
+# match fails if pattern not at start
+m2 = re.match(r"Python", text)
+print(m2)   # None — "Python" is not at start
+
+# re.search() — searches anywhere in string
+s = re.search(r"Python", text)
+if s:
+    print("search found:", s.group())  # Python
+    print("Position:", s.start())      # 7
+
+# Using groups
+s2 = re.search(r"Python (\d+\.\d+)", text)
+if s2:
+    print("Full match:", s2.group())    # Python 3.11
+    print("Version:", s2.group(1))      # 3.11
+        </pre>
+      </div>
+
+      <div class="code-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> re.findall() and re.finditer()</div>
+        <pre>
+import re
+
+text = "Call 9876543210 or 8765432109 for support. Fax: 7654321098"
+
+# re.findall() — returns list of all matches
+phones = re.findall(r"\d{10}", text)
+print(phones)
+# ['9876543210', '8765432109', '7654321098']
+
+# Find all words
+words = re.findall(r"\w+", "Hello World Python")
+print(words)   # ['Hello', 'World', 'Python']
+
+# re.finditer() — returns iterator of match objects
+for match in re.finditer(r"\d{10}", text):
+    print(f"Found: {match.group()} at position {match.start()}")
+
+# Find all email addresses
+emails = "alice@example.com and bob@test.org"
+found = re.findall(r"[\w.]+@[\w.]+\.\w+", emails)
+print(found)   # ['alice@example.com', 'bob@test.org']
+        </pre>
+      </div>
+
+      <div class="code-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> re.compile(), re.sub(), re.subn(), re.split()</div>
+        <pre>
+import re
+
+# re.compile() — create reusable pattern object
+pattern = re.compile(r"\d+")
+print(pattern.findall("abc 123 def 456"))   # ['123', '456']
+print(pattern.search("abc 789").group())    # 789
+
+# re.sub() — substitute matches
+text = "Hello   World    Python"
+# Replace multiple spaces with single space
+cleaned = re.sub(r"\s+", " ", text)
+print(cleaned)   # Hello World Python
+
+# Replace digits with *
+masked = re.sub(r"\d", "*", "Phone: 9876543210")
+print(masked)    # Phone: **********
+
+# re.subn() — substitute and return count
+result, count = re.subn(r"\d", "*", "abc 123 def 456")
+print(result)   # abc *** def ***
+print(count)    # 6
+
+# re.split() — split by pattern
+parts = re.split(r"\s+", "one  two   three    four")
+print(parts)    # ['one', 'two', 'three', 'four']
+
+# Split by comma or semicolon
+data = "apple,banana;cherry,mango"
+items = re.split(r"[,;]", data)
+print(items)    # ['apple', 'banana', 'cherry', 'mango']
+        </pre>
+      </div>
+
+    </div>
+  </section>
+    <!-- ========== FORMULAS ========== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Syntax Reference
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> File Open Syntax</div>
+        <div class="formula">open("filename", "mode", encoding="utf-8")</div>
+        <div class="formula">with open("file.txt", "r") as f:</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;content = f.read()</div>
+        <div class="formula answer">with statement auto-closes file — always preferred</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Read vs readline vs readlines</div>
+        <div class="formula">f.read()        → entire file as one string</div>
+        <div class="formula">f.readline()    → one line at a time</div>
+        <div class="formula">f.readlines()   → all lines as a list</div>
+        <div class="formula answer">for line in f: → most memory-efficient way</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> tell() and seek()</div>
+        <div class="formula">f.tell()        → current byte position in file</div>
+        <div class="formula">f.seek(0)       → move to beginning</div>
+        <div class="formula">f.seek(n)       → move to byte position n</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Regex Functions</div>
+        <div class="formula">re.match(pattern, string)     → match at start only</div>
+        <div class="formula">re.search(pattern, string)    → match anywhere</div>
+        <div class="formula">re.findall(pattern, string)   → list of all matches</div>
+        <div class="formula">re.finditer(pattern, string)  → iterator of matches</div>
+        <div class="formula">re.sub(pattern, repl, string) → replace matches</div>
+        <div class="formula">re.subn(pattern, repl, string)→ replace + count</div>
+        <div class="formula">re.split(pattern, string)     → split by pattern</div>
+        <div class="formula">re.compile(pattern)           → reusable pattern object</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Key Regex Patterns</div>
+        <div class="formula">\d+ → one or more digits</div>
+        <div class="formula">\w+ → one or more word characters</div>
+        <div class="formula">\s+ → one or more whitespace</div>
+        <div class="formula">^   → start of string</div>
+        <div class="formula">$   → end of string</div>
+        <div class="formula">[aeiou] → any character in set</div>
+        <div class="formula">[^aeiou] → any character NOT in set</div>
+        <div class="formula answer">Use r"..." raw strings for regex patterns always</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== DEFINITIONS ========== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> input()</div>
+        <p>A built-in Python function that reads a line of text from the keyboard (standard input) and returns it as a string. Any prompt string passed as argument is displayed to the user before reading.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> File Mode</div>
+        <p>A string passed to <code>open()</code> that specifies how a file should be opened — for reading (<code>'r'</code>), writing (<code>'w'</code>), appending (<code>'a'</code>), exclusive creation (<code>'x'</code>), binary (<code>'b'</code>), or text (<code>'t'</code>) mode.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> readline()</div>
+        <p>A file method that reads and returns one complete line from the file, including the newline character <code>\n</code>. Returns an empty string when the end of file is reached.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> readlines()</div>
+        <p>A file method that reads all lines of the file and returns them as a list of strings. Each string in the list includes the newline character at the end.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> tell()</div>
+        <p>A file method that returns an integer representing the current position of the file pointer (in bytes from the beginning of the file).</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> seek()</div>
+        <p>A file method that moves the file pointer to a specified byte position. <code>seek(0)</code> moves to the beginning of the file. Used to re-read or navigate within a file.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Regular Expression (Regex)</div>
+        <p>A sequence of characters that defines a search pattern. Used for string matching, searching, validation, and substitution. Python supports regex through the <code>re</code> module.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> re.compile()</div>
+        <p>A function that compiles a regex pattern string into a Pattern object. This compiled pattern can be reused multiple times, which is more efficient than compiling the pattern on every call.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Metacharacter</div>
+        <p>A character with a special meaning in a regular expression. Examples: <code>.</code> (any character), <code>^</code> (start), <code>$</code> (end), <code>*</code> (zero or more), <code>+</code> (one or more), <code>?</code> (optional), <code>[]</code> (character class), <code>|</code> (or).</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> flush()</div>
+        <p>A file method that forces any buffered data to be written to the disk immediately, without waiting for the buffer to fill or the file to be closed.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== COMPARISONS ========== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> read() vs readline() vs readlines()</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Method</th><th>Returns</th><th>Reads</th><th>Best for</th></tr></thead>
+            <tbody>
+              <tr><td><code>read()</code></td><td>Single string</td><td>Entire file</td><td>Small files, whole content needed</td></tr>
+              <tr><td><code>readline()</code></td><td>Single string</td><td>One line</td><td>Processing line by line manually</td></tr>
+              <tr><td><code>readlines()</code></td><td>List of strings</td><td>All lines</td><td>When you need all lines as a list</td></tr>
+              <tr><td><code>for line in f</code></td><td>One line per iteration</td><td>Line by line</td><td>Large files — most memory efficient</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> write() vs writelines()</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Method</th><th>Argument</th><th>Adds newline?</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>write(s)</code></td><td>Single string</td><td>No — must add \n manually</td><td><code>f.write("hello\n")</code></td></tr>
+              <tr><td><code>writelines(list)</code></td><td>List of strings</td><td>No — must include \n in each string</td><td><code>f.writelines(["a\n","b\n"])</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> re.match() vs re.search()</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Feature</th><th>re.match()</th><th>re.search()</th></tr></thead>
+            <tbody>
+              <tr><td>Where it searches</td><td>Only at the <strong>beginning</strong> of string</td><td><strong>Anywhere</strong> in the string</td></tr>
+              <tr><td>Returns</td><td>Match object or None</td><td>Match object or None</td></tr>
+              <tr><td>Use case</td><td>Validate string format (starts with)</td><td>Find pattern anywhere in text</td></tr>
+              <tr><td>Example</td><td><code>re.match(r"\d+", "123abc")</code> → match</td><td><code>re.search(r"\d+", "abc123")</code> → match</td></tr>
+              <tr><td>Example fail</td><td><code>re.match(r"\d+", "abc123")</code> → None</td><td><code>re.search(r"\d+", "abcdef")</code> → None</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> re.sub() vs re.subn()</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Function</th><th>Returns</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td><code>re.sub(p, r, s)</code></td><td>New string with replacements</td><td>You only need the modified string</td></tr>
+              <tr><td><code>re.subn(p, r, s)</code></td><td>Tuple: (new_string, count)</td><td>You also need to know how many replacements were made</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> File Modes Comparison</div>
+        <div class="table-wrapper">
+          <table class="io-table">
+            <thead><tr><th>Mode</th><th>Read</th><th>Write</th><th>Create</th><th>Truncate (clear)</th></tr></thead>
+            <tbody>
+              <tr><td><code>'r'</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+              <tr><td><code>'w'</code></td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+              <tr><td><code>'a'</code></td><td>❌</td><td>✅</td><td>✅</td><td>❌</td></tr>
+              <tr><td><code>'x'</code></td><td>❌</td><td>✅</td><td>✅ only</td><td>❌</td></tr>
+              <tr><td><code>'r+'</code></td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== MCQs ========== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Which file mode opens a file for writing and clears its existing content?</p>
+          <ul class="options">
+            <li>a. 'r'</li>
+            <li>b. 'a'</li>
+            <li>c. 'w'</li>
+            <li>d. 'x'</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_1">
+            <strong>Answer: c. 'w'</strong>
+            <p>The <code>'w'</code> mode opens a file for writing and truncates (clears) the file if it exists. If it does not exist, a new file is created.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What does <code>readlines()</code> return?</p>
+          <ul class="options">
+            <li>a. A single string with all content</li>
+            <li>b. One line at a time</li>
+            <li>c. A list of all lines</li>
+            <li>d. An integer count of lines</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_2">
+            <strong>Answer: c. A list of all lines</strong>
+            <p><code>readlines()</code> reads all lines from the file and returns them as a list of strings, where each string is one line including the newline character.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Which regex function searches for a pattern anywhere in the string?</p>
+          <ul class="options">
+            <li>a. re.match()</li>
+            <li>b. re.search()</li>
+            <li>c. re.compile()</li>
+            <li>d. re.finditer()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_3">
+            <strong>Answer: b. re.search()</strong>
+            <p><code>re.search()</code> scans through the entire string looking for the first location where the pattern matches. <code>re.match()</code> only matches at the beginning.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What does the regex metacharacter <code>+</code> mean?</p>
+          <ul class="options">
+            <li>a. Match zero or more times</li>
+            <li>b. Match exactly once</li>
+            <li>c. Match one or more times</li>
+            <li>d. Match zero or one time</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_4">
+            <strong>Answer: c. Match one or more times</strong>
+            <p><code>+</code> means the preceding element must match <strong>one or more</strong> times. Compare: <code>*</code> means zero or more, <code>?</code> means zero or one.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What does <code>f.tell()</code> return?</p>
+          <ul class="options">
+            <li>a. The file name</li>
+            <li>b. The number of lines in the file</li>
+            <li>c. The current byte position of the file pointer</li>
+            <li>d. The file mode</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_5">
+            <strong>Answer: c. The current byte position of the file pointer</strong>
+            <p><code>tell()</code> returns an integer representing the current position (offset in bytes) of the file pointer from the beginning of the file.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Which function returns a list of all non-overlapping matches in a string?</p>
+          <ul class="options">
+            <li>a. re.match()</li>
+            <li>b. re.search()</li>
+            <li>c. re.findall()</li>
+            <li>d. re.compile()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_6">
+            <strong>Answer: c. re.findall()</strong>
+            <p><code>re.findall()</code> returns a list of all non-overlapping matches of the pattern in the string, from left to right.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What does the regex pattern <code>^\d{3}-\d{4}$</code> match?</p>
+          <ul class="options">
+            <li>a. Any string containing digits and dashes</li>
+            <li>b. A string that is exactly 3 digits, a dash, then 4 digits</li>
+            <li>c. A string starting with 3 digits</li>
+            <li>d. Any phone number format</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_7">
+            <strong>Answer: b. A string that is exactly 3 digits, a dash, then 4 digits</strong>
+            <p><code>^</code> anchors to start, <code>\d{3}</code> matches exactly 3 digits, <code>-</code> matches literal dash, <code>\d{4}</code> matches exactly 4 digits, <code>$</code> anchors to end. So "123-4567" matches but not "1234-567".</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Which file mode raises an error if the file already exists?</p>
+          <ul class="options">
+            <li>a. 'w'</li>
+            <li>b. 'a'</li>
+            <li>c. 'r'</li>
+            <li>d. 'x'</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4_8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4_8">
+            <strong>Answer: d. 'x'</strong>
+            <p>The <code>'x'</code> (exclusive creation) mode creates a new file but raises <code>FileExistsError</code> if the file already exists. It is used when you want to ensure you are not overwriting anything.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SHORT QUESTIONS ========== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the difference between <code>'w'</code> and <code>'a'</code> file modes?</p>
+          <button class="toggle-btn" data-target="sq4_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_1">
+            <p><code>'w'</code> (write) mode opens the file and <strong>clears all existing content</strong> before writing. If the file does not exist, it creates one. <code>'a'</code> (append) mode opens the file and <strong>adds new content at the end</strong> without deleting existing content.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the difference between <code>re.match()</code> and <code>re.search()</code>?</p>
+          <button class="toggle-btn" data-target="sq4_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_2">
+            <p><code>re.match()</code> matches the pattern only at the <strong>beginning</strong> of the string. If the pattern is not at the start, it returns None. <code>re.search()</code> scans the <strong>entire string</strong> and returns the first match found anywhere.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Why should we use <code>with open()</code> instead of <code>open()</code> and <code>close()</code>?</p>
+          <button class="toggle-btn" data-target="sq4_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_3">
+            <p>The <code>with</code> statement (context manager) automatically closes the file when the block exits, even if an exception occurs. With manual <code>open()</code>/<code>close()</code>, if an error happens before <code>close()</code>, the file stays open, causing resource leaks.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What does the regex <code>\d+</code> match? Give an example.</p>
+          <button class="toggle-btn" data-target="sq4_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_4">
+            <p><code>\d</code> matches any single digit (0–9). <code>\d+</code> matches one or more consecutive digits. Example: in the string <code>"abc 123 xyz 456"</code>, <code>re.findall(r"\d+", text)</code> returns <code>['123', '456']</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is <code>re.compile()</code> and why is it used?</p>
+          <button class="toggle-btn" data-target="sq4_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_5">
+            <p><code>re.compile(pattern)</code> compiles a regex pattern string into a reusable Pattern object. It is used when the same pattern is used multiple times — compiling once and reusing is more efficient than recompiling on every function call.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the difference between <code>re.sub()</code> and <code>re.subn()</code>?</p>
+          <button class="toggle-btn" data-target="sq4_6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_6">
+            <p>Both replace matches with a replacement string. <code>re.sub()</code> returns only the <strong>new string</strong> after substitution. <code>re.subn()</code> returns a <strong>tuple</strong> of (new_string, count) where count is the number of substitutions made.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What do <code>tell()</code> and <code>seek()</code> do in file operations?</p>
+          <button class="toggle-btn" data-target="sq4_7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_7">
+            <p><code>tell()</code> returns the current position of the file pointer as a byte offset from the beginning of the file. <code>seek(pos)</code> moves the file pointer to the specified byte position. Together they allow random access within a file.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the difference between <code>re.findall()</code> and <code>re.finditer()</code>?</p>
+          <button class="toggle-btn" data-target="sq4_8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4_8">
+            <p><code>re.findall()</code> returns a <strong>list</strong> of all matching strings. <code>re.finditer()</code> returns an <strong>iterator</strong> of match objects. <code>finditer()</code> is more memory-efficient for large texts because it yields one match at a time, and each match object provides position info via <code>.start()</code> and <code>.end()</code>.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LONG QUESTIONS ========== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain file I/O in Python — file modes, opening, reading, writing, and closing files with examples.</p>
+          <button class="toggle-btn" data-target="lq4_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4_1">
+            <p><strong>File I/O</strong> allows Python programs to read data from and write data to files on disk.</p>
+            <p><strong>Opening a file:</strong> <code>open(filename, mode)</code> returns a file object.</p>
+            <p><strong>File Modes:</strong></p>
+            <ul>
+              <li><code>'r'</code> — Read only. File must exist.</li>
+              <li><code>'w'</code> — Write. Creates or clears file.</li>
+              <li><code>'a'</code> — Append. Adds to end of file.</li>
+              <li><code>'x'</code> — Exclusive create. Fails if file exists.</li>
+              <li><code>'b'</code> — Binary mode. Combine as 'rb', 'wb'.</li>
+            </ul>
+            <p><strong>Reading functions:</strong> <code>read()</code> — whole file, <code>readline()</code> — one line, <code>readlines()</code> — list of lines.</p>
+            <p><strong>Writing functions:</strong> <code>write(str)</code> — write string, <code>writelines(list)</code> — write list.</p>
+            <p><strong>Best practice:</strong> Use <code>with open() as f:</code> — auto closes file even on error.</p>
+            <p><strong>Other operations:</strong> <code>tell()</code> — current position, <code>seek(0)</code> — go to start, <code>flush()</code> — force write to disk.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain regular expressions in Python — the re module, metacharacters, and all major functions with examples.</p>
+          <button class="toggle-btn" data-target="lq4_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4_2">
+            <p><strong>Regular Expressions</strong> define search patterns for string matching and manipulation. Python uses the <code>re</code> module.</p>
+            <p><strong>Key Metacharacters:</strong></p>
+            <ul>
+              <li><code>.</code> — any character except newline</li>
+              <li><code>^</code> — start of string, <code>$</code> — end of string</li>
+              <li><code>*</code> — 0 or more, <code>+</code> — 1 or more, <code>?</code> — 0 or 1</li>
+              <li><code>\d</code> — digit, <code>\w</code> — word char, <code>\s</code> — whitespace</li>
+              <li><code>[]</code> — character class, <code>|</code> — OR, <code>()</code> — group</li>
+            </ul>
+            <p><strong>Functions:</strong></p>
+            <ul>
+              <li><code>re.match()</code> — match at start only</li>
+              <li><code>re.search()</code> — match anywhere</li>
+              <li><code>re.findall()</code> — list of all matches</li>
+              <li><code>re.finditer()</code> — iterator of match objects</li>
+              <li><code>re.sub(p,r,s)</code> — replace matches</li>
+              <li><code>re.subn(p,r,s)</code> — replace + return count</li>
+              <li><code>re.split(p,s)</code> — split string by pattern</li>
+              <li><code>re.compile(p)</code> — compile reusable pattern</li>
+            </ul>
+            <p><strong>Example:</strong> <code>re.findall(r"\d+", "abc 123 xyz 456")</code> → <code>['123', '456']</code></p>
+            <p><strong>Always use raw strings:</strong> <code>r"\d+"</code> not <code>"\d+"</code> to avoid backslash issues.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a Python program to read a text file, count the number of lines, words, and characters, and write the results to another file.</p>
+          <button class="toggle-btn" data-target="lq4_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4_3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+def analyze_file(input_file, output_file):
+    """
+    Reads input_file, counts lines, words, chars.
+    Writes statistics to output_file.
+    """
+    line_count = 0
+    word_count = 0
+    char_count = 0
+
+    with open(input_file, "r") as f:
+        for line in f:
+            line_count += 1
+            words = line.split()
+            word_count += len(words)
+            char_count += len(line)
+
+    stats = f"""File Analysis: {input_file}
+{'=' * 30}
+Lines: {line_count}
+Words: {word_count}
+Characters: {char_count}
+"""
+
+    with open(output_file, "w") as f:
+        f.write(stats)
+
+    print(stats)
+    print(f"Results written to {output_file}")
+
+# Usage
+analyze_file("sample.txt", "stats.txt")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Explain the use of regex for validating email addresses and phone numbers in Python with complete examples.</p>
+          <button class="toggle-btn" data-target="lq4_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4_4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Email and Phone Validation</div>
+              <pre>
+import re
+
+# Email validation
+def validate_email(email):
+    pattern = r"^[\w.+-]+@[\w-]+\.[a-zA-Z]{2,}$"
+    if re.match(pattern, email):
+        return True
+    return False
+
+emails = [
+    "alice@example.com",    # valid
+    "bob.smith@test.org",   # valid
+    "invalid@",             # invalid
+    "@noname.com",          # invalid
+    "user@domain.co.in",    # valid
+]
+
+print("Email Validation:")
+for e in emails:
+    status = "Valid" if validate_email(e) else "Invalid"
+    print(f"  {e:25} → {status}")
+
+# Phone number validation (10-digit Indian)
+def validate_phone(phone):
+    pattern = r"^[6-9]\d{9}$"
+    return bool(re.match(pattern, phone))
+
+phones = ["9876543210", "1234567890", "8765432109", "123"]
+
+print("\nPhone Validation:")
+for p in phones:
+    status = "Valid" if validate_phone(p) else "Invalid"
+    print(f"  {p:15} → {status}")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a Python program demonstrating tell(), seek(), and reading a file in chunks using read(n).</p>
+          <button class="toggle-btn" data-target="lq4_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4_5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+# First, create a sample file
+with open("demo.txt", "w") as f:
+    f.write("Hello, Python File I/O is very useful!\n")
+    f.write("We can read, write, seek, and tell.\n")
+
+# Demonstrate tell() and seek()
+with open("demo.txt", "r") as f:
+
+    print("=== tell() and seek() Demo ===")
+    print(f"Start position: {f.tell()}")     # 0
+
+    chunk1 = f.read(5)
+    print(f"Read 5 chars: '{chunk1}'")       # Hello
+    print(f"Position after read: {f.tell()}") # 5
+
+    f.seek(0)   # Back to beginning
+    print(f"After seek(0): {f.tell()}")      # 0
+
+    f.seek(7)   # Jump to position 7
+    print(f"After seek(7): {f.tell()}")      # 7
+    print(f"Read from 7: '{f.read(6)}'")     # Python
+
+    print("\n=== Reading in chunks ===")
+    f.seek(0)   # Reset
+    chunk_size = 10
+    while True:
+        chunk = f.read(chunk_size)
+        if not chunk:
+            break
+        print(f"Chunk: '{chunk}'")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRACTICE ========== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a Python program to copy the contents of one file to another file.</p>
+          <button class="toggle-btn" data-target="pp4_1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4_1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+def copy_file(source, destination):
+    """Copies content from source file to destination file."""
+    try:
+        with open(source, "r") as src:
+            content = src.read()
+
+        with open(destination, "w") as dst:
+            dst.write(content)
+
+        print(f"Successfully copied '{source}' to '{destination}'")
+
+    except FileNotFoundError:
+        print(f"Error: '{source}' not found.")
+
+# Usage
+copy_file("original.txt", "backup.txt")
+
+# Line by line copy (better for large files)
+def copy_file_large(source, destination):
+    with open(source, "r") as src, open(destination, "w") as dst:
+        for line in src:
+            dst.write(line)
+    print("Copy complete.")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a Python program using regex to extract all dates in DD/MM/YYYY format from a given text.</p>
+          <button class="toggle-btn" data-target="pp4_2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4_2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+import re
+
+text = """
+Meeting scheduled on 15/01/2024.
+Report due by 28/02/2024.
+Event on 05/03/2024 and 31/12/2023.
+Invalid: 99/13/2024 (will still match pattern)
+"""
+
+# Pattern for DD/MM/YYYY
+pattern = r"\b\d{2}/\d{2}/\d{4}\b"
+
+dates = re.findall(pattern, text)
+print("Dates found:")
+for d in dates:
+    print(f"  {d}")
+
+# Output:
+# Dates found:
+#   15/01/2024
+#   28/02/2024
+#   05/03/2024
+#   31/12/2023
+#   99/13/2024
+
+# More strict validation with groups
+strict = r"\b(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/\d{4}\b"
+valid_dates = re.findall(strict, text)
+print("\nValid dates (strict):")
+for d in valid_dates:
+    print(f"  {'/'.join(d)}")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a Python program to read a file and replace all occurrences of a word with another word using regex, then save the result.</p>
+          <button class="toggle-btn" data-target="pp4_3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4_3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+import re
+
+def replace_word_in_file(filename, old_word, new_word):
+    """
+    Reads file, replaces old_word with new_word,
+    writes updated content back.
+    """
+    # Read original content
+    with open(filename, "r") as f:
+        content = f.read()
+
+    # Replace using regex (case-insensitive, whole word)
+    pattern = r"\b" + re.escape(old_word) + r"\b"
+    new_content, count = re.subn(pattern, new_word, content,
+                                  flags=re.IGNORECASE)
+
+    # Write updated content
+    with open(filename, "w") as f:
+        f.write(new_content)
+
+    print(f"Replaced '{old_word}' with '{new_word}': {count} times.")
+
+# Create sample file
+with open("story.txt", "w") as f:
+    f.write("Python is great. Python is powerful. I love Python!")
+
+replace_word_in_file("story.txt", "Python", "Java")
+
+# Verify
+with open("story.txt", "r") as f:
+    print(f.read())
+# Output: Java is great. Java is powerful. I love Java!
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a Python program to read student names and marks from a file, calculate average marks, and append the result to the same file.</p>
+          <button class="toggle-btn" data-target="pp4_4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4_4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+# Create sample data file
+with open("marks.txt", "w") as f:
+    f.write("Alice 85\n")
+    f.write("Bob 92\n")
+    f.write("Charlie 78\n")
+    f.write("Diana 95\n")
+    f.write("Eve 88\n")
+
+# Read and calculate
+students = {}
+with open("marks.txt", "r") as f:
+    for line in f:
+        parts = line.strip().split()
+        if len(parts) == 2:
+            name, mark = parts[0], int(parts[1])
+            students[name] = mark
+
+total = sum(students.values())
+average = total / len(students)
+highest = max(students, key=students.get)
+lowest = min(students, key=students.get)
+
+# Append results to file
+with open("marks.txt", "a") as f:
+    f.write(f"\n--- Summary ---\n")
+    f.write(f"Total Students: {len(students)}\n")
+    f.write(f"Average Marks:  {average:.2f}\n")
+    f.write(f"Highest:        {highest} ({students[highest]})\n")
+    f.write(f"Lowest:         {lowest} ({students[lowest]})\n")
+
+# Verify
+with open("marks.txt", "r") as f:
+    print(f.read())
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a Python program using regex to split a sentence by any punctuation mark and print each word.</p>
+          <button class="toggle-btn" data-target="pp4_5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4_5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+import re
+
+text = "Hello, World! Python is great; isn't it? Yes. Absolutely!"
+
+# Split by any punctuation and whitespace
+words = re.split(r"[^\w]+", text)
+
+# Remove empty strings
+words = [w for w in words if w]
+
+print("Words extracted:")
+for i, word in enumerate(words, 1):
+    print(f"  {i}. {word}")
+
+print(f"\nTotal words: {len(words)}")
+
+# Output:
+# Words extracted:
+#   1. Hello
+#   2. World
+#   3. Python
+#   4. is
+#   5. great
+#   6. isn
+#   7. t
+#   8. it
+#   9. Yes
+#   10. Absolutely
+# Total words: 10
+              </pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== REVISION ========== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul>
+          <li><code>input()</code> always returns a <strong>string</strong>. Use <code>int()</code>/<code>float()</code> to convert.</li>
+          <li><code>print(sep=, end=, file=)</code> — customize separator, end char, and output destination.</li>
+          <li>File modes: <code>'r'</code> read, <code>'w'</code> write+clear, <code>'a'</code> append, <code>'x'</code> exclusive create, <code>'b'</code> binary.</li>
+          <li><strong>'w' clears file</strong>. <strong>'a' preserves file</strong> and adds to end.</li>
+          <li><code>read()</code> → whole file string. <code>readline()</code> → one line. <code>readlines()</code> → list of lines.</li>
+          <li><code>write()</code> — does NOT add newline. <code>writelines()</code> — does NOT add newline.</li>
+          <li><strong>Best practice:</strong> Always use <code>with open() as f:</code> — auto closes file.</li>
+          <li><code>tell()</code> → current byte position. <code>seek(n)</code> → jump to byte n.</li>
+          <li><code>flush()</code> → force write buffer to disk. <code>close()</code> → close file.</li>
+          <li>Regex uses <strong>raw strings</strong> <code>r"..."</code> to avoid backslash issues.</li>
+          <li><code>re.match()</code> → start of string only. <code>re.search()</code> → anywhere in string.</li>
+          <li><code>re.findall()</code> → returns <strong>list</strong>. <code>re.finditer()</code> → returns <strong>iterator</strong> of match objects.</li>
+          <li><code>re.sub(p,r,s)</code> → new string. <code>re.subn(p,r,s)</code> → (new_string, count).</li>
+          <li><code>re.split(p,s)</code> → split string by pattern. <code>re.compile(p)</code> → reusable pattern.</li>
+          <li>Key metacharacters: <code>\d</code> digit, <code>\w</code> word char, <code>\s</code> space, <code>^</code> start, <code>$</code> end, <code>+</code> one or more, <code>*</code> zero or more, <code>?</code> optional.</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Must Remember for Exam</div>
+        <ul>
+          <li><code>'w'</code> mode <strong>deletes existing content</strong>. <code>'a'</code> mode <strong>preserves content</strong>.</li>
+          <li><code>'x'</code> mode raises <strong>FileExistsError</strong> if file already exists.</li>
+          <li><code>readlines()</code> returns a <strong>list</strong>. Each element includes <code>\n</code>.</li>
+          <li><code>write()</code> does NOT automatically add <code>\n</code> — you must add it manually.</li>
+          <li><code>re.match()</code> fails if pattern is not at the <strong>very start</strong>.</li>
+          <li><code>re.findall()</code> returns <strong>list of strings</strong> not match objects.</li>
+          <li><code>\d+</code> = one or more digits. <code>\d*</code> = zero or more digits.</li>
+          <li>Always use <code>r"..."</code> raw string for regex patterns.</li>
+          <li><code>re.subn()</code> returns a <strong>tuple</strong>: (modified_string, replacement_count).</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Using <code>'w'</code> mode when you want to append — this will <strong>erase the file</strong>.</li>
+          <li>Forgetting that <code>input()</code> returns a string — not converting causes TypeError in math.</li>
+          <li>Confusing <code>re.match()</code> with <code>re.search()</code> — match only checks the start.</li>
+          <li>Forgetting that <code>readlines()</code> includes <code>\n</code> — use <code>.strip()</code> to remove it.</li>
+          <li>Not using <code>r"..."</code> for regex — <code>"\d"</code> is not the same as <code>r"\d"</code>.</li>
+          <li>Using <code>write()</code> to write a list — it only accepts strings. Use <code>writelines()</code> or a loop.</li>
+          <li>Forgetting to check if <code>re.match()</code>/<code>re.search()</code> returned None before calling <code>.group()</code>.</li>
+          <li>Using <code>'r'</code> mode on a file that does not exist — causes <strong>FileNotFoundError</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end .container -->
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+
+</body>
+</html>

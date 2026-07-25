@@ -1,0 +1,2380 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 5 – Pointers in C | CST201</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../../units-com/common.css">
+<style>
+  .ptr-mem {
+    display: flex;
+    gap: 0;
+    margin: 12px 0;
+    flex-wrap: wrap;
+    font-family: monospace;
+  }
+  .ptr-cell {
+    border: 2px solid var(--accent, #4361ee);
+    min-width: 80px;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.85rem;
+    background: var(--box-bg, #f0f4ff);
+  }
+  .ptr-cell .addr {
+    font-size: 0.7rem;
+    color: var(--text-muted, #888);
+  }
+  .ptr-cell .var {
+    font-weight: bold;
+    color: var(--accent, #4361ee);
+  }
+  .ptr-cell .val {
+    font-size: 0.95rem;
+    margin-top: 2px;
+  }
+  .ptr-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--accent, #4361ee);
+    font-size: 1.2rem;
+    padding: 0 8px;
+  }
+  .ptr-diagram {
+    background: var(--box-bg, #f0f4ff);
+    border: 1px solid var(--border, #ddd);
+    border-radius: 8px;
+    padding: 14px;
+    margin: 12px 0;
+    font-family: monospace;
+    font-size: 0.87rem;
+    line-height: 1.9;
+  }
+  .dma-visual {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 8px 0;
+    flex-wrap: wrap;
+  }
+  .dma-block {
+    border: 2px solid var(--accent, #4361ee);
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: var(--box-bg, #f0f4ff);
+    font-family: monospace;
+    font-size: 0.83rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-code"></i> CST201 – Unit 5
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#intro">Intro</a>
+      <a href="#declaration">Declaration</a>
+      <a href="#types">Types</a>
+      <a href="#arithmetic">Arithmetic</a>
+      <a href="#functions">Functions</a>
+      <a href="#arrays">Arrays</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="../index.html"><i class="fas fa-home"></i></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 5 – Pointers in C</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#intro">Understanding Pointers</a>
+    <a href="#declaration">Declaration & Access</a>
+    <a href="#types">Types of Pointers</a>
+    <a href="#arithmetic">Pointer Arithmetic</a>
+    <a href="#functions">Pointers & Functions</a>
+    <a href="#arrays">Pointers & Arrays</a>
+    <a href="#strings">Pointers & Strings</a>
+    <a href="#array-of-ptrs">Array of Pointers</a>
+    <a href="#function-ptrs">Function Pointers</a>
+    <a href="#ptr-to-ptr">Pointer to Pointer</a>
+    <a href="#dma">Dynamic Memory</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+    <a href="../index.html">← Subject Home</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <h1><i class="fas fa-map-marker-alt"></i> Unit 5: Pointers in C</h1>
+    <p>CST201 — Computer Programming in C | 3rd Semester</p>
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-clock"></i> 15 Hours</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Module C</div>
+      <div class="info-item"><i class="fas fa-signal"></i> Exhaustive Depth</div>
+      <div class="info-item"><i class="fas fa-file-code"></i> Language: C</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ======================== OVERVIEW ======================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You Will Learn</div>
+        <p>Unit 5 is the <strong>most critical and most difficult</strong> unit in C programming. <strong>Pointers</strong> are variables that store memory addresses rather than values. They are the foundation of dynamic memory allocation, efficient array handling, call by reference, and data structures like linked lists and trees. Mastering pointers is essential for systems programming, embedded programming, and technical interviews. This unit covers pointer basics, types, arithmetic, relationship with arrays and strings, function pointers, pointer to pointer, and dynamic memory allocation.</p>
+      </div>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Why Pointers Are Hard</div>
+        <p>Pointers are powerful but dangerous. A small mistake with pointers can cause: <strong>segmentation faults</strong> (crashes), <strong>memory leaks</strong> (wasted memory), <strong>dangling pointers</strong> (pointing to freed memory), and <strong>undefined behavior</strong>. Understanding pointers requires visualizing memory addresses and indirection. Practice is absolutely essential.</p>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3><i class="fas fa-info-circle"></i> Basics</h3>
+          <p>What are pointers, difference from normal variables, memory addresses.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-code"></i> Declaration</h3>
+          <p>Declaring pointers, & operator, * operator, null pointers, void pointers.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-calculator"></i> Arithmetic</h3>
+          <p>Increment, decrement, addition, subtraction, comparison of pointers.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-random"></i> Functions</h3>
+          <p>Passing pointers to functions, call by reference, returning pointers.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-table"></i> Arrays & Strings</h3>
+          <p>Array name as pointer, pointer arithmetic with arrays, string manipulation.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-layer-group"></i> Advanced</h3>
+          <p>Array of pointers, function pointers, pointer to pointer, dynamic memory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== UNDERSTANDING POINTERS ======================== -->
+  <section class="section" id="intro">
+    <h2 class="section-title">
+      <i class="fas fa-brain"></i> Understanding Pointers
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is a Pointer?</div>
+        <p>A <strong>pointer</strong> is a variable that stores the <strong>memory address</strong> of another variable. Instead of storing a value like 10 or 'A', a pointer stores the location in memory where that value is stored. Pointers allow indirect access to data and enable powerful programming techniques like dynamic memory allocation and efficient array manipulation.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-not-equal"></i> Memory Variable vs Pointer Variable</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Feature</th><th>Normal Variable</th><th>Pointer Variable</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Stores</td><td>A data value (10, 3.14, 'A')</td><td>A memory address (e.g., 1000, 2004)</td></tr>
+              <tr><td>Declaration</td><td>int x;</td><td>int *p;</td></tr>
+              <tr><td>Example value</td><td>x = 50</td><td>p = 1000 (address of x)</td></tr>
+              <tr><td>Access data</td><td>Direct: x</td><td>Indirect: *p (dereference)</td></tr>
+              <tr><td>Size</td><td>Depends on type (int=4, char=1)</td><td>Fixed (4 bytes on 32-bit, 8 on 64-bit)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-memory"></i> Memory Address Visualization</div>
+        <p>Every variable in a C program is stored at a specific memory location. Each location has a unique numeric address. Think of memory as a large apartment building where each apartment has a number (address) and contains a value.</p>
+        <div class="ptr-mem">
+          <div class="ptr-cell">
+            <div class="addr">Address: 1000</div>
+            <div class="var">int x</div>
+            <div class="val">Value: 50</div>
+          </div>
+          <div class="ptr-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+          <div class="ptr-cell">
+            <div class="addr">Address: 2000</div>
+            <div class="var">int *p</div>
+            <div class="val">Value: 1000</div>
+          </div>
+        </div>
+        <p><code>p</code> stores the address 1000, which is where <code>x</code> lives. We say <strong>p points to x</strong>.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Why Use Pointers?</div>
+        <ul>
+          <li><strong>Call by Reference</strong> — Modify original variables inside functions.</li>
+          <li><strong>Dynamic Memory</strong> — Allocate memory at runtime using malloc/calloc.</li>
+          <li><strong>Efficient Array Handling</strong> — Traverse arrays without copying.</li>
+          <li><strong>Data Structures</strong> — Essential for linked lists, trees, graphs.</li>
+          <li><strong>String Manipulation</strong> — Efficient processing of character arrays.</li>
+          <li><strong>Return Multiple Values</strong> — Functions can modify multiple variables via pointers.</li>
+          <li><strong>Low-Level Control</strong> — Direct memory access for systems programming.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== DECLARATION & ACCESS ======================== -->
+  <section class="section" id="declaration">
+    <h2 class="section-title">
+      <i class="fas fa-code"></i> Declaring and Accessing Pointers
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer Declaration Syntax</div>
+        <pre>data_type *pointer_name;
+
+/* Examples */
+int *ptr;        /* pointer to int */
+float *fp;       /* pointer to float */
+char *cp;        /* pointer to char */
+double *dp;      /* pointer to double */</pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> The Two Critical Operators</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Operator</th><th>Name</th><th>Purpose</th><th>Returns</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>&amp;</td>
+                <td>Address-of</td>
+                <td>Gets the memory address of a variable</td>
+                <td>Address (pointer)</td>
+                <td>&amp;x returns address of x</td>
+              </tr>
+              <tr>
+                <td>*</td>
+                <td>Dereference / Indirection</td>
+                <td>Accesses the value at the address stored in pointer</td>
+                <td>Value at that address</td>
+                <td>*p returns value stored at address in p</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Complete Pointer Example — Declaration, Assignment, Access</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int x = 50;         /* normal variable */
+    int *p;             /* pointer to int — declared but uninitialized */
+
+    p = &x;             /* p now stores the ADDRESS of x */
+
+    printf("Value of x        : %d\n", x);      /* 50 */
+    printf("Address of x      : %p\n", &x);     /* e.g., 0x7ffd5e3c */
+    printf("Value of p (addr) : %p\n", p);      /* same as &x */
+    printf("Value at *p       : %d\n", *p);     /* 50 — dereferenced */
+
+    /* Modify x through pointer */
+    *p = 100;           /* changes the value at address stored in p */
+    printf("\nAfter *p = 100:\n");
+    printf("Value of x        : %d\n", x);      /* 100 — changed! */
+    printf("Value at *p       : %d\n", *p);     /* 100 */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-table"></i> Memory Trace</div>
+        <div class="ptr-diagram">
+Memory after: int x = 50; int *p; p = &x;
+
+Variable    Address    Value
+────────────────────────────────
+x           1000       50
+p           2000       1000 (points to x)
+
+Access methods:
+x      → Direct access → 50
+&x     → Address of x  → 1000
+p      → Value in p    → 1000 (address)
+*p     → Value at 1000 → 50 (same as x)
+
+After: *p = 100;
+x           1000       100  ← changed through pointer
+p           2000       1000 (unchanged — still points to x)
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Pointer Mistakes</div>
+        <ul>
+          <li><strong>Uninitialized Pointer</strong> — Using a pointer before assigning it an address causes undefined behavior (crash).
+          <pre>int *p;   /* p contains garbage address */
+*p = 10;  /* DANGER — writes to random memory! */</pre></li>
+          <li><strong>Confusing * in declaration vs usage</strong> — <code>int *p;</code> declares a pointer. <code>*p = 10;</code> uses dereference.</li>
+          <li><strong>Forgetting & when assigning</strong> — <code>p = x;</code> is wrong. Correct: <code>p = &x;</code>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== TYPES OF POINTERS ======================== -->
+  <section class="section" id="types">
+    <h2 class="section-title">
+      <i class="fas fa-list"></i> Types of Pointers
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-ban"></i> 1. Null Pointer</div>
+        <p>A <strong>null pointer</strong> is a pointer that points to <strong>nothing</strong> — it does not hold any valid memory address. It is represented by the macro <code>NULL</code> (defined as <code>0</code> or <code>(void*)0</code> in <code>&lt;stdio.h&gt;</code>).</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Null Pointer Usage</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int *p = NULL;      /* p initialized to null — safe */
+
+    if (p == NULL) {
+        printf("Pointer is null — not pointing anywhere\n");
+    }
+
+    /* NEVER dereference a null pointer */
+    /* *p = 10;  — CRASH! Segmentation fault */
+
+    int x = 50;
+    p = &x;             /* now p points to valid memory */
+
+    if (p != NULL) {
+        printf("Now safe to use: *p = %d\n", *p);  /* 50 */
+    }
+    return 0;
+}</pre>
+        </div>
+        <div class="tip-box">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> Best Practice</div>
+          <p>Always initialize pointers to <code>NULL</code> if you don't have a valid address yet. Always check <code>if (p != NULL)</code> before dereferencing in production code to prevent crashes.</p>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-cube"></i> 2. Void Pointer (Generic Pointer)</div>
+        <p>A <strong>void pointer</strong> is a special pointer type that can point to <strong>any data type</strong>. Declared as <code>void *ptr</code>. It cannot be dereferenced directly — it must be typecast to a specific type first.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Void Pointer Example</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int x = 10;
+    float f = 3.14;
+    char c = 'A';
+
+    void *ptr;          /* generic pointer */
+
+    ptr = &x;           /* points to int */
+    printf("Int value: %d\n", *(int*)ptr);  /* must typecast */
+
+    ptr = &f;           /* now points to float */
+    printf("Float value: %.2f\n", *(float*)ptr);
+
+    ptr = &c;           /* now points to char */
+    printf("Char value: %c\n", *(char*)ptr);
+
+    /* Cannot do: printf("%d", *ptr);  — ERROR: void* cannot be dereferenced */
+    return 0;
+}</pre>
+        </div>
+        <div class="important-note">
+          <div class="box-title"><i class="fas fa-info-circle"></i> Use Cases of Void Pointers</div>
+          <ul>
+            <li>Generic functions like <code>malloc()</code>, <code>memcpy()</code>, <code>qsort()</code> return <code>void*</code>.</li>
+            <li>Callback functions that accept any data type.</li>
+            <li>Implementing generic data structures.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-lock"></i> 3. Constant Pointer and Pointer to Constant</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Type</th><th>Declaration</th><th>Meaning</th><th>Can Change</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pointer to Constant</td>
+                <td><code>const int *p;</code></td>
+                <td>Value at address is constant</td>
+                <td>p can change, *p cannot</td>
+              </tr>
+              <tr>
+                <td>Constant Pointer</td>
+                <td><code>int *const p;</code></td>
+                <td>Pointer address is constant</td>
+                <td>p cannot change, *p can</td>
+              </tr>
+              <tr>
+                <td>Constant Pointer to Constant</td>
+                <td><code>const int *const p;</code></td>
+                <td>Both pointer and value constant</td>
+                <td>Neither p nor *p can change</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Constant Pointers Example</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int x = 10, y = 20;
+
+    /* Pointer to constant */
+    const int *p1 = &x;
+    /* *p1 = 50;  — ERROR: cannot modify value */
+    p1 = &y;       /* OK — can change where it points */
+
+    /* Constant pointer */
+    int *const p2 = &x;
+    *p2 = 50;      /* OK — can modify value */
+    /* p2 = &y;   — ERROR: cannot change pointer address */
+
+    /* Constant pointer to constant */
+    const int *const p3 = &x;
+    /* *p3 = 50;  — ERROR */
+    /* p3 = &y;   — ERROR */
+
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== POINTER ARITHMETIC ======================== -->
+  <section class="section" id="arithmetic">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Pointer Arithmetic
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is Pointer Arithmetic?</div>
+        <p>Pointer arithmetic allows you to perform mathematical operations on pointers. When you increment a pointer, it moves to the <strong>next element of its type</strong>, not the next byte. The pointer moves by <code>sizeof(data_type)</code> bytes.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Valid Pointer Arithmetic Operations</div>
+        <ul>
+          <li><strong>Increment</strong> — <code>ptr++</code> or <code>++ptr</code> → moves to next element</li>
+          <li><strong>Decrement</strong> — <code>ptr--</code> or <code>--ptr</code> → moves to previous element</li>
+          <li><strong>Addition</strong> — <code>ptr + n</code> → moves n elements forward</li>
+          <li><strong>Subtraction</strong> — <code>ptr - n</code> → moves n elements backward</li>
+          <li><strong>Difference</strong> — <code>ptr2 - ptr1</code> → number of elements between two pointers</li>
+          <li><strong>Comparison</strong> — <code>ptr1 == ptr2</code>, <code>ptr1 &lt; ptr2</code>, etc.</li>
+        </ul>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-ban"></i> Invalid Operations</div>
+          <p>You <strong>cannot</strong>: multiply pointers (<code>ptr * 2</code>), divide pointers (<code>ptr / 2</code>), or add two pointers (<code>ptr1 + ptr2</code>).</p>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer Arithmetic Example</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *p = arr;      /* p points to arr[0] */
+
+    printf("Initial: *p = %d, address = %p\n", *p, p);  /* 10, e.g., 1000 */
+
+    p++;               /* moves to next int (4 bytes forward) */
+    printf("After p++: *p = %d, address = %p\n", *p, p); /* 20, 1004 */
+
+    p += 2;            /* moves 2 ints forward (8 bytes) */
+    printf("After p+=2: *p = %d, address = %p\n", *p, p); /* 40, 1012 */
+
+    p--;               /* moves 1 int backward */
+    printf("After p--: *p = %d, address = %p\n", *p, p); /* 30, 1008 */
+
+    /* Pointer difference */
+    int *start = &arr[0];
+    int *end = &arr[4];
+    printf("\nDifference: %ld elements\n", end - start); /* 4 */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-calculator"></i> Pointer Arithmetic Formula</div>
+        <div class="formula">New Address = Current Address + (n × sizeof(data_type))</div>
+        <div class="formula answer">Example: int *p at 1000, p+3 → 1000 + (3×4) = 1012</div>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-memory"></i> Pointer Arithmetic Memory Visualization</div>
+        <div class="ptr-mem">
+          <div class="ptr-cell">
+            <div class="addr">1000</div>
+            <div class="var">arr[0]</div>
+            <div class="val">10</div>
+          </div>
+          <div class="ptr-cell">
+            <div class="addr">1004</div>
+            <div class="var">arr[1]</div>
+            <div class="val">20</div>
+          </div>
+          <div class="ptr-cell">
+            <div class="addr">1008</div>
+            <div class="var">arr[2]</div>
+            <div class="val">30</div>
+          </div>
+          <div class="ptr-cell">
+            <div class="addr">1012</div>
+            <div class="var">arr[3]</div>
+            <div class="val">40</div>
+          </div>
+          <div class="ptr-cell">
+            <div class="addr">1016</div>
+            <div class="var">arr[4]</div>
+            <div class="val">50</div>
+          </div>
+        </div>
+        <p>If <code>p = arr</code> (points to 1000):<br>
+        <code>p+1</code> → 1004, <code>p+2</code> → 1008, <code>p+3</code> → 1012, <code>p+4</code> → 1016<br>
+        Each increment moves by <code>sizeof(int) = 4</code> bytes.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== POINTERS & FUNCTIONS ======================== -->
+  <section class="section" id="functions">
+    <h2 class="section-title">
+      <i class="fas fa-random"></i> Pointers and Functions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Passing Pointers to Functions</div>
+        <p>Passing pointers to functions enables <strong>call by reference</strong> — the function can modify the original variables in the calling function. This is the only way in C to have a function modify multiple variables or modify an array.</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Call by Reference — Swap Function</div>
+        <pre>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b) {     /* receives addresses */
+    int temp = *a;
+    *a = *b;                     /* modify original via pointers */
+    *b = temp;
+}
+
+int main() {
+    int x = 10, y = 20;
+    printf("Before swap: x = %d, y = %d\n", x, y);  /* 10, 20 */
+    swap(&x, &y);                /* pass addresses */
+    printf("After swap:  x = %d, y = %d\n", x, y);  /* 20, 10 */
+    return 0;
+}</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Function Modifying Multiple Values via Pointers</div>
+        <pre>#include &lt;stdio.h&gt;
+
+void calculate(int a, int b, int *sum, int *diff, int *prod) {
+    *sum = a + b;
+    *diff = a - b;
+    *prod = a * b;
+}
+
+int main() {
+    int s, d, p;
+    calculate(20, 5, &s, &d, &p);  /* pass addresses */
+    printf("Sum = %d, Diff = %d, Product = %d\n", s, d, p);
+    /* Sum = 25, Diff = 15, Product = 100 */
+    return 0;
+}</pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Returning Pointer to Local Variable — DANGER!</div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> WRONG — Dangling Pointer</div>
+          <pre>int* badFunction() {
+    int x = 10;     /* local variable on stack */
+    return &x;       /* DANGER — x destroyed after return */
+}
+
+int main() {
+    int *p = badFunction();
+    printf("%d", *p);  /* UNDEFINED BEHAVIOR — x no longer exists */
+    return 0;
+}</pre>
+        </div>
+        <p><strong>Why it's wrong:</strong> Local variable <code>x</code> is destroyed when the function returns. The pointer points to freed memory (dangling pointer). Dereferencing it causes undefined behavior — may crash or print garbage.</p>
+        <div class="tip-box">
+          <div class="box-title"><i class="fas fa-check-circle"></i> Correct Solutions</div>
+          <ul>
+            <li>Return pointer to <strong>dynamically allocated memory</strong> using malloc().</li>
+            <li>Return pointer to <strong>static variable</strong> (lifetime = program).</li>
+            <li>Return pointer to <strong>global variable</strong>.</li>
+            <li>Have the caller pass a pointer to modify.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== POINTERS & ARRAYS ======================== -->
+  <section class="section" id="arrays">
+    <h2 class="section-title">
+      <i class="fas fa-table"></i> Pointers and Arrays
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-link"></i> Array Name is a Pointer</div>
+        <p>In C, the <strong>array name is a constant pointer</strong> to the first element of the array. For <code>int arr[5];</code>, the name <code>arr</code> is equivalent to <code>&arr[0]</code> — both give the address of the first element.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-equals"></i> Array-Pointer Equivalences</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Array Notation</th><th>Pointer Notation</th><th>Meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>arr</td><td>&arr[0]</td><td>Address of first element</td></tr>
+              <tr><td>arr[i]</td><td>*(arr + i)</td><td>Value at index i</td></tr>
+              <tr><td>&arr[i]</td><td>(arr + i)</td><td>Address of element at index i</td></tr>
+              <tr><td>arr[0]</td><td>*arr</td><td>First element value</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Array Access via Pointers</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *p = arr;       /* p points to arr[0] */
+
+    /* Array notation vs Pointer notation */
+    printf("arr[0] = %d,  *arr = %d\n", arr[0], *arr);       /* 10, 10 */
+    printf("arr[2] = %d,  *(arr+2) = %d\n", arr[2], *(arr+2)); /* 30, 30 */
+
+    /* Traversing array using pointer */
+    printf("\nUsing pointer to traverse:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("arr[%d] = %d = *(p+%d) = %d\n", i, arr[i], i, *(p+i));
+    }
+
+    /* Pointer arithmetic */
+    printf("\nPointer arithmetic:\n");
+    printf("*p     = %d\n", *p);      /* 10 */
+    printf("*(p+1) = %d\n", *(p+1));  /* 20 */
+    printf("*(p+4) = %d\n", *(p+4));  /* 50 */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Passing Array to Function (Always Call by Reference)</div>
+        <pre>#include &lt;stdio.h&gt;
+
+/* Arrays are ALWAYS passed by reference (as pointers) */
+void modifyArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        arr[i] *= 2;    /* modifies original array */
+    }
+}
+
+/* Equivalent declaration using pointer notation */
+void modifyArray2(int *arr, int n) {
+    for (int i = 0; i < n; i++) {
+        *(arr + i) *= 2;
+    }
+}
+
+int main() {
+    int nums[] = {1, 2, 3, 4, 5};
+
+    printf("Before: ");
+    for (int i = 0; i < 5; i++) printf("%d ", nums[i]);
+
+    modifyArray(nums, 5);   /* array name is a pointer */
+
+    printf("\nAfter:  ");
+    for (int i = 0; i < 5; i++) printf("%d ", nums[i]);
+    printf("\n");
+    /* Output: 2 4 6 8 10 — original array modified */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Key Difference: Array Name vs Pointer Variable</div>
+        <ul>
+          <li><strong>Array name</strong> (<code>arr</code>) is a <strong>constant pointer</strong> — you cannot do <code>arr++</code> or <code>arr = &x</code>.</li>
+          <li><strong>Pointer variable</strong> (<code>int *p</code>) can be reassigned — you can do <code>p++</code>, <code>p = arr</code>, etc.</li>
+        </ul>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Demonstration</div>
+          <pre>int arr[5] = {1,2,3,4,5};
+int *p = arr;
+
+p++;        /* OK — pointer variable can be modified */
+/* arr++;   ERROR — array name is constant pointer */</pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== POINTERS & STRINGS ======================== -->
+  <section class="section" id="strings">
+    <h2 class="section-title">
+      <i class="fas fa-font"></i> Pointers and Strings
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Strings are Character Arrays</div>
+        <p>In C, strings are <strong>character arrays</strong> terminated by <code>'\0'</code>. A character pointer <code>char *p</code> can point to a string. String literals are stored in read-only memory.</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> String Declaration: Array vs Pointer</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    /* Method 1: Character array */
+    char str1[] = "Hello";      /* Array — modifiable, stack */
+    str1[0] = 'h';               /* OK — can modify */
+
+    /* Method 2: Character pointer */
+    char *str2 = "World";        /* Pointer to string literal — read-only */
+    /* str2[0] = 'w';  — DANGER — may crash (segfault) */
+
+    printf("%s\n", str1);        /* hello */
+    printf("%s\n", str2);        /* World */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Array vs Pointer for Strings</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Feature</th><th>char str[] = "Hi";</th><th>char *str = "Hi";</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Storage</td><td>Stack (local array)</td><td>Pointer to read-only memory</td></tr>
+              <tr><td>Modifiable?</td><td>Yes</td><td>No (undefined behavior)</td></tr>
+              <tr><td>Can reassign?</td><td>No (array name constant)</td><td>Yes (pointer variable)</td></tr>
+              <tr><td>Memory</td><td>6 bytes for "Hi\0"</td><td>Pointer size (4 or 8 bytes)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Traversing String Using Pointer</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    char str[] = "DIPLOMA";
+    char *p = str;
+
+    /* Traverse using pointer */
+    printf("Characters: ");
+    while (*p != '\0') {
+        printf("%c ", *p);
+        p++;                /* move to next character */
+    }
+    printf("\n");
+
+    /* Another method */
+    p = str;                /* reset pointer */
+    for (p = str; *p != '\0'; p++) {
+        printf("%c", *p);
+    }
+    printf("\n");
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Custom strlen() Using Pointer</div>
+        <pre>#include &lt;stdio.h&gt;
+
+int myStrlen(char *s) {
+    int len = 0;
+    while (*s != '\0') {
+        len++;
+        s++;
+    }
+    return len;
+}
+
+int main() {
+    char name[] = "Computer";
+    printf("Length of '%s' = %d\n", name, myStrlen(name));  /* 8 */
+    return 0;
+}</pre>
+      </div>
+
+    </div>
+  </section>
+    <!-- ======================== ARRAY OF POINTERS ======================== -->
+  <section class="section" id="array-of-ptrs">
+    <h2 class="section-title">
+      <i class="fas fa-layer-group"></i> Array of Pointers
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is an Array of Pointers?</div>
+        <p>An <strong>array of pointers</strong> is an array where each element is a pointer. Most commonly used for storing multiple strings efficiently.</p>
+      </div>
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Declaration Syntax</div>
+        <pre>data_type *array_name[size];
+
+/* Example */
+int *ptr_arr[5];        /* array of 5 pointers to int */
+char *names[10];        /* array of 10 pointers to char (strings) */</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Array of Pointers — Storing Strings</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    /* Array of pointers to strings */
+    char *days[] = {
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+    };
+
+    printf("Days of the week:\n");
+    for (int i = 0; i < 7; i++) {
+        printf("%d. %s\n", i+1, days[i]);
+    }
+
+    /* Access individual characters */
+    printf("\nFirst char of Wednesday: %c\n", days[2][0]);  /* W */
+    printf("Third char of Friday: %c\n", days[4][2]);       /* i */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-memory"></i> Memory Layout of Array of Pointers</div>
+        <p>For <code>char *names[] = {"Alice", "Bob", "Charlie"};</code></p>
+        <div class="ptr-diagram">
+names[0] → pointer → "Alice\0"    (stored in read-only memory)
+names[1] → pointer → "Bob\0"      (stored in read-only memory)
+names[2] → pointer → "Charlie\0"  (stored in read-only memory)
+
+Each pointer (4 or 8 bytes) points to the first character of each string.
+The strings themselves are stored separately in memory.
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Array of Integer Pointers</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a = 10, b = 20, c = 30, d = 40;
+    int *ptr[4];        /* array of 4 int pointers */
+
+    ptr[0] = &a;
+    ptr[1] = &b;
+    ptr[2] = &c;
+    ptr[3] = &d;
+
+    printf("Values using array of pointers:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("*ptr[%d] = %d\n", i, *ptr[i]);
+    }
+
+    /* Modify through pointers */
+    *ptr[0] = 100;      /* changes a to 100 */
+    printf("\nAfter modification: a = %d\n", a);  /* 100 */
+
+    return 0;
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== FUNCTION POINTERS ======================== -->
+  <section class="section" id="function-ptrs">
+    <h2 class="section-title">
+      <i class="fas fa-cogs"></i> Function Pointers
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is a Function Pointer?</div>
+        <p>A <strong>function pointer</strong> is a pointer that stores the <strong>address of a function</strong>. It can be used to call the function indirectly. Useful for callback functions, implementing function tables, and polymorphism.</p>
+      </div>
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Function Pointer Syntax</div>
+        <pre>return_type (*pointer_name)(parameter_types);
+
+/* Example */
+int (*func_ptr)(int, int);    /* pointer to function taking 2 ints, returning int */
+void (*callback)(char*);      /* pointer to function taking char*, returning void */</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Function Pointer Example</div>
+        <pre>#include &lt;stdio.h&gt;
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int subtract(int a, int b) {
+    return a - b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}
+
+int main() {
+    int (*operation)(int, int);   /* function pointer declaration */
+
+    /* Point to add function */
+    operation = add;              /* or operation = &add; */
+    printf("10 + 5 = %d\n", operation(10, 5));  /* 15 */
+
+    /* Point to subtract function */
+    operation = subtract;
+    printf("10 - 5 = %d\n", operation(10, 5));  /* 5 */
+
+    /* Point to multiply function */
+    operation = multiply;
+    printf("10 * 5 = %d\n", operation(10, 5));  /* 50 */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Array of Function Pointers (Calculator)</div>
+        <pre>#include &lt;stdio.h&gt;
+
+int add(int a, int b) { return a + b; }
+int sub(int a, int b) { return a - b; }
+int mul(int a, int b) { return a * b; }
+int dvd(int a, int b) { return a / b; }
+
+int main() {
+    /* Array of function pointers */
+    int (*operations[4])(int, int) = {add, sub, mul, dvd};
+    char *symbols[] = {"+", "-", "*", "/"};
+
+    int a = 20, b = 5;
+
+    printf("Calculator using function pointers:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("%d %s %d = %d\n", a, symbols[i], b, operations[i](a, b));
+    }
+
+    return 0;
+}
+/* Output:
+   20 + 5 = 25
+   20 - 5 = 15
+   20 * 5 = 100
+   20 / 5 = 4
+*/</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== POINTER TO POINTER ======================== -->
+  <section class="section" id="ptr-to-ptr">
+    <h2 class="section-title">
+      <i class="fas fa-sitemap"></i> Pointer to Pointer (Double Pointer)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is a Pointer to Pointer?</div>
+        <p>A <strong>pointer to pointer</strong> (double pointer) is a pointer that stores the address of another pointer. Declared with <code>**</code>. Used in dynamic 2D arrays, command line arguments, and modifying pointer values inside functions.</p>
+      </div>
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+        <pre>data_type **pointer_name;
+
+/* Example */
+int **pp;      /* pointer to pointer to int */
+char **argv;   /* pointer to pointer to char (used in main) */</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer to Pointer Example</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int x = 50;
+    int *p = &x;        /* p points to x */
+    int **pp = &p;      /* pp points to p */
+
+    printf("Value of x:        %d\n", x);       /* 50 */
+    printf("Value using *p:    %d\n", *p);      /* 50 */
+    printf("Value using **pp:  %d\n", **pp);    /* 50 */
+
+    printf("\nAddress of x:     %p\n", &x);
+    printf("Value of p (addr): %p\n", p);       /* same as &x */
+    printf("Value of pp:       %p\n", pp);      /* address of p */
+
+    /* Modify x through double pointer */
+    **pp = 100;
+    printf("\nAfter **pp = 100:\n");
+    printf("x = %d\n", x);                       /* 100 */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="trace-box">
+        <div class="box-title"><i class="fas fa-memory"></i> Memory Visualization</div>
+        <div class="ptr-diagram">
+Variable    Address    Value
+────────────────────────────────
+x           1000       50
+p           2000       1000  (points to x)
+pp          3000       2000  (points to p)
+
+Access chains:
+x      → 50
+*p     → value at 1000 → 50
+**pp   → value at (value at 3000) → value at 2000 → value at 1000 → 50
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer to Pointer — Modify Pointer Inside Function</div>
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void allocate(int **ptr, int value) {
+    *ptr = (int*)malloc(sizeof(int));  /* allocate memory */
+    **ptr = value;                      /* set value */
+}
+
+int main() {
+    int *p = NULL;
+
+    allocate(&p, 99);   /* pass address of pointer */
+
+    if (p != NULL) {
+        printf("Value allocated: %d\n", *p);  /* 99 */
+        free(p);
+    }
+
+    return 0;
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== DYNAMIC MEMORY ALLOCATION ======================== -->
+  <section class="section" id="dma">
+    <h2 class="section-title">
+      <i class="fas fa-memory"></i> Dynamic Memory Allocation
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is Dynamic Memory Allocation?</div>
+        <p><strong>Dynamic memory allocation</strong> allows you to allocate memory at <strong>runtime</strong> from the heap instead of compile-time from the stack. Size can be determined during execution. Essential for data structures like linked lists, trees, and graphs. Requires manual deallocation using <code>free()</code>.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Stack vs Heap Memory</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Feature</th><th>Stack Memory</th><th>Heap Memory</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Allocation</td><td>Compile-time (automatic)</td><td>Runtime (manual using malloc/calloc)</td></tr>
+              <tr><td>Deallocation</td><td>Automatic when function returns</td><td>Manual using free()</td></tr>
+              <tr><td>Size</td><td>Fixed at compile time</td><td>Can be determined at runtime</td></tr>
+              <tr><td>Lifetime</td><td>Function scope only</td><td>Until explicitly freed</td></tr>
+              <tr><td>Access speed</td><td>Faster</td><td>Slower</td></tr>
+              <tr><td>Size limit</td><td>Small (typically 1-8 MB)</td><td>Large (limited by system RAM)</td></tr>
+              <tr><td>Risk</td><td>Stack overflow</td><td>Memory leak if not freed</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-cog"></i> malloc() — Memory Allocation</div>
+        <p>Allocates a block of memory of specified size in bytes. Does <strong>NOT initialize</strong> the memory — contains garbage values. Returns <code>void*</code> which must be typecast. Returns <code>NULL</code> if allocation fails.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>void* malloc(size_t size);
+
+/* Usage */
+int *ptr = (int*) malloc(n * sizeof(int));
+char *str = (char*) malloc(100 * sizeof(char));</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> malloc() Example</div>
+          <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    /* Allocate memory for n integers */
+    int *arr = (int*) malloc(n * sizeof(int));
+
+    if (arr == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    /* Use the allocated memory */
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("You entered: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    /* Free the allocated memory */
+    free(arr);
+    arr = NULL;     /* good practice — avoid dangling pointer */
+
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-cog"></i> calloc() — Contiguous Allocation</div>
+        <p>Allocates memory for an array of elements and <strong>initializes all bytes to zero</strong>. Takes two arguments: number of elements and size of each element.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>void* calloc(size_t num_elements, size_t element_size);
+
+/* Usage */
+int *ptr = (int*) calloc(n, sizeof(int));  /* n ints, all initialized to 0 */</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> calloc() Example</div>
+          <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *arr = (int*) calloc(5, sizeof(int));
+
+    if (arr == NULL) {
+        printf("Allocation failed!\n");
+        return 1;
+    }
+
+    printf("Array initialized by calloc:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("arr[%d] = %d\n", i, arr[i]);  /* All 0s */
+    }
+
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-cog"></i> realloc() — Resize Allocated Memory</div>
+        <p>Changes the size of previously allocated memory block. Can expand or shrink. Preserves existing data. May move the block to a new location if needed.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>void* realloc(void *ptr, size_t new_size);
+
+/* Usage */
+ptr = (int*) realloc(ptr, new_size * sizeof(int));</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> realloc() Example</div>
+          <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *arr = (int*) malloc(3 * sizeof(int));
+
+    arr[0] = 10; arr[1] = 20; arr[2] = 30;
+
+    printf("Original array: %d %d %d\n", arr[0], arr[1], arr[2]);
+
+    /* Resize to hold 5 elements */
+    arr = (int*) realloc(arr, 5 * sizeof(int));
+
+    if (arr == NULL) {
+        printf("Reallocation failed!\n");
+        return 1;
+    }
+
+    arr[3] = 40; arr[4] = 50;
+
+    printf("After realloc:  ");
+    for (int i = 0; i < 5; i++) printf("%d ", arr[i]);
+    printf("\n");
+
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-trash"></i> free() — Deallocate Memory</div>
+        <p>Releases the dynamically allocated memory back to the heap. <strong>Must be called</strong> for every malloc/calloc/realloc to prevent memory leaks. Does NOT set the pointer to NULL — you must do it manually.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>void free(void *ptr);
+
+/* Usage */
+free(ptr);
+ptr = NULL;   /* prevent dangling pointer */</pre>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">malloc vs calloc vs realloc</caption>
+          <thead>
+            <tr><th>Feature</th><th>malloc</th><th>calloc</th><th>realloc</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Purpose</td><td>Allocate memory</td><td>Allocate & initialize to 0</td><td>Resize allocated memory</td></tr>
+            <tr><td>Arguments</td><td>1 (total bytes)</td><td>2 (count, size each)</td><td>2 (pointer, new size)</td></tr>
+            <tr><td>Initialization</td><td>No (garbage values)</td><td>Yes (all zeros)</td><td>No (new part has garbage)</td></tr>
+            <tr><td>Speed</td><td>Faster</td><td>Slower (due to init)</td><td>Varies</td></tr>
+            <tr><td>Use case</td><td>General allocation</td><td>Arrays needing 0 init</td><td>Dynamic resizing</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Common Dynamic Memory Mistakes</div>
+        <ul>
+          <li><strong>Memory Leak</strong> — Forgetting to call <code>free()</code>. Memory is never released, wasting RAM.
+          <pre>int *p = malloc(100);
+/* ... use p ... */
+/* Forgot free(p); — MEMORY LEAK */</pre></li>
+          <li><strong>Dangling Pointer</strong> — Using pointer after <code>free()</code>.
+          <pre>free(p);
+printf("%d", *p);  /* DANGER — undefined behavior */</pre></li>
+          <li><strong>Double Free</strong> — Calling <code>free()</code> twice on same pointer.
+          <pre>free(p);
+free(p);  /* CRASH — undefined behavior */</pre></li>
+          <li><strong>Not Checking NULL</strong> — Using pointer without checking if allocation succeeded.
+          <pre>int *p = malloc(1000000000);
+*p = 10;  /* CRASH if malloc returned NULL */</pre></li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer to Structure with Dynamic Memory</div>
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+struct Student {
+    int rollNo;
+    char name[50];
+    float marks;
+};
+
+int main() {
+    struct Student *s;
+
+    /* Allocate memory for one Student */
+    s = (struct Student*) malloc(sizeof(struct Student));
+
+    if (s == NULL) {
+        printf("Allocation failed!\n");
+        return 1;
+    }
+
+    /* Access members using -> operator */
+    s->rollNo = 101;
+    strcpy(s->name, "Alice");
+    s->marks = 95.5;
+
+    printf("Student Details:\n");
+    printf("Roll No: %d\n", s->rollNo);
+    printf("Name: %s\n", s->name);
+    printf("Marks: %.2f\n", s->marks);
+
+    free(s);
+    s = NULL;
+
+    return 0;
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== FORMULAS ======================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Key Formulas and Syntax
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer Declaration</div>
+        <div class="formula">data_type *pointer_name;</div>
+        <div class="formula answer">Example: int *p; char *cp; float *fp;</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Address-of and Dereference</div>
+        <div class="formula">&variable → returns address of variable</div>
+        <div class="formula">*pointer → returns value at address stored in pointer</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer Arithmetic</div>
+        <div class="formula">ptr + n → address moves by (n × sizeof(type)) bytes</div>
+        <div class="formula answer">Example: int *p at 1000, p+3 → 1000 + (3×4) = 1012</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Array-Pointer Equivalence</div>
+        <div class="formula">arr[i]  ≡  *(arr + i)</div>
+        <div class="formula">&arr[i] ≡  (arr + i)</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Dynamic Memory Allocation Size</div>
+        <div class="formula">malloc(n * sizeof(type))</div>
+        <div class="formula">calloc(n, sizeof(type))</div>
+        <div class="formula answer">For 10 integers: malloc(10 * sizeof(int)) or calloc(10, sizeof(int))</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Pointer Size</div>
+        <div class="formula">sizeof(pointer) = 4 bytes (32-bit system)</div>
+        <div class="formula">sizeof(pointer) = 8 bytes (64-bit system)</div>
+        <div class="formula answer">Size is independent of data type pointer points to</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== DEFINITIONS ======================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Pointer</div>
+        <p>A variable that stores the memory address of another variable rather than a data value. Declared with * operator.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Dereference</div>
+        <p>The operation of accessing the value at the address stored in a pointer using the * operator. Also called indirection.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Null Pointer</div>
+        <p>A pointer that does not point to any valid memory location. Initialized with NULL (defined as 0). Dereferencing a null pointer causes a crash.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Void Pointer</div>
+        <p>A generic pointer type (void*) that can point to any data type. Cannot be dereferenced directly — must be typecast first. Used by malloc/calloc.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Dangling Pointer</div>
+        <p>A pointer that points to memory that has been freed or deallocated. Dereferencing it causes undefined behavior. Set pointers to NULL after free() to avoid this.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Memory Leak</div>
+        <p>A situation where dynamically allocated memory is not freed using free(), causing the program to waste memory that cannot be reclaimed until the program ends.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Dynamic Memory Allocation</div>
+        <p>The process of allocating memory at runtime from the heap using malloc(), calloc(), or realloc(). Memory must be manually freed using free().</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Pointer Arithmetic</div>
+        <p>Mathematical operations (increment, decrement, addition, subtraction) performed on pointers. The pointer moves by multiples of sizeof(data_type), not bytes.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Double Pointer</div>
+        <p>A pointer to a pointer (declared with **). Stores the address of another pointer. Used in dynamic 2D arrays and modifying pointers inside functions.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Function Pointer</div>
+        <p>A pointer that stores the address of a function. Can be used to call the function indirectly. Useful for callbacks and implementing function tables.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== COMPARISONS ======================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">& (Address-of) vs * (Dereference)</caption>
+          <thead>
+            <tr><th>Operator</th><th>Name</th><th>Used On</th><th>Returns</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>&</td><td>Address-of</td><td>Variable</td><td>Address (pointer)</td><td>&x returns address of x</td></tr>
+            <tr><td>*</td><td>Dereference</td><td>Pointer</td><td>Value at address</td><td>*p returns value at address in p</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">Array Name vs Pointer Variable</caption>
+          <thead>
+            <tr><th>Feature</th><th>Array Name (arr)</th><th>Pointer Variable (int *p)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Type</td><td>Constant pointer</td><td>Variable pointer</td></tr>
+            <tr><td>Can modify?</td><td>No (arr++ is error)</td><td>Yes (p++ is valid)</td></tr>
+            <tr><td>Can reassign?</td><td>No (arr = &x is error)</td><td>Yes (p = &x is valid)</td></tr>
+            <tr><td>sizeof()</td><td>Total array size in bytes</td><td>Pointer size (4 or 8 bytes)</td></tr>
+            <tr><td>Passed to function</td><td>Decays to pointer</td><td>Passed as-is</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">char str[] = "Hi" vs char *str = "Hi"</caption>
+          <thead>
+            <tr><th>Feature</th><th>char str[] = "Hi"</th><th>char *str = "Hi"</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Storage</td><td>Array on stack</td><td>Pointer to read-only string literal</td></tr>
+            <tr><td>Modifiable?</td><td>Yes</td><td>No (undefined behavior)</td></tr>
+            <tr><td>Can reassign?</td><td>No</td><td>Yes (can point elsewhere)</td></tr>
+            <tr><td>Memory</td><td>3 bytes (Hi\0)</td><td>Pointer size (4 or 8 bytes)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">Stack vs Heap Memory</caption>
+          <thead>
+            <tr><th>Feature</th><th>Stack</th><th>Heap</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Allocation</td><td>Automatic (compile-time)</td><td>Manual (runtime via malloc/calloc)</td></tr>
+            <tr><td>Deallocation</td><td>Automatic (function return)</td><td>Manual (via free())</td></tr>
+            <tr><td>Speed</td><td>Faster</td><td>Slower</td></tr>
+            <tr><td>Size</td><td>Small (1-8 MB typical)</td><td>Large (limited by RAM)</td></tr>
+            <tr><td>Lifetime</td><td>Function scope</td><td>Until explicitly freed</td></tr>
+            <tr><td>Variables</td><td>Local variables, parameters</td><td>malloc/calloc allocated data</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== MCQs ======================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What does the & operator do in C?</p>
+          <ul class="options">
+            <li>a. Multiplies two numbers</li>
+            <li>b. Returns the memory address of a variable</li>
+            <li>c. Returns the value at an address</li>
+            <li>d. Performs bitwise AND</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: b. Returns the memory address of a variable</strong>
+            <p>The & (address-of) operator returns the memory address of a variable. Example: &x gives the address where x is stored. Option d is partially correct (& is also bitwise AND) but in pointer context, it's the address-of operator.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the output of: <code>int x=10; int *p=&x; printf("%d", *p);</code>?</p>
+          <ul class="options">
+            <li>a. Address of x</li>
+            <li>b. 10</li>
+            <li>c. Address of p</li>
+            <li>d. Garbage value</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: b. 10</strong>
+            <p>*p dereferences the pointer p, which returns the value stored at the address p holds. Since p points to x, *p gives the value of x, which is 10.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>If int *p points to an integer at address 1000, what will p+2 point to (assuming int size is 4 bytes)?</p>
+          <ul class="options">
+            <li>a. 1002</li>
+            <li>b. 1004</li>
+            <li>c. 1008</li>
+            <li>d. 2000</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: c. 1008</strong>
+            <p>Pointer arithmetic: p+2 moves 2 elements forward = 1000 + (2 × 4) = 1008. The pointer moves by sizeof(int) × 2, not by 2 bytes.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Which function is used to allocate memory and initialize it to zero?</p>
+          <ul class="options">
+            <li>a. malloc()</li>
+            <li>b. calloc()</li>
+            <li>c. realloc()</li>
+            <li>d. alloc()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: b. calloc()</strong>
+            <p>calloc() allocates memory and initializes all bytes to zero. malloc() allocates but does NOT initialize (contains garbage). realloc() resizes already allocated memory. alloc() does not exist in standard C.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is a null pointer?</p>
+          <ul class="options">
+            <li>a. A pointer that points to address 0</li>
+            <li>b. A pointer with garbage value</li>
+            <li>c. A pointer that does not point to any valid memory</li>
+            <li>d. Both a and c</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: d. Both a and c</strong>
+            <p>A null pointer is initialized with NULL (which is defined as 0 or (void*)0). It represents a pointer that points to nothing/nowhere. Dereferencing it causes a crash.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What happens if you forget to call free() after malloc()?</p>
+          <ul class="options">
+            <li>a. Compile error</li>
+            <li>b. Runtime crash</li>
+            <li>c. Memory leak</li>
+            <li>d. Nothing</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: c. Memory leak</strong>
+            <p>Not calling free() causes a memory leak — the allocated memory is never returned to the system. Over time, repeated leaks can exhaust available memory. The OS reclaims it only when the program terminates.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is the size of a pointer variable on a 64-bit system?</p>
+          <ul class="options">
+            <li>a. 2 bytes</li>
+            <li>b. 4 bytes</li>
+            <li>c. 8 bytes</li>
+            <li>d. Depends on the data type it points to</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: c. 8 bytes</strong>
+            <p>On a 64-bit system, all pointers are 8 bytes regardless of the type they point to. On 32-bit systems, pointers are 4 bytes. The size is determined by the system architecture, not the pointed-to type.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Which of the following is equivalent to arr[3] in C?</p>
+          <ul class="options">
+            <li>a. *(arr + 3)</li>
+            <li>b. *arr + 3</li>
+            <li>c. &arr[3]</li>
+            <li>d. arr + 3</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: a. *(arr + 3)</strong>
+            <p>arr[3] is exactly equivalent to *(arr + 3). Both access the element at index 3. Option b (*arr + 3) adds 3 to the first element's value. Option c gives the address. Option d gives a pointer, not the value.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What type of pointer can point to any data type?</p>
+          <ul class="options">
+            <li>a. int*</li>
+            <li>b. char*</li>
+            <li>c. void*</li>
+            <li>d. double*</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: c. void*</strong>
+            <p>void* is a generic pointer that can point to any data type. It must be typecast before dereferencing. malloc() and calloc() return void* for this reason.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>What is a dangling pointer?</p>
+          <ul class="options">
+            <li>a. A pointer with NULL value</li>
+            <li>b. A pointer pointing to freed memory</li>
+            <li>c. A pointer to a pointer</li>
+            <li>d. An uninitialized pointer</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: b. A pointer pointing to freed memory</strong>
+            <p>A dangling pointer points to memory that has been freed or deallocated. Dereferencing it causes undefined behavior. To avoid, set pointers to NULL after calling free().</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>Which function is used to resize dynamically allocated memory?</p>
+          <ul class="options">
+            <li>a. malloc()</li>
+            <li>b. calloc()</li>
+            <li>c. realloc()</li>
+            <li>d. resize()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: c. realloc()</strong>
+            <p>realloc() changes the size of a previously allocated memory block. It can expand or shrink the block. If expansion is needed, it may move the block to a new location and copy existing data.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>What is the correct way to declare a pointer to a pointer to an integer?</p>
+          <ul class="options">
+            <li>a. int *p;</li>
+            <li>b. int **p;</li>
+            <li>c. int ***p;</li>
+            <li>d. int p**;</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: b. int **p;</strong>
+            <p>int **p declares a pointer to a pointer to an integer (double pointer). The ** indicates two levels of indirection. Used for dynamic 2D arrays and modifying pointers inside functions.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 13</h4>
+          <p>What does malloc() return if memory allocation fails?</p>
+          <ul class="options">
+            <li>a. 0</li>
+            <li>b. NULL</li>
+            <li>c. -1</li>
+            <li>d. Garbage value</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq13"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq13">
+            <strong>Answer: b. NULL</strong>
+            <p>If malloc() or calloc() cannot allocate the requested memory (e.g., not enough RAM), they return NULL. Always check if the returned pointer is NULL before using it to prevent crashes.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 14</h4>
+          <p>Which operator is used to access structure members through a pointer?</p>
+          <ul class="options">
+            <li>a. .</li>
+            <li>b. -></li>
+            <li>c. ::</li>
+            <li>d. *</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq14"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq14">
+            <strong>Answer: b. -></strong>
+            <p>The -> operator is used to access structure members through a pointer. If s is a pointer to a structure, s->member is equivalent to (*s).member. The . operator is used for direct structure access.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 15</h4>
+          <p>What is the difference between int *p[5] and int (*p)[5]?</p>
+          <ul class="options">
+            <li>a. No difference</li>
+            <li>b. First is array of pointers, second is pointer to array</li>
+            <li>c. First is pointer to array, second is array of pointers</li>
+            <li>d. Both are invalid</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq15"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq15">
+            <strong>Answer: b. First is array of pointers, second is pointer to array</strong>
+            <p>int *p[5] is an array of 5 pointers to int. int (*p)[5] is a pointer to an array of 5 integers. Parentheses change the precedence: [] binds before * in the first case.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SHORT QUESTIONS ======================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is a pointer? How is it different from a normal variable?</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>A <strong>pointer</strong> is a variable that stores the <strong>memory address</strong> of another variable instead of a data value. Declared with * operator. A normal variable stores a value (like 10, 'A'), while a pointer stores an address (like 1000, 2004). Pointers allow indirect access to data and enable dynamic memory allocation.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What are the & and * operators? Explain with an example.</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p><strong>& (address-of)</strong> — Returns the memory address of a variable. Example: <code>int x=10; &x</code> gives the address where x is stored.</p>
+            <p><strong>* (dereference/indirection)</strong> — Accesses the value at the address stored in a pointer. Example: <code>int *p=&x; *p</code> gives the value 10.</p>
+            <p>Together: <code>p = &x;</code> makes p point to x. <code>*p = 20;</code> changes x to 20.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is pointer arithmetic? Explain with an example.</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p><strong>Pointer arithmetic</strong> allows mathematical operations on pointers. When you increment a pointer, it moves to the next element of its type, not the next byte. The pointer moves by <code>sizeof(data_type)</code> bytes.</p>
+            <p>Example: <code>int arr[] = {10,20,30}; int *p = arr;</code><br>
+            <code>p</code> points to arr[0] at address 1000. <code>p++</code> moves to arr[1] at 1004 (4 bytes forward). <code>p+2</code> points to arr[2] at 1008.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is a null pointer? Why is it used?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p>A <strong>null pointer</strong> is a pointer that points to nothing, initialized with <code>NULL</code> (defined as 0). It is used to: (1) initialize pointers when no valid address is available yet; (2) check if a pointer has been assigned; (3) avoid accidental dereferencing of uninitialized pointers. Dereferencing a null pointer causes a segmentation fault (crash).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is dynamic memory allocation? Name the functions used for it.</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p><strong>Dynamic memory allocation</strong> is the process of allocating memory at <strong>runtime</strong> from the heap instead of compile-time from the stack. The size can be determined during program execution. Functions used: <strong>malloc()</strong> — allocate memory; <strong>calloc()</strong> — allocate and initialize to zero; <strong>realloc()</strong> — resize allocated memory; <strong>free()</strong> — deallocate memory.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the difference between malloc() and calloc()?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p><strong>malloc()</strong> — Takes 1 argument (total bytes); does NOT initialize memory (contains garbage); faster. Syntax: <code>malloc(n * sizeof(type))</code>.</p>
+            <p><strong>calloc()</strong> — Takes 2 arguments (count, size each); initializes all bytes to zero; slower due to initialization. Syntax: <code>calloc(n, sizeof(type))</code>.</p>
+            <p>Use calloc() when you need zero-initialized memory; use malloc() otherwise for speed.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is a dangling pointer? How can you avoid it?</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p>A <strong>dangling pointer</strong> is a pointer that points to memory that has been freed or deallocated. Dereferencing it causes undefined behavior (crash or garbage data). To avoid: (1) Set pointer to <code>NULL</code> after calling <code>free()</code>; (2) Never return address of local variables from functions; (3) Always check if pointer is NULL before dereferencing.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is a void pointer? When is it used?</p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>A <strong>void pointer</strong> (<code>void*</code>) is a generic pointer that can point to any data type. It cannot be dereferenced directly — must be typecast first. Used by: (1) <code>malloc()</code> and <code>calloc()</code> which return <code>void*</code>; (2) Generic functions that accept any pointer type; (3) Implementing generic data structures.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What is the relationship between arrays and pointers in C?</p>
+          <button class="toggle-btn" data-target="sq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq9">
+            <p>In C, the <strong>array name is a constant pointer</strong> to the first element. For <code>int arr[5];</code>, <code>arr</code> is equivalent to <code>&arr[0]</code>. Key relationships: <code>arr[i]</code> = <code>*(arr+i)</code>; <code>&arr[i]</code> = <code>(arr+i)</code>. Arrays are always passed to functions as pointers (call by reference). The difference: array name cannot be reassigned; pointer variables can.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>What is a memory leak? How can it be prevented?</p>
+          <button class="toggle-btn" data-target="sq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq10">
+            <p>A <strong>memory leak</strong> occurs when dynamically allocated memory is not freed using <code>free()</code>, causing the program to waste memory that cannot be reclaimed. Over time, this can exhaust available RAM. Prevention: (1) Always call <code>free()</code> for every <code>malloc()/calloc()</code>; (2) Set pointers to NULL after freeing; (3) Use tools like Valgrind to detect leaks.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== LONG QUESTIONS ======================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions (6 Marks)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain pointers in C with declaration, initialization, and a complete program demonstrating pointer usage with variables and arrays.</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p>A <strong>pointer</strong> is a variable that stores the memory address of another variable. It enables indirect access to data and is essential for dynamic memory allocation and efficient programming.</p>
+            <p><strong>Declaration:</strong> <code>data_type *pointer_name;</code> Example: <code>int *p;</code></p>
+            <p><strong>Initialization:</strong> <code>p = &variable;</code> assigns the address of variable to p.</p>
+            <p><strong>Dereferencing:</strong> <code>*p</code> accesses the value at the address stored in p.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Complete Pointer Program</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int x = 50;
+    int *p = &x;        /* p points to x */
+
+    printf("x = %d\n", x);
+    printf("Address of x (&x) = %p\n", &x);
+    printf("Value in p = %p\n", p);      /* same as &x */
+    printf("Value at *p = %d\n", *p);    /* 50 */
+
+    *p = 100;           /* modify x through pointer */
+    printf("After *p=100, x = %d\n", x); /* 100 */
+
+    /* Pointer with array */
+    int arr[] = {10, 20, 30, 40};
+    int *ptr = arr;     /* ptr points to arr[0] */
+
+    printf("\nArray elements:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("arr[%d] = %d = *(ptr+%d) = %d\n", 
+               i, arr[i], i, *(ptr+i));
+    }
+
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain dynamic memory allocation in C. Describe malloc(), calloc(), realloc(), and free() with syntax and examples.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p><strong>Dynamic Memory Allocation</strong> allows allocating memory at runtime from the heap. All functions are in <code>&lt;stdlib.h&gt;</code>.</p>
+            <p><strong>1. malloc()</strong> — Allocates memory of specified size; does NOT initialize.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> malloc() Example</div>
+              <pre>int *p = (int*) malloc(5 * sizeof(int));
+if (p == NULL) { printf("Failed\n"); return 1; }
+for (int i=0; i&lt;5; i++) p[i] = i*10;
+free(p);</pre>
+            </div>
+            <p><strong>2. calloc()</strong> — Allocates and initializes to zero.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> calloc() Example</div>
+              <pre>int *p = (int*) calloc(5, sizeof(int));
+/* All 5 elements are 0 */</pre>
+            </div>
+            <p><strong>3. realloc()</strong> — Resizes previously allocated memory.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> realloc() Example</div>
+              <pre>int *p = malloc(3 * sizeof(int));
+p = (int*) realloc(p, 6 * sizeof(int));  /* now 6 elements */</pre>
+            </div>
+            <p><strong>4. free()</strong> — Releases allocated memory.</p>
+            <pre>free(p);
+p = NULL;  /* prevent dangling pointer */</pre>
+            <p><strong>Common mistakes:</strong> Memory leak (not calling free), dangling pointer (using after free), double free.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain pointer arithmetic in C with examples. Show how pointers are used to traverse an array.</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p><strong>Pointer arithmetic</strong> allows increment, decrement, addition, subtraction, and comparison operations on pointers. When a pointer is incremented, it moves to the next element of its type, not the next byte.</p>
+            <p><strong>Formula:</strong> New Address = Current Address + (n × sizeof(data_type))</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Pointer Arithmetic Example</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int arr[] = {100, 200, 300, 400, 500};
+    int *p = arr;
+
+    printf("Initial: *p = %d, address = %p\n", *p, p);
+
+    p++;  /* move to next int */
+    printf("After p++: *p = %d, address = %p\n", *p, p);
+
+    p += 2;  /* move 2 ints forward */
+    printf("After p+=2: *p = %d\n", *p);  /* 400 */
+
+    /* Traverse array using pointer */
+    p = arr;  /* reset */
+    printf("\nTraversing array:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("*(p+%d) = %d\n", i, *(p+i));
+    }
+
+    /* Using pointer increment */
+    p = arr;
+    while (p < arr + 5) {
+        printf("%d ", *p);
+        p++;
+    }
+    printf("\n");
+
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== PRACTICE ======================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a C program using pointers to swap two numbers. Use call by reference.</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Swap Using Pointers</div>
+              <pre>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int x = 10, y = 20;
+    printf("Before swap: x = %d, y = %d\n", x, y);
+    swap(&x, &y);
+    printf("After swap:  x = %d, y = %d\n", x, y);
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a C program to dynamically allocate memory for n integers using malloc(), read values, find the largest, and free the memory.</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Dynamic Array — Find Max</div>
+              <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n, *arr, max;
+
+    printf("Enter n: ");
+    scanf("%d", &n);
+
+    arr = (int*) malloc(n * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) scanf("%d", &arr[i]);
+
+    max = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] > max) max = arr[i];
+
+    printf("Largest = %d\n", max);
+
+    free(arr);
+    arr = NULL;
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a C program using pointers to reverse a string without using string library functions.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Reverse String Using Pointers</div>
+              <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char str[100], temp;
+    char *start, *end;
+
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    start = str;
+    end = str;
+
+    /* Find end of string */
+    while (*end != '\0') end++;
+    end--;  /* move back from '\0' to last char */
+
+    /* Swap characters */
+    while (start < end) {
+        temp = *start;
+        *start = *end;
+        *end = temp;
+        start++;
+        end--;
+    }
+
+    printf("Reversed: %s\n", str);
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a C program demonstrating pointer to pointer (double pointer). Modify a variable using double pointer.</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Pointer to Pointer</div>
+              <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 25;
+    int *p = &x;
+    int **pp = &p;
+
+    printf("x = %d\n", x);
+    printf("*p = %d\n", *p);
+    printf("**pp = %d\n", **pp);
+
+    printf("\nAddresses:\n");
+    printf("&x  = %p\n", &x);
+    printf("p   = %p (same as &x)\n", p);
+    printf("&p  = %p\n", &p);
+    printf("pp  = %p (same as &p)\n", pp);
+
+    /* Modify through double pointer */
+    **pp = 99;
+    printf("\nAfter **pp = 99:\n");
+    printf("x = %d\n", x);
+
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a C program to demonstrate array of pointers by storing 5 strings and displaying them.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Array of Pointers to Strings</div>
+              <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char *subjects[] = {
+        "Computer Programming",
+        "Data Structures",
+        "Algorithms",
+        "Computer Organization",
+        "Scripting Languages"
+    };
+
+    printf("3rd Semester Subjects:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%d. %s\n", i+1, subjects[i]);
+    }
+
+    /* Access individual characters */
+    printf("\nFirst char of each:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%c ", subjects[i][0]);
+    }
+    printf("\n");
+
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== REVISION ======================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points — Unit 5</div>
+        <ul>
+          <li>Pointer = variable storing <strong>memory address</strong>, not value.</li>
+          <li>Declaration: <code>data_type *ptr;</code> Example: <code>int *p;</code></li>
+          <li><strong>& operator</strong> — returns address of variable. <strong>* operator</strong> — dereferences pointer (gets value).</li>
+          <li>Null pointer = points to nothing; initialized with <strong>NULL</strong>; dereferencing causes crash.</li>
+          <li>Void pointer (<code>void*</code>) — generic pointer; can point to any type; must typecast before dereferencing.</li>
+          <li><strong>Pointer arithmetic</strong>: ptr+n moves by (n × sizeof(type)) bytes, not n bytes.</li>
+          <li>Array name = <strong>constant pointer</strong> to first element; cannot be modified.</li>
+          <li><code>arr[i]</code> = <code>*(arr+i)</code>; <code>&arr[i]</code> = <code>(arr+i)</code></li>
+          <li>Arrays always passed to functions as <strong>pointers</strong> (call by reference).</li>
+          <li>String with <code>char str[]</code> — modifiable. String with <code>char *str</code> — read-only literal.</li>
+          <li><strong>malloc()</strong> — allocate; no init. <strong>calloc()</strong> — allocate + init to 0. <strong>realloc()</strong> — resize. <strong>free()</strong> — deallocate.</li>
+          <li>Always check if <code>malloc/calloc</code> returned <strong>NULL</strong> before using.</li>
+          <li>Always call <strong>free()</strong> to prevent <strong>memory leak</strong>. Set pointer to NULL after free.</li>
+          <li><strong>Dangling pointer</strong> — points to freed memory; causes undefined behavior.</li>
+          <li><strong>Double pointer</strong> (<code>**p</code>) — pointer to pointer; used for 2D arrays and modifying pointers in functions.</li>
+          <li>Pointer size = <strong>4 bytes (32-bit)</strong> or <strong>8 bytes (64-bit)</strong> — independent of pointed type.</li>
+          <li><strong>Function pointer</strong> — stores address of function; used for callbacks.</li>
+          <li><strong>Array of pointers</strong> — each element is a pointer; common for storing strings.</li>
+          <li><strong>Structure member access</strong>: <code>s.member</code> (direct), <code>s->member</code> (through pointer).</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-fire"></i> Must Remember for Exam</div>
+        <ul>
+          <li><strong>& gives address, * dereferences</strong> — most fundamental concept; appears in every exam.</li>
+          <li><strong>Pointer arithmetic formula</strong>: ptr+n = current_address + (n × sizeof(type)).</li>
+          <li><strong>arr[i] = *(arr+i)</strong> — array-pointer equivalence; very common question.</li>
+          <li><strong>malloc does NOT initialize</strong>; calloc initializes to 0 — key difference asked every year.</li>
+          <li><strong>NULL pointer</strong> — points to nothing; dereferencing it = crash.</li>
+          <li><strong>Forgetting free() = memory leak</strong> — common exam question on dynamic memory mistakes.</li>
+          <li><strong>Dangling pointer</strong> — using pointer after free(); always set to NULL after free.</li>
+          <li><strong>Pointer size = 4 or 8 bytes</strong> — independent of data type it points to.</li>
+          <li><strong>void* can point to any type</strong> — must typecast before dereferencing.</li>
+          <li><strong>Array name is constant pointer</strong> — cannot do arr++ or arr = &x.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Using uninitialized pointer: <code>int *p; *p=10;</code> — CRASH; always initialize first.</li>
+          <li>Confusing <code>int *p[5]</code> (array of pointers) with <code>int (*p)[5]</code> (pointer to array).</li>
+          <li>Thinking pointer arithmetic moves by bytes: <code>ptr+1</code> does NOT move to next byte.</li>
+          <li>Using pointer after free() without setting to NULL — dangling pointer.</li>
+          <li>Not checking if malloc returned NULL before using the pointer.</li>
+          <li>Forgetting & in scanf for normal variables but using it for arrays (arrays don't need &).</li>
+          <li>Returning address of local variable from function — variable destroyed, pointer dangling.</li>
+          <li>Thinking sizeof(pointer) depends on pointed type — it's always 4 or 8 bytes.</li>
+          <li>Writing <code>char *s="Hi"; s[0]='h';</code> — modifying string literal = undefined behavior.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

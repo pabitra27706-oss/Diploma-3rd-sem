@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 3 – Arrays & Strings | CST201</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../../units-com/common.css">
+<style>
+  .memory-grid {
+    display: flex;
+    gap: 0;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .memory-cell {
+    border: 2px solid var(--accent, #4361ee);
+    min-width: 48px;
+    padding: 6px 4px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+  .memory-cell .cell-val {
+    font-weight: bold;
+    color: var(--accent, #4361ee);
+  }
+  .memory-cell .cell-idx {
+    font-size: 0.7rem;
+    color: var(--text-muted, #888);
+  }
+  .matrix-grid {
+    display: inline-grid;
+    gap: 2px;
+    margin: 10px 0;
+  }
+  .matrix-cell {
+    border: 1px solid var(--border, #ddd);
+    background: var(--box-bg, #f0f4ff);
+    width: 44px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-code"></i> CST201 – Unit 3
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#arrays-intro">Arrays</a>
+      <a href="#2d-arrays">2D Arrays</a>
+      <a href="#strings">Strings</a>
+      <a href="#string-functions">String Functions</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="../index.html"><i class="fas fa-home"></i></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 3 – Arrays & Strings</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#arrays-intro">1D Arrays</a>
+    <a href="#2d-arrays">2D Arrays</a>
+    <a href="#multidim">Multidimensional</a>
+    <a href="#strings">Strings</a>
+    <a href="#string-functions">String Functions</a>
+    <a href="#applications">Applications</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+    <a href="../index.html">← Subject Home</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <h1><i class="fas fa-table"></i> Unit 3: Arrays &amp; Strings</h1>
+    <p>CST201 — Computer Programming in C | 3rd Semester</p>
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-clock"></i> 10 Hours</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Module B</div>
+      <div class="info-item"><i class="fas fa-signal"></i> Full Depth</div>
+      <div class="info-item"><i class="fas fa-file-code"></i> Language: C</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ======================== OVERVIEW ======================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You Will Learn</div>
+        <p>Unit 3 introduces <strong>arrays</strong> (subscripted variables) — the most fundamental data structure in C. You will learn how to store and process collections of similar data efficiently. The unit also covers <strong>strings</strong> — character arrays with special termination rules — and the powerful standard library string handling functions. Arrays and strings are the foundation of nearly all real-world C programs.</p>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3><i class="fas fa-list-ol"></i> 1D Arrays</h3>
+          <p>Declaration, initialization, accessing elements, traversal, and common operations.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-th"></i> 2D Arrays</h3>
+          <p>Matrix representation, declaration, initialization, row-column access, matrix operations.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-cubes"></i> Multidimensional</h3>
+          <p>Arrays with more than two dimensions — conceptual understanding.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-font"></i> Strings</h3>
+          <p>Character arrays, null terminator, declaration, initialization, and character access.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-tools"></i> String Functions</h3>
+          <p>strlen, strcpy, strcat, strcmp from &lt;string.h&gt; with examples and applications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 1D ARRAYS ======================== -->
+  <section class="section" id="arrays-intro">
+    <h2 class="section-title">
+      <i class="fas fa-list-ol"></i> One-Dimensional Arrays
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is an Array?</div>
+        <p>An <strong>array</strong> is a collection of a <strong>fixed number of elements of the same data type</strong> stored in <strong>contiguous (adjacent) memory locations</strong>. Each element is accessed using an <strong>index</strong> (subscript), starting from 0.</p>
+        <p>Without arrays, to store marks of 50 students you would need 50 separate variables: <code>m1, m2, m3 ... m50</code>. With an array: <code>marks[50]</code> — one declaration handles all 50.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Advantages of Arrays</div>
+        <ul>
+          <li><strong>Efficient storage</strong> — Multiple values stored under one name.</li>
+          <li><strong>Random access</strong> — Any element accessed directly using its index in O(1) time.</li>
+          <li><strong>Easy traversal</strong> — Loop through all elements with a single for loop.</li>
+          <li><strong>Sorting &amp; searching</strong> — Arrays are the standard structure for these operations.</li>
+          <li><strong>Reduced code</strong> — No need to declare separate variables for each value.</li>
+          <li><strong>Passed to functions</strong> — Arrays can be passed to functions for processing.</li>
+        </ul>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-code"></i> Declaration and Initialization</div>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>data_type array_name[size];
+data_type array_name[size] = {val1, val2, val3, ...};</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Declaration and Initialization Examples</div>
+          <pre>/* Declaration only */
+int marks[5];                    /* 5 integers, uninitialized */
+float salary[100];               /* 100 floats */
+char grade[10];                  /* 10 characters */
+
+/* Declaration with initialization */
+int marks[5] = {85, 90, 78, 92, 88};
+float pi_vals[3] = {3.14, 3.141, 3.1415};
+
+/* Partial initialization — rest are set to 0 */
+int arr[5] = {1, 2};            /* arr = {1, 2, 0, 0, 0} */
+
+/* Size inferred from initializer */
+int nums[] = {10, 20, 30, 40};  /* size = 4 (auto-calculated) */
+
+/* All elements set to 0 */
+int zeros[10] = {0};</pre>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-memory"></i> Memory Representation of a 1D Array</div>
+        <p>For <code>int marks[5] = {85, 90, 78, 92, 88};</code> on a system where int = 4 bytes:</p>
+        <div class="memory-grid">
+          <div class="memory-cell"><div class="cell-val">85</div><div class="cell-idx">marks[0]</div></div>
+          <div class="memory-cell"><div class="cell-val">90</div><div class="cell-idx">marks[1]</div></div>
+          <div class="memory-cell"><div class="cell-val">78</div><div class="cell-idx">marks[2]</div></div>
+          <div class="memory-cell"><div class="cell-val">92</div><div class="cell-idx">marks[3]</div></div>
+          <div class="memory-cell"><div class="cell-val">88</div><div class="cell-idx">marks[4]</div></div>
+        </div>
+        <div class="formula-box">
+          <div class="box-title"><i class="fas fa-map-marker-alt"></i> Address Formula</div>
+          <div class="formula">Address of marks[i] = Base Address + (i × sizeof(data_type))</div>
+          <div class="formula answer">Example: If base = 1000, sizeof(int) = 4 → marks[3] is at 1000 + (3×4) = 1012</div>
+        </div>
+        <div class="important-note">
+          <div class="box-title"><i class="fas fa-exclamation-circle"></i> Index Rules</div>
+          <ul>
+            <li>Valid indices: <strong>0 to size-1</strong>. For <code>int arr[5]</code>, valid indices are 0, 1, 2, 3, 4.</li>
+            <li>C does NOT check for <strong>out-of-bounds</strong> access — accessing <code>arr[5]</code> or <code>arr[-1]</code> is undefined behavior (may crash or corrupt data).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Complete 1D Array Example — Input, Display, Find Max/Min</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int arr[10], n, i;
+    int max, min;
+
+    printf("Enter number of elements (max 10): ");
+    scanf("%d", &n);
+
+    /* Input */
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i &lt; n; i++) {
+        printf("arr[%d] = ", i);
+        scanf("%d", &arr[i]);
+    }
+
+    /* Initialize max and min */
+    max = arr[0];
+    min = arr[0];
+
+    /* Find max and min */
+    for (i = 1; i &lt; n; i++) {
+        if (arr[i] &gt; max) max = arr[i];
+        if (arr[i] &lt; min) min = arr[i];
+    }
+
+    /* Display */
+    printf("Array: ");
+    for (i = 0; i &lt; n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\nMaximum = %d\nMinimum = %d\n", max, min);
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-sort"></i> Sorting a 1D Array (Bubble Sort)</div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Sort Array in Ascending Order</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int arr[] = {64, 25, 12, 22, 11};
+    int n = 5, temp;
+
+    /* Bubble Sort */
+    for (int i = 0; i &lt; n - 1; i++) {
+        for (int j = 0; j &lt; n - i - 1; j++) {
+            if (arr[j] &gt; arr[j+1]) {
+                temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+
+    printf("Sorted array: ");
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    return 0;
+}
+/* Output: 11 12 22 25 64 */</pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== 2D ARRAYS ======================== -->
+  <section class="section" id="2d-arrays">
+    <h2 class="section-title">
+      <i class="fas fa-th"></i> Two-Dimensional Arrays (Matrices)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is a 2D Array?</div>
+        <p>A <strong>two-dimensional array</strong> is an array of arrays — essentially a <strong>matrix</strong> with rows and columns. It is used to represent tabular data, matrices for mathematical operations, grids, and game boards. Elements are accessed using <strong>two indices</strong>: row index and column index.</p>
+      </div>
+
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> Declaration and Initialization Syntax</div>
+        <pre>data_type array_name[rows][columns];
+data_type array_name[rows][columns] = {{r0c0,r0c1,...},{r1c0,r1c1,...}, ...};</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> 2D Array Declaration Examples</div>
+        <pre>/* Declaration only */
+int matrix[3][3];          /* 3×3 matrix of integers */
+float table[4][5];         /* 4 rows, 5 columns */
+
+/* With initialization */
+int mat[2][3] = {
+    {1, 2, 3},             /* row 0 */
+    {4, 5, 6}              /* row 1 */
+};
+
+/* Alternative flat initialization */
+int mat2[2][3] = {1, 2, 3, 4, 5, 6};
+
+/* Access: mat[row][col] */
+printf("%d", mat[1][2]);   /* row 1, col 2 = 6 */</pre>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-th"></i> Memory Layout of a 2D Array</div>
+        <p>For <code>int mat[2][3]</code>, stored in <strong>row-major order</strong> in memory:</p>
+        <div class="memory-grid">
+          <div class="memory-cell"><div class="cell-val">1</div><div class="cell-idx">mat[0][0]</div></div>
+          <div class="memory-cell"><div class="cell-val">2</div><div class="cell-idx">mat[0][1]</div></div>
+          <div class="memory-cell"><div class="cell-val">3</div><div class="cell-idx">mat[0][2]</div></div>
+          <div class="memory-cell"><div class="cell-val">4</div><div class="cell-idx">mat[1][0]</div></div>
+          <div class="memory-cell"><div class="cell-val">5</div><div class="cell-idx">mat[1][1]</div></div>
+          <div class="memory-cell"><div class="cell-val">6</div><div class="cell-idx">mat[1][2]</div></div>
+        </div>
+        <div class="formula-box">
+          <div class="box-title"><i class="fas fa-map-marker-alt"></i> Address Formula (Row-Major)</div>
+          <div class="formula">Address of mat[i][j] = Base + (i × num_cols + j) × sizeof(type)</div>
+          <div class="formula answer">Example: mat[1][2] at Base=2000, cols=3, int=4: 2000 + (1×3+2)×4 = 2000+20 = 2020</div>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Matrix Input, Display and Addition</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int A[3][3], B[3][3], C[3][3];
+    int i, j;
+
+    /* Input Matrix A */
+    printf("Enter elements of Matrix A (3x3):\n");
+    for (i = 0; i &lt; 3; i++)
+        for (j = 0; j &lt; 3; j++)
+            scanf("%d", &A[i][j]);
+
+    /* Input Matrix B */
+    printf("Enter elements of Matrix B (3x3):\n");
+    for (i = 0; i &lt; 3; i++)
+        for (j = 0; j &lt; 3; j++)
+            scanf("%d", &B[i][j]);
+
+    /* Addition */
+    for (i = 0; i &lt; 3; i++)
+        for (j = 0; j &lt; 3; j++)
+            C[i][j] = A[i][j] + B[i][j];
+
+    /* Display result */
+    printf("\nMatrix C = A + B:\n");
+    for (i = 0; i &lt; 3; i++) {
+        for (j = 0; j &lt; 3; j++)
+            printf("%5d", C[i][j]);
+        printf("\n");
+    }
+    return 0;
+}</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Matrix Multiplication</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int A[3][3] = {{1,2,3},{4,5,6},{7,8,9}};
+    int B[3][3] = {{9,8,7},{6,5,4},{3,2,1}};
+    int C[3][3] = {0};  /* initialize result to 0 */
+
+    for (int i = 0; i &lt; 3; i++) {
+        for (int j = 0; j &lt; 3; j++) {
+            for (int k = 0; k &lt; 3; k++) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    printf("Product Matrix:\n");
+    for (int i = 0; i &lt; 3; i++) {
+        for (int j = 0; j &lt; 3; j++)
+            printf("%5d", C[i][j]);
+        printf("\n");
+    }
+    return 0;
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== MULTIDIMENSIONAL ======================== -->
+  <section class="section" id="multidim">
+    <h2 class="section-title">
+      <i class="fas fa-cubes"></i> Multidimensional Arrays
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Multidimensional Arrays (Idea)</div>
+        <p>C allows arrays with <strong>more than two dimensions</strong>. A 3D array can be thought of as a collection of 2D matrices — like multiple pages of a spreadsheet stacked together.</p>
+      </div>
+      <div class="syntax-box">
+        <div class="box-title"><i class="fas fa-code"></i> 3D Array Syntax</div>
+        <pre>data_type array_name[depth][rows][columns];
+
+/* Example: 3D array of 2 pages, each 3×3 */
+int cube[2][3][3];
+
+/* Access element at page 1, row 2, column 0 */
+cube[1][2][0] = 50;
+
+/* Total elements = 2 × 3 × 3 = 18 integers */</pre>
+      </div>
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-calculator"></i> Total Elements Formula</div>
+        <div class="formula">Total Elements = d1 × d2 × d3 × ... × dn</div>
+        <div class="formula answer">Example: int arr[2][3][4] → 2×3×4 = 24 elements, size = 24×4 = 96 bytes</div>
+      </div>
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-graduation-cap"></i> Exam Note</div>
+        <p>The syllabus says "idea only" for multidimensional arrays. You only need to know the declaration syntax, element access, and total element count formula. You will not be asked to write complete programs with 3D arrays.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== STRINGS ======================== -->
+  <section class="section" id="strings">
+    <h2 class="section-title">
+      <i class="fas fa-font"></i> Strings (Character Arrays)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> What is a String in C?</div>
+        <p>In C, a <strong>string</strong> is a <strong>one-dimensional array of characters</strong> terminated by a special character called the <strong>null character ('\0')</strong>. The null character signals the end of the string. C has no built-in string data type — strings are always character arrays.</p>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-memory"></i> String Memory Representation</div>
+        <p>For <code>char str[] = "HELLO";</code>:</p>
+        <div class="memory-grid">
+          <div class="memory-cell"><div class="cell-val">'H'</div><div class="cell-idx">str[0]</div></div>
+          <div class="memory-cell"><div class="cell-val">'E'</div><div class="cell-idx">str[1]</div></div>
+          <div class="memory-cell"><div class="cell-val">'L'</div><div class="cell-idx">str[2]</div></div>
+          <div class="memory-cell"><div class="cell-val">'L'</div><div class="cell-idx">str[3]</div></div>
+          <div class="memory-cell"><div class="cell-val">'O'</div><div class="cell-idx">str[4]</div></div>
+          <div class="memory-cell"><div class="cell-val">'\0'</div><div class="cell-idx">str[5]</div></div>
+        </div>
+        <p>The string "HELLO" requires <strong>6 bytes</strong> — 5 for characters + 1 for '\0'.</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> String Declaration and Initialization</div>
+        <pre>/* Method 1: With string literal (auto adds '\0') */
+char str1[] = "Hello";           /* size = 6 (5 chars + '\0') */
+char str2[10] = "Hello";         /* size = 10, rest filled with '\0' */
+
+/* Method 2: Character by character */
+char str3[] = {'H','e','l','l','o','\0'};  /* must add '\0' manually */
+
+/* Method 3: Using pointer (string literal in read-only memory) */
+char *str4 = "Hello";            /* pointer to string literal */
+
+/* Reading string from user */
+char name[50];
+scanf("%s", name);               /* reads until whitespace, NO & needed */
+printf("%s", name);              /* prints the string */
+
+/* Reading string with spaces using fgets */
+fgets(name, 50, stdin);          /* reads full line including spaces */</pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Critical String Rules</div>
+        <ul>
+          <li>Always declare string size <strong>at least 1 more</strong> than the expected string length (for '\0').</li>
+          <li><code>scanf("%s", name)</code> does NOT need <code>&amp;</code> because array name is already a pointer.</li>
+          <li><code>scanf("%s")</code> stops at whitespace — use <code>fgets()</code> for strings with spaces.</li>
+          <li>Strings cannot be compared with <code>==</code> — use <code>strcmp()</code>.</li>
+          <li>Strings cannot be assigned with <code>=</code> after declaration — use <code>strcpy()</code>.</li>
+        </ul>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Accessing Individual Characters of a String</div>
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main() {
+    char str[] = "DIPLOMA";
+    int len = strlen(str);
+
+    /* Access characters using index */
+    printf("First char : %c\n", str[0]);    /* D */
+    printf("Last char  : %c\n", str[len-1]); /* A */
+
+    /* Print character by character */
+    printf("Characters: ");
+    for (int i = 0; str[i] != '\0'; i++) {
+        printf("%c ", str[i]);
+    }
+    printf("\n");
+
+    /* Count vowels */
+    int vowels = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        char c = str[i];
+        if (c=='A'||c=='E'||c=='I'||c=='O'||c=='U'||
+            c=='a'||c=='e'||c=='i'||c=='o'||c=='u')
+            vowels++;
+    }
+    printf("Vowels in '%s': %d\n", str, vowels);
+    return 0;
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== STRING FUNCTIONS ======================== -->
+  <section class="section" id="string-functions">
+    <h2 class="section-title">
+      <i class="fas fa-tools"></i> String Handling Functions (&lt;string.h&gt;)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Including string.h</div>
+        <p>All standard string functions require: <code>#include &lt;string.h&gt;</code> at the top of your program.</p>
+      </div>
+
+      <!-- STRLEN -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-ruler"></i> 1. strlen() — String Length</div>
+        <p>Returns the <strong>number of characters</strong> in a string, <strong>excluding the null terminator '\0'</strong>.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>size_t strlen(const char *str);
+/* Returns: integer — number of characters (not including '\0') */</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> strlen() Example</div>
+          <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main() {
+    char str1[] = "Hello";
+    char str2[] = "Computer";
+    char str3[] = "";          /* empty string */
+
+    printf("Length of '%s' = %lu\n", str1, strlen(str1)); /* 5 */
+    printf("Length of '%s' = %lu\n", str2, strlen(str2)); /* 8 */
+    printf("Length of '' = %lu\n", strlen(str3));          /* 0 */
+
+    /* Note: sizeof vs strlen */
+    char arr[20] = "Hello";
+    printf("strlen = %lu\n", strlen(arr));   /* 5 */
+    printf("sizeof = %lu\n", sizeof(arr));   /* 20 (array size, not string length) */
+    return 0;
+}</pre>
+        </div>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> strlen vs sizeof</div>
+          <p><code>strlen(arr)</code> returns the <strong>string length</strong> (up to '\0'). <code>sizeof(arr)</code> returns the <strong>total array size in bytes</strong>. These are DIFFERENT. For <code>char arr[20] = "Hello"</code>: strlen = 5, sizeof = 20.</p>
+        </div>
+      </div>
+
+      <!-- STRCPY -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-copy"></i> 2. strcpy() — String Copy</div>
+        <p>Copies the contents of the <strong>source string</strong> into the <strong>destination string</strong>, including the null terminator. The destination must have enough space.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>char *strcpy(char *destination, const char *source);
+/* Copies source into destination. Returns pointer to destination. */</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> strcpy() Example</div>
+          <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main() {
+    char src[] = "Hello World";
+    char dest[20];
+
+    strcpy(dest, src);            /* copies src into dest */
+    printf("dest = %s\n", dest);  /* Hello World */
+
+    /* String assignment using strcpy */
+    char name[20];
+    strcpy(name, "Diploma");
+    printf("name = %s\n", name);  /* Diploma */
+
+    /* WRONG: name = "Diploma";  — This does NOT work after declaration */
+    return 0;
+}</pre>
+        </div>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Buffer Overflow Risk</div>
+          <p>If the destination array is smaller than the source string, <code>strcpy()</code> causes a <strong>buffer overflow</strong> — a critical security vulnerability. Always ensure <code>sizeof(dest) &gt; strlen(src) + 1</code>. Use <code>strncpy()</code> for safer copying.</p>
+        </div>
+      </div>
+
+      <!-- STRCAT -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-link"></i> 3. strcat() — String Concatenation</div>
+        <p>Appends (joins) the <strong>source string</strong> to the end of the <strong>destination string</strong>. The null terminator of destination is overwritten and a new one added at the end.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>char *strcat(char *destination, const char *source);
+/* Appends source to end of destination. Returns pointer to destination. */</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> strcat() Example</div>
+          <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main() {
+    char first[30] = "Hello";
+    char second[] = " World";
+
+    printf("Before strcat: '%s'\n", first);   /* Hello */
+    strcat(first, second);                     /* append second to first */
+    printf("After strcat:  '%s'\n", first);   /* Hello World */
+
+    /* Concatenating multiple strings */
+    char result[50] = "West";
+    strcat(result, " Bengal");
+    strcat(result, " State");
+    printf("%s\n", result);   /* West Bengal State */
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <!-- STRCMP -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-equals"></i> 4. strcmp() — String Comparison</div>
+        <p>Compares two strings <strong>lexicographically</strong> (dictionary order) character by character. Returns an integer based on the comparison.</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>int strcmp(const char *str1, const char *str2);
+/* Returns:
+   0       — if str1 == str2 (strings are identical)
+   < 0     — if str1 < str2 (str1 comes before str2 in dictionary)
+   > 0     — if str1 > str2 (str1 comes after str2 in dictionary)
+*/</pre>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> strcmp() Example</div>
+          <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main() {
+    char s1[] = "apple";
+    char s2[] = "apple";
+    char s3[] = "banana";
+    char s4[] = "Apple";   /* uppercase A */
+
+    printf("%d\n", strcmp(s1, s2));  /* 0 — equal */
+    printf("%d\n", strcmp(s1, s3));  /* negative — apple < banana */
+    printf("%d\n", strcmp(s3, s1));  /* positive — banana > apple */
+    printf("%d\n", strcmp(s1, s4));  /* positive — 'a'(97) > 'A'(65) */
+
+    /* Practical use: Password check */
+    char password[20];
+    printf("Enter password: ");
+    scanf("%s", password);
+    if (strcmp(password, "secret123") == 0) {
+        printf("Access granted!\n");
+    } else {
+        printf("Wrong password!\n");
+    }
+    return 0;
+}</pre>
+        </div>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Never Compare Strings with ==</div>
+          <p>In C, <code>str1 == str2</code> compares the <strong>memory addresses</strong> of the strings, not their contents. This will almost always give wrong results. Always use <code>strcmp()</code> to compare string contents.</p>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">Summary of String Functions</caption>
+          <thead>
+            <tr><th>Function</th><th>Header</th><th>Purpose</th><th>Returns</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>strlen(s)</td><td>string.h</td><td>Length of string</td><td>int (length)</td><td>strlen("Hi") = 2</td></tr>
+            <tr><td>strcpy(d, s)</td><td>string.h</td><td>Copy s into d</td><td>char* (dest)</td><td>strcpy(d, "Hello")</td></tr>
+            <tr><td>strcat(d, s)</td><td>string.h</td><td>Append s to d</td><td>char* (dest)</td><td>strcat(d, " World")</td></tr>
+            <tr><td>strcmp(s1,s2)</td><td>string.h</td><td>Compare s1 and s2</td><td>0 / &lt;0 / &gt;0</td><td>strcmp("a","a") = 0</td></tr>
+            <tr><td>strncpy(d,s,n)</td><td>string.h</td><td>Copy n chars safely</td><td>char* (dest)</td><td>strncpy(d,s,5)</td></tr>
+            <tr><td>strncat(d,s,n)</td><td>string.h</td><td>Append n chars safely</td><td>char* (dest)</td><td>strncat(d,s,3)</td></tr>
+            <tr><td>strstr(s,sub)</td><td>string.h</td><td>Find substring in string</td><td>char* or NULL</td><td>strstr("Hello","ell")</td></tr>
+            <tr><td>strupr(s)</td><td>string.h</td><td>Convert to uppercase</td><td>char* (str)</td><td>strupr("hello")="HELLO"</td></tr>
+            <tr><td>strlwr(s)</td><td>string.h</td><td>Convert to lowercase</td><td>char* (str)</td><td>strlwr("HI")="hi"</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== APPLICATIONS ======================== -->
+  <section class="section" id="applications">
+    <h2 class="section-title">
+      <i class="fas fa-cog"></i> String Applications
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Application 1 — Palindrome Check</div>
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main() {
+    char str[100], rev[100];
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    strcpy(rev, str);
+    int len = strlen(rev);
+
+    /* Reverse the string */
+    for (int i = 0; i &lt; len / 2; i++) {
+        char temp = rev[i];
+        rev[i] = rev[len - 1 - i];
+        rev[len - 1 - i] = temp;
+    }
+
+    if (strcmp(str, rev) == 0)
+        printf("'%s' is a Palindrome.\n", str);
+    else
+        printf("'%s' is NOT a Palindrome.\n", str);
+    return 0;
+}
+/* "MADAM" → reversed = "MADAM" → strcmp = 0 → Palindrome */</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Application 2 — Extract Substring</div>
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+/* Extract substring from position 'start' of length 'len' */
+void extractSubstring(char *src, char *dest, int start, int len) {
+    int i;
+    for (i = 0; i &lt; len && src[start + i] != '\0'; i++) {
+        dest[i] = src[start + i];
+    }
+    dest[i] = '\0';   /* null terminate */
+}
+
+int main() {
+    char str[] = "Computer Programming";
+    char sub[20];
+
+    /* Extract "Programming" (starts at index 9, length 11) */
+    extractSubstring(str, sub, 9, 11);
+    printf("Substring: %s\n", sub);    /* Programming */
+
+    /* Extract first 8 chars "Computer" */
+    extractSubstring(str, sub, 0, 8);
+    printf("Left 8: %s\n", sub);       /* Computer */
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Application 3 — Count Vowels and Consonants</div>
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+int main() {
+    char str[100];
+    int vowels = 0, consonants = 0;
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        char c = tolower(str[i]);   /* convert to lowercase for easy check */
+        if (c &gt;= 'a' &amp;&amp; c &lt;= 'z') {
+            if (c=='a'||c=='e'||c=='i'||c=='o'||c=='u')
+                vowels++;
+            else
+                consonants++;
+        }
+    }
+    printf("Vowels = %d, Consonants = %d\n", vowels, consonants);
+    return 0;
+}</pre>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Application 4 — Replace Character in String</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    char str[] = "Hello World Hello";
+    char find = 'l', replace = 'L';
+
+    printf("Before: %s\n", str);
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == find)
+            str[i] = replace;
+    }
+    printf("After:  %s\n", str);
+    /* Output: HeLLo WorLd HeLLo */
+    return 0;
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== FORMULAS ======================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Key Formulas and Syntax
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> 1D Array Declaration</div>
+        <div class="formula">data_type array_name[SIZE];</div>
+        <div class="formula answer">Valid index range: 0 to SIZE-1</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> 1D Array Address Formula</div>
+        <div class="formula">Address of arr[i] = Base_Address + (i × sizeof(data_type))</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> 2D Array Declaration</div>
+        <div class="formula">data_type array_name[ROWS][COLS];</div>
+        <div class="formula answer">Total elements = ROWS × COLS</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> 2D Array Address Formula (Row-Major)</div>
+        <div class="formula">Address of mat[i][j] = Base + (i × num_cols + j) × sizeof(type)</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> String Size vs Length</div>
+        <div class="formula">Array size must be ≥ string_length + 1 (for '\0')</div>
+        <div class="formula answer">char str[6] = "Hello"; → strlen = 5, sizeof = 6</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> strcmp Return Value</div>
+        <div class="formula">strcmp(s1, s2) = 0   → strings are equal</div>
+        <div class="formula">strcmp(s1, s2) &lt; 0  → s1 comes before s2</div>
+        <div class="formula">strcmp(s1, s2) &gt; 0  → s1 comes after s2</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== DEFINITIONS ======================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Array</div>
+        <p>A collection of a fixed number of elements of the same data type stored in contiguous memory locations, each identified by an index starting from 0.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Subscript / Index</div>
+        <p>The integer value used to identify and access a specific element of an array. Valid range is 0 to size-1.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> String</div>
+        <p>A one-dimensional array of characters terminated by the null character '\0'. In C there is no separate string data type — strings are character arrays.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Null Terminator ('\0')</div>
+        <p>A special character with ASCII value 0 that marks the end of a string in C. All standard string functions rely on '\0' to determine string boundaries.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Row-Major Order</div>
+        <p>The memory storage order for 2D arrays in C where elements are stored row by row — all elements of row 0 first, then all of row 1, and so on.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> strlen()</div>
+        <p>A standard library function in &lt;string.h&gt; that returns the number of characters in a string, excluding the null terminator '\0'.</p>
+      </div>
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Buffer Overflow</div>
+        <p>A security vulnerability that occurs when data written to a buffer (array) exceeds its allocated size, overwriting adjacent memory. Common with strcpy() when destination is too small.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== COMPARISONS ======================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">1D Array vs 2D Array vs String</caption>
+          <thead>
+            <tr><th>Feature</th><th>1D Array</th><th>2D Array</th><th>String (char array)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Declaration</td><td>int arr[n]</td><td>int mat[r][c]</td><td>char str[n]</td></tr>
+            <tr><td>Elements accessed by</td><td>One index</td><td>Two indices [i][j]</td><td>One index</td></tr>
+            <tr><td>Terminator</td><td>None</td><td>None</td><td>'\0' mandatory</td></tr>
+            <tr><td>I/O function</td><td>scanf("%d", &arr[i])</td><td>scanf("%d", &mat[i][j])</td><td>scanf("%s", str)</td></tr>
+            <tr><td>Total elements</td><td>n</td><td>r × c</td><td>length + 1 (for '\0')</td></tr>
+            <tr><td>Use case</td><td>List of values</td><td>Matrix / table data</td><td>Text data</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">strlen vs sizeof</caption>
+          <thead>
+            <tr><th>Feature</th><th>strlen()</th><th>sizeof()</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>What it measures</td><td>Length of string content</td><td>Total size of array in bytes</td></tr>
+            <tr><td>Includes '\0'?</td><td>No</td><td>Yes (included in array size)</td></tr>
+            <tr><td>For char arr[20]="Hello"</td><td>Returns 5</td><td>Returns 20</td></tr>
+            <tr><td>Type</td><td>Function (runtime)</td><td>Operator (compile-time)</td></tr>
+            <tr><td>Header needed</td><td>string.h</td><td>None (built-in operator)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold;padding:8px;">strcpy vs strcat vs strcmp</caption>
+          <thead>
+            <tr><th>Function</th><th>Action</th><th>Modifies Destination?</th><th>Return Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>strcpy(d, s)</td><td>Replaces d with s</td><td>Yes — overwrites</td><td>Pointer to d</td></tr>
+            <tr><td>strcat(d, s)</td><td>Appends s to end of d</td><td>Yes — extends</td><td>Pointer to d</td></tr>
+            <tr><td>strcmp(s1, s2)</td><td>Compares s1 and s2</td><td>No — read-only</td><td>0 / &lt;0 / &gt;0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== MCQs ======================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the valid index range for an array declared as <code>int arr[10]</code>?</p>
+          <ul class="options">
+            <li>a. 1 to 10</li>
+            <li>b. 0 to 10</li>
+            <li>c. 0 to 9</li>
+            <li>d. 1 to 9</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: c. 0 to 9</strong>
+            <p>Array indices in C always start from 0. For an array of size 10, valid indices are 0 through 9 (size-1). Accessing arr[10] is out-of-bounds and causes undefined behavior.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the output of: <code>char s[]="Hello"; printf("%lu", strlen(s));</code></p>
+          <ul class="options">
+            <li>a. 6</li>
+            <li>b. 5</li>
+            <li>c. 4</li>
+            <li>d. Compile error</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: b. 5</strong>
+            <p>strlen() returns the number of characters EXCLUDING the null terminator '\0'. "Hello" has 5 characters (H,e,l,l,o), so strlen returns 5. The array size is 6 (5 + '\0') but strlen is 5.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Which function is used to copy one string into another in C?</p>
+          <ul class="options">
+            <li>a. strdup()</li>
+            <li>b. strcopy()</li>
+            <li>c. strcpy()</li>
+            <li>d. strcp()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: c. strcpy()</strong>
+            <p>strcpy(destination, source) is the standard library function in &lt;string.h&gt; for copying strings. strcopy() and strcp() do not exist. strdup() is non-standard (POSIX).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What does <code>strcmp("apple", "apple")</code> return?</p>
+          <ul class="options">
+            <li>a. 1</li>
+            <li>b. -1</li>
+            <li>c. 0</li>
+            <li>d. True</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. 0</strong>
+            <p>strcmp() returns 0 when both strings are identical. It returns a negative value if the first string comes before the second lexicographically, and a positive value if after. It does NOT return true/false.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>How many bytes does <code>char str[10] = "Hello";</code> occupy in memory?</p>
+          <ul class="options">
+            <li>a. 5 bytes</li>
+            <li>b. 6 bytes</li>
+            <li>c. 10 bytes</li>
+            <li>d. 11 bytes</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. 10 bytes</strong>
+            <p>The array is declared with size 10, so it occupies 10 bytes regardless of the string length. The string "Hello" (5 chars + '\0') occupies 6 of those bytes; the remaining 4 are filled with '\0'.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Which of the following correctly accesses element at row 2, column 3 of a 2D array <code>mat</code>?</p>
+          <ul class="options">
+            <li>a. mat[3][2]</li>
+            <li>b. mat[2,3]</li>
+            <li>c. mat[2][3]</li>
+            <li>d. mat(2)(3)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: c. mat[2][3]</strong>
+            <p>2D array elements are accessed using two separate square brackets: mat[row][col]. mat[2,3] is invalid syntax in C (comma operator would make it mat[3]). Parentheses are not used for array access.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What character terminates every string in C?</p>
+          <ul class="options">
+            <li>a. '$'</li>
+            <li>b. '#'</li>
+            <li>c. '\n'</li>
+            <li>d. '\0'</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: d. '\0'</strong>
+            <p>The null character '\0' (ASCII value 0) terminates every string in C. All standard string functions like strlen(), strcpy(), strcmp() rely on this character to determine where the string ends.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the total number of elements in <code>int arr[3][4]</code>?</p>
+          <ul class="options">
+            <li>a. 7</li>
+            <li>b. 12</li>
+            <li>c. 34</li>
+            <li>d. 3</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: b. 12</strong>
+            <p>Total elements in a 2D array = rows × columns = 3 × 4 = 12. Total memory = 12 × sizeof(int) = 12 × 4 = 48 bytes on a 32-bit system.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>Which function appends one string to the end of another?</p>
+          <ul class="options">
+            <li>a. strcpy()</li>
+            <li>b. strcat()</li>
+            <li>c. strcmp()</li>
+            <li>d. strlen()</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: b. strcat()</strong>
+            <p>strcat(destination, source) appends the source string to the end of the destination string. strcpy copies, strcmp compares, strlen measures length.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>What is the output of: <code>int arr[] = {1,2,3,4,5}; printf("%d", arr[2]);</code></p>
+          <ul class="options">
+            <li>a. 1</li>
+            <li>b. 2</li>
+            <li>c. 3</li>
+            <li>d. 4</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: c. 3</strong>
+            <p>Array index 2 gives the third element (indices start at 0). arr[0]=1, arr[1]=2, arr[2]=3, arr[3]=4, arr[4]=5. So arr[2] = 3.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>What happens if you use <code>==</code> to compare two strings in C?</p>
+          <ul class="options">
+            <li>a. It compares string contents correctly</li>
+            <li>b. It compares memory addresses, not contents</li>
+            <li>c. Compile error</li>
+            <li>d. It compares only first characters</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: b. It compares memory addresses, not contents</strong>
+            <p>In C, array names are pointers to the first element. Using == compares the addresses (pointers), not the actual string contents. Always use strcmp() to compare string contents.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>Which of the following is an incorrect way to initialize a string in C?</p>
+          <ul class="options">
+            <li>a. char s[] = "Hello";</li>
+            <li>b. char s[6] = "Hello";</li>
+            <li>c. char s[] = {'H','e','l','l','o','\0'};</li>
+            <li>d. char s[5] = "Hello";</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: d. char s[5] = "Hello";</strong>
+            <p>This is incorrect because "Hello" requires 6 bytes (5 chars + '\0'). Declaring size as 5 leaves no room for the null terminator, causing undefined behavior. The size must be at least 6.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SHORT QUESTIONS ======================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is an array? List any four advantages of using arrays.</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>An <strong>array</strong> is a collection of a fixed number of elements of the same data type stored in contiguous memory locations, accessed using an index. Advantages: (1) <strong>Efficient storage</strong> — multiple values under one name; (2) <strong>Random access</strong> — any element in O(1) using index; (3) <strong>Easy traversal</strong> — single loop processes all elements; (4) <strong>Sorting/searching</strong> — standard operations easily applied.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the difference between strlen() and sizeof() for character arrays?</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p><strong>strlen()</strong> is a function that returns the number of characters in the string content, excluding '\0'. <strong>sizeof()</strong> is an operator that returns the total memory size of the array in bytes. For <code>char arr[20] = "Hello"</code>: <code>strlen(arr) = 5</code> but <code>sizeof(arr) = 20</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Why is the null character '\0' important in C strings?</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p>The null character <strong>'\0'</strong> (ASCII 0) marks the <strong>end of a string</strong> in C. Since C has no built-in string type, all string functions (strlen, strcpy, strcmp, printf with %s) rely on '\0' to know where the string ends. Without '\0', these functions would read past the end of the string, causing undefined behavior or crashes.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the output of <code>strcmp("Banana", "Apple")</code> and why?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p>The output is a <strong>positive value</strong>. strcmp compares strings lexicographically. 'B' has ASCII value 66 and 'A' has 65. Since 'B' &gt; 'A', "Banana" &gt; "Apple", so strcmp returns a positive value (typically 1 or the difference of ASCII values).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is the difference between a 1D array and a 2D array? Give one example of each.</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p>A <strong>1D array</strong> is a linear list of elements accessed by a single index: <code>int marks[5]</code> — stores 5 marks. A <strong>2D array</strong> is a matrix of elements arranged in rows and columns, accessed by two indices: <code>int mat[3][3]</code> — stores a 3×3 matrix. 2D arrays are used for tabular and matrix data.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is row-major order? How are elements of a 2D array stored in memory?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p><strong>Row-major order</strong> means 2D array elements are stored in memory <strong>row by row</strong>. For <code>int mat[2][3]</code>, the storage order is: mat[0][0], mat[0][1], mat[0][2], mat[1][0], mat[1][1], mat[1][2]. C uses row-major order (unlike FORTRAN which uses column-major order).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is the minimum size of an array to store the string "DIPLOMA"?</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p>The string "DIPLOMA" has <strong>7 characters</strong>. In C, every string must end with '\0', so the minimum array size is <strong>8</strong>: <code>char str[8]</code>. Declaration: <code>char str[8] = "DIPLOMA";</code> or <code>char str[] = "DIPLOMA";</code> (auto-sizes to 8).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Why can't we use = to assign a string to a character array after declaration?</p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>After declaration, the array name is a <strong>constant pointer</strong> — it cannot be reassigned. The statement <code>str = "Hello"</code> tries to change the pointer (address), which is not allowed. The correct way to assign a string after declaration is to use <code>strcpy(str, "Hello")</code>, which copies characters one by one.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== LONG QUESTIONS ======================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions (6 Marks)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain one-dimensional arrays in C with declaration, initialization, memory representation, and a complete program to find the largest and smallest elements.</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p>A <strong>one-dimensional array</strong> is a linear sequence of elements of the same type stored contiguously in memory. Each element is accessed by a single integer index starting from 0.</p>
+            <p><strong>Declaration:</strong> <code>data_type name[size];</code> Example: <code>int marks[5];</code></p>
+            <p><strong>Initialization:</strong> <code>int marks[5] = {85, 90, 78, 92, 88};</code></p>
+            <p><strong>Memory:</strong> For <code>int arr[5]</code> at base address 1000 (int=4 bytes):</p>
+            <ul>
+              <li>arr[0] at 1000, arr[1] at 1004, arr[2] at 1008, arr[3] at 1012, arr[4] at 1016</li>
+              <li>Formula: Address of arr[i] = 1000 + i × 4</li>
+            </ul>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Find Largest and Smallest</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int arr[10], n, max, min;
+    printf("Enter n: ");
+    scanf("%d", &n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &arr[i]);
+
+    max = min = arr[0];
+    for (int i = 1; i &lt; n; i++) {
+        if (arr[i] &gt; max) max = arr[i];
+        if (arr[i] &lt; min) min = arr[i];
+    }
+    printf("Max = %d, Min = %d\n", max, min);
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain string handling functions in C: strlen(), strcpy(), strcat(), and strcmp() with syntax, description, and one example for each.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p>All string functions require <code>#include &lt;string.h&gt;</code>.</p>
+            <p><strong>1. strlen(str)</strong> — Returns the length of the string excluding '\0'.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> strlen</div>
+              <pre>char s[] = "Hello";
+printf("%lu", strlen(s));   /* Output: 5 */</pre>
+            </div>
+            <p><strong>2. strcpy(dest, src)</strong> — Copies src into dest including '\0'.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> strcpy</div>
+              <pre>char dest[20];
+strcpy(dest, "Diploma");
+printf("%s", dest);   /* Output: Diploma */</pre>
+            </div>
+            <p><strong>3. strcat(dest, src)</strong> — Appends src to end of dest.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> strcat</div>
+              <pre>char s[30] = "Hello";
+strcat(s, " World");
+printf("%s", s);   /* Output: Hello World */</pre>
+            </div>
+            <p><strong>4. strcmp(s1, s2)</strong> — Compares lexicographically. Returns 0 if equal, &lt;0 if s1&lt;s2, &gt;0 if s1&gt;s2.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> strcmp</div>
+              <pre>printf("%d", strcmp("abc", "abc"));   /* 0 — equal */
+printf("%d", strcmp("abc", "abd"));   /* negative */
+printf("%d", strcmp("abd", "abc"));   /* positive */</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain two-dimensional arrays in C. Write a program to perform matrix multiplication of two 3×3 matrices.</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p>A <strong>two-dimensional array</strong> is an array of arrays representing a matrix. Elements are accessed with two indices: <code>mat[row][col]</code>. Stored in memory in row-major order.</p>
+            <p><strong>Declaration:</strong> <code>int mat[3][3];</code> — 3 rows, 3 columns, 9 elements.</p>
+            <p><strong>Matrix Multiplication Rule:</strong> C[i][j] = sum of A[i][k] × B[k][j] for all k.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Matrix Multiplication</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int A[3][3], B[3][3], C[3][3] = {0};
+
+    printf("Enter Matrix A (3x3):\n");
+    for(int i=0;i&lt;3;i++) for(int j=0;j&lt;3;j++) scanf("%d",&A[i][j]);
+
+    printf("Enter Matrix B (3x3):\n");
+    for(int i=0;i&lt;3;i++) for(int j=0;j&lt;3;j++) scanf("%d",&B[i][j]);
+
+    /* Multiplication */
+    for(int i=0;i&lt;3;i++)
+        for(int j=0;j&lt;3;j++)
+            for(int k=0;k&lt;3;k++)
+                C[i][j] += A[i][k] * B[k][j];
+
+    printf("\nResult Matrix C = A×B:\n");
+    for(int i=0;i&lt;3;i++){
+        for(int j=0;j&lt;3;j++) printf("%6d", C[i][j]);
+        printf("\n");
+    }
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Condition for multiplication:</strong> Columns of A must equal rows of B. For 3×3 matrices this is always satisfied.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== PRACTICE ======================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a C program to reverse an array of n integers entered by the user and display the reversed array.</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int arr[100], n, temp;
+    printf("Enter n: ");
+    scanf("%d", &n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &arr[i]);
+
+    /* Reverse using two-pointer technique */
+    int left = 0, right = n - 1;
+    while (left &lt; right) {
+        temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+        left++;
+        right--;
+    }
+
+    printf("Reversed: ");
+    for (int i = 0; i &lt; n; i++) printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a C program to check whether a string entered by the user is a palindrome or not (without using string library functions).</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    char str[100];
+    int len = 0, isPalin = 1;
+
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    /* Find length manually */
+    while (str[len] != '\0') len++;
+
+    /* Check palindrome */
+    for (int i = 0; i &lt; len / 2; i++) {
+        if (str[i] != str[len - 1 - i]) {
+            isPalin = 0;
+            break;
+        }
+    }
+
+    if (isPalin)
+        printf("'%s' IS a palindrome.\n", str);
+    else
+        printf("'%s' is NOT a palindrome.\n", str);
+    return 0;
+}
+/* "MADAM" → palindrome, "HELLO" → not palindrome */</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a C program to find the transpose of a 3×3 matrix.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int mat[3][3], trans[3][3];
+
+    printf("Enter 3x3 matrix:\n");
+    for (int i = 0; i &lt; 3; i++)
+        for (int j = 0; j &lt; 3; j++)
+            scanf("%d", &mat[i][j]);
+
+    /* Transpose: swap row and column */
+    for (int i = 0; i &lt; 3; i++)
+        for (int j = 0; j &lt; 3; j++)
+            trans[j][i] = mat[i][j];
+
+    printf("\nOriginal Matrix:\n");
+    for (int i = 0; i &lt; 3; i++) {
+        for (int j = 0; j &lt; 3; j++) printf("%5d", mat[i][j]);
+        printf("\n");
+    }
+
+    printf("\nTranspose Matrix:\n");
+    for (int i = 0; i &lt; 3; i++) {
+        for (int j = 0; j &lt; 3; j++) printf("%5d", trans[i][j]);
+        printf("\n");
+    }
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a C program to count the number of words, vowels, and consonants in a string entered by the user.</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+int main() {
+    char str[200];
+    int words = 0, vowels = 0, consonants = 0;
+    int inWord = 0;
+
+    printf("Enter a sentence: ");
+    fgets(str, 200, stdin);
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        char c = tolower(str[i]);
+
+        /* Count words */
+        if (c != ' ' &amp;&amp; c != '\n' &amp;&amp; c != '\t') {
+            if (!inWord) { words++; inWord = 1; }
+        } else {
+            inWord = 0;
+        }
+
+        /* Count vowels and consonants */
+        if (c &gt;= 'a' &amp;&amp; c &lt;= 'z') {
+            if (c=='a'||c=='e'||c=='i'||c=='o'||c=='u')
+                vowels++;
+            else
+                consonants++;
+        }
+    }
+
+    printf("Words = %d\nVowels = %d\nConsonants = %d\n",
+           words, vowels, consonants);
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a C program to implement linear search on an array of integers. Display the index if found, or "Not found" if absent.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int linearSearch(int arr[], int n, int key) {
+    for (int i = 0; i &lt; n; i++) {
+        if (arr[i] == key) return i;   /* found at index i */
+    }
+    return -1;   /* not found */
+}
+
+int main() {
+    int arr[100], n, key, result;
+    printf("Enter n: ");
+    scanf("%d", &n);
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i &lt; n; i++) scanf("%d", &arr[i]);
+
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    result = linearSearch(arr, n, key);
+    if (result != -1)
+        printf("%d found at index %d\n", key, result);
+    else
+        printf("%d not found in array\n", key);
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== REVISION ======================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points — Unit 3</div>
+        <ul>
+          <li>Array = collection of <strong>same type elements</strong> in <strong>contiguous memory</strong>.</li>
+          <li>Array index starts at <strong>0</strong>, valid range is <strong>0 to size-1</strong>.</li>
+          <li>C does <strong>NOT check bounds</strong> — out-of-bounds access = undefined behavior.</li>
+          <li>Address of arr[i] = Base + (i × sizeof(type)).</li>
+          <li>2D array element: <strong>mat[row][col]</strong>. Total elements = rows × cols.</li>
+          <li>2D arrays stored in <strong>row-major order</strong> in C.</li>
+          <li>String = <strong>char array</strong> terminated by <strong>'\0'</strong> (null character).</li>
+          <li>Array size for string must be <strong>at least length + 1</strong> for '\0'.</li>
+          <li><code>scanf("%s", name)</code> — <strong>no &amp; needed</strong> for arrays.</li>
+          <li><strong>strlen(s)</strong> — length excluding '\0'. <strong>sizeof(arr)</strong> — total array bytes.</li>
+          <li><strong>strcpy(dest, src)</strong> — copies src to dest (dest must be large enough).</li>
+          <li><strong>strcat(dest, src)</strong> — appends src to end of dest.</li>
+          <li><strong>strcmp(s1, s2)</strong> — 0 if equal, &lt;0 if s1&lt;s2, &gt;0 if s1&gt;s2.</li>
+          <li>Cannot use <strong>==</strong> to compare strings — compares addresses, not content.</li>
+          <li>Cannot use <strong>=</strong> to assign string after declaration — use strcpy().</li>
+          <li>All string functions require <strong>#include &lt;string.h&gt;</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-fire"></i> Must Remember for Exam</div>
+        <ul>
+          <li><strong>Array index starts at 0</strong> — extremely common MCQ trap (choosing 1 to n instead of 0 to n-1).</li>
+          <li><strong>String must end with '\0'</strong> — always allocate one extra byte for it.</li>
+          <li><strong>strcmp returns 0</strong> for equal strings — NOT 1 or true.</li>
+          <li><strong>strlen does NOT count '\0'</strong> — this distinction is asked every year.</li>
+          <li><strong>Address formula</strong> for 1D array and 2D array — asked in numerical questions.</li>
+          <li><strong>Matrix multiplication condition</strong>: columns of A must equal rows of B.</li>
+          <li><strong>Row-major order</strong> — C stores 2D arrays row by row (column-major is Fortran).</li>
+          <li>All 4 string functions: <strong>strlen, strcpy, strcat, strcmp</strong> — their purpose and return type.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Writing array size exactly equal to string length — missing space for '\0'.</li>
+          <li>Using <code>&amp;arr[i]</code> for 2D arrays in scanf — correct is <code>&amp;mat[i][j]</code>.</li>
+          <li>Using <code>scanf("%s", &amp;name)</code> instead of <code>scanf("%s", name)</code> — & not needed for arrays.</li>
+          <li>Thinking <code>strcmp("abc","abc")</code> returns <strong>1</strong> (true) — it returns <strong>0</strong>.</li>
+          <li>Confusing <strong>strlen (5)</strong> with <strong>sizeof (6)</strong> for <code>"Hello"</code>.</li>
+          <li>Accessing <code>arr[n]</code> instead of <code>arr[n-1]</code> for the last element.</li>
+          <li>Forgetting to initialize result matrix to 0 in matrix multiplication.</li>
+          <li>Using <code>str1 == str2</code> to compare strings — always use <code>strcmp()</code>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

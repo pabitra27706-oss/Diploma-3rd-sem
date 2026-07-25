@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 4 – Graph Algorithms | CST209</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="../../units-com/common.css"/>
+  <style>
+    .graph-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .graph-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1rem;
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+    .graph-card h4 {
+      margin: 0 0 0.4rem 0;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .graph-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .complexity-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.78rem;
+      font-family: 'Courier New', monospace;
+      margin-top: 0.4rem;
+    }
+    .trace-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 0.8rem;
+      margin: 0.3rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+    }
+    .trace-step .step-label {
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 0.5rem;
+    }
+    .highlight-el {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 3px;
+      padding: 0 4px;
+      font-weight: 700;
+    }
+    .graph-diagram {
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      line-height: 1.8;
+      overflow-x: auto;
+      margin-top: 0.6rem;
+      white-space: pre;
+    }
+    .edge-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+    }
+    .edge-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-family: 'Courier New', monospace;
+    }
+    .edge-item.selected {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, var(--card-bg));
+      font-weight: 700;
+    }
+    .dist-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+    }
+    .dist-cell {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem;
+      text-align: center;
+      font-size: 0.82rem;
+    }
+    .dist-cell .node-label {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+    .dist-cell .dist-val {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+    .dist-cell.updated {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, var(--card-bg));
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="../index.html" style="text-decoration:none;color:inherit;">
+        <i class="fas fa-arrow-left"></i> CST209
+      </a>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview">Overview</a>
+      <a href="#graph-basics">Basics</a>
+      <a href="#dag-topo">DAG &amp; Topo</a>
+      <a href="#mst">MST</a>
+      <a href="#shortest-path">Shortest Path</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#definitions">Definitions</a>
+      <a href="#comparisons">Comparisons</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#short-questions">Short Qs</a>
+      <a href="#long-questions">Long Qs</a>
+      <a href="#practice">Practice</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 4 – Graph Algorithms</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#graph-basics">Graph Basics</a>
+    <a href="#dag-topo">DAG &amp; Topological Sort</a>
+    <a href="#mst">Minimum Spanning Tree</a>
+    <a href="#shortest-path">Shortest Path</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Key Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice Problems</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-code-branch"></i> CST209 – Algorithms</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Unit 4 of 5</div>
+      <div class="info-item"><i class="fas fa-clock"></i> 14 Hours</div>
+      <div class="info-item"><i class="fas fa-graduation-cap"></i> Diploma 3rd Semester</div>
+    </div>
+    <h1><i class="fas fa-project-diagram"></i> Graph Algorithms</h1>
+    <p>Graph definitions, DAGs, topological sort, MST (Prim's &amp; Kruskal's), and shortest paths (Dijkstra, Bellman-Ford, Floyd-Warshall).</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- =================== SECTION 1: OVERVIEW =================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What is this unit about?</div>
+        <p>Graphs model relationships between objects — from road networks to social media connections. This unit covers the most important graph algorithms asked in exams and used in real-world computing.</p>
+        <ul>
+          <li><strong>Graph basics:</strong> Directed/undirected graphs, paths, cycles, spanning trees.</li>
+          <li><strong>DAGs:</strong> Directed Acyclic Graphs and Topological Sorting.</li>
+          <li><strong>MST:</strong> Minimum Spanning Tree using Prim's and Kruskal's algorithms.</li>
+          <li><strong>Shortest Path:</strong> Dijkstra's, Bellman-Ford, and Floyd-Warshall algorithms.</li>
+        </ul>
+      </div>
+      <div class="graph-grid">
+        <div class="graph-card">
+          <h4><i class="fas fa-project-diagram"></i> Graphs</h4>
+          <p>Directed, undirected, paths, cycles, spanning trees.</p>
+        </div>
+        <div class="graph-card">
+          <h4><i class="fas fa-sort-amount-down"></i> Topological Sort</h4>
+          <p>Ordering vertices of a DAG.</p>
+          <span class="complexity-badge">O(V+E)</span>
+        </div>
+        <div class="graph-card">
+          <h4><i class="fas fa-tree"></i> Prim's MST</h4>
+          <p>Grow MST from a starting vertex.</p>
+          <span class="complexity-badge">O(V²) / O(E log V)</span>
+        </div>
+        <div class="graph-card">
+          <h4><i class="fas fa-tree"></i> Kruskal's MST</h4>
+          <p>Add edges in increasing weight.</p>
+          <span class="complexity-badge">O(E log E)</span>
+        </div>
+        <div class="graph-card">
+          <h4><i class="fas fa-route"></i> Dijkstra</h4>
+          <p>Single-source shortest path (non-negative).</p>
+          <span class="complexity-badge">O(V²) / O(E log V)</span>
+        </div>
+        <div class="graph-card">
+          <h4><i class="fas fa-route"></i> Bellman-Ford</h4>
+          <p>Single-source (handles negative weights).</p>
+          <span class="complexity-badge">O(V·E)</span>
+        </div>
+        <div class="graph-card">
+          <h4><i class="fas fa-th"></i> Floyd-Warshall</h4>
+          <p>All-pairs shortest path.</p>
+          <span class="complexity-badge">O(V³)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 2: GRAPH BASICS =================== -->
+  <section class="section" id="graph-basics">
+    <h2 class="section-title">
+      <i class="fas fa-project-diagram"></i> Graph Definitions &amp; Basics
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Graph Definition</div>
+        <p>A <strong>Graph G = (V, E)</strong> consists of:</p>
+        <ul>
+          <li><strong>V</strong> — A set of <strong>vertices</strong> (nodes).</li>
+          <li><strong>E</strong> — A set of <strong>edges</strong> connecting pairs of vertices.</li>
+        </ul>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-arrows-alt-h"></i> Types of Graphs</div>
+        <div class="table-wrapper" style="margin-top:0.5rem;">
+          <table class="data-table">
+            <thead>
+              <tr><th>Type</th><th>Description</th><th>Edge Notation</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Undirected Graph</strong></td><td>Edges have no direction. (u,v) = (v,u)</td><td>{u, v}</td></tr>
+              <tr><td><strong>Directed Graph (Digraph)</strong></td><td>Edges have direction. (u→v) ≠ (v→u)</td><td>(u, v)</td></tr>
+              <tr><td><strong>Weighted Graph</strong></td><td>Each edge has a weight (cost/distance)</td><td>(u, v, w)</td></tr>
+              <tr><td><strong>Unweighted Graph</strong></td><td>All edges have equal weight (or weight 1)</td><td>(u, v)</td></tr>
+              <tr><td><strong>Complete Graph</strong></td><td>Every vertex is connected to every other</td><td>|E| = V(V-1)/2</td></tr>
+              <tr><td><strong>Connected Graph</strong></td><td>There is a path between every pair of vertices</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="graph-diagram">
+    Undirected:          Directed:
+    A --- B              A --→ B
+    |   / |              ↑     ↓
+    |  /  |              |     |
+    C --- D              C ←-- D
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-road"></i> Paths, Cycles, and Connectivity</div>
+        <ul style="line-height:2.2;">
+          <li><strong>Path:</strong> A sequence of vertices v₁, v₂, ..., vₖ where each consecutive pair has an edge. <strong>Length</strong> = number of edges in the path.</li>
+          <li><strong>Simple Path:</strong> A path where no vertex is repeated.</li>
+          <li><strong>Cycle:</strong> A path where the first and last vertices are the same (v₁ = vₖ, k ≥ 3).</li>
+          <li><strong>Acyclic Graph:</strong> A graph with no cycles.</li>
+          <li><strong>Connected Graph:</strong> Every pair of vertices has a path between them (for undirected graphs).</li>
+          <li><strong>Strongly Connected:</strong> In a directed graph, every vertex can reach every other vertex.</li>
+        </ul>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-tree"></i> Spanning Tree</div>
+        <p>A <strong>spanning tree</strong> of a connected graph G is a subgraph that:</p>
+        <ul>
+          <li>Is a <strong>tree</strong> (connected + acyclic).</li>
+          <li>Contains <strong>all V vertices</strong> of G.</li>
+          <li>Contains exactly <strong>V − 1 edges</strong>.</li>
+        </ul>
+        <p style="margin-top:0.5rem;">A graph can have many spanning trees. Among all possible spanning trees of a weighted graph, the one with minimum total edge weight is called the <strong>Minimum Spanning Tree (MST)</strong>.</p>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-database"></i> Graph Representations</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Representation</th><th>Space</th><th>Edge Check</th><th>List Neighbours</th><th>Best When</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Adjacency Matrix</strong></td><td>O(V²)</td><td>O(1)</td><td>O(V)</td><td>Dense graphs (E ≈ V²)</td></tr>
+              <tr><td><strong>Adjacency List</strong></td><td>O(V+E)</td><td>O(degree)</td><td>O(degree)</td><td>Sparse graphs (E ≪ V²)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="important-note" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Key Graph Properties</div>
+        <ul>
+          <li>Undirected graph: max edges = <strong>V(V-1)/2</strong></li>
+          <li>Directed graph: max edges = <strong>V(V-1)</strong></li>
+          <li>A tree has exactly <strong>V − 1 edges</strong></li>
+          <li>A connected graph has at least <strong>V − 1 edges</strong></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 3: DAG & TOPOLOGICAL SORT =================== -->
+  <section class="section" id="dag-topo">
+    <h2 class="section-title">
+      <i class="fas fa-sort-amount-down"></i> DAGs &amp; Topological Sorting
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> DAG Definition</div>
+        <p>A <strong>Directed Acyclic Graph (DAG)</strong> is a directed graph with <strong>no directed cycles</strong>. Every DAG has at least one topological ordering.</p>
+        <p style="margin-top:0.5rem;"><strong>Examples:</strong> Task dependency graphs, course prerequisites, build systems, Git commit history.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-quote-left"></i> Topological Sort</div>
+        <p><strong>Topological Sort</strong> is a linear ordering of vertices of a DAG such that for every directed edge (u → v), vertex u appears <strong>before</strong> vertex v in the ordering.</p>
+        <p style="margin-top:0.5rem;">Topological sort is only possible for <strong>DAGs</strong> (no cycles). If the graph has a cycle, topological sort is impossible.</p>
+      </div>
+
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-cogs"></i> Algorithm 1: Kahn's Algorithm (BFS-based)</div>
+        <div class="pseudocode-box" style="margin-top:0.4rem;">
+          <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode</div>
+          <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+KAHN-TOPOLOGICAL-SORT(G)
+  Compute in-degree for each vertex
+  queue Q ← all vertices with in-degree 0
+  result = []
+  while Q is not empty
+    u = Q.dequeue()
+    result.append(u)
+    for each neighbour v of u
+      in-degree[v] -= 1
+      if in-degree[v] == 0
+        Q.enqueue(v)
+  if |result| != |V|: "Graph has a cycle"
+  return result
+          </pre>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-cogs"></i> Algorithm 2: DFS-based Topological Sort</div>
+        <div class="pseudocode-box" style="margin-top:0.4rem;">
+          <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode</div>
+          <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+DFS-TOPOLOGICAL-SORT(G)
+  stack S = []
+  visited = {all false}
+  for each vertex u in V
+    if not visited[u]
+      DFS-VISIT(u, visited, S)
+  return S (reversed)
+
+DFS-VISIT(u, visited, S)
+  visited[u] = true
+  for each neighbour v of u
+    if not visited[v]
+      DFS-VISIT(v, visited, S)
+  S.push(u)    // push after all descendants
+          </pre>
+        </div>
+      </div>
+
+      <div class="trace-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Example: Topological Sort (Kahn's)</div>
+        <p style="margin:0.3rem 0;font-size:0.9rem;">Graph: 5→0, 5→2, 4→0, 4→1, 2→3, 3→1</p>
+        <div class="graph-diagram" style="margin-top:0.3rem;">
+    5 ---→ 0       4 ---→ 1
+    |              |       ↑
+    ↓              ↓       |
+    2 ---→ 3 ------→------+
+        </div>
+        <div class="trace-step"><span class="step-label">In-degrees:</span> 0:2, 1:2, 2:1, 3:1, 4:0, 5:0</div>
+        <div class="trace-step"><span class="step-label">Queue:</span> {4, 5} (in-degree 0)</div>
+        <div class="trace-step"><span class="step-label">Dequeue 4:</span> Reduce in-deg of 0(→1), 1(→1). Result: [4]</div>
+        <div class="trace-step"><span class="step-label">Dequeue 5:</span> Reduce 0(→0→Q), 2(→0→Q). Result: [4,5]</div>
+        <div class="trace-step"><span class="step-label">Dequeue 0:</span> No outgoing. Result: [4,5,0]</div>
+        <div class="trace-step"><span class="step-label">Dequeue 2:</span> Reduce 3(→0→Q). Result: [4,5,0,2]</div>
+        <div class="trace-step"><span class="step-label">Dequeue 3:</span> Reduce 1(→0→Q). Result: [4,5,0,2,3]</div>
+        <div class="trace-step"><span class="step-label">Dequeue 1:</span> Result: [<span class="highlight-el">4,5,0,2,3,1</span>] ✅</div>
+      </div>
+
+      <div class="complexity-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Topological Sort</div>
+        <ul>
+          <li><strong>Time:</strong> O(V + E) — both Kahn's and DFS-based.</li>
+          <li><strong>Space:</strong> O(V) — for in-degree array/visited array + queue/stack.</li>
+          <li><strong>Prerequisite:</strong> Graph must be a DAG. If cycle exists, Kahn's detects it (result size &lt; V).</li>
+        </ul>
+      </div>
+
+      <div class="tip-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Real-World Applications</div>
+        <ul>
+          <li><strong>Build systems:</strong> Compile files in dependency order (Makefile, Gradle).</li>
+          <li><strong>Task scheduling:</strong> Schedule tasks with prerequisites.</li>
+          <li><strong>Course prerequisites:</strong> Order courses so all prereqs come first.</li>
+          <li><strong>Package managers:</strong> Install dependencies in correct order (npm, pip).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 4: MST =================== -->
+  <section class="section" id="mst">
+    <h2 class="section-title">
+      <i class="fas fa-tree"></i> Minimum Spanning Tree (MST)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-quote-left"></i> MST Definition</div>
+        <p>The <strong>Minimum Spanning Tree</strong> of a connected, weighted, undirected graph G is a spanning tree (V−1 edges connecting all V vertices) with the <strong>minimum total edge weight</strong>.</p>
+        <p style="margin-top:0.5rem;"><strong>Properties:</strong></p>
+        <ul>
+          <li>Contains exactly <strong>V − 1 edges</strong>.</li>
+          <li>Connects all V vertices.</li>
+          <li>Has no cycles.</li>
+          <li>Has minimum total weight among all spanning trees.</li>
+          <li>May not be unique if multiple edges have the same weight.</li>
+        </ul>
+      </div>
+
+      <!-- PRIM'S -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin:1.2rem 0 0.6rem;"><i class="fas fa-tree"></i> 1. Prim's Algorithm</h3>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Prim's algorithm grows the MST <strong>one vertex at a time</strong>, starting from any vertex. At each step, it adds the <strong>cheapest edge</strong> connecting a vertex already in the MST to a vertex not yet in the MST.</p>
+        <p style="margin-top:0.5rem;"><strong>Paradigm:</strong> Greedy Method.</p>
+      </div>
+
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Prim's Algorithm</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+PRIM(G, start)
+  key[v] = ∞ for all v    // min weight edge to v
+  key[start] = 0
+  parent[v] = NIL for all v
+  inMST[v] = false for all v
+
+  repeat V times:
+    u = vertex with minimum key[] not in MST
+    inMST[u] = true
+    for each neighbour v of u with weight w:
+      if not inMST[v] and w < key[v]:
+        key[v] = w
+        parent[v] = u
+
+  MST edges = {(parent[v], v) for all v ≠ start}
+        </pre>
+      </div>
+
+      <div class="trace-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: Prim's Algorithm</div>
+        <p style="margin:0.3rem 0;font-size:0.9rem;">Graph vertices: A,B,C,D,E. Edges: A-B(2), A-D(6), B-C(3), B-D(8), B-E(5), C-E(7), D-E(9). Start at A.</p>
+        <div class="graph-diagram" style="margin-top:0.3rem;">
+      A --2-- B --3-- C
+      |      / \      |
+      6    8    5     7
+      |  /       \  |
+      D ----9---- E
+        </div>
+        <div class="trace-step"><span class="step-label">Init:</span> key: A=0, B=∞, C=∞, D=∞, E=∞</div>
+        <div class="trace-step"><span class="step-label">Pick A (key=0):</span> Update: B=2(A), D=6(A). MST: {A}</div>
+        <div class="trace-step"><span class="step-label">Pick B (key=2):</span> Update: C=3(B), E=5(B), D=min(6,8)=6. MST edge: <span class="highlight-el">A-B(2)</span></div>
+        <div class="trace-step"><span class="step-label">Pick C (key=3):</span> Update: E=min(5,7)=5. MST edge: <span class="highlight-el">B-C(3)</span></div>
+        <div class="trace-step"><span class="step-label">Pick E (key=5):</span> Update: D=min(6,9)=6. MST edge: <span class="highlight-el">B-E(5)</span></div>
+        <div class="trace-step"><span class="step-label">Pick D (key=6):</span> MST edge: <span class="highlight-el">A-D(6)</span></div>
+        <div class="trace-step"><span class="step-label">MST edges:</span> A-B(2), B-C(3), B-E(5), A-D(6). <strong>Total weight = 16</strong> ✅</div>
+      </div>
+
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Prim's</div>
+        <ul>
+          <li><strong>With adjacency matrix:</strong> O(V²) — suitable for dense graphs.</li>
+          <li><strong>With min-heap + adjacency list:</strong> O(E log V) — suitable for sparse graphs.</li>
+          <li><strong>Space:</strong> O(V + E).</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0;border:none;border-top:1px dashed var(--border);">
+
+      <!-- KRUSKAL'S -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-tree"></i> 2. Kruskal's Algorithm</h3>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Kruskal's algorithm builds the MST <strong>one edge at a time</strong>. It sorts all edges by weight and adds them greedily, <strong>skipping any edge that would create a cycle</strong>. Uses <strong>Union-Find (Disjoint Set Union)</strong> data structure to detect cycles efficiently.</p>
+        <p style="margin-top:0.5rem;"><strong>Paradigm:</strong> Greedy Method.</p>
+      </div>
+
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Kruskal's Algorithm</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+KRUSKAL(G)
+  Sort all edges E by weight (ascending)
+  MST = {}
+  Initialize Union-Find for V vertices
+
+  for each edge (u, v, w) in sorted order:
+    if FIND(u) ≠ FIND(v):     // u and v in different sets (no cycle)
+      MST = MST ∪ {(u, v, w)}
+      UNION(u, v)
+    if |MST| == V - 1: break
+
+  return MST
+        </pre>
+      </div>
+
+      <div class="trace-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: Kruskal's Algorithm (same graph)</div>
+        <p style="margin:0.3rem 0;font-size:0.9rem;">Edges sorted: A-B(2), B-C(3), B-E(5), A-D(6), C-E(7), B-D(8), D-E(9)</p>
+        <div class="edge-list">
+          <div class="edge-item selected">A-B: 2</div>
+          <div class="edge-item selected">B-C: 3</div>
+          <div class="edge-item selected">B-E: 5</div>
+          <div class="edge-item selected">A-D: 6</div>
+          <div class="edge-item">C-E: 7 ✗</div>
+          <div class="edge-item">B-D: 8 ✗</div>
+          <div class="edge-item">D-E: 9 ✗</div>
+        </div>
+        <div class="trace-step" style="margin-top:0.5rem;"><span class="step-label">Edge A-B(2):</span> A,B in different sets → Add. Sets: {A,B},{C},{D},{E}</div>
+        <div class="trace-step"><span class="step-label">Edge B-C(3):</span> B,C different → Add. Sets: {A,B,C},{D},{E}</div>
+        <div class="trace-step"><span class="step-label">Edge B-E(5):</span> B,E different → Add. Sets: {A,B,C,E},{D}</div>
+        <div class="trace-step"><span class="step-label">Edge A-D(6):</span> A,D different → Add. Sets: {A,B,C,D,E}</div>
+        <div class="trace-step"><span class="step-label">4 edges = V-1:</span> MST complete! Total = 2+3+5+6 = <strong>16</strong> ✅</div>
+        <div class="trace-step"><span class="step-label">Edge C-E(7):</span> C,E same set → Skip (would form cycle).</div>
+      </div>
+
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Kruskal's</div>
+        <ul>
+          <li><strong>Sorting edges:</strong> O(E log E) = O(E log V) since E ≤ V².</li>
+          <li><strong>Union-Find operations:</strong> Nearly O(1) each with path compression + union by rank → total O(E · α(V)) ≈ O(E).</li>
+          <li><strong>Overall:</strong> O(E log E).</li>
+          <li><strong>Space:</strong> O(V + E).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 5: SHORTEST PATH =================== -->
+  <section class="section" id="shortest-path">
+    <h2 class="section-title">
+      <i class="fas fa-route"></i> Shortest Path Algorithms
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Three Algorithms — Different Use Cases</div>
+        <div class="table-wrapper" style="margin-top:0.5rem;">
+          <table class="data-table">
+            <thead>
+              <tr><th>Algorithm</th><th>Type</th><th>Negative Weights?</th><th>Complexity</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Dijkstra</strong></td><td>Single-source</td><td>❌ No</td><td>O(V²) or O(E log V)</td></tr>
+              <tr><td><strong>Bellman-Ford</strong></td><td>Single-source</td><td>✅ Yes</td><td>O(V·E)</td></tr>
+              <tr><td><strong>Floyd-Warshall</strong></td><td>All-pairs</td><td>✅ Yes (no neg. cycles)</td><td>O(V³)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DIJKSTRA -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin:1.2rem 0 0.6rem;"><i class="fas fa-route"></i> 1. Dijkstra's Algorithm</h3>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Dijkstra's algorithm finds the <strong>shortest path from a single source vertex to all other vertices</strong> in a graph with <strong>non-negative edge weights</strong>. It greedily selects the unvisited vertex with the smallest known distance and updates its neighbours.</p>
+        <p style="margin-top:0.5rem;"><strong>Paradigm:</strong> Greedy Method.</p>
+        <p><strong>Limitation:</strong> Does NOT work with negative edge weights.</p>
+      </div>
+
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Dijkstra's Algorithm</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+DIJKSTRA(G, source)
+  dist[v] = ∞ for all v
+  dist[source] = 0
+  visited[v] = false for all v
+
+  repeat V times:
+    u = unvisited vertex with minimum dist[]
+    visited[u] = true
+    for each neighbour v of u with weight w:
+      if not visited[v] and dist[u] + w < dist[v]:
+        dist[v] = dist[u] + w
+
+  return dist[]
+        </pre>
+      </div>
+
+      <div class="trace-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: Dijkstra from vertex A</div>
+        <p style="margin:0.3rem 0;font-size:0.9rem;">Graph: A→B(4), A→C(2), B→D(3), B→C(5), C→B(1), C→D(8), D→E(2), B→E(6)</p>
+        <div class="trace-step"><span class="step-label">Init:</span> dist: A=0, B=∞, C=∞, D=∞, E=∞</div>
+        <div class="trace-step"><span class="step-label">Pick A (d=0):</span> Update B=4, C=2</div>
+        <div class="trace-step"><span class="step-label">Pick C (d=2):</span> Update B=min(4,2+1)=<span class="highlight-el">3</span>, D=min(∞,2+8)=10</div>
+        <div class="trace-step"><span class="step-label">Pick B (d=3):</span> Update D=min(10,3+3)=<span class="highlight-el">6</span>, E=min(∞,3+6)=9</div>
+        <div class="trace-step"><span class="step-label">Pick D (d=6):</span> Update E=min(9,6+2)=<span class="highlight-el">8</span></div>
+        <div class="trace-step"><span class="step-label">Pick E (d=8):</span> No updates.</div>
+        <div class="trace-step"><span class="step-label">Result:</span> A=0, B=3, C=2, D=6, E=8 ✅</div>
+        <div class="dist-table">
+          <div class="dist-cell updated"><div class="node-label">A</div><div class="dist-val">0</div></div>
+          <div class="dist-cell updated"><div class="node-label">B</div><div class="dist-val">3</div></div>
+          <div class="dist-cell updated"><div class="node-label">C</div><div class="dist-val">2</div></div>
+          <div class="dist-cell updated"><div class="node-label">D</div><div class="dist-val">6</div></div>
+          <div class="dist-cell updated"><div class="node-label">E</div><div class="dist-val">8</div></div>
+        </div>
+      </div>
+
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Dijkstra's</div>
+        <ul>
+          <li><strong>With adjacency matrix:</strong> O(V²).</li>
+          <li><strong>With min-heap + adjacency list:</strong> O((V + E) log V) = O(E log V).</li>
+          <li><strong>Space:</strong> O(V).</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Why Dijkstra Fails with Negative Weights</div>
+        <p>Dijkstra marks a vertex as "visited" permanently once it's picked. With negative weights, a later path through a negative edge could give a shorter distance, but Dijkstra wouldn't re-check it. This leads to incorrect results.</p>
+        <p><strong>For negative weights, use Bellman-Ford.</strong></p>
+      </div>
+
+      <hr style="margin:1.5rem 0;border:none;border-top:1px dashed var(--border);">
+
+      <!-- BELLMAN-FORD -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-route"></i> 2. Bellman-Ford Algorithm</h3>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Bellman-Ford computes shortest paths from a single source, even with <strong>negative edge weights</strong>. It relaxes all edges <strong>V−1 times</strong>. Additionally, it can <strong>detect negative weight cycles</strong> (a cycle whose total weight is negative — no shortest path exists in such cases).</p>
+        <p style="margin-top:0.5rem;"><strong>Paradigm:</strong> Dynamic Programming.</p>
+      </div>
+
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Bellman-Ford</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+BELLMAN-FORD(G, source)
+  dist[v] = ∞ for all v
+  dist[source] = 0
+
+  // Relax all edges V-1 times
+  for i = 1 to V-1:
+    for each edge (u, v, w) in E:
+      if dist[u] + w < dist[v]:
+        dist[v] = dist[u] + w
+
+  // Check for negative weight cycles
+  for each edge (u, v, w) in E:
+    if dist[u] + w < dist[v]:
+      print "Negative weight cycle detected!"
+      return
+
+  return dist[]
+        </pre>
+      </div>
+
+      <div class="trace-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: Bellman-Ford from vertex A</div>
+        <p style="margin:0.3rem 0;font-size:0.9rem;">Graph: A→B(4), A→C(2), B→D(-3), C→B(1), D→E(2). Source: A.</p>
+        <div class="trace-step"><span class="step-label">Init:</span> dist: A=0, B=∞, C=∞, D=∞, E=∞</div>
+        <div class="trace-step"><span class="step-label">Pass 1:</span> A→B: B=min(∞,0+4)=4 | A→C: C=min(∞,0+2)=2 | B→D: D=min(∞,4-3)=1 | C→B: B=min(4,2+1)=3 | D→E: E=min(∞,1+2)=3</div>
+        <div class="trace-step"><span class="step-label">Pass 2:</span> B→D: D=min(1,3-3)=0 | D→E: E=min(3,0+2)=2. Others no change.</div>
+        <div class="trace-step"><span class="step-label">Pass 3:</span> B→D: D=min(0,3-3)=0. No change.</div>
+        <div class="trace-step"><span class="step-label">Pass 4 (V-1=4):</span> No changes.</div>
+        <div class="trace-step"><span class="step-label">Negative cycle check:</span> No edge can be relaxed further → no negative cycle ✅</div>
+        <div class="trace-step"><span class="step-label">Result:</span> A=0, B=3, C=2, D=0, E=2 ✅</div>
+      </div>
+
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Bellman-Ford</div>
+        <ul>
+          <li><strong>Time:</strong> O(V · E) — V-1 passes, each scanning E edges.</li>
+          <li><strong>Space:</strong> O(V).</li>
+          <li><strong>Extra feature:</strong> Detects negative weight cycles in one additional pass.</li>
+        </ul>
+      </div>
+
+      <hr style="margin:1.5rem 0;border:none;border-top:1px dashed var(--border);">
+
+      <!-- FLOYD-WARSHALL -->
+      <h3 style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-th"></i> 3. Floyd-Warshall Algorithm</h3>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
+        <p>Floyd-Warshall computes <strong>shortest paths between ALL pairs of vertices</strong>. It uses <strong>Dynamic Programming</strong> on an adjacency matrix. For each intermediate vertex k, it checks if the path from i to j through k is shorter than the known path from i to j.</p>
+        <p style="margin-top:0.5rem;"><strong>Paradigm:</strong> Dynamic Programming.</p>
+        <p><strong>Handles:</strong> Negative weights (but not negative cycles).</p>
+      </div>
+
+      <div class="pseudocode-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Floyd-Warshall</div>
+        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
+FLOYD-WARSHALL(W)
+  // W = adjacency matrix (weight matrix)
+  // W[i][j] = weight of edge i→j, ∞ if no edge, 0 if i==j
+  dist[][] = copy of W
+
+  for k = 1 to V:
+    for i = 1 to V:
+      for j = 1 to V:
+        if dist[i][k] + dist[k][j] < dist[i][j]:
+          dist[i][j] = dist[i][k] + dist[k][j]
+
+  return dist[][]
+        </pre>
+      </div>
+
+      <div class="trace-box" style="margin-top:0.8rem;">
+        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: Floyd-Warshall</div>
+        <p style="margin:0.3rem 0;font-size:0.9rem;">Vertices: 1,2,3,4. Edges: 1→2(3), 1→3(8), 2→3(2), 3→4(1), 4→1(4)</p>
+        <div class="table-wrapper" style="margin-top:0.4rem;">
+          <table class="data-table" style="text-align:center;">
+            <thead><tr><th>Initial</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1</strong></td><td>0</td><td>3</td><td>8</td><td>∞</td></tr>
+              <tr><td><strong>2</strong></td><td>∞</td><td>0</td><td>2</td><td>∞</td></tr>
+              <tr><td><strong>3</strong></td><td>∞</td><td>∞</td><td>0</td><td>1</td></tr>
+              <tr><td><strong>4</strong></td><td>4</td><td>∞</td><td>∞</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="trace-step" style="margin-top:0.5rem;"><span class="step-label">k=1:</span> Check paths via vertex 1. 4→1→2: 4+3=7 (update 4→2). 4→1→3: 4+8=12 (update 4→3).</div>
+        <div class="trace-step"><span class="step-label">k=2:</span> 1→2→3: 3+2=5 &lt; 8 → update dist[1][3]=<span class="highlight-el">5</span>. 4→2→3: 7+2=9 &lt; 12 → update dist[4][3]=9.</div>
+        <div class="trace-step"><span class="step-label">k=3:</span> 1→3→4: 5+1=6 → dist[1][4]=<span class="highlight-el">6</span>. 2→3→4: 2+1=3 → dist[2][4]=<span class="highlight-el">3</span>. 4→3→4: 9+1=10 &gt; 0 → no change.</div>
+        <div class="trace-step"><span class="step-label">k=4:</span> 2→4→1: 3+4=7 → dist[2][1]=<span class="highlight-el">7</span>. 3→4→1: 1+4=5 → dist[3][1]=<span class="highlight-el">5</span>. 3→4→2: 1+7=8(via 4→2=7) → dist[3][2]=<span class="highlight-el">8</span>.</div>
+        <div class="table-wrapper" style="margin-top:0.5rem;">
+          <table class="data-table" style="text-align:center;">
+            <thead><tr><th>Final</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1</strong></td><td>0</td><td>3</td><td>5</td><td>6</td></tr>
+              <tr><td><strong>2</strong></td><td>7</td><td>0</td><td>2</td><td>3</td></tr>
+              <tr><td><strong>3</strong></td><td>5</td><td>8</td><td>0</td><td>1</td></tr>
+              <tr><td><strong>4</strong></td><td>4</td><td>7</td><td>9</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="trace-step"><span class="step-label">Result:</span> All-pairs shortest distances computed ✅</div>
+      </div>
+
+      <div class="complexity-box" style="margin-top:0.6rem;">
+        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Floyd-Warshall</div>
+        <ul>
+          <li><strong>Time:</strong> O(V³) — three nested loops.</li>
+          <li><strong>Space:</strong> O(V²) — distance matrix.</li>
+          <li><strong>Negative cycles:</strong> Detected if any diagonal dist[i][i] &lt; 0.</li>
+          <li><strong>Best for:</strong> Dense graphs where all-pairs distances are needed.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== SECTION 6: FORMULAS =================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Formulas &amp; Quick References
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-superscript"></i> Graph Edge Bounds</div>
+        <div class="formula">Undirected: max edges = V(V−1)/2   |   Directed: max edges = V(V−1)</div>
+        <div class="formula" style="margin-top:0.4rem;">Spanning Tree: exactly V − 1 edges</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Topological Sort Complexity</div>
+        <div class="formula">Time: O(V + E)   |   Space: O(V)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Prim's Algorithm</div>
+        <div class="formula">Adj Matrix: O(V²)   |   Min-Heap + Adj List: O(E log V)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Kruskal's Algorithm</div>
+        <div class="formula">O(E log E) = O(E log V)   (sorting dominates)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Dijkstra's Algorithm</div>
+        <div class="formula">Adj Matrix: O(V²)   |   Min-Heap: O(E log V)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Bellman-Ford Algorithm</div>
+        <div class="formula">Time: O(V · E)   |   Space: O(V)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Floyd-Warshall Algorithm</div>
+        <div class="formula">Time: O(V³)   |   Space: O(V²)</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Floyd-Warshall Core Recurrence</div>
+        <div class="formula">dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])   for each intermediate k</div>
+      </div>
+      <div class="formula-box" style="margin-top:0.7rem;">
+        <div class="box-title"><i class="fas fa-superscript"></i> Dijkstra Relaxation</div>
+        <div class="formula">if dist[u] + w(u,v) &lt; dist[v]:  dist[v] = dist[u] + w(u,v)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 7: DEFINITIONS =================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-spell-check"></i> All Key Terms</div>
+        <ul style="line-height:2.2;">
+          <li><strong>Graph:</strong> G = (V, E); V = vertices, E = edges.</li>
+          <li><strong>Directed Graph:</strong> Edges have direction (u → v).</li>
+          <li><strong>Undirected Graph:</strong> Edges have no direction ({u, v}).</li>
+          <li><strong>Weighted Graph:</strong> Each edge has an associated weight/cost.</li>
+          <li><strong>Path:</strong> A sequence of vertices connected by edges.</li>
+          <li><strong>Cycle:</strong> A path where the starting vertex equals the ending vertex.</li>
+          <li><strong>DAG:</strong> Directed Acyclic Graph — a directed graph with no cycles.</li>
+          <li><strong>Spanning Tree:</strong> A tree subgraph containing all vertices with V−1 edges.</li>
+          <li><strong>MST:</strong> Minimum Spanning Tree — spanning tree with minimum total edge weight.</li>
+          <li><strong>Topological Sort:</strong> Linear ordering of DAG vertices such that for every edge u→v, u comes before v.</li>
+          <li><strong>In-degree:</strong> Number of edges coming into a vertex.</li>
+          <li><strong>Relaxation:</strong> Updating the shortest distance to a vertex when a shorter path is found.</li>
+          <li><strong>Prim's Algorithm:</strong> Greedy MST — grows MST from a starting vertex, adding cheapest connecting edge.</li>
+          <li><strong>Kruskal's Algorithm:</strong> Greedy MST — adds edges in sorted weight order, skipping cycle-forming edges.</li>
+          <li><strong>Union-Find:</strong> Data structure to track connected components; used in Kruskal's to detect cycles.</li>
+          <li><strong>Dijkstra's Algorithm:</strong> Greedy single-source shortest path; only non-negative weights.</li>
+          <li><strong>Bellman-Ford:</strong> DP single-source shortest path; handles negative weights; detects negative cycles.</li>
+          <li><strong>Floyd-Warshall:</strong> DP all-pairs shortest path; O(V³).</li>
+          <li><strong>Negative Weight Cycle:</strong> A cycle whose total weight is negative — no finite shortest path exists.</li>
+          <li><strong>Adjacency Matrix:</strong> V×V matrix where entry [i][j] = weight of edge i→j (or 0/∞).</li>
+          <li><strong>Adjacency List:</strong> Array of linked lists; each vertex stores its neighbours.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 8: COMPARISONS =================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <h3 style="font-size:1rem;color:var(--accent);margin-bottom:0.6rem;"><i class="fas fa-table"></i> Prim's vs Kruskal's</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Feature</th><th>Prim's</th><th>Kruskal's</th></tr></thead>
+          <tbody>
+            <tr><td>Approach</td><td>Vertex-based (grow MST)</td><td>Edge-based (sort &amp; add)</td></tr>
+            <tr><td>Starts with</td><td>A starting vertex</td><td>All edges sorted</td></tr>
+            <tr><td>Data structure</td><td>Min-heap / priority queue</td><td>Union-Find (DSU)</td></tr>
+            <tr><td>Complexity</td><td>O(V²) or O(E log V)</td><td>O(E log E)</td></tr>
+            <tr><td>Better for</td><td>Dense graphs (E ≈ V²)</td><td>Sparse graphs (E ≪ V²)</td></tr>
+            <tr><td>Paradigm</td><td>Greedy</td><td>Greedy</td></tr>
+            <tr><td>Result</td><td>Same MST weight</td><td>Same MST weight</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:1rem;color:var(--accent);margin:1.2rem 0 0.6rem;"><i class="fas fa-table"></i> Dijkstra vs Bellman-Ford vs Floyd-Warshall</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Feature</th><th>Dijkstra</th><th>Bellman-Ford</th><th>Floyd-Warshall</th></tr></thead>
+          <tbody>
+            <tr><td>Type</td><td>Single-source</td><td>Single-source</td><td>All-pairs</td></tr>
+            <tr><td>Negative weights</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+            <tr><td>Negative cycles</td><td>Cannot detect</td><td>Can detect</td><td>Can detect</td></tr>
+            <tr><td>Time</td><td>O(V²) or O(E log V)</td><td>O(V·E)</td><td>O(V³)</td></tr>
+            <tr><td>Space</td><td>O(V)</td><td>O(V)</td><td>O(V²)</td></tr>
+            <tr><td>Paradigm</td><td>Greedy</td><td>Dynamic Programming</td><td>Dynamic Programming</td></tr>
+            <tr><td>Best for</td><td>Non-neg. weights, sparse</td><td>Negative weights present</td><td>All-pairs needed, dense</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:1rem;color:var(--accent);margin:1.2rem 0 0.6rem;"><i class="fas fa-table"></i> Adjacency Matrix vs Adjacency List</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Feature</th><th>Adjacency Matrix</th><th>Adjacency List</th></tr></thead>
+          <tbody>
+            <tr><td>Space</td><td>O(V²)</td><td>O(V + E)</td></tr>
+            <tr><td>Edge check (u,v)</td><td>O(1)</td><td>O(degree(u))</td></tr>
+            <tr><td>List all neighbours</td><td>O(V)</td><td>O(degree(u))</td></tr>
+            <tr><td>Add edge</td><td>O(1)</td><td>O(1)</td></tr>
+            <tr><td>Best for</td><td>Dense graphs</td><td>Sparse graphs</td></tr>
+            <tr><td>Used by</td><td>Floyd-Warshall</td><td>BFS, DFS, Dijkstra</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  
+  <!-- =================== SECTION 9: MCQs =================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>A spanning tree of a graph with V vertices has exactly how many edges?</p>
+          <ul class="options">
+            <li>a. V</li>
+            <li>b. V − 1</li>
+            <li>c. V + 1</li>
+            <li>d. 2V</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-1">
+            <strong>Answer: b. V − 1</strong>
+            <p>A tree with V vertices always has exactly V − 1 edges. A spanning tree connects all V vertices of the graph using V − 1 edges without forming any cycle.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Topological sorting is possible only for:</p>
+          <ul class="options">
+            <li>a. Undirected graphs</li>
+            <li>b. Complete graphs</li>
+            <li>c. Directed Acyclic Graphs (DAGs)</li>
+            <li>d. All directed graphs</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-2">
+            <strong>Answer: c. Directed Acyclic Graphs (DAGs)</strong>
+            <p>Topological sorting requires a linear ordering where for every edge u→v, u comes before v. This is impossible if the graph has a directed cycle (e.g., A→B→C→A — who comes first?).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Which algorithm uses Union-Find data structure?</p>
+          <ul class="options">
+            <li>a. Prim's</li>
+            <li>b. Dijkstra's</li>
+            <li>c. Kruskal's</li>
+            <li>d. Bellman-Ford</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-3">
+            <strong>Answer: c. Kruskal's</strong>
+            <p>Kruskal's algorithm uses Union-Find (Disjoint Set Union) to efficiently check whether adding an edge creates a cycle. FIND checks if two vertices are in the same set; UNION merges two sets.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Dijkstra's algorithm does NOT work correctly with:</p>
+          <ul class="options">
+            <li>a. Directed graphs</li>
+            <li>b. Undirected graphs</li>
+            <li>c. Weighted graphs</li>
+            <li>d. Negative edge weights</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-4">
+            <strong>Answer: d. Negative edge weights</strong>
+            <p>Dijkstra's greedy approach permanently marks vertices as "visited." A negative edge weight could provide a shorter path through a visited vertex, but Dijkstra wouldn't re-check it. Use Bellman-Ford for negative weights.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is the time complexity of Floyd-Warshall algorithm?</p>
+          <ul class="options">
+            <li>a. O(V²)</li>
+            <li>b. O(V · E)</li>
+            <li>c. O(V³)</li>
+            <li>d. O(E log V)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-5">
+            <strong>Answer: c. O(V³)</strong>
+            <p>Floyd-Warshall uses three nested loops (for k, i, j each from 1 to V), giving O(V³) time complexity. It computes shortest paths between ALL pairs of vertices.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Prim's algorithm is better suited for:</p>
+          <ul class="options">
+            <li>a. Sparse graphs</li>
+            <li>b. Dense graphs</li>
+            <li>c. Directed graphs</li>
+            <li>d. Unweighted graphs</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-6">
+            <strong>Answer: b. Dense graphs</strong>
+            <p>With adjacency matrix, Prim's runs in O(V²). For dense graphs where E ≈ V², this is efficient. Kruskal's O(E log E) is better for sparse graphs where E ≪ V².</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Which algorithm can detect negative weight cycles?</p>
+          <ul class="options">
+            <li>a. Dijkstra's</li>
+            <li>b. Prim's</li>
+            <li>c. Bellman-Ford</li>
+            <li>d. Kruskal's</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-7">
+            <strong>Answer: c. Bellman-Ford</strong>
+            <p>After V−1 relaxation passes, Bellman-Ford performs one more pass. If any edge can still be relaxed, a negative weight cycle exists. Dijkstra cannot detect this.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>The maximum number of edges in an undirected graph with 5 vertices is:</p>
+          <ul class="options">
+            <li>a. 5</li>
+            <li>b. 10</li>
+            <li>c. 20</li>
+            <li>d. 25</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-8">
+            <strong>Answer: b. 10</strong>
+            <p>Maximum edges in an undirected graph = V(V−1)/2 = 5×4/2 = 10. This is a complete graph (every vertex connected to every other).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>Bellman-Ford relaxes all edges how many times?</p>
+          <ul class="options">
+            <li>a. V times</li>
+            <li>b. V − 1 times</li>
+            <li>c. E times</li>
+            <li>d. V + E times</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-9">
+            <strong>Answer: b. V − 1 times</strong>
+            <p>The shortest path between any two vertices in a graph with V vertices can have at most V − 1 edges. So V − 1 relaxation passes are sufficient to find shortest paths (assuming no negative cycles).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>Which MST algorithm starts by sorting all edges?</p>
+          <ul class="options">
+            <li>a. Prim's</li>
+            <li>b. Dijkstra's</li>
+            <li>c. Kruskal's</li>
+            <li>d. Floyd-Warshall</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-10">
+            <strong>Answer: c. Kruskal's</strong>
+            <p>Kruskal's first step is sorting all edges by weight in ascending order. Then it greedily adds edges that don't form a cycle until V−1 edges are added.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>The time complexity of topological sort is:</p>
+          <ul class="options">
+            <li>a. O(V²)</li>
+            <li>b. O(V + E)</li>
+            <li>c. O(V · E)</li>
+            <li>d. O(E log V)</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-11">
+            <strong>Answer: b. O(V + E)</strong>
+            <p>Both Kahn's (BFS-based) and DFS-based topological sort visit each vertex once and each edge once, giving O(V + E) time complexity.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>Which shortest path algorithm uses Dynamic Programming with three nested loops?</p>
+          <ul class="options">
+            <li>a. Dijkstra's</li>
+            <li>b. Bellman-Ford</li>
+            <li>c. Floyd-Warshall</li>
+            <li>d. Kruskal's</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-12">
+            <strong>Answer: c. Floyd-Warshall</strong>
+            <p>Floyd-Warshall uses three nested loops: for k (intermediate vertex), for i (source), for j (destination). It checks if path i→k→j is shorter than current i→j. This gives O(V³).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 13</h4>
+          <p>In Prim's algorithm, the key[] array stores:</p>
+          <ul class="options">
+            <li>a. Shortest path from source</li>
+            <li>b. Minimum weight edge connecting vertex to MST</li>
+            <li>c. In-degree of the vertex</li>
+            <li>d. Number of neighbours</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-13"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-13">
+            <strong>Answer: b. Minimum weight edge connecting vertex to MST</strong>
+            <p>In Prim's, key[v] stores the minimum weight of any edge connecting vertex v to a vertex already in the MST. The vertex with the smallest key is picked next.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 14</h4>
+          <p>In Floyd-Warshall, a negative weight cycle is detected when:</p>
+          <ul class="options">
+            <li>a. dist[i][j] = ∞</li>
+            <li>b. dist[i][i] &lt; 0 for some i</li>
+            <li>c. dist[i][j] = 0</li>
+            <li>d. The algorithm doesn't terminate</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-14"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-14">
+            <strong>Answer: b. dist[i][i] &lt; 0 for some i</strong>
+            <p>If after running Floyd-Warshall, any diagonal entry dist[i][i] is negative, it means there's a cycle from i back to i with negative total weight — a negative weight cycle.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 15</h4>
+          <p>The core operation in Dijkstra's and Bellman-Ford is called:</p>
+          <ul class="options">
+            <li>a. Contraction</li>
+            <li>b. Relaxation</li>
+            <li>c. Rotation</li>
+            <li>d. Partitioning</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4-15"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4-15">
+            <strong>Answer: b. Relaxation</strong>
+            <p>Relaxation: if dist[u] + w(u,v) &lt; dist[v], then update dist[v] = dist[u] + w(u,v). This "relaxes" the constraint on the shortest distance to v. Both Dijkstra and Bellman-Ford use this operation.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 10: SHORT QUESTIONS =================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is a spanning tree? How many edges does it have?</p>
+          <button class="toggle-btn" data-target="sq4-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-1">
+            <p>A <strong>spanning tree</strong> of a connected graph G is a subgraph that is a tree (connected and acyclic) and includes <strong>all V vertices</strong> of G. It has exactly <strong>V − 1 edges</strong>.</p>
+            <p><strong>Example:</strong> A graph with 5 vertices has a spanning tree with exactly 4 edges.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Differentiate between directed and undirected graphs.</p>
+          <button class="toggle-btn" data-target="sq4-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-2">
+            <p><strong>Directed Graph:</strong> Edges have direction. Edge (u → v) means you can go from u to v but not necessarily from v to u. Max edges = V(V−1).</p>
+            <p><strong>Undirected Graph:</strong> Edges have no direction. Edge {u, v} means you can go both ways. Max edges = V(V−1)/2.</p>
+            <p><strong>Example:</strong> One-way streets → directed; Two-way roads → undirected.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is topological sorting? Give a real-life example.</p>
+          <button class="toggle-btn" data-target="sq4-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-3">
+            <p><strong>Topological Sort:</strong> A linear ordering of vertices of a DAG such that for every edge u → v, u appears before v. It is only possible for DAGs.</p>
+            <p><strong>Real-life example:</strong> University courses with prerequisites. If Course B requires Course A, then A must appear before B in the schedule. Topological sort gives a valid course order.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is a negative weight cycle? Why does it cause problems?</p>
+          <button class="toggle-btn" data-target="sq4-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-4">
+            <p>A <strong>negative weight cycle</strong> is a cycle in a directed graph whose total edge weight sum is negative. Example: A→B(−2), B→C(1), C→A(−1) has total weight = −2.</p>
+            <p><strong>Problem:</strong> If a negative weight cycle is reachable from the source, we can keep going around it to reduce the distance infinitely. Therefore, <strong>no finite shortest path exists</strong>. Bellman-Ford can detect this; Dijkstra cannot.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What is the difference between Prim's and Kruskal's algorithms?</p>
+          <button class="toggle-btn" data-target="sq4-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-5">
+            <p><strong>Prim's:</strong> Vertex-based. Starts from one vertex and grows the MST by adding the cheapest edge connecting to a new vertex. Uses priority queue. Better for dense graphs O(V²).</p>
+            <p><strong>Kruskal's:</strong> Edge-based. Sorts all edges by weight and adds them greedily, skipping cycle-forming edges. Uses Union-Find. Better for sparse graphs O(E log E).</p>
+            <p>Both produce MST with the same total weight (Greedy approach).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Why does Dijkstra's algorithm fail with negative edge weights?</p>
+          <button class="toggle-btn" data-target="sq4-6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-6">
+            <p>Dijkstra's is a <strong>greedy algorithm</strong> that permanently finalises the shortest distance to a vertex once it's picked (marked as visited). With negative weights, a later path through a negative edge could give a <strong>shorter distance</strong> to an already-visited vertex, but Dijkstra won't revisit it.</p>
+            <p><strong>Example:</strong> Source S. S→A(1), S→B(10), A→B(−20). Dijkstra picks A(1), finalises it, then picks B(10). But S→A→B = 1+(−20) = −19 &lt; 10. Dijkstra misses this.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>State the core recurrence of Floyd-Warshall algorithm.</p>
+          <button class="toggle-btn" data-target="sq4-7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-7">
+            <p><strong>Floyd-Warshall Recurrence:</strong></p>
+            <p style="font-family:'Courier New',monospace; font-size:0.95rem;">dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])</p>
+            <p>For each intermediate vertex k (from 1 to V), check if going from i to k then k to j gives a shorter path than the current direct i→j path. This is applied for all pairs (i, j).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the role of Union-Find in Kruskal's algorithm?</p>
+          <button class="toggle-btn" data-target="sq4-8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-8">
+            <p><strong>Union-Find (Disjoint Set Union)</strong> is used in Kruskal's to efficiently detect cycles:</p>
+            <ul>
+              <li><strong>FIND(u):</strong> Returns the representative (root) of the set containing u.</li>
+              <li><strong>UNION(u, v):</strong> Merges the sets containing u and v.</li>
+            </ul>
+            <p>Before adding edge (u, v): if FIND(u) == FIND(v), u and v are already connected → adding this edge creates a cycle → <strong>skip it</strong>. Otherwise, add the edge and UNION their sets.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What is edge relaxation in shortest path algorithms?</p>
+          <button class="toggle-btn" data-target="sq4-9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-9">
+            <p><strong>Relaxation</strong> is the process of updating the shortest known distance to a vertex when a shorter path is found through another vertex.</p>
+            <p style="font-family:'Courier New',monospace;">if dist[u] + w(u,v) &lt; dist[v]: dist[v] = dist[u] + w(u,v)</p>
+            <p>This means: if going from source to u, then taking edge u→v gives a shorter path to v than what we currently know, update the distance to v. Used in both Dijkstra and Bellman-Ford.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>Compare adjacency matrix and adjacency list representations.</p>
+          <button class="toggle-btn" data-target="sq4-10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-10">
+            <p><strong>Adjacency Matrix:</strong> V×V matrix. Space O(V²). Edge check O(1). Best for dense graphs. Used by Floyd-Warshall.</p>
+            <p><strong>Adjacency List:</strong> Array of linked lists. Space O(V+E). Edge check O(degree). Best for sparse graphs. Used by BFS, DFS, Dijkstra.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 11</h4>
+          <p>What is a DAG? Can a DAG have more than one topological order?</p>
+          <button class="toggle-btn" data-target="sq4-11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-11">
+            <p>A <strong>DAG (Directed Acyclic Graph)</strong> is a directed graph with no directed cycles.</p>
+            <p><strong>Yes</strong>, a DAG can have multiple valid topological orderings. For example, if vertices A and B have no dependency between them, either can come first. Only a DAG that forms a single chain (total order) has a unique topological sort.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 12</h4>
+          <p>How many times does Bellman-Ford relax all edges? Why V−1?</p>
+          <button class="toggle-btn" data-target="sq4-12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4-12">
+            <p>Bellman-Ford relaxes all edges <strong>V − 1 times</strong>.</p>
+            <p><strong>Why V−1?</strong> The shortest path from source to any vertex in a graph with V vertices has at most V−1 edges (since a simple path visits at most V vertices). In the i-th pass, the algorithm correctly computes shortest paths using at most i edges. After V−1 passes, all shortest paths are found.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 11: LONG QUESTIONS =================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain Prim's and Kruskal's algorithms with pseudocode. Apply both on a graph with vertices A,B,C,D,E and edges: A-B(1), A-C(7), B-C(5), B-D(4), B-E(3), C-E(6), D-E(2). Compare the two.</p>
+          <button class="toggle-btn" data-target="lq4-1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-1">
+            <p><strong>Prim's:</strong> Grows MST from a starting vertex by adding cheapest edge to a new vertex.</p>
+            <p><strong>Kruskal's:</strong> Sorts edges by weight and adds them if no cycle is formed (uses Union-Find).</p>
+
+            <h4 style="color:var(--accent);margin:0.8rem 0 0.4rem;">Kruskal's Trace:</h4>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Sorted edges: A-B(1), D-E(2), B-E(3), B-D(4), B-C(5), C-E(6), A-C(7)</div>
+              <div class="trace-step"><span class="step-label">A-B(1):</span> A,B different → Add. MST={A-B}</div>
+              <div class="trace-step"><span class="step-label">D-E(2):</span> D,E different → Add. MST={A-B, D-E}</div>
+              <div class="trace-step"><span class="step-label">B-E(3):</span> B,E different → Add. MST={A-B, D-E, B-E}</div>
+              <div class="trace-step"><span class="step-label">B-D(4):</span> B,D same set (B-E-D) → <strong>Skip</strong> (cycle)</div>
+              <div class="trace-step"><span class="step-label">B-C(5):</span> B,C different → Add. MST={A-B, D-E, B-E, B-C}</div>
+              <div class="trace-step"><span class="step-label">4 edges = V-1:</span> Done! Total = 1+2+3+5 = <strong>11</strong> ✅</div>
+            </div>
+
+            <h4 style="color:var(--accent);margin:0.8rem 0 0.4rem;">Prim's Trace (start at A):</h4>
+            <div class="trace-box">
+              <div class="trace-step"><span class="step-label">Pick A:</span> Update B=1(A), C=7(A). MST={A}</div>
+              <div class="trace-step"><span class="step-label">Pick B(key=1):</span> Update C=min(7,5)=5(B), D=4(B), E=3(B). Edge: <span class="highlight-el">A-B(1)</span></div>
+              <div class="trace-step"><span class="step-label">Pick E(key=3):</span> Update D=min(4,2)=2(E), C=min(5,6)=5(B). Edge: <span class="highlight-el">B-E(3)</span></div>
+              <div class="trace-step"><span class="step-label">Pick D(key=2):</span> No better updates. Edge: <span class="highlight-el">D-E(2)</span></div>
+              <div class="trace-step"><span class="step-label">Pick C(key=5):</span> Edge: <span class="highlight-el">B-C(5)</span></div>
+              <div class="trace-step"><span class="step-label">MST:</span> A-B(1), B-E(3), D-E(2), B-C(5). Total = <strong>11</strong> ✅</div>
+            </div>
+
+            <div class="important-note" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-star"></i> Comparison</div>
+              <p>Both give MST weight = 11. Prim's is vertex-based (O(V²) for dense). Kruskal's is edge-based (O(E log E) for sparse). Same result, different approach.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain Dijkstra's algorithm with pseudocode and trace on: Source=A, edges: A→B(10), A→C(3), B→C(1), B→D(2), C→B(4), C→D(8), D→E(7), C→E(2).</p>
+          <button class="toggle-btn" data-target="lq4-2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-2">
+            <p><strong>Dijkstra's Algorithm:</strong> Greedily picks the unvisited vertex with minimum distance, then relaxes its neighbours.</p>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace from Source A</div>
+              <div class="trace-step"><span class="step-label">Init:</span> A=0, B=∞, C=∞, D=∞, E=∞</div>
+              <div class="trace-step"><span class="step-label">Pick A(d=0):</span> B=min(∞,0+10)=10, C=min(∞,0+3)=3</div>
+              <div class="trace-step"><span class="step-label">Pick C(d=3):</span> B=min(10,3+4)=7, D=min(∞,3+8)=11, E=min(∞,3+2)=<span class="highlight-el">5</span></div>
+              <div class="trace-step"><span class="step-label">Pick E(d=5):</span> No outgoing from E in this example that improves.</div>
+              <div class="trace-step"><span class="step-label">Pick B(d=7):</span> C=min(3,7+1)=3(no change), D=min(11,7+2)=<span class="highlight-el">9</span></div>
+              <div class="trace-step"><span class="step-label">Pick D(d=9):</span> E=min(5,9+7)=5(no change)</div>
+              <div class="trace-step"><span class="step-label">Result:</span> A=0, B=7, C=3, D=9, E=5 ✅</div>
+            </div>
+            <p style="margin-top:0.5rem;"><strong>Shortest paths:</strong> A→C(3), A→C→E(5), A→C→B(7), A→C→B→D(9).</p>
+            <div class="complexity-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-chart-line"></i> Complexity</div>
+              <ul>
+                <li>Adj matrix: O(V²). Min-heap: O(E log V). Works only with non-negative weights.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain Floyd-Warshall algorithm. Apply on a 4-vertex graph: edges 1→2(5), 1→4(10), 2→3(3), 3→4(1). Show the initial and final distance matrices.</p>
+          <button class="toggle-btn" data-target="lq4-3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-3">
+            <p><strong>Floyd-Warshall:</strong> All-pairs shortest path using DP. Core: dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]) for each k.</p>
+            <div class="table-wrapper">
+              <table class="data-table" style="text-align:center;">
+                <thead><tr><th>Initial D₀</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1</strong></td><td>0</td><td>5</td><td>∞</td><td>10</td></tr>
+                  <tr><td><strong>2</strong></td><td>∞</td><td>0</td><td>3</td><td>∞</td></tr>
+                  <tr><td><strong>3</strong></td><td>∞</td><td>∞</td><td>0</td><td>1</td></tr>
+                  <tr><td><strong>4</strong></td><td>∞</td><td>∞</td><td>∞</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="trace-box" style="margin-top:0.5rem;">
+              <div class="trace-step"><span class="step-label">k=1:</span> No vertex can reach 1 (except 1 itself), so no updates via vertex 1.</div>
+              <div class="trace-step"><span class="step-label">k=2:</span> 1→2→3: 5+3=8 → dist[1][3]=<span class="highlight-el">8</span>.</div>
+              <div class="trace-step"><span class="step-label">k=3:</span> 1→3→4: 8+1=9 &lt; 10 → dist[1][4]=<span class="highlight-el">9</span>. 2→3→4: 3+1=4 → dist[2][4]=<span class="highlight-el">4</span>.</div>
+              <div class="trace-step"><span class="step-label">k=4:</span> No improvements (vertex 4 has no outgoing edges).</div>
+            </div>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="data-table" style="text-align:center;">
+                <thead><tr><th>Final D₄</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1</strong></td><td>0</td><td>5</td><td>8</td><td>9</td></tr>
+                  <tr><td><strong>2</strong></td><td>∞</td><td>0</td><td>3</td><td>4</td></tr>
+                  <tr><td><strong>3</strong></td><td>∞</td><td>∞</td><td>0</td><td>1</td></tr>
+                  <tr><td><strong>4</strong></td><td>∞</td><td>∞</td><td>∞</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.5rem;">Complexity: O(V³) = O(4³) = 64 operations for this example.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Explain Bellman-Ford algorithm with pseudocode. How does it detect negative weight cycles? Trace on: Source=S, edges: S→A(6), S→B(7), A→B(8), A→C(5), A→D(−4), B→A(−3), B→C(−2), C→D(7), D→C(9), D→S(2).</p>
+          <button class="toggle-btn" data-target="lq4-4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-4">
+            <p><strong>Bellman-Ford:</strong> Relaxes all edges V−1 times. Then checks once more for negative cycles.</p>
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: V=5 (S,A,B,C,D), V-1=4 passes</div>
+              <div class="trace-step"><span class="step-label">Init:</span> S=0, A=∞, B=∞, C=∞, D=∞</div>
+              <div class="trace-step"><span class="step-label">Pass 1:</span> S→A: A=6 | S→B: B=7 | A→B: B=min(7,6+8)=7 | A→C: C=6+5=11 | A→D: D=6+(−4)=2 | B→A: A=min(6,7+(−3))=4 | B→C: C=min(11,7+(−2))=5 | C→D: D=min(2,5+7)=2 | D→C: C=min(5,2+9)=5 | D→S: S=min(0,2+2)=0</div>
+              <div class="trace-step"><span class="step-label">Pass 2:</span> B→A: A=min(4,7-3)=4 | A→D: D=min(2,4-4)=0 | A→C: C=min(5,4+5)=5 | B→C: C=5 | D→S: S=min(0,0+2)=0 | Minor changes propagate.</div>
+              <div class="trace-step"><span class="step-label">Pass 3:</span> A→D: D=min(0,4-4)=0. Stabilising.</div>
+              <div class="trace-step"><span class="step-label">Pass 4:</span> No changes.</div>
+              <div class="trace-step"><span class="step-label">Neg cycle check:</span> One more pass — no edge can be further relaxed → No negative cycle ✅</div>
+              <div class="trace-step"><span class="step-label">Final:</span> S=0, A=4, B=7, C=5, D=0</div>
+            </div>
+            <div class="important-note" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-star"></i> Negative Cycle Detection</div>
+              <p>After V−1 passes, perform one more relaxation pass. If ANY edge (u,v,w) satisfies dist[u]+w &lt; dist[v], a negative cycle exists and shortest paths are undefined.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Compare Dijkstra, Bellman-Ford, and Floyd-Warshall. When would you choose each?</p>
+          <button class="toggle-btn" data-target="lq4-5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-5">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Feature</th><th>Dijkstra</th><th>Bellman-Ford</th><th>Floyd-Warshall</th></tr></thead>
+                <tbody>
+                  <tr><td>Type</td><td>Single-source</td><td>Single-source</td><td>All-pairs</td></tr>
+                  <tr><td>Negative weights</td><td>❌</td><td>✅</td><td>✅</td></tr>
+                  <tr><td>Neg. cycle detect</td><td>❌</td><td>✅</td><td>✅ (diagonal &lt; 0)</td></tr>
+                  <tr><td>Time</td><td>O(V²) / O(E log V)</td><td>O(V·E)</td><td>O(V³)</td></tr>
+                  <tr><td>Space</td><td>O(V)</td><td>O(V)</td><td>O(V²)</td></tr>
+                  <tr><td>Paradigm</td><td>Greedy</td><td>DP</td><td>DP</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tip-box" style="margin-top:0.6rem;">
+              <div class="box-title"><i class="fas fa-lightbulb"></i> When to Choose</div>
+              <ul>
+                <li><strong>Dijkstra:</strong> All weights ≥ 0 AND only need shortest path from one source. Fastest.</li>
+                <li><strong>Bellman-Ford:</strong> Graph has negative weights OR need to detect negative cycles.</li>
+                <li><strong>Floyd-Warshall:</strong> Need shortest paths between ALL pairs of vertices. Dense graphs. Simple implementation.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Explain topological sorting using Kahn's algorithm with pseudocode and a detailed example.</p>
+          <button class="toggle-btn" data-target="lq4-6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-6">
+            <p><strong>Kahn's Algorithm (BFS-based):</strong> Repeatedly remove vertices with in-degree 0 and add to result.</p>
+            <div class="algo-box">
+              <div class="box-title"><i class="fas fa-list-ol"></i> Steps</div>
+              <ol style="margin:0.5rem 0 0 1rem;line-height:1.9;">
+                <li>Compute in-degree for every vertex.</li>
+                <li>Enqueue all vertices with in-degree 0.</li>
+                <li>While queue not empty: dequeue u, add to result, decrement in-degree of all neighbours of u, enqueue any that reach 0.</li>
+                <li>If result size ≠ V → graph has a cycle.</li>
+              </ol>
+            </div>
+            <div class="trace-box" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Example: A→C, B→C, B→D, C→E, D→E</div>
+              <div class="trace-step"><span class="step-label">In-degrees:</span> A=0, B=0, C=2, D=1, E=2</div>
+              <div class="trace-step"><span class="step-label">Queue:</span> {A, B}</div>
+              <div class="trace-step"><span class="step-label">Dequeue A:</span> C: 2→1. Result: [A]</div>
+              <div class="trace-step"><span class="step-label">Dequeue B:</span> C: 1→0→Q, D: 1→0→Q. Result: [A,B]</div>
+              <div class="trace-step"><span class="step-label">Dequeue C:</span> E: 2→1. Result: [A,B,C]</div>
+              <div class="trace-step"><span class="step-label">Dequeue D:</span> E: 1→0→Q. Result: [A,B,C,D]</div>
+              <div class="trace-step"><span class="step-label">Dequeue E:</span> Result: [<span class="highlight-el">A,B,C,D,E</span>] ✅</div>
+            </div>
+            <p style="margin-top:0.5rem;">Time: O(V+E). Note: [B,A,C,D,E] and [B,A,D,C,E] are also valid topological orderings.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Define graph, path, cycle, spanning tree, and MST. Explain the relationship between them.</p>
+          <button class="toggle-btn" data-target="lq4-7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-7">
+            <p><strong>Graph G = (V, E):</strong> A collection of vertices V connected by edges E.</p>
+            <p><strong>Path:</strong> A sequence of vertices where consecutive vertices are connected by edges. Length = number of edges.</p>
+            <p><strong>Cycle:</strong> A path that starts and ends at the same vertex (v₁ = vₖ, k ≥ 3).</p>
+            <p><strong>Spanning Tree:</strong> A subgraph of G that is a tree (connected + acyclic) containing ALL V vertices with exactly V−1 edges.</p>
+            <p><strong>MST:</strong> The spanning tree with the minimum total edge weight among all possible spanning trees of a weighted graph.</p>
+            <div class="important-note" style="margin-top:0.5rem;">
+              <div class="box-title"><i class="fas fa-link"></i> Relationships</div>
+              <ul>
+                <li>A spanning tree is a subgraph of a graph.</li>
+                <li>A spanning tree has no cycles (if you add any edge back, you get a cycle).</li>
+                <li>Removing any edge from a spanning tree disconnects it.</li>
+                <li>MST is a spanning tree with minimum weight — found using Prim's or Kruskal's.</li>
+                <li>A graph must be connected to have a spanning tree.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Compare the two MST algorithms and three shortest path algorithms. Discuss time complexity and when to use each.</p>
+          <button class="toggle-btn" data-target="lq4-8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4-8">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Algorithm</th><th>Problem</th><th>Time</th><th>Neg. Wts?</th><th>Best For</th></tr></thead>
+                <tbody>
+                  <tr><td>Prim's</td><td>MST</td><td>O(V²) / O(E log V)</td><td>N/A (undirected)</td><td>Dense graphs</td></tr>
+                  <tr><td>Kruskal's</td><td>MST</td><td>O(E log E)</td><td>N/A</td><td>Sparse graphs</td></tr>
+                  <tr><td>Dijkstra</td><td>Single-source SP</td><td>O(V²) / O(E log V)</td><td>❌</td><td>Non-neg. weights</td></tr>
+                  <tr><td>Bellman-Ford</td><td>Single-source SP</td><td>O(V·E)</td><td>✅</td><td>Neg. weights</td></tr>
+                  <tr><td>Floyd-Warshall</td><td>All-pairs SP</td><td>O(V³)</td><td>✅</td><td>Dense, all-pairs</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.6rem;"><strong>Key takeaways:</strong></p>
+            <ul>
+              <li>Prim's and Kruskal's solve the SAME problem (MST) — choice depends on graph density.</li>
+              <li>Dijkstra is fastest for non-negative weight single-source shortest path.</li>
+              <li>Bellman-Ford is slower but handles negative weights and detects negative cycles.</li>
+              <li>Floyd-Warshall is the only practical choice when all-pairs distances are needed.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 12: PRACTICE =================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Apply Kruskal's algorithm on: Vertices={1,2,3,4,5}, Edges: 1-2(4), 1-3(3), 2-3(1), 2-4(2), 3-4(5), 3-5(6), 4-5(7). Find the MST and total weight.</p>
+          <button class="toggle-btn" data-target="pp4-1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-1">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Kruskal's Trace</div>
+              <div class="trace-step"><span class="step-label">Sorted:</span> 2-3(1), 2-4(2), 1-3(3), 1-2(4), 3-4(5), 3-5(6), 4-5(7)</div>
+              <div class="trace-step"><span class="step-label">2-3(1):</span> Add. Sets: {2,3},{1},{4},{5}</div>
+              <div class="trace-step"><span class="step-label">2-4(2):</span> Add. Sets: {2,3,4},{1},{5}</div>
+              <div class="trace-step"><span class="step-label">1-3(3):</span> 1 and 3 different → Add. Sets: {1,2,3,4},{5}</div>
+              <div class="trace-step"><span class="step-label">1-2(4):</span> 1,2 same set → <strong>Skip</strong></div>
+              <div class="trace-step"><span class="step-label">3-4(5):</span> Same set → <strong>Skip</strong></div>
+              <div class="trace-step"><span class="step-label">3-5(6):</span> 3,5 different → Add. Sets: {1,2,3,4,5}</div>
+              <div class="trace-step"><span class="step-label">MST:</span> 2-3(1), 2-4(2), 1-3(3), 3-5(6). Total = <strong>12</strong> ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Apply Dijkstra's algorithm on: Source=1, Edges: 1→2(2), 1→3(4), 2→3(1), 2→4(7), 3→4(3), 3→5(5), 4→5(1). Find shortest distances from vertex 1 to all others.</p>
+          <button class="toggle-btn" data-target="pp4-2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-2">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Dijkstra from vertex 1</div>
+              <div class="trace-step"><span class="step-label">Init:</span> 1=0, 2=∞, 3=∞, 4=∞, 5=∞</div>
+              <div class="trace-step"><span class="step-label">Pick 1(d=0):</span> 2=min(∞,0+2)=2, 3=min(∞,0+4)=4</div>
+              <div class="trace-step"><span class="step-label">Pick 2(d=2):</span> 3=min(4,2+1)=<span class="highlight-el">3</span>, 4=min(∞,2+7)=9</div>
+              <div class="trace-step"><span class="step-label">Pick 3(d=3):</span> 4=min(9,3+3)=<span class="highlight-el">6</span>, 5=min(∞,3+5)=8</div>
+              <div class="trace-step"><span class="step-label">Pick 4(d=6):</span> 5=min(8,6+1)=<span class="highlight-el">7</span></div>
+              <div class="trace-step"><span class="step-label">Pick 5(d=7):</span> No updates.</div>
+              <div class="trace-step"><span class="step-label">Result:</span> 1=0, 2=2, 3=3, 4=6, 5=7 ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Perform topological sort (Kahn's algorithm) on: Vertices={A,B,C,D,E,F}. Edges: A→D, B→D, C→E, D→F, E→F.</p>
+          <button class="toggle-btn" data-target="pp4-3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-3">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Kahn's Topological Sort</div>
+              <div class="trace-step"><span class="step-label">In-degrees:</span> A=0, B=0, C=0, D=2, E=1, F=2</div>
+              <div class="trace-step"><span class="step-label">Queue:</span> {A, B, C} (in-degree 0)</div>
+              <div class="trace-step"><span class="step-label">Dequeue A:</span> D: 2→1. Result: [A]</div>
+              <div class="trace-step"><span class="step-label">Dequeue B:</span> D: 1→0→Q. Result: [A,B]</div>
+              <div class="trace-step"><span class="step-label">Dequeue C:</span> E: 1→0→Q. Result: [A,B,C]</div>
+              <div class="trace-step"><span class="step-label">Dequeue D:</span> F: 2→1. Result: [A,B,C,D]</div>
+              <div class="trace-step"><span class="step-label">Dequeue E:</span> F: 1→0→Q. Result: [A,B,C,D,E]</div>
+              <div class="trace-step"><span class="step-label">Dequeue F:</span> Result: [<span class="highlight-el">A,B,C,D,E,F</span>] ✅</div>
+            </div>
+            <p style="margin-top:0.5rem;">|result| = 6 = |V| → No cycle. Valid topological order.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Apply Prim's algorithm starting from vertex 1 on: Edges: 1-2(6), 1-3(1), 1-4(5), 2-3(5), 2-5(3), 3-4(5), 3-5(6), 3-6(4), 4-6(2), 5-6(6).</p>
+          <button class="toggle-btn" data-target="pp4-4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-4">
+            <div class="trace-box">
+              <div class="box-title"><i class="fas fa-shoe-prints"></i> Prim's from vertex 1</div>
+              <div class="trace-step"><span class="step-label">Init:</span> key: 1=0, 2=∞, 3=∞, 4=∞, 5=∞, 6=∞</div>
+              <div class="trace-step"><span class="step-label">Pick 1(k=0):</span> 2=6(1), 3=1(1), 4=5(1). MST={1}</div>
+              <div class="trace-step"><span class="step-label">Pick 3(k=1):</span> 2=min(6,5)=5(3), 4=min(5,5)=5, 5=6(3), 6=4(3). Edge: <span class="highlight-el">1-3(1)</span></div>
+              <div class="trace-step"><span class="step-label">Pick 6(k=4):</span> 4=min(5,2)=<span class="highlight-el">2</span>(6), 5=min(6,6)=6. Edge: <span class="highlight-el">3-6(4)</span></div>
+              <div class="trace-step"><span class="step-label">Pick 4(k=2):</span> No better updates. Edge: <span class="highlight-el">6-4(2)</span></div>
+              <div class="trace-step"><span class="step-label">Pick 2(k=5):</span> 5=min(6,3)=<span class="highlight-el">3</span>(2). Edge: <span class="highlight-el">3-2(5)</span></div>
+              <div class="trace-step"><span class="step-label">Pick 5(k=3):</span> Edge: <span class="highlight-el">2-5(3)</span></div>
+              <div class="trace-step"><span class="step-label">MST:</span> 1-3(1), 3-6(4), 6-4(2), 3-2(5), 2-5(3). Total = <strong>15</strong> ✅</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Apply Floyd-Warshall on a 3-vertex graph: Edges: 1→2(4), 1→3(11), 2→1(6), 2→3(2), 3→1(3). Show initial and final matrices.</p>
+          <button class="toggle-btn" data-target="pp4-5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-5">
+            <div class="table-wrapper">
+              <table class="data-table" style="text-align:center;">
+                <thead><tr><th>D₀</th><th>1</th><th>2</th><th>3</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1</strong></td><td>0</td><td>4</td><td>11</td></tr>
+                  <tr><td><strong>2</strong></td><td>6</td><td>0</td><td>2</td></tr>
+                  <tr><td><strong>3</strong></td><td>3</td><td>∞</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="trace-box" style="margin-top:0.5rem;">
+              <div class="trace-step"><span class="step-label">k=1:</span> 2→1→3: 6+11=17&gt;2→no. 3→1→2: 3+4=7→dist[3][2]=<span class="highlight-el">7</span></div>
+              <div class="trace-step"><span class="step-label">k=2:</span> 1→2→3: 4+2=6&lt;11→dist[1][3]=<span class="highlight-el">6</span>. 3→2→1: 7+6=13&gt;3→no.</div>
+              <div class="trace-step"><span class="step-label">k=3:</span> 1→3→1: 6+3=9&gt;0→no. 2→3→1: 2+3=5&lt;6→dist[2][1]=<span class="highlight-el">5</span>. 1→3→2: 6+7=13&gt;4→no. 2→3→2: 2+7=9&gt;0→no.</div>
+            </div>
+            <div class="table-wrapper" style="margin-top:0.5rem;">
+              <table class="data-table" style="text-align:center;">
+                <thead><tr><th>Final</th><th>1</th><th>2</th><th>3</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1</strong></td><td>0</td><td>4</td><td>6</td></tr>
+                  <tr><td><strong>2</strong></td><td>5</td><td>0</td><td>2</td></tr>
+                  <tr><td><strong>3</strong></td><td>3</td><td>7</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.5rem;">No diagonal &lt; 0 → no negative cycles ✅</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>Determine if the following graph has a valid topological ordering: A→B, B→C, C→A, A→D. Justify your answer.</p>
+          <button class="toggle-btn" data-target="pp4-6"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-6">
+            <p><strong>No</strong>, this graph does NOT have a valid topological ordering.</p>
+            <p><strong>Reason:</strong> There is a directed cycle: A → B → C → A. Topological sort is only possible for DAGs (Directed Acyclic Graphs). Since this graph has a cycle, no linear ordering can satisfy all edge constraints.</p>
+            <p><strong>Detection using Kahn's:</strong></p>
+            <div class="trace-box">
+              <div class="trace-step"><span class="step-label">In-degrees:</span> A=1(from C), B=1(from A), C=1(from B), D=1(from A)</div>
+              <div class="trace-step"><span class="step-label">Queue:</span> Empty! No vertex has in-degree 0.</div>
+              <div class="trace-step"><span class="step-label">Result:</span> Empty. |result|=0 ≠ |V|=4 → <strong>Cycle detected!</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Given a graph with 6 vertices and 15 edges, what kind of graph is it? Can Prim's be applied? What about Dijkstra?</p>
+          <button class="toggle-btn" data-target="pp4-7"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-7">
+            <p><strong>Analysis:</strong> Max edges for undirected with V=6: 6×5/2 = 15. So this is a <strong>complete graph</strong> (every vertex connected to every other).</p>
+            <p><strong>Prim's:</strong> Yes, can be applied if the graph is weighted and undirected. Since it's a complete (dense) graph, use adjacency matrix → O(V²) = O(36).</p>
+            <p><strong>Dijkstra:</strong> Yes, can be applied if all edge weights are non-negative. For this dense graph, adjacency matrix version O(V²) is optimal.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>A graph has V=4 vertices and edges with weights including a −5 weight. Which shortest path algorithm should you use and why?</p>
+          <button class="toggle-btn" data-target="pp4-8"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4-8">
+            <p><strong>Use Bellman-Ford</strong> if you need single-source shortest path, or <strong>Floyd-Warshall</strong> if you need all-pairs.</p>
+            <p><strong>Why not Dijkstra?</strong> Dijkstra does NOT work with negative edge weights. The greedy approach permanently finalises vertices, but a negative weight edge could provide a shorter path through an already-finalised vertex.</p>
+            <p><strong>Recommendation for V=4:</strong> Since V is very small, Floyd-Warshall with O(V³) = O(64) operations is practical and gives all-pairs distances at once.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SECTION 13: REVISION =================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul style="line-height:2.2;">
+          <li><strong>Graph G = (V, E):</strong> Vertices + Edges. Directed or Undirected. Weighted or Unweighted.</li>
+          <li><strong>Path:</strong> Sequence of vertices connected by edges. <strong>Cycle:</strong> Path starting and ending at same vertex.</li>
+          <li><strong>DAG:</strong> Directed graph with NO cycles. Only DAGs have topological orderings.</li>
+          <li><strong>Spanning Tree:</strong> Tree subgraph with all V vertices and V−1 edges. No cycles.</li>
+          <li><strong>MST:</strong> Spanning tree with minimum total edge weight.</li>
+          <li><strong>Topological Sort:</strong> O(V+E). Kahn's (BFS in-degree) or DFS-based. Only for DAGs.</li>
+          <li><strong>Prim's MST:</strong> Vertex-based greedy. O(V²) matrix / O(E log V) heap. Better for dense graphs.</li>
+          <li><strong>Kruskal's MST:</strong> Edge-based greedy. Sort edges + Union-Find. O(E log E). Better for sparse graphs.</li>
+          <li><strong>Dijkstra:</strong> Single-source, greedy, NON-NEGATIVE weights only. O(V²) / O(E log V).</li>
+          <li><strong>Bellman-Ford:</strong> Single-source, DP, handles NEGATIVE weights. Detects negative cycles. O(V·E).</li>
+          <li><strong>Floyd-Warshall:</strong> ALL-PAIRS, DP, 3 nested loops. O(V³). Handles negative weights (not neg. cycles).</li>
+          <li><strong>Relaxation:</strong> if dist[u]+w &lt; dist[v] → update dist[v]. Core of Dijkstra and Bellman-Ford.</li>
+          <li><strong>Undirected max edges:</strong> V(V−1)/2. <strong>Directed:</strong> V(V−1).</li>
+          <li><strong>Adj Matrix:</strong> O(V²) space, O(1) edge check. <strong>Adj List:</strong> O(V+E) space, O(deg) edge check.</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Must Remember for Exam</div>
+        <ul style="line-height:2.2;">
+          <li>Spanning tree has exactly <strong>V − 1 edges</strong>.</li>
+          <li>Topological sort is possible ONLY for <strong>DAGs</strong> (no cycles).</li>
+          <li>Prim's → <strong>dense graphs</strong> (vertex-based); Kruskal's → <strong>sparse graphs</strong> (edge-based).</li>
+          <li>Dijkstra <strong>CANNOT handle negative weights</strong>. Use Bellman-Ford instead.</li>
+          <li>Bellman-Ford relaxes edges <strong>V−1 times</strong>. Extra pass detects negative cycles.</li>
+          <li>Floyd-Warshall: <strong>dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])</strong>.</li>
+          <li>Floyd-Warshall detects negative cycle if <strong>dist[i][i] &lt; 0</strong>.</li>
+          <li>Kruskal's uses <strong>Union-Find</strong> for cycle detection.</li>
+          <li>Dijkstra uses <strong>min-heap / priority queue</strong> for finding minimum distance vertex.</li>
+          <li>Both MST algorithms (Prim's &amp; Kruskal's) use <strong>Greedy</strong> paradigm.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+        <ul style="line-height:2.2;">
+          <li>Saying spanning tree has <strong>V edges</strong> — it has <strong>V − 1 edges</strong>.</li>
+          <li>Applying topological sort on a graph <strong>with cycles</strong> — it only works on DAGs.</li>
+          <li>Using Dijkstra's on a graph with <strong>negative weights</strong> — it gives wrong results.</li>
+          <li>Confusing Prim's (vertex-based) with Kruskal's (edge-based).</li>
+          <li>Saying Bellman-Ford relaxes V times — it relaxes <strong>V − 1 times</strong>.</li>
+          <li>Writing Floyd-Warshall as O(V²) — it is <strong>O(V³)</strong>.</li>
+          <li>Forgetting to check for negative cycles in Bellman-Ford (the extra V-th pass).</li>
+          <li>Applying MST algorithms to <strong>directed graphs</strong> — MST is for undirected weighted graphs.</li>
+          <li>Confusing single-source (Dijkstra, Bellman-Ford) with all-pairs (Floyd-Warshall).</li>
+          <li>Saying Kruskal's doesn't need sorted edges — sorting is the <strong>first step</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB BUTTONS -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

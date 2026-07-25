@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Basics of C | CST201</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../../units-com/common.css">
+<style>
+  .op-table td:first-child {
+    font-family: monospace;
+    font-weight: bold;
+    color: var(--accent, #4361ee);
+  }
+  .precedence-level {
+    display: inline-block;
+    background: var(--accent, #4361ee);
+    color: #fff;
+    border-radius: 4px;
+    padding: 1px 8px;
+    font-size: 0.78rem;
+    margin-right: 6px;
+  }
+  .token-card {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .token-pill {
+    background: var(--box-bg, #f0f4ff);
+    border: 1px solid var(--border, #ddd);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .char-set-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .char-set-item {
+    background: var(--box-bg, #f0f4ff);
+    border-radius: 8px;
+    padding: 10px 14px;
+    border: 1px solid var(--border, #ddd);
+    font-size: 0.88rem;
+  }
+  .char-set-item strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--accent, #4361ee);
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-code"></i> CST201 – Unit 1
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#history">History</a>
+      <a href="#fundamentals">Fundamentals</a>
+      <a href="#operators">Operators</a>
+      <a href="#typecasting">Type Conversion</a>
+      <a href="#io">Input/Output</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="../index.html"><i class="fas fa-home"></i></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 1 – Basics of C</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#history">History of C</a>
+    <a href="#fundamentals">Fundamentals</a>
+    <a href="#operators">Operators</a>
+    <a href="#typecasting">Type Conversion</a>
+    <a href="#io">Input/Output</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#comparisons">Comparisons</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#short-questions">Short Questions</a>
+    <a href="#long-questions">Long Questions</a>
+    <a href="#practice">Practice</a>
+    <a href="#revision">Revision</a>
+    <a href="../index.html">← Subject Home</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <h1><i class="fas fa-play-circle"></i> Unit 1: Basics of C</h1>
+    <p>CST201 — Computer Programming in C | 3rd Semester</p>
+    <div class="course-info">
+      <div class="info-item"><i class="fas fa-clock"></i> 5 Hours</div>
+      <div class="info-item"><i class="fas fa-layer-group"></i> Module A</div>
+      <div class="info-item"><i class="fas fa-signal"></i> Foundation Level</div>
+      <div class="info-item"><i class="fas fa-file-code"></i> Language: C</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ======================== SECTION 1: OVERVIEW ======================== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Unit Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What You Will Learn</div>
+        <p>Unit 1 is the foundation of C programming. You will understand where C came from, why
+        it is still widely used, how a C program is structured at the file level, and the basic
+        building blocks — character sets, tokens, data types, operators, and input/output functions.
+        Every topic in this unit appears in exam questions every year.</p>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3><i class="fas fa-history"></i> History & Files</h3>
+          <p>Origin of C, structured programming advantages, file types used in C programs.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-font"></i> Fundamentals</h3>
+          <p>Character set, tokens, constants, variables, keywords, and primary data types.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-calculator"></i> Operators</h3>
+          <p>All operator types, precedence rules, and associativity.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-exchange-alt"></i> Type Conversion</h3>
+          <p>Implicit and explicit type conversion with typecasting syntax.</p>
+        </div>
+        <div class="topic-card">
+          <h3><i class="fas fa-terminal"></i> I/O Functions</h3>
+          <p>printf() and scanf() with format specifiers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 2: HISTORY ======================== -->
+  <section class="section" id="history">
+    <h2 class="section-title">
+      <i class="fas fa-history"></i> Introduction to C &amp; File Types
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> History and Evolution of C</div>
+        <p>C was developed by <strong>Dennis Ritchie</strong> at <strong>Bell Laboratories</strong>
+        between <strong>1969 and 1973</strong>. It was originally developed along with the UNIX
+        operating system. C evolved from the earlier language <strong>B</strong>, which in turn came
+        from <strong>BCPL</strong>. In 1989, the American National Standards Institute (ANSI)
+        standardized C, creating <strong>ANSI C (C89)</strong>. Later versions include C99, C11,
+        and C17.</p>
+        <ul>
+          <li><strong>1960s</strong> — BCPL created by Martin Richards</li>
+          <li><strong>1970</strong> — B language created by Ken Thompson</li>
+          <li><strong>1972</strong> — C language created by Dennis Ritchie</li>
+          <li><strong>1978</strong> — "The C Programming Language" book published (K&R C)</li>
+          <li><strong>1989</strong> — ANSI C standardized (C89/C90)</li>
+          <li><strong>1999</strong> — C99 standard released</li>
+        </ul>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-star"></i> Advantages of Structured Programming</div>
+        <p>C is a <strong>structured programming language</strong>, which means programs are divided
+        into well-defined functions/blocks. Advantages include:</p>
+        <ul>
+          <li><strong>Modularity</strong> — Program is divided into functions/modules, each solving one task.</li>
+          <li><strong>Reusability</strong> — Functions can be called multiple times from different places.</li>
+          <li><strong>Easier Debugging</strong> — Each module can be tested independently.</li>
+          <li><strong>Easier Maintenance</strong> — Changes in one module do not affect others.</li>
+          <li><strong>Readability</strong> — Structured code is easier to understand and follow.</li>
+        </ul>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-star"></i> Key Characteristics of C</div>
+        <ul>
+          <li><strong>Middle-Level Language</strong> — Combines features of both high-level and low-level languages.</li>
+          <li><strong>Case-Sensitive</strong> — <code>main</code> and <code>Main</code> are different.</li>
+          <li><strong>Efficient and Fast</strong> — Compiled directly to machine code.</li>
+          <li><strong>Portable</strong> — Code written on one system can run on another with minimal changes.</li>
+          <li><strong>Rich in Operators</strong> — Provides a wide variety of operators for complex expressions.</li>
+          <li><strong>Structured</strong> — Supports functions, loops, and conditional statements.</li>
+          <li><strong>Extensible</strong> — Can be extended by adding new features through libraries.</li>
+        </ul>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-file-alt"></i> File Types Used in C Programming</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>File Type</th><th>Extension</th><th>Description</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Source File</td><td>.c</td>
+                <td>Contains the actual C code written by the programmer</td>
+                <td>main.c, hello.c</td>
+              </tr>
+              <tr>
+                <td>Header File</td><td>.h</td>
+                <td>Contains function prototypes, macros, and constants; included with #include</td>
+                <td>stdio.h, math.h</td>
+              </tr>
+              <tr>
+                <td>Object File</td><td>.o / .obj</td>
+                <td>Intermediate file produced by the compiler from source code; not yet executable</td>
+                <td>main.o</td>
+              </tr>
+              <tr>
+                <td>Executable File</td><td>.exe / (none on Linux)</td>
+                <td>Final binary file produced by the linker; ready to run</td>
+                <td>program.exe</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> C Program Compilation Process</div>
+        <p>The journey from source code to executable involves four steps:</p>
+        <ol>
+          <li><strong>Preprocessing</strong> — Handles directives like <code>#include</code> and <code>#define</code>. Produces expanded source code.</li>
+          <li><strong>Compilation</strong> — Converts preprocessed source code into assembly language. Checks for syntax errors.</li>
+          <li><strong>Assembly</strong> — Converts assembly code into machine code object files (.o / .obj).</li>
+          <li><strong>Linking</strong> — Combines object files and library files to produce the final executable (.exe).</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 3: FUNDAMENTALS ======================== -->
+  <section class="section" id="fundamentals">
+    <h2 class="section-title">
+      <i class="fas fa-font"></i> Fundamentals: Tokens, Data Types &amp; Keywords
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-spell-check"></i> C Character Set</div>
+        <p>The C character set consists of all valid characters that can be used in a C program.</p>
+        <div class="char-set-grid">
+          <div class="char-set-item">
+            <strong>Alphabets</strong>
+            A–Z (uppercase), a–z (lowercase)
+          </div>
+          <div class="char-set-item">
+            <strong>Digits</strong>
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+          </div>
+          <div class="char-set-item">
+            <strong>Special Symbols</strong>
+            + - * / = ( ) { } [ ] ; , . # & | ^ ~ ! % @ _ ? : ' " \ &lt; &gt;
+          </div>
+          <div class="char-set-item">
+            <strong>Whitespace</strong>
+            Space, Tab, Newline, Carriage return
+          </div>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-puzzle-piece"></i> Tokens in C</div>
+        <p>A <strong>token</strong> is the smallest individual meaningful unit in a C program. The C compiler breaks the source code into tokens during compilation.</p>
+        <div class="token-card">
+          <span class="token-pill"><i class="fas fa-key"></i> Keywords</span>
+          <span class="token-pill"><i class="fas fa-tag"></i> Identifiers</span>
+          <span class="token-pill"><i class="fas fa-hashtag"></i> Constants</span>
+          <span class="token-pill"><i class="fas fa-quote-right"></i> String Literals</span>
+          <span class="token-pill"><i class="fas fa-calculator"></i> Operators</span>
+          <span class="token-pill"><i class="fas fa-dot-circle"></i> Punctuators</span>
+        </div>
+        <br>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Token Type</th><th>Description</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Keyword</td><td>Reserved words with fixed meaning; cannot be used as identifiers</td><td>int, float, if, return, for</td></tr>
+              <tr><td>Identifier</td><td>User-defined names for variables, functions, arrays</td><td>myVar, sum, calculate</td></tr>
+              <tr><td>Constant</td><td>Fixed values that do not change during execution</td><td>25, 3.14, 'A', "Hello"</td></tr>
+              <tr><td>String Literal</td><td>Sequence of characters enclosed in double quotes</td><td>"Hello World"</td></tr>
+              <tr><td>Operator</td><td>Symbols that perform operations on operands</td><td>+, -, *, /, =, ==</td></tr>
+              <tr><td>Punctuator</td><td>Special symbols used for structure and syntax</td><td>; , ( ) { } [ ]</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Rules for Identifiers</div>
+        <ul>
+          <li>Must begin with a letter (a–z, A–Z) or underscore (_).</li>
+          <li>Can contain letters, digits, and underscores.</li>
+          <li>Cannot be a C keyword (e.g., cannot name a variable <code>int</code> or <code>float</code>).</li>
+          <li>Case-sensitive: <code>Count</code> and <code>count</code> are different.</li>
+          <li>No spaces or special characters (except underscore) allowed.</li>
+        </ul>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-key"></i> C Keywords (32 Standard Keywords)</div>
+        <p>Keywords are reserved words that have predefined meanings in C. They cannot be used as variable names.</p>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> All 32 C Keywords</div>
+          <pre>auto      break     case      char      const
+continue  default   do        double    else
+enum      extern    float     for       goto
+if        int       long      register  return
+short     signed    sizeof    static    struct
+switch    typedef   union     unsigned  void
+volatile  while</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-database"></i> Primary Data Types in C</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Data Type</th><th>Keyword</th><th>Size (bytes)</th><th>Range</th><th>Format Specifier</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Integer</td><td>int</td><td>2 or 4</td><td>-32768 to 32767 (2-byte) / -2,147,483,648 to 2,147,483,647 (4-byte)</td><td>%d or %i</td></tr>
+              <tr><td>Float</td><td>float</td><td>4</td><td>3.4 × 10⁻³⁸ to 3.4 × 10³⁸ (6 decimal digits precision)</td><td>%f</td></tr>
+              <tr><td>Double</td><td>double</td><td>8</td><td>1.7 × 10⁻³⁰⁸ to 1.7 × 10³⁰⁸ (15 decimal digits precision)</td><td>%lf</td></tr>
+              <tr><td>Character</td><td>char</td><td>1</td><td>-128 to 127 (signed) / 0 to 255 (unsigned)</td><td>%c</td></tr>
+              <tr><td>Void</td><td>void</td><td>0</td><td>No value; used for functions with no return type</td><td>N/A</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-equals"></i> Variables: Declaration and Initialization</div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Variable Declaration and Initialization in C</div>
+          <pre>/* Declaration */
+int age;
+float salary;
+char grade;
+
+/* Initialization */
+int age = 20;
+float salary = 25000.50;
+char grade = 'A';
+
+/* Multiple declarations */
+int a, b, c;
+int x = 10, y = 20, z = 30;
+
+/* Constants using const keyword */
+const float PI = 3.14159;
+const int MAX = 100;</pre>
+        </div>
+        <div class="important-note">
+          <div class="box-title"><i class="fas fa-exclamation-circle"></i> Key Rule</div>
+          <p>In C, all variables must be <strong>declared before use</strong>, typically at the beginning of a block. Using an undeclared variable is a compile-time error.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 4: OPERATORS ======================== -->
+  <section class="section" id="operators">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Operators in C
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is an Operator?</div>
+        <p>An <strong>operator</strong> is a symbol that tells the compiler to perform a specific mathematical, relational, or logical operation and produce a result. The values that operators work on are called <strong>operands</strong>.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-plus"></i> 1. Arithmetic Operators</div>
+        <p>Used for basic mathematical calculations.</p>
+        <div class="table-wrapper">
+          <table class="data-table op-table">
+            <thead><tr><th>Operator</th><th>Name</th><th>Example (a=10, b=3)</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>+</td><td>Addition</td><td>a + b</td><td>13</td></tr>
+              <tr><td>-</td><td>Subtraction</td><td>a - b</td><td>7</td></tr>
+              <tr><td>*</td><td>Multiplication</td><td>a * b</td><td>30</td></tr>
+              <tr><td>/</td><td>Division</td><td>a / b</td><td>3 (integer division)</td></tr>
+              <tr><td>%</td><td>Modulus</td><td>a % b</td><td>1 (remainder)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistake</div>
+          <p>The <strong>modulus operator %</strong> works only with integers. <code>10.5 % 3</code> is invalid in C.</p>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-not-equal"></i> 2. Relational Operators</div>
+        <p>Used to compare two values. Always returns 0 (false) or 1 (true).</p>
+        <div class="table-wrapper">
+          <table class="data-table op-table">
+            <thead><tr><th>Operator</th><th>Meaning</th><th>Example (a=5, b=3)</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>==</td><td>Equal to</td><td>a == b</td><td>0 (false)</td></tr>
+              <tr><td>!=</td><td>Not equal to</td><td>a != b</td><td>1 (true)</td></tr>
+              <tr><td>&lt;</td><td>Less than</td><td>a &lt; b</td><td>0 (false)</td></tr>
+              <tr><td>&gt;</td><td>Greater than</td><td>a &gt; b</td><td>1 (true)</td></tr>
+              <tr><td>&lt;=</td><td>Less than or equal to</td><td>a &lt;= b</td><td>0 (false)</td></tr>
+              <tr><td>&gt;=</td><td>Greater than or equal to</td><td>a &gt;= b</td><td>1 (true)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-sitemap"></i> 3. Logical Operators</div>
+        <p>Used to combine multiple conditions. Return 0 or 1.</p>
+        <div class="table-wrapper">
+          <table class="data-table op-table">
+            <thead><tr><th>Operator</th><th>Name</th><th>Meaning</th><th>Example</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>&amp;&amp;</td><td>AND</td><td>True if BOTH conditions are true</td><td>(5&gt;3) &amp;&amp; (4&gt;2)</td><td>1</td></tr>
+              <tr><td>||</td><td>OR</td><td>True if AT LEAST ONE condition is true</td><td>(5&gt;3) || (4&lt;2)</td><td>1</td></tr>
+              <tr><td>!</td><td>NOT</td><td>Reverses the truth value</td><td>!(5&gt;3)</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-arrow-right"></i> 4. Assignment Operators</div>
+        <div class="table-wrapper">
+          <table class="data-table op-table">
+            <thead><tr><th>Operator</th><th>Equivalent to</th><th>Example (a=10)</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>=</td><td>Simple assignment</td><td>a = 5</td><td>a = 5</td></tr>
+              <tr><td>+=</td><td>a = a + b</td><td>a += 5</td><td>a = 15</td></tr>
+              <tr><td>-=</td><td>a = a - b</td><td>a -= 3</td><td>a = 7</td></tr>
+              <tr><td>*=</td><td>a = a * b</td><td>a *= 2</td><td>a = 20</td></tr>
+              <tr><td>/=</td><td>a = a / b</td><td>a /= 2</td><td>a = 5</td></tr>
+              <tr><td>%=</td><td>a = a % b</td><td>a %= 3</td><td>a = 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-plus-circle"></i> 5. Increment and Decrement Operators</div>
+        <p>These are <strong>unary operators</strong> that increase or decrease a variable's value by 1.</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Type</th><th>Operator</th><th>What Happens</th><th>Example (a=5)</th><th>Value of a after</th></tr></thead>
+            <tbody>
+              <tr><td>Pre-increment</td><td>++a</td><td>Increment first, then use value</td><td>b = ++a</td><td>a=6, b=6</td></tr>
+              <tr><td>Post-increment</td><td>a++</td><td>Use value first, then increment</td><td>b = a++</td><td>a=6, b=5</td></tr>
+              <tr><td>Pre-decrement</td><td>--a</td><td>Decrement first, then use value</td><td>b = --a</td><td>a=4, b=4</td></tr>
+              <tr><td>Post-decrement</td><td>a--</td><td>Use value first, then decrement</td><td>b = a--</td><td>a=4, b=5</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Pre vs Post Increment Demo</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a = 5, b;
+
+    b = ++a;   /* Pre-increment: a becomes 6, then b = 6 */
+    printf("Pre-increment: a = %d, b = %d\n", a, b);  /* a=6, b=6 */
+
+    a = 5;     /* Reset a */
+    b = a++;   /* Post-increment: b = 5, then a becomes 6 */
+    printf("Post-increment: a = %d, b = %d\n", a, b); /* a=6, b=5 */
+
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-question"></i> 6. Conditional (Ternary) Operator</div>
+        <p>The ternary operator is the only operator in C that takes <strong>three operands</strong>. It is a shorthand for an if-else statement.</p>
+        <div class="formula-box">
+          <div class="box-title"><i class="fas fa-formula"></i> Syntax</div>
+          <div class="formula">variable = (condition) ? expression_if_true : expression_if_false;</div>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Ternary Operator Example</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a = 10, b = 20, max;
+    max = (a &gt; b) ? a : b;   /* If a&gt;b, max=a, else max=b */
+    printf("Maximum = %d\n", max);  /* Output: Maximum = 20 */
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-microchip"></i> 7. Bitwise Operators</div>
+        <p>Bitwise operators work directly on the binary bits of integer values.</p>
+        <div class="table-wrapper">
+          <table class="data-table op-table">
+            <thead><tr><th>Operator</th><th>Name</th><th>Example (a=12=1100₂, b=10=1010₂)</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>&amp;</td><td>Bitwise AND</td><td>a &amp; b → 1100 &amp; 1010</td><td>1000 = 8</td></tr>
+              <tr><td>|</td><td>Bitwise OR</td><td>a | b → 1100 | 1010</td><td>1110 = 14</td></tr>
+              <tr><td>^</td><td>Bitwise XOR</td><td>a ^ b → 1100 ^ 1010</td><td>0110 = 6</td></tr>
+              <tr><td>~</td><td>Bitwise NOT</td><td>~a → ~1100</td><td>...0011 = -13 (2's complement)</td></tr>
+              <tr><td>&lt;&lt;</td><td>Left Shift</td><td>a &lt;&lt; 2</td><td>110000 = 48 (multiply by 4)</td></tr>
+              <tr><td>&gt;&gt;</td><td>Right Shift</td><td>a &gt;&gt; 1</td><td>0110 = 6 (divide by 2)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-dot-circle"></i> 8. Special Operators</div>
+        <div class="table-wrapper">
+          <table class="data-table op-table">
+            <thead><tr><th>Operator</th><th>Name</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>sizeof()</td><td>sizeof</td><td>Returns the size (in bytes) of a variable or data type</td><td>sizeof(int) → 4</td></tr>
+              <tr><td>,</td><td>Comma</td><td>Evaluates multiple expressions left to right; returns value of last expression</td><td>int a=1, b=2;</td></tr>
+              <tr><td>&amp;</td><td>Address-of</td><td>Returns the memory address of a variable (used with pointers)</td><td>&amp;a → address of a</td></tr>
+              <tr><td>*</td><td>Dereference</td><td>Accesses the value at the address stored in a pointer</td><td>*ptr → value at ptr</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-sort-numeric-up"></i> Operator Precedence Table (High to Low)</div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Precedence</th><th>Operators</th><th>Associativity</th></tr></thead>
+            <tbody>
+              <tr><td><span class="precedence-level">1 (Highest)</span></td><td>() [] -> . ++ -- (postfix)</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">2</span></td><td>++ -- + - ! ~ * &amp; sizeof (unary/prefix)</td><td>Right to Left</td></tr>
+              <tr><td><span class="precedence-level">3</span></td><td>* / %</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">4</span></td><td>+ -</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">5</span></td><td>&lt;&lt; &gt;&gt;</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">6</span></td><td>&lt; &lt;= &gt; &gt;=</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">7</span></td><td>== !=</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">8</span></td><td>&amp; (bitwise)</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">9</span></td><td>^ (bitwise)</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">10</span></td><td>| (bitwise)</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">11</span></td><td>&amp;&amp;</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">12</span></td><td>||</td><td>Left to Right</td></tr>
+              <tr><td><span class="precedence-level">13</span></td><td>?: (ternary)</td><td>Right to Left</td></tr>
+              <tr><td><span class="precedence-level">14</span></td><td>= += -= *= /= %=</td><td>Right to Left</td></tr>
+              <tr><td><span class="precedence-level">15 (Lowest)</span></td><td>, (comma)</td><td>Left to Right</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tip-box">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> Memory Trick</div>
+          <p>Remember: <strong>PUMA's REM</strong> — Postfix, Unary, Multiplicative, Additive, Shift, Relational, Equality, bitwise (and, xor, or), logical (and, or), conditional, assignment, coMma</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 5: TYPE CONVERSION ======================== -->
+  <section class="section" id="typecasting">
+    <h2 class="section-title">
+      <i class="fas fa-exchange-alt"></i> Type Conversion and Typecasting
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What is Type Conversion?</div>
+        <p>Type conversion is the process of converting one data type to another. In C, this happens in two ways: <strong>implicitly</strong> (automatically by the compiler) and <strong>explicitly</strong> (manually by the programmer).</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-magic"></i> Implicit Type Conversion (Type Promotion)</div>
+        <p>The compiler automatically converts a lower data type to a higher data type to avoid data loss. This follows the hierarchy:</p>
+        <div class="formula-box">
+          <div class="box-title"><i class="fas fa-arrow-right"></i> Type Promotion Hierarchy</div>
+          <div class="formula">char → int → long → float → double → long double</div>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Implicit Conversion Example</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int i = 10;
+    float f;
+    f = i;          /* int automatically promoted to float */
+    printf("%f\n", f);   /* Output: 10.000000 */
+
+    int a = 5, b = 2;
+    float result;
+    result = a / b;      /* Integer division happens first! */
+    printf("%f\n", result); /* Output: 2.000000 (NOT 2.5) */
+    return 0;
+}</pre>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-user-cog"></i> Explicit Type Conversion (Typecasting)</div>
+        <p>The programmer manually forces the conversion of one data type to another using the cast operator.</p>
+        <div class="formula-box">
+          <div class="box-title"><i class="fas fa-formula"></i> Typecasting Syntax</div>
+          <div class="formula">(target_data_type) expression</div>
+        </div>
+        <div class="code-box">
+          <div class="box-title"><i class="fas fa-code"></i> Typecasting Example</div>
+          <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a = 5, b = 2;
+    float result;
+
+    /* Without typecast: integer division */
+    result = a / b;
+    printf("Without typecast: %f\n", result);  /* 2.000000 */
+
+    /* With typecast: float division */
+    result = (float) a / b;
+    printf("With typecast: %f\n", result);     /* 2.500000 */
+
+    /* Another example */
+    float x = 9.7;
+    int y = (int) x;   /* Truncates decimal part */
+    printf("Typecasted: %d\n", y);             /* 9 */
+
+    return 0;
+}</pre>
+        </div>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Important Note</div>
+          <p>Typecasting <strong>does not round</strong>. It <strong>truncates</strong> the decimal part. So <code>(int)9.9</code> gives <code>9</code>, not <code>10</code>.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 6: I/O ======================== -->
+  <section class="section" id="io">
+    <h2 class="section-title">
+      <i class="fas fa-terminal"></i> Formatted Input / Output
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Standard I/O in C</div>
+        <p>C uses the standard library <code>&lt;stdio.h&gt;</code> (Standard Input Output header) for input and output operations. The two most important functions are <code>printf()</code> and <code>scanf()</code>.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-print"></i> printf() — Formatted Output</div>
+        <p><code>printf()</code> sends formatted output to the standard output (screen).</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>printf("format string", argument1, argument2, ...);</pre>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Format Specifier</th><th>Data Type</th><th>Example Output</th></tr></thead>
+            <tbody>
+              <tr><td>%d or %i</td><td>int</td><td>25</td></tr>
+              <tr><td>%f</td><td>float</td><td>3.140000</td></tr>
+              <tr><td>%.2f</td><td>float (2 decimal places)</td><td>3.14</td></tr>
+              <tr><td>%lf</td><td>double</td><td>3.14159265</td></tr>
+              <tr><td>%c</td><td>char</td><td>A</td></tr>
+              <tr><td>%s</td><td>string</td><td>Hello</td></tr>
+              <tr><td>%x</td><td>Hexadecimal (lowercase)</td><td>1a</td></tr>
+              <tr><td>%X</td><td>Hexadecimal (uppercase)</td><td>1A</td></tr>
+              <tr><td>%o</td><td>Octal</td><td>17</td></tr>
+              <tr><td>%u</td><td>Unsigned integer</td><td>65535</td></tr>
+              <tr><td>%p</td><td>Pointer address</td><td>0x7ffd...</td></tr>
+              <tr><td>%%</td><td>Literal % character</td><td>%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-keyboard"></i> scanf() — Formatted Input</div>
+        <p><code>scanf()</code> reads formatted input from the standard input (keyboard).</p>
+        <div class="syntax-box">
+          <div class="box-title"><i class="fas fa-code"></i> Syntax</div>
+          <pre>scanf("format string", &variable1, &variable2, ...);</pre>
+        </div>
+        <div class="warning-box">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Critical Rule</div>
+          <p>Always use the <strong>address-of operator (&amp;)</strong> before variable names in <code>scanf()</code>. Forgetting it is one of the most common bugs in C.</p>
+        </div>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Complete printf() and scanf() Example</div>
+        <pre>#include &lt;stdio.h&gt;
+int main() {
+    int age;
+    float salary;
+    char initial;
+    char name[50];
+
+    /* Taking input */
+    printf("Enter your name: ");
+    scanf("%s", name);        /* No & needed for string/array */
+
+    printf("Enter age, salary and initial: ");
+    scanf("%d %f %c", &amp;age, &amp;salary, &amp;initial);
+
+    /* Formatted output */
+    printf("\n--- Details ---\n");
+    printf("Name    : %s\n", name);
+    printf("Age     : %d years\n", age);
+    printf("Salary  : %.2f\n", salary);
+    printf("Initial : %c\n", initial);
+
+    /* Hex and Octal output */
+    printf("Age in Hex  : %x\n", age);
+    printf("Age in Octal: %o\n", age);
+
+    return 0;
+}</pre>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Width and Precision in printf()</div>
+        <pre>printf("%10d", 25);      /* Right-aligned in 10-char width: "        25" */
+printf("%-10d", 25);     /* Left-aligned in 10-char width:  "25        " */
+printf("%010d", 25);     /* Leading zeros:                  "0000000025" */
+printf("%.4f", 3.14);   /* 4 decimal places: "3.1400"      */
+printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 7: FORMULAS ======================== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Key Formulas and Syntax
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Variable Declaration Syntax</div>
+        <div class="formula">data_type variable_name;</div>
+        <div class="formula">data_type variable_name = initial_value;</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Ternary Operator Syntax</div>
+        <div class="formula">result = (condition) ? value_if_true : value_if_false;</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> sizeof() Operator</div>
+        <div class="formula">sizeof(data_type)  →  returns size in bytes</div>
+        <div class="formula">sizeof(variable)   →  returns size of variable in bytes</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Typecasting Syntax</div>
+        <div class="formula">(target_type) expression</div>
+        <div class="formula answer">Example: (float) 5 / 2  →  2.5</div>
+      </div>
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Left Shift and Right Shift</div>
+        <div class="formula">a &lt;&lt; n  =  a × 2ⁿ  (multiply by 2 raised to n)</div>
+        <div class="formula">a &gt;&gt; n  =  a ÷ 2ⁿ  (integer divide by 2 raised to n)</div>
+        <div class="formula answer">Example: 12 &lt;&lt; 2 = 12 × 4 = 48</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 8: DEFINITIONS ======================== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Token</div>
+        <p>A token is the smallest individual meaningful unit in a C program. Examples: keywords, identifiers, constants, operators.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Identifier</div>
+        <p>An identifier is a user-defined name given to a variable, function, array, or any user-defined entity. Must start with a letter or underscore, and cannot be a keyword.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Keyword</div>
+        <p>A keyword is a reserved word in C that has a predefined meaning and cannot be used as an identifier. C has 32 keywords (e.g., int, float, if, for, return).</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Constant</div>
+        <p>A constant is a value that does not change during the execution of a program. Types: integer constants, floating-point constants, character constants, string constants.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Operator Precedence</div>
+        <p>Operator precedence defines the order in which operators are evaluated in an expression. Operators with higher precedence are evaluated before operators with lower precedence.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Associativity</div>
+        <p>Associativity defines the order of evaluation when two operators have the same precedence. It can be Left-to-Right or Right-to-Left.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Typecasting</div>
+        <p>Typecasting (explicit type conversion) is the process of manually converting a value of one data type into another using the cast operator, written as <code>(type) value</code>.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Structured Programming</div>
+        <p>Structured programming is a programming paradigm that uses functions, loops, and conditionals to create clear, modular, and readable code. It avoids the use of goto statements.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 9: COMPARISONS ======================== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">Implicit vs Explicit Type Conversion</caption>
+          <thead>
+            <tr><th>Feature</th><th>Implicit Conversion</th><th>Explicit Conversion (Typecasting)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Who does it</td><td>Compiler automatically</td><td>Programmer manually</td></tr>
+            <tr><td>Syntax</td><td>No special syntax</td><td>(type) expression</td></tr>
+            <tr><td>Risk</td><td>May cause unexpected results</td><td>Programmer has full control</td></tr>
+            <tr><td>Example</td><td>int i = 3.7; → i = 3</td><td>(float) 5 / 2 → 2.5</td></tr>
+            <tr><td>Also called</td><td>Type promotion / coercion</td><td>Type casting / narrowing</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">Pre-increment vs Post-increment</caption>
+          <thead>
+            <tr><th>Feature</th><th>Pre-increment (++a)</th><th>Post-increment (a++)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Operation order</td><td>Increment first, use later</td><td>Use first, increment later</td></tr>
+            <tr><td>Value returned</td><td>Incremented value</td><td>Original value</td></tr>
+            <tr><td>Example (a=5)</td><td>b = ++a → b=6, a=6</td><td>b = a++ → b=5, a=6</td></tr>
+            <tr><td>Speed</td><td>Slightly faster (no temp copy)</td><td>May use a temporary copy</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption style="font-weight:bold; padding:8px;">Source File vs Header File vs Object File vs Executable</caption>
+          <thead>
+            <tr><th>File Type</th><th>Extension</th><th>Created By</th><th>Content</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Source File</td><td>.c</td><td>Programmer</td><td>C source code</td></tr>
+            <tr><td>Header File</td><td>.h</td><td>Programmer / Library</td><td>Prototypes, macros, constants</td></tr>
+            <tr><td>Object File</td><td>.o / .obj</td><td>Compiler</td><td>Machine code (not linked)</td></tr>
+            <tr><td>Executable</td><td>.exe / (none)</td><td>Linker</td><td>Final ready-to-run program</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 10: MCQs ======================== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>C language was developed by:</p>
+          <ul class="options">
+            <li>a. James Gosling</li>
+            <li>b. Dennis Ritchie</li>
+            <li>c. Bjarne Stroustrup</li>
+            <li>d. Ken Thompson</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: b. Dennis Ritchie</strong>
+            <p>C was developed by Dennis Ritchie at Bell Laboratories between 1969–1973. Ken Thompson developed B, and James Gosling developed Java.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Which of the following is NOT a valid C keyword?</p>
+          <ul class="options">
+            <li>a. float</li>
+            <li>b. extern</li>
+            <li>c. integer</li>
+            <li>d. static</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: c. integer</strong>
+            <p><code>integer</code> is not a C keyword. The correct keyword is <code>int</code>. All others — float, extern, static — are valid C keywords.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the output of the following code?<br>
+          <code>int a = 5; printf("%d", a++);</code></p>
+          <ul class="options">
+            <li>a. 6</li>
+            <li>b. 5</li>
+            <li>c. 4</li>
+            <li>d. Compile error</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: b. 5</strong>
+            <p>Post-increment (a++) uses the current value (5) first in the expression, then increments. So printf prints 5, and after that a becomes 6.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the result of <code>(float) 7 / 2</code> in C?</p>
+          <ul class="options">
+            <li>a. 3</li>
+            <li>b. 3.0</li>
+            <li>c. 3.5</li>
+            <li>d. Error</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: c. 3.5</strong>
+            <p>The typecast (float) converts 7 to 7.0 before division. So 7.0 / 2 = 3.5. Without typecast, 7 / 2 = 3 (integer division).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Which format specifier is used to print a hexadecimal value in C?</p>
+          <ul class="options">
+            <li>a. %h</li>
+            <li>b. %o</li>
+            <li>c. %x</li>
+            <li>d. %b</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. %x</strong>
+            <p>%x prints lowercase hexadecimal, %X prints uppercase hexadecimal. %o prints octal. C does not have a %b specifier for binary.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What does the sizeof() operator return for <code>int</code> on a 32-bit system?</p>
+          <ul class="options">
+            <li>a. 1</li>
+            <li>b. 2</li>
+            <li>c. 4</li>
+            <li>d. 8</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: c. 4</strong>
+            <p>On a 32-bit system, sizeof(int) = 4 bytes. On older 16-bit systems it was 2 bytes. sizeof(char) = 1, sizeof(double) = 8.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>The result of <code>12 &amp; 10</code> (bitwise AND) is:</p>
+          <ul class="options">
+            <li>a. 22</li>
+            <li>b. 8</li>
+            <li>c. 14</li>
+            <li>d. 2</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: b. 8</strong>
+            <p>12 = 1100₂, 10 = 1010₂. Bitwise AND: 1100 &amp; 1010 = 1000₂ = 8 in decimal.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Which of the following is the correct way to read an integer using scanf()?</p>
+          <ul class="options">
+            <li>a. scanf("%d", num);</li>
+            <li>b. scanf("%d", &amp;num);</li>
+            <li>c. scanf(num);</li>
+            <li>d. scanf("%i" num);</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: b. scanf("%d", &amp;num);</strong>
+            <p>scanf() requires the address of the variable using the & operator. Without &, undefined behavior occurs as scanf won't know where to store the input.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>What is the value of <code>5 &lt;&lt; 2</code>?</p>
+          <ul class="options">
+            <li>a. 10</li>
+            <li>b. 20</li>
+            <li>c. 40</li>
+            <li>d. 80</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: b. 20</strong>
+            <p>Left shift by n positions = multiply by 2ⁿ. So 5 &lt;&lt; 2 = 5 × 2² = 5 × 4 = 20. Binary: 101 becomes 10100 = 20.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>Which file type contains function prototypes and macro definitions in C?</p>
+          <ul class="options">
+            <li>a. .c file</li>
+            <li>b. .obj file</li>
+            <li>c. .h file</li>
+            <li>d. .exe file</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: c. .h file</strong>
+            <p>Header files (.h) contain function prototypes, macro definitions, and constants. They are included using the #include directive. For example, stdio.h contains the printf() and scanf() prototypes.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 11: SHORT QUESTIONS ======================== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pencil-alt"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is a token in C? Name any four types of tokens.</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>A <strong>token</strong> is the smallest meaningful unit in a C program that the compiler can recognize. The four types of tokens are: <strong>Keywords</strong> (int, float), <strong>Identifiers</strong> (variable names), <strong>Constants</strong> (25, 3.14), and <strong>Operators</strong> (+, -, *, /).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the difference between = and == in C?</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p><code>=</code> is the <strong>assignment operator</strong> — it assigns the value on the right to the variable on the left (e.g., <code>a = 5</code>). <code>==</code> is the <strong>equality/relational operator</strong> — it compares two values and returns 1 (true) or 0 (false) (e.g., <code>a == 5</code>). Using = instead of == in a condition is a common and dangerous bug.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is type casting in C? Give one example.</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p><strong>Typecasting</strong> is the explicit (manual) conversion of one data type to another using the cast operator. Syntax: <code>(type) expression</code>. Example: <code>float result = (float)5 / 2;</code> gives 2.5 instead of 2 (which integer division would give).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the modulus operator and on what data types does it work?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p>The <strong>modulus operator %</strong> returns the remainder after integer division. For example, <code>10 % 3 = 1</code> (since 10 = 3×3 + 1). It works <strong>only on integer data types</strong> (int, long, char). Using % with float or double causes a compile-time error.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Name the four types of files used in a C program and their extensions.</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p>The four file types are: <strong>Source file (.c)</strong> — contains the C source code; <strong>Header file (.h)</strong> — contains prototypes and macros; <strong>Object file (.o or .obj)</strong> — machine code produced by compiler; <strong>Executable file (.exe)</strong> — final runnable program produced by the linker.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the difference between a pre-increment (++a) and post-increment (a++) operator?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p>In <strong>pre-increment (++a)</strong>, the variable is incremented first and then the new value is used in the expression. In <strong>post-increment (a++)</strong>, the current value is used in the expression first, and then the variable is incremented. Example: If a=5, then <code>b = ++a</code> gives b=6, a=6; but <code>b = a++</code> gives b=5, a=6.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Why is the & operator required in scanf()? What happens if it is omitted?</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p>The <strong>&amp; (address-of) operator</strong> is required in scanf() because scanf() needs to know the <strong>memory address</strong> of the variable where the input should be stored. If & is omitted, the variable's value (not its address) is passed to scanf(), causing a <strong>runtime error or undefined behavior</strong> (the program may crash or produce wrong results).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What are the advantages of structured programming?</p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>Advantages of structured programming: (1) <strong>Modularity</strong> — program divided into functions; (2) <strong>Reusability</strong> — functions can be reused; (3) <strong>Easier debugging</strong> — each module tested independently; (4) <strong>Better readability</strong> — code is clear and organized; (5) <strong>Easier maintenance</strong> — changes in one module don't affect others.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 12: LONG QUESTIONS ======================== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions (6 Marks)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain all the operator types available in C with examples for each. Include arithmetic, relational, logical, assignment, increment/decrement, bitwise, ternary, and special operators.</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p>C provides a rich set of operators. Here is a summary of each type:</p>
+            <p><strong>1. Arithmetic Operators</strong> (+, -, *, /, %):<br>
+            Used for mathematical calculations. Example: <code>a + b</code>, <code>a % b</code>. Note: % works only on integers.</p>
+
+            <p><strong>2. Relational Operators</strong> (==, !=, &lt;, &gt;, &lt;=, &gt;=):<br>
+            Compare two values and return 0 or 1. Example: <code>5 &gt; 3</code> returns 1.</p>
+
+            <p><strong>3. Logical Operators</strong> (&amp;&amp;, ||, !):<br>
+            Combine conditions. Example: <code>(a&gt;0 &amp;&amp; b&gt;0)</code> is true only if both are positive.</p>
+
+            <p><strong>4. Assignment Operators</strong> (=, +=, -=, etc.):<br>
+            Assign values. Example: <code>a += 5</code> is same as <code>a = a + 5</code>.</p>
+
+            <p><strong>5. Increment/Decrement</strong> (++, --):<br>
+            Increase or decrease by 1. Pre (++a) increments first; Post (a++) uses value first.</p>
+
+            <p><strong>6. Bitwise Operators</strong> (&amp;, |, ^, ~, &lt;&lt;, &gt;&gt;):<br>
+            Work on individual bits. Example: <code>12 &amp; 10 = 8</code> (1100 &amp; 1010 = 1000).</p>
+
+            <p><strong>7. Ternary Operator</strong> (?:):<br>
+            Shorthand for if-else. Example: <code>max = (a&gt;b) ? a : b;</code></p>
+
+            <p><strong>8. Special Operators</strong> (sizeof, comma, &amp;, *):<br>
+            sizeof returns byte size of a type. Comma evaluates multiple expressions. &amp; gives address, * dereferences.</p>
+
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Complete Example</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a = 10, b = 3;
+    printf("Arithmetic: %d %d %d %d %d\n", a+b, a-b, a*b, a/b, a%b);
+    printf("Relational: %d %d\n", a==b, a>b);
+    printf("Logical: %d %d\n", (a>0 &amp;&amp; b>0), !0);
+    printf("Ternary: %d\n", (a>b) ? a : b);
+    printf("Bitwise AND: %d\n", a &amp; b);
+    printf("Sizeof int: %lu\n", sizeof(int));
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain the C compilation process from source code to executable. Describe each step with the file types involved. Also explain the different file types (.c, .h, .o, .exe) used in C programming.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p>The compilation process in C involves <strong>four stages</strong>:</p>
+            <p><strong>Step 1: Preprocessing</strong><br>
+            The preprocessor handles all directives starting with #. It expands #include files, replaces #define macros, and removes comments. The output is an expanded source file with .i extension.</p>
+
+            <p><strong>Step 2: Compilation</strong><br>
+            The compiler converts preprocessed code into assembly language. This stage checks for syntax errors. Output: .s file (assembly code).</p>
+
+            <p><strong>Step 3: Assembly</strong><br>
+            The assembler converts assembly code into machine code (binary). Output: .o or .obj (object file). Object files are not yet executable.</p>
+
+            <p><strong>Step 4: Linking</strong><br>
+            The linker combines one or more object files with library files (like stdio library) to produce the final executable. Output: .exe (Windows) or no extension (Linux/Mac).</p>
+
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Stage</th><th>Input</th><th>Output</th><th>Tool</th></tr></thead>
+                <tbody>
+                  <tr><td>Preprocessing</td><td>.c file</td><td>.i file</td><td>cpp (C Preprocessor)</td></tr>
+                  <tr><td>Compilation</td><td>.i file</td><td>.s file</td><td>cc1 (Compiler)</td></tr>
+                  <tr><td>Assembly</td><td>.s file</td><td>.o / .obj file</td><td>as (Assembler)</td></tr>
+                  <tr><td>Linking</td><td>.o + libraries</td><td>.exe file</td><td>ld (Linker)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p><strong>File Types in C:</strong></p>
+            <ul>
+              <li><strong>.c (Source File)</strong> — Contains the actual C program written by the programmer.</li>
+              <li><strong>.h (Header File)</strong> — Contains function prototypes, macros, and type definitions. Included using #include.</li>
+              <li><strong>.o / .obj (Object File)</strong> — Machine code produced by the compiler. Not directly executable. Needs to be linked.</li>
+              <li><strong>.exe (Executable File)</strong> — The final ready-to-run program produced by the linker.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain implicit and explicit type conversion in C with examples. What are the rules of type promotion in C? What are the risks of type mismatch?</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p><strong>Type Conversion</strong> is the process of converting a value from one data type to another. C supports two types:</p>
+
+            <p><strong>1. Implicit Type Conversion (Type Promotion)</strong>:<br>
+            Performed automatically by the compiler without any instruction from the programmer. It converts a "lower" type to a "higher" type to prevent data loss.</p>
+            <div class="formula-box">
+              <div class="box-title"><i class="fas fa-arrow-right"></i> Type Promotion Order</div>
+              <div class="formula">char → int → long → float → double → long double</div>
+            </div>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Implicit Conversion</div>
+              <pre>int i = 10;
+float f = i;     /* int promoted to float: f = 10.0 */
+double d = f;    /* float promoted to double */
+
+/* Danger: */
+int a = 5, b = 2;
+float result = a / b;   /* Integer division FIRST: result = 2.0 NOT 2.5 */</pre>
+            </div>
+
+            <p><strong>2. Explicit Type Conversion (Typecasting)</strong>:<br>
+            The programmer manually specifies the conversion using the cast operator <code>(type)</code>.</p>
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Explicit Conversion (Typecasting)</div>
+              <pre>int a = 5, b = 2;
+float result = (float)a / b;  /* 5.0 / 2 = 2.5 — correct! */
+
+float x = 9.99;
+int y = (int)x;               /* Truncation: y = 9 (NOT rounded) */
+
+char c = 'A';
+int ascii = (int)c;           /* ASCII value: 65 */</pre>
+            </div>
+
+            <p><strong>Risks of Type Mismatch:</strong></p>
+            <ul>
+              <li><strong>Data Loss</strong> — Converting float to int loses the decimal part.</li>
+              <li><strong>Overflow</strong> — Assigning a large value to a smaller type causes unexpected results.</li>
+              <li><strong>Wrong Calculations</strong> — Integer division when float result is expected.</li>
+              <li><strong>Sign Issues</strong> — Converting signed to unsigned can produce large unexpected positive numbers.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 13: PRACTICE ======================== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a C program that takes two integers as input from the user, then displays: their sum, difference, product, quotient, and remainder. Also display the average as a float.</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a, b;
+    printf("Enter two integers: ");
+    scanf("%d %d", &a, &b);
+
+    printf("Sum        = %d\n", a + b);
+    printf("Difference = %d\n", a - b);
+    printf("Product    = %d\n", a * b);
+    printf("Quotient   = %d\n", a / b);
+    printf("Remainder  = %d\n", a % b);
+    printf("Average    = %.2f\n", (float)(a + b) / 2);
+
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Key concept used:</strong> Typecasting with <code>(float)</code> to get decimal average.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a C program to demonstrate the size of all primary data types using the sizeof() operator. Also demonstrate pre-increment and post-increment operators.</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    /* Sizes of data types */
+    printf("=== Size of Data Types ===\n");
+    printf("Size of char   : %lu bytes\n", sizeof(char));
+    printf("Size of int    : %lu bytes\n", sizeof(int));
+    printf("Size of float  : %lu bytes\n", sizeof(float));
+    printf("Size of double : %lu bytes\n", sizeof(double));
+    printf("Size of long   : %lu bytes\n", sizeof(long));
+
+    /* Increment operators */
+    printf("\n=== Increment Operators ===\n");
+    int x = 10, y;
+
+    y = ++x;  /* Pre-increment */
+    printf("Pre-increment:  x = %d, y = %d\n", x, y);
+
+    x = 10;   /* Reset */
+    y = x++;  /* Post-increment */
+    printf("Post-increment: x = %d, y = %d\n", x, y);
+
+    return 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a C program to find the maximum of three numbers entered by the user using the ternary operator.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>#include &lt;stdio.h&gt;
+int main() {
+    int a, b, c, max;
+
+    printf("Enter three integers: ");
+    scanf("%d %d %d", &a, &b, &c);
+
+    /* Find max of a and b first */
+    max = (a &gt; b) ? a : b;
+
+    /* Compare max with c */
+    max = (max &gt; c) ? max : c;
+
+    printf("Maximum of %d, %d, %d = %d\n", a, b, c, max);
+    return 0;
+}</pre>
+            </div>
+            <p><strong>Concept:</strong> Nested ternary operator usage for multi-value comparison.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SECTION 14: REVISION ======================== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Quick Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points — Unit 1</div>
+        <ul>
+          <li>C was developed by <strong>Dennis Ritchie</strong> at Bell Labs in <strong>1972</strong>.</li>
+          <li>C is a <strong>middle-level</strong>, <strong>case-sensitive</strong>, <strong>structured</strong> programming language.</li>
+          <li>C has <strong>32 keywords</strong> — they cannot be used as identifiers.</li>
+          <li>A <strong>token</strong> is the smallest unit: keywords, identifiers, constants, operators, string literals, punctuators.</li>
+          <li>The four file types: <strong>.c</strong> (source), <strong>.h</strong> (header), <strong>.o/.obj</strong> (object), <strong>.exe</strong> (executable).</li>
+          <li>Compilation stages: <strong>Preprocessing → Compilation → Assembly → Linking</strong>.</li>
+          <li>Primary data types: <strong>int (4 bytes), float (4 bytes), double (8 bytes), char (1 byte)</strong>.</li>
+          <li>Format specifiers: <strong>%d</strong> (int), <strong>%f</strong> (float), <strong>%c</strong> (char), <strong>%s</strong> (string), <strong>%x</strong> (hex), <strong>%o</strong> (octal).</li>
+          <li><strong>Implicit conversion</strong> = automatic by compiler (lower to higher type).</li>
+          <li><strong>Explicit conversion</strong> = manual typecasting using <code>(type)</code>.</li>
+          <li><strong>Pre-increment (++a)</strong>: increment first, use later. <strong>Post-increment (a++)</strong>: use first, increment later.</li>
+          <li><strong>Ternary operator</strong>: <code>condition ? true_value : false_value</code>. Only 3-operand operator in C.</li>
+          <li><strong>Left shift &lt;&lt; n</strong> = multiply by 2ⁿ. <strong>Right shift &gt;&gt; n</strong> = divide by 2ⁿ.</li>
+          <li>scanf() <strong>requires &amp;</strong> before variable names (except arrays/strings).</li>
+          <li><strong>Modulus operator %</strong> works only with integers.</li>
+        </ul>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-fire"></i> Must Remember for Exam</div>
+        <ul>
+          <li>C was developed by <strong>Dennis Ritchie</strong> — this is asked in almost every exam.</li>
+          <li><strong>32 keywords</strong> in C — int, float, char, double, void, if, else, for, while, do, switch, case, break, continue, return, goto, struct, union, enum, typedef, static, extern, auto, register, const, volatile, signed, unsigned, short, long, sizeof, default.</li>
+          <li><strong>Post-increment vs Pre-increment</strong> — a very common 2-mark and MCQ topic.</li>
+          <li><strong>Operator precedence</strong> — unary > arithmetic > relational > logical > assignment.</li>
+          <li><strong>scanf with &amp;</strong> — always required for scalar variables. One of the most tested topics.</li>
+          <li><strong>5 / 2 = 2</strong> (integer division) but <strong>(float)5 / 2 = 2.5</strong> — typecasting changes behavior.</li>
+          <li><strong>sizeof(int) = 4</strong> bytes on 32-bit/64-bit; <strong>sizeof(char) = 1</strong> byte always.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-skull-crossbones"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Writing <code>integer</code> instead of <code>int</code> — integer is NOT a C keyword.</li>
+          <li>Forgetting <strong>&amp;</strong> in scanf() calls — a classic bug.</li>
+          <li>Confusing <strong>= (assignment)</strong> with <strong>== (comparison)</strong> in conditions.</li>
+          <li>Using <strong>%</strong> with float — it only works with integers in C.</li>
+          <li>Thinking <strong>(int)9.9 = 10</strong> — wrong! Typecasting <strong>truncates</strong>, it does NOT round. Answer is 9.</li>
+          <li>Confusing pre and post increment: <code>b = ++a</code> and <code>b = a++</code> give different results when a=5.</li>
+          <li>Thinking left shift always doubles — it only works for unsigned values; signed overflow is undefined.</li>
+          <li>Writing <code>printf("%d", a, b);</code> with two values but only one format specifier — only a will be printed.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+</body>
+</html>

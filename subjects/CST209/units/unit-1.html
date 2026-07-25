@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 1: Fundamentals of Algorithms - CST209</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../units-com/common.css">
+</head>
+<body>
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="course-info">
+        <div class="info-item">
+          <i class="fas fa-book"></i>
+          <span>CST209: Algorithms</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-layer-group"></i>
+          <span>Unit 1</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-clock"></i>
+          <span>6 Hours</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-brand">
+        <i class="fas fa-arrow-left"></i> CST209
+      </a>
+      <div class="nav-links">
+        <a href="#overview"><i class="fas fa-info-circle"></i> Overview</a>
+        <a href="#definitions"><i class="fas fa-book-open"></i> Definitions</a>
+        <a href="#complexity"><i class="fas fa-chart-line"></i> Complexity</a>
+        <a href="#mcqs"><i class="fas fa-question-circle"></i> MCQs</a>
+        <a href="#practice"><i class="fas fa-code"></i> Practice</a>
+      </div>
+      <div class="nav-right">
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="mobile-menu-btn" id="menuBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="nav-overlay" id="navOverlay"></div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <h3>Unit 1: Fundamentals</h3>
+      <button class="drawer-close" id="drawerClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="drawer-links" id="drawerLinks">
+      <a href="#overview"><i class="fas fa-info-circle"></i> Overview</a>
+      <a href="#definitions"><i class="fas fa-book-open"></i> Definitions</a>
+      <a href="#data-abstraction"><i class="fas fa-layer-group"></i> Data Abstraction</a>
+      <a href="#sets-multisets"><i class="fas fa-project-diagram"></i> Sets & Multisets</a>
+      <a href="#stacks-queues"><i class="fas fa-bars"></i> Stacks & Queues</a>
+      <a href="#asymptotic"><i class="fas fa-infinity"></i> Asymptotic Notations</a>
+      <a href="#complexity"><i class="fas fa-chart-line"></i> Complexity Analysis</a>
+      <a href="#programming-models"><i class="fas fa-cogs"></i> Programming Models</a>
+      <a href="#formulas"><i class="fas fa-square-root-alt"></i> Formulas</a>
+      <a href="#definitions-list"><i class="fas fa-list"></i> Definitions</a>
+      <a href="#comparisons"><i class="fas fa-balance-scale"></i> Comparisons</a>
+      <a href="#mcqs"><i class="fas fa-question-circle"></i> MCQs</a>
+      <a href="#short-questions"><i class="fas fa-clipboard-question"></i> Short Questions</a>
+      <a href="#long-questions"><i class="fas fa-file-alt"></i> Long Questions</a>
+      <a href="#practice"><i class="fas fa-code"></i> Practice</a>
+      <a href="#revision"><i class="fas fa-graduation-cap"></i> Revision</a>
+    </div>
+    <div class="drawer-footer">
+      <button id="drawerThemeToggle">
+        <i class="fas fa-moon"></i> Theme
+      </button>
+      <button id="drawerPrint">
+        <i class="fas fa-print"></i> Print
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1><i class="fas fa-brain"></i> Unit 1: Fundamentals of Algorithms</h1>
+
+    <!-- Overview Section -->
+    <section class="section" id="overview">
+      <h2 class="section-title">
+        <i class="fas fa-info-circle"></i> Overview
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        <p>This unit introduces the fundamental concepts of algorithms, including definitions, characteristics, and the mathematical tools used to analyze algorithm efficiency. Understanding these foundations is crucial for designing and evaluating computational solutions.</p>
+        
+        <div class="topic-grid">
+          <div class="topic-card">
+            <i class="fas fa-book-open"></i>
+            <h3>Definitions & Characteristics</h3>
+            <p>What makes an algorithm, finiteness, definiteness, effectiveness</p>
+          </div>
+          <div class="topic-card">
+            <i class="fas fa-layer-group"></i>
+            <h3>Data Abstraction</h3>
+            <p>Abstract Data Types (ADTs), Sets, Multisets, Stacks, Queues</p>
+          </div>
+          <div class="topic-card">
+            <i class="fas fa-infinity"></i>
+            <h3>Asymptotic Notations</h3>
+            <p>Big-O, Omega, Theta for algorithm analysis</p>
+          </div>
+          <div class="topic-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Complexity Analysis</h3>
+            <p>Time and space complexity, best/average/worst cases</p>
+          </div>
+          <div class="topic-card">
+            <i class="fas fa-cogs"></i>
+            <h3>Programming Models</h3>
+            <p>Divide & Conquer, Greedy, Dynamic Programming</p>
+          </div>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title">
+            <i class="fas fa-exclamation-triangle"></i> Exam Importance
+          </div>
+          <p>This unit forms the theoretical foundation for all algorithm analysis. Expect MCQs on asymptotic notations, complexity calculations, and algorithm characteristics.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Definitions and Characteristics Section -->
+    <section class="section" id="definitions">
+      <h2 class="section-title">
+        <i class="fas fa-book-open"></i> Definitions and Characteristics of Algorithms
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-bookmark"></i> What is an Algorithm?
+          </div>
+          <p>An <strong>algorithm</strong> is a well-defined computational procedure that takes some values as <strong>input</strong> and produces some value as <strong>output</strong>. It is a finite sequence of precise instructions to solve a specific problem.</p>
+        </div>
+
+        <h3><i class="fas fa-list-check"></i> Five Characteristics of an Algorithm</h3>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-hourglass-end"></i> 1. Finiteness
+          </div>
+          <p>An algorithm must <strong>terminate after a finite number of steps</strong>. It cannot run indefinitely.</p>
+          <p><strong>Example:</strong> A loop that increments from 1 to 10 is finite. An infinite loop (while true) is NOT an algorithm.</p>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-spell-check"></i> 2. Definiteness
+          </div>
+          <p>Each step of the algorithm must be <strong>precisely and unambiguously defined</strong>. No step should have multiple interpretations.</p>
+          <p><strong>Example:</strong> "Add 5 to x" is definite. "Add some number to x" is NOT definite.</p>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-sign-in-alt"></i> 3. Input
+          </div>
+          <p>An algorithm has <strong>zero or more inputs</strong> taken from a specified set of objects.</p>
+          <p><strong>Example:</strong> A sorting algorithm takes an array as input. A "print hello" algorithm may have zero inputs.</p>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-sign-out-alt"></i> 4. Output
+          </div>
+          <p>An algorithm must produce <strong>one or more outputs</strong> that have a specified relation to the inputs.</p>
+          <p><strong>Example:</strong> A sorting algorithm outputs a sorted array.</p>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-cogs"></i> 5. Effectiveness
+          </div>
+          <p>Every operation in the algorithm must be <strong>basic enough to be carried out exactly and in a finite amount of time</strong>. It must be feasible.</p>
+          <p><strong>Example:</strong> Basic operations like addition, comparison are effective. Asking to "solve the halting problem" is NOT effective.</p>
+        </div>
+
+        <h3><i class="fas fa-code"></i> Example Algorithm: Finding Maximum</h3>
+
+        <div class="algo-box">
+          <div class="box-title">
+            <i class="fas fa-trophy"></i> Algorithm: Find Maximum Element
+          </div>
+          <pre>
+Algorithm FindMax(A, n)
+  Input: Array A of n elements
+  Output: Maximum element in A
+
+  1. max ← A[0]
+  2. for i = 1 to n-1 do
+  3.   if A[i] > max then
+  4.     max ← A[i]
+  5. return max
+          </pre>
+          <p><strong>Characteristics satisfied:</strong></p>
+          <ul>
+            <li><strong>Finiteness:</strong> Loop runs n-1 times, then terminates</li>
+            <li><strong>Definiteness:</strong> Each step is clearly defined</li>
+            <li><strong>Input:</strong> Array A and size n</li>
+            <li><strong>Output:</strong> Maximum element</li>
+            <li><strong>Effectiveness:</strong> All operations (comparison, assignment) are basic</li>
+          </ul>
+        </div>
+
+        <div class="tip-box">
+          <div class="box-title">
+            <i class="fas fa-lightbulb"></i> Exam Tip
+          </div>
+          <p>Remember the five characteristics by the acronym <strong>FDIOE</strong>: Finiteness, Definiteness, Input, Output, Effectiveness. Questions often ask to identify which characteristic is violated in a given procedure.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Data Abstraction Section -->
+    <section class="section" id="data-abstraction">
+      <h2 class="section-title">
+        <i class="fas fa-layer-group"></i> Data Abstraction and ADTs
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-cube"></i> Abstract Data Type (ADT)
+          </div>
+          <p>An <strong>Abstract Data Type (ADT)</strong> is a mathematical model for data types, defined by:</p>
+          <ul>
+            <li><strong>Data:</strong> The values it can hold</li>
+            <li><strong>Operations:</strong> Functions that can be performed on the data</li>
+            <li><strong>No implementation details:</strong> Only WHAT operations do, not HOW they are implemented</li>
+          </ul>
+          <p><strong>Example:</strong> Stack ADT defines push(), pop(), peek(), isEmpty() without specifying array or linked list implementation.</p>
+        </div>
+
+        <h3><i class="fas fa-table"></i> Examples of ADTs</h3>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ADT</th>
+                <th>Data</th>
+                <th>Primary Operations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stack</td>
+                <td>Collection of elements</td>
+                <td>push(), pop(), peek(), isEmpty()</td>
+              </tr>
+              <tr>
+                <td>Queue</td>
+                <td>Collection of elements</td>
+                <td>enqueue(), dequeue(), front(), isEmpty()</td>
+              </tr>
+              <tr>
+                <td>List</td>
+                <td>Ordered sequence</td>
+                <td>insert(), delete(), search(), get()</td>
+              </tr>
+              <tr>
+                <td>Set</td>
+                <td>Unordered unique elements</td>
+                <td>add(), remove(), contains(), union()</td>
+              </tr>
+              <tr>
+                <td>Map</td>
+                <td>Key-value pairs</td>
+                <td>put(), get(), remove(), containsKey()</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-shield-alt"></i> Benefits of ADTs
+          </div>
+          <ul>
+            <li><strong>Encapsulation:</strong> Hide implementation details</li>
+            <li><strong>Modularity:</strong> Use without knowing internals</li>
+            <li><strong>Reusability:</strong> Same ADT, different implementations</li>
+            <li><strong>Flexibility:</strong> Change implementation without affecting users</li>
+          </ul>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title">
+            <i class="fas fa-star"></i> Key Point
+          </div>
+          <p>ADT focuses on <strong>WHAT</strong> operations do (specification), not <strong>HOW</strong> they are implemented (implementation). The same ADT can be implemented using arrays, linked lists, or other structures.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Sets and Multisets Section -->
+    <section class="section" id="sets-multisets">
+      <h2 class="section-title">
+        <i class="fas fa-project-diagram"></i> Sets and Multisets
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-circle"></i> Set
+          </div>
+          <p>A <strong>set</strong> is a collection of distinct elements with no duplicates and no inherent order.</p>
+          <p><strong>Example:</strong> S = {1, 2, 3, 4} is a set. S cannot contain duplicate 2.</p>
+          <p><strong>Operations:</strong> Union (∪), Intersection (∩), Difference (−), Subset (⊆)</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-layer-group"></i> Multiset (Bag)
+          </div>
+          <p>A <strong>multiset</strong> is a collection that allows duplicate elements.</p>
+          <p><strong>Example:</strong> M = {1, 2, 2, 3, 3, 3} is a multiset where 2 appears twice and 3 appears thrice.</p>
+          <p><strong>Use case:</strong> Counting occurrences of items.</p>
+        </div>
+
+        <h3><i class="fas fa-calculator"></i> Set Operations Examples</h3>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-plus"></i> Union (A ∪ B)
+          </div>
+          <p>All elements in A or B or both.</p>
+          <div class="formula">
+            A = {1, 2, 3}, B = {3, 4, 5} <br>
+            A ∪ B = {1, 2, 3, 4, 5}
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-intersection"></i> Intersection (A ∩ B)
+          </div>
+          <p>Elements common to both A and B.</p>
+          <div class="formula">
+            A = {1, 2, 3}, B = {3, 4, 5} <br>
+            A ∩ B = {3}
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-minus"></i> Difference (A − B)
+          </div>
+          <p>Elements in A but not in B.</p>
+          <div class="formula">
+            A = {1, 2, 3}, B = {3, 4, 5} <br>
+            A − B = {1, 2}
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Set</th>
+                <th>Multiset</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Duplicates Allowed</td>
+                <td>No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Order Matters</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Example</td>
+                <td>{1, 2, 3}</td>
+                <td>{1, 2, 2, 3, 3, 3}</td>
+              </tr>
+              <tr>
+                <td>Use Case</td>
+                <td>Unique items</td>
+                <td>Counting frequencies</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tip-box">
+          <div class="box-title">
+            <i class="fas fa-info-circle"></i> Mathematical Foundation
+          </div>
+          <p>Sets and multisets form the mathematical foundation for many algorithms, especially in graph theory, database operations, and search algorithms.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Stacks and Queues Section -->
+    <section class="section" id="stacks-queues">
+      <h2 class="section-title">
+        <i class="fas fa-bars"></i> Stacks and Queues
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-layer-group"></i> Stack (LIFO)
+          </div>
+          <p>A <strong>stack</strong> is a linear data structure following <strong>Last In First Out (LIFO)</strong> principle.</p>
+          <p><strong>Operations:</strong></p>
+          <ul>
+            <li><strong>push(x):</strong> Insert element x at top</li>
+            <li><strong>pop():</strong> Remove and return top element</li>
+            <li><strong>peek() / top():</strong> Return top element without removing</li>
+            <li><strong>isEmpty():</strong> Check if stack is empty</li>
+          </ul>
+          <p><strong>Examples:</strong> Function call stack, undo mechanism, expression evaluation</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-people-line"></i> Queue (FIFO)
+          </div>
+          <p>A <strong>queue</strong> is a linear data structure following <strong>First In First Out (FIFO)</strong> principle.</p>
+          <p><strong>Operations:</strong></p>
+          <ul>
+            <li><strong>enqueue(x):</strong> Insert element x at rear</li>
+            <li><strong>dequeue():</strong> Remove and return front element</li>
+            <li><strong>front() / peek():</strong> Return front element without removing</li>
+            <li><strong>isEmpty():</strong> Check if queue is empty</li>
+          </ul>
+          <p><strong>Examples:</strong> Task scheduling, BFS traversal, print queue</p>
+        </div>
+
+        <h3><i class="fas fa-code"></i> Implementation Comparison</h3>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Stack</th>
+                <th>Queue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Principle</td>
+                <td>LIFO</td>
+                <td>FIFO</td>
+              </tr>
+              <tr>
+                <td>Insert Position</td>
+                <td>Top</td>
+                <td>Rear</td>
+              </tr>
+              <tr>
+                <td>Delete Position</td>
+                <td>Top</td>
+                <td>Front</td>
+              </tr>
+              <tr>
+                <td>Access Pattern</td>
+                <td>One end only</td>
+                <td>Two ends (front & rear)</td>
+              </tr>
+              <tr>
+                <td>Common Implementation</td>
+                <td>Array or Linked List</td>
+                <td>Circular Array or Linked List</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Stack Operations Example
+          </div>
+          <pre>
+Stack S = empty
+push(10) → S = [10]
+push(20) → S = [10, 20]
+push(30) → S = [10, 20, 30] ← top
+pop()    → returns 30, S = [10, 20]
+peek()   → returns 20 (not removed)
+pop()    → returns 20, S = [10]
+          </pre>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Queue Operations Example
+          </div>
+          <pre>
+Queue Q = empty
+enqueue(10) → Q = [10] ← front & rear
+enqueue(20) → Q = [10, 20] ← rear (front is 10)
+enqueue(30) → Q = [10, 20, 30] ← rear
+dequeue()   → returns 10, Q = [20, 30]
+front()     → returns 20 (not removed)
+dequeue()   → returns 20, Q = [30]
+          </pre>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title">
+            <i class="fas fa-clock"></i> Time Complexity
+          </div>
+          <p>Both Stack and Queue operations (push/pop, enqueue/dequeue) have <strong>O(1)</strong> time complexity when implemented efficiently using arrays or linked lists.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Asymptotic Notations Section -->
+    <section class="section" id="asymptotic">
+      <h2 class="section-title">
+        <i class="fas fa-infinity"></i> Asymptotic Notations
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-question"></i> Why Asymptotic Analysis?
+          </div>
+          <p>We use asymptotic notations to describe the <strong>growth rate</strong> of an algorithm's running time as input size n approaches infinity. This helps compare algorithms independent of hardware or programming language.</p>
+        </div>
+
+        <h3><i class="fas fa-angle-up"></i> Big-O Notation (O) — Upper Bound</h3>
+
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-less-than-equal"></i> Big-O (O)
+          </div>
+          <p><strong>Big-O</strong> describes the <strong>upper bound</strong> (worst-case) growth rate of an algorithm.</p>
+          <div class="formula">
+            f(n) = O(g(n)) means f(n) ≤ c · g(n) for all n ≥ n₀
+          </div>
+          <p>In simple words: f(n) grows <strong>no faster than</strong> g(n).</p>
+          <p><strong>Example:</strong> If an algorithm takes 3n² + 5n + 10 operations, we say it is O(n²) because n² is the dominant term.</p>
+        </div>
+
+        <h3><i class="fas fa-angle-down"></i> Omega Notation (Ω) — Lower Bound</h3>
+
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-greater-than-equal"></i> Omega (Ω)
+          </div>
+          <p><strong>Omega</strong> describes the <strong>lower bound</strong> (best-case) growth rate of an algorithm.</p>
+          <div class="formula">
+            f(n) = Ω(g(n)) means f(n) ≥ c · g(n) for all n ≥ n₀
+          </div>
+          <p>In simple words: f(n) grows <strong>at least as fast as</strong> g(n).</p>
+          <p><strong>Example:</strong> If searching in a list takes at minimum n comparisons, we say it is Ω(n).</p>
+        </div>
+
+        <h3><i class="fas fa-equals"></i> Theta Notation (Θ) — Tight Bound</h3>
+
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-grip-lines"></i> Theta (Θ)
+          </div>
+          <p><strong>Theta</strong> describes the <strong>tight bound</strong> (average-case) when upper and lower bounds are the same.</p>
+          <div class="formula">
+            f(n) = Θ(g(n)) means c₁ · g(n) ≤ f(n) ≤ c₂ · g(n) for all n ≥ n₀
+          </div>
+          <p>In simple words: f(n) grows <strong>exactly at the same rate as</strong> g(n).</p>
+          <p><strong>Example:</strong> Merge sort is Θ(n log n) in all cases.</p>
+        </div>
+
+        <h3><i class="fas fa-list-ol"></i> Common Complexity Classes (Fastest to Slowest)</h3>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Notation</th>
+                <th>Name</th>
+                <th>Example Algorithm</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>O(1)</td>
+                <td>Constant</td>
+                <td>Array access, push/pop in stack</td>
+              </tr>
+              <tr>
+                <td>O(log n)</td>
+                <td>Logarithmic</td>
+                <td>Binary search</td>
+              </tr>
+              <tr>
+                <td>O(n)</td>
+                <td>Linear</td>
+                <td>Linear search, single loop</td>
+              </tr>
+              <tr>
+                <td>O(n log n)</td>
+                <td>Linearithmic</td>
+                <td>Merge sort, Heap sort</td>
+              </tr>
+              <tr>
+                <td>O(n²)</td>
+                <td>Quadratic</td>
+                <td>Bubble sort, Selection sort</td>
+              </tr>
+              <tr>
+                <td>O(n³)</td>
+                <td>Cubic</td>
+                <td>Matrix multiplication (naive)</td>
+              </tr>
+              <tr>
+                <td>O(2ⁿ)</td>
+                <td>Exponential</td>
+                <td>Recursive Fibonacci, Subset generation</td>
+              </tr>
+              <tr>
+                <td>O(n!)</td>
+                <td>Factorial</td>
+                <td>Permutation generation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-ruler"></i> Example: Analyzing f(n) = 3n² + 5n + 10
+          </div>
+          <p>Determine Big-O:</p>
+          <ul>
+            <li>Drop constants: 3n² → n²</li>
+            <li>Drop lower-order terms: 5n and 10 are negligible for large n</li>
+            <li><strong>Result:</strong> f(n) = O(n²)</li>
+          </ul>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title">
+            <i class="fas fa-star"></i> Key Rule
+          </div>
+          <p>When analyzing complexity:</p>
+          <ul>
+            <li>Focus on <strong>dominant term</strong> (largest growth rate)</li>
+            <li>Ignore <strong>constants</strong> (3n² becomes n²)</li>
+            <li>Ignore <strong>lower-order terms</strong> (n² + n becomes n²)</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <div class="box-title">
+            <i class="fas fa-exclamation-triangle"></i> Common Mistake
+          </div>
+          <p>Do NOT confuse:</p>
+          <ul>
+            <li>O(n) vs O(log n): log n is much faster than n</li>
+            <li>O(n²) vs O(2ⁿ): 2ⁿ is exponentially worse than n²</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Time and Space Complexity Section -->
+    <section class="section" id="complexity">
+      <h2 class="section-title">
+        <i class="fas fa-chart-line"></i> Time and Space Complexity
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-clock"></i> Time Complexity
+          </div>
+          <p><strong>Time complexity</strong> measures how the <strong>running time</strong> of an algorithm grows with input size n.</p>
+          <p>It counts the number of basic operations (comparisons, assignments, arithmetic) as a function of n.</p>
+          <p><strong>Example:</strong> A loop running n times has time complexity O(n).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title">
+            <i class="fas fa-memory"></i> Space Complexity
+          </div>
+          <p><strong>Space complexity</strong> measures how the <strong>memory usage</strong> of an algorithm grows with input size n.</p>
+          <p>It includes:</p>
+          <ul>
+            <li><strong>Input space:</strong> Memory for storing input</li>
+            <li><strong>Auxiliary space:</strong> Extra memory used during execution</li>
+          </ul>
+          <p><strong>Example:</strong> An algorithm using an array of size n has space complexity O(n).</p>
+        </div>
+
+        <h3><i class="fas fa-layer-group"></i> Three Cases of Analysis</h3>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-smile"></i> Best Case
+          </div>
+          <p>Minimum time/space required by the algorithm under optimal input conditions.</p>
+          <p><strong>Example:</strong> In linear search, best case is O(1) when the target is at the first position.</p>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-meh"></i> Average Case
+          </div>
+          <p>Expected time/space required averaged over all possible inputs.</p>
+          <p><strong>Example:</strong> In linear search, average case is O(n/2) = O(n) when target is randomly positioned.</p>
+        </div>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-frown"></i> Worst Case
+          </div>
+          <p>Maximum time/space required by the algorithm under worst input conditions.</p>
+          <p><strong>Example:</strong> In linear search, worst case is O(n) when the target is at the last position or not present.</p>
+        </div>
+
+        <h3><i class="fas fa-calculator"></i> Calculating Time Complexity: Examples</h3>
+
+        <div class="code-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Example 1: Single Loop
+          </div>
+          <pre>
+for (int i = 0; i < n; i++) {
+    print(i);  // O(1) operation
+}
+          </pre>
+          <div class="complexity-box">
+            <div class="box-title"><i class="fas fa-chart-bar"></i> Analysis</div>
+            <p><strong>Loop runs:</strong> n times</p>
+            <p><strong>Work per iteration:</strong> O(1)</p>
+            <p><strong>Total Time Complexity:</strong> O(n)</p>
+          </div>
+        </div>
+
+        <div class="code-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Example 2: Nested Loops
+          </div>
+          <pre>
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        print(i, j);  // O(1) operation
+    }
+}
+          </pre>
+          <div class="complexity-box">
+            <div class="box-title"><i class="fas fa-chart-bar"></i> Analysis</div>
+            <p><strong>Outer loop:</strong> n times</p>
+            <p><strong>Inner loop:</strong> n times for each outer loop iteration</p>
+            <p><strong>Total Time Complexity:</strong> O(n × n) = O(n²)</p>
+          </div>
+        </div>
+
+        <div class="code-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Example 3: Logarithmic Complexity
+          </div>
+          <pre>
+int i = 1;
+while (i < n) {
+    print(i);
+    i = i * 2;  // i doubles each time
+}
+          </pre>
+          <div class="complexity-box">
+            <div class="box-title"><i class="fas fa-chart-bar"></i> Analysis</div>
+            <p><strong>Iterations:</strong> i = 1, 2, 4, 8, ..., until i ≥ n</p>
+            <p><strong>Number of iterations:</strong> log₂(n)</p>
+            <p><strong>Total Time Complexity:</strong> O(log n)</p>
+          </div>
+        </div>
+
+        <h3><i class="fas fa-balance-scale"></i> Space Complexity Examples</h3>
+
+        <div class="code-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Example 1: Constant Space
+          </div>
+          <pre>
+int sum(int a, int b) {
+    int result = a + b;
+    return result;
+}
+          </pre>
+          <div class="complexity-box">
+            <div class="box-title"><i class="fas fa-memory"></i> Analysis</div>
+            <p><strong>Variables:</strong> a, b, result (fixed number)</p>
+            <p><strong>Space Complexity:</strong> O(1)</p>
+          </div>
+        </div>
+
+        <div class="code-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Example 2: Linear Space
+          </div>
+          <pre>
+int[] createArray(int n) {
+    int[] arr = new int[n];
+    return arr;
+}
+          </pre>
+          <div class="complexity-box">
+            <div class="box-title"><i class="fas fa-memory"></i> Analysis</div>
+            <p><strong>Array size:</strong> n elements</p>
+            <p><strong>Space Complexity:</strong> O(n)</p>
+          </div>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title">
+            <i class="fas fa-star"></i> Important
+          </div>
+          <p>For most practical purposes, <strong>worst-case time complexity</strong> is the most important metric because it guarantees performance even under unfavorable conditions.</p>
+        </div>
+
+        <div class="tip-box">
+          <div class="box-title">
+            <i class="fas fa-lightbulb"></i> Quick Rules
+          </div>
+          <ul>
+            <li>Single loop → O(n)</li>
+            <li>Nested loops (2 levels) → O(n²)</li>
+            <li>Halving input each time → O(log n)</li>
+            <li>Recursive calls splitting input → O(n log n) (often)</li>
+            <li>Constant operations → O(1)</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Programming Models Section -->
+    <section class="section" id="programming-models">
+      <h2 class="section-title">
+        <i class="fas fa-cogs"></i> Programming Model Concepts
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <p>Algorithm design paradigms are general approaches to solving computational problems. The three fundamental models are:</p>
+
+        <h3><i class="fas fa-split"></i> Divide and Conquer</h3>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-puzzle-piece"></i> Divide and Conquer Strategy
+          </div>
+          <p>Break the problem into smaller sub-problems, solve them independently, and combine results.</p>
+          <p><strong>Steps:</strong></p>
+          <ol>
+            <li><strong>Divide:</strong> Split the problem into smaller sub-problems</li>
+            <li><strong>Conquer:</strong> Solve each sub-problem recursively</li>
+            <li><strong>Combine:</strong> Merge solutions to get final result</li>
+          </ol>
+          <p><strong>Examples:</strong></p>
+          <ul>
+            <li><strong>Merge Sort:</strong> Divide array into halves, sort each, merge sorted halves</li>
+            <li><strong>Quick Sort:</strong> Partition around pivot, sort left and right partitions</li>
+            <li><strong>Binary Search:</strong> Divide search space in half each time</li>
+          </ul>
+        </div>
+
+        <div class="algo-box">
+          <div class="box-title">
+            <i class="fas fa-code"></i> Divide and Conquer Template
+          </div>
+          <pre>
+Algorithm DivideAndConquer(Problem P)
+  if P is small enough then
+    solve P directly
+  else
+    Divide P into sub-problems P1, P2, ..., Pk
+    for each Pi do
+      Solution_i = DivideAndConquer(Pi)
+    Combine Solution_1, Solution_2, ..., Solution_k
+    return combined solution
+          </pre>
+        </div>
+
+        <h3><i class="fas fa-hand-holding-usd"></i> Greedy Method</h3>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-chart-line"></i> Greedy Strategy
+          </div>
+          <p>Make the <strong>locally optimal choice</strong> at each step, hoping to find a global optimum.</p>
+          <p><strong>Key Idea:</strong> Choose the best option available right now without considering future consequences.</p>
+          <p><strong>When to use:</strong> Problems with optimal substructure and greedy choice property.</p>
+          <p><strong>Examples:</strong></p>
+          <ul>
+            <li><strong>Coin Change (specific denominations):</strong> Always pick largest coin possible</li>
+            <li><strong>Huffman Coding:</strong> Build tree by merging smallest frequency nodes</li>
+            <li><strong>Kruskal's MST:</strong> Always add the smallest edge that doesn't create a cycle</li>
+            <li><strong>Dijkstra's Algorithm:</strong> Always visit the nearest unvisited node</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <div class="box-title">
+            <i class="fas fa-exclamation-triangle"></i> Greedy Limitation
+          </div>
+          <p>Greedy algorithms <strong>do NOT always produce optimal solutions</strong> for all problems. They work only when the problem has the <strong>greedy choice property</strong>.</p>
+          <p><strong>Counter-example:</strong> Coin change with denominations {1, 3, 4} for amount 6:</p>
+          <ul>
+            <li>Greedy: 4 + 1 + 1 = 3 coins</li>
+            <li>Optimal: 3 + 3 = 2 coins</li>
+          </ul>
+        </div>
+
+        <h3><i class="fas fa-layer-group"></i> Dynamic Programming (DP)</h3>
+
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-database"></i> Dynamic Programming Strategy
+          </div>
+          <p>Solve complex problems by <strong>breaking them into overlapping sub-problems</strong> and <strong>storing solutions</strong> to avoid recomputation.</p>
+          <p><strong>Key Idea:</strong> If you solve a sub-problem, remember its solution (memoization) so you don't solve it again.</p>
+          <p><strong>When to use:</strong> Problems with overlapping sub-problems and optimal substructure.</p>
+          <p><strong>Examples:</strong></p>
+          <ul>
+            <li><strong>Fibonacci Sequence:</strong> F(n) = F(n-1) + F(n-2), store computed values</li>
+            <li><strong>Shortest Path (Floyd-Warshall):</strong> Build solution incrementally</li>
+            <li><strong>Knapsack Problem:</strong> Optimal selection with capacity constraint</li>
+            <li><strong>Longest Common Subsequence:</strong> Find longest matching subsequence</li>
+          </ul>
+        </div>
+
+        <div class="algo-box">
+          <div class="box-title">
+            <i class="fas fa-calculator"></i> Example: Fibonacci with DP
+          </div>
+          <pre>
+// Recursive (inefficient) - O(2^n)
+fib(n):
+  if n ≤ 1: return n
+  return fib(n-1) + fib(n-2)
+
+// Dynamic Programming (efficient) - O(n)
+fibDP(n):
+  dp[0] = 0, dp[1] = 1
+  for i = 2 to n:
+    dp[i] = dp[i-1] + dp[i-2]
+  return dp[n]
+          </pre>
+          <p><strong>Improvement:</strong> DP reduces time from exponential to linear by storing results.</p>
+        </div>
+
+        <h3><i class="fas fa-balance-scale"></i> Comparison of the Three Models</h3>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Divide & Conquer</th>
+                <th>Greedy</th>
+                <th>Dynamic Programming</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Approach</td>
+                <td>Split into independent sub-problems</td>
+                <td>Make local optimal choices</td>
+                <td>Store solutions to overlapping sub-problems</td>
+              </tr>
+              <tr>
+                <td>Sub-problems</td>
+                <td>Independent</td>
+                <td>N/A (makes choices step-by-step)</td>
+                <td>Overlapping</td>
+              </tr>
+              <tr>
+                <td>Optimality</td>
+                <td>Depends on problem</td>
+                <td>Not always optimal</td>
+                <td>Always optimal (if applicable)</td>
+              </tr>
+              <tr>
+                <td>Technique</td>
+                <td>Recursion + Combine</td>
+                <td>Greedy choice at each step</td>
+                <td>Memoization / Tabulation</td>
+              </tr>
+              <tr>
+                <td>Example</td>
+                <td>Merge Sort, Binary Search</td>
+                <td>Dijkstra's, Huffman</td>
+                <td>Fibonacci, Knapsack</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title">
+            <i class="fas fa-lightbulb"></i> Choosing the Right Paradigm
+          </div>
+          <ul>
+            <li>Use <strong>Divide & Conquer</strong> when sub-problems are independent (Merge Sort, Binary Search)</li>
+            <li>Use <strong>Greedy</strong> when local optimal choices lead to global optimum (Dijkstra's, Huffman)</li>
+            <li>Use <strong>Dynamic Programming</strong> when sub-problems overlap and you can store solutions (Fibonacci, Knapsack)</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Formulas Section -->
+    <section class="section" id="formulas">
+      <h2 class="section-title">
+        <i class="fas fa-square-root-alt"></i> Important Formulas
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="formula-box">
+          <div class="box-title">
+            <i class="fas fa-infinity"></i> Big-O Definition
+          </div>
+          <div class="formula">
+            f(n) = O(g(n)) ⟺ ∃ c, n₀ > 0 such that f(n) ≤ c · g(n) ∀ n ≥ n₀
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="box-title">
+            <i class="fas fa-greater-than-equal"></i> Omega Definition
+          </div>
+          <div class="formula">
+            f(n) = Ω(g(n)) ⟺ ∃ c, n₀ > 0 such that f(n) ≥ c · g(n) ∀ n ≥ n₀
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="box-title">
+            <i class="fas fa-equals"></i> Theta Definition
+          </div>
+          <div class="formula">
+            f(n) = Θ(g(n)) ⟺ ∃ c₁, c₂, n₀ > 0 such that c₁·g(n) ≤ f(n) ≤ c₂·g(n) ∀ n ≥ n₀
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="box-title">
+            <i class="fas fa-calculator"></i> Sum of First n Natural Numbers
+          </div>
+          <div class="formula">
+            1 + 2 + 3 + ... + n = n(n+1)/2 = O(n²)
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="box-title">
+            <i class="fas fa-superscript"></i> Logarithmic Properties
+          </div>
+          <div class="formula">
+            log(ab) = log(a) + log(b)<br>
+            log(aᵇ) = b · log(a)<br>
+            log_a(b) = log(b) / log(a)
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="box-title">
+            <i class="fas fa-layer-group"></i> Nested Loop Complexity
+          </div>
+          <div class="formula">
+            Time Complexity = (Outer loop iterations) × (Inner loop iterations)<br>
+            Example: Two nested loops of n → O(n²)
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="box-title">
+            <i class="fas fa-memory"></i> Space Complexity Formula
+          </div>
+          <div class="formula">
+            Space Complexity = Input Space + Auxiliary Space
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Definitions List Section -->
+    <section class="section" id="definitions-list">
+      <h2 class="section-title">
+        <i class="fas fa-list"></i> Key Definitions
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-code"></i> Algorithm</div>
+          <p>A well-defined computational procedure that takes input and produces output in finite steps.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-hourglass-end"></i> Finiteness</div>
+          <p>An algorithm must terminate after a finite number of steps.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-spell-check"></i> Definiteness</div>
+          <p>Each step of the algorithm must be precisely and unambiguously defined.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-cogs"></i> Effectiveness</div>
+          <p>All operations must be basic enough to be performed exactly in finite time.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-cube"></i> Abstract Data Type (ADT)</div>
+          <p>A mathematical model for data types defined by data values and operations, without implementation details.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-circle"></i> Set</div>
+          <p>A collection of distinct elements with no duplicates and no inherent order.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-layer-group"></i> Multiset</div>
+          <p>A collection that allows duplicate elements.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-bars"></i> Stack</div>
+          <p>A linear data structure following Last In First Out (LIFO) principle.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-people-line"></i> Queue</div>
+          <p>A linear data structure following First In First Out (FIFO) principle.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-less-than-equal"></i> Big-O (O)</div>
+          <p>Upper bound on the growth rate of a function (worst-case complexity).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-greater-than-equal"></i> Omega (Ω)</div>
+          <p>Lower bound on the growth rate of a function (best-case complexity).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-equals"></i> Theta (Θ)</div>
+          <p>Tight bound on the growth rate of a function (average-case complexity).</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-clock"></i> Time Complexity</div>
+          <p>Measure of how running time grows with input size.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-memory"></i> Space Complexity</div>
+          <p>Measure of how memory usage grows with input size.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-puzzle-piece"></i> Divide and Conquer</div>
+          <p>Algorithm design paradigm that breaks problems into independent sub-problems, solves them, and combines results.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-hand-holding-usd"></i> Greedy Method</div>
+          <p>Algorithm design paradigm that makes locally optimal choices at each step.</p>
+        </div>
+
+        <div class="definition-box">
+          <div class="box-title"><i class="fas fa-database"></i> Dynamic Programming</div>
+          <p>Algorithm design paradigm that stores solutions to overlapping sub-problems to avoid recomputation.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Comparisons Section -->
+    <section class="section" id="comparisons">
+      <h2 class="section-title">
+        <i class="fas fa-balance-scale"></i> Comparisons
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <h3><i class="fas fa-layer-group"></i> Stack vs Queue</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Stack</th>
+                <th>Queue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Principle</td>
+                <td>LIFO (Last In First Out)</td>
+                <td>FIFO (First In First Out)</td>
+              </tr>
+              <tr>
+                <td>Insert Operation</td>
+                <td>push() at top</td>
+                <td>enqueue() at rear</td>
+              </tr>
+              <tr>
+                <td>Delete Operation</td>
+                <td>pop() from top</td>
+                <td>dequeue() from front</td>
+              </tr>
+              <tr>
+                <td>Access Points</td>
+                <td>One end (top)</td>
+                <td>Two ends (front & rear)</td>
+              </tr>
+              <tr>
+                <td>Example Use</td>
+                <td>Function call stack, undo/redo</td>
+                <td>Task scheduling, BFS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3><i class="fas fa-infinity"></i> Big-O vs Omega vs Theta</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Notation</th>
+                <th>Meaning</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Big-O (O)</td>
+                <td>Upper bound (≤)</td>
+                <td>Worst-case analysis</td>
+              </tr>
+              <tr>
+                <td>Omega (Ω)</td>
+                <td>Lower bound (≥)</td>
+                <td>Best-case analysis</td>
+              </tr>
+              <tr>
+                <td>Theta (Θ)</td>
+                <td>Tight bound (=)</td>
+                <td>Average-case / Exact growth</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3><i class="fas fa-cogs"></i> Algorithm Design Paradigms</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Paradigm</th>
+                <th>Key Idea</th>
+                <th>Sub-problems</th>
+                <th>Optimal Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Divide & Conquer</td>
+                <td>Split, solve, combine</td>
+                <td>Independent</td>
+                <td>Depends on problem</td>
+              </tr>
+              <tr>
+                <td>Greedy</td>
+                <td>Local optimal choice</td>
+                <td>N/A</td>
+                <td>Not always optimal</td>
+              </tr>
+              <tr>
+                <td>Dynamic Programming</td>
+                <td>Store solutions to avoid recomputation</td>
+                <td>Overlapping</td>
+                <td>Always optimal</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3><i class="fas fa-clock"></i> Time vs Space Complexity</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Time Complexity</th>
+                <th>Space Complexity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Measures</td>
+                <td>Running time growth</td>
+                <td>Memory usage growth</td>
+              </tr>
+              <tr>
+                <td>Counted by</td>
+                <td>Number of operations</td>
+                <td>Amount of memory used</td>
+              </tr>
+              <tr>
+                <td>Goal</td>
+                <td>Minimize execution time</td>
+                <td>Minimize memory usage</td>
+              </tr>
+              <tr>
+                <td>Trade-off</td>
+                <td>May use more memory to save time</td>
+                <td>May use more time to save memory</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3><i class="fas fa-circle"></i> Set vs Multiset</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Set</th>
+                <th>Multiset</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Duplicates</td>
+                <td>Not allowed</td>
+                <td>Allowed</td>
+              </tr>
+              <tr>
+                <td>Order</td>
+                <td>No inherent order</td>
+                <td>No inherent order</td>
+              </tr>
+              <tr>
+                <td>Example</td>
+                <td>{1, 2, 3}</td>
+                <td>{1, 2, 2, 3, 3, 3}</td>
+              </tr>
+              <tr>
+                <td>Use Case</td>
+                <td>Unique elements</td>
+                <td>Counting frequencies</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MCQs Section -->
+    <section class="section" id="mcqs">
+      <h2 class="section-title">
+        <i class="fas fa-question-circle"></i> Multiple Choice Questions
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="mcq-grid">
+
+          <div class="mcq-item">
+            <h4>Q1</h4>
+            <p>Which of the following is NOT a characteristic of an algorithm?</p>
+            <ul class="options">
+              <li>a. Finiteness</li>
+              <li>b. Definiteness</li>
+              <li>c. Ambiguity</li>
+              <li>d. Effectiveness</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq1">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq1">
+              <strong>Answer: c. Ambiguity</strong>
+              <p>An algorithm must be definite and unambiguous. Ambiguity is NOT a characteristic.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q2</h4>
+            <p>What is the time complexity of a single loop running from 1 to n?</p>
+            <ul class="options">
+              <li>a. O(1)</li>
+              <li>b. O(log n)</li>
+              <li>c. O(n)</li>
+              <li>d. O(n²)</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq2">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq2">
+              <strong>Answer: c. O(n)</strong>
+              <p>A single loop running n times has linear time complexity O(n).</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q3</h4>
+            <p>Which notation represents the worst-case time complexity?</p>
+            <ul class="options">
+              <li>a. Big-O (O)</li>
+              <li>b. Omega (Ω)</li>
+              <li>c. Theta (Θ)</li>
+              <li>d. Little-o (o)</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq3">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq3">
+              <strong>Answer: a. Big-O (O)</strong>
+              <p>Big-O represents the upper bound, which corresponds to worst-case complexity.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q4</h4>
+            <p>A Stack follows which principle?</p>
+            <ul class="options">
+              <li>a. FIFO</li>
+              <li>b. LIFO</li>
+              <li>c. Random Access</li>
+              <li>d. Priority Based</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq4">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq4">
+              <strong>Answer: b. LIFO</strong>
+              <p>Stack follows Last In First Out (LIFO) principle.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q5</h4>
+            <p>Which of the following is an example of Divide and Conquer?</p>
+            <ul class="options">
+              <li>a. Bubble Sort</li>
+              <li>b. Merge Sort</li>
+              <li>c. Linear Search</li>
+              <li>d. Insertion Sort</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq5">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq5">
+              <strong>Answer: b. Merge Sort</strong>
+              <p>Merge Sort divides the array into halves, sorts each half, and combines them.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q6</h4>
+            <p>Which complexity is better: O(n) or O(log n)?</p>
+            <ul class="options">
+              <li>a. O(n)</li>
+              <li>b. O(log n)</li>
+              <li>c. Both are same</li>
+              <li>d. Cannot compare</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq6">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq6">
+              <strong>Answer: b. O(log n)</strong>
+              <p>O(log n) is better (faster) than O(n) because logarithmic growth is slower than linear growth.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q7</h4>
+            <p>What is the space complexity of an algorithm using a single array of size n?</p>
+            <ul class="options">
+              <li>a. O(1)</li>
+              <li>b. O(log n)</li>
+              <li>c. O(n)</li>
+              <li>d. O(n²)</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq7">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq7">
+              <strong>Answer: c. O(n)</strong>
+              <p>An array of size n requires O(n) space.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q8</h4>
+            <p>Which paradigm stores solutions to avoid recomputation?</p>
+            <ul class="options">
+              <li>a. Divide and Conquer</li>
+              <li>b. Greedy</li>
+              <li>c. Dynamic Programming</li>
+              <li>d. Backtracking</li>
+            </ul>
+            <button class="toggle-btn" data-target="mcq8">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="mcq8">
+              <strong>Answer: c. Dynamic Programming</strong>
+              <p>Dynamic Programming uses memoization to store solutions to overlapping sub-problems.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Short Questions Section -->
+    <section class="section" id="short-questions">
+      <h2 class="section-title">
+        <i class="fas fa-clipboard-question"></i> Short Questions
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="mcq-grid">
+
+          <div class="mcq-item">
+            <h4>Q1</h4>
+            <p>Define an algorithm.</p>
+            <button class="toggle-btn" data-target="sq1">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq1">
+              <p>An algorithm is a well-defined computational procedure that takes some values as input and produces some value as output. It is a finite sequence of precise instructions to solve a specific problem.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q2</h4>
+            <p>List the five characteristics of an algorithm.</p>
+            <button class="toggle-btn" data-target="sq2">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq2">
+              <p>1. Finiteness, 2. Definiteness, 3. Input, 4. Output, 5. Effectiveness</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q3</h4>
+            <p>What is an Abstract Data Type (ADT)?</p>
+            <button class="toggle-btn" data-target="sq3">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq3">
+              <p>An ADT is a mathematical model for data types defined by the data it holds and the operations that can be performed on the data, without specifying implementation details.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q4</h4>
+            <p>Differentiate between a Set and a Multiset.</p>
+            <button class="toggle-btn" data-target="sq4">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq4">
+              <p>A Set contains only distinct elements (no duplicates), while a Multiset allows duplicate elements.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q5</h4>
+            <p>What is the difference between LIFO and FIFO?</p>
+            <button class="toggle-btn" data-target="sq5">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq5">
+              <p>LIFO (Last In First Out) means the last element inserted is the first to be removed (Stack). FIFO (First In First Out) means the first element inserted is the first to be removed (Queue).</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q6</h4>
+            <p>What does Big-O notation represent?</p>
+            <button class="toggle-btn" data-target="sq6">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq6">
+              <p>Big-O notation represents the upper bound on the growth rate of an algorithm's time or space complexity, typically indicating worst-case performance.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q7</h4>
+            <p>What is the time complexity of nested loops each running n times?</p>
+            <button class="toggle-btn" data-target="sq7">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq7">
+              <p>The time complexity is O(n²) because the inner loop runs n times for each of the n iterations of the outer loop.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q8</h4>
+            <p>Explain Divide and Conquer strategy.</p>
+            <button class="toggle-btn" data-target="sq8">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="sq8">
+              <p>Divide and Conquer is a strategy that breaks a problem into smaller independent sub-problems, solves each sub-problem recursively, and combines the solutions to solve the original problem.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Long Questions Section -->
+    <section class="section" id="long-questions">
+      <h2 class="section-title">
+        <i class="fas fa-file-alt"></i> Long Questions
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="mcq-grid">
+
+          <div class="mcq-item">
+            <h4>Q1</h4>
+            <p>Explain the five characteristics of an algorithm with examples.</p>
+            <button class="toggle-btn" data-target="lq1">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="lq1">
+              <p><strong>1. Finiteness:</strong> An algorithm must terminate after a finite number of steps. Example: A loop from 1 to 10 is finite; an infinite loop is not.</p>
+              <p><strong>2. Definiteness:</strong> Each step must be precisely defined. Example: "Add 5 to x" is definite; "Add some number" is not.</p>
+              <p><strong>3. Input:</strong> Zero or more inputs from a specified set. Example: A sorting algorithm takes an array.</p>
+              <p><strong>4. Output:</strong> At least one output related to the inputs. Example: Sorting outputs a sorted array.</p>
+              <p><strong>5. Effectiveness:</strong> All operations must be basic and executable in finite time. Example: Basic operations like addition are effective.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q2</h4>
+            <p>Describe Big-O, Omega, and Theta notations with examples.</p>
+            <button class="toggle-btn" data-target="lq2">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="lq2">
+              <p><strong>Big-O (O):</strong> Upper bound (worst-case). f(n) = O(g(n)) means f(n) grows no faster than g(n). Example: Linear search is O(n) in the worst case.</p>
+              <p><strong>Omega (Ω):</strong> Lower bound (best-case). f(n) = Ω(g(n)) means f(n) grows at least as fast as g(n). Example: Linear search is Ω(1) in the best case.</p>
+              <p><strong>Theta (Θ):</strong> Tight bound (average-case). f(n) = Θ(g(n)) means f(n) grows at the same rate as g(n). Example: Merge sort is Θ(n log n) in all cases.</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q3</h4>
+            <p>Compare and contrast Divide and Conquer, Greedy, and Dynamic Programming paradigms.</p>
+            <button class="toggle-btn" data-target="lq3">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="lq3">
+              <p><strong>Divide and Conquer:</strong> Breaks the problem into independent sub-problems, solves them recursively, and combines results. Example: Merge Sort.</p>
+              <p><strong>Greedy:</strong> Makes locally optimal choices at each step without considering future consequences. Does not always give optimal solution. Example: Dijkstra's algorithm.</p>
+              <p><strong>Dynamic Programming:</strong> Stores solutions to overlapping sub-problems to avoid recomputation. Always gives optimal solution if applicable. Example: Fibonacci with memoization.</p>
+              <div class="table-wrapper">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Aspect</th>
+                      <th>Divide & Conquer</th>
+                      <th>Greedy</th>
+                      <th>Dynamic Programming</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Sub-problems</td>
+                      <td>Independent</td>
+                      <td>N/A</td>
+                      <td>Overlapping</td>
+                    </tr>
+                    <tr>
+                      <td>Optimality</td>
+                      <td>Depends</td>
+                      <td>Not always</td>
+                      <td>Always</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q4</h4>
+            <p>Explain time complexity and space complexity with examples.</p>
+            <button class="toggle-btn" data-target="lq4">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="lq4">
+              <p><strong>Time Complexity:</strong> Measures how running time grows with input size n. It counts the number of basic operations.</p>
+              <p><strong>Example:</strong> A single loop from 1 to n has time complexity O(n). Nested loops each running n times have O(n²).</p>
+              <p><strong>Space Complexity:</strong> Measures how memory usage grows with input size n. It includes input space and auxiliary space.</p>
+              <p><strong>Example:</strong> An algorithm using an array of size n has space complexity O(n). An algorithm using only a few variables has O(1) space.</p>
+              <p><strong>Trade-off:</strong> Sometimes we use more memory to reduce time (e.g., Dynamic Programming).</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q5</h4>
+            <p>What is an Abstract Data Type? Explain with examples of Stack and Queue.</p>
+            <button class="toggle-btn" data-target="lq5">
+              <i class="fas fa-eye"></i> Show Answer
+            </button>
+            <div class="answer-reveal" id="lq5">
+              <p><strong>Abstract Data Type (ADT):</strong> A mathematical model for data types defined by the data it holds and the operations that can be performed, without specifying implementation.</p>
+              <p><strong>Stack ADT:</strong></p>
+              <ul>
+                <li>Data: Collection of elements</li>
+                <li>Operations: push(), pop(), peek(), isEmpty()</li>
+                <li>Principle: LIFO (Last In First Out)</li>
+                <li>Example: Function call stack</li>
+              </ul>
+              <p><strong>Queue ADT:</strong></p>
+              <ul>
+                <li>Data: Collection of elements</li>
+                <li>Operations: enqueue(), dequeue(), front(), isEmpty()</li>
+                <li>Principle: FIFO (First In First Out)</li>
+                <li>Example: Task scheduling</li>
+              </ul>
+              <p>Both can be implemented using arrays or linked lists without changing the ADT interface.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Practice Section -->
+    <section class="section" id="practice">
+      <h2 class="section-title">
+        <i class="fas fa-code"></i> Practice Problems
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="mcq-grid">
+
+          <div class="mcq-item">
+            <h4>Q1</h4>
+            <p>Calculate the time complexity of the following code:</p>
+            <div class="code-box">
+              <pre>
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+        print(i, j);
+    }
+}
+              </pre>
+            </div>
+            <button class="toggle-btn" data-target="pp1">
+              <i class="fas fa-eye"></i> Show Solution
+            </button>
+            <div class="answer-reveal" id="pp1">
+              <div class="complexity-box">
+                <div class="box-title"><i class="fas fa-calculator"></i> Analysis</div>
+                <p><strong>Outer loop:</strong> Runs n times (i = 0 to n-1)</p>
+                <p><strong>Inner loop:</strong> Runs i times for each i</p>
+                <p><strong>Total iterations:</strong> 0 + 1 + 2 + ... + (n-1) = n(n-1)/2</p>
+                <p><strong>Time Complexity:</strong> O(n²)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q2</h4>
+            <p>Determine the time complexity of binary search.</p>
+            <button class="toggle-btn" data-target="pp2">
+              <i class="fas fa-eye"></i> Show Solution
+            </button>
+            <div class="answer-reveal" id="pp2">
+              <p><strong>Binary Search Algorithm:</strong></p>
+              <ul>
+                <li>Each iteration divides the search space in half</li>
+                <li>If n elements, after 1 iteration → n/2 elements remain</li>
+                <li>After 2 iterations → n/4 elements remain</li>
+                <li>After k iterations → n/2ᵏ elements remain</li>
+                <li>Stop when n/2ᵏ = 1, i.e., 2ᵏ = n, so k = log₂(n)</li>
+              </ul>
+              <p><strong>Time Complexity:</strong> O(log n)</p>
+              <p><strong>Space Complexity:</strong> O(1) for iterative, O(log n) for recursive (call stack)</p>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q3</h4>
+            <p>Perform the following Stack operations and show the final state:</p>
+            <p>push(5), push(10), push(15), pop(), push(20), pop(), peek()</p>
+            <button class="toggle-btn" data-target="pp3">
+              <i class="fas fa-eye"></i> Show Solution
+            </button>
+            <div class="answer-reveal" id="pp3">
+              <div class="trace-box">
+                <div class="box-title"><i class="fas fa-list-ol"></i> Step-by-step Trace</div>
+                <pre>
+Initial: Stack = []
+push(5):  Stack = [5]
+push(10): Stack = [5, 10]
+push(15): Stack = [5, 10, 15] ← top
+pop():    Returns 15, Stack = [5, 10]
+push(20): Stack = [5, 10, 20] ← top
+pop():    Returns 20, Stack = [5, 10]
+peek():   Returns 10 (not removed), Stack = [5, 10]
+
+<strong>Final State:</strong> Stack = [5, 10], peek() returns 10
+                </pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q4</h4>
+            <p>Calculate the complexity of the following code:</p>
+            <div class="code-box">
+              <pre>
+int i = 1;
+while (i <= n) {
+    print(i);
+    i = i * 3;
+}
+              </pre>
+            </div>
+            <button class="toggle-btn" data-target="pp4">
+              <i class="fas fa-eye"></i> Show Solution
+            </button>
+            <div class="answer-reveal" id="pp4">
+              <div class="complexity-box">
+                <div class="box-title"><i class="fas fa-calculator"></i> Analysis</div>
+                <p><strong>Loop iterations:</strong> i = 1, 3, 9, 27, ..., 3ᵏ</p>
+                <p><strong>Stops when:</strong> 3ᵏ > n, i.e., k > log₃(n)</p>
+                <p><strong>Number of iterations:</strong> k = log₃(n)</p>
+                <p><strong>Time Complexity:</strong> O(log n)</p>
+                <p>(Base of logarithm doesn't matter in Big-O notation)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mcq-item">
+            <h4>Q5</h4>
+            <p>Prove that 3n² + 5n + 10 = O(n²).</p>
+            <button class="toggle-btn" data-target="pp5">
+              <i class="fas fa-eye"></i> Show Solution
+            </button>
+            <div class="answer-reveal" id="pp5">
+              <p><strong>Given:</strong> f(n) = 3n² + 5n + 10</p>
+              <p><strong>To prove:</strong> f(n) = O(n²)</p>
+              <p><strong>Proof:</strong></p>
+              <ul>
+                <li>For n ≥ 1: 5n ≤ 5n²</li>
+                <li>For n ≥ 1: 10 ≤ 10n²</li>
+                <li>Therefore: f(n) = 3n² + 5n + 10 ≤ 3n² + 5n² + 10n² = 18n²</li>
+                <li>So f(n) ≤ 18 · n² for all n ≥ 1</li>
+              </ul>
+              <p><strong>Conclusion:</strong> By definition of Big-O, f(n) = O(n²) with c = 18 and n₀ = 1.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Revision Section -->
+    <section class="section" id="revision">
+      <h2 class="section-title">
+        <i class="fas fa-graduation-cap"></i> Quick Revision
+        <i class="fas fa-chevron-up collapse-icon"></i>
+      </h2>
+      <div class="section-content">
+        
+        <div class="concept-box">
+          <div class="box-title">
+            <i class="fas fa-check-circle"></i> Quick Revision Points
+          </div>
+          <ul>
+            <li><strong>Algorithm:</strong> Well-defined computational procedure with input, output, and finite steps</li>
+            <li><strong>Five Characteristics:</strong> Finiteness, Definiteness, Input, Output, Effectiveness (FDIOE)</li>
+            <li><strong>ADT:</strong> Mathematical model defining data and operations without implementation</li>
+            <li><strong>Set:</strong> Distinct elements, no duplicates; Multiset: Allows duplicates</li>
+            <li><strong>Stack:</strong> LIFO (Last In First Out) - push, pop, peek</li>
+            <li><strong>Queue:</strong> FIFO (First In First Out) - enqueue, dequeue, front</li>
+            <li><strong>Big-O (O):</strong> Upper bound (worst-case), f(n) ≤ c·g(n)</li>
+            <li><strong>Omega (Ω):</strong> Lower bound (best-case), f(n) ≥ c·g(n)</li>
+            <li><strong>Theta (Θ):</strong> Tight bound (average-case), c₁·g(n) ≤ f(n) ≤ c₂·g(n)</li>
+            <li><strong>Time Complexity:</strong> Growth of running time with input size</li>
+            <li><strong>Space Complexity:</strong> Growth of memory usage with input size</li>
+            <li><strong>Common Complexities:</strong> O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ) < O(n!)</li>
+            <li><strong>Divide & Conquer:</strong> Split, solve, combine - independent sub-problems</li>
+            <li><strong>Greedy:</strong> Local optimal choices - not always globally optimal</li>
+            <li><strong>Dynamic Programming:</strong> Store solutions - overlapping sub-problems</li>
+            <li><strong>Single loop n times:</strong> O(n)</li>
+            <li><strong>Nested loops n×n:</strong> O(n²)</li>
+            <li><strong>Halving each time:</strong> O(log n)</li>
+          </ul>
+        </div>
+
+        <div class="important-note">
+          <div class="box-title">
+            <i class="fas fa-star"></i> Must Remember for Exam
+          </div>
+          <ul>
+            <li>Able to identify which characteristic is violated in a given procedure</li>
+            <li>Calculate time complexity by analyzing loops (single → O(n), nested → O(n²), halving → O(log n))</li>
+            <li>Differentiate Big-O (worst), Omega (best), Theta (average)</li>
+            <li>Stack vs Queue: LIFO vs FIFO</li>
+            <li>Divide & Conquer vs Greedy vs DP differences</li>
+            <li>Prove complexity using Big-O definition</li>
+            <li>Trace Stack/Queue operations step-by-step</li>
+            <li>Identify ADT characteristics (data + operations, no implementation)</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <div class="box-title">
+            <i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid
+          </div>
+          <ul>
+            <li>Confusing O(n) with O(log n) - log n is much faster</li>
+            <li>Forgetting to drop constants and lower-order terms in Big-O</li>
+            <li>Mixing up Stack (LIFO) and Queue (FIFO) principles</li>
+            <li>Thinking Greedy always gives optimal solution - it doesn't!</li>
+            <li>Ignoring space complexity - it's as important as time complexity</li>
+            <li>Not understanding that ADT is about WHAT, not HOW</li>
+            <li>Confusing best-case (Ω) with worst-case (O)</li>
+            <li>Counting iterations incorrectly in loops (especially nested loops)</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FAB Buttons -->
+  <div class="fab-container">
+    <button class="fab fab-top" id="fabTop" title="Back to top">
+      <i class="fas fa-arrow-up"></i>
+      <span class="fab-tooltip">Back to Top</span>
+    </button>
+    <button class="fab fab-print" id="fabPrint" title="Print">
+      <i class="fas fa-print"></i>
+      <span class="fab-tooltip">Print</span>
+    </button>
+    <button class="fab fab-save" id="fabSave" title="Bookmark">
+      <i class="fas fa-bookmark"></i>
+      <span class="fab-tooltip">Bookmark</span>
+    </button>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMsg">Action completed</span>
+  </div>
+
+  <script src="../../units-com/common.js"></script>
+</body>

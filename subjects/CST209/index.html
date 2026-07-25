@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CST209 – Algorithms</title>
+  <link rel="stylesheet" href="../units-com/common.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ---- consistent overrides ---- */
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .unit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .unit-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+    }
+    .unit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.8rem;
+      border-radius: 20px;
+      width: fit-content;
+      letter-spacing: 0.02em;
+    }
+    .unit-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.3;
+    }
+    .unit-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .unit-card ul li {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .unit-card ul li::before {
+      content: "▸";
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .unit-hours {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .unit-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: auto;
+      width: fit-content;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .unit-link-btn:hover {
+      background: var(--primary-dark, #1a56db);
+      transform: translateX(3px);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .about-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .about-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .about-card p, .about-card ul {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .about-card ul {
+      padding-left: 1.2rem;
+    }
+    .about-card ul li {
+      margin-bottom: 0.3rem;
+    }
+    .exam-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+    }
+    .exam-table th {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .exam-table td {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .exam-table tr:nth-child(even) td {
+      background: var(--hover-bg);
+    }
+    .book-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .book-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      font-size: 0.86rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .book-list li i {
+      color: var(--primary);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .course-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding: 0.9rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+    .meta-item i {
+      color: var(--primary);
+    }
+    .meta-item strong {
+      color: var(--text);
+    }
+    .header .course-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.5rem;
+    }
+    .header .course-info .info-item {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .header .course-info .info-item i {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fas fa-project-diagram"></i>
+      <span>CST209 – Algorithms</span>
+    </div>
+    <div class="nav-links">
+      <a href="#units"><i class="fas fa-layer-group"></i> Units</a>
+      <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#exam"><i class="fas fa-file-alt"></i> Exam</a>
+      <a href="#books"><i class="fas fa-book"></i> Books</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>CST209</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#units"><i class="fas fa-layer-group"></i> Units</a>
+    <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+    <a href="#exam"><i class="fas fa-file-alt"></i> Exam</a>
+    <a href="#books"><i class="fas fa-book"></i> Books</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle">
+      <i class="fas fa-moon"></i> Theme
+    </button>
+    <button id="drawerPrint">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <h1><i class="fas fa-project-diagram"></i> Algorithms</h1>
+    <p>CST209 &nbsp;|&nbsp; Diploma 3rd Semester &nbsp;|&nbsp; WBSCTE</p>
+    <div class="course-info">
+      <span class="info-item"><i class="fas fa-credit-card"></i> Credits: 4</span>
+      <span class="info-item"><i class="fas fa-chalkboard-teacher"></i> L:3 T:1 P:0</span>
+      <span class="info-item"><i class="fas fa-layer-group"></i> 5 Units</span>
+      <span class="info-item"><i class="fas fa-clock"></i> 60 Hours Total</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Course Meta Bar -->
+  <div class="course-meta-bar">
+    <div class="meta-item"><i class="fas fa-check-circle"></i> <strong>Prerequisites:</strong>&nbsp; NIL</div>
+    <div class="meta-item"><i class="fas fa-code"></i> <strong>Focus:</strong>&nbsp; Algorithm Design &amp; Analysis</div>
+    <div class="meta-item"><i class="fas fa-university"></i> <strong>Board:</strong>&nbsp; WBSCTE</div>
+    <div class="meta-item"><i class="fas fa-calendar-alt"></i> <strong>Semester:</strong>&nbsp; 3rd</div>
+    <div class="meta-item"><i class="fas fa-code-branch"></i> <strong>Subject Code:</strong>&nbsp; CST209</div>
+  </div>
+
+  <!-- ===== SECTION 1: UNITS ===== -->
+  <section class="section" id="units">
+    <h2 class="section-title">
+      <i class="fas fa-layer-group"></i> Units
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="unit-grid">
+
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 1</span>
+          <h3>Fundamentals of Algorithms</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 6 Hours</div>
+          <ul>
+            <li>Definition &amp; Characteristics of Algorithms</li>
+            <li>Data Abstraction &amp; ADTs</li>
+            <li>Sets, Multisets, Stacks, Queues</li>
+            <li>Asymptotic Notations: Big-O, Omega, Theta</li>
+            <li>Time &amp; Space Complexity</li>
+            <li>Divide &amp; Conquer, Greedy, Dynamic Programming</li>
+          </ul>
+          <a href="units/unit-1.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 1
+          </a>
+        </div>
+
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 2</span>
+          <h3>Sorting</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 16 Hours</div>
+          <ul>
+            <li>Bubble, Selection, Insertion, Shell Sort</li>
+            <li>Merge Sort: O(n log n)</li>
+            <li>Quicksort: Average O(n log n)</li>
+            <li>Heapsort: O(n log n)</li>
+            <li>Count Sort, Bucket Sort, Radix Sort</li>
+            <li>Complexity Analysis of All Algorithms</li>
+          </ul>
+          <a href="units/unit-2.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 2
+          </a>
+        </div>
+
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 3</span>
+          <h3>Searching</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 12 Hours</div>
+          <ul>
+            <li>Linear Search: O(n)</li>
+            <li>Binary Search: O(log n)</li>
+            <li>Binary Search Trees (BST)</li>
+            <li>AVL Trees, Red-Black Trees, B-Trees</li>
+            <li>Hashing &amp; Hash Functions</li>
+            <li>Collision Resolution: Chaining, Open Addressing</li>
+            <li>Symbol Tables</li>
+          </ul>
+          <a href="units/unit-3.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 3
+          </a>
+        </div>
+
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 4</span>
+          <h3>Graph Algorithms</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 14 Hours</div>
+          <ul>
+            <li>Directed &amp; Undirected Graphs</li>
+            <li>Paths, Cycles &amp; Spanning Trees</li>
+            <li>Topological Sorting (DAGs)</li>
+            <li>Prim's &amp; Kruskal's (MST)</li>
+            <li>Dijkstra's Algorithm (Single-Source)</li>
+            <li>Bellman-Ford Algorithm</li>
+            <li>Floyd-Warshall (All-Pairs)</li>
+          </ul>
+          <a href="units/unit-4.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 4
+          </a>
+        </div>
+
+        <div class="unit-card">
+          <span class="unit-badge"><i class="fas fa-star"></i> Unit 5</span>
+          <h3>String Algorithms</h3>
+          <div class="unit-hours"><i class="fas fa-clock"></i> 12 Hours</div>
+          <ul>
+            <li>String Sort: LSD/MSD Radix Sort</li>
+            <li>Tries: Prefix Tree Data Structure</li>
+            <li>Naive, Rabin-Karp, KMP Matching</li>
+            <li>Horspool &amp; Boyer-Moore Algorithms</li>
+            <li>Regular Expressions</li>
+            <li>Huffman Coding &amp; Run-Length Encoding</li>
+          </ul>
+          <a href="units/unit-5.html" class="unit-link-btn">
+            <i class="fas fa-arrow-right"></i> Go to Unit 5
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 2: ABOUT ===== -->
+  <section class="section" id="about">
+    <h2 class="section-title">
+      <i class="fas fa-info-circle"></i> About This Course
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="about-grid">
+        <div class="about-card">
+          <h4><i class="fas fa-bullseye"></i> Course Aim</h4>
+          <p>To develop the basic concept of algorithms in computer science and prepare students with the algorithmic foundations of computing, as almost all programming involves algorithms at some level.</p>
+        </div>
+        <div class="about-card">
+          <h4><i class="fas fa-list-check"></i> Course Objectives</h4>
+          <ul>
+            <li>Understand algorithm design and analysis fundamentals.</li>
+            <li>Analyze time and space complexity using asymptotic notations.</li>
+            <li>Implement and compare sorting and searching algorithms.</li>
+            <li>Apply graph algorithms to real-world problems.</li>
+            <li>Study string matching and data compression techniques.</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h4><i class="fas fa-graduation-cap"></i> Learning Outcomes</h4>
+          <ul>
+            <li>Classify algorithms by their complexity (Big-O, Omega, Theta).</li>
+            <li>Implement and trace all major sorting algorithms.</li>
+            <li>Use BST, AVL, hashing for efficient searching.</li>
+            <li>Apply Dijkstra, Prim, Kruskal on weighted graphs.</li>
+            <li>Implement KMP, Boyer-Moore, and Huffman coding.</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h4><i class="fas fa-tools"></i> Prerequisites</h4>
+          <p>No formal prerequisites. Basic familiarity with programming concepts (loops, arrays, functions) and elementary data structures (stacks, queues) is helpful.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: EXAM PATTERN ===== -->
+  <section class="section" id="exam">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Exam Pattern (WBSCTE)
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="exam-table data-table">
+          <thead>
+            <tr>
+              <th>Question Type</th>
+              <th>Marks Each</th>
+              <th>Count</th>
+              <th>Total Marks</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>MCQ</td><td>1</td><td>15</td><td>15</td><td>All compulsory</td></tr>
+            <tr><td>Short Answer</td><td>1</td><td>10</td><td>10</td><td>All compulsory</td></tr>
+            <tr><td>Subjective (Brief)</td><td>2</td><td>7</td><td>14</td><td>Answer any 7 from 10</td></tr>
+            <tr><td>Subjective (Detailed)</td><td>6</td><td>3</td><td>18</td><td>Answer any 3 from 5</td></tr>
+            <tr><td>Sessional / Internal</td><td>—</td><td>—</td><td>30</td><td>Internal assessment</td></tr>
+            <tr><td><strong>Grand Total</strong></td><td>—</td><td>—</td><td><strong>100</strong></td><td>Theory 70 + Sessional 30</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Important Exam Tips</div>
+        <ul style="margin:0; padding-left:1.2rem; font-size:0.88rem;">
+          <li>Unit 2 (Sorting — 16 hrs) and Unit 4 (Graph Algorithms — 14 hrs) carry the highest weightage.</li>
+          <li>Trace tables for sorting algorithms (Bubble, Merge, Quick, Heap) are frequently asked.</li>
+          <li>Dijkstra's, Prim's, and Kruskal's algorithm step-by-step traces are common 6-mark questions.</li>
+          <li>Complexity analysis (Big-O derivations) must be shown with proper working.</li>
+          <li>KMP failure function and Huffman code tree construction are important for Unit 5.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 4: REFERENCE BOOKS ===== -->
+  <section class="section" id="books">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Reference Books
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <ul class="book-list">
+        <li><i class="fas fa-book-open"></i> <strong>Introduction to Algorithms (CLRS)</strong> – Cormen, Leiserson, Rivest, Stein</li>
+        <li><i class="fas fa-book-open"></i> <strong>Algorithms</strong> – Robert Sedgewick &amp; Kevin Wayne</li>
+        <li><i class="fas fa-book-open"></i> <strong>The Algorithm Design Manual</strong> – Steven S. Skiena</li>
+        <li><i class="fas fa-book-open"></i> <strong>Data Structures and Algorithm Analysis in C</strong> – Mark Allen Weiss</li>
+        <li><i class="fas fa-book-open"></i> <strong>Fundamentals of Computer Algorithms</strong> – Horowitz, Sahni &amp; Rajasekaran</li>
+        <li><i class="fas fa-book-open"></i> <strong>Algorithm Design</strong> – Jon Kleinberg &amp; Éva Tardos</li>
+        <li><i class="fas fa-globe"></i> <strong>GeeksforGeeks – Algorithms Section</strong> – geeksforgeeks.org</li>
+      </ul>
+    </div>
+  </section>
+
+</div><!-- end container -->
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../units-com/common.js"></script>
+</body>
+</html>

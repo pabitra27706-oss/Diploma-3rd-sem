@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 3 – Functions, Modules and Packages | CST203</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .fn-table { width:100%; border-collapse:collapse; font-size:0.87rem; margin-top:0.5rem; }
+    .fn-table th { background:var(--primary); color:#fff; padding:0.55rem 0.8rem; text-align:left; }
+    .fn-table td { padding:0.5rem 0.8rem; border-bottom:1px solid var(--border); color:var(--text); }
+    .fn-table tr:nth-child(even) td { background:var(--card-bg); }
+    .scope-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-top:0.75rem; }
+    .scope-card { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:1rem; }
+    .scope-card h4 { color:var(--primary); font-size:0.9rem; margin:0 0 0.5rem 0; }
+    .scope-card p { font-size:0.82rem; color:var(--text-muted); margin:0; }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fab fa-python"></i>
+      <span>CST203 — Unit 3</span>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#functions">Functions</a>
+      <a href="#parameters">Parameters</a>
+      <a href="#scope">Scope</a>
+      <a href="#modules">Modules</a>
+      <a href="#packages">Packages</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 3 – Functions &amp; Modules</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#functions">Functions</a>
+    <a href="#parameters">Parameters</a>
+    <a href="#scope">Scope</a>
+    <a href="#modules">Modules</a>
+    <a href="#packages">Packages</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle"><i class="fas fa-moon"></i> Theme</button>
+    <button id="drawerPrint"><i class="fas fa-print"></i> Print</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <h1><i class="fas fa-cube"></i> Unit 3: Functions, Modules and Packages</h1>
+      <p>CST203 — Scripting Languages (Python) &nbsp;|&nbsp; 6 Hours</p>
+      <div class="course-info">
+        <span class="info-item"><i class="fas fa-clock"></i> 6 Hours</span>
+        <span class="info-item"><i class="fas fa-signal"></i> Full Depth</span>
+        <span class="info-item"><i class="fas fa-list"></i> 5 Topics</span>
+        <span class="info-item"><a href="../index.html" style="color:inherit;text-decoration:none;"><i class="fas fa-home"></i> Subject Home</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== OVERVIEW ========== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What This Unit Covers</div>
+        <ul>
+          <li><strong>Functions:</strong> Defining, calling, and organizing code into reusable blocks.</li>
+          <li><strong>Parameters and Arguments:</strong> Positional, keyword, default, *args, **kwargs.</li>
+          <li><strong>Variable Scope:</strong> Local, nonlocal, global, and class scope.</li>
+          <li><strong>Modules:</strong> Organizing code into .py files and importing them.</li>
+          <li><strong>Packages:</strong> Grouping modules into directories with __init__.py.</li>
+        </ul>
+      </div>
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Study Tip</div>
+        <p>Functions are the most important topic in this unit. Understand *args and **kwargs thoroughly — they are frequently asked in exams. Scope (LEGB rule) is also a common exam topic.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FUNCTIONS ========== -->
+  <section class="section" id="functions">
+    <h2 class="section-title">
+      <i class="fas fa-cube"></i> Functions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-book"></i> What is a Function?</div>
+        <p>A <strong>function</strong> is a named, reusable block of code that performs a specific task. Functions help in organizing code, avoiding repetition (DRY — Don't Repeat Yourself), and making programs easier to read and maintain.</p>
+      </div>
+
+      <div class="syntax-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Function Definition Syntax</div>
+        <div class="formula">def function_name(parameters):</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;"""docstring — optional description"""</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;# function body</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;return value   # optional</div>
+      </div>
+
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Function Examples</div>
+        <pre>
+# Simple function — no parameters, no return
+def greet():
+    """Prints a greeting message."""
+    print("Hello, World!")
+
+greet()   # Calling the function → Hello, World!
+
+# Function with parameters and return value
+def add(a, b):
+    """Returns the sum of a and b."""
+    return a + b
+
+result = add(5, 3)
+print(result)   # 8
+
+# Function with multiple return values
+def min_max(numbers):
+    return min(numbers), max(numbers)
+
+lo, hi = min_max([4, 1, 9, 2, 7])
+print(lo, hi)   # 1 9
+
+# Calling with keyword arguments
+def display(name, age):
+    print(f"Name: {name}, Age: {age}")
+
+display(age=20, name="Alice")   # Order doesn't matter with keywords
+        </pre>
+      </div>
+
+      <!-- Pass by Object Reference -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-link"></i> Pass by Object Reference</div>
+        <p>In Python, all arguments are passed by <strong>object reference</strong> (also called "pass by sharing"). This means:</p>
+        <ul>
+          <li>If you pass an <strong>immutable</strong> object (int, str, tuple) — the function gets a copy of the reference. Modifying it inside the function does NOT affect the original.</li>
+          <li>If you pass a <strong>mutable</strong> object (list, dict) — the function gets the same reference. Modifying it inside DOES affect the original.</li>
+        </ul>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Pass by Object Reference Demo</div>
+        <pre>
+# Immutable — original not affected
+def try_modify(x):
+    x = x + 10
+    print("Inside:", x)
+
+num = 5
+try_modify(num)
+print("Outside:", num)   # Still 5
+
+# Mutable — original IS affected
+def add_item(lst):
+    lst.append(99)
+
+my_list = [1, 2, 3]
+add_item(my_list)
+print(my_list)   # [1, 2, 3, 99] — modified!
+        </pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== PARAMETERS ========== -->
+  <section class="section" id="parameters">
+    <h2 class="section-title">
+      <i class="fas fa-sliders-h"></i> Parameters and Arguments
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Parameter vs Argument</div>
+        <p><strong>Parameter:</strong> Variable listed in the function definition. <br>
+        <strong>Argument:</strong> Actual value passed to the function when calling it.</p>
+        <p>Example: <code>def add(a, b):</code> — a and b are <em>parameters</em>. <code>add(5, 3)</code> — 5 and 3 are <em>arguments</em>.</p>
+      </div>
+
+      <!-- Positional -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-sort-numeric-down"></i> Positional Parameters</div>
+        <p>Arguments are matched to parameters by their <strong>position</strong> (order). The first argument goes to the first parameter, second to second, and so on.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Positional Parameters</div>
+        <pre>
+def describe(name, city, age):
+    print(f"{name} lives in {city} and is {age} years old.")
+
+describe("Alice", "Kolkata", 20)
+# Alice lives in Kolkata and is 20 years old.
+
+# Order matters for positional arguments
+describe(20, "Alice", "Kolkata")
+# Wrong — positional order matters!
+        </pre>
+      </div>
+
+      <!-- Default / Optional -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star-half-alt"></i> Default (Optional) Parameters</div>
+        <p>Parameters can have <strong>default values</strong>. If the caller does not provide a value for that parameter, the default is used. Default parameters must come after non-default parameters.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Default Parameters</div>
+        <pre>
+def greet(name, message="Hello"):
+    print(f"{message}, {name}!")
+
+greet("Alice")              # Hello, Alice!
+greet("Bob", "Good morning")  # Good morning, Bob!
+
+# Keyword arguments — order independent
+def power(base, exponent=2):
+    return base ** exponent
+
+print(power(3))          # 9  (3^2, default exponent=2)
+print(power(2, 10))      # 1024 (2^10)
+print(power(exponent=3, base=4))  # 64 (keyword)
+        </pre>
+      </div>
+
+      <!-- *args -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-asterisk"></i> Arbitrary Arguments — *args</div>
+        <p><code>*args</code> allows a function to accept any number of <strong>positional arguments</strong>. Inside the function, <code>args</code> is a <strong>tuple</strong> containing all the extra positional arguments.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> *args Example</div>
+        <pre>
+def sum_all(*args):
+    """Accepts any number of numbers and returns their sum."""
+    print(type(args))   # &lt;class 'tuple'&gt;
+    total = 0
+    for num in args:
+        total += num
+    return total
+
+print(sum_all(1, 2, 3))          # 6
+print(sum_all(10, 20, 30, 40))   # 100
+print(sum_all(5))                # 5
+
+# Mixing positional and *args
+def display(title, *items):
+    print(f"--- {title} ---")
+    for item in items:
+        print("-", item)
+
+display("Fruits", "Apple", "Banana", "Mango")
+# --- Fruits ---
+# - Apple
+# - Banana
+# - Mango
+
+# Unpacking a tuple when calling
+numbers = (4, 5, 6)
+print(sum_all(*numbers))   # 15 — unpacks tuple as args
+        </pre>
+      </div>
+
+      <!-- **kwargs -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-asterisk"></i> Arbitrary Keyword Arguments — **kwargs</div>
+        <p><code>**kwargs</code> allows a function to accept any number of <strong>keyword arguments</strong>. Inside the function, <code>kwargs</code> is a <strong>dictionary</strong> containing all the keyword arguments.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> **kwargs Example</div>
+        <pre>
+def print_info(**kwargs):
+    """Accepts any keyword arguments."""
+    print(type(kwargs))   # &lt;class 'dict'&gt;
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_info(name="Alice", age=20, city="Kolkata")
+# name: Alice
+# age: 20
+# city: Kolkata
+
+# Mixing all types of parameters
+def mixed(a, b, *args, **kwargs):
+    print("a:", a)
+    print("b:", b)
+    print("args:", args)
+    print("kwargs:", kwargs)
+
+mixed(1, 2, 3, 4, 5, x=10, y=20)
+# a: 1
+# b: 2
+# args: (3, 4, 5)
+# kwargs: {'x': 10, 'y': 20}
+
+# Unpacking a dictionary when calling
+data = {"name": "Bob", "age": 25}
+print_info(**data)   # unpacks dict as kwargs
+        </pre>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Parameter Order Rule</div>
+        <p>When defining a function with multiple parameter types, they must appear in this order:</p>
+        <div class="formula">def func(positional, default=value, *args, **kwargs):</div>
+        <ul style="margin-top:0.5rem;">
+          <li>1. Regular positional parameters</li>
+          <li>2. Default (optional) parameters</li>
+          <li>3. *args</li>
+          <li>4. **kwargs</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SCOPE ========== -->
+  <section class="section" id="scope">
+    <h2 class="section-title">
+      <i class="fas fa-map-marker-alt"></i> Variable Scope and Binding
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What is Scope?</div>
+        <p><strong>Scope</strong> determines where a variable can be accessed in a program. Python follows the <strong>LEGB Rule</strong> to resolve variable names — it searches in this order:</p>
+        <p style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);">L → E → G → B</p>
+        <p><strong>L</strong> — Local &nbsp;&nbsp; <strong>E</strong> — Enclosing &nbsp;&nbsp; <strong>G</strong> — Global &nbsp;&nbsp; <strong>B</strong> — Built-in</p>
+      </div>
+
+      <div class="scope-grid" style="margin-top:1rem;">
+        <div class="scope-card">
+          <h4><i class="fas fa-map-pin"></i> Local Scope</h4>
+          <p>Variables defined <strong>inside a function</strong>. Only accessible within that function.</p>
+        </div>
+        <div class="scope-card">
+          <h4><i class="fas fa-layer-group"></i> Enclosing Scope</h4>
+          <p>Variables in the <strong>enclosing function</strong> of a nested function. Accessed using <code>nonlocal</code>.</p>
+        </div>
+        <div class="scope-card">
+          <h4><i class="fas fa-globe"></i> Global Scope</h4>
+          <p>Variables defined at the <strong>top level</strong> of a module. Accessible everywhere. Modified inside function using <code>global</code> keyword.</p>
+        </div>
+        <div class="scope-card">
+          <h4><i class="fas fa-tools"></i> Built-in Scope</h4>
+          <p>Names pre-defined in Python (<code>print</code>, <code>len</code>, <code>range</code>, <code>int</code>, etc.). Always available.</p>
+        </div>
+      </div>
+
+      <div class="code-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Scope Examples</div>
+        <pre>
+# ---- Local Variable ----
+def my_func():
+    x = 10    # Local variable
+    print(x)  # 10
+
+my_func()
+# print(x)   # NameError — x not accessible outside
+
+# ---- Global Variable ----
+count = 0    # Global variable
+
+def increment():
+    global count    # Tell Python we want the global count
+    count += 1
+
+increment()
+increment()
+print(count)   # 2
+
+# ---- Nonlocal Variable ----
+def outer():
+    msg = "Hello"    # Enclosing variable
+
+    def inner():
+        nonlocal msg     # Access enclosing variable
+        msg = "Hi"       # Modify it
+        print(msg)       # Hi
+
+    inner()
+    print(msg)       # Hi — modified by inner()
+
+outer()
+        </pre>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> global vs nonlocal</div>
+        <div class="table-wrapper">
+          <table class="fn-table">
+            <thead><tr><th>Keyword</th><th>Used In</th><th>Accesses</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>global</code></td><td>Any function</td><td>Module-level (global) variable</td><td><code>global x; x = 10</code></td></tr>
+              <tr><td><code>nonlocal</code></td><td>Nested (inner) function only</td><td>Enclosing function's variable</td><td><code>nonlocal msg; msg = "Hi"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== MODULES ========== -->
+  <section class="section" id="modules">
+    <h2 class="section-title">
+      <i class="fas fa-puzzle-piece"></i> Modules
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-book"></i> What is a Module?</div>
+        <p>A <strong>module</strong> is a file containing Python code (functions, classes, variables) saved with a <code>.py</code> extension. Modules allow you to organize code into separate files and reuse it across multiple programs.</p>
+      </div>
+
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-download"></i> Importing Modules</div>
+        <p>Python provides several ways to import a module:</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Import Syntax Examples</div>
+        <pre>
+# 1. Import entire module
+import math
+print(math.sqrt(16))    # 4.0
+print(math.pi)          # 3.141592653589793
+
+# 2. Import specific function or variable
+from math import sqrt, pi
+print(sqrt(25))         # 5.0
+print(pi)               # 3.141592...
+
+# 3. Import with alias
+import math as m
+print(m.floor(3.7))     # 3
+
+from datetime import datetime as dt
+print(dt.now())
+
+# 4. Import everything (not recommended)
+from math import *
+print(cos(0))           # 1.0
+
+# 5. Check what's in a module
+import math
+print(dir(math))        # Lists all attributes and functions
+
+# 6. __name__ special variable
+# When run directly: __name__ == "__main__"
+# When imported:     __name__ == "module_name"
+        </pre>
+      </div>
+
+      <!-- Creating own module -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-file-code"></i> Creating Your Own Module</div>
+        <p>Any <code>.py</code> file is a module. You can create your own and import it in other programs.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Creating and Using a Custom Module</div>
+        <pre>
+# File: mymath.py  (your custom module)
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+PI = 3.14159
+
+# ─────────────────────────────
+# File: main.py  (using the module)
+import mymath
+
+print(mymath.add(5, 3))       # 8
+print(mymath.subtract(10, 4)) # 6
+print(mymath.PI)              # 3.14159
+
+# Or import specific items
+from mymath import add, PI
+print(add(2, 7))  # 9
+print(PI)         # 3.14159
+        </pre>
+      </div>
+
+      <!-- PyPI -->
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-cloud-download-alt"></i> External Modules — PyPI</div>
+        <p>The <strong>Python Package Index (PyPI)</strong> at <code>pypi.org</code> hosts thousands of third-party packages. Install them using <code>pip</code>:</p>
+        <pre style="background:var(--code-bg,#f4f4f4);padding:0.75rem;border-radius:6px;font-size:0.84rem;">
+pip install requests     # Install requests library
+pip install numpy        # Install numpy
+pip install django       # Install Django framework
+        </pre>
+        <p>After installation, use <code>import requests</code> etc. in your Python file.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== PACKAGES ========== -->
+  <section class="section" id="packages">
+    <h2 class="section-title">
+      <i class="fas fa-box-open"></i> Packages
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-book"></i> What is a Package?</div>
+        <p>A <strong>package</strong> is a directory (folder) that contains multiple Python modules and a special file called <code>__init__.py</code>. The <code>__init__.py</code> file (can be empty) tells Python that this directory is a package, not just a regular folder.</p>
+      </div>
+
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-folder-tree"></i> Package Directory Structure</div>
+        <pre style="background:var(--code-bg,#f4f4f4);padding:0.75rem;border-radius:6px;font-size:0.85rem;">
+mypackage/
+├── __init__.py        ← Makes this directory a package
+├── module1.py         ← Module 1
+├── module2.py         ← Module 2
+└── subpackage/
+    ├── __init__.py    ← Sub-package marker
+    └── module3.py     ← Module in sub-package
+        </pre>
+      </div>
+
+      <div class="code-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Creating and Using a Package</div>
+        <pre>
+# File: mypackage/module1.py
+def hello():
+    return "Hello from module1!"
+
+# File: mypackage/module2.py
+def add(a, b):
+    return a + b
+
+# File: mypackage/__init__.py
+# Can be empty, or can import things to expose at package level
+from .module1 import hello
+from .module2 import add
+
+# ─────────────────────────────────────────
+# File: main.py (using the package)
+
+# Method 1: Import module from package
+import mypackage.module1
+print(mypackage.module1.hello())   # Hello from module1!
+
+# Method 2: Import specific function from module
+from mypackage.module2 import add
+print(add(3, 4))                   # 7
+
+# Method 3: If __init__.py exposes them
+import mypackage
+print(mypackage.hello())           # Hello from module1!
+print(mypackage.add(5, 6))        # 11
+
+# Importing from sub-package
+from mypackage.subpackage import module3
+        </pre>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> Module vs Package</div>
+        <div class="table-wrapper">
+          <table class="fn-table">
+            <thead><tr><th>Feature</th><th>Module</th><th>Package</th></tr></thead>
+            <tbody>
+              <tr><td>What it is</td><td>A single <code>.py</code> file</td><td>A directory with <code>__init__.py</code></td></tr>
+              <tr><td>Contains</td><td>Functions, classes, variables</td><td>Multiple modules and sub-packages</td></tr>
+              <tr><td>Import example</td><td><code>import math</code></td><td><code>import mypackage.module1</code></td></tr>
+              <tr><td>Required file</td><td>Nothing special</td><td><code>__init__.py</code></td></tr>
+              <tr><td>Scale</td><td>Small — single file</td><td>Large — organized collection</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+    <!-- ========== FORMULAS ========== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Syntax Reference
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Function Definition</div>
+        <div class="formula">def function_name(param1, param2=default, *args, **kwargs):</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;"""docstring"""</div>
+        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;return value</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> *args and **kwargs</div>
+        <div class="formula">*args   → collects extra positional args as a tuple</div>
+        <div class="formula">**kwargs → collects extra keyword args as a dict</div>
+        <div class="formula answer">func(*tuple) → unpacks tuple as positional args</div>
+        <div class="formula answer">func(**dict) → unpacks dict as keyword args</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Scope Keywords</div>
+        <div class="formula">global var_name    → access/modify global variable inside function</div>
+        <div class="formula">nonlocal var_name  → access/modify enclosing function's variable</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Import Syntax</div>
+        <div class="formula">import module_name</div>
+        <div class="formula">from module_name import function_name</div>
+        <div class="formula">import module_name as alias</div>
+        <div class="formula">from package.module import function</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== DEFINITIONS ========== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Function</div>
+        <p>A named, reusable block of code that performs a specific task. Defined using the <code>def</code> keyword. May accept parameters and return a value.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> *args</div>
+        <p>A special parameter syntax that allows a function to accept any number of positional arguments. Inside the function, <code>args</code> is a tuple containing all the extra positional arguments passed.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> **kwargs</div>
+        <p>A special parameter syntax that allows a function to accept any number of keyword arguments. Inside the function, <code>kwargs</code> is a dictionary containing all the keyword arguments passed.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Scope (LEGB Rule)</div>
+        <p>The region of a program where a variable is accessible. Python resolves variable names using the LEGB rule: Local → Enclosing → Global → Built-in.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Module</div>
+        <p>A single Python file (<code>.py</code>) containing functions, classes, and variables that can be imported and reused in other programs.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Package</div>
+        <p>A directory containing multiple Python modules and a special <code>__init__.py</code> file. Packages allow large codebases to be organized into a hierarchy of modules.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Pass by Object Reference</div>
+        <p>Python's argument passing mechanism where function parameters receive a reference to the object, not a copy. Mutable objects (lists, dicts) can be modified inside the function, affecting the original.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> __init__.py</div>
+        <p>A special file (can be empty) placed inside a directory to mark it as a Python package. It is executed when the package is imported and can be used to initialize package-level imports.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== COMPARISONS ========== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> *args vs **kwargs</div>
+        <div class="table-wrapper">
+          <table class="fn-table">
+            <thead><tr><th>Feature</th><th>*args</th><th>**kwargs</th></tr></thead>
+            <tbody>
+              <tr><td>Full name</td><td>Arbitrary positional arguments</td><td>Arbitrary keyword arguments</td></tr>
+              <tr><td>Data structure inside</td><td>Tuple</td><td>Dictionary</td></tr>
+              <tr><td>How passed</td><td>Without keyword: <code>func(1, 2, 3)</code></td><td>With keyword: <code>func(a=1, b=2)</code></td></tr>
+              <tr><td>Unpacking to call</td><td><code>func(*my_tuple)</code></td><td><code>func(**my_dict)</code></td></tr>
+              <tr><td>Position in def</td><td>Before **kwargs</td><td>Last parameter</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> global vs nonlocal</div>
+        <div class="table-wrapper">
+          <table class="fn-table">
+            <thead><tr><th>Feature</th><th>global</th><th>nonlocal</th></tr></thead>
+            <tbody>
+              <tr><td>Purpose</td><td>Modify module-level variable</td><td>Modify enclosing function's variable</td></tr>
+              <tr><td>Used in</td><td>Any function</td><td>Only nested (inner) functions</td></tr>
+              <tr><td>Scope accessed</td><td>Global (module) scope</td><td>Enclosing function scope</td></tr>
+              <tr><td>Example</td><td><code>global x; x = 5</code></td><td><code>nonlocal x; x = 5</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> Module vs Package</div>
+        <div class="table-wrapper">
+          <table class="fn-table">
+            <thead><tr><th>Feature</th><th>Module</th><th>Package</th></tr></thead>
+            <tbody>
+              <tr><td>Structure</td><td>Single <code>.py</code> file</td><td>Directory with <code>__init__.py</code></td></tr>
+              <tr><td>Contains</td><td>Functions, classes, variables</td><td>Multiple modules and sub-packages</td></tr>
+              <tr><td>Import style</td><td><code>import math</code></td><td><code>import mypackage.module</code></td></tr>
+              <tr><td>Required file</td><td>Just a <code>.py</code> file</td><td><code>__init__.py</code> mandatory</td></tr>
+              <tr><td>Example</td><td><code>math</code>, <code>os</code>, <code>sys</code></td><td><code>numpy</code>, <code>django</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== MCQs ========== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What data structure does <code>*args</code> collect arguments into inside a function?</p>
+          <ul class="options">
+            <li>a. List</li>
+            <li>b. Dictionary</li>
+            <li>c. Tuple</li>
+            <li>d. Set</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_1">
+            <strong>Answer: c. Tuple</strong>
+            <p><code>*args</code> collects all extra positional arguments into a <strong>tuple</strong> inside the function.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Which keyword is used to define a function in Python?</p>
+          <ul class="options">
+            <li>a. function</li>
+            <li>b. define</li>
+            <li>c. func</li>
+            <li>d. def</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_2">
+            <strong>Answer: d. def</strong>
+            <p>Functions in Python are defined using the <code>def</code> keyword followed by the function name and parentheses.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the correct order of parameters in a Python function definition?</p>
+          <ul class="options">
+            <li>a. *args, positional, default, **kwargs</li>
+            <li>b. positional, default, *args, **kwargs</li>
+            <li>c. **kwargs, *args, default, positional</li>
+            <li>d. positional, *args, default, **kwargs</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_3">
+            <strong>Answer: b. positional, default, *args, **kwargs</strong>
+            <p>Python requires parameters in this strict order: positional → default → *args → **kwargs.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Which file makes a directory a Python package?</p>
+          <ul class="options">
+            <li>a. __main__.py</li>
+            <li>b. __init__.py</li>
+            <li>c. __package__.py</li>
+            <li>d. setup.py</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_4">
+            <strong>Answer: b. __init__.py</strong>
+            <p>The <code>__init__.py</code> file (which can be empty) marks a directory as a Python package, allowing it to be imported.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What does the <code>global</code> keyword do inside a function?</p>
+          <ul class="options">
+            <li>a. Creates a new global variable only</li>
+            <li>b. Deletes the global variable</li>
+            <li>c. Allows the function to read and modify a module-level variable</li>
+            <li>d. Makes all variables in the function global</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_5">
+            <strong>Answer: c. Allows the function to read and modify a module-level variable</strong>
+            <p>The <code>global</code> keyword tells Python that the variable name refers to the module-level (global) variable, not a new local one.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What does <code>**kwargs</code> collect inside a function?</p>
+          <ul class="options">
+            <li>a. All positional arguments into a tuple</li>
+            <li>b. All keyword arguments into a dictionary</li>
+            <li>c. All arguments into a list</li>
+            <li>d. Only default arguments</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_6">
+            <strong>Answer: b. All keyword arguments into a dictionary</strong>
+            <p><code>**kwargs</code> collects all extra keyword arguments passed to the function into a <strong>dictionary</strong>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Which of the following is the correct way to import only the <code>sqrt</code> function from the <code>math</code> module?</p>
+          <ul class="options">
+            <li>a. <code>import sqrt from math</code></li>
+            <li>b. <code>include math.sqrt</code></li>
+            <li>c. <code>from math import sqrt</code></li>
+            <li>d. <code>import math.sqrt</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_7">
+            <strong>Answer: c. from math import sqrt</strong>
+            <p>The correct syntax is <code>from module_name import function_name</code>. After this, you can use <code>sqrt()</code> directly without the <code>math.</code> prefix.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>In Python, passing a mutable object (like a list) to a function and modifying it inside the function will:</p>
+          <ul class="options">
+            <li>a. Have no effect on the original</li>
+            <li>b. Raise a TypeError</li>
+            <li>c. Modify the original object</li>
+            <li>d. Create a copy of the list</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3_8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3_8">
+            <strong>Answer: c. Modify the original object</strong>
+            <p>Python passes mutable objects by object reference. The function receives the same reference, so modifications inside the function affect the original object.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SHORT QUESTIONS ========== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is the difference between a parameter and an argument?</p>
+          <button class="toggle-btn" data-target="sq3_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_1">
+            <p>A <strong>parameter</strong> is the variable listed in the function definition (e.g., <code>def add(a, b)</code> — a and b are parameters). An <strong>argument</strong> is the actual value passed when calling the function (e.g., <code>add(5, 3)</code> — 5 and 3 are arguments).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the LEGB rule in Python?</p>
+          <button class="toggle-btn" data-target="sq3_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_2">
+            <p>LEGB is the order Python uses to resolve variable names: <strong>L</strong>ocal → <strong>E</strong>nclosing → <strong>G</strong>lobal → <strong>B</strong>uilt-in. Python first looks in the local scope, then enclosing function scopes, then global (module) scope, then built-in names.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the purpose of <code>__init__.py</code> in a Python package?</p>
+          <button class="toggle-btn" data-target="sq3_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_3">
+            <p>The <code>__init__.py</code> file marks a directory as a Python package, making it importable. It can be empty or contain initialization code and package-level imports that run when the package is imported.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the difference between <code>*args</code> and <code>**kwargs</code>?</p>
+          <button class="toggle-btn" data-target="sq3_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_4">
+            <p><code>*args</code> collects extra <strong>positional arguments</strong> into a <strong>tuple</strong>. <code>**kwargs</code> collects extra <strong>keyword arguments</strong> into a <strong>dictionary</strong>. Both allow functions to accept a variable number of arguments.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What does <code>nonlocal</code> keyword do in Python?</p>
+          <button class="toggle-btn" data-target="sq3_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_5">
+            <p>The <code>nonlocal</code> keyword is used inside a nested function to declare that a variable belongs to the enclosing (outer) function's scope, not the local scope. It allows the inner function to modify the outer function's variable.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is pass by object reference in Python?</p>
+          <button class="toggle-btn" data-target="sq3_6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_6">
+            <p>In Python, function arguments receive a reference to the object, not a copy. For <strong>immutable</strong> objects (int, str, tuple), modifying inside the function does not affect the original. For <strong>mutable</strong> objects (list, dict), modifications inside the function do affect the original.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>How do you install an external Python package from PyPI?</p>
+          <button class="toggle-btn" data-target="sq3_7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_7">
+            <p>External packages from PyPI are installed using the <code>pip</code> tool from the command line: <code>pip install package_name</code>. For example, <code>pip install requests</code> installs the requests library. After installation, use <code>import requests</code> in your program.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the difference between <code>import math</code> and <code>from math import sqrt</code>?</p>
+          <button class="toggle-btn" data-target="sq3_8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3_8">
+            <p><code>import math</code> imports the entire module — you must use <code>math.sqrt()</code> to call the function. <code>from math import sqrt</code> imports only the <code>sqrt</code> function — you can call it directly as <code>sqrt()</code> without the module prefix.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LONG QUESTIONS ========== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Explain functions in Python — definition, calling, parameters, return values, and pass by object reference with examples.</p>
+          <button class="toggle-btn" data-target="lq3_1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3_1">
+            <p><strong>Function:</strong> A named, reusable block of code defined using <code>def</code>.</p>
+            <p><strong>Definition syntax:</strong></p>
+            <p><code>def function_name(parameters): body; return value</code></p>
+            <p><strong>Calling:</strong> <code>result = function_name(arguments)</code></p>
+            <p><strong>Parameters:</strong> Variables in the definition. Arguments: values passed during call.</p>
+            <p><strong>Return value:</strong> A function can return one or multiple values using <code>return</code>. Without return, function returns <code>None</code>.</p>
+            <p><strong>Pass by Object Reference:</strong></p>
+            <ul>
+              <li>Immutable objects (int, str, tuple): changes inside function do NOT affect original.</li>
+              <li>Mutable objects (list, dict): changes inside function DO affect original because the same reference is shared.</li>
+            </ul>
+            <p><strong>Example:</strong></p>
+            <p><code>def add(a, b): return a + b</code> → <code>print(add(5, 3))</code> → 8</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain *args and **kwargs in Python with syntax, examples, and how to unpack tuples and dictionaries when calling functions.</p>
+          <button class="toggle-btn" data-target="lq3_2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3_2">
+            <p><strong>*args (Arbitrary Positional Arguments):</strong></p>
+            <p>Allows a function to accept any number of positional arguments. Collected as a <strong>tuple</strong>.</p>
+            <p>Example: <code>def total(*args): return sum(args)</code></p>
+            <p><code>total(1, 2, 3)</code> → 6 &nbsp; <code>total(10, 20, 30, 40)</code> → 100</p>
+            <p><strong>**kwargs (Arbitrary Keyword Arguments):</strong></p>
+            <p>Allows a function to accept any number of keyword arguments. Collected as a <strong>dictionary</strong>.</p>
+            <p>Example: <code>def info(**kwargs): print(kwargs)</code></p>
+            <p><code>info(name="Alice", age=20)</code> → {'name': 'Alice', 'age': 20}</p>
+            <p><strong>Unpacking when calling:</strong></p>
+            <ul>
+              <li><code>func(*my_tuple)</code> → unpacks tuple as positional arguments.</li>
+              <li><code>func(**my_dict)</code> → unpacks dictionary as keyword arguments.</li>
+            </ul>
+            <p><strong>Order of parameters:</strong> positional → default → *args → **kwargs.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Explain variable scope in Python — local, nonlocal, global, and built-in scope with the LEGB rule and examples.</p>
+          <button class="toggle-btn" data-target="lq3_3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3_3">
+            <p><strong>Scope</strong> defines where a variable is accessible. Python uses the <strong>LEGB Rule</strong>:</p>
+            <p><strong>L — Local:</strong> Variables inside a function. Only accessible within that function.</p>
+            <p>Example: <code>def f(): x = 10</code> — x is local to f.</p>
+            <p><strong>E — Enclosing:</strong> Variables in outer function of a nested function. Use <code>nonlocal</code> to modify.</p>
+            <p>Example: <code>def outer(): msg = "hi"; def inner(): nonlocal msg; msg = "hello"</code></p>
+            <p><strong>G — Global:</strong> Variables at module level. Use <code>global</code> inside function to modify.</p>
+            <p>Example: <code>count = 0; def inc(): global count; count += 1</code></p>
+            <p><strong>B — Built-in:</strong> Python's pre-defined names like <code>print</code>, <code>len</code>, <code>range</code>, <code>int</code>. Always available.</p>
+            <p><strong>Lookup order:</strong> Python checks L first, then E, then G, then B. If not found anywhere → NameError.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Explain Python modules and packages — how to create, import, and use them. Include different import styles with examples.</p>
+          <button class="toggle-btn" data-target="lq3_4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3_4">
+            <p><strong>Module:</strong> A <code>.py</code> file containing Python code. Used to organize and reuse code.</p>
+            <p><strong>Creating a module:</strong> Save functions/variables in <code>mymodule.py</code>.</p>
+            <p><strong>Import styles:</strong></p>
+            <ul>
+              <li><code>import math</code> → use <code>math.sqrt()</code></li>
+              <li><code>from math import sqrt</code> → use <code>sqrt()</code> directly</li>
+              <li><code>import math as m</code> → use <code>m.sqrt()</code></li>
+              <li><code>from math import *</code> → import everything (not recommended)</li>
+            </ul>
+            <p><strong>Package:</strong> A directory with <code>__init__.py</code> containing multiple modules.</p>
+            <p><strong>Structure:</strong></p>
+            <p><code>mypackage/__init__.py</code>, <code>mypackage/module1.py</code>, <code>mypackage/module2.py</code></p>
+            <p><strong>Importing from package:</strong></p>
+            <p><code>from mypackage.module1 import hello</code></p>
+            <p><code>import mypackage.module2</code></p>
+            <p><strong>PyPI:</strong> External packages installed using <code>pip install package_name</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a Python function that accepts a variable number of numbers using *args and returns their sum, average, minimum, and maximum.</p>
+          <button class="toggle-btn" data-target="lq3_5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3_5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+def statistics(*args):
+    """
+    Accepts any number of numeric arguments.
+    Returns sum, average, minimum, and maximum.
+    """
+    if len(args) == 0:
+        print("No numbers provided.")
+        return
+
+    total = sum(args)
+    average = total / len(args)
+    minimum = min(args)
+    maximum = max(args)
+
+    return total, average, minimum, maximum
+
+# Calling the function
+s, avg, lo, hi = statistics(10, 25, 7, 42, 16, 33)
+print(f"Sum:     {s}")
+print(f"Average: {avg:.2f}")
+print(f"Minimum: {lo}")
+print(f"Maximum: {hi}")
+
+# Output:
+# Sum:     133
+# Average: 22.17
+# Minimum: 7
+# Maximum: 42
+
+# Unpacking a list as args
+my_numbers = [5, 15, 25, 35, 45]
+result = statistics(*my_numbers)
+print(result)
+              </pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRACTICE ========== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a Python function to check whether a given number is prime or not. Call it for numbers 1 to 20 and print the primes.</p>
+          <button class="toggle-btn" data-target="pp3_1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3_1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+def is_prime(n):
+    """Returns True if n is prime, False otherwise."""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+print("Prime numbers from 1 to 20:")
+for num in range(1, 21):
+    if is_prime(num):
+        print(num, end=" ")
+
+# Output: 2 3 5 7 11 13 17 19
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a Python program demonstrating the use of <code>global</code> and <code>nonlocal</code> keywords with nested functions.</p>
+          <button class="toggle-btn" data-target="pp3_2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3_2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+# global keyword demo
+counter = 0
+
+def increment():
+    global counter
+    counter += 1
+    print(f"Counter inside function: {counter}")
+
+increment()
+increment()
+print(f"Counter outside: {counter}")   # 2
+
+print("---")
+
+# nonlocal keyword demo
+def outer():
+    message = "Hello"
+    print(f"outer before inner: {message}")
+
+    def inner():
+        nonlocal message
+        message = "Hi from inner!"
+        print(f"inner: {message}")
+
+    inner()
+    print(f"outer after inner: {message}")
+
+outer()
+
+# Output:
+# Counter inside function: 1
+# Counter inside function: 2
+# Counter outside: 2
+# ---
+# outer before inner: Hello
+# inner: Hi from inner!
+# outer after inner: Hi from inner!
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Create a Python module called <code>geometry.py</code> with functions to calculate the area of a circle, rectangle, and triangle. Import and use it in a main program.</p>
+          <button class="toggle-btn" data-target="pp3_3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3_3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> geometry.py (module)</div>
+              <pre>
+# geometry.py
+import math
+
+def area_circle(radius):
+    """Area of circle = π × r²"""
+    return math.pi * radius ** 2
+
+def area_rectangle(length, width):
+    """Area of rectangle = length × width"""
+    return length * width
+
+def area_triangle(base, height):
+    """Area of triangle = 0.5 × base × height"""
+    return 0.5 * base * height
+              </pre>
+            </div>
+            <div class="code-box" style="margin-top:0.75rem;">
+              <div class="box-title"><i class="fas fa-code"></i> main.py (using the module)</div>
+              <pre>
+# main.py
+import geometry
+
+r = float(input("Circle radius: "))
+print(f"Circle area: {geometry.area_circle(r):.2f}")
+
+l = float(input("Rectangle length: "))
+w = float(input("Rectangle width: "))
+print(f"Rectangle area: {geometry.area_rectangle(l, w):.2f}")
+
+b = float(input("Triangle base: "))
+h = float(input("Triangle height: "))
+print(f"Triangle area: {geometry.area_triangle(b, h):.2f}")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a Python function using **kwargs that accepts any number of student name–score pairs and prints the student with the highest score.</p>
+          <button class="toggle-btn" data-target="pp3_4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3_4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+def top_student(**kwargs):
+    """
+    Accepts student name=score keyword pairs.
+    Prints the student with the highest score.
+    """
+    if not kwargs:
+        print("No students provided.")
+        return
+
+    print("All students:")
+    for name, score in kwargs.items():
+        print(f"  {name}: {score}")
+
+    best = max(kwargs, key=kwargs.get)
+    print(f"\nTop student: {best} with score {kwargs[best]}")
+
+top_student(Alice=85, Bob=92, Charlie=78, Diana=95, Eve=88)
+
+# Output:
+# All students:
+#   Alice: 85
+#   Bob: 92
+#   Charlie: 78
+#   Diana: 95
+#   Eve: 88
+#
+# Top student: Diana with score 95
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a recursive Python function to calculate the factorial of a number. Also write the iterative version and compare both.</p>
+          <button class="toggle-btn" data-target="pp3_5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3_5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+# Recursive version
+def factorial_recursive(n):
+    """Calculates n! using recursion."""
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial_recursive(n - 1)
+
+# Iterative version
+def factorial_iterative(n):
+    """Calculates n! using a loop."""
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+# Testing both
+for n in [0, 1, 5, 7, 10]:
+    r = factorial_recursive(n)
+    i = factorial_iterative(n)
+    print(f"{n}! = {r} (recursive) = {i} (iterative)")
+
+# Output:
+# 0! = 1 (recursive) = 1 (iterative)
+# 1! = 1 (recursive) = 1 (iterative)
+# 5! = 120 (recursive) = 120 (iterative)
+# 7! = 5040 (recursive) = 5040 (iterative)
+# 10! = 3628800 (recursive) = 3628800 (iterative)
+              </pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== REVISION ========== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul>
+          <li>Functions are defined using <code>def</code> keyword. Called using <code>function_name()</code>.</li>
+          <li><strong>Parameter</strong> = variable in definition. <strong>Argument</strong> = value passed in call.</li>
+          <li><strong>Default parameters</strong> must come after non-default parameters in the definition.</li>
+          <li><code>*args</code> → extra positional args → collected as a <strong>tuple</strong> inside function.</li>
+          <li><code>**kwargs</code> → extra keyword args → collected as a <strong>dictionary</strong> inside function.</li>
+          <li>Parameter order: positional → default → *args → **kwargs.</li>
+          <li><code>func(*tuple)</code> unpacks tuple as positional args when calling.</li>
+          <li><code>func(**dict)</code> unpacks dictionary as keyword args when calling.</li>
+          <li><strong>Pass by object reference:</strong> mutable objects modified inside function affect original.</li>
+          <li><strong>LEGB Rule:</strong> Local → Enclosing → Global → Built-in (variable lookup order).</li>
+          <li><code>global</code> keyword: modify module-level variable inside a function.</li>
+          <li><code>nonlocal</code> keyword: modify enclosing function's variable in a nested function.</li>
+          <li>A <strong>module</strong> is a <code>.py</code> file. Imported with <code>import</code> or <code>from...import</code>.</li>
+          <li>A <strong>package</strong> is a directory with <code>__init__.py</code> containing modules.</li>
+          <li>Install external packages using <code>pip install package_name</code>.</li>
+        </ul>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Must Remember for Exam</div>
+        <ul>
+          <li><code>*args</code> → <strong>tuple</strong>. <code>**kwargs</code> → <strong>dictionary</strong>. Never mix these up.</li>
+          <li><code>__init__.py</code> makes a directory a <strong>package</strong>.</li>
+          <li>LEGB: <strong>L</strong>ocal → <strong>E</strong>nclosing → <strong>G</strong>lobal → <strong>B</strong>uilt-in.</li>
+          <li><code>global</code> for module-level. <code>nonlocal</code> for enclosing function only.</li>
+          <li>Without <code>return</code>, a function returns <code>None</code>.</li>
+          <li>Immutable args → original NOT affected. Mutable args → original IS affected.</li>
+          <li><code>from math import sqrt</code> — most efficient way to import single function.</li>
+        </ul>
+      </div>
+
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Writing <code>*args</code> after <code>**kwargs</code> — wrong order causes SyntaxError.</li>
+          <li>Thinking <code>*args</code> creates a list — it creates a <strong>tuple</strong>.</li>
+          <li>Forgetting <code>global</code> when modifying a global variable inside a function — causes UnboundLocalError.</li>
+          <li>Using <code>nonlocal</code> at the module level — only valid inside nested functions.</li>
+          <li>Forgetting <code>__init__.py</code> — directory won't be recognized as package.</li>
+          <li>Confusing <code>import math</code> (needs <code>math.</code> prefix) with <code>from math import sqrt</code> (no prefix needed).</li>
+          <li>Default parameter after <code>*args</code> — causes SyntaxError in most cases.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end .container -->
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+
+</body>
+</html>

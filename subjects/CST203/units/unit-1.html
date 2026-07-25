@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit 1 – Introduction, Variables and Data Types | CST203</title>
+  <link rel="stylesheet" href="../../units-com/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .op-table { width:100%; border-collapse:collapse; font-size:0.87rem; margin-top:0.5rem; }
+    .op-table th { background:var(--primary); color:#fff; padding:0.55rem 0.8rem; text-align:left; }
+    .op-table td { padding:0.5rem 0.8rem; border-bottom:1px solid var(--border); color:var(--text); }
+    .op-table tr:nth-child(even) td { background:var(--card-bg); }
+    .type-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:0.75rem; }
+    .type-card { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:1rem; text-align:center; }
+    .type-card .type-icon { font-size:1.8rem; color:var(--primary); margin-bottom:0.4rem; }
+    .type-card h4 { margin:0 0 0.3rem 0; font-size:0.95rem; color:var(--text); }
+    .type-card p { font-size:0.8rem; color:var(--text-muted); margin:0; }
+    .prec-table { width:100%; border-collapse:collapse; font-size:0.86rem; }
+    .prec-table th { background:var(--primary); color:#fff; padding:0.5rem 0.8rem; }
+    .prec-table td { padding:0.45rem 0.8rem; border-bottom:1px solid var(--border); color:var(--text); text-align:center; }
+    .prec-table td:first-child { text-align:left; font-weight:600; }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <i class="fab fa-python"></i>
+      <span>CST203 — Unit 1</span>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#intro">Introduction</a>
+      <a href="#variables">Variables</a>
+      <a href="#strings">Strings</a>
+      <a href="#collections">Collections</a>
+      <a href="#operators">Operators</a>
+      <a href="#formulas">Formulas</a>
+      <a href="#mcqs">MCQs</a>
+      <a href="#revision">Revision</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <h3>Unit 1 – Intro &amp; Data Types</h3>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="drawer-links" id="drawerLinks">
+    <a href="#overview">Overview</a>
+    <a href="#intro">Introduction</a>
+    <a href="#variables">Variables</a>
+    <a href="#strings">Strings</a>
+    <a href="#collections">Collections</a>
+    <a href="#operators">Operators</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#mcqs">MCQs</a>
+    <a href="#revision">Revision</a>
+  </div>
+  <div class="drawer-footer">
+    <button id="drawerThemeToggle"><i class="fas fa-moon"></i> Theme</button>
+    <button id="drawerPrint"><i class="fas fa-print"></i> Print</button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <h1><i class="fab fa-python"></i> Unit 1: Introduction, Variables and Data Types</h1>
+      <p>CST203 — Scripting Languages (Python) &nbsp;|&nbsp; 7 Hours</p>
+      <div class="course-info">
+        <span class="info-item"><i class="fas fa-clock"></i> 7 Hours</span>
+        <span class="info-item"><i class="fas fa-signal"></i> Full Depth</span>
+        <span class="info-item"><i class="fas fa-list"></i> 10 Topics</span>
+        <span class="info-item"><a href="../index.html" style="color:inherit;text-decoration:none;"><i class="fas fa-home"></i> Subject Home</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 1: OVERVIEW ========== -->
+  <section class="section" id="overview">
+    <h2 class="section-title">
+      <i class="fas fa-binoculars"></i> Overview
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> What This Unit Covers</div>
+        <p>Unit 1 introduces you to the Python programming language from scratch. You will learn:</p>
+        <ul>
+          <li>The history, features, and installation of Python.</li>
+          <li>How Python works — interactive interpreter vs script mode.</li>
+          <li>Python syntax — indentation, comments, print statements.</li>
+          <li>Variables and dynamic typing.</li>
+          <li>All core data types — int, float, complex, string, list, tuple, dict, array.</li>
+          <li>All categories of Python operators and precedence rules.</li>
+        </ul>
+      </div>
+      <div class="tip-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> How to Study This Unit</div>
+        <p>Start with the introduction, then data types, then operators. Practice each code example in the Python interpreter. Indentation is the most common mistake — be careful.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 2: INTRODUCTION TO PYTHON ========== -->
+  <section class="section" id="intro">
+    <h2 class="section-title">
+      <i class="fab fa-python"></i> Introduction to Python
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- History -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-history"></i> History of Python</div>
+        <p>Python was created by <strong>Guido van Rossum</strong> and first released in <strong>1991</strong>. It was designed to be easy to read and write, with a focus on code readability and simplicity. The name "Python" was inspired by the British comedy show <em>Monty Python's Flying Circus</em>.</p>
+        <ul>
+          <li><strong>Python 1.0</strong> — Released in 1994.</li>
+          <li><strong>Python 2.0</strong> — Released in 2000. Added list comprehensions, garbage collection.</li>
+          <li><strong>Python 3.0</strong> — Released in 2008. Not backward compatible with Python 2. Current standard.</li>
+        </ul>
+      </div>
+
+      <!-- Features -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-star"></i> Key Features of Python</div>
+        <div class="type-grid">
+          <div class="type-card">
+            <div class="type-icon"><i class="fas fa-play-circle"></i></div>
+            <h4>Interpreted</h4>
+            <p>Code is executed line by line. No separate compilation step needed.</p>
+          </div>
+          <div class="type-card">
+            <div class="type-icon"><i class="fas fa-layer-group"></i></div>
+            <h4>High-Level</h4>
+            <p>Abstracts away hardware details. Programmer focuses on logic.</p>
+          </div>
+          <div class="type-card">
+            <div class="type-icon"><i class="fas fa-tags"></i></div>
+            <h4>Dynamically Typed</h4>
+            <p>Variable types are determined at runtime. No need to declare types.</p>
+          </div>
+          <div class="type-card">
+            <div class="type-icon"><i class="fas fa-cube"></i></div>
+            <h4>Object-Oriented</h4>
+            <p>Supports classes, objects, inheritance, and polymorphism.</p>
+          </div>
+          <div class="type-card">
+            <div class="type-icon"><i class="fas fa-boxes"></i></div>
+            <h4>Extensive Libraries</h4>
+            <p>Rich standard library + PyPI with thousands of third-party packages.</p>
+          </div>
+          <div class="type-card">
+            <div class="type-icon"><i class="fas fa-laptop-code"></i></div>
+            <h4>Cross-Platform</h4>
+            <p>Runs on Windows, Linux, macOS without modification.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Installation -->
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-download"></i> Installation and Setup</div>
+        <p><strong>Windows:</strong></p>
+        <ol>
+          <li>Download installer from <code>python.org</code>.</li>
+          <li>Run the installer — check <em>"Add Python to PATH"</em>.</li>
+          <li>Verify with <code>python --version</code> in Command Prompt.</li>
+        </ol>
+        <p><strong>Linux/Mac:</strong></p>
+        <ol>
+          <li>Linux: <code>sudo apt install python3</code></li>
+          <li>Mac: Use Homebrew — <code>brew install python3</code></li>
+          <li>Verify: <code>python3 --version</code></li>
+        </ol>
+      </div>
+
+      <!-- Interactive vs Script -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-terminal"></i> Interactive Interpreter vs Script Mode</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead>
+              <tr><th>Feature</th><th>Interactive Interpreter</th><th>Script Mode</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>How to start</td><td>Type <code>python</code> in terminal</td><td>Write code in a <code>.py</code> file</td></tr>
+              <tr><td>Execution</td><td>Line by line immediately</td><td>Entire file at once</td></tr>
+              <tr><td>Use case</td><td>Testing, exploring, quick calculations</td><td>Building real programs</td></tr>
+              <tr><td>Output</td><td>Shows result of each expression</td><td>Only explicit print() shows output</td></tr>
+              <tr><td>Prompt</td><td><code>&gt;&gt;&gt;</code></td><td>No prompt — run with <code>python file.py</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Basic Syntax -->
+      <div class="syntax-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Basic Python Syntax</div>
+        <p><strong>1. Indentation:</strong> Python uses indentation (spaces/tabs) to define code blocks. No curly braces.</p>
+        <p><strong>2. Comments:</strong> Single-line comments use <code>#</code>. Multi-line use triple quotes <code>"""..."""</code>.</p>
+        <p><strong>3. Print Statement:</strong> <code>print()</code> function outputs to screen.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Syntax Examples</div>
+        <pre>
+# This is a single-line comment
+
+"""
+This is a
+multi-line comment
+"""
+
+# Indentation example
+if True:
+    print("Indented block")   # 4 spaces indent
+    print("Still in block")
+
+print("Outside block")
+
+# Print statement
+print("Hello, World!")
+print("Sum:", 5 + 3)
+print("Name:", "Alice", "Age:", 20)
+        </pre>
+      </div>
+
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Exam Important</div>
+        <ul>
+          <li>Python was created by <strong>Guido van Rossum in 1991</strong>.</li>
+          <li>Python uses <strong>indentation</strong> instead of curly braces for code blocks.</li>
+          <li>Python is <strong>interpreted</strong> — code runs line by line.</li>
+          <li>Interactive mode uses <code>&gt;&gt;&gt;</code> prompt. Script mode runs <code>.py</code> files.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SECTION 3: VARIABLES AND DATA TYPES ========== -->
+  <section class="section" id="variables">
+    <h2 class="section-title">
+      <i class="fas fa-database"></i> Variables and Data Types
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- Dynamic Typing -->
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-tags"></i> Python Variables — Dynamic Typing</div>
+        <p>In Python, you do <strong>not need to declare</strong> the type of a variable. The type is automatically assigned based on the value given. This is called <strong>dynamic typing</strong>.</p>
+        <p>A variable is a name that refers to a value stored in memory. You create a variable by simply assigning a value using <code>=</code>.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Variable Examples</div>
+        <pre>
+x = 10          # int
+y = 3.14        # float
+name = "Alice"  # str
+flag = True     # bool
+
+# Type can change dynamically
+x = "Now I am a string"
+print(type(x))  # &lt;class 'str'&gt;
+
+# Check type using type()
+print(type(10))     # &lt;class 'int'&gt;
+print(type(3.14))   # &lt;class 'float'&gt;
+print(type(2+3j))   # &lt;class 'complex'&gt;
+        </pre>
+      </div>
+
+      <!-- Numeric Types -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-hashtag"></i> Numeric Data Types</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead>
+              <tr><th>Type</th><th>Description</th><th>Example</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>int</code></td><td>Integer values</td><td><code>10, -5, 0</code></td><td>No size limit in Python 3</td></tr>
+              <tr><td><code>float</code></td><td>Decimal numbers</td><td><code>3.14, -2.5, 1.0</code></td><td>64-bit IEEE 754</td></tr>
+              <tr><td><code>complex</code></td><td>Complex numbers</td><td><code>2+3j, -1j</code></td><td>Real + imaginary part</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Numeric Type Examples</div>
+        <pre>
+# Integer
+a = 100
+b = -45
+print(type(a))   # &lt;class 'int'&gt;
+
+# Float
+pi = 3.14159
+print(type(pi))  # &lt;class 'float'&gt;
+
+# Complex
+c = 2 + 3j
+print(c.real)    # 2.0
+print(c.imag)    # 3.0
+print(type(c))   # &lt;class 'complex'&gt;
+
+# Type conversion
+print(int(3.7))   # 3  (truncates)
+print(float(5))   # 5.0
+print(complex(2)) # (2+0j)
+        </pre>
+      </div>
+
+      <!-- Date and Time -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calendar-alt"></i> Date and Time — datetime Module</div>
+        <p>Python provides the <code>datetime</code> module to work with dates and times.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> datetime Examples</div>
+        <pre>
+from datetime import datetime, date, timedelta
+
+# Current date and time
+now = datetime.now()
+print(now)                    # 2024-01-15 10:30:00.123456
+
+# Specific date
+d = date(2024, 1, 15)
+print(d)                      # 2024-01-15
+
+# Formatting
+print(now.strftime("%d/%m/%Y"))  # 15/01/2024
+print(now.strftime("%H:%M:%S"))  # 10:30:00
+
+# Timedelta (date arithmetic)
+tomorrow = date.today() + timedelta(days=1)
+print(tomorrow)
+        </pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SECTION 4: STRINGS ========== -->
+  <section class="section" id="strings">
+    <h2 class="section-title">
+      <i class="fas fa-font"></i> String Data Type
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-book"></i> What is a String?</div>
+        <p>A <strong>string</strong> is a sequence of characters enclosed in quotes. Python supports single quotes <code>'...'</code>, double quotes <code>"..."</code>, and triple quotes <code>"""..."""</code> or <code>'''...'''</code>.</p>
+        <p>Strings in Python are <strong>immutable</strong> — once created, they cannot be changed.</p>
+        <p>Each character has an <strong>index</strong> starting from 0 (left) or -1 (right, going backwards).</p>
+      </div>
+
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> String Literals and Indexing</div>
+        <pre>
+# String literals
+s1 = 'Hello'
+s2 = "World"
+s3 = """This is a
+multi-line string"""
+
+# Indexing
+s = "Python"
+print(s[0])    # P  (first char)
+print(s[-1])   # n  (last char)
+print(s[2])    # t
+
+# Slicing: s[start:stop:step]
+print(s[1:4])  # yth  (index 1,2,3)
+print(s[:3])   # Pyt  (from start)
+print(s[3:])   # hon  (to end)
+print(s[::-1]) # nohtyP  (reversed)
+
+# Concatenation and Repetition
+print("Hello" + " " + "World")  # Hello World
+print("Ha" * 3)                  # HaHaHa
+        </pre>
+      </div>
+
+      <!-- String Formatting -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-magic"></i> String Formatting</div>
+        <p>Python provides two modern ways to format strings:</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> .format() and f-strings</div>
+        <pre>
+name = "Alice"
+age = 20
+score = 95.5
+
+# .format() method
+print("Hello, {}! You are {} years old.".format(name, age))
+print("Score: {:.2f}".format(score))  # 2 decimal places
+
+# f-strings (Python 3.6+) — Preferred modern way
+print(f"Hello, {name}! You are {age} years old.")
+print(f"Score: {score:.2f}")
+print(f"Next year you will be {age + 1}")
+
+# Unicode strings
+u_str = u"Caf\u00e9"  # Unicode literal
+print(u_str)           # Café
+
+# Comparing strings
+print("apple" == "apple")  # True
+print("apple" != "mango")  # True
+print("apple" < "banana")  # True (alphabetical)
+        </pre>
+      </div>
+
+      <!-- String Methods -->
+      <div class="algo-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-tools"></i> Common String Methods</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead>
+              <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>.upper()</code></td><td>Convert to uppercase</td><td><code>"hello".upper()</code></td><td><code>"HELLO"</code></td></tr>
+              <tr><td><code>.lower()</code></td><td>Convert to lowercase</td><td><code>"HELLO".lower()</code></td><td><code>"hello"</code></td></tr>
+              <tr><td><code>.strip()</code></td><td>Remove leading/trailing whitespace</td><td><code>"  hi  ".strip()</code></td><td><code>"hi"</code></td></tr>
+              <tr><td><code>.find(sub)</code></td><td>Returns index of first occurrence (-1 if not found)</td><td><code>"hello".find("l")</code></td><td><code>2</code></td></tr>
+              <tr><td><code>.replace(a,b)</code></td><td>Replace all occurrences of a with b</td><td><code>"hello".replace("l","r")</code></td><td><code>"herro"</code></td></tr>
+              <tr><td><code>.split(sep)</code></td><td>Split string into list</td><td><code>"a,b,c".split(",")</code></td><td><code>['a','b','c']</code></td></tr>
+              <tr><td><code>.join(iterable)</code></td><td>Join list into string</td><td><code>",".join(["a","b","c"])</code></td><td><code>"a,b,c"</code></td></tr>
+              <tr><td><code>.startswith(s)</code></td><td>Check if starts with s</td><td><code>"hello".startswith("he")</code></td><td><code>True</code></td></tr>
+              <tr><td><code>.endswith(s)</code></td><td>Check if ends with s</td><td><code>"hello".endswith("lo")</code></td><td><code>True</code></td></tr>
+              <tr><td><code>len(s)</code></td><td>Length of string</td><td><code>len("hello")</code></td><td><code>5</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SECTION 5: COLLECTIONS ========== -->
+  <section class="section" id="collections">
+    <h2 class="section-title">
+      <i class="fas fa-layer-group"></i> Collections — List, Tuple, Dict, Array
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- Lists -->
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-list"></i> Lists</div>
+        <p>A <strong>list</strong> is a <em>mutable, ordered</em> sequence of elements. Lists can hold elements of different types. Defined using square brackets <code>[]</code>.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> List Operations</div>
+        <pre>
+# Defining a list
+fruits = ["apple", "banana", "cherry"]
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", 3.14, True]
+
+# Indexing and Slicing
+print(fruits[0])     # apple
+print(fruits[-1])    # cherry
+print(numbers[1:4])  # [2, 3, 4]
+print(numbers[::-1]) # [5, 4, 3, 2, 1]
+
+# Modifying lists (mutable)
+fruits.append("mango")         # Add to end
+fruits.insert(1, "grape")      # Insert at index 1
+fruits.remove("banana")        # Remove by value
+popped = fruits.pop()          # Remove and return last
+popped2 = fruits.pop(0)        # Remove at index 0
+
+# Other methods
+numbers.sort()                 # Sort in place
+numbers.reverse()              # Reverse in place
+print(len(numbers))            # Length
+print(numbers.index(3))        # Index of value 3
+print(numbers.count(2))        # Count occurrences
+
+# Copying Lists
+import copy
+original = [1, [2, 3], 4]
+
+# Shallow copy — inner list is shared
+shallow = original.copy()      # or original[:]
+
+# Deep copy — completely independent
+deep = copy.deepcopy(original)
+
+original[1][0] = 99
+print(shallow[1][0])  # 99 (affected — shallow)
+print(deep[1][0])     # 2  (not affected — deep)
+        </pre>
+      </div>
+
+      <div class="important-note" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Shallow vs Deep Copy</div>
+        <ul>
+          <li><strong>Shallow copy:</strong> Copies the list but nested objects (inner lists) are still shared references.</li>
+          <li><strong>Deep copy:</strong> Creates a fully independent copy including all nested objects.</li>
+          <li>Use <code>copy.deepcopy()</code> from the <code>copy</code> module for deep copy.</li>
+        </ul>
+      </div>
+
+      <!-- Tuples -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-lock"></i> Tuples</div>
+        <p>A <strong>tuple</strong> is an <em>immutable, ordered</em> sequence. Once created, elements cannot be changed. Defined using parentheses <code>()</code>.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Tuple Examples</div>
+        <pre>
+# Defining tuples
+t1 = (1, 2, 3)
+t2 = ("a", "b", "c")
+single = (42,)      # Single element tuple needs comma!
+empty = ()
+
+# Accessing
+print(t1[0])        # 1
+print(t2[-1])       # c
+print(t1[1:3])      # (2, 3)
+
+# Tuples are immutable
+# t1[0] = 99   # TypeError!
+
+# Tuple packing and unpacking
+packed = 1, 2, 3           # Packing
+a, b, c = packed           # Unpacking
+print(a, b, c)             # 1 2 3
+
+# Swap using tuple unpacking
+x, y = 10, 20
+x, y = y, x
+print(x, y)                # 20 10
+
+# Tuple methods
+print(t1.count(2))   # 1
+print(t1.index(3))   # 2
+print(len(t1))       # 3
+        </pre>
+      </div>
+
+      <!-- Dictionaries -->
+      <div class="definition-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-key"></i> Dictionaries</div>
+        <p>A <strong>dictionary</strong> stores data as <em>key-value pairs</em>. It is <em>mutable</em> and <em>unordered</em> (in Python 3.7+ insertion order is maintained). Keys must be unique and immutable. Defined using curly braces <code>{}</code>.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Dictionary Operations</div>
+        <pre>
+# Defining a dictionary
+student = {
+    "name": "Alice",
+    "age": 20,
+    "grade": "A"
+}
+
+# Accessing
+print(student["name"])          # Alice
+print(student.get("age"))       # 20
+print(student.get("marks", 0))  # 0 (default if not found)
+
+# Adding and updating
+student["email"] = "alice@mail.com"  # Add new key
+student["age"] = 21                  # Update existing key
+
+# Deleting
+del student["grade"]           # Delete by key
+popped = student.pop("email")  # Remove and return
+
+# Iterating
+for key in student:
+    print(key, ":", student[key])
+
+for key, value in student.items():
+    print(f"{key} = {value}")
+
+# Dictionary methods
+print(student.keys())    # dict_keys(['name', 'age'])
+print(student.values())  # dict_values(['Alice', 21])
+print(len(student))      # 2
+        </pre>
+      </div>
+
+      <!-- Arrays -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-th"></i> Arrays — array Module</div>
+        <p>Python's built-in <code>array</code> module provides typed arrays — more memory-efficient than lists for large numeric data. All elements must be of the same type. The type is specified using a <strong>type code</strong>.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Array Examples</div>
+        <pre>
+from array import array
+
+# Type codes: 'i' = int, 'f' = float, 'd' = double
+arr = array('i', [1, 2, 3, 4, 5])
+print(arr[0])        # 1
+print(arr[1:3])      # array('i', [2, 3])
+
+arr.append(6)        # Add element
+arr.remove(3)        # Remove value
+print(len(arr))      # 5
+
+# Float array
+farr = array('f', [1.1, 2.2, 3.3])
+print(farr[0])       # 1.100000023841858 (float precision)
+
+# Common type codes
+# 'b' - signed char, 'B' - unsigned char
+# 'i' - signed int,  'I' - unsigned int
+# 'f' - float,       'd' - double
+        </pre>
+      </div>
+
+      <!-- Comparison table -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> Collections Comparison</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead>
+              <tr><th>Feature</th><th>List</th><th>Tuple</th><th>Dictionary</th><th>Array</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Syntax</td><td><code>[1,2,3]</code></td><td><code>(1,2,3)</code></td><td><code>{"k":"v"}</code></td><td><code>array('i',[1,2])</code></td></tr>
+              <tr><td>Mutable</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>Ordered</td><td>Yes</td><td>Yes</td><td>Yes (3.7+)</td><td>Yes</td></tr>
+              <tr><td>Indexed</td><td>Yes (int)</td><td>Yes (int)</td><td>Yes (key)</td><td>Yes (int)</td></tr>
+              <tr><td>Duplicates</td><td>Allowed</td><td>Allowed</td><td>Keys: No, Values: Yes</td><td>Allowed</td></tr>
+              <tr><td>Types</td><td>Any</td><td>Any</td><td>Any</td><td>Single type</td></tr>
+              <tr><td>Use case</td><td>General purpose</td><td>Fixed data</td><td>Key-value mapping</td><td>Numeric data</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SECTION 6: OPERATORS ========== -->
+  <section class="section" id="operators">
+    <h2 class="section-title">
+      <i class="fas fa-calculator"></i> Operators
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- Arithmetic -->
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-plus-minus"></i> Arithmetic Operators</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Operator</th><th>Name</th><th>Example</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>+</code></td><td>Addition</td><td><code>10 + 3</code></td><td><code>13</code></td></tr>
+              <tr><td><code>-</code></td><td>Subtraction</td><td><code>10 - 3</code></td><td><code>7</code></td></tr>
+              <tr><td><code>*</code></td><td>Multiplication</td><td><code>10 * 3</code></td><td><code>30</code></td></tr>
+              <tr><td><code>/</code></td><td>Division (float)</td><td><code>10 / 3</code></td><td><code>3.333...</code></td></tr>
+              <tr><td><code>//</code></td><td>Floor Division</td><td><code>10 // 3</code></td><td><code>3</code></td></tr>
+              <tr><td><code>%</code></td><td>Modulus</td><td><code>10 % 3</code></td><td><code>1</code></td></tr>
+              <tr><td><code>**</code></td><td>Exponentiation</td><td><code>2 ** 8</code></td><td><code>256</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Relational -->
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-not-equal"></i> Relational (Comparison) Operators</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>==</code></td><td>Equal to</td><td><code>5 == 5</code></td><td><code>True</code></td></tr>
+              <tr><td><code>!=</code></td><td>Not equal to</td><td><code>5 != 3</code></td><td><code>True</code></td></tr>
+              <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>5 &gt; 3</code></td><td><code>True</code></td></tr>
+              <tr><td><code>&lt;</code></td><td>Less than</td><td><code>5 &lt; 3</code></td><td><code>False</code></td></tr>
+              <tr><td><code>&gt;=</code></td><td>Greater or equal</td><td><code>5 &gt;= 5</code></td><td><code>True</code></td></tr>
+              <tr><td><code>&lt;=</code></td><td>Less or equal</td><td><code>5 &lt;= 3</code></td><td><code>False</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Assignment -->
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-equals"></i> Assignment Operators</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Operator</th><th>Equivalent</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>=</code></td><td>Simple assignment</td><td><code>x = 10</code></td></tr>
+              <tr><td><code>+=</code></td><td><code>x = x + n</code></td><td><code>x += 5</code></td></tr>
+              <tr><td><code>-=</code></td><td><code>x = x - n</code></td><td><code>x -= 3</code></td></tr>
+              <tr><td><code>*=</code></td><td><code>x = x * n</code></td><td><code>x *= 2</code></td></tr>
+              <tr><td><code>/=</code></td><td><code>x = x / n</code></td><td><code>x /= 4</code></td></tr>
+              <tr><td><code>//=</code></td><td><code>x = x // n</code></td><td><code>x //= 2</code></td></tr>
+              <tr><td><code>%=</code></td><td><code>x = x % n</code></td><td><code>x %= 3</code></td></tr>
+              <tr><td><code>**=</code></td><td><code>x = x ** n</code></td><td><code>x **= 2</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.75rem;"><strong>Multiple Assignment:</strong></p>
+        <pre style="background:var(--code-bg,#f4f4f4);padding:0.75rem;border-radius:6px;font-size:0.85rem;">
+a, b = 5, 10       # Multiple assignment (tuple unpacking)
+a = b = c = 0      # Chain assignment
+x, y = y, x        # Swap values
+        </pre>
+      </div>
+
+      <!-- Logical -->
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-project-diagram"></i> Logical Operators</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Operator</th><th>Description</th><th>Example</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>and</code></td><td>True if both are True</td><td><code>True and False</code></td><td><code>False</code></td></tr>
+              <tr><td><code>or</code></td><td>True if at least one is True</td><td><code>True or False</code></td><td><code>True</code></td></tr>
+              <tr><td><code>not</code></td><td>Inverts the boolean</td><td><code>not True</code></td><td><code>False</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Bitwise -->
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-microchip"></i> Bitwise Operators</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Operator</th><th>Name</th><th>Example (a=5, b=3)</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>&amp;</code></td><td>AND</td><td><code>5 &amp; 3</code></td><td><code>1</code> (0101 &amp; 0011 = 0001)</td></tr>
+              <tr><td><code>|</code></td><td>OR</td><td><code>5 | 3</code></td><td><code>7</code> (0101 | 0011 = 0111)</td></tr>
+              <tr><td><code>^</code></td><td>XOR</td><td><code>5 ^ 3</code></td><td><code>6</code> (0101 ^ 0011 = 0110)</td></tr>
+              <tr><td><code>~</code></td><td>NOT (complement)</td><td><code>~5</code></td><td><code>-6</code> (inverts bits)</td></tr>
+              <tr><td><code>&lt;&lt;</code></td><td>Left shift</td><td><code>5 &lt;&lt; 1</code></td><td><code>10</code> (shift left by 1)</td></tr>
+              <tr><td><code>&gt;&gt;</code></td><td>Right shift</td><td><code>5 &gt;&gt; 1</code></td><td><code>2</code> (shift right by 1)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Membership and Identity -->
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-search"></i> Membership and Identity Operators</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Operator</th><th>Type</th><th>Description</th><th>Example</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>in</code></td><td>Membership</td><td>True if value found in sequence</td><td><code>"a" in "cat"</code></td><td><code>True</code></td></tr>
+              <tr><td><code>not in</code></td><td>Membership</td><td>True if value NOT in sequence</td><td><code>"z" not in "cat"</code></td><td><code>True</code></td></tr>
+              <tr><td><code>is</code></td><td>Identity</td><td>True if same object in memory</td><td><code>x is y</code></td><td>Depends</td></tr>
+              <tr><td><code>is not</code></td><td>Identity</td><td>True if NOT same object</td><td><code>x is not y</code></td><td>Depends</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warning-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> is vs ==</div>
+          <p><code>==</code> checks if <em>values</em> are equal. <code>is</code> checks if they are the <em>same object</em> in memory. These are different!</p>
+          <pre style="background:var(--code-bg,#f4f4f4);padding:0.5rem;border-radius:6px;font-size:0.84rem;">
+a = [1, 2, 3]
+b = [1, 2, 3]
+print(a == b)   # True  (same values)
+print(a is b)   # False (different objects)
+          </pre>
+        </div>
+      </div>
+
+      <!-- Operator Precedence -->
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-sort-numeric-down"></i> Operator Precedence (Highest to Lowest)</div>
+        <div class="table-wrapper">
+          <table class="prec-table">
+            <thead><tr><th>Priority</th><th>Operator(s)</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>1 (Highest)</td><td><code>()</code></td><td>Parentheses</td></tr>
+              <tr><td>2</td><td><code>**</code></td><td>Exponentiation</td></tr>
+              <tr><td>3</td><td><code>~x, +x, -x</code></td><td>Unary (bitwise NOT, unary plus/minus)</td></tr>
+              <tr><td>4</td><td><code>*, /, //, %</code></td><td>Multiplication, Division, Floor, Modulus</td></tr>
+              <tr><td>5</td><td><code>+, -</code></td><td>Addition, Subtraction</td></tr>
+              <tr><td>6</td><td><code>&lt;&lt;, &gt;&gt;</code></td><td>Bitwise Shift</td></tr>
+              <tr><td>7</td><td><code>&amp;</code></td><td>Bitwise AND</td></tr>
+              <tr><td>8</td><td><code>^</code></td><td>Bitwise XOR</td></tr>
+              <tr><td>9</td><td><code>|</code></td><td>Bitwise OR</td></tr>
+              <tr><td>10</td><td><code>==, !=, &lt;, &gt;, &lt;=, &gt;=, is, is not, in, not in</code></td><td>Comparison &amp; Membership</td></tr>
+              <tr><td>11</td><td><code>not x</code></td><td>Logical NOT</td></tr>
+              <tr><td>12</td><td><code>and</code></td><td>Logical AND</td></tr>
+              <tr><td>13 (Lowest)</td><td><code>or</code></td><td>Logical OR</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Coding Blocks -->
+      <div class="syntax-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-indent"></i> Coding Blocks and Indentation</div>
+        <p>Python uses <strong>indentation</strong> (whitespace at the beginning of a line) to define a block of code. All lines in the same block must have the same indentation level. The standard is <strong>4 spaces</strong>.</p>
+      </div>
+      <div class="code-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Indentation Example</div>
+        <pre>
+# Correct indentation
+x = 10
+if x > 5:
+    print("x is greater than 5")    # block starts
+    y = x * 2
+    print("y =", y)                 # still in block
+print("This is outside the block")  # block ends
+
+# Wrong indentation — causes IndentationError
+if x > 5:
+print("Wrong!")  # IndentationError!
+        </pre>
+      </div>
+      <div class="warning-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistake</div>
+        <p>Mixing spaces and tabs in the same file causes <strong>IndentationError</strong> or <strong>TabError</strong>. Always use 4 spaces consistently. Never mix tabs and spaces.</p>
+      </div>
+
+    </div>
+  </section>
+    <!-- ========== SECTION 7: FORMULAS ========== -->
+  <section class="section" id="formulas">
+    <h2 class="section-title">
+      <i class="fas fa-square-root-alt"></i> Formulas and Syntax Reference
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-code"></i> Variable Assignment</div>
+        <div class="formula">variable_name = value</div>
+        <div class="formula">a, b, c = val1, val2, val3</div>
+        <div class="formula">a = b = c = 0</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> String Slicing</div>
+        <div class="formula">string[start : stop : step]</div>
+        <div class="formula">string[1:4]   → characters at index 1, 2, 3</div>
+        <div class="formula">string[::-1]  → reversed string</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> List Operations Syntax</div>
+        <div class="formula">list.append(item)         → add to end</div>
+        <div class="formula">list.insert(index, item)  → add at index</div>
+        <div class="formula">list.remove(value)        → remove by value</div>
+        <div class="formula">list.pop(index)           → remove by index and return</div>
+        <div class="formula">list[start:stop]          → slicing</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Floor Division and Modulus</div>
+        <div class="formula">a // b  →  quotient (floor)</div>
+        <div class="formula">a % b   →  remainder</div>
+        <div class="formula answer">Example: 17 // 5 = 3,  17 % 5 = 2</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> Bitwise Shift</div>
+        <div class="formula">x &lt;&lt; n  →  x multiplied by 2^n</div>
+        <div class="formula">x &gt;&gt; n  →  x divided by 2^n (floor)</div>
+        <div class="formula answer">Example: 5 &lt;&lt; 1 = 10,  5 &gt;&gt; 1 = 2</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> f-string Syntax</div>
+        <div class="formula">f"text {variable} text"</div>
+        <div class="formula">f"Value: {expression:.2f}"</div>
+        <div class="formula answer">Example: f"Hello {name}, age {age+1}"</div>
+      </div>
+
+      <div class="formula-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-code"></i> datetime Syntax</div>
+        <div class="formula">from datetime import datetime</div>
+        <div class="formula">datetime.now()               → current date and time</div>
+        <div class="formula">datetime(year, month, day)   → specific date</div>
+        <div class="formula">date.strftime("%d/%m/%Y")    → formatted string</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SECTION 8: DEFINITIONS ========== -->
+  <section class="section" id="definitions">
+    <h2 class="section-title">
+      <i class="fas fa-book"></i> Key Definitions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="definition-box">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Python</div>
+        <p>A high-level, interpreted, dynamically typed, object-oriented programming language created by Guido van Rossum in 1991. Known for readable syntax and extensive standard libraries.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Dynamic Typing</div>
+        <p>A language feature where the type of a variable is determined at runtime based on the value assigned, not at compile time. In Python, the same variable can hold different types at different times.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Interpreted Language</div>
+        <p>A language where the source code is executed line by line by an interpreter at runtime, without a separate compilation step into machine code.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Indentation</div>
+        <p>The use of whitespace (spaces or tabs) at the beginning of a line to define a block of code in Python. Python uses indentation instead of curly braces <code>{}</code>.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> List</div>
+        <p>A mutable, ordered collection of elements in Python, defined using square brackets <code>[]</code>. Lists allow duplicate values and elements of different types.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Tuple</div>
+        <p>An immutable, ordered collection of elements in Python, defined using parentheses <code>()</code>. Once created, its elements cannot be modified.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Dictionary</div>
+        <p>A mutable, unordered collection of key-value pairs in Python, defined using curly braces <code>{}</code>. Keys must be unique and immutable. Values can be of any type.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Operator Precedence</div>
+        <p>The order in which operators are evaluated in an expression. Higher precedence operators are evaluated before lower precedence ones. Parentheses have the highest precedence and can override default order.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Shallow Copy</div>
+        <p>A copy of a collection where only the top-level structure is duplicated. Nested objects (like inner lists) still share the same reference as the original.</p>
+      </div>
+
+      <div class="definition-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-bookmark"></i> Deep Copy</div>
+        <p>A completely independent copy of a collection, including all nested objects. Modifications to the deep copy do not affect the original. Created using <code>copy.deepcopy()</code>.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SECTION 9: COMPARISONS ========== -->
+  <section class="section" id="comparisons">
+    <h2 class="section-title">
+      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> Interactive Mode vs Script Mode</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Aspect</th><th>Interactive Mode</th><th>Script Mode</th></tr></thead>
+            <tbody>
+              <tr><td>Start</td><td>Type <code>python</code> in terminal</td><td>Write <code>.py</code> file, run with <code>python file.py</code></td></tr>
+              <tr><td>Execution</td><td>Line by line immediately</td><td>Whole file at once</td></tr>
+              <tr><td>Best for</td><td>Quick tests, learning, exploring</td><td>Real programs, projects</td></tr>
+              <tr><td>Output</td><td>Shows expression values automatically</td><td>Only <code>print()</code> shows output</td></tr>
+              <tr><td>Saving</td><td>Code is not saved</td><td>Code saved in file</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> List vs Tuple vs Dictionary</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Property</th><th>List</th><th>Tuple</th><th>Dictionary</th></tr></thead>
+            <tbody>
+              <tr><td>Mutability</td><td>Mutable</td><td>Immutable</td><td>Mutable</td></tr>
+              <tr><td>Syntax</td><td><code>[1, 2, 3]</code></td><td><code>(1, 2, 3)</code></td><td><code>{"a": 1}</code></td></tr>
+              <tr><td>Ordered</td><td>Yes</td><td>Yes</td><td>Yes (3.7+)</td></tr>
+              <tr><td>Indexed by</td><td>Integer index</td><td>Integer index</td><td>Key</td></tr>
+              <tr><td>Duplicates</td><td>Yes</td><td>Yes</td><td>Keys: No</td></tr>
+              <tr><td>Performance</td><td>Slightly slower</td><td>Faster (immutable)</td><td>O(1) key lookup</td></tr>
+              <tr><td>Use case</td><td>Changeable data</td><td>Fixed/constant data</td><td>Key-value mapping</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> == (Equality) vs is (Identity)</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Operator</th><th>Checks</th><th>Example</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>==</code></td><td>Value equality</td><td><code>[1,2] == [1,2]</code></td><td><code>True</code></td></tr>
+              <tr><td><code>is</code></td><td>Same object in memory</td><td><code>[1,2] is [1,2]</code></td><td><code>False</code></td></tr>
+              <tr><td><code>is</code></td><td>Same object in memory</td><td><code>x = y = [1,2]; x is y</code></td><td><code>True</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-balance-scale"></i> Shallow Copy vs Deep Copy</div>
+        <div class="table-wrapper">
+          <table class="op-table">
+            <thead><tr><th>Property</th><th>Shallow Copy</th><th>Deep Copy</th></tr></thead>
+            <tbody>
+              <tr><td>Method</td><td><code>list.copy()</code> or <code>list[:]</code></td><td><code>copy.deepcopy(list)</code></td></tr>
+              <tr><td>Top-level elements</td><td>Independent</td><td>Independent</td></tr>
+              <tr><td>Nested objects</td><td>Shared (same reference)</td><td>Independent copies</td></tr>
+              <tr><td>Performance</td><td>Faster</td><td>Slower</td></tr>
+              <tr><td>Safe for nested?</td><td>No</td><td>Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SECTION 10: MCQs ========== -->
+  <section class="section" id="mcqs">
+    <h2 class="section-title">
+      <i class="fas fa-question-circle"></i> Multiple Choice Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Who created the Python programming language?</p>
+          <ul class="options">
+            <li>a. Dennis Ritchie</li>
+            <li>b. James Gosling</li>
+            <li>c. Guido van Rossum</li>
+            <li>d. Bjarne Stroustrup</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq1">
+            <strong>Answer: c. Guido van Rossum</strong>
+            <p>Python was created by Guido van Rossum and first released in 1991.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Which of the following is the correct way to define a single-element tuple in Python?</p>
+          <ul class="options">
+            <li>a. <code>t = (42)</code></li>
+            <li>b. <code>t = [42]</code></li>
+            <li>c. <code>t = (42,)</code></li>
+            <li>d. <code>t = {42}</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq2">
+            <strong>Answer: c. t = (42,)</strong>
+            <p>A single-element tuple requires a trailing comma. Without it, <code>(42)</code> is just an integer in parentheses.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is the output of <code>10 // 3</code> in Python?</p>
+          <ul class="options">
+            <li>a. 3.33</li>
+            <li>b. 1</li>
+            <li>c. 3</li>
+            <li>d. 4</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq3">
+            <strong>Answer: c. 3</strong>
+            <p><code>//</code> is the floor division operator. It divides and returns the integer quotient, discarding the remainder. 10 ÷ 3 = 3 remainder 1, so result is 3.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Which data type is immutable in Python?</p>
+          <ul class="options">
+            <li>a. List</li>
+            <li>b. Dictionary</li>
+            <li>c. Set</li>
+            <li>d. Tuple</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq4">
+            <strong>Answer: d. Tuple</strong>
+            <p>Tuples are immutable — once created, their elements cannot be changed. Lists, Dictionaries, and Sets are all mutable.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What does the <code>**</code> operator do in Python?</p>
+          <ul class="options">
+            <li>a. Multiply two numbers</li>
+            <li>b. Floor division</li>
+            <li>c. Exponentiation (power)</li>
+            <li>d. Bitwise AND</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq5">
+            <strong>Answer: c. Exponentiation (power)</strong>
+            <p><code>**</code> raises the left operand to the power of the right. For example, <code>2 ** 8 = 256</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What will <code>"Python"[::-1]</code> return?</p>
+          <ul class="options">
+            <li>a. <code>"Pytho"</code></li>
+            <li>b. <code>"nohtyP"</code></li>
+            <li>c. <code>"Python"</code></li>
+            <li>d. Error</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq6">
+            <strong>Answer: b. "nohtyP"</strong>
+            <p>Slicing with step <code>-1</code> reverses the string. <code>"Python"[::-1]</code> = <code>"nohtyP"</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>Which operator checks if two variables point to the same object in memory?</p>
+          <ul class="options">
+            <li>a. <code>==</code></li>
+            <li>b. <code>!=</code></li>
+            <li>c. <code>is</code></li>
+            <li>d. <code>in</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq7">
+            <strong>Answer: c. is</strong>
+            <p>The <code>is</code> operator checks identity — whether two variables refer to the same object in memory. <code>==</code> checks value equality.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>What is the result of <code>5 &amp; 3</code> in Python?</p>
+          <ul class="options">
+            <li>a. 8</li>
+            <li>b. 7</li>
+            <li>c. 1</li>
+            <li>d. 15</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq8">
+            <strong>Answer: c. 1</strong>
+            <p>Bitwise AND: 5 = 0101, 3 = 0011. AND: 0001 = 1.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 9</h4>
+          <p>Which method is used to add an element to the end of a list?</p>
+          <ul class="options">
+            <li>a. <code>.insert()</code></li>
+            <li>b. <code>.add()</code></li>
+            <li>c. <code>.append()</code></li>
+            <li>d. <code>.push()</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq9">
+            <strong>Answer: c. .append()</strong>
+            <p><code>list.append(item)</code> adds an element to the end of the list. <code>.insert(index, item)</code> adds at a specific position.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 10</h4>
+          <p>What type does Python assign to the value <code>3.14</code>?</p>
+          <ul class="options">
+            <li>a. int</li>
+            <li>b. double</li>
+            <li>c. decimal</li>
+            <li>d. float</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq10">
+            <strong>Answer: d. float</strong>
+            <p>In Python, decimal numbers like <code>3.14</code> are of type <code>float</code>. Python has no separate <code>double</code> type.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 11: SHORT QUESTIONS ========== -->
+  <section class="section" id="short-questions">
+    <h2 class="section-title">
+      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is dynamic typing in Python?</p>
+          <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq1">
+            <p>Dynamic typing means that the type of a variable is determined at runtime based on the value assigned. You do not need to declare the type explicitly. The same variable can hold different types at different times.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>What is the difference between <code>/</code> and <code>//</code> in Python?</p>
+          <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq2">
+            <p><code>/</code> performs regular division and always returns a float (e.g., <code>10/3 = 3.333...</code>). <code>//</code> performs floor division and returns the integer quotient (e.g., <code>10//3 = 3</code>).</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>What is an f-string in Python? Give an example.</p>
+          <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq3">
+            <p>An f-string (formatted string literal) is a string prefixed with <code>f</code> that allows embedding expressions directly inside curly braces. Example: <code>name = "Alice"; print(f"Hello {name}")</code> outputs <code>Hello Alice</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>What is the difference between a list and a tuple?</p>
+          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq4">
+            <p>A list is <strong>mutable</strong> (can be changed after creation) and uses square brackets <code>[]</code>. A tuple is <strong>immutable</strong> (cannot be changed) and uses parentheses <code>()</code>. Tuples are faster than lists.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>What does the <code>%</code> operator do in Python?</p>
+          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq5">
+            <p>The <code>%</code> operator is the modulus operator. It returns the remainder when the left operand is divided by the right operand. Example: <code>10 % 3 = 1</code> because 10 = 3×3 + 1.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 6</h4>
+          <p>What is the purpose of indentation in Python?</p>
+          <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq6">
+            <p>In Python, indentation defines code blocks. All lines belonging to the same block (e.g., inside an if statement or loop) must be indented by the same amount. Python uses indentation instead of curly braces <code>{}</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 7</h4>
+          <p>What is the difference between <code>is</code> and <code>==</code> in Python?</p>
+          <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq7">
+            <p><code>==</code> checks if two values are equal (value comparison). <code>is</code> checks if two variables point to the same object in memory (identity comparison). Two different lists with the same values will give <code>== True</code> but <code>is False</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 8</h4>
+          <p>Name any four string methods in Python with their purpose.</p>
+          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="sq8">
+            <p>
+              1. <code>.upper()</code> — Converts string to uppercase.<br>
+              2. <code>.lower()</code> — Converts string to lowercase.<br>
+              3. <code>.strip()</code> — Removes leading and trailing whitespace.<br>
+              4. <code>.split(sep)</code> — Splits string into a list based on separator.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 12: LONG QUESTIONS ========== -->
+  <section class="section" id="long-questions">
+    <h2 class="section-title">
+      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>What is Python? Discuss its history, features, and the difference between interactive mode and script mode.</p>
+          <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq1">
+            <p><strong>Python</strong> is a high-level, interpreted, dynamically typed, object-oriented programming language.</p>
+            <p><strong>History:</strong> Created by Guido van Rossum in 1991. Python 2.0 released in 2000, Python 3.0 in 2008.</p>
+            <p><strong>Features:</strong></p>
+            <ul>
+              <li><strong>Interpreted:</strong> Code runs line by line without compilation.</li>
+              <li><strong>High-Level:</strong> Abstracts hardware complexity.</li>
+              <li><strong>Dynamically Typed:</strong> Types assigned at runtime.</li>
+              <li><strong>Object-Oriented:</strong> Supports classes and objects.</li>
+              <li><strong>Extensive Libraries:</strong> Rich standard library and PyPI packages.</li>
+              <li><strong>Cross-Platform:</strong> Runs on Windows, Linux, macOS.</li>
+            </ul>
+            <p><strong>Interactive Mode:</strong> Started by typing <code>python</code> in terminal. Shows <code>&gt;&gt;&gt;</code> prompt. Executes each line immediately. Used for quick testing.</p>
+            <p><strong>Script Mode:</strong> Write code in a <code>.py</code> file. Run using <code>python filename.py</code>. Full program runs at once. Used for real applications.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Explain all Python operators with examples — arithmetic, relational, logical, bitwise, membership, and identity operators.</p>
+          <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq2">
+            <p><strong>1. Arithmetic Operators:</strong> Perform mathematical calculations.</p>
+            <p><code>+</code> addition, <code>-</code> subtraction, <code>*</code> multiplication, <code>/</code> division, <code>//</code> floor division, <code>%</code> modulus, <code>**</code> exponentiation.</p>
+            <p>Example: <code>2 ** 8 = 256</code>, <code>10 % 3 = 1</code></p>
+            <p><strong>2. Relational Operators:</strong> Compare two values and return True or False.</p>
+            <p><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></p>
+            <p>Example: <code>5 &gt; 3</code> → <code>True</code></p>
+            <p><strong>3. Logical Operators:</strong> Combine boolean values.</p>
+            <p><code>and</code>, <code>or</code>, <code>not</code></p>
+            <p>Example: <code>True and False</code> → <code>False</code></p>
+            <p><strong>4. Bitwise Operators:</strong> Operate on binary bits.</p>
+            <p><code>&amp;</code> AND, <code>|</code> OR, <code>^</code> XOR, <code>~</code> NOT, <code>&lt;&lt;</code> left shift, <code>&gt;&gt;</code> right shift.</p>
+            <p>Example: <code>5 &amp; 3</code> → <code>1</code> (0101 AND 0011 = 0001)</p>
+            <p><strong>5. Membership Operators:</strong> Check if a value exists in a sequence.</p>
+            <p><code>in</code>, <code>not in</code></p>
+            <p>Example: <code>"a" in "cat"</code> → <code>True</code></p>
+            <p><strong>6. Identity Operators:</strong> Check if variables point to the same object.</p>
+            <p><code>is</code>, <code>is not</code></p>
+            <p>Example: <code>x = [1,2]; y = x; x is y</code> → <code>True</code></p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Describe Python's collection data types — List, Tuple, and Dictionary — with their properties, operations, and examples.</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p><strong>List:</strong> Mutable, ordered. Defined with <code>[]</code>.</p>
+            <p>Supports: <code>append()</code>, <code>insert()</code>, <code>remove()</code>, <code>pop()</code>, slicing.</p>
+            <p>Example: <code>fruits = ["apple", "banana"]; fruits.append("mango")</code></p>
+            <p><strong>Tuple:</strong> Immutable, ordered. Defined with <code>()</code>.</p>
+            <p>Cannot be modified after creation. Faster than lists.</p>
+            <p>Supports: indexing, slicing, <code>count()</code>, <code>index()</code>.</p>
+            <p>Example: <code>coords = (10, 20); x, y = coords</code></p>
+            <p><strong>Dictionary:</strong> Mutable, key-value pairs. Defined with <code>{}</code>.</p>
+            <p>Keys must be unique and immutable. Values can be any type.</p>
+            <p>Supports: <code>keys()</code>, <code>values()</code>, <code>items()</code>, <code>get()</code>, <code>pop()</code>.</p>
+            <p>Example: <code>student = {"name": "Alice", "age": 20}</code></p>
+            <p><strong>Key difference:</strong> Lists use integer indices, tuples are immutable, dictionaries use keys for access.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Explain string manipulation in Python. Cover indexing, slicing, string methods, and string formatting with examples.</p>
+          <button class="toggle-btn" data-target="lq4"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq4">
+            <p><strong>Strings</strong> in Python are immutable sequences of characters. They can be defined using single, double, or triple quotes.</p>
+            <p><strong>Indexing:</strong> Each character has a position starting from 0. Negative indices count from the end.</p>
+            <p><code>s = "Python"; s[0] = 'P'; s[-1] = 'n'</code></p>
+            <p><strong>Slicing:</strong> Extract a substring using <code>s[start:stop:step]</code>.</p>
+            <p><code>s[1:4] = "yth"</code>, <code>s[::-1] = "nohtyP"</code></p>
+            <p><strong>Concatenation and Repetition:</strong></p>
+            <p><code>"Hello" + " World" = "Hello World"</code></p>
+            <p><code>"Ha" * 3 = "HaHaHa"</code></p>
+            <p><strong>String Methods:</strong></p>
+            <ul>
+              <li><code>.upper()</code> → Uppercase</li>
+              <li><code>.lower()</code> → Lowercase</li>
+              <li><code>.strip()</code> → Remove whitespace</li>
+              <li><code>.split(",")</code> → Split to list</li>
+              <li><code>",".join(list)</code> → Join list to string</li>
+              <li><code>.replace("a","b")</code> → Replace characters</li>
+              <li><code>.find("sub")</code> → Find index of substring</li>
+            </ul>
+            <p><strong>String Formatting:</strong></p>
+            <p><code>"Hello {}".format(name)</code> — .format() method</p>
+            <p><code>f"Hello {name}, age {age}"</code> — f-string (modern, preferred)</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Explain operator precedence in Python with the complete precedence table and examples.</p>
+          <button class="toggle-btn" data-target="lq5"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq5">
+            <p><strong>Operator Precedence</strong> defines the order in which operators are evaluated in an expression. Higher precedence operators are evaluated first.</p>
+            <p><strong>Order (Highest to Lowest):</strong></p>
+            <ol>
+              <li><code>()</code> — Parentheses (highest)</li>
+              <li><code>**</code> — Exponentiation</li>
+              <li><code>~x, +x, -x</code> — Unary operators</li>
+              <li><code>*, /, //, %</code> — Multiplication group</li>
+              <li><code>+, -</code> — Addition/Subtraction</li>
+              <li><code>&lt;&lt;, &gt;&gt;</code> — Bitwise shift</li>
+              <li><code>&amp;</code> — Bitwise AND</li>
+              <li><code>^</code> — Bitwise XOR</li>
+              <li><code>|</code> — Bitwise OR</li>
+              <li>Comparison operators (<code>==, !=, &lt;, &gt;</code>, etc.)</li>
+              <li><code>not</code> — Logical NOT</li>
+              <li><code>and</code> — Logical AND</li>
+              <li><code>or</code> — Logical OR (lowest)</li>
+            </ol>
+            <p><strong>Example:</strong> <code>2 + 3 * 4</code> → <code>3 * 4 = 12</code> first (higher precedence), then <code>2 + 12 = 14</code>.</p>
+            <p><strong>Example:</strong> <code>(2 + 3) * 4</code> → Parentheses first: <code>5 * 4 = 20</code>.</p>
+            <p>When operators have equal precedence, they are evaluated <strong>left to right</strong> (except <code>**</code> which is right to left).</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 13: PRACTICE ========== -->
+  <section class="section" id="practice">
+    <h2 class="section-title">
+      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+      <div class="mcq-grid">
+
+        <div class="mcq-item">
+          <h4>Q 1</h4>
+          <p>Write a Python program to accept a name and age from the user and print a formatted greeting using an f-string.</p>
+          <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp1">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+
+print(f"Hello, {name}! You are {age} years old.")
+print(f"Next year, you will be {age + 1} years old.")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 2</h4>
+          <p>Write a Python program to demonstrate all arithmetic operators using two numbers entered by the user.</p>
+          <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp2">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+a = float(input("Enter first number: "))
+b = float(input("Enter second number: "))
+
+print(f"Addition:       {a} + {b} = {a + b}")
+print(f"Subtraction:    {a} - {b} = {a - b}")
+print(f"Multiplication: {a} * {b} = {a * b}")
+print(f"Division:       {a} / {b} = {a / b:.4f}")
+print(f"Floor Division: {a} // {b} = {a // b}")
+print(f"Modulus:        {a} % {b} = {a % b}")
+print(f"Exponent:       {a} ** {b} = {a ** b}")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 3</h4>
+          <p>Write a Python program to create a list of 5 student names. Then: add a new name, remove the second name, and print the final list with its length.</p>
+          <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp3">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+students = ["Alice", "Bob", "Charlie", "Diana", "Eve"]
+print("Original list:", students)
+
+# Add a new name
+students.append("Frank")
+print("After append:", students)
+
+# Remove the second name (index 1)
+students.pop(1)
+print("After removing Bob:", students)
+
+# Final list and length
+print("Final list:", students)
+print("Total students:", len(students))
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 4</h4>
+          <p>Write a Python program to demonstrate string slicing, reversal, and at least 4 string methods.</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+s = "  Hello, Python World!  "
+
+# Slicing
+print(s[2:7])         # Hello
+print(s[9:15])        # Python
+
+# Reversal
+stripped = s.strip()
+print(stripped[::-1]) # !dlroW nohtyP ,olleH
+
+# String methods
+print(s.strip())              # Remove whitespace
+print(s.upper())              # Uppercase
+print(s.lower())              # Lowercase
+print(s.replace("Python","Programming"))  # Replace
+print(s.strip().split(","))   # Split by comma
+print(s.find("Python"))       # Find index
+print(s.strip().startswith("Hello"))  # True
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <h4>Q 5</h4>
+          <p>Write a Python program to demonstrate shallow copy vs deep copy using a nested list.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+import copy
+
+original = [1, [2, 3], 4]
+
+# Shallow copy
+shallow = original.copy()
+
+# Deep copy
+deep = copy.deepcopy(original)
+
+# Modify inner list of original
+original[1][0] = 99
+
+print("Original:", original)   # [1, [99, 3], 4]
+print("Shallow:", shallow)     # [1, [99, 3], 4] — affected!
+print("Deep:", deep)           # [1, [2, 3], 4]  — not affected
+
+# Conclusion
+print("\nShallow copy shares inner objects — NOT safe for nested data.")
+print("Deep copy is fully independent — SAFE for nested data.")
+              </pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 14: REVISION ========== -->
+  <section class="section" id="revision">
+    <h2 class="section-title">
+      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-chevron-up collapse-icon"></i>
+    </h2>
+    <div class="section-content">
+
+      <!-- Part 1: Quick Revision Points -->
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <ul>
+          <li>Python was created by <strong>Guido van Rossum in 1991</strong>.</li>
+          <li>Python is <strong>interpreted, high-level, dynamically typed, and object-oriented</strong>.</li>
+          <li>Python uses <strong>indentation</strong> (4 spaces) to define code blocks — no curly braces.</li>
+          <li>Interactive mode uses <code>&gt;&gt;&gt;</code> prompt. Script mode runs <code>.py</code> files.</li>
+          <li>Variables are <strong>dynamically typed</strong> — no declaration needed.</li>
+          <li>Numeric types: <code>int</code>, <code>float</code>, <code>complex</code>.</li>
+          <li>Strings are <strong>immutable</strong>. Indexed from 0 (left) or -1 (right).</li>
+          <li>Slicing syntax: <code>s[start:stop:step]</code>. <code>s[::-1]</code> reverses a string.</li>
+          <li>f-strings (Python 3.6+): <code>f"Hello {name}"</code> — modern way to format strings.</li>
+          <li><strong>List</strong> = mutable, ordered, <code>[]</code>. <strong>Tuple</strong> = immutable, ordered, <code>()</code>.</li>
+          <li><strong>Dictionary</strong> = key-value pairs, mutable, <code>{}</code>. Keys must be unique.</li>
+          <li><strong>array</strong> module provides typed arrays — all elements must be same type.</li>
+          <li><code>//</code> = floor division. <code>%</code> = modulus. <code>**</code> = exponentiation.</li>
+          <li><code>is</code> checks identity (same object). <code>==</code> checks value equality.</li>
+          <li><strong>Shallow copy</strong>: inner objects shared. <strong>Deep copy</strong>: fully independent.</li>
+          <li>Operator precedence: <code>()</code> → <code>**</code> → unary → <code>*/%//</code> → <code>+-</code> → comparisons → <code>not</code> → <code>and</code> → <code>or</code>.</li>
+          <li><code>datetime</code> module handles dates and times. <code>datetime.now()</code> for current time.</li>
+        </ul>
+      </div>
+
+      <!-- Part 2: Must Remember -->
+      <div class="important-note" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Must Remember for Exam</div>
+        <ul>
+          <li><strong>Creator:</strong> Guido van Rossum, 1991.</li>
+          <li><strong>Single-element tuple:</strong> Must have trailing comma — <code>(42,)</code> not <code>(42)</code>.</li>
+          <li><strong>/ vs //:</strong> <code>/</code> gives float, <code>//</code> gives integer (floor).</li>
+          <li><strong>Mutable:</strong> List, Dict, Array. <strong>Immutable:</strong> Tuple, String, int, float.</li>
+          <li><strong>Deep copy:</strong> Requires <code>import copy</code> then <code>copy.deepcopy()</code>.</li>
+          <li><strong>Dictionary keys</strong> must be unique and immutable (strings, numbers, tuples).</li>
+          <li><strong>Bitwise AND:</strong> <code>5 &amp; 3 = 1</code> (0101 AND 0011 = 0001).</li>
+          <li><strong>String reversal:</strong> <code>s[::-1]</code>.</li>
+          <li><strong>Highest precedence:</strong> Parentheses <code>()</code>. Lowest: <code>or</code>.</li>
+          <li><strong>type()</strong> function returns the data type of a variable.</li>
+        </ul>
+      </div>
+
+      <!-- Part 3: Common Mistakes -->
+      <div class="warning-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+        <ul>
+          <li>Writing <code>(42)</code> instead of <code>(42,)</code> for single-element tuple.</li>
+          <li>Confusing <code>is</code> with <code>==</code> — they check different things.</li>
+          <li>Using <code>=</code> instead of <code>==</code> in comparisons.</li>
+          <li>Forgetting that strings are <strong>immutable</strong> — you cannot do <code>s[0] = "X"</code>.</li>
+          <li>Mixing tabs and spaces — causes <strong>IndentationError</strong>.</li>
+          <li>Forgetting the colon <code>:</code> at the end of <code>if</code>, <code>for</code>, <code>def</code> statements.</li>
+          <li>Accessing a dictionary key that doesn't exist causes <strong>KeyError</strong> — use <code>.get()</code> instead.</li>
+          <li>Confusing shallow copy with deep copy for nested lists.</li>
+          <li>Assuming <code>/</code> gives integer result — in Python 3, <code>10/3 = 3.333...</code> not 3.</li>
+          <li>Forgetting <code>import copy</code> before using <code>copy.deepcopy()</code>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end .container -->
+
+<!-- FAB Buttons -->
+<div class="fab-container">
+  <button class="fab fab-top" id="fabTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+    <span class="fab-tooltip">Back to Top</span>
+  </button>
+  <button class="fab fab-print" id="fabPrint" title="Print">
+    <i class="fas fa-print"></i>
+    <span class="fab-tooltip">Print</span>
+  </button>
+  <button class="fab fab-save" id="fabSave" title="Bookmark">
+    <i class="fas fa-bookmark"></i>
+    <span class="fab-tooltip">Bookmark</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<script src="../../units-com/common.js"></script>
+
+</body>
+</html>
