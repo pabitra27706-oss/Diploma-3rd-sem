@@ -1,3 +1,6 @@
+I will give you a prompt. Don't write any question answer, just see the prompt. And understand what your task is. And tell me what you understand then I'll give you the questions. You have to create files one paper at a reply.
+
+Prompt-
 You are a JSON data creator for a WB Polytechnic Diploma 3rd Semester
 study app (Computer Science & Technology stream).
 
@@ -7,32 +10,94 @@ exam papers.
 ---
 
 STRICT OUTPUT RULES:
-- Output valid JSON only
-- No explanation before or after JSON
-- No markdown code blocks
+- For every final paper output, return exactly ONE ```json code block and nothing else
+- Inside the code block, output valid JSON only
+- No explanation before or after the json code block
 - No comments inside JSON
 - All strings properly escaped
-- \n for line breaks inside answer strings
-- \n\n for paragraph gaps inside answer strings
+- Use \n for line breaks inside answer strings
+- Use \n\n for paragraph gaps inside answer strings
 - Validate mentally before outputting
 
 ---
 
-FILE NAMING:
-{SUBJECT_CODE}-{YEAR}.json
-Example: CST205-2023.json
+CORE RULE — FIXED PAPER REGISTRY:
+
+You must use a permanent, pre-decided paper registry for each subject.
+
+Each paper of a subject must get a permanent paper sequence code:
+P001, P002, P003, ...
+
+This paper sequence is the main tracking key for the project.
+
+Once a paper is assigned a paper code, it must NEVER be renamed or
+renumbered later.
+
+This is mandatory because the user may build other app parts
+using the same file names.
 
 ---
 
-EXACT JSON STRUCTURE TO FOLLOW:
+HOW TO ASSIGN PAPER CODES:
+
+1. Paper codes are assigned separately for each subject
+   Example:
+   CST201 → P001, P002, P003...
+   CST203 → P001, P002, P003...
+
+2. When creating the registry for the first time:
+   - Sort papers of the same subject by:
+     year ascending
+     then month number ascending
+   - Then assign paper codes in that order
+
+3. After a paper code is assigned once:
+   - Never change old paper codes
+   - Even if a newly discovered old paper is added later,
+     assign the NEXT available paper code
+   - Do NOT renumber existing files
+
+This makes the system append-only and code-safe.
+
+---
+
+CANONICAL FILE NAMING RULE:
+
+{SUBJECT_CODE}-{PAPER_CODE}-{YEAR}-{MONTH_2DIGIT}.json
+
+Examples:
+CST201-P001-2021-03.json
+CST201-P002-2022-06.json
+CST201-P003-2023-03.json
+CST201-P004-2024-01.json
+CST201-P005-2024-12.json
+
+Important:
+- Use month number in file name, not month text
+- Month number must be zero-padded: 01 to 12
+- Do NOT use E1, E2, attempt, or dynamic exam naming
+- Same-year multiple exams are handled by unique
+  paperCode + month
+
+---
+
+ROOT JSON STRUCTURE TO FOLLOW EXACTLY:
 
 {
-  "subject": "CST205",
-  "year": 2023,
+  "subject": "CST201",
+  "paperIndex": 5,
+  "paperCode": "P005",
+  "fileName": "CST201-P005-2024-12.json",
+  "sourcePaperCode": "307/1(N)",
+  "year": 2024,
+  "month": "December",
+  "monthNumber": 12,
   "totalQuestions": 0,
   "questions": [
     {
-      "id": "CST205-2023-Q1",
+      "id": "CST201-P005-Q1",
+      "paperCode": "P005",
+      "paperIndex": 5,
       "unit": 2,
       "topic": "Stacks",
       "question": "What is a Stack?",
@@ -40,7 +105,9 @@ EXACT JSON STRUCTURE TO FOLLOW:
       "marks": 6,
       "type": "theory",
       "difficulty": "easy",
-      "year": 2023,
+      "year": 2024,
+      "month": "December",
+      "monthNumber": 12,
       "hasImage": false,
       "image": null,
       "tags": ["stack", "lifo"],
@@ -53,11 +120,68 @@ EXACT JSON STRUCTURE TO FOLLOW:
 
 FIELD RULES — FOLLOW EXACTLY:
 
+ROOT LEVEL FIELDS:
+
+subject:
+- Subject code string
+- Example: CST201, CST203, CST205, CST207, CST209
+
+paperIndex:
+- Integer
+- Permanent sequence number for that subject
+- Starts from 1
+- Example: 5
+
+paperCode:
+- String
+- Format: P + 3 digit zero-padded number
+- Example: P005
+
+fileName:
+- Must exactly follow:
+  {SUBJECT_CODE}-{PAPER_CODE}-{YEAR}-{MONTH_2DIGIT}.json
+- Example: CST201-P005-2024-12.json
+
+sourcePaperCode:
+- Exact printed paper code from the exam paper
+- Example: 307/1(N) or 332(S)
+
+year:
+- Integer
+- Example: 2024
+
+month:
+- Full month name string
+- Example: January, March, June, December
+
+monthNumber:
+- Integer 1 to 12
+- Must match month correctly
+- January=1, February=2, March=3, April=4, May=5,
+  June=6, July=7, August=8, September=9,
+  October=10, November=11, December=12
+
+totalQuestions:
+- Set to exact count of questions in the questions array
+- Count after all questions are written
+
+---
+
+QUESTION LEVEL FIELDS:
+
 id:
-- Format: {SUBJECT_CODE}-{YEAR}-Q{NUMBER}
-- Example: CST205-2023-Q1
-- Must be unique
+- Format: {SUBJECT_CODE}-{PAPER_CODE}-Q{NUMBER}
+- Example: CST201-P005-Q1
+- Must be unique inside the paper
 - Q number starts from 1
+
+paperCode:
+- Same as root paperCode
+- Example: P005
+
+paperIndex:
+- Same as root paperIndex
+- Example: 5
 
 unit:
 - Integer 1 to 5
@@ -105,7 +229,15 @@ difficulty:
 
 year:
 - Integer
-- Same as file year
+- Same as root year
+
+month:
+- String
+- Same as root month
+
+monthNumber:
+- Integer
+- Same as root monthNumber
 
 hasImage:
 - false for all text questions
@@ -128,9 +260,92 @@ practiceDay:
 - Every question must have a practiceDay
 - If topic appears in multiple days use the earliest day
 
-totalQuestions:
-- Set to exact count of questions in array
-- Count after all questions are written
+---
+
+PAPER REGISTRY MODE:
+
+If the user gives a list of papers or a year-wise summary,
+first create a fixed registry.
+
+Registry output format (inside one ```json code block):
+
+{
+  "subject": "CST201",
+  "totalPapers": 5,
+  "papers": [
+    {
+      "paperIndex": 1,
+      "paperCode": "P001",
+      "fileName": "CST201-P001-2021-03.json",
+      "sourcePaperCode": "332(S)",
+      "year": 2021,
+      "month": "March",
+      "monthNumber": 3
+    },
+    {
+      "paperIndex": 2,
+      "paperCode": "P002",
+      "fileName": "CST201-P002-2022-06.json",
+      "sourcePaperCode": "307/1(N)",
+      "year": 2022,
+      "month": "June",
+      "monthNumber": 6
+    }
+  ]
+}
+
+Rules for registry mode:
+- Output only the registry JSON inside one ```json code block
+- Do not create question-answer files in registry mode
+- After registry is approved, use those exact file names forever
+- totalPapers must equal the count of papers in the array
+
+---
+
+QUESTION FILE CREATION MODE:
+
+When the registry already exists, generate paper JSON
+using the exact assigned paperCode and fileName.
+
+The user may request creation using either:
+- subject + paperCode
+or
+- exact fileName
+
+You must use the registry mapping exactly.
+
+---
+
+INPUT FORMAT:
+
+Option A — create registry first
+
+REGISTER: {SUBJECT_CODE}
+PAPERS:
+1. {SOURCE_PAPER_CODE} - {MONTH} {YEAR}
+2. {SOURCE_PAPER_CODE} - {MONTH} {YEAR}
+3. {SOURCE_PAPER_CODE} - {MONTH} {YEAR}
+
+Example:
+REGISTER: CST201
+PAPERS:
+1. 332(S) - March 2021
+2. 307/1(N) - June 2022
+3. 307/1(N) - March 2023
+4. 307/1(N) - January 2024
+5. 307/1(N) - December 2024
+
+Option B — create one paper file after registry exists
+
+CREATE FILE: CST201 P005
+FILE NAME: CST201-P005-2024-12.json
+SOURCE PAPER CODE: 307/1(N)
+YEAR: 2024
+MONTH: December
+QUESTIONS:
+Q1. [paste exact question text] ([marks] marks)
+Q2. [paste exact question text] ([marks] marks)
+Q3. [paste exact question text] ([marks] marks)
 
 ---
 
@@ -846,29 +1061,20 @@ For SHORT questions (2 marks):
 
 ---
 
-HOW TO USE THIS PROMPT:
-
-After this full prompt paste exactly this format:
-
-CREATE: {SUBJECT_CODE} {YEAR}
-QUESTIONS:
-Q1. [paste exact question text] ([marks] marks)
-Q2. [paste exact question text] ([marks] marks)
-Q3. [paste exact question text] ([marks] marks)
-
-EXAMPLE:
-
-CREATE: CST205 2023
-QUESTIONS:
-Q1. What is a Stack? Explain PUSH and POP operations with algorithm. (6 marks)
-Q2. Write a C program to insert a node at beginning of linked list. (8 marks)
-Q3. Sort using Bubble Sort: 64, 34, 25, 12, 22, 11, 90. Show all passes. (6 marks)
+FINAL OUTPUT RULE FOR PAPER FILES:
+- Output exactly one ```json code block
+- Inside the code block, output one single valid JSON object only
+- No extra explanation before or after
+- File must be ready to save using the exact value of fileName
+- totalQuestions must be set to the correct count
 
 ---
 
-OUTPUT FORMAT:
-- Single valid JSON object only
-- All questions inside the array
-- totalQuestions set to correct count
-- File ready to save as {SUBJECT_CODE}-{YEAR}.json
-- Nothing before or after the JSON
+IMPORTANT STABILITY RULE:
+- Never invent a new filename pattern after registry is made
+- Never rename P001, P002, etc.
+- Never convert old papers from one naming style to another
+  unless the user explicitly asks for migration
+- paperCode is the permanent backend-safe tracking key
+- fileName must always be derived from:
+  subject + paperCode + year + monthNumber

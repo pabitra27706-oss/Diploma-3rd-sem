@@ -16,7 +16,7 @@ This is a complete study companion app designed specifically for WB Polytechnic 
 - **5 Core Subjects** with detailed unit-wise content
 - **Practice System** with day-wise question practice
 - **Quiz System** with difficulty-based challenges
-- **Previous Year Questions** organized by year and subject
+- **Previous Year Questions** organized by subject, year, and month
 - **30-Day Roadmap** for structured exam preparation
 - **Bookmark System** to save important pages
 - **Dark/Light Themes** with user preference persistence
@@ -35,7 +35,7 @@ This is a complete study companion app designed specifically for WB Polytechnic 
 | **Unit-wise Content** | Each subject divided into units with explanations, examples, formulas |
 | **Practice Mode** | Daily practice questions with progress tracking |
 | **Quiz System** | Timed quizzes with instant results and explanations |
-| **PYQ Viewer** | Filter previous year questions by subject and year |
+| **PYQ Viewer** | Filter previous year questions by subject, year, and month |
 | **Roadmap** | 30-day study plan with daily targets |
 | **Bookmarks** | Save any page for quick access later |
 | **Study Tips** | Subject-specific preparation suggestions |
@@ -114,17 +114,17 @@ This is a complete study companion app designed specifically for WB Polytechnic 
    ```
 
 2. **Serve Locally**
-   
+
    Using Python:
    ```bash
    python -m http.server 8000
    ```
-   
+
    Using Node.js:
    ```bash
    npx serve
    ```
-   
+
    Using PHP:
    ```bash
    php -S localhost:8000
@@ -147,101 +147,119 @@ This is a complete study companion app designed specifically for WB Polytechnic 
 ```
 Diploma-3rd-sem/
 │
-├── index.html                  # Main dashboard/homepage
-├── manifest.json               # PWA manifest
-├── sw.js                       # Service Worker
-├── offline.html                # Offline fallback page
-├── README.md                   # This file
+├── index.html                    # Main dashboard/homepage
+├── manifest.json                 # PWA manifest
+├── sw.js                         # Service Worker
+├── offline.html                  # Offline fallback page
+├── README.md                     # This file
 │
-├── assets/                     # Static assets
+├── assets/                       # Static assets
 │   ├── css/
-│   │   ├── variables.css       # CSS custom properties (theme variables)
-│   │   └── main.css            # Main stylesheet
+│   │   ├── variables.css         # CSS custom properties (theme variables)
+│   │   └── main.css              # Main stylesheet
 │   ├── js/
-│   │   ├── theme.js            # Theme toggle logic
-│   │   └── app.js              # Main app logic
+│   │   ├── theme.js              # Theme toggle logic
+│   │   └── app.js                # Main app logic
 │   ├── icons/
-│   │   └── sprite.svg          # SVG icon sprite (30+ icons)
-│   └── pwa/                    # PWA icons (72x72 to 512x512)
+│   │   └── sprite.svg            # SVG icon sprite (30+ icons)
+│   ├── images/
+│   │   └── questions/            # Question diagram images
+│   │       └── {SUBJECT}-{PAPERCODE}-Q{N}.png
+│   └── pwa/                      # PWA icons (72x72 to 512x512)
 │
-├── _templates/                 # Reusable templates for new pages
-│   ├── base-structure.html     # HTML skeleton
-│   ├── variables.css           # CSS variables to copy
-│   └── README.md               # Template usage guide
+├── _templates/                   # Reusable templates for new pages
+│   ├── base-structure.html       # HTML skeleton
+│   ├── variables.css             # CSS variables to copy
+│   └── README.md                 # Template usage guide
 │
-├── _data/                      # Question data (JSON)
-│   ├── manifest.json           # Master index of subjects
-│   ├── CST201/                 # C Programming data
-│   │   ├── meta.json           # Subject metadata
-│   │   ├── 2021.json           # 2021 questions
-│   │   ├── 2022.json           # 2022 questions
-│   │   ├── 2023.json           # 2023 questions
-│   │   ├── 2024.json           # 2024 questions
-│   │   └── 2025.json           # 2025 questions
-│   ├── CST203/                 # Python data
-│   ├── CST205/                 # Data Structures data
-│   ├── CST207/                 # CSO data
-│   └── CST209/                 # Algorithms data
+├── _data/                        # Question data (JSON)
+│   ├── manifest.json             # Master index of all subjects and papers
+│   ├── CST201/                   # C Programming data
+│   │   ├── meta.json             # Subject metadata
+│   │   ├── registry.json         # Fixed paper registry for CST201
+│   │   ├── CST201-P001-2021-03.json   # March 2021 paper
+│   │   ├── CST201-P002-2022-06.json   # June 2022 paper
+│   │   ├── CST201-P003-2023-03.json   # March 2023 paper
+│   │   ├── CST201-P004-2024-01.json   # January 2024 paper
+│   │   └── CST201-P005-2024-12.json   # December 2024 paper
+│   ├── CST203/                   # Python data
+│   │   ├── meta.json
+│   │   ├── registry.json
+│   │   └── CST203-P001-YYYY-MM.json
+│   ├── CST205/                   # Data Structures data
+│   │   ├── meta.json
+│   │   ├── registry.json
+│   │   └── CST205-P001-YYYY-MM.json
+│   ├── CST207/                   # CSO data
+│   │   ├── meta.json
+│   │   ├── registry.json
+│   │   └── CST207-P001-YYYY-MM.json
+│   └── CST209/                   # Algorithms data
+│       ├── meta.json
+│       ├── registry.json
+│       └── CST209-P001-YYYY-MM.json
 │
-├── subjects/                   # Subject pages
-│   ├── CST201/                 # C Programming
-│   │   ├── index.html          # Subject home
+├── subjects/                     # Subject pages
+│   ├── CST201/                   # C Programming
+│   │   ├── index.html            # Subject home
 │   │   ├── index.css
 │   │   ├── index.js
 │   │   ├── units/
-│   │   │   ├── common.css      # Shared styles for all units
-│   │   │   ├── common.js       # Shared logic for all units
-│   │   │   ├── unit-1.html     # Unit 1 content
-│   │   │   ├── unit-2.html     # Unit 2 content
-│   │   │   └── ...
+│   │   │   ├── common.css        # Shared styles for all units
+│   │   │   ├── common.js         # Shared logic for all units
+│   │   │   ├── unit-1.html
+│   │   │   ├── unit-2.html
+│   │   │   ├── unit-3.html
+│   │   │   ├── unit-4.html
+│   │   │   └── unit-5.html
 │   │   └── resources/
 │   │       ├── formula-sheet.html
 │   │       ├── formula-sheet.css
 │   │       └── formula-sheet.js
-│   ├── CST203/                 # Python (same structure)
-│   ├── CST205/                 # Data Structures
-│   ├── CST207/                 # Computer System Organization
-│   └── CST209/                 # Algorithms
+│   ├── CST203/                   # Python (same structure)
+│   ├── CST205/                   # Data Structures
+│   ├── CST207/                   # Computer System Organization
+│   └── CST209/                   # Algorithms
 │
-├── practice/                   # Practice system
-│   ├── index.html              # Practice dashboard
+├── practice/                     # Practice system
+│   ├── index.html                # Practice dashboard
 │   ├── index.css
 │   ├── index.js
-│   ├── session.html            # Active practice session
+│   ├── session.html              # Active practice session
 │   ├── session.css
 │   └── session.js
 │
-├── quiz/                       # Quiz system
-│   ├── index.html              # Quiz selector
+├── quiz/                         # Quiz system
+│   ├── index.html                # Quiz selector
 │   ├── index.css
 │   ├── index.js
-│   ├── play.html               # Quiz session
+│   ├── play.html                 # Quiz session
 │   ├── play.css
 │   ├── play.js
-│   ├── result.html             # Quiz results
+│   ├── result.html               # Quiz results
 │   ├── result.css
 │   └── result.js
 │
-├── pyq/                        # Previous Year Questions
-│   ├── index.html              # Subject/year selector
+├── pyq/                          # Previous Year Questions
+│   ├── index.html                # Subject selector
 │   ├── index.css
 │   ├── index.js
-│   ├── viewer.html             # Question viewer
+│   ├── viewer.html               # Question viewer
 │   ├── viewer.css
 │   └── viewer.js
 │
-├── roadmap/                    # 30-day revision roadmap
+├── roadmap/                      # 30-day revision roadmap
 │   ├── index.html
 │   ├── index.css
 │   └── index.js
 │
-├── bookmarks/                  # Saved pages viewer
+├── bookmarks/                    # Saved pages viewer
 │   ├── index.html
 │   ├── index.css
 │   └── index.js
 │
-├── suggestions/                # Study tips
-│   ├── index.html              # Subject selector
+├── suggestions/                  # Study tips
+│   ├── index.html                # Subject selector
 │   ├── index.css
 │   ├── index.js
 │   └── subjects/
@@ -251,84 +269,254 @@ Diploma-3rd-sem/
 │       │   └── tips.js
 │       └── ...
 │
-├── info/                       # Information pages
-│   ├── about.html              # About the app
+├── info/                         # Information pages
+│   ├── about.html
 │   ├── about.css
-│   ├── usage-guide.html        # How to use
+│   ├── usage-guide.html
 │   ├── usage-guide.css
-│   ├── contact.html            # Contact/Feedback
+│   ├── contact.html
 │   ├── contact.css
-│   ├── credits.html            # Credits
+│   ├── credits.html
 │   └── credits.css
 │
-└── _dev/                       # Development files (not for production)
-    ├── README.md               # Development notes
-    ├── chat-progress.md        # Multi-chat build tracker
-    ├── structure-notes.md      # Architecture decisions
-    └── todo.txt                # Future improvements
+└── _dev/                         # Development files (not for production)
+    ├── README.md                 # Development notes
+    ├── chat-progress.md          # Multi-chat build tracker
+    ├── structure-notes.md        # Architecture decisions
+    └── todo.txt                  # Future improvements
 ```
 
 ---
 
-## 🎨 Design Philosophy
+## 📋 Paper Registry System
 
-### 1. Self-Contained Pages
-Each page owns its complete functionality (HTML + CSS + JS). No complex cross-dependencies.
+### Why a Fixed Registry?
 
-### 2. Template-Based Development
-Build foundation once, copy template structure for consistency across all new pages.
+Each exam paper is assigned a **permanent paper code** (`P001`, `P002`, etc.) per subject.
+This code never changes — it is the stable key used across:
+- JSON file names
+- JavaScript fetch calls
+- Service Worker cache entries
+- localStorage references
+- PYQ viewer filters
 
-### 3. Unified Data Structure
-One JSON file per subject per year. Same questions filtered multiple ways:
-- **By year** → PYQ viewer
-- **By day** → Practice system  
-- **By difficulty** → Quiz system
-- **By unit** → Unit quizzes
+### File Naming Convention
 
-### 4. No External Dependencies
-- No npm packages
-- No build tools
-- No frameworks
-- Pure web standards
+```
+{SUBJECT_CODE}-{PAPER_CODE}-{YEAR}-{MONTH_2DIGIT}.json
+```
 
-### 5. Mobile-First Responsive
-Designed for mobile, enhanced for desktop. Touch-friendly UI with bottom navigation.
+**Examples:**
+```
+CST201-P001-2021-03.json   ← March 2021
+CST201-P002-2022-06.json   ← June 2022
+CST201-P003-2023-03.json   ← March 2023
+CST201-P004-2024-01.json   ← January 2024
+CST201-P005-2024-12.json   ← December 2024
+```
+
+### Rules
+- Paper codes are assigned **per subject** independently
+- Codes are assigned in order of **year ascending → month ascending**
+- Same year, different month = different paper code
+- Once assigned, a paper code is **permanent and never renamed**
+- New papers discovered later get the **next available code** (append-only)
+
+### CST201 — Registered Papers
+
+| Paper Code | File Name | Source Code | Year | Month |
+|------------|-----------|-------------|------|-------|
+| P001 | CST201-P001-2021-03.json | 332(S) | 2021 | March |
+| P002 | CST201-P002-2022-06.json | 307/1(N) | 2022 | June |
+| P003 | CST201-P003-2023-03.json | 307/1(N) | 2023 | March |
+| P004 | CST201-P004-2024-01.json | 307/1(N) | 2024 | January |
+| P005 | CST201-P005-2024-12.json | 307/1(N) | 2024 | December |
+
+### Registry File Format (`_data/CST201/registry.json`)
+
+```json
+{
+  "subject": "CST201",
+  "totalPapers": 5,
+  "papers": [
+    {
+      "paperIndex": 1,
+      "paperCode": "P001",
+      "fileName": "CST201-P001-2021-03.json",
+      "sourcePaperCode": "332(S)",
+      "year": 2021,
+      "month": "March",
+      "monthNumber": 3
+    },
+    {
+      "paperIndex": 2,
+      "paperCode": "P002",
+      "fileName": "CST201-P002-2022-06.json",
+      "sourcePaperCode": "307/1(N)",
+      "year": 2022,
+      "month": "June",
+      "monthNumber": 6
+    },
+    {
+      "paperIndex": 3,
+      "paperCode": "P003",
+      "fileName": "CST201-P003-2023-03.json",
+      "sourcePaperCode": "307/1(N)",
+      "year": 2023,
+      "month": "March",
+      "monthNumber": 3
+    },
+    {
+      "paperIndex": 4,
+      "paperCode": "P004",
+      "fileName": "CST201-P004-2024-01.json",
+      "sourcePaperCode": "307/1(N)",
+      "year": 2024,
+      "month": "January",
+      "monthNumber": 1
+    },
+    {
+      "paperIndex": 5,
+      "paperCode": "P005",
+      "fileName": "CST201-P005-2024-12.json",
+      "sourcePaperCode": "307/1(N)",
+      "year": 2024,
+      "month": "December",
+      "monthNumber": 12
+    }
+  ]
+}
+```
 
 ---
 
 ## 🎯 Data Structure
 
-### Question Format
+### Question File Format
 
-Every question in `_data/` follows this schema:
+Every question JSON file follows this root structure:
 
 ```json
 {
-  "id": "CST205-2023-Q1",
-  "unit": 2,
-  "topic": "Stack Operations",
-  "question": "What is a Stack? Explain PUSH and POP operations.",
-  "answer": "A Stack is a linear data structure that follows LIFO...",
-  "marks": 6,
-  "type": "theory",
-  "difficulty": "easy",
-  "year": 2023,
-  "image": null
+  "subject": "CST201",
+  "paperIndex": 5,
+  "paperCode": "P005",
+  "fileName": "CST201-P005-2024-12.json",
+  "sourcePaperCode": "307/1(N)",
+  "year": 2024,
+  "month": "December",
+  "monthNumber": 12,
+  "totalQuestions": 24,
+  "questions": [...]
 }
 ```
 
-### Subject Metadata (`_data/CST205/meta.json`)
+### Question Object Schema
 
 ```json
 {
-  "code": "CST205",
-  "name": "Data Structures",
+  "id": "CST201-P005-Q1",
+  "paperCode": "P005",
+  "paperIndex": 5,
+  "unit": 2,
+  "topic": "Operator Precedence",
+  "question": "What is operator precedence? Explain with example.",
+  "answer": "Operator precedence defines the order...",
+  "marks": 6,
+  "type": "theory",
+  "difficulty": "easy",
+  "year": 2024,
+  "month": "December",
+  "monthNumber": 12,
+  "hasImage": false,
+  "image": null,
+  "tags": ["c-programming", "operators", "operator-precedence"],
+  "practiceDay": 2
+}
+```
+
+### Question Image Path Convention
+
+If a question has a diagram:
+```
+"hasImage": true,
+"image": "assets/images/questions/CST201-P005-Q3.png"
+```
+
+Image files are stored at:
+```
+assets/images/questions/{SUBJECT}-{PAPERCODE}-Q{NUMBER}.png
+```
+
+### Subject Metadata (`_data/CST201/meta.json`)
+
+```json
+{
+  "code": "CST201",
+  "name": "Computer Programming in C",
   "credits": 2,
+  "totalUnits": 5,
   "units": [
     {
       "unit": 1,
-      "title": "Introduction to Data Structures",
-      "topics": ["Basic Terminology", "Classification"]
+      "title": "Introduction to C Programming",
+      "topics": ["History of C", "Data Types", "Operators"]
+    },
+    {
+      "unit": 2,
+      "title": "Control Flow",
+      "topics": ["if-else", "loops", "switch-case"]
+    }
+  ]
+}
+```
+
+### Master Data Manifest (`_data/manifest.json`)
+
+```json
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-01",
+  "subjects": [
+    {
+      "code": "CST201",
+      "name": "Computer Programming in C",
+      "credits": 2,
+      "totalUnits": 5,
+      "registryFile": "_data/CST201/registry.json",
+      "totalPapers": 5
+    },
+    {
+      "code": "CST203",
+      "name": "Scripting Languages (Python)",
+      "credits": 2,
+      "totalUnits": 5,
+      "registryFile": "_data/CST203/registry.json",
+      "totalPapers": 0
+    },
+    {
+      "code": "CST205",
+      "name": "Data Structures",
+      "credits": 2,
+      "totalUnits": 4,
+      "registryFile": "_data/CST205/registry.json",
+      "totalPapers": 0
+    },
+    {
+      "code": "CST207",
+      "name": "Computer System Organization",
+      "credits": 4,
+      "totalUnits": 5,
+      "registryFile": "_data/CST207/registry.json",
+      "totalPapers": 0
+    },
+    {
+      "code": "CST209",
+      "name": "Algorithms",
+      "credits": 4,
+      "totalUnits": 5,
+      "registryFile": "_data/CST209/registry.json",
+      "totalPapers": 0
     }
   ]
 }
@@ -344,19 +532,19 @@ The app stores user data locally:
 {
   // Theme preference
   "diploma-3rd-sem-theme": "dark",
-  
+
   // First launch flag
   "diploma-3rd-sem-first-launch": true,
-  
+
   // Student name
   "diploma-3rd-sem-student-name": "Rahul",
-  
+
   // Last visited subject
   "diploma-3rd-sem-last-visited": {
-    "subjectCode": "CST205",
+    "subjectCode": "CST201",
     "timestamp": 1705334400000
   },
-  
+
   // Bookmarked pages
   "diploma-3rd-sem-bookmarks": [
     {
@@ -366,13 +554,13 @@ The app stores user data locally:
       "timestamp": 1705334400000
     }
   ],
-  
-  // Practice progress
+
+  // Practice progress per day
   "diploma-3rd-sem-practice-progress": {
     "day1": { "completed": true, "score": 8, "total": 10 },
     "day2": { "completed": false }
   },
-  
+
   // Quiz scores
   "diploma-3rd-sem-quiz-scores": [
     {
@@ -382,7 +570,16 @@ The app stores user data locally:
       "total": 10,
       "date": "2025-01-15"
     }
-  ]
+  ],
+
+  // PYQ last selected filter
+  "diploma-3rd-sem-pyq-last-filter": {
+    "subject": "CST201",
+    "paperCode": "P005",
+    "year": 2024,
+    "month": "December",
+    "monthNumber": 12
+  }
 }
 ```
 
@@ -440,7 +637,7 @@ This project is designed to be built across multiple AI chat sessions:
 | **Chat 4** | CST205 | Data Structures subject with all units |
 | **Chat 5** | CST207 | Computer System Organization subject |
 | **Chat 6** | CST209 | Algorithms subject |
-| **Chat 7** | PYQ System | Complete PYQ viewer with filtering |
+| **Chat 7** | PYQ System | Complete PYQ viewer with paper registry support |
 | **Chat 8** | Practice | Day-wise practice system |
 | **Chat 9** | Quiz | Quiz system with results |
 | **Chat 10** | Roadmap + Misc | Roadmap, bookmarks, suggestions, info |
@@ -453,10 +650,18 @@ This project is designed to be built across multiple AI chat sessions:
 3. Link to `common.css` and add inline styles if needed
 4. Save as `subjects/SUBJECT/units/unit-X.html`
 
-**To add questions:**
-1. Open `_data/SUBJECT/YEAR.json`
-2. Add question object following the schema
-3. Question automatically appears in PYQ, Practice, Quiz
+**To add a new paper (questions):**
+1. Register the paper first by adding it to `_data/SUBJECT/registry.json`
+2. Assign the next available `paperCode` (P006, P007, etc.)
+3. Create the file using the exact `fileName` from registry
+4. File name must follow: `{SUBJECT}-{PAPERCODE}-{YEAR}-{MONTH_2DIGIT}.json`
+5. Add question objects following the full schema
+6. Update `_data/manifest.json` to increment `totalPapers`
+7. Questions automatically appear in PYQ viewer, Practice, and Quiz
+
+**To add a question image:**
+1. Save image as `assets/images/questions/{SUBJECT}-{PAPERCODE}-Q{N}.png`
+2. Set `"hasImage": true` and `"image": "assets/images/questions/..."` in the question object
 
 **To add a new page:**
 1. Use template structure
@@ -471,7 +676,7 @@ This project is designed to be built across multiple AI chat sessions:
 ### Contributing Content
 
 You can help by:
-- Adding more questions to `_data/` files
+- Adding more question files to `_data/` following the paper registry system
 - Improving explanations in unit pages
 - Adding solved examples
 - Creating formula sheets
@@ -480,9 +685,11 @@ You can help by:
 ### Question Guidelines
 
 When adding questions:
+- Always register the paper in `registry.json` first
+- Use the permanent `paperCode` in file name and all question `id` fields
 - Use clear, concise language
 - Provide complete answers
-- Tag with correct unit and topic
+- Tag with correct unit, topic, and practiceDay
 - Set appropriate difficulty
 - Include marks distribution
 
@@ -550,13 +757,13 @@ This project is created for **educational purposes** only.
 
 ### Credits
 
-**Developed for:**  
+**Developed for:**
 West Bengal State Council of Technical Education (WBSCTE)
 
-**Target Audience:**  
+**Target Audience:**
 Diploma 3rd Semester - Computer Science & Technology Students
 
-**Inspiration:**  
+**Inspiration:**
 Built to help students access quality study material anytime, anywhere, even offline.
 
 ---
@@ -577,7 +784,7 @@ Built to help students access quality study material anytime, anywhere, even off
 - **30** Days Roadmap
 - **100%** Offline Capable
 - **0** External Dependencies
-- **~211** Total Files (when complete)
+- **~215** Total Files (when complete)
 
 ---
 
@@ -599,6 +806,7 @@ Special thanks to:
 - ✅ PWA setup with offline support
 - ✅ SVG icon system
 - ✅ Template structure for future development
+- ✅ Paper registry system for stable file naming
 - ✅ Data schema and manifest setup
 
 ---
@@ -634,6 +842,8 @@ This app:
 
 ---
 
-**Version:** 1.0.0  
-**Last Updated:** January 2025  
+**Version:** 1.0.0
+**Last Updated:** January 2025
 **Status:** Active Development
+```
+
