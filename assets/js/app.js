@@ -1,27 +1,25 @@
 /**
  * Main Application Logic
  * Diploma 3rd Sem - Study Hub
- * Enhanced: Streak system, Toast notifications,
- * Today's Focus, Progress tracking, Accessibility
  */
 
 // ================================
 // App Configuration
 // ================================
 
-const APP_CONFIG = {
+var APP_CONFIG = {
   version: '1.0.0',
-  examDate: new Date(2027, 1, 15), // May 15, 2025 — update as needed
-  streakGracePeriodHours: 26,      // Allow slight delay before streak breaks
-  toastDuration: 3500,             // ms before toast auto-dismisses
-  skeletonDelay: 600,              // ms before replacing skeletons
+  examDate: new Date(2025, 4, 15),
+  streakGracePeriodHours: 26,
+  toastDuration: 3500,
+  skeletonDelay: 600
 };
 
 // ================================
 // App State
 // ================================
 
-const APP_STATE = {
+var APP_STATE = {
   studentName: '',
   lastVisited: {},
   subjects: [
@@ -31,7 +29,6 @@ const APP_STATE = {
       shortName: 'C Programming',
       credits: 2,
       units: 5,
-      icon: '💻',
       color: '#3b82f6',
       colorLight: '#60a5fa',
       colorRgb: '59, 130, 246',
@@ -43,7 +40,6 @@ const APP_STATE = {
       shortName: 'Python',
       credits: 2,
       units: 5,
-      icon: '🐍',
       color: '#10b981',
       colorLight: '#34d399',
       colorRgb: '16, 185, 129',
@@ -55,7 +51,6 @@ const APP_STATE = {
       shortName: 'Data Structures',
       credits: 2,
       units: 4,
-      icon: '📊',
       color: '#8b5cf6',
       colorLight: '#a78bfa',
       colorRgb: '139, 92, 246',
@@ -67,7 +62,6 @@ const APP_STATE = {
       shortName: 'CSO',
       credits: 4,
       units: 5,
-      icon: '⚙️',
       color: '#f59e0b',
       colorLight: '#fbbf24',
       colorRgb: '245, 158, 11',
@@ -79,7 +73,6 @@ const APP_STATE = {
       shortName: 'Algorithms',
       credits: 4,
       units: 5,
-      icon: '🧮',
       color: '#ec4899',
       colorLight: '#f472b6',
       colorRgb: '236, 72, 153',
@@ -87,39 +80,712 @@ const APP_STATE = {
     }
   ],
 
-  // 30-day roadmap focus data
-  // Each day: title + which subjects to focus on
+  // ================================
+  // 10-Day Theory Roadmap
+  // ================================
+
   roadmap: [
-    { day: 1,  title: 'C Basics & Python Intro',          subjects: ['CST201', 'CST203'] },
-    { day: 2,  title: 'C Control Flow & Python Syntax',   subjects: ['CST201', 'CST203'] },
-    { day: 3,  title: 'Functions in C & Python',          subjects: ['CST201', 'CST203'] },
-    { day: 4,  title: 'Arrays & Lists',                   subjects: ['CST201', 'CST203'] },
-    { day: 5,  title: 'Pointers & Python OOP Basics',     subjects: ['CST201', 'CST203'] },
-    { day: 6,  title: 'Structures & File Handling',       subjects: ['CST201', 'CST203'] },
-    { day: 7,  title: 'Revision — C & Python',            subjects: ['CST201', 'CST203'] },
-    { day: 8,  title: 'Intro to Data Structures',         subjects: ['CST205'] },
-    { day: 9,  title: 'Arrays & Linked Lists',            subjects: ['CST205'] },
-    { day: 10, title: 'Stacks & Queues',                  subjects: ['CST205'] },
-    { day: 11, title: 'Trees — Binary & BST',             subjects: ['CST205'] },
-    { day: 12, title: 'Graphs & Hashing',                 subjects: ['CST205'] },
-    { day: 13, title: 'DS Revision + PYQs',               subjects: ['CST205'] },
-    { day: 14, title: 'Mixed Revision — Week 2',          subjects: ['CST201', 'CST203', 'CST205'] },
-    { day: 15, title: 'Number Systems & Boolean Algebra', subjects: ['CST207'] },
-    { day: 16, title: 'Logic Gates & Combinational',      subjects: ['CST207'] },
-    { day: 17, title: 'Sequential Circuits',              subjects: ['CST207'] },
-    { day: 18, title: 'Memory & I/O Organization',        subjects: ['CST207'] },
-    { day: 19, title: 'CPU Architecture & Pipelining',    subjects: ['CST207'] },
-    { day: 20, title: 'CSO Revision + PYQs',              subjects: ['CST207'] },
-    { day: 21, title: 'Algorithm Analysis & Sorting',     subjects: ['CST209'] },
-    { day: 22, title: 'Divide & Conquer',                 subjects: ['CST209'] },
-    { day: 23, title: 'Greedy Algorithms',                subjects: ['CST209'] },
-    { day: 24, title: 'Dynamic Programming',              subjects: ['CST209'] },
-    { day: 25, title: 'Graph Algorithms',                 subjects: ['CST209'] },
-    { day: 26, title: 'Algorithms Revision + PYQs',       subjects: ['CST209'] },
-    { day: 27, title: 'Full Revision — All Subjects',     subjects: ['CST201', 'CST203', 'CST205', 'CST207', 'CST209'] },
-    { day: 28, title: 'PYQ Marathon — Day 1',             subjects: ['CST201', 'CST205'] },
-    { day: 29, title: 'PYQ Marathon — Day 2',             subjects: ['CST207', 'CST209'] },
-    { day: 30, title: 'Final Revision & Rest',            subjects: ['CST201', 'CST203', 'CST205', 'CST207', 'CST209'] },
+    {
+      day: 1,
+      theme: 'Foundations',
+      difficulty: 'easy',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'History of C',
+            'Structure of C program',
+            'C character set',
+            'Tokens',
+            'Constants',
+            'Variables',
+            'Keywords',
+            'Data types'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'History of Python',
+            'Features of Python',
+            'Basic Syntax',
+            'Variables',
+            'Numeric data types (int, float, complex)'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Basic Terminology',
+            'Classification of Data Structures',
+            'Operations on Data Structures'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Computer Functional units',
+            'Von-Neumann architecture',
+            'Bus structures',
+            'Basic Operational Concepts'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Definitions and Characteristics of Algorithm',
+            'Examples of Algorithms',
+            'Data Abstraction',
+            'Sets',
+            'Multisets'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 2,
+      theme: 'Operators, Expressions and Complexity',
+      difficulty: 'easy',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Arithmetic operators',
+            'Logical operators',
+            'Relational operators',
+            'Assignment operators',
+            'Bitwise operators',
+            'Ternary operator',
+            'Increment and Decrement operators',
+            'Operator precedence and Associativity',
+            'Formatted I/O',
+            'Type conversion',
+            'Typecasting'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'String data type',
+            'String operations',
+            'String methods',
+            'Unicode string literals',
+            'Converting between simple types',
+            'Converting to strings',
+            'String formatting',
+            'Understanding coding blocks',
+            'Tuples',
+            'Lists (defining and slicing)',
+            'Dictionary',
+            'All Operators'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Introduction to Stacks',
+            'Array Representation of Stacks',
+            'Stack Operations (Push and Pop)',
+            'Applications of Stacks',
+            'Infix-to-Postfix Transformation',
+            'Evaluating Postfix Expressions'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Data representation - Fixed point',
+            'Data representation - Floating point',
+            'Error detecting codes',
+            'Register Transfer',
+            'Memory transfers'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Asymptotic Notations - Big-O',
+            'Asymptotic Notations - Omega',
+            'Asymptotic Notations - Theta',
+            'Time Complexity',
+            'Space Complexity',
+            'Best case analysis',
+            'Average case analysis',
+            'Worst case analysis'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 3,
+      theme: 'Control Flow and Linear Data Structures',
+      difficulty: 'medium',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'if statement',
+            'if-else statement',
+            'else-if ladder',
+            'Nested if-else',
+            'Switch case statement',
+            'goto statement',
+            'while loop',
+            'do-while loop',
+            'for loop',
+            'Break and continue',
+            'Nested loops'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'if, else, elif blocks',
+            'For loops',
+            'While loops',
+            'break statement',
+            'continue statement',
+            'else in loops',
+            'pass statement'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Introduction to Queues',
+            'Array Representation of Queues',
+            'Queue Operations (Enqueue and Dequeue)',
+            'Circular Queue',
+            'De-Queue (Double Ended Queue)',
+            'Recursion - GCD',
+            'Recursion - Tower of Hanoi',
+            'Round Robin Algorithm'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Arithmetic micro-operations',
+            'Logic micro-operations',
+            'Shift micro-operations',
+            'Arithmetic logic shift unit'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Bubble Sort',
+            'Selection Sort',
+            'Insertion Sort',
+            'Shell Sort',
+            'Complexity analysis of basic sorts'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 4,
+      theme: 'Arrays, Strings and Advanced Sorting',
+      difficulty: 'medium',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Advantages of arrays',
+            'Declaration and initialization of 1D arrays',
+            'Declaration and initialization of 2D arrays',
+            'Character arrays',
+            'Strings in C',
+            'strlen()',
+            'strcpy()',
+            'strcat()',
+            'strcmp()',
+            'Substring extraction',
+            'String concatenation',
+            'String replacement'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'Defining functions',
+            'Calling functions',
+            'Pass by object reference',
+            'Function parameters',
+            'Arbitrary arguments',
+            'Optional arguments',
+            'Named arguments',
+            'Local scope',
+            'Nonlocal scope',
+            'Global scope'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Singly Linked List',
+            'Representation in Memory',
+            'Add node at beginning',
+            'Add node in between',
+            'Add node at end',
+            'Delete node at beginning',
+            'Delete node in between',
+            'Delete node at end',
+            'Circular Linked List operations'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Control memory',
+            'Address sequencing',
+            'Design of control unit',
+            'Addition algorithm',
+            'Subtraction algorithm'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Merge Sort',
+            'Quick Sort',
+            'Heapsort',
+            'Count Sort',
+            'Bucket Sort',
+            'Radix Sort',
+            'Complexity analysis of all sorting algorithms'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 5,
+      theme: 'Functions, Modules and Linked Lists',
+      difficulty: 'medium',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Definition of functions',
+            'Prototype declaration',
+            'Scope of variables',
+            'Lifetime of variables',
+            'Auto storage class',
+            'Extern storage class',
+            'Static storage class',
+            'Register storage class',
+            'Call by value',
+            'Call by reference'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'Importing own modules',
+            'Importing external modules',
+            'Packages',
+            'Passing arguments from a tuple',
+            'Class scope',
+            'Date and Time',
+            'Advanced string operations',
+            'List split',
+            'List join',
+            'List copying'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Doubly Linked List - add at beginning',
+            'Doubly Linked List - add in between',
+            'Doubly Linked List - add at end',
+            'Doubly Linked List - delete operations',
+            'Circular Double Linked List',
+            'Linked List Representation of Stack',
+            'Linked List Representation of Queue',
+            'Operations of Stack using Linked List'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Multiplication algorithm',
+            'Division algorithm',
+            'Floating-point arithmetic operation',
+            'Arithmetic Pipeline',
+            'Instruction Pipeline',
+            'RISC Pipeline'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Linear Search',
+            'Binary Search',
+            'Divide and Conquer strategy',
+            'Greedy Methods overview',
+            'Dynamic Programming overview'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 6,
+      theme: 'Recursion, File I/O and Trees',
+      difficulty: 'hard',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Recursion and memory stack',
+            'Types of recursion',
+            'Recursion vs Iteration',
+            'Applications of recursion'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'Accessing Keyboard Input - raw_input',
+            'Accessing Keyboard Input - input()',
+            'File modes and permissions',
+            'open() and close()',
+            'read() and readline()',
+            'readlines()',
+            'write() and writelines()',
+            'tell() and seek()',
+            'flush()',
+            'fileno()',
+            'isatty()',
+            'next()',
+            'Redirecting output streams to files'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Introduction to Trees',
+            'Basic Tree Terminologies',
+            'Definition and Concepts of Binary Trees',
+            'Array Representation of Binary Tree',
+            'Linked List Representation of Binary Tree',
+            'Insertion in Binary Tree',
+            'Deletion in Binary Tree',
+            'Inorder Traversal',
+            'Preorder Traversal',
+            'Postorder Traversal'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Vector Processing',
+            'Array Processors',
+            'Introduction to Intel 8086',
+            'Block diagram of 8086',
+            'Pin functions of 8086',
+            'Register structure of 8086',
+            'Segmentation'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Binary Search Trees',
+            'BST Algorithms',
+            'BST Searching - Time and Space Complexity',
+            'Balanced Search Trees',
+            'Hashing',
+            'Hash Tables',
+            'Hash functions',
+            'Collision resolution techniques',
+            'Symbol Tables'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 7,
+      theme: 'Pointers, Regex and Advanced Trees',
+      difficulty: 'hard',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Understanding Pointers',
+            'Null Pointers',
+            'Generic Pointers',
+            'Pointer arithmetic',
+            'Pointers and arrays',
+            'Passing array to function',
+            'Array name and Pointer',
+            'Pointers and Strings',
+            'Array of pointers',
+            'Constant pointers',
+            'Pointer to a constant',
+            'Function pointers',
+            'Pointer to a pointer'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            're.match()',
+            're.search()',
+            're.findall()',
+            're.finditer()',
+            're.compile()',
+            're.sub()',
+            're.split()'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Types of Binary Trees',
+            'B-Tree',
+            'AVL Tree',
+            'Introduction to Graphs',
+            'Graph Terminologies',
+            'Set Representation of Graphs',
+            'Linked Representation of Graphs',
+            'Matrix Representation of Graphs'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Interrupt mechanism',
+            'Addressing modes of 8086',
+            'Instructions of 8086',
+            'Simple Assembly programs',
+            'Logical instructions',
+            'Branch instructions',
+            'Call instructions'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Directed graphs',
+            'Undirected graphs',
+            'Paths and Cycles',
+            'Spanning trees',
+            'Directed Acyclic Graphs',
+            'Topological Sorting'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 8,
+      theme: 'Dynamic Memory, Django and Graph Algorithms',
+      difficulty: 'hard',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Dynamic memory allocation - malloc()',
+            'Dynamic memory allocation - calloc()',
+            'Dynamic memory allocation - realloc()',
+            'free()',
+            'Pointer to a structure'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'What is Django',
+            'MVC framework',
+            'Creating URL in Django',
+            'Django Templates',
+            'Sending data to template',
+            'Creating HTML forms',
+            'Handling form data',
+            'Creating Django forms',
+            'Form Validation',
+            'Model-based forms',
+            'Display object lists in templates',
+            'Filters in templates',
+            'Base templates',
+            'Inserting static files',
+            'Validating and manipulating data',
+            'Widget usage',
+            'Customizing error messages'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Breadth First Search - BFS',
+            'Depth First Search - DFS',
+            'Applications of BFS',
+            'Applications of DFS'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Assembly programs for sorting',
+            'Evaluation of arithmetic expressions in Assembly',
+            'String manipulation in Assembly',
+            'Assembler directives',
+            'Procedures in Assembly',
+            'Macros in Assembly'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Minimum Spanning Tree - Prims Algorithm',
+            'Minimum Spanning Tree - Kruskals Algorithm',
+            'MST examples and trace'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 9,
+      theme: 'Complete Remaining Topics',
+      difficulty: 'hard',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Complete Unit 5 review',
+            'All pointer types revision',
+            'DMA complete revision',
+            'Structure with pointers'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'Django Advanced complete revision',
+            'Complete Unit 5 review'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Dijkstras Shortest Path Algorithm',
+            'Bellman-Ford Algorithm',
+            'Floyd-Warshall all pairs shortest path',
+            'Complete Unit 4 revision'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Memory and Digital Interfacing',
+            'Addressing and address decoding',
+            'Interfacing RAM',
+            'Interfacing ROM',
+            'Interfacing EPROM',
+            'Programmable Peripheral Interface',
+            'Cache Memory - Mapping',
+            'Cache Memory - Hit ratio',
+            'Virtual Memory',
+            'Logical address vs Physical address',
+            'Translation Lookaside Buffer (TLB)'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'String Sort',
+            'Tries',
+            'Search a Substring within a string',
+            'Naive String Matching Algorithm',
+            'Rabin-Karp Algorithm',
+            'Knuth-Morris-Pratt (KMP) Algorithm',
+            'Horspool String Matching Algorithm',
+            'Boyer-Moore String Matching Algorithm',
+            'Regular Expressions in Algorithms',
+            'Elementary Data Compression',
+            'Shortest Path - Dijkstras Algorithm',
+            'Shortest Path - Bellman-Ford',
+            'Shortest Path - Floyd-Warshall'
+          ]
+        }
+      ]
+    },
+
+    {
+      day: 10,
+      theme: 'Full Theory Revision',
+      difficulty: 'medium',
+      subjects: [
+        {
+          code: 'CST201',
+          topics: [
+            'Data types revision',
+            'Operators revision',
+            'Control flow revision',
+            'Arrays and Strings revision',
+            'Functions revision',
+            'Recursion revision',
+            'Pointers revision',
+            'Dynamic Memory revision'
+          ]
+        },
+        {
+          code: 'CST203',
+          topics: [
+            'Data types revision',
+            'String formatting revision',
+            'Control flow revision',
+            'Functions and Modules revision',
+            'File I/O revision',
+            'Regular Expressions revision',
+            'Django revision'
+          ]
+        },
+        {
+          code: 'CST205',
+          topics: [
+            'Stack revision',
+            'Queue revision',
+            'Linked Lists revision',
+            'Trees revision',
+            'Graphs revision',
+            'Hashing revision',
+            'Shortest paths revision'
+          ]
+        },
+        {
+          code: 'CST207',
+          topics: [
+            'Computer Architecture revision',
+            'Data representation revision',
+            'Micro-operations revision',
+            'Pipelining revision',
+            '8086 revision',
+            'Assembly Language revision',
+            'Memory Organization revision'
+          ]
+        },
+        {
+          code: 'CST209',
+          topics: [
+            'Complexity analysis revision',
+            'Sorting algorithms revision',
+            'Searching algorithms revision',
+            'Graph algorithms revision',
+            'String matching revision',
+            'Data compression revision'
+          ]
+        }
+      ]
+    }
   ]
 };
 
@@ -127,7 +793,7 @@ const APP_STATE = {
 // LocalStorage Management
 // ================================
 
-const Storage = {
+var Storage = {
   keys: {
     firstLaunch:      'diploma-3rd-sem-first-launch',
     studentName:      'diploma-3rd-sem-student-name',
@@ -137,12 +803,12 @@ const Storage = {
     quizScores:       'diploma-3rd-sem-quiz-scores',
     streak:           'diploma-3rd-sem-streak',
     lastStudyDate:    'diploma-3rd-sem-last-study-date',
-    roadmapStartDate: 'diploma-3rd-sem-roadmap-start',
+    roadmapStartDate: 'diploma-3rd-sem-roadmap-start'
   },
 
-  get(key) {
+  get: function(key) {
     try {
-      const value = localStorage.getItem(key);
+      var value = localStorage.getItem(key);
       return value ? JSON.parse(value) : null;
     } catch (e) {
       console.error('[Storage] get error:', e);
@@ -150,7 +816,7 @@ const Storage = {
     }
   },
 
-  set(key, value) {
+  set: function(key, value) {
     try {
       localStorage.setItem(key, JSON.stringify(value));
       return true;
@@ -160,7 +826,7 @@ const Storage = {
     }
   },
 
-  remove(key) {
+  remove: function(key) {
     try {
       localStorage.removeItem(key);
       return true;
@@ -170,9 +836,12 @@ const Storage = {
     }
   },
 
-  clear() {
+  clear: function() {
     try {
-      Object.values(this.keys).forEach(key => this.remove(key));
+      var self = this;
+      Object.values(self.keys).forEach(function(key) {
+        self.remove(key);
+      });
       return true;
     } catch (e) {
       console.error('[Storage] clear error:', e);
@@ -185,87 +854,76 @@ const Storage = {
 // Toast Notification System
 // ================================
 
-const Toast = {
+var Toast = {
   container: null,
-  queue: [],
 
   icons: {
-    success: '✅',
-    error:   '❌',
-    warning: '⚠️',
-    info:    'ℹ️'
+    success: 'check',
+    error:   'close',
+    warning: 'info',
+    info:    'info'
   },
 
-  init() {
+  init: function() {
     this.container = document.getElementById('toastContainer');
   },
 
-  show(message, type = 'info', duration = APP_CONFIG.toastDuration) {
+  show: function(message, type, duration) {
+    type     = type || 'info';
+    duration = duration || APP_CONFIG.toastDuration;
+
     if (!this.container) {
-      // Fallback if container not ready
-      console.log(`[Toast ${type}] ${message}`);
+      console.log('[Toast ' + type + '] ' + message);
       return;
     }
 
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
+    var iconName = this.icons[type] || 'info';
+    var toast    = document.createElement('div');
+    toast.className = 'toast ' + type;
     toast.setAttribute('role', 'alert');
     toast.setAttribute('aria-live', 'assertive');
 
-    toast.innerHTML = `
-      <span class="toast-icon" aria-hidden="true">${this.icons[type] || 'ℹ️'}</span>
-      <span class="toast-message">${this._escapeHtml(message)}</span>
-      <button class="toast-close" aria-label="Dismiss notification">×</button>
-    `;
+    toast.innerHTML =
+      '<span class="toast-icon" aria-hidden="true">' +
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#' + iconName + '"></use></svg>' +
+      '</span>' +
+      '<span class="toast-message">' + this._escapeHtml(message) + '</span>' +
+      '<button class="toast-close" aria-label="Dismiss notification">' +
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#close"></use></svg>' +
+      '</button>';
 
-    // Close button
-    const closeBtn = toast.querySelector('.toast-close');
-    closeBtn.addEventListener('click', () => this._dismiss(toast));
+    var self     = this;
+    var closeBtn = toast.querySelector('.toast-close');
+    closeBtn.addEventListener('click', function() {
+      self._dismiss(toast);
+    });
 
     this.container.appendChild(toast);
 
-    // Auto dismiss
-    const timer = setTimeout(() => this._dismiss(toast), duration);
-
-    // Store timer on element for early dismissal
+    var timer    = setTimeout(function() { self._dismiss(toast); }, duration);
     toast._timer = timer;
 
     return toast;
   },
 
-  _dismiss(toast) {
+  _dismiss: function(toast) {
     if (!toast || toast._removing) return;
     toast._removing = true;
-
     clearTimeout(toast._timer);
     toast.classList.add('removing');
-
-    toast.addEventListener('animationend', () => {
+    toast.addEventListener('animationend', function() {
       toast.remove();
     }, { once: true });
-
-    // Fallback remove if animation doesn't fire
-    setTimeout(() => toast.remove(), 400);
+    setTimeout(function() { toast.remove(); }, 400);
   },
 
-  success(message, duration) {
-    return this.show(message, 'success', duration);
-  },
+  success: function(message, duration) { return this.show(message, 'success', duration); },
+  error:   function(message, duration) { return this.show(message, 'error',   duration); },
+  warning: function(message, duration) { return this.show(message, 'warning', duration); },
+  info:    function(message, duration) { return this.show(message, 'info',    duration); },
 
-  error(message, duration) {
-    return this.show(message, 'error', duration);
-  },
-
-  warning(message, duration) {
-    return this.show(message, 'warning', duration);
-  },
-
-  info(message, duration) {
-    return this.show(message, 'info', duration);
-  },
-
-  _escapeHtml(str) {
-    const div = document.createElement('div');
+  _escapeHtml: function(str) {
+    var div = document.createElement('div');
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
   }
@@ -275,96 +933,55 @@ const Toast = {
 // Streak System
 // ================================
 
-const Streak = {
+var Streak = {
 
-  /**
-   * Get current streak data from storage
-   */
-  getData() {
-    return Storage.get(Storage.keys.streak) || {
-      count: 0,
-      lastDate: null
-    };
+  getData: function() {
+    return Storage.get(Storage.keys.streak) || { count: 0, lastDate: null };
   },
 
-  /**
-   * Save streak data
-   */
-  saveData(data) {
+  saveData: function(data) {
     Storage.set(Storage.keys.streak, data);
   },
 
-  /**
-   * Get today's date string YYYY-MM-DD
-   */
-  todayString() {
+  todayString: function() {
     return new Date().toISOString().split('T')[0];
   },
 
-  /**
-   * Get yesterday's date string YYYY-MM-DD
-   */
-  yesterdayString() {
-    const d = new Date();
+  yesterdayString: function() {
+    var d = new Date();
     d.setDate(d.getDate() - 1);
     return d.toISOString().split('T')[0];
   },
 
-  /**
-   * Record that user studied today.
-   * Call this when user opens a subject or completes practice.
-   */
-  recordStudy() {
-    const data  = this.getData();
-    const today = this.todayString();
-    const yesterday = this.yesterdayString();
+  recordStudy: function() {
+    var data      = this.getData();
+    var today     = this.todayString();
+    var yesterday = this.yesterdayString();
 
-    // Already recorded today — no change
-    if (data.lastDate === today) return data;
-
-    if (data.lastDate === yesterday) {
-      // Continued from yesterday — increment
-      data.count++;
-    } else if (data.lastDate === null) {
-      // First ever study
-      data.count = 1;
-    } else {
-      // Gap detected — reset streak
-      data.count = 1;
-    }
+    if (data.lastDate === today)      return data;
+    if (data.lastDate === yesterday)  { data.count++; }
+    else if (data.lastDate === null)  { data.count = 1; }
+    else                              { data.count = 1; }
 
     data.lastDate = today;
     this.saveData(data);
-
     return data;
   },
 
-  /**
-   * Check if streak is still alive.
-   * Streak breaks if last study was before yesterday.
-   */
-  isAlive() {
-    const data = this.getData();
+  isAlive: function() {
+    var data = this.getData();
     if (!data.lastDate) return false;
-
-    const today     = this.todayString();
-    const yesterday = this.yesterdayString();
-
+    var today     = this.todayString();
+    var yesterday = this.yesterdayString();
     return data.lastDate === today || data.lastDate === yesterday;
   },
 
-  /**
-   * Get current streak count (0 if broken)
-   */
-  getCount() {
+  getCount: function() {
     if (!this.isAlive()) return 0;
     return this.getData().count;
   },
 
-  /**
-   * Reset streak (used in app reset)
-   */
-  reset() {
+  reset: function() {
     this.saveData({ count: 0, lastDate: null });
   }
 };
@@ -373,48 +990,34 @@ const Streak = {
 // Roadmap Day Calculator
 // ================================
 
-const Roadmap = {
+var Roadmap = {
 
-  /**
-   * Get or create the roadmap start date.
-   * Start date = first time user launched the app.
-   */
-  getStartDate() {
-    const saved = Storage.get(Storage.keys.roadmapStartDate);
+  getStartDate: function() {
+    var saved = Storage.get(Storage.keys.roadmapStartDate);
     if (saved) return new Date(saved);
-
-    // First launch — set start date to today
-    const today = new Date();
+    var today = new Date();
     today.setHours(0, 0, 0, 0);
     Storage.set(Storage.keys.roadmapStartDate, today.toISOString());
     return today;
   },
 
-  /**
-   * Get current roadmap day (1–30).
-   * Returns null if beyond day 30.
-   */
-  getCurrentDay() {
-    const start = this.getStartDate();
-    const today = new Date();
+  getCurrentDay: function() {
+    var start = this.getStartDate();
+    var today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    const diffMs   = today - start;
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    const day      = diffDays + 1; // Day 1 on launch day
-
+    var diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+    var day = diffDays + 1;
     if (day < 1)  return 1;
-    if (day > 30) return null; // Roadmap complete
+    if (day > 10) return null;
     return day;
   },
 
-  /**
-   * Get today's roadmap entry
-   */
-  getTodayEntry() {
-    const day = this.getCurrentDay();
+  getTodayEntry: function() {
+    var day = this.getCurrentDay();
     if (!day) return null;
-    return APP_STATE.roadmap.find(r => r.day === day) || null;
+    return APP_STATE.roadmap.find(function(r) {
+      return r.day === day;
+    }) || null;
   }
 };
 
@@ -422,83 +1025,77 @@ const Roadmap = {
 // Welcome Screen
 // ================================
 
-class WelcomeScreen {
-  constructor() {
-    this.screen       = document.getElementById('welcomeScreen');
-    this.appContainer = document.getElementById('appContainer');
-    this.startBtn     = document.getElementById('startBtn');
-    this.nameInput    = document.getElementById('studentName');
-
-    this.init();
-  }
-
-  init() {
-    const hasLaunched = Storage.get(Storage.keys.firstLaunch);
-
-    if (hasLaunched) {
-      this.hideWelcome();
-      this.showApp();
-    } else {
-      this.setupEventListeners();
-    }
-  }
-
-  setupEventListeners() {
-    if (this.startBtn) {
-      this.startBtn.addEventListener('click', () => this.handleStart());
-    }
-
-    if (this.nameInput) {
-      this.nameInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') this.handleStart();
-      });
-
-      // Focus name input after welcome animation
-      setTimeout(() => {
-        if (this.nameInput) this.nameInput.focus();
-      }, 700);
-    }
-  }
-
-  handleStart() {
-    const rawName = this.nameInput ? this.nameInput.value.trim() : '';
-    const name    = rawName.length > 0 ? rawName : 'Student';
-
-    // Sanitize — strip HTML tags
-    const safeName = name.replace(/<[^>]*>/g, '').slice(0, 20);
-
-    Storage.set(Storage.keys.studentName, safeName);
-    Storage.set(Storage.keys.firstLaunch, true);
-    APP_STATE.studentName = safeName;
-
-    // Record first study day for streak + roadmap
-    Streak.recordStudy();
-
-    // Animate button
-    if (this.startBtn) {
-      this.startBtn.style.opacity = '0.7';
-      this.startBtn.disabled = true;
-    }
-
-    this.hideWelcome();
-    setTimeout(() => this.showApp(), 350);
-  }
-
-  hideWelcome() {
-    if (this.screen) {
-      this.screen.classList.add('hidden');
-      // Remove from accessibility tree
-      this.screen.setAttribute('aria-hidden', 'true');
-    }
-  }
-
-  showApp() {
-    if (this.appContainer) {
-      this.appContainer.classList.remove('hidden');
-      initApp();
-    }
-  }
+function WelcomeScreen() {
+  this.screen       = document.getElementById('welcomeScreen');
+  this.appContainer = document.getElementById('appContainer');
+  this.startBtn     = document.getElementById('startBtn');
+  this.nameInput    = document.getElementById('studentName');
+  this.init();
 }
+
+WelcomeScreen.prototype.init = function() {
+  var hasLaunched = Storage.get(Storage.keys.firstLaunch);
+  if (hasLaunched) {
+    this.hideWelcome();
+    this.showApp();
+  } else {
+    this.setupEventListeners();
+  }
+};
+
+WelcomeScreen.prototype.setupEventListeners = function() {
+  var self = this;
+
+  if (this.startBtn) {
+    this.startBtn.addEventListener('click', function() {
+      self.handleStart();
+    });
+  }
+
+  if (this.nameInput) {
+    this.nameInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') self.handleStart();
+    });
+    setTimeout(function() {
+      if (self.nameInput) self.nameInput.focus();
+    }, 700);
+  }
+};
+
+WelcomeScreen.prototype.handleStart = function() {
+  var rawName  = this.nameInput ? this.nameInput.value.trim() : '';
+  var name     = rawName.length > 0 ? rawName : 'Student';
+  var safeName = name.replace(/<[^>]*>/g, '').slice(0, 20);
+
+  Storage.set(Storage.keys.studentName, safeName);
+  Storage.set(Storage.keys.firstLaunch, true);
+  APP_STATE.studentName = safeName;
+
+  Streak.recordStudy();
+
+  if (this.startBtn) {
+    this.startBtn.style.opacity = '0.7';
+    this.startBtn.disabled = true;
+  }
+
+  this.hideWelcome();
+  var self = this;
+  setTimeout(function() { self.showApp(); }, 350);
+};
+
+WelcomeScreen.prototype.hideWelcome = function() {
+  if (this.screen) {
+    this.screen.classList.add('hidden');
+    this.screen.setAttribute('aria-hidden', 'true');
+  }
+};
+
+WelcomeScreen.prototype.showApp = function() {
+  if (this.appContainer) {
+    this.appContainer.classList.remove('hidden');
+    initApp();
+  }
+};
 
 // ================================
 // Main App Initialization
@@ -517,13 +1114,10 @@ function initApp() {
   setupMenu();
   scheduleNextMidnightUpdate();
 
-  // Render subjects after brief delay
-  // Gives skeleton loaders time to show
-  setTimeout(() => {
+  setTimeout(function() {
     renderSubjects();
   }, APP_CONFIG.skeletonDelay);
 
-  // Update streak — user opened the app
   Streak.recordStudy();
 }
 
@@ -532,7 +1126,7 @@ function initApp() {
 // ================================
 
 function loadStudentName() {
-  const name = Storage.get(Storage.keys.studentName);
+  var name = Storage.get(Storage.keys.studentName);
   APP_STATE.studentName = name || 'Student';
 }
 
@@ -541,41 +1135,36 @@ function loadStudentName() {
 // ================================
 
 function renderGreeting() {
-  const hour = new Date().getHours();
+  var hour = new Date().getHours();
 
-  const greetings = [
-    { range: [5,  12], text: 'Good Morning',   emoji: '🌅' },
-    { range: [12, 17], text: 'Good Afternoon',  emoji: '☀️' },
-    { range: [17, 21], text: 'Good Evening',    emoji: '🌆' },
-    { range: [21, 24], text: 'Good Night',      emoji: '🌙' },
-    { range: [0,  5],  text: 'Still Studying?', emoji: '🌙' },
+  var greetings = [
+    { range: [5,  12], text: 'Good Morning' },
+    { range: [12, 17], text: 'Good Afternoon' },
+    { range: [17, 21], text: 'Good Evening' },
+    { range: [21, 24], text: 'Good Night' },
+    { range: [0,   5], text: 'Still Studying?' }
   ];
 
-  const match = greetings.find(g => hour >= g.range[0] && hour < g.range[1]);
-  const { text, emoji } = match || greetings[0];
+  var match = greetings.find(function(g) {
+    return hour >= g.range[0] && hour < g.range[1];
+  });
+  var greetText = match ? match.text : greetings[0].text;
 
-  const greetingTitle  = document.getElementById('greetingTitle');
-  const greetingName   = document.getElementById('greetingName');
-  const profileName    = document.getElementById('profileName');
-  const profileAvatar  = document.getElementById('profileAvatar');
+  var greetingTitle = document.getElementById('greetingTitle');
+  var greetingName  = document.getElementById('greetingName');
+  var profileName   = document.getElementById('profileName');
+  var profileAvatar = document.getElementById('profileAvatar');
 
-  if (greetingTitle) {
-    greetingTitle.textContent = `${text} ${emoji}`;
-  }
+  if (greetingTitle) greetingTitle.textContent = greetText;
 
   if (greetingName) {
-    // Inject name with accent highlight span
-    greetingName.innerHTML = `Hey <span class="name-highlight">${_escapeHtml(APP_STATE.studentName)}</span>, ready to study?`;
+    greetingName.innerHTML = 'Hey <span class="name-highlight">' +
+      _escapeHtml(APP_STATE.studentName) +
+      '</span>, ready to study?';
   }
 
-  if (profileName) {
-    profileName.textContent = APP_STATE.studentName;
-  }
-
-  if (profileAvatar) {
-    const initial = APP_STATE.studentName.charAt(0).toUpperCase();
-    profileAvatar.textContent = initial;
-  }
+  if (profileName)   profileName.textContent  = APP_STATE.studentName;
+  if (profileAvatar) profileAvatar.textContent = APP_STATE.studentName.charAt(0).toUpperCase();
 }
 
 // ================================
@@ -583,17 +1172,13 @@ function renderGreeting() {
 // ================================
 
 function renderDate() {
-  const dateDisplay = document.getElementById('dateDisplay');
+  var dateDisplay = document.getElementById('dateDisplay');
   if (!dateDisplay) return;
-
-  const today = new Date();
-  const options = {
+  dateDisplay.textContent = new Date().toLocaleDateString('en-US', {
     weekday: 'short',
     month:   'short',
     day:     'numeric'
-  };
-
-  dateDisplay.textContent = today.toLocaleDateString('en-US', options);
+  });
 }
 
 // ================================
@@ -601,49 +1186,35 @@ function renderDate() {
 // ================================
 
 function calculateExamCountdown() {
-  const examCountdown = document.getElementById('examCountdown');
+  var examCountdown = document.getElementById('examCountdown');
   if (!examCountdown) return;
 
-  const today    = new Date();
-  const examDate = new Date(APP_CONFIG.examDate);
-
+  var today    = new Date();
+  var examDate = new Date(APP_CONFIG.examDate);
   today.setHours(0, 0, 0, 0);
   examDate.setHours(0, 0, 0, 0);
 
-  const diffDays = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+  var diffDays = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
 
   if (diffDays > 30) {
-    examCountdown.innerHTML = `
-      <svg class="icon" aria-hidden="true">
-        <use href="assets/icons/sprite.svg#calendar"></use>
-      </svg>
-      ${diffDays}d to exams
-    `;
+    examCountdown.innerHTML =
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#calendar"></use></svg> ' +
+      diffDays + 'd to exams';
     examCountdown.style.background = '';
   } else if (diffDays > 0) {
-    examCountdown.innerHTML = `
-      <svg class="icon" aria-hidden="true">
-        <use href="assets/icons/sprite.svg#clock"></use>
-      </svg>
-      ${diffDays}d left!
-    `;
+    examCountdown.innerHTML =
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#clock"></use></svg> ' +
+      diffDays + 'd left!';
     examCountdown.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
   } else if (diffDays === 0) {
-    examCountdown.innerHTML = `
-      <svg class="icon" aria-hidden="true">
-        <use href="assets/icons/sprite.svg#target"></use>
-      </svg>
-      Exam today!
-    `;
+    examCountdown.innerHTML =
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#target"></use></svg> ' +
+      'Exam today!';
     examCountdown.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
   } else {
-    // Exams over
-    examCountdown.innerHTML = `
-      <svg class="icon" aria-hidden="true">
-        <use href="assets/icons/sprite.svg#check"></use>
-      </svg>
-      Exams done!
-    `;
+    examCountdown.innerHTML =
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#check"></use></svg> ' +
+      'Exams done!';
     examCountdown.style.background = 'linear-gradient(135deg, #10b981, #059669)';
   }
 }
@@ -659,49 +1230,44 @@ function renderStatsBar() {
 }
 
 function renderStreak() {
-  const streakValue = document.getElementById('streakValue');
-  const streakCard  = document.getElementById('streakCard');
+  var streakValue = document.getElementById('streakValue');
+  var streakCard  = document.getElementById('streakCard');
   if (!streakValue || !streakCard) return;
 
-  const count   = Streak.getCount();
-  const isAlive = Streak.isAlive();
+  var count   = Streak.getCount();
+  var isAlive = Streak.isAlive();
 
   streakValue.textContent = count;
 
-  // Update icon based on streak state
-  const iconEl = streakCard.querySelector('.stat-card-icon');
+  var iconEl = streakCard.querySelector('.stat-card-icon');
   if (iconEl) {
-    iconEl.textContent = count >= 3 ? '🔥' : count > 0 ? '✨' : '💤';
+    var iconName = count >= 3 ? 'trending-up' : count > 0 ? 'zap' : 'clock';
+    iconEl.innerHTML =
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#' + iconName + '"></use></svg>';
   }
 
-  // Visual state
   streakCard.classList.toggle('streak-active', isAlive && count > 0);
   streakCard.classList.toggle('streak-zero',   !isAlive || count === 0);
-
-  // Update aria-label
   streakCard.setAttribute(
     'aria-label',
     count > 0
-      ? `${count} day study streak — keep it up!`
-      : 'No streak yet — study today to start one!'
+      ? count + ' day study streak - keep it up!'
+      : 'No streak yet - study today to start one!'
   );
 }
 
 function renderPracticeCount() {
-  const practiceValue = document.getElementById('practiceValue');
+  var practiceValue = document.getElementById('practiceValue');
   if (!practiceValue) return;
-
-  const progress = Storage.get(Storage.keys.practiceProgress) || {};
-  const done     = Object.values(progress).filter(p => p.completed).length;
-
+  var progress = Storage.get(Storage.keys.practiceProgress) || {};
+  var done = Object.values(progress).filter(function(p) { return p.completed; }).length;
   practiceValue.textContent = done;
 }
 
 function renderQuizCount() {
-  const quizValue = document.getElementById('quizValue');
+  var quizValue = document.getElementById('quizValue');
   if (!quizValue) return;
-
-  const scores = Storage.get(Storage.keys.quizScores) || [];
+  var scores = Storage.get(Storage.keys.quizScores) || [];
   quizValue.textContent = scores.length;
 }
 
@@ -710,42 +1276,88 @@ function renderQuizCount() {
 // ================================
 
 function renderTodayFocus() {
-  const focusCard     = document.getElementById('focusCard');
-  const focusDay      = document.getElementById('focusDay');
-  const focusTitle    = document.getElementById('focusTitle');
-  const focusSubjects = document.getElementById('focusSubjects');
+  var focusCard     = document.getElementById('focusCard');
+  var focusDay      = document.getElementById('focusDay');
+  var focusTitle    = document.getElementById('focusTitle');
+  var focusSubjects = document.getElementById('focusSubjects');
 
   if (!focusCard) return;
 
-  const entry = Roadmap.getTodayEntry();
+  var entry = Roadmap.getTodayEntry();
 
+  // Roadmap complete
   if (!entry) {
-    // Beyond day 30 — roadmap complete
-    if (focusDay)   focusDay.textContent   = '🎉 Complete!';
-    if (focusTitle) focusTitle.textContent = 'You\'ve finished the 30-day roadmap. Keep revising!';
+    if (focusDay) focusDay.innerHTML =
+      '<svg class="icon" style="width:14px;height:14px;" aria-hidden="true">' +
+      '<use href="assets/icons/sprite.svg#check"></use></svg> Complete!';
+    if (focusTitle) focusTitle.textContent = 'You have finished the 10-day theory roadmap. Time to practice!';
     if (focusSubjects) focusSubjects.innerHTML = '';
-
-    focusCard.setAttribute('aria-label', 'Roadmap complete — keep revising!');
-    focusCard.onclick = () => window.location.href = 'roadmap/index.html';
+    focusCard.setAttribute('aria-label', 'Theory roadmap complete!');
+    focusCard.addEventListener('click', function() {
+      window.location.href = 'roadmap/index.html';
+    });
+    focusCard.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = 'roadmap/index.html';
+      }
+    });
     return;
   }
 
-  if (focusDay)   focusDay.textContent   = `Day ${entry.day} of 30`;
-  if (focusTitle) focusTitle.textContent = entry.title;
+  // Day label with difficulty icon
+  if (focusDay) {
+    var difficultyIcons = {
+      easy:   'check',
+      medium: 'clock',
+      hard:   'zap'
+    };
+    var difficultyLabels = {
+      easy:   'Easy',
+      medium: 'Medium',
+      hard:   'Hard'
+    };
+    var iconRef  = difficultyIcons[entry.difficulty] || 'clock';
+    var diffText = difficultyLabels[entry.difficulty] || 'Medium';
 
+    focusDay.innerHTML = 'Day ' + entry.day + ' of 10 ' +
+      '<svg class="icon" style="width:14px;height:14px;" aria-hidden="true">' +
+      '<use href="assets/icons/sprite.svg#' + iconRef + '"></use></svg> ' +
+      diffText;
+  }
+
+  // Theme title
+  if (focusTitle) {
+    focusTitle.textContent = entry.theme;
+  }
+
+  // Subject tags with topic count
   if (focusSubjects) {
-    focusSubjects.innerHTML = entry.subjects.map(code => {
-      const subject = APP_STATE.subjects.find(s => s.code === code);
-      return subject
-        ? `<span class="focus-subject-tag">${subject.icon} ${subject.shortName}</span>`
-        : '';
+    focusSubjects.innerHTML = entry.subjects.map(function(subjectEntry) {
+      var subject = APP_STATE.subjects.find(function(s) {
+        return s.code === subjectEntry.code;
+      });
+      if (!subject) return '';
+
+      var topicCount = subjectEntry.topics.length;
+
+      return '<span class="focus-subject-tag"' +
+        ' title="' + _escapeHtml(subjectEntry.topics.join(', ')) + '"' +
+        ' aria-label="' + subject.shortName + ' - ' + topicCount + ' topics">' +
+        '<svg class="icon" style="width:14px;height:14px;" aria-hidden="true">' +
+        '<use href="assets/icons/sprite.svg#book"></use></svg> ' +
+        subject.shortName +
+        '<span style="opacity:0.75;font-size:0.7rem;margin-left:4px;">' +
+        topicCount + '</span></span>';
     }).join('');
   }
 
-  // Navigate to roadmap on click or Enter key
-  const navigate = () => window.location.href = 'roadmap/index.html';
+  // Navigation
+  var navigate = function() {
+    window.location.href = 'roadmap/index.html';
+  };
   focusCard.addEventListener('click', navigate);
-  focusCard.addEventListener('keydown', (e) => {
+  focusCard.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       navigate();
@@ -754,7 +1366,8 @@ function renderTodayFocus() {
 
   focusCard.setAttribute(
     'aria-label',
-    `Today's focus: Day ${entry.day} — ${entry.title}. Tap to view roadmap.`
+    'Todays focus: Day ' + entry.day + ' - ' + entry.theme +
+    '. ' + entry.subjects.length + ' subjects. Tap to view roadmap.'
   );
 }
 
@@ -763,92 +1376,75 @@ function renderTodayFocus() {
 // ================================
 
 function renderSubjects() {
-  const grid = document.getElementById('subjectGrid');
+  var grid = document.getElementById('subjectGrid');
   if (!grid) return;
 
-  // Read practice progress for progress bars
-  const practiceProgress = Storage.get(Storage.keys.practiceProgress) || {};
+  var practiceProgress = Storage.get(Storage.keys.practiceProgress) || {};
 
-  grid.innerHTML = APP_STATE.subjects.map(subject => {
+  grid.innerHTML = APP_STATE.subjects.map(function(subject) {
 
-    // Calculate progress for this subject
-    // Days 1–30 tagged to subjects in roadmap
-    const subjectDays = APP_STATE.roadmap
-      .filter(r => r.subjects.includes(subject.code))
-      .map(r => r.day);
-
-    const completedDays = subjectDays.filter(day => {
-      const key = `day${day}`;
-      return practiceProgress[key]?.completed === true;
+    var subjectDays = [];
+    APP_STATE.roadmap.forEach(function(r) {
+      var found = r.subjects.some(function(s) {
+        return s.code === subject.code;
+      });
+      if (found) subjectDays.push(r.day);
     });
 
-    const progressPct = subjectDays.length > 0
+    var completedDays = subjectDays.filter(function(day) {
+      var key = 'day' + day;
+      return practiceProgress[key] && practiceProgress[key].completed === true;
+    });
+
+    var progressPct = subjectDays.length > 0
       ? Math.round((completedDays.length / subjectDays.length) * 100)
       : 0;
 
-    return `
-      <a
-        href="${subject.path}"
-        class="subject-card"
-        role="listitem"
-        aria-label="${subject.name} — ${subject.units} units, ${subject.credits} credits, ${progressPct}% complete"
-        style="
-          --subject-color: ${subject.color};
-          --subject-color-light: ${subject.colorLight};
-          --subject-color-rgb: ${subject.colorRgb};
-        "
-      >
-        <div class="subject-header">
-          <div class="subject-icon" aria-hidden="true">${subject.icon}</div>
-          <div class="subject-code">${subject.code}</div>
-        </div>
+    return '<a href="' + subject.path + '"' +
+      ' class="subject-card"' +
+      ' role="listitem"' +
+      ' aria-label="' + subject.name + ' - ' + subject.units + ' units, ' +
+      subject.credits + ' credits, ' + progressPct + '% complete"' +
+      ' style="--subject-color:' + subject.color +
+      ';--subject-color-light:' + subject.colorLight +
+      ';--subject-color-rgb:' + subject.colorRgb + ';">' +
 
-        <h3 class="subject-name">${subject.name}</h3>
+      '<div class="subject-header">' +
+      '<div class="subject-icon" aria-hidden="true">' +
+      '<svg class="icon" style="width:24px;height:24px;stroke:white;" aria-hidden="true">' +
+      '<use href="assets/icons/sprite.svg#book"></use></svg></div>' +
+      '<div class="subject-code">' + subject.code + '</div></div>' +
 
-        <div class="subject-meta">
-          <div class="meta-item">
-            <svg class="icon" aria-hidden="true">
-              <use href="assets/icons/sprite.svg#layers"></use>
-            </svg>
-            <span>${subject.units} Units</span>
-          </div>
-          <div class="meta-item">
-            <svg class="icon" aria-hidden="true">
-              <use href="assets/icons/sprite.svg#award"></use>
-            </svg>
-            <span>${subject.credits} Credits</span>
-          </div>
-        </div>
+      '<h3 class="subject-name">' + subject.name + '</h3>' +
 
-        <div class="subject-progress" aria-hidden="true">
-          <div class="subject-progress-header">
-            <span class="subject-progress-label">Progress</span>
-            <span class="subject-progress-value">${progressPct}%</span>
-          </div>
-          <div class="progress-bar-track">
-            <div
-              class="progress-bar-fill"
-              style="width: ${progressPct}%"
-            ></div>
-          </div>
-        </div>
-      </a>
-    `;
+      '<div class="subject-meta">' +
+      '<div class="meta-item">' +
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#layers"></use></svg>' +
+      '<span>' + subject.units + ' Units</span></div>' +
+      '<div class="meta-item">' +
+      '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#award"></use></svg>' +
+      '<span>' + subject.credits + ' Credits</span></div></div>' +
+
+      '<div class="subject-progress" aria-hidden="true">' +
+      '<div class="subject-progress-header">' +
+      '<span class="subject-progress-label">Progress</span>' +
+      '<span class="subject-progress-value">' + progressPct + '%</span></div>' +
+      '<div class="progress-bar-track">' +
+      '<div class="progress-bar-fill" style="width:' + progressPct + '%"></div>' +
+      '</div></div></a>';
   }).join('');
 
-  // Track subject visits for Continue card
-  const subjectCards = grid.querySelectorAll('.subject-card');
-  subjectCards.forEach((card, index) => {
-    card.addEventListener('click', () => {
-      const subject = APP_STATE.subjects[index];
+  // Track visits
+  var cards = grid.querySelectorAll('.subject-card');
+  cards.forEach(function(card, index) {
+    card.addEventListener('click', function() {
+      var subject = APP_STATE.subjects[index];
       Storage.set(Storage.keys.lastVisited, {
         subjectCode: subject.code,
         subjectName: subject.name,
-        subjectIcon: subject.icon,
         subjectPath: subject.path,
         timestamp:   Date.now()
       });
-      // Record study for streak
       Streak.recordStudy();
     });
   });
@@ -859,8 +1455,8 @@ function renderSubjects() {
 // ================================
 
 function checkContinueCard() {
-  const continueCard    = document.getElementById('continueCard');
-  const lastVisited     = Storage.get(Storage.keys.lastVisited);
+  var continueCard = document.getElementById('continueCard');
+  var lastVisited  = Storage.get(Storage.keys.lastVisited);
 
   if (!continueCard) return;
 
@@ -869,35 +1465,36 @@ function checkContinueCard() {
     return;
   }
 
-  const { subjectCode, subjectName, subjectIcon, subjectPath, timestamp } = lastVisited;
-  const daysSince = (Date.now() - timestamp) / (1000 * 60 * 60 * 24);
+  var subjectCode = lastVisited.subjectCode;
+  var subjectName = lastVisited.subjectName;
+  var subjectPath = lastVisited.subjectPath;
+  var timestamp   = lastVisited.timestamp;
+  var daysSince   = (Date.now() - timestamp) / (1000 * 60 * 60 * 24);
 
   if (daysSince <= 7 && subjectCode) {
-    const subject = APP_STATE.subjects.find(s => s.code === subjectCode);
+    var subject = APP_STATE.subjects.find(function(s) {
+      return s.code === subjectCode;
+    });
     if (!subject) {
       continueCard.style.display = 'none';
       return;
     }
 
-    const continueIconEl    = document.getElementById('continueIcon');
-    const continueSubjectEl = document.getElementById('continueSubject');
+    var continueIconEl    = document.getElementById('continueIcon');
+    var continueSubjectEl = document.getElementById('continueSubject');
 
-    if (continueIconEl)    continueIconEl.textContent    = subjectIcon || subject.icon;
-    if (continueSubjectEl) continueSubjectEl.textContent = subjectName || subject.name;
+    if (continueIconEl) {
+      continueIconEl.innerHTML =
+        '<svg class="icon" style="width:24px;height:24px;stroke:white;" aria-hidden="true">' +
+        '<use href="assets/icons/sprite.svg#book"></use></svg>';
+    }
+    if (continueSubjectEl) {
+      continueSubjectEl.textContent = subjectName || subject.name;
+    }
 
-    // Set the href directly — it's now an <a> tag
-    continueCard.setAttribute(
-      'href',
-      subjectPath || subject.path
-    );
-
-    continueCard.setAttribute(
-      'aria-label',
-      `Continue studying ${subjectName || subject.name}`
-    );
-
+    continueCard.setAttribute('href', subjectPath || subject.path);
+    continueCard.setAttribute('aria-label', 'Continue studying ' + (subjectName || subject.name));
     continueCard.style.display = 'flex';
-
   } else {
     continueCard.style.display = 'none';
   }
@@ -908,15 +1505,11 @@ function checkContinueCard() {
 // ================================
 
 function setupNavigation() {
-  const backBtn = document.getElementById('backBtn');
+  var backBtn = document.getElementById('backBtn');
   if (!backBtn) return;
-
-  backBtn.addEventListener('click', () => {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = 'index.html';
-    }
+  backBtn.addEventListener('click', function() {
+    if (window.history.length > 1) window.history.back();
+    else window.location.href = 'index.html';
   });
 }
 
@@ -925,101 +1518,89 @@ function setupNavigation() {
 // ================================
 
 function setupMenu() {
-  const menuBtn     = document.getElementById('menuBtn');
-  const closeMenuBtn = document.getElementById('closeMenuBtn');
-  const menuOverlay  = document.getElementById('menuOverlay');
-  const sideMenu     = document.getElementById('sideMenu');
-  const resetAppBtn  = document.getElementById('resetAppBtn');
+  var menuBtn      = document.getElementById('menuBtn');
+  var closeMenuBtn = document.getElementById('closeMenuBtn');
+  var menuOverlay  = document.getElementById('menuOverlay');
+  var sideMenu     = document.getElementById('sideMenu');
+  var resetAppBtn  = document.getElementById('resetAppBtn');
 
-  // ── Open ──
   function openMenu() {
     if (!menuOverlay || !sideMenu) return;
     menuOverlay.classList.add('active');
     sideMenu.classList.add('active');
     sideMenu.setAttribute('aria-hidden', 'false');
-    menuBtn && menuBtn.setAttribute('aria-expanded', 'true');
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-
-    // Focus first item in menu
-    setTimeout(() => {
-      const firstItem = sideMenu.querySelector('a, button');
+    setTimeout(function() {
+      var firstItem = sideMenu.querySelector('a, button');
       if (firstItem) firstItem.focus();
     }, 300);
   }
 
-  // ── Close ──
   function closeMenu() {
     if (!menuOverlay || !sideMenu) return;
     menuOverlay.classList.remove('active');
     sideMenu.classList.remove('active');
     sideMenu.setAttribute('aria-hidden', 'true');
-    menuBtn && menuBtn.setAttribute('aria-expanded', 'false');
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-
-    // Return focus to menu button
     if (menuBtn) menuBtn.focus();
   }
 
-  if (menuBtn)      menuBtn.addEventListener('click', (e) => { e.stopPropagation(); openMenu(); });
-  if (closeMenuBtn) closeMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); closeMenu(); });
-  if (menuOverlay)  menuOverlay.addEventListener('click', closeMenu);
-
-  // Prevent clicks inside menu from closing it
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openMenu();
+    });
+  }
+  if (closeMenuBtn) {
+    closeMenuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
+  if (menuOverlay) {
+    menuOverlay.addEventListener('click', closeMenu);
+  }
   if (sideMenu) {
-    sideMenu.addEventListener('click', (e) => e.stopPropagation());
+    sideMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
   }
 
-  // ESC key closes menu
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sideMenu?.classList.contains('active')) {
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && sideMenu && sideMenu.classList.contains('active')) {
       closeMenu();
     }
   });
 
-  // Trap focus inside menu when open
+  // Focus trap
   if (sideMenu) {
-    sideMenu.addEventListener('keydown', (e) => {
+    sideMenu.addEventListener('keydown', function(e) {
       if (e.key !== 'Tab') return;
-
-      const focusable = sideMenu.querySelectorAll(
-        'a[href], button:not([disabled]), [tabindex="0"]'
-      );
-      const first = focusable[0];
-      const last  = focusable[focusable.length - 1];
-
+      var focusable = sideMenu.querySelectorAll('a[href], button:not([disabled]), [tabindex="0"]');
+      var first = focusable[0];
+      var last  = focusable[focusable.length - 1];
       if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
       } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
       }
     });
   }
 
-  // ── Reset App ──
+  // Reset
   if (resetAppBtn) {
-    resetAppBtn.addEventListener('click', () => {
+    resetAppBtn.addEventListener('click', function() {
       if (!confirm(
-        'Reset all app data?\n\n' +
-        'This clears:\n' +
-        '• Your name\n' +
-        '• Bookmarks\n' +
-        '• Practice progress\n' +
-        '• Quiz scores\n' +
-        '• Study streak\n\n' +
-        'Cannot be undone!'
+        'Reset all app data?\n\nThis clears:\n' +
+        '- Your name\n- Bookmarks\n- Practice progress\n' +
+        '- Quiz scores\n- Study streak\n\nCannot be undone!'
       )) return;
-
       Storage.clear();
       Streak.reset();
-
       Toast.success('App data reset. Reloading...');
-      setTimeout(() => window.location.reload(), 1500);
+      setTimeout(function() { window.location.reload(); }, 1500);
     });
   }
 }
@@ -1029,92 +1610,71 @@ function setupMenu() {
 // ================================
 
 function scheduleNextMidnightUpdate() {
-  const now       = new Date();
-  const tomorrow  = new Date(now);
+  var now      = new Date();
+  var tomorrow = new Date(now);
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(0, 0, 0, 0);
 
-  const msUntilMidnight = tomorrow - now;
-
-  setTimeout(() => {
+  setTimeout(function() {
     renderDate();
     renderGreeting();
     calculateExamCountdown();
     renderTodayFocus();
     renderStatsBar();
     scheduleNextMidnightUpdate();
-  }, msUntilMidnight);
+  }, tomorrow - now);
 }
 
 // ================================
 // Utility Functions
 // ================================
 
-/**
- * Escape HTML to prevent XSS
- */
 function _escapeHtml(str) {
-  const div = document.createElement('div');
+  var div = document.createElement('div');
   div.appendChild(document.createTextNode(String(str)));
   return div.innerHTML;
 }
 
-/**
- * Format timestamp to relative time string
- */
 function formatRelativeTime(timestamp) {
-  const diff    = Date.now() - timestamp;
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours   = Math.floor(minutes / 60);
-  const days    = Math.floor(hours / 24);
-
-  if (days > 0)    return `${days} day${days > 1 ? 's' : ''} ago`;
-  if (hours > 0)   return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-  if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  var diff    = Date.now() - timestamp;
+  var seconds = Math.floor(diff / 1000);
+  var minutes = Math.floor(seconds / 60);
+  var hours   = Math.floor(minutes / 60);
+  var days    = Math.floor(hours / 24);
+  if (days > 0)    return days + ' day' + (days > 1 ? 's' : '') + ' ago';
+  if (hours > 0)   return hours + ' hour' + (hours > 1 ? 's' : '') + ' ago';
+  if (minutes > 0) return minutes + ' minute' + (minutes > 1 ? 's' : '') + ' ago';
   return 'Just now';
 }
 
-/**
- * Debounce
- */
 function debounce(func, wait) {
-  let timeout;
-  return function (...args) {
+  var timeout;
+  return function() {
+    var args = arguments;
+    var self = this;
     clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
+    timeout = setTimeout(function() { func.apply(self, args); }, wait);
   };
 }
 
-/**
- * Check if mobile device
- */
 function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
-    .test(navigator.userAgent);
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-/**
- * Check if running as installed PWA
- */
 function isPWA() {
   return window.matchMedia('(display-mode: standalone)').matches ||
          window.navigator.standalone === true;
 }
 
-/**
- * Get subject by code
- */
 function getSubjectByCode(code) {
-  return APP_STATE.subjects.find(s => s.code === code) || null;
+  return APP_STATE.subjects.find(function(s) { return s.code === code; }) || null;
 }
 
 // ================================
 // App Lifecycle Events
 // ================================
 
-// Refresh UI when user returns to tab
-document.addEventListener('visibilitychange', () => {
+document.addEventListener('visibilitychange', function() {
   if (document.hidden) return;
   renderGreeting();
   renderDate();
@@ -1122,35 +1682,26 @@ document.addEventListener('visibilitychange', () => {
   renderStatsBar();
 });
 
-// Online / Offline toasts
-window.addEventListener('online', () => {
+window.addEventListener('online', function() {
   Toast.success('You are back online!');
 });
 
-window.addEventListener('offline', () => {
+window.addEventListener('offline', function() {
   Toast.warning('You are offline. Content may be limited.');
 });
 
 // ================================
-// DOM Ready — Bootstrap
+// DOM Ready
 // ================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   new WelcomeScreen();
 
-  // Console branding
-  console.log(
-    '%c📚 Diploma 3rd Sem — Study Hub',
-    'color:#6366f1;font-size:18px;font-weight:bold;'
-  );
+  console.log('%cDiploma 3rd Sem - Study Hub', 'color:#6366f1;font-size:18px;font-weight:bold;');
   console.log('%cv' + APP_CONFIG.version, 'color:#94a3b8;font-size:11px;');
-  console.log(
-    '%cMade for WB Polytechnic Students',
-    'color:#94a3b8;font-size:11px;'
-  );
-
-  if (isPWA())   console.log('%c✅ Running as PWA',    'color:#10b981;font-size:11px;');
-  if (isMobile()) console.log('%c📱 Mobile detected',  'color:#3b82f6;font-size:11px;');
+  console.log('%cMade for WB Polytechnic Students', 'color:#94a3b8;font-size:11px;');
+  if (isPWA())    console.log('%cRunning as PWA', 'color:#10b981;font-size:11px;');
+  if (isMobile()) console.log('%cMobile detected', 'color:#3b82f6;font-size:11px;');
 });
 
 // ================================
@@ -1166,10 +1717,10 @@ window.APP = {
   roadmap: Roadmap,
   utils: {
     escapeHtml:        _escapeHtml,
-    formatRelativeTime,
-    debounce,
-    isMobile,
-    isPWA,
-    getSubjectByCode,
+    formatRelativeTime: formatRelativeTime,
+    debounce:          debounce,
+    isMobile:          isMobile,
+    isPWA:             isPWA,
+    getSubjectByCode:  getSubjectByCode
   }
 };
