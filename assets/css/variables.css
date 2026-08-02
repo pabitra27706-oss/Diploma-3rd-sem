@@ -3,19 +3,31 @@
    ================================ */
 
 :root {
-  /* Accent Colors */
+  /* ── Accent Colors ── */
   --accent-primary: #6366f1;
   --accent-secondary: #8b5cf6;
   --accent-success: #10b981;
   --accent-warning: #f59e0b;
   --accent-error: #ef4444;
   --accent-info: #3b82f6;
-
-  /* Light Theme Colors */
+  
+  /* ── Accent RGB (for rgba() usage) ── */
+  --accent-primary-rgb: 99, 102, 241;
+  --accent-secondary-rgb: 139, 92, 246;
+  --accent-success-rgb: 16, 185, 129;
+  --accent-warning-rgb: 245, 158, 11;
+  --accent-error-rgb: 239, 68, 68;
+  --accent-info-rgb: 59, 130, 246;
+  
+  /* ── Light Theme Colors ── */
   --bg-primary-light: #ffffff;
   --bg-secondary-light: #f8fafc;
   --bg-tertiary-light: #f1f5f9;
   --bg-card-light: #ffffff;
+  
+  /* ── Light Theme RGB (for rgba() usage) ── */
+  --bg-card-light-rgb: 255, 255, 255;
+  --bg-primary-light-rgb: 255, 255, 255;
   
   --text-primary-light: #0f172a;
   --text-secondary-light: #475569;
@@ -28,12 +40,16 @@
   --shadow-md-light: 0 4px 6px rgba(15, 23, 42, 0.07);
   --shadow-lg-light: 0 10px 25px rgba(15, 23, 42, 0.1);
   --shadow-xl-light: 0 20px 40px rgba(15, 23, 42, 0.12);
-
-  /* Dark Theme Colors */
+  
+  /* ── Dark Theme Colors ── */
   --bg-primary-dark: #0f0f1e;
   --bg-secondary-dark: #1a1a2e;
   --bg-tertiary-dark: #242438;
   --bg-card-dark: #1e1e32;
+  
+  /* ── Dark Theme RGB (for rgba() usage) ── */
+  --bg-card-dark-rgb: 30, 30, 50;
+  --bg-primary-dark-rgb: 15, 15, 30;
   
   --text-primary-dark: #f8fafc;
   --text-secondary-dark: #cbd5e1;
@@ -46,11 +62,12 @@
   --shadow-md-dark: 0 4px 6px rgba(0, 0, 0, 0.4);
   --shadow-lg-dark: 0 10px 25px rgba(0, 0, 0, 0.5);
   --shadow-xl-dark: 0 20px 40px rgba(0, 0, 0, 0.6);
-
-  /* Typography */
-  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* ── Typography ── */
+  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", "Consolas", "Monaco", monospace;
-
+  
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -59,57 +76,103 @@
   --text-2xl: 1.5rem;
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
-
+  
   --font-normal: 400;
   --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700;
-
-  /* Spacing */
+  
+  /* ── Spacing ── */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
-
-  /* Border Radius */
+  
+  /* ── Border Radius ── */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-full: 9999px;
-
-  /* Transitions */
+  
+  /* ── Transitions ── */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 350ms ease;
-
-  /* Z-index layers */
+  
+  /* ── Z-index Layers ── */
   --z-base: 1;
   --z-dropdown: 100;
   --z-sticky: 200;
   --z-overlay: 300;
   --z-modal: 400;
   --z-toast: 500;
-
-  /* Layout */
+  
+  /* ── Layout ── */
   --header-height: 64px;
   --bottom-nav-height: 64px;
   --max-width: 1200px;
+  
+  /* ── Subject Colors ── */
+  --subject-cst201: #3b82f6;
+  --subject-cst203: #10b981;
+  --subject-cst205: #8b5cf6;
+  --subject-cst207: #f59e0b;
+  --subject-cst209: #ec4899;
+  
+  /* ── Subject RGB (for rgba() usage) ── */
+  --subject-cst201-rgb: 59, 130, 246;
+  --subject-cst203-rgb: 16, 185, 129;
+  --subject-cst205-rgb: 139, 92, 246;
+  --subject-cst207-rgb: 245, 158, 11;
+  --subject-cst209-rgb: 236, 72, 153;
+  
+  /* ── Toast Notification ── */
+  --toast-success-bg: #dcfce7;
+  --toast-success-color: #166534;
+  --toast-success-border: #86efac;
+  
+  --toast-error-bg: #fee2e2;
+  --toast-error-color: #991b1b;
+  --toast-error-border: #fca5a5;
+  
+  --toast-warning-bg: #fef9c3;
+  --toast-warning-color: #854d0e;
+  --toast-warning-border: #fde047;
+  
+  --toast-info-bg: #dbeafe;
+  --toast-info-color: #1e40af;
+  --toast-info-border: #93c5fd;
+  
+  /* ── Streak Colors ── */
+  --streak-fire: #f97316;
+  --streak-fire-rgb: 249, 115, 22;
+  --streak-cold: #94a3b8;
+  
+  /* ── Skeleton Loading ── */
+  --skeleton-base: rgba(148, 163, 184, 0.15);
+  --skeleton-highlight: rgba(148, 163, 184, 0.3);
+  
+  /* ── Focus Ring (Accessibility) ── */
+  --focus-ring: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.4);
+  
+  /* ── Today Focus Card ── */
+  --focus-card-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /* ================================
    Theme Application
    ================================ */
 
-/* Light Theme (default fallback) */
 [data-theme="light"] {
   --bg-primary: var(--bg-primary-light);
   --bg-secondary: var(--bg-secondary-light);
   --bg-tertiary: var(--bg-tertiary-light);
   --bg-card: var(--bg-card-light);
+  --bg-card-rgb: var(--bg-card-light-rgb);
   
   --text-primary: var(--text-primary-light);
   --text-secondary: var(--text-secondary-light);
@@ -122,16 +185,18 @@
   --shadow-md: var(--shadow-md-light);
   --shadow-lg: var(--shadow-lg-light);
   --shadow-xl: var(--shadow-xl-light);
-
+  
+  /* Toast light overrides — already readable, keep as-is */
+  
   color-scheme: light;
 }
 
-/* Dark Theme */
 [data-theme="dark"] {
   --bg-primary: var(--bg-primary-dark);
   --bg-secondary: var(--bg-secondary-dark);
   --bg-tertiary: var(--bg-tertiary-dark);
   --bg-card: var(--bg-card-dark);
+  --bg-card-rgb: var(--bg-card-dark-rgb);
   
   --text-primary: var(--text-primary-dark);
   --text-secondary: var(--text-secondary-dark);
@@ -144,15 +209,27 @@
   --shadow-md: var(--shadow-md-dark);
   --shadow-lg: var(--shadow-lg-dark);
   --shadow-xl: var(--shadow-xl-dark);
-
+  
+  /* Toast dark overrides */
+  --toast-success-bg: rgba(22, 101, 52, 0.9);
+  --toast-success-color: #86efac;
+  --toast-success-border: #166534;
+  
+  --toast-error-bg: rgba(153, 27, 27, 0.9);
+  --toast-error-color: #fca5a5;
+  --toast-error-border: #991b1b;
+  
+  --toast-warning-bg: rgba(133, 77, 14, 0.9);
+  --toast-warning-color: #fde047;
+  --toast-warning-border: #854d0e;
+  
+  --toast-info-bg: rgba(30, 64, 175, 0.9);
+  --toast-info-color: #93c5fd;
+  --toast-info-border: #1e40af;
+  
+  /* Skeleton dark */
+  --skeleton-base: rgba(255, 255, 255, 0.05);
+  --skeleton-highlight: rgba(255, 255, 255, 0.1);
+  
   color-scheme: dark;
-}
-
-/* Subject-specific accent colors */
-:root {
-  --subject-cst201: #3b82f6; /* Blue - C Programming */
-  --subject-cst203: #10b981; /* Green - Python */
-  --subject-cst205: #8b5cf6; /* Purple - Data Structures */
-  --subject-cst207: #f59e0b; /* Orange - CSO */
-  --subject-cst209: #ec4899; /* Pink - Algorithms */
 }
