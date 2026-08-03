@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Practice & Review - PYQ with Answers">
+  <title>Practice | Diploma 3rd Sem</title>
+  <link rel="stylesheet" href="answers.css">
+</head>
+<body>
+
+  <!-- ═══ Loading Screen ═══ -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-spinner"></div>
+    <p>Loading questions...</p>
+  </div>
+
+  <!-- ═══ Error Screen ═══ -->
+  <div class="error-screen hidden" id="errorScreen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <p id="errorMessage">Failed to load paper.</p>
+    <a href="index.html" class="error-link">Back to papers</a>
+  </div>
+
+  <!-- ═══ Main App ═══ -->
+  <div class="app-shell hidden" id="appShell">
+
+    <!-- ─── Header ─── -->
+    <header class="app-header">
+      <button class="header-btn" id="sidebarToggle" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <div class="header-center">
+        <h1 class="header-title" id="headerTitle">Practice</h1>
+        <p class="header-sub" id="headerSub"></p>
+      </div>
+      <button class="header-btn" id="searchToggle" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <button class="header-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- ─── Sidebar Overlay ─── -->
+    <div class="sidebar-overlay hidden" id="sidebarOverlay"></div>
+
+    <!-- ─── Sidebar ─── -->
+    <aside class="sidebar hidden" id="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title" id="sidebarTitle">Questions</h2>
+        <button class="sidebar-close" id="sidebarClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-progress">
+        <div class="progress-text">
+          <span id="progressLabel">0 / 0 answered</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-actions">
+        <button class="sidebar-action-btn" id="statsBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          <span>Statistics</span>
+        </button>
+        <button class="sidebar-action-btn" id="bookmarksBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>Bookmarks <small id="bookmarkCount">(0)</small></span>
+        </button>
+        <button class="sidebar-action-btn" id="printAllBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          <span>Print All</span>
+        </button>
+        <button class="sidebar-action-btn sidebar-action-danger" id="resetBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"/>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+          </svg>
+          <span>Reset Progress</span>
+        </button>
+      </div>
+
+      <div class="sidebar-questions" id="sidebarQuestions"></div>
+    </aside>
+
+    <!-- ─── Search Panel ─── -->
+    <div class="search-panel hidden" id="searchPanel">
+      <div class="search-header">
+        <div class="search-input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search questions..." autocomplete="off">
+        </div>
+        <button class="search-close" id="searchClose" aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <p class="search-empty">Type to search questions...</p>
+      </div>
+    </div>
+
+    <!-- ─── Mode Switcher + Filter Bar ─── -->
+    <div class="toolbar-strip">
+      <div class="mode-switcher">
+        <button class="mode-btn active" data-mode="practice" id="modePractice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          <span>Practice</span>
+        </button>
+        <button class="mode-btn" data-mode="review" id="modeReview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+          <span>Review</span>
+        </button>
+      </div>
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="unanswered">Unanswered</button>
+        <button class="filter-chip" data-filter="correct">Correct</button>
+        <button class="filter-chip" data-filter="wrong">Wrong</button>
+        <button class="filter-chip" data-filter="bookmarked">Bookmarked</button>
+      </div>
+    </div>
+
+    <!-- ─── Question Container ─── -->
+    <main class="question-container" id="questionContainer"></main>
+
+    <!-- ─── Footer (Practice mode only) ─── -->
+    <footer class="app-footer" id="appFooter">
+      <div class="nav-dots" id="navDots"></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" disabled aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+          <span>Previous</span>
+        </button>
+        <span class="nav-counter" id="navCounter">0 / 0</span>
+        <button class="nav-btn" id="nextBtn" disabled aria-label="Next">
+          <span>Next</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </footer>
+
+    <!-- ─── Go to Top (Review mode) ─── -->
+    <button class="go-top-btn hidden" id="goTopBtn" aria-label="Scroll to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 15l-6-6-6 6"/>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- ═══ Statistics Modal ═══ -->
+  <div class="modal-overlay hidden" id="statsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Statistics</h2>
+        <button class="modal-close" id="statsClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="statsBody"></div>
+    </div>
+  </div>
+
+  <!-- ═══ Bookmarks Modal ═══ -->
+  <div class="modal-overlay hidden" id="bookmarksModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Bookmarked Questions</h2>
+        <button class="modal-close" id="bookmarksClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="bookmarksBody">
+        <p class="modal-empty">No bookmarked questions yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Print Overlay ═══ -->
+  <div class="print-overlay hidden" id="printOverlay">
+    <div class="print-toolbar no-print">
+      <div class="print-toolbar-left">
+        <span class="print-title">Print Preview</span>
+      </div>
+      <div class="print-toolbar-center">
+        <button class="print-size-btn" data-size="small">A</button>
+        <button class="print-size-btn active" data-size="normal">A</button>
+        <button class="print-size-btn" data-size="large">A</button>
+      </div>
+      <div class="print-toolbar-right">
+        <button class="print-action-btn" id="printNowBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          <span>Print / Save PDF</span>
+        </button>
+        <button class="print-close-btn" id="printCloseBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="print-content" id="printContent" data-size="normal"></div>
+  </div>
+
+  <!-- ═══ Toast Container ═══ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="answers.js"></script>
+</body>
+</html>

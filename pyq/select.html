@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Select mode - Question Paper or Practice">
+  <title>Select Mode | Diploma 3rd Sem</title>
+  <link rel="stylesheet" href="select.css">
+</head>
+<body>
+
+  <header class="app-header no-print">
+    <a href="index.html" class="back-btn" aria-label="Back to papers">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+    </a>
+    <h1 class="header-title" id="headerTitle">Select Mode</h1>
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon" id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main class="select-container">
+
+    <div class="paper-info-card" id="paperInfoCard">
+      <div class="info-row">
+        <span class="info-label">Subject</span>
+        <span class="info-value" id="infoSubject">Loading...</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Paper</span>
+        <span class="info-value" id="infoPaper">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Session</span>
+        <span class="info-value" id="infoSession">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Source Code</span>
+        <span class="info-value" id="infoSource">—</span>
+      </div>
+    </div>
+
+    <div class="mode-cards">
+
+      <a class="mode-card" id="paperModeCard" href="#">
+        <div class="mode-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <div class="mode-info">
+          <h2 class="mode-title">Question Paper</h2>
+          <p class="mode-desc">View questions in exam paper format. Black and white, printable. No answers shown.</p>
+        </div>
+        <div class="mode-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="mode-card" id="practiceModeCard" href="#">
+        <div class="mode-icon mode-icon-practice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        <div class="mode-info">
+          <h2 class="mode-title">Practice with Answers</h2>
+          <p class="mode-desc">Attempt questions interactively. Get instant feedback, explanations, and track your progress.</p>
+        </div>
+        <div class="mode-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="error-state hidden" id="errorState">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p id="errorMessage">Paper not found.</p>
+      <a href="index.html" class="back-link">Back to papers</a>
+    </div>
+
+  </main>
+
+  <script>
+    // ─── Theme ─────────────────────────────────────────
+    const savedTheme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+      } else {
+        themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+      }
+    }
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    // ─── Params ────────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const subjectCode = params.get('subject');
+    const paperCode = params.get('paper');
+
+    const SUBJECT_NAMES = {
+      CST201: 'Computer Programming in C',
+      CST203: 'Scripting Languages (Python)',
+      CST205: 'Data Structures',
+      CST207: 'Computer System Organization',
+      CST209: 'Algorithms'
+    };
+
+    if (!subjectCode || !paperCode) {
+      document.getElementById('paperInfoCard').classList.add('hidden');
+      document.querySelector('.mode-cards').classList.add('hidden');
+      document.getElementById('errorState').classList.remove('hidden');
+      document.getElementById('errorMessage').textContent = 'Invalid URL. Subject or paper code missing.';
+    } else {
+      loadPaperInfo();
+    }
+
+    async function loadPaperInfo() {
+      try {
+        const res = await fetch(`../_data/${subjectCode}/registry.json`);
+        if (!res.ok) throw new Error('Registry not found');
+        const registry = await res.json();
+
+        const paper = registry.papers.find(p => p.paperCode === paperCode);
+        if (!paper) throw new Error(`Paper ${paperCode} not found`);
+
+        // Fill info
+        document.getElementById('infoSubject').textContent =
+          `${SUBJECT_NAMES[subjectCode] || subjectCode} (${subjectCode})`;
+        document.getElementById('infoPaper').textContent = paper.paperCode;
+        document.getElementById('infoSession').textContent =
+          `${paper.month} ${paper.year}`;
+        document.getElementById('infoSource').textContent =
+          paper.sourcePaperCode || '—';
+        document.getElementById('headerTitle').textContent =
+          `${subjectCode} · ${paper.month} ${paper.year}`;
+
+        // Set links
+        document.getElementById('paperModeCard').href =
+          `viewer.html?subject=${subjectCode}&paper=${paperCode}`;
+        document.getElementById('practiceModeCard').href =
+          `answers.html?subject=${subjectCode}&paper=${paperCode}`;
+
+      } catch (err) {
+        document.getElementById('paperInfoCard').classList.add('hidden');
+        document.querySelector('.mode-cards').classList.add('hidden');
+        document.getElementById('errorState').classList.remove('hidden');
+        document.getElementById('errorMessage').textContent = err.message;
+      }
+    }
+  </script>
+
+</body>
+</html>
