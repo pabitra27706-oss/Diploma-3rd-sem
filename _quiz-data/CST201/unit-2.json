@@ -1,0 +1,532 @@
+{
+  "subject": "CST201",
+  "unit": 2,
+  "unitTitle": "Decision Control and Looping Statements",
+  "totalQuestions": 31,
+  "questions": [
+    {
+      "id": "CST201-U2-Q001",
+      "type": "mcq",
+      "topic": "goto Statement",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["goto", "structured-programming", "control-flow"],
+      "question": "Which of the following statement is NOT generally used in structured programming?",
+      "options": {
+        "A": "break",
+        "B": "continue",
+        "C": "switch",
+        "D": "goto"
+      },
+      "correct": "D",
+      "explanation": "goto violates structured programming by creating uncontrolled jumps, making programs difficult to read, debug, and maintain."
+    },
+    {
+      "id": "CST201-U2-Q002",
+      "type": "mcq",
+      "topic": "for Loop",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["for-loop", "infinite-loop", "iteration"],
+      "question": "How many times will the following loop execute?\nfor(j = 1; j <= 10; j = j - 1)",
+      "options": {
+        "A": "forever",
+        "B": "never",
+        "C": "0",
+        "D": "1"
+      },
+      "correct": "A",
+      "explanation": "j starts at 1, condition j<=10 is always true, but j=j-1 keeps decrementing j (making it negative forever). This is an infinite loop."
+    },
+    {
+      "id": "CST201-U2-Q003",
+      "type": "mcq",
+      "topic": "do-while Loop",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["do-while", "exit-controlled", "loops"],
+      "question": "A do while loop is useful when we want that the statements within the loop must be executed -",
+      "options": {
+        "A": "only once",
+        "B": "at least once",
+        "C": "more than once",
+        "D": "none of the above"
+      },
+      "correct": "B",
+      "explanation": "do-while is an exit-controlled loop. The body executes first, then condition is checked, so the body runs at least once even if condition is false."
+    },
+    {
+      "id": "CST201-U2-Q004",
+      "type": "mcq",
+      "topic": "break Statement",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["break", "loops", "control-flow"],
+      "question": "The break statement is used to exit from -",
+      "options": {
+        "A": "an if statement",
+        "B": "a for loop",
+        "C": "a program",
+        "D": "the main() function"
+      },
+      "correct": "B",
+      "explanation": "break exits from the nearest enclosing loop (for, while, do-while) or switch statement. It does not exit from if blocks or the entire program."
+    },
+    {
+      "id": "CST201-U2-Q005",
+      "type": "mcq",
+      "topic": "do-while Loop",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["do-while", "exit-controlled", "loops"],
+      "question": "Which of the following is an exit controlled loop?",
+      "options": {
+        "A": "while loop",
+        "B": "for loop",
+        "C": "do-while loop",
+        "D": "None of the above"
+      },
+      "correct": "C",
+      "explanation": "do-while is the only exit-controlled loop in C. The condition is checked after the loop body executes, unlike while and for where condition is checked first."
+    },
+    {
+      "id": "CST201-U2-Q006",
+      "type": "mcq",
+      "topic": "continue Statement",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["continue", "switch", "control-flow", "loops"],
+      "question": "The continue statement cannot be used with -",
+      "options": {
+        "A": "for",
+        "B": "switch",
+        "C": "while",
+        "D": "all of these"
+      },
+      "correct": "B",
+      "explanation": "continue can only be used inside loops (for, while, do-while). It cannot be used with switch because switch is not a loop construct."
+    },
+    {
+      "id": "CST201-U2-Q007",
+      "type": "mcq",
+      "topic": "Infinite Loop",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["infinite-loop", "for-loop", "while-loop", "loops"],
+      "question": "Which of the following is NOT an infinite loop?\n(A) for (i = 100; i < 500; --i) { }\n(B) while(1) { }\n(C) i = 10; for (i < 20; ++i) { }\n(D) for (i = 10; i < 20; --i) { i = i - 2; }",
+      "options": {
+        "A": "for (i = 100; i < 500; --i) { }",
+        "B": "while(1) { }",
+        "C": "i = 10; for (i < 20; ++i) { }",
+        "D": "for (i = 10; i < 20; --i) { i = i - 2; }"
+      },
+      "correct": "C",
+      "explanation": "Option C has a malformed for loop — the initialization is missing, making it invalid/not compiling rather than infinite. Options A, B, D are all truly infinite loops."
+    },
+    {
+      "id": "CST201-U2-Q008",
+      "type": "mcq",
+      "topic": "while Loop Output",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["while-loop", "break", "output", "increment"],
+      "question": "What is the output of the following code?\nmain() {\n    int i = 1;\n    while(1) {\n        printf(\"%d\\n\", i++);\n        if(i > 10)\n            break;\n    }\n}",
+      "options": {
+        "A": "1 to 9",
+        "B": "1 to 10",
+        "C": "1 to 11",
+        "D": "Infinite loop"
+      },
+      "correct": "B",
+      "explanation": "i starts at 1. printf prints i then increments. When i becomes 11 after printing 10, break executes. So 1 through 10 are printed."
+    },
+    {
+      "id": "CST201-U2-Q009",
+      "type": "theory",
+      "topic": "if-else Statement",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["if-else", "decision-making", "branching", "modular-programming"],
+      "question": "a) How do comments written in C explain with examples? (2)\nb) Write a program to explain if-else construct in a C program. (3)\nc) What is modular programming? How functions help in modular programming? (3)"
+    },
+    {
+      "id": "CST201-U2-Q010",
+      "type": "program",
+      "topic": "Nested if-else",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["nested-if-else", "flowchart", "decision-making", "maximum"],
+      "question": "Draw the flow-chart of nested if-else structure. Write a C program which input three integer numbers and find and display the maximum number. (3 + 5)"
+    },
+    {
+      "id": "CST201-U2-Q011",
+      "type": "program",
+      "topic": "while Loop",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["while-loop", "do-while", "comparison", "digit-sum"],
+      "question": "Write the difference between while and do-while loops. Write a C program to input an integer number and calculate the sum of its digits. (3 + 5)"
+    },
+    {
+      "id": "CST201-U2-Q012",
+      "type": "program",
+      "topic": "GCD Using Loop",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["gcd", "loops", "iteration", "while-loop"],
+      "question": "Write a program to calculate GCD of two numbers. (4)"
+    },
+    {
+      "id": "CST201-U2-Q013",
+      "type": "program",
+      "topic": "GCD Using Loop",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["gcd", "loops", "iteration"],
+      "question": "Write a program in C to find the GCD (Greatest Common Divisor) of two numbers. (4)"
+    },
+    {
+      "id": "CST201-U2-Q014",
+      "type": "program",
+      "topic": "Conditional Statements",
+      "difficulty": "easy",
+      "marks": 4,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["if-else", "divisibility", "conditional-statements"],
+      "question": "Write a program in C to check whether a number is divisible by 5 and 11 or not. (4)"
+    },
+    {
+      "id": "CST201-U2-Q015",
+      "type": "theory",
+      "topic": "for Loop vs while Loop",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["for-loop", "while-loop", "comparison", "loops"],
+      "question": "Differentiate between for and while loop using suitable example. (3)"
+    },
+    {
+      "id": "CST201-U2-Q016",
+      "type": "program",
+      "topic": "if-else Ladder",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["if-else-ladder", "grade-calculation", "percentage", "decision-making"],
+      "question": "Write a program in C to input marks of five subjects C_Prog, Data_Struct, Algorithms, Python and Comp_System_Organization. Calculate percentage and grade according to following:\nPercentage >= 90% : Grade A\nPercentage >= 80% : Grade B\nPercentage >= 70% : Grade C\nPercentage >= 60% : Grade D\nPercentage >= 40% : Grade E\nPercentage < 40% : Grade F (5)"
+    },
+    {
+      "id": "CST201-U2-Q017",
+      "type": "theory",
+      "topic": "goto Statement",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["goto", "unconditional-jump", "control-flow"],
+      "question": "What is the use of goto statement? Give suitable example. (3)"
+    },
+    {
+      "id": "CST201-U2-Q018",
+      "type": "program",
+      "topic": "Nested Loops",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["nested-loops", "pattern-printing", "for-loop"],
+      "question": "Print the patterns using nested loops:\n5\n4 5\n3 4 5\n2 3 4 5\n1 2 3 4 5\n(5)"
+    },
+    {
+      "id": "CST201-U2-Q019",
+      "type": "theory",
+      "topic": "break and continue",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["break", "continue", "associativity", "control-flow"],
+      "question": "What do you mean by associativity of an operator? Explain break and continue statement with an example."
+    },
+    {
+      "id": "CST201-U2-Q020",
+      "type": "program",
+      "topic": "GCD and goto",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["gcd", "goto", "structured-programming", "loops"],
+      "question": "Write a program to calculate GCD of two numbers. Why goto statement should be avoided in C?"
+    },
+    {
+      "id": "CST201-U2-Q021",
+      "type": "program",
+      "topic": "Nested Loops",
+      "difficulty": "hard",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["nested-loops", "series", "for-loop", "pattern"],
+      "question": "What do you mean by nested loop structure? Write a program in C to find the sum of the series 1 + (1+2) + (1+2+3) + ... up to 'n' terms, the value of 'n' should be given from the keyboard."
+    },
+    {
+      "id": "CST201-U2-Q022",
+      "type": "program",
+      "topic": "switch-case Statement",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["switch-case", "decision-making", "branching"],
+      "question": "Illustrate the use of switch-case with an example program code. (4)"
+    },
+    {
+      "id": "CST201-U2-Q023",
+      "type": "program",
+      "topic": "for Loop",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["for-loop", "armstrong-number", "loops", "nested-loops"],
+      "question": "Write a program to find all the Armstrong numbers within 100 to 1000. (4)"
+    },
+    {
+      "id": "CST201-U2-Q024",
+      "type": "theory",
+      "topic": "Entry vs Exit Controlled Loop",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["entry-controlled", "exit-controlled", "loops", "comparison"],
+      "question": "Write down atleast three differences between entry controlled and exit controlled loop structure. (4)"
+    },
+    {
+      "id": "CST201-U2-Q025",
+      "type": "program",
+      "topic": "Nested Loops",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["nested-loops", "series", "for-loop"],
+      "question": "Write a program in C to find the sum of the series 1 + (1+2) + (1+2+3) + ... up to 'n' terms, the value of 'n' should be given from the keyboard. (6)"
+    },
+    {
+      "id": "CST201-U2-Q026",
+      "type": "theory",
+      "topic": "goto Statement",
+      "difficulty": "easy",
+      "marks": 4,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["goto", "structured-programming", "drawbacks"],
+      "question": "Why we should avoid 'goto' statement from our program? (4)"
+    },
+    {
+      "id": "CST201-U2-Q027",
+      "type": "program",
+      "topic": "switch-case Statement",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["switch-case", "advantages", "nested-if-else"],
+      "question": "a) What are the advantages of switch-case statements over nested if-else structure? (3)\nb) Write down a program in C to express any multiword string into its equivalent abbreviated form separated by a dot (.) i.e. SWAPAN KUMAR SEN will be written as S.K.S. (7)"
+    },
+    {
+      "id": "CST201-U2-Q028",
+      "type": "mcq",
+      "topic": "switch-case Statement",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["switch-case", "decision-making", "break", "fall-through"],
+      "question": "What happens if a break statement is omitted in a switch-case block in C?",
+      "options": {
+        "A": "The program terminates",
+        "B": "Only the matched case executes",
+        "C": "Execution falls through to the next case",
+        "D": "A compile error occurs"
+      },
+      "correct": "C",
+      "explanation": "Without break, execution 'falls through' to the next case and continues until a break is found or the switch ends. This is called fall-through behaviour."
+    },
+    {
+      "id": "CST201-U2-Q029",
+      "type": "mcq",
+      "topic": "for Loop",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["for-loop", "iteration", "loop-count"],
+      "question": "How many times will the following loop body execute?\nfor(int i = 0; i < 5; i++) { }",
+      "options": {
+        "A": "4",
+        "B": "5",
+        "C": "6",
+        "D": "Infinite"
+      },
+      "correct": "B",
+      "explanation": "i goes from 0 to 4 (i < 5), so the body executes 5 times (i = 0, 1, 2, 3, 4)."
+    },
+    {
+      "id": "CST201-U2-Q030",
+      "type": "mcq",
+      "topic": "while Loop vs do-while Loop",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["while-loop", "do-while", "comparison", "entry-controlled", "exit-controlled"],
+      "question": "What is the minimum number of times a do-while loop body executes?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "Depends on condition"
+      },
+      "correct": "B",
+      "explanation": "do-while is exit-controlled — the body always executes at least once before the condition is tested, even if the condition is false from the start."
+    },
+    {
+      "id": "CST201-U2-Q031",
+      "type": "mcq",
+      "topic": "Nested if-else",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["nested-if-else", "else-if-ladder", "decision-making"],
+      "question": "In C, the else clause associates with -",
+      "options": {
+        "A": "The first if above it",
+        "B": "The nearest unmatched if above it",
+        "C": "Any if in the program",
+        "D": "The outermost if"
+      },
+      "correct": "B",
+      "explanation": "In C, an else always pairs with the nearest preceding unmatched if. This is known as the 'dangling else' rule."
+    },
+    {
+      "id": "CST201-U2-Q032",
+      "type": "mcq",
+      "topic": "for Loop",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["for-loop", "syntax", "initialization", "loops"],
+      "question": "Which section of the for loop is optional in C?",
+      "options": {
+        "A": "Initialization only",
+        "B": "Condition only",
+        "C": "Increment/Decrement only",
+        "D": "All three sections are optional"
+      },
+      "correct": "D",
+      "explanation": "In C, all three parts of the for loop — initialization, condition, and increment — are optional. for(;;) is a valid infinite loop."
+    },
+    {
+      "id": "CST201-U2-Q033",
+      "type": "program",
+      "topic": "Prime Numbers Using Loop",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["prime-numbers", "for-loop", "nested-loops", "range"],
+      "question": "Write down a C program to find all the prime numbers in a given range (upper and lower range should be given from the keyboard). (6)"
+    },
+    {
+      "id": "CST201-U2-Q034",
+      "type": "mcq",
+      "topic": "break and continue",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["continue", "for-loop", "control-flow", "skip"],
+      "question": "What does the continue statement do inside a for loop?",
+      "options": {
+        "A": "Exits the loop completely",
+        "B": "Skips the current iteration and moves to the next",
+        "C": "Restarts the loop from the beginning",
+        "D": "Causes an infinite loop"
+      },
+      "correct": "B",
+      "explanation": "continue skips the remaining statements in the current iteration and transfers control to the loop's update expression (increment/decrement), then checks the condition."
+    },
+    {
+      "id": "CST201-U2-Q035",
+      "type": "mcq",
+      "topic": "switch-case Statement",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["switch-case", "data-types", "case-labels"],
+      "question": "Which data type CANNOT be used as a switch expression in C?",
+      "options": {
+        "A": "int",
+        "B": "char",
+        "C": "float",
+        "D": "short"
+      },
+      "correct": "C",
+      "explanation": "switch in C only works with integer types (int, char, short, long, enum). float and double are not allowed because they cannot be exactly compared."
+    },
+    {
+      "id": "CST201-U2-Q036",
+      "type": "mcq",
+      "topic": "Nested Loops",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["nested-loops", "loop-count", "for-loop"],
+      "question": "How many times will the inner loop body execute in the following?\nfor(i=1; i<=3; i++)\n    for(j=1; j<=4; j++)\n        printf(\"*\");",
+      "options": {
+        "A": "7",
+        "B": "12",
+        "C": "3",
+        "D": "4"
+      },
+      "correct": "B",
+      "explanation": "Outer loop runs 3 times. Inner loop runs 4 times for each outer iteration. Total = 3 × 4 = 12 times."
+    }
+  ]
+}

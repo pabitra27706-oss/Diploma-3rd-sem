@@ -1,0 +1,662 @@
+{
+  "subject": "CST201",
+  "unit": 5,
+  "unitTitle": "Pointers in C",
+  "totalQuestions": 42,
+  "questions": [
+    {
+      "id": "CST201-U5-Q001",
+      "type": "mcq",
+      "topic": "Pointer Declaration",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["pointers", "declaration", "syntax"],
+      "question": "Which is the correct way to declare a pointer?",
+      "options": {
+        "A": "int_ptr x",
+        "B": "int *ptr",
+        "C": "*int ptr",
+        "D": "none"
+      },
+      "correct": "B",
+      "explanation": "The correct syntax for pointer declaration is: datatype *pointer_name; So int *ptr; declares a pointer to an integer."
+    },
+    {
+      "id": "CST201-U5-Q002",
+      "type": "mcq",
+      "topic": "Pointer Arithmetic",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["pointers", "pointer-arithmetic", "integer-pointer"],
+      "question": "If p is an integer pointer with a value 1000, then what will the value of p + 5 be?",
+      "options": {
+        "A": "1020",
+        "B": "1005",
+        "C": "1004",
+        "D": "1010"
+      },
+      "correct": "D",
+      "explanation": "For a 2-byte int: p+5 = 1000 + 5×2 = 1010. Pointer arithmetic adds (n × size_of_datatype) to the address. For 4-byte int the answer would be 1020."
+    },
+    {
+      "id": "CST201-U5-Q003",
+      "type": "mcq",
+      "topic": "Dereferencing Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["pointers", "dereference", "address-of", "value-of"],
+      "question": "*(&num) is equivalent to writing -",
+      "options": {
+        "A": "&num",
+        "B": "*num",
+        "C": "num",
+        "D": "none of these"
+      },
+      "correct": "C",
+      "explanation": "&num gives the address of num. * (dereference) on that address gives back the value stored at that address, which is num itself. So *(&num) = num."
+    },
+    {
+      "id": "CST201-U5-Q004",
+      "type": "mcq",
+      "topic": "Pointer Data Type",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["pointers", "address", "data-type", "integer"],
+      "question": "Address stored in the pointer variable is of type -",
+      "options": {
+        "A": "Integer",
+        "B": "Float",
+        "C": "Array",
+        "D": "Character"
+      },
+      "correct": "A",
+      "explanation": "Addresses in memory are represented as unsigned integers. Pointer variables store memory addresses, which are essentially integer values."
+    },
+    {
+      "id": "CST201-U5-Q005",
+      "type": "mcq",
+      "topic": "Pointer Expressions",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["pointers", "dereference", "increment", "output"],
+      "question": "Find the output of the following code:\n#include<stdio.h>\nmain() {\n    int num = 5, *ptr = &num, x = *ptr;\n    printf(\"%d %d %d\", ++num, x + 2, (*ptr)--);\n}",
+      "options": {
+        "A": "6 8 6",
+        "B": "6 8 4",
+        "C": "5 7 4",
+        "D": "5 7 5"
+      },
+      "correct": "D",
+      "explanation": "Arguments evaluated right-to-left: (*ptr)-- → value is 5 (post-decrement, num becomes 4); x+2 → x was set to 5 initially, so 5+2=7; ++num → num is now 4, pre-increment gives 5. Output: 5 7 5."
+    },
+    {
+      "id": "CST201-U5-Q006",
+      "type": "mcq",
+      "topic": "Pointers and Arrays",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["pointers", "arrays", "pointer-arithmetic", "equivalence"],
+      "question": "If arr is an array of integers, the arr[i] is equivalent to",
+      "options": {
+        "A": "*a - i",
+        "B": "*a - i",
+        "C": "a - i",
+        "D": "*arr[i]"
+      },
+      "correct": "C",
+      "explanation": "arr[i] is equivalent to *(arr + i) in pointer notation. The array name acts as a pointer to the first element, and adding i gives the address of the ith element."
+    },
+    {
+      "id": "CST201-U5-Q007",
+      "type": "mcq",
+      "topic": "Pointer Expressions Validity",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["pointers", "pointer-arithmetic", "valid-expressions"],
+      "question": "If P and Q are properly declared and initialized pointer and x, y and z are integer variables, then which of the following statement is NOT valid?",
+      "options": {
+        "A": "x = x + *P",
+        "B": "y = *P + *Q",
+        "C": "P = Q + 10",
+        "D": "*P = P + 10"
+      },
+      "correct": "D",
+      "explanation": "*P is an integer value but P+10 is an address (pointer). Assigning an address to an integer location (*P) without casting is invalid. A, B are valid integer operations. C adds 10 to pointer which is valid pointer arithmetic."
+    },
+    {
+      "id": "CST201-U5-Q008",
+      "type": "mcq",
+      "topic": "Pointer to Structure - Union Size",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["union", "sizeof", "memory", "structure"],
+      "question": "If int, char and float variables take 2 byte, 1 byte and 4 byte memory respectively, then what is the size of a variable of following union type?\nunion test {\n    int x;\n    char y;\n    float z;\n};",
+      "options": {
+        "A": "7 bytes",
+        "B": "2 bytes",
+        "C": "3 bytes",
+        "D": "4 bytes"
+      },
+      "correct": "D",
+      "explanation": "Union size equals the size of its largest member. The largest member is float z (4 bytes). All members share the same memory space in a union."
+    },
+    {
+      "id": "CST201-U5-Q009",
+      "type": "mcq",
+      "topic": "Storage Class and Pointers",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["storage-class", "pointers", "scope", "range"],
+      "question": "Which of the following is NOT determined by the storage class of a variable?",
+      "options": {
+        "A": "The place where the variable allocates its space.",
+        "B": "The scope of the variable.",
+        "C": "The range of values of the variable.",
+        "D": "The initial value of the variable."
+      },
+      "correct": "C",
+      "explanation": "Storage class determines memory location, scope, lifetime, and initial value. The range of values is determined by the data type (int, float, char), not the storage class."
+    },
+    {
+      "id": "CST201-U5-Q010",
+      "type": "mcq",
+      "topic": "Pointers and Arrays - Output",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["pointers", "arrays", "pointer-arithmetic", "output"],
+      "question": "What will be the output of the following code?\nmain() {\n    int arr[] = {1, 2, 3, 4, 5};\n    int *ptr, i;\n    ptr = arr + 4;\n    for(i = 0; i < 5; i++)\n        printf(\"%d\", *(ptr - i));\n}",
+      "options": {
+        "A": "5 4 3 2 1",
+        "B": "1 2 3 4 5",
+        "C": "4 3 2 1 0",
+        "D": "5 3 1 0 0"
+      },
+      "correct": "A",
+      "explanation": "ptr points to arr[4] (value 5). *(ptr-0)=5, *(ptr-1)=4, *(ptr-2)=3, *(ptr-3)=2, *(ptr-4)=1. Output: 5 4 3 2 1 (array printed in reverse)."
+    },
+    {
+      "id": "CST201-U5-Q011",
+      "type": "mcq",
+      "topic": "Variables vs Pointers",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["variables", "pointers", "declaration", "scope"],
+      "question": "Which is false about variables and pointers?",
+      "options": {
+        "A": "A variable defined once can be defined again with different scope.",
+        "B": "A single variable cannot be defined with two different types in the same scope.",
+        "C": "A variable must be declared and defined at the same time.",
+        "D": "A variable refers to a location in memory."
+      },
+      "correct": "C",
+      "explanation": "Variables can be declared and defined separately. For example, extern int x; declares but doesn't define. Definition happens elsewhere. Declaration and definition don't have to happen simultaneously."
+    },
+    {
+      "id": "CST201-U5-Q012",
+      "type": "mcq",
+      "topic": "Pointer to Structure",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["structure", "nested-structure", "pointer-to-structure"],
+      "question": "A structure can be placed within another structure is known as -",
+      "options": {
+        "A": "nested structure",
+        "B": "self-referential structure",
+        "C": "parallel structure",
+        "D": "pointer to structure"
+      },
+      "correct": "A",
+      "explanation": "When a structure is defined inside another structure, it is called a nested structure. A self-referential structure contains a pointer to itself."
+    },
+    {
+      "id": "CST201-U5-Q013",
+      "type": "short",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["malloc", "dynamic-memory", "heap"],
+      "question": "What is malloc()?"
+    },
+    {
+      "id": "CST201-U5-Q014",
+      "type": "theory",
+      "topic": "Pointer Definition and Parameter Passing",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["pointers", "call-by-value", "call-by-reference", "definition"],
+      "question": "What is pointer? Explain call-by-value and call-by-address parameter passing techniques with example. (2 + 6)"
+    },
+    {
+      "id": "CST201-U5-Q015",
+      "type": "theory",
+      "topic": "Address-of and Value-of Operators",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["pointers", "address-of", "value-of", "dereference"],
+      "question": "Explain with example the use of \"address of\" and \"value of\" operator in relation to pointers in C. (4)"
+    },
+    {
+      "id": "CST201-U5-Q016",
+      "type": "program",
+      "topic": "Pointers and Arrays",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["pointers", "arrays", "1d-array", "access"],
+      "question": "Write a C program to access a one dimensional array using pointers. (4)"
+    },
+    {
+      "id": "CST201-U5-Q017",
+      "type": "theory",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["calloc", "malloc", "comparison", "dynamic-memory"],
+      "question": "Differentiate calloc() and malloc(). (3)"
+    },
+    {
+      "id": "CST201-U5-Q018",
+      "type": "theory",
+      "topic": "Call by Value vs Call by Reference",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["call-by-value", "call-by-reference", "pointers", "parameter-passing"],
+      "question": "Differentiate between call by value and call by address. (4)"
+    },
+    {
+      "id": "CST201-U5-Q019",
+      "type": "program",
+      "topic": "Pointers and Functions",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["pointers", "functions", "addition", "call-by-reference"],
+      "question": "Write a program in C to add two numbers using pointers and function. (5)"
+    },
+    {
+      "id": "CST201-U5-Q020",
+      "type": "theory",
+      "topic": "Pointer Definition and Advantages",
+      "difficulty": "easy",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["pointers", "definition", "advantages"],
+      "question": "What is pointer? State advantages of using pointer in C. (1 + 2)"
+    },
+    {
+      "id": "CST201-U5-Q021",
+      "type": "theory",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["malloc", "calloc", "realloc", "free", "dynamic-memory"],
+      "question": "Explain with example: a) malloc() b) calloc() c) realloc() d) free() (2 + 2 + 2 + 2)"
+    },
+    {
+      "id": "CST201-U5-Q022",
+      "type": "program",
+      "topic": "Pointers and Arrays",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["pointers", "arrays", "1d-array", "access"],
+      "question": "Write a C program to access a one dimensional array using pointer."
+    },
+    {
+      "id": "CST201-U5-Q023",
+      "type": "theory",
+      "topic": "Pointer to Function",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["pointer-to-function", "function-pointers", "definition"],
+      "question": "What do you mean by a pointer to a function? Write a C program to access a one dimensional array using pointer."
+    },
+    {
+      "id": "CST201-U5-Q024",
+      "type": "program",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "hard",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["dynamic-memory", "malloc", "read-write", "pointers"],
+      "question": "Write a C program for reading and writing some integer value using the concept of Dynamic Memory Allocation."
+    },
+    {
+      "id": "CST201-U5-Q025",
+      "type": "theory",
+      "topic": "Structure vs Union",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["structure", "union", "comparison", "pointer-to-structure"],
+      "question": "Distinguish between Structure and union. (3)"
+    },
+    {
+      "id": "CST201-U5-Q026",
+      "type": "program",
+      "topic": "Pointer to Structure",
+      "difficulty": "hard",
+      "marks": 7,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["structure", "structure-array", "pointer-to-structure", "students"],
+      "question": "Write down a program in C to insert 'n' students data in a structure array named as 'Student' consisting of roll, name and marks of three subjects as member data. Display all those data and average marks of each student in tabular format. (7)"
+    },
+    {
+      "id": "CST201-U5-Q027",
+      "type": "theory",
+      "topic": "Pointer to Function",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["pointer-to-function", "function-pointers", "example"],
+      "question": "What do you mean by pointer to a function? Give an example. (2 + 2)"
+    },
+    {
+      "id": "CST201-U5-Q028",
+      "type": "theory",
+      "topic": "Pointer Definition and Advantages",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["pointers", "definition", "advantages", "memory-variables"],
+      "question": "a) What do you mean by pointer in C? (2)\nb) What are the advantages of pointer variable over memory variable? (3)"
+    },
+    {
+      "id": "CST201-U5-Q029",
+      "type": "program",
+      "topic": "Pointers and Arrays",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["pointers", "arrays", "1d-array", "access"],
+      "question": "Write a program in C to access the elements of a one dimensional array using pointer. (5)"
+    },
+    {
+      "id": "CST201-U5-Q030",
+      "type": "program",
+      "topic": "Leap Year Program",
+      "difficulty": "easy",
+      "marks": 4,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["leap-year", "conditional", "program"],
+      "question": "Write a program to find whether a year is leap year or not."
+    },
+    {
+      "id": "CST201-U5-Q031",
+      "type": "mcq",
+      "topic": "Null Pointers",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["null-pointer", "pointers", "initialization"],
+      "question": "What is a NULL pointer in C?",
+      "options": {
+        "A": "A pointer that points to the first element of an array",
+        "B": "A pointer that points to nothing (address 0)",
+        "C": "A pointer that stores a garbage value",
+        "D": "A pointer that points to itself"
+      },
+      "correct": "B",
+      "explanation": "A NULL pointer is a pointer that does not point to any valid memory location. It is initialized with NULL or 0 and is used to indicate an empty or uninitialized pointer."
+    },
+    {
+      "id": "CST201-U5-Q032",
+      "type": "mcq",
+      "topic": "Generic Pointers",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["void-pointer", "generic-pointer", "pointers"],
+      "question": "What is a void pointer (generic pointer) in C?",
+      "options": {
+        "A": "A pointer that can only point to void functions",
+        "B": "A pointer that can point to any data type",
+        "C": "A pointer that occupies 0 bytes",
+        "D": "A pointer that always has NULL value"
+      },
+      "correct": "B",
+      "explanation": "void pointer (void *) is a generic pointer that can point to any data type. It must be cast to the appropriate type before dereferencing."
+    },
+    {
+      "id": "CST201-U5-Q033",
+      "type": "mcq",
+      "topic": "Constant Pointers",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["constant-pointer", "pointer-to-constant", "const"],
+      "question": "What does 'const int *ptr' mean?",
+      "options": {
+        "A": "ptr is a constant pointer that cannot change the address it holds",
+        "B": "ptr is a pointer to a constant integer — the value pointed to cannot be changed through ptr",
+        "C": "Both the pointer and the value are constant",
+        "D": "ptr cannot be used at all"
+      },
+      "correct": "B",
+      "explanation": "const int *ptr means pointer to a constant integer. The value pointed to by ptr cannot be changed using *ptr, but ptr itself can point to a different address."
+    },
+    {
+      "id": "CST201-U5-Q034",
+      "type": "mcq",
+      "topic": "Pointer to Pointer",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["pointer-to-pointer", "double-pointer", "indirection"],
+      "question": "How is a pointer to a pointer declared in C?",
+      "options": {
+        "A": "int *ptr;",
+        "B": "int &ptr;",
+        "C": "int **ptr;",
+        "D": "int ptr**;"
+      },
+      "correct": "C",
+      "explanation": "int **ptr declares a pointer to a pointer. It stores the address of another pointer variable. Also called double pointer or double indirection."
+    },
+    {
+      "id": "CST201-U5-Q035",
+      "type": "mcq",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["malloc", "calloc", "dynamic-memory", "comparison"],
+      "question": "What is the key difference between malloc() and calloc()?",
+      "options": {
+        "A": "malloc() allocates memory on stack, calloc() on heap",
+        "B": "malloc() initializes memory to zero, calloc() does not",
+        "C": "calloc() initializes memory to zero, malloc() leaves it with garbage values",
+        "D": "There is no difference between them"
+      },
+      "correct": "C",
+      "explanation": "calloc() allocates memory and initializes all bytes to zero. malloc() allocates memory but does NOT initialize it — memory contains garbage values."
+    },
+    {
+      "id": "CST201-U5-Q036",
+      "type": "mcq",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["realloc", "dynamic-memory", "resize"],
+      "question": "What does realloc() do in C?",
+      "options": {
+        "A": "Frees the previously allocated memory",
+        "B": "Allocates new memory without freeing old memory",
+        "C": "Resizes a previously allocated memory block",
+        "D": "Allocates memory for arrays only"
+      },
+      "correct": "C",
+      "explanation": "realloc() changes the size of previously allocated memory block. If the new size is larger, additional memory is allocated. If smaller, excess memory is freed."
+    },
+    {
+      "id": "CST201-U5-Q037",
+      "type": "mcq",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["free", "dynamic-memory", "memory-leak"],
+      "question": "What happens if dynamically allocated memory is not freed using free()?",
+      "options": {
+        "A": "Compiler automatically frees it",
+        "B": "It causes a memory leak",
+        "C": "The program crashes immediately",
+        "D": "The memory is freed when the function returns"
+      },
+      "correct": "B",
+      "explanation": "If dynamically allocated memory is not freed, it remains occupied until the program terminates. This is called a memory leak and can consume available memory over time."
+    },
+    {
+      "id": "CST201-U5-Q038",
+      "type": "mcq",
+      "topic": "Pointers and Strings",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["pointers", "strings", "character-pointer"],
+      "question": "What does char *str = \"Hello\"; create?",
+      "options": {
+        "A": "A character array that can be modified",
+        "B": "A pointer to a string literal stored in read-only memory",
+        "C": "A copy of the string on the heap",
+        "D": "A NULL pointer"
+      },
+      "correct": "B",
+      "explanation": "char *str = \"Hello\"; creates a pointer to a string literal. String literals are stored in read-only memory, so modifying them causes undefined behaviour."
+    },
+    {
+      "id": "CST201-U5-Q039",
+      "type": "mcq",
+      "topic": "Array of Pointers",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["array-of-pointers", "pointers", "declaration"],
+      "question": "Which of the following correctly declares an array of 5 integer pointers?",
+      "options": {
+        "A": "int *arr[5];",
+        "B": "int (*arr)[5];",
+        "C": "int arr*[5];",
+        "D": "int *arr(5);"
+      },
+      "correct": "A",
+      "explanation": "int *arr[5]; declares an array of 5 pointers to int. Option B declares a pointer to an array of 5 integers, which is different."
+    },
+    {
+      "id": "CST201-U5-Q040",
+      "type": "mcq",
+      "topic": "Pointer Arithmetic",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["pointers", "pointer-arithmetic", "subtraction"],
+      "question": "If two pointers p1 and p2 point to elements of the same array, what does p2 - p1 give?",
+      "options": {
+        "A": "Difference of addresses in bytes",
+        "B": "Number of elements between them",
+        "C": "Sum of the values pointed to",
+        "D": "Undefined behaviour"
+      },
+      "correct": "B",
+      "explanation": "Subtracting two pointers of the same array gives the number of elements between them, not the byte difference. It is calculated as (address difference) / sizeof(element)."
+    },
+    {
+      "id": "CST201-U5-Q041",
+      "type": "mcq",
+      "topic": "Dynamic Memory Allocation",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["dynamic-memory", "header-file", "stdlib"],
+      "question": "Which header file is required for using malloc(), calloc(), realloc() and free()?",
+      "options": {
+        "A": "stdio.h",
+        "B": "string.h",
+        "C": "stdlib.h",
+        "D": "alloc.h"
+      },
+      "correct": "C",
+      "explanation": "All dynamic memory allocation functions (malloc, calloc, realloc, free) are declared in stdlib.h (Standard Library header)."
+    },
+    {
+      "id": "CST201-U5-Q042",
+      "type": "mcq",
+      "topic": "Passing Array to Function",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["pointers", "arrays", "function-parameter", "array-name"],
+      "question": "What is the relationship between an array name and a pointer in C?",
+      "options": {
+        "A": "Array name is a variable pointer that can be reassigned",
+        "B": "Array name acts as a constant pointer to the first element",
+        "C": "Array name and pointers are completely unrelated",
+        "D": "Array name stores the last element's address"
+      },
+      "correct": "B",
+      "explanation": "An array name acts as a constant pointer to the first element (arr = &arr[0]). Unlike a pointer variable, the array name cannot be reassigned to point elsewhere."
+    }
+  ]
+}

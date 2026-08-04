@@ -1,0 +1,578 @@
+{
+  "subject": "CST201",
+  "unit": 4,
+  "unitTitle": "Arrays and Strings",
+  "totalQuestions": 38,
+  "questions": [
+    {
+      "id": "CST201-U4-Q001",
+      "type": "mcq",
+      "topic": "Array Memory Allocation",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["arrays", "memory-allocation", "2d-array", "sizeof"],
+      "question": "If an int element requires 2-byte memory, How many bytes will be allocated to int arr[5][5]?",
+      "options": {
+        "A": "5",
+        "B": "50",
+        "C": "25",
+        "D": "10"
+      },
+      "correct": "B",
+      "explanation": "Total elements = 5×5 = 25. Each int = 2 bytes. Total = 25 × 2 = 50 bytes."
+    },
+    {
+      "id": "CST201-U4-Q002",
+      "type": "mcq",
+      "topic": "Array Initialization",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["arrays", "initialization", "declaration", "syntax"],
+      "question": "How is an array initialized in C language?",
+      "options": {
+        "A": "int a[3] = {1, 2, 3};",
+        "B": "int a = {1, 2, 3};",
+        "C": "int a[] = new int[3];",
+        "D": "int a(3) = {1, 2, 3};"
+      },
+      "correct": "A",
+      "explanation": "In C, arrays are initialized using: datatype name[size] = {values}; Option B lacks brackets, C uses 'new' which is C++ syntax, D uses parentheses instead of brackets."
+    },
+    {
+      "id": "CST201-U4-Q003",
+      "type": "mcq",
+      "topic": "Array Sum Output",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["arrays", "for-loop", "sum", "output"],
+      "question": "What is the output of the following code snippet?\n#include <stdio.h>\nint main() {\n    int a[] = {1, 2, 3, 4};\n    int sum = 0;\n    for(int i = 0; i < 4; i++) {\n        sum += a[i];\n    }\n    printf(\"%d\", sum);\n    return 0;\n}",
+      "options": {
+        "A": "1",
+        "B": "4",
+        "C": "20",
+        "D": "10"
+      },
+      "correct": "D",
+      "explanation": "Sum = 1+2+3+4 = 10. The loop adds all 4 elements of the array."
+    },
+    {
+      "id": "CST201-U4-Q004",
+      "type": "mcq",
+      "topic": "Array sizeof",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["arrays", "sizeof", "data-types", "elements"],
+      "question": "If an array is declared as arr[] = {1, 2, 5, 7, 9}; then what is the value of sizeof(arr[3])?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "3",
+        "D": "8"
+      },
+      "correct": "B",
+      "explanation": "arr[3] is a single int element. sizeof(int) = 2 bytes (in 16-bit compiler). The question asks size of one element, not the value at index 3."
+    },
+    {
+      "id": "CST201-U4-Q005",
+      "type": "mcq",
+      "topic": "String Concatenation",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["strings", "strcat", "string-functions", "concatenation"],
+      "question": "s1 = \"H1\", s2 = \"HELLO\", s3 = \"BYE\". How can we concatenate the three strings?",
+      "options": {
+        "A": "strcat(s1, s2, s3)",
+        "B": "strcat(s1, strcat(s2, s3))",
+        "C": "strcpy(s1, s2, s3)",
+        "D": "strcpy(s1, strcpy(s2, s3))"
+      },
+      "correct": "B",
+      "explanation": "strcat() takes only two arguments. To concatenate three strings, we nest calls: first strcat(s2,s3) appends s3 to s2, then strcat(s1, result) appends to s1."
+    },
+    {
+      "id": "CST201-U4-Q006",
+      "type": "mcq",
+      "topic": "Null Character",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["strings", "null-character", "string-terminator"],
+      "question": "A string is terminated by a -",
+      "options": {
+        "A": "\\0",
+        "B": "\\n",
+        "C": "0",
+        "D": "\\"
+      },
+      "correct": "A",
+      "explanation": "Every string in C is terminated by the null character '\\0' (ASCII value 0). This marks the end of the string."
+    },
+    {
+      "id": "CST201-U4-Q007",
+      "type": "mcq",
+      "topic": "ASCII Values",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["ascii", "character-set", "strings", "range"],
+      "question": "ASCII code for a - z ranges from -",
+      "options": {
+        "A": "0 - 26",
+        "B": "35 - 81",
+        "C": "97 - 123",
+        "D": "none of the above"
+      },
+      "correct": "C",
+      "explanation": "In the ASCII table, lowercase letters 'a' to 'z' have values 97 to 122. Note: 123 is not technically correct but it's the closest option; 'a'=97, 'z'=122."
+    },
+    {
+      "id": "CST201-U4-Q008",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["strcpy", "string-functions", "copy"],
+      "question": "The function strcpy(s1, s2) -",
+      "options": {
+        "A": "copies s1 into s2",
+        "B": "copies s2 into s1",
+        "C": "append s2 after s1",
+        "D": "replace s1 with s2"
+      },
+      "correct": "B",
+      "explanation": "strcpy(destination, source) copies the source string (s2) into the destination string (s1). The second argument is always the source."
+    },
+    {
+      "id": "CST201-U4-Q009",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["strcpy", "string-functions", "copy"],
+      "question": "The function strcpy(s1, s2) call means -",
+      "options": {
+        "A": "copies s1 string into s2",
+        "B": "copies s2 string into s1",
+        "C": "copies both s1 and s2",
+        "D": "None of these"
+      },
+      "correct": "B",
+      "explanation": "strcpy(s1, s2) copies s2 (source) into s1 (destination). Syntax: strcpy(destination, source)."
+    },
+    {
+      "id": "CST201-U4-Q010",
+      "type": "short",
+      "topic": "Null Character",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["null-character", "string-terminator", "strings"],
+      "question": "What is the use of a '\\0' character?"
+    },
+    {
+      "id": "CST201-U4-Q011",
+      "type": "short",
+      "topic": "Null Character",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["null-character", "string-terminator", "strings"],
+      "question": "Each string is terminated with a ______ character."
+    },
+    {
+      "id": "CST201-U4-Q012",
+      "type": "short",
+      "topic": "Array Subscript",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["arrays", "subscript", "index", "zero-based"],
+      "question": "Array subscripts in C always start at ______."
+    },
+    {
+      "id": "CST201-U4-Q013",
+      "type": "short",
+      "topic": "Types of Arrays",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["arrays", "types", "1d-array", "2d-array", "multidimensional"],
+      "question": "Name the types of Arrays."
+    },
+    {
+      "id": "CST201-U4-Q014",
+      "type": "theory",
+      "topic": "Array Definition and Matrix",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["arrays", "2d-array", "matrix", "diagonal-sum"],
+      "question": "What do you mean by array? Write a C program to read a 4×4 integer matrix and find the sum of its diagonal elements. (2 + 6)"
+    },
+    {
+      "id": "CST201-U4-Q015",
+      "type": "theory",
+      "topic": "String Definition",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["strings", "definition", "character-array"],
+      "question": "What is a string in C? (1)"
+    },
+    {
+      "id": "CST201-U4-Q016",
+      "type": "theory",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 7,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["string-functions", "strlen", "strcpy", "strcat", "strcmp"],
+      "question": "Discuss any four string handling library functions with example. (7)"
+    },
+    {
+      "id": "CST201-U4-Q017",
+      "type": "program",
+      "topic": "String Reversal",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["strings", "reverse", "without-library", "string-manipulation"],
+      "question": "Write a C program to reverse a string without using any string handling library function. (4)"
+    },
+    {
+      "id": "CST201-U4-Q018",
+      "type": "program",
+      "topic": "Identity Matrix",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["2d-array", "matrix", "identity-matrix", "arrays"],
+      "question": "Write a program in C to check whether a given matrix is an identity matrix. (5)"
+    },
+    {
+      "id": "CST201-U4-Q019",
+      "type": "theory",
+      "topic": "Array Definition and Advantages",
+      "difficulty": "easy",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["arrays", "definition", "advantages", "subscript-variables"],
+      "question": "What is an array? State advantages of an array. (1 + 2)"
+    },
+    {
+      "id": "CST201-U4-Q020",
+      "type": "theory",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["strcmp", "strcat", "string-functions", "comparison"],
+      "question": "Explain the following string operations used in C: (i) strcmp() (ii) strcat() (3)"
+    },
+    {
+      "id": "CST201-U4-Q021",
+      "type": "program",
+      "topic": "Case Conversion",
+      "difficulty": "hard",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["strings", "case-conversion", "lowercase", "uppercase", "without-library"],
+      "question": "Write a C program to convert lowercase string to uppercase and vice versa. [Do Not use string.h] (5)"
+    },
+    {
+      "id": "CST201-U4-Q022",
+      "type": "program",
+      "topic": "ASCII Value",
+      "difficulty": "easy",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["ascii", "character", "strings", "input-output"],
+      "question": "Write a program in C to find ASCII value of a character. (3)"
+    },
+    {
+      "id": "CST201-U4-Q023",
+      "type": "theory",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["string-functions", "strlen", "strcpy", "strcat", "strcmp"],
+      "question": "Discuss with programming examples the different types of String Handling Function in C."
+    },
+    {
+      "id": "CST201-U4-Q024",
+      "type": "program",
+      "topic": "String Reversal",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["strings", "reverse", "string-manipulation"],
+      "question": "Write a C program to find reverse of a string."
+    },
+    {
+      "id": "CST201-U4-Q025",
+      "type": "program",
+      "topic": "Two Dimensional Array",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["2d-array", "matrix", "maximum", "minimum", "location"],
+      "question": "Create a two dimensional integer array to insert some integers randomly into it. Now find the greatest and smallest integer from the array and also find their corresponding locations. (6)"
+    },
+    {
+      "id": "CST201-U4-Q026",
+      "type": "program",
+      "topic": "String Abbreviation",
+      "difficulty": "hard",
+      "marks": 7,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["strings", "abbreviation", "string-manipulation", "multiword"],
+      "question": "Write down a program in C to express any multiword string into its equivalent abbreviated form separated by a dot (.) i.e. SWAPAN KUMAR SEN will be written as S.K.S. (7)"
+    },
+    {
+      "id": "CST201-U4-Q027",
+      "type": "program",
+      "topic": "String Functions Implementation",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["strcpy", "strlen", "implementation", "without-library"],
+      "question": "Write C programs to implement: i) strcpy(), ii) strlen() library function by yourself. (3×2)"
+    },
+    {
+      "id": "CST201-U4-Q028",
+      "type": "theory",
+      "topic": "Null Character",
+      "difficulty": "easy",
+      "marks": 4,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["null-character", "string-terminator", "string-manipulation"],
+      "question": "What do you mean by null character? Describe its uses in string manipulation. (1 + 3)"
+    },
+    {
+      "id": "CST201-U4-Q029",
+      "type": "mcq",
+      "topic": "Array Declaration",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["arrays", "declaration", "syntax", "size"],
+      "question": "Which of the following correctly declares a one-dimensional array of 10 integers?",
+      "options": {
+        "A": "int arr(10);",
+        "B": "int arr[10];",
+        "C": "array int[10];",
+        "D": "int[10] arr;"
+      },
+      "correct": "B",
+      "explanation": "In C, arrays are declared as: datatype name[size]; So int arr[10]; is the correct syntax to declare an array of 10 integers."
+    },
+    {
+      "id": "CST201-U4-Q030",
+      "type": "mcq",
+      "topic": "Array Accessing",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["arrays", "indexing", "access", "zero-based"],
+      "question": "If an array is declared as int arr[5] = {10, 20, 30, 40, 50}; what is the value of arr[2]?",
+      "options": {
+        "A": "10",
+        "B": "20",
+        "C": "30",
+        "D": "40"
+      },
+      "correct": "C",
+      "explanation": "Array indexing starts from 0 in C. arr[0]=10, arr[1]=20, arr[2]=30. So arr[2] is 30."
+    },
+    {
+      "id": "CST201-U4-Q031",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["strlen", "string-functions", "string-length"],
+      "question": "What does the strlen() function return?",
+      "options": {
+        "A": "The size of the character array including null character",
+        "B": "The number of characters in the string excluding the null character",
+        "C": "The ASCII sum of all characters",
+        "D": "The memory address of the string"
+      },
+      "correct": "B",
+      "explanation": "strlen() returns the number of characters in a string excluding the terminating null character '\\0'. For \"HELLO\", strlen returns 5."
+    },
+    {
+      "id": "CST201-U4-Q032",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["strcmp", "string-functions", "comparison"],
+      "question": "What does strcmp(s1, s2) return when s1 and s2 are identical strings?",
+      "options": {
+        "A": "1",
+        "B": "-1",
+        "C": "0",
+        "D": "The length of the string"
+      },
+      "correct": "C",
+      "explanation": "strcmp() returns 0 if both strings are equal, a negative value if s1 < s2, and a positive value if s1 > s2 (lexicographically)."
+    },
+    {
+      "id": "CST201-U4-Q033",
+      "type": "mcq",
+      "topic": "Two Dimensional Array",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["2d-array", "declaration", "rows-columns", "matrix"],
+      "question": "In a 2D array declared as int a[3][4], how many elements can it store?",
+      "options": {
+        "A": "3",
+        "B": "4",
+        "C": "7",
+        "D": "12"
+      },
+      "correct": "D",
+      "explanation": "A 2D array a[3][4] has 3 rows and 4 columns. Total elements = 3 × 4 = 12."
+    },
+    {
+      "id": "CST201-U4-Q034",
+      "type": "mcq",
+      "topic": "Character Arrays",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["character-arrays", "strings", "declaration", "null-character"],
+      "question": "What is the minimum size of character array needed to store the string \"HELLO\"?",
+      "options": {
+        "A": "4",
+        "B": "5",
+        "C": "6",
+        "D": "7"
+      },
+      "correct": "C",
+      "explanation": "\"HELLO\" has 5 characters plus 1 null terminator '\\0'. So minimum size = 5 + 1 = 6."
+    },
+    {
+      "id": "CST201-U4-Q035",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["string-functions", "header-file", "string-h"],
+      "question": "Which header file must be included to use string handling functions like strlen(), strcpy(), strcat(), strcmp()?",
+      "options": {
+        "A": "stdio.h",
+        "B": "stdlib.h",
+        "C": "string.h",
+        "D": "ctype.h"
+      },
+      "correct": "C",
+      "explanation": "All standard string handling functions are declared in the string.h header file."
+    },
+    {
+      "id": "CST201-U4-Q036",
+      "type": "mcq",
+      "topic": "Multidimensional Arrays",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["multidimensional-array", "3d-array", "declaration"],
+      "question": "Which of the following correctly declares a 3-dimensional array in C?",
+      "options": {
+        "A": "int arr[2][3][4];",
+        "B": "int arr[2,3,4];",
+        "C": "int arr(2)(3)(4);",
+        "D": "int arr{2}{3}{4};"
+      },
+      "correct": "A",
+      "explanation": "In C, multidimensional arrays are declared using separate brackets for each dimension: int arr[2][3][4]; declares a 3D array with 2×3×4 = 24 elements."
+    },
+    {
+      "id": "CST201-U4-Q037",
+      "type": "mcq",
+      "topic": "String Substring Extraction",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["strings", "substring", "string-manipulation", "applications"],
+      "question": "Which standard C library function can be used directly to extract a substring from a string?",
+      "options": {
+        "A": "strstr()",
+        "B": "substr()",
+        "C": "strtok()",
+        "D": "There is no direct standard function for substring extraction"
+      },
+      "correct": "D",
+      "explanation": "C does not have a built-in substr() function. Substring extraction must be done manually using loops, pointer arithmetic, or strncpy(). strstr() finds a substring but does not extract it."
+    },
+    {
+      "id": "CST201-U4-Q038",
+      "type": "mcq",
+      "topic": "Array Passing to Function",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["arrays", "functions", "pass-by-reference", "base-address"],
+      "question": "When an array is passed to a function in C, what is actually passed?",
+      "options": {
+        "A": "A copy of the entire array",
+        "B": "The base address (pointer to the first element)",
+        "C": "The size of the array",
+        "D": "The last element of the array"
+      },
+      "correct": "B",
+      "explanation": "In C, when an array is passed to a function, only the base address (pointer to arr[0]) is passed. This is why changes to array elements inside a function affect the original array."
+    }
+  ]
+}

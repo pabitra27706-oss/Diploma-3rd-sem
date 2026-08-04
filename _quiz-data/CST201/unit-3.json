@@ -1,0 +1,638 @@
+{
+  "subject": "CST201",
+  "unit": 3,
+  "unitTitle": "User Defined Functions",
+  "totalQuestions": 42,
+  "questions": [
+    {
+      "id": "CST201-U3-Q001",
+      "type": "mcq",
+      "topic": "Function Characteristics",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["functions", "input", "return-value", "characteristics"],
+      "question": "A function -",
+      "options": {
+        "A": "may or may not need input data",
+        "B": "may or may not return a value",
+        "C": "Both a and b",
+        "D": "None of these"
+      },
+      "correct": "C",
+      "explanation": "Functions in C can have zero or more parameters (input) and may return a value or be void (no return). Both characteristics are optional."
+    },
+    {
+      "id": "CST201-U3-Q002",
+      "type": "mcq",
+      "topic": "Return Values",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["void-function", "return-type", "functions"],
+      "question": "If the function returns no value then it is called -",
+      "options": {
+        "A": "Data type function",
+        "B": "Calling function",
+        "C": "Main function",
+        "D": "Void function"
+      },
+      "correct": "D",
+      "explanation": "A function declared with void return type does not return any value. Example: void display() { }"
+    },
+    {
+      "id": "CST201-U3-Q003",
+      "type": "mcq",
+      "topic": "Function Limits",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["functions", "limit", "c-programming"],
+      "question": "What is the limit for number of functions in a C Program?",
+      "options": {
+        "A": "16",
+        "B": "31",
+        "C": "32",
+        "D": "No Limit"
+      },
+      "correct": "D",
+      "explanation": "There is no limit to the number of functions that can be defined in a C program. You can create as many functions as needed."
+    },
+    {
+      "id": "CST201-U3-Q004",
+      "type": "mcq",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["storage-class", "keywords", "auto-extern-static-register"],
+      "question": "Which of the following is NOT a storage class?",
+      "options": {
+        "A": "auto",
+        "B": "extern",
+        "C": "dynamic",
+        "D": "static"
+      },
+      "correct": "C",
+      "explanation": "The four storage classes in C are: auto, extern, static, and register. 'dynamic' is not a storage class in C."
+    },
+    {
+      "id": "CST201-U3-Q005",
+      "type": "mcq",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["storage-class", "typedef", "keywords"],
+      "question": "Which of the following is not a storage class specifier in C?",
+      "options": {
+        "A": "volatile",
+        "B": "extern",
+        "C": "typedef",
+        "D": "static"
+      },
+      "correct": "C",
+      "explanation": "typedef is NOT a storage class; it creates type aliases. The storage classes are: auto, extern, static, register. volatile is a type qualifier."
+    },
+    {
+      "id": "CST201-U3-Q006",
+      "type": "mcq",
+      "topic": "Storage Classes",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["storage-class", "register", "static-variables", "machine-registers"],
+      "question": "The machine registers are sometimes called -",
+      "options": {
+        "A": "local variables",
+        "B": "global variables",
+        "C": "accumulators",
+        "D": "static variables"
+      },
+      "correct": "C",
+      "explanation": "Machine registers (like CPU registers) are often called accumulators. The register storage class suggests storing variables in CPU registers for faster access."
+    },
+    {
+      "id": "CST201-U3-Q007",
+      "type": "mcq",
+      "topic": "Storage Classes",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["storage-class", "auto", "local-variables", "default"],
+      "question": "The default storage class of a local variable is -",
+      "options": {
+        "A": "auto",
+        "B": "static",
+        "C": "register",
+        "D": "extern"
+      },
+      "correct": "A",
+      "explanation": "Local variables declared inside a function have auto storage class by default. auto variables are created when the function is called and destroyed when it exits."
+    },
+    {
+      "id": "CST201-U3-Q008",
+      "type": "mcq",
+      "topic": "Recursion Output",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["recursion", "function-calls", "output", "static-storage"],
+      "question": "What will be the output of the following codes?\nint func();\nmain() {\n    printf(\"%d\", func());\n    printf(\"%d\", func());\n    printf(\"%d\", func());\n}\nint func() {\n    int counter = 5;\n    counter++;\n    return(counter);\n}",
+      "options": {
+        "A": "6 6 6",
+        "B": "6 7 8",
+        "C": "5 6 7",
+        "D": "5 5 5"
+      },
+      "correct": "A",
+      "explanation": "counter is a local auto variable (re-initialized to 5 each time func() is called). Each call: counter=5, then counter++→6, return 6. Output: 6 6 6."
+    },
+    {
+      "id": "CST201-U3-Q009",
+      "type": "mcq",
+      "topic": "Function Calls and Return Values",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["function-calls", "nested-functions", "return-values", "output"],
+      "question": "What will be the output?\nint f2(int a) {\n    return(a * a);\n}\nint f1(int a, int b) {\n    return(f2(a * b));\n}\nmain() {\n    int x;\n    x = f1(2, 4);\n    printf(\"%d\", x);\n}",
+      "options": {
+        "A": "8",
+        "B": "16",
+        "C": "64",
+        "D": "32"
+      },
+      "correct": "C",
+      "explanation": "f1(2,4) calls f2(2*4) = f2(8). f2(8) returns 8*8 = 64. So x = 64."
+    },
+    {
+      "id": "CST201-U3-Q010",
+      "type": "short",
+      "topic": "Function Prototype",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["function-prototype", "declaration", "functions"],
+      "question": "What is prototype declaration of a function?"
+    },
+    {
+      "id": "CST201-U3-Q011",
+      "type": "short",
+      "topic": "Library Functions",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["library-functions", "predefined-functions", "header-files"],
+      "question": "What do you mean by library function in C program?"
+    },
+    {
+      "id": "CST201-U3-Q012",
+      "type": "short",
+      "topic": "Scope and Lifetime",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["global-variables", "scope", "lifetime"],
+      "question": "What is global variable?"
+    },
+    {
+      "id": "CST201-U3-Q013",
+      "type": "short",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["storage-class", "static", "default-value", "initialization"],
+      "question": "By default a variable is assigned with ______ in static storage class."
+    },
+    {
+      "id": "CST201-U3-Q014",
+      "type": "short",
+      "topic": "Return Values",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["void-function", "return-type", "functions"],
+      "question": "If the function returns no value then it is called ______."
+    },
+    {
+      "id": "CST201-U3-Q015",
+      "type": "short",
+      "topic": "Function Types",
+      "difficulty": "medium",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["user-defined-functions", "function-types", "classification"],
+      "question": "State the types of User-Defined Functions."
+    },
+    {
+      "id": "CST201-U3-Q016",
+      "type": "theory",
+      "topic": "Modular Programming and Functions",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["modular-programming", "functions", "advantages"],
+      "question": "What is modular programming? How functions help in modular programming? (3)"
+    },
+    {
+      "id": "CST201-U3-Q017",
+      "type": "theory",
+      "topic": "Function Advantages and Parameters",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["functions", "advantages", "declaration-vs-definition", "parameters"],
+      "question": "What are the advantages of user-defined function? Write the difference between function declaration and function definition. Explain actual parameter and formal parameter with example. (3 + 2 + 3)"
+    },
+    {
+      "id": "CST201-U3-Q018",
+      "type": "program",
+      "topic": "Return Statement and Functions",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["return-statement", "factorial", "series", "functions"],
+      "question": "What is the use of 'return' statement? Write a C program which calculate the following sum:\nsum = 1/1! + 1/2! + 1/3! + ... + 1/n!\n[The value of n is taken as input] (2 + 6)"
+    },
+    {
+      "id": "CST201-U3-Q019",
+      "type": "theory",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["recursion", "gcd", "recursive-function", "examples"],
+      "question": "What do you understand by recursion? Explain with example. Write recursive function with two integer parameters and calculate their greatest common divisor. (3 + 5)"
+    },
+    {
+      "id": "CST201-U3-Q020",
+      "type": "theory",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["storage-class", "auto-extern-static-register", "scope-lifetime"],
+      "question": "What do you understand by storage class? Explain different storage class in C with example. (2 + 6)"
+    },
+    {
+      "id": "CST201-U3-Q021",
+      "type": "program",
+      "topic": "GCD Using Recursion",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["gcd", "recursion", "euclidean-algorithm"],
+      "question": "Write a program to calculate GCD of two numbers. (4)"
+    },
+    {
+      "id": "CST201-U3-Q022",
+      "type": "theory",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["storage-class", "auto-extern-static-register", "scope-lifetime"],
+      "question": "Discuss different storage classes with examples. (4)"
+    },
+    {
+      "id": "CST201-U3-Q023",
+      "type": "theory",
+      "topic": "Recursion vs Iteration",
+      "difficulty": "medium",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["recursion", "iteration", "comparison", "loops"],
+      "question": "Explain the differences between recursion and iteration. (2)"
+    },
+    {
+      "id": "CST201-U3-Q024",
+      "type": "theory",
+      "topic": "Hello World Program",
+      "difficulty": "easy",
+      "marks": 3,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["hello-world", "header-files", "stdio", "basic-program"],
+      "question": "Write a complete \"Hello World\" program in C and explain used header files with their purpose. (3)"
+    },
+    {
+      "id": "CST201-U3-Q025",
+      "type": "program",
+      "topic": "Recursion - Fibonacci Series",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["recursion", "fibonacci", "iteration", "loops"],
+      "question": "Write programs to generate Fibonacci series using recursion and loop. (4 + 4)"
+    },
+    {
+      "id": "CST201-U3-Q026",
+      "type": "theory",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["storage-class", "auto-extern-static-register", "scope-lifetime"],
+      "question": "Discuss various storage classes used in C. (4)"
+    },
+    {
+      "id": "CST201-U3-Q027",
+      "type": "program",
+      "topic": "Functions - Prime Numbers",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["functions", "prime-numbers", "user-defined-functions"],
+      "question": "Write a program in C to find all prime numbers between given interval using functions. (5)"
+    },
+    {
+      "id": "CST201-U3-Q028",
+      "type": "theory",
+      "topic": "Parameter Passing",
+      "difficulty": "medium",
+      "marks": 10,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["parameter-passing", "call-by-value", "call-by-reference", "functions"],
+      "question": "a) What do you mean by parameter passing in C? (3)\nb) Explain different types of parameter passing supported by C using suitable examples. (7)"
+    },
+    {
+      "id": "CST201-U3-Q029",
+      "type": "program",
+      "topic": "Recursion - Sum of Natural Numbers",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["recursion", "recursive-function", "sum", "natural-numbers"],
+      "question": "Write a recursive function to obtain the returning sum of first 25 natural numbers."
+    },
+    {
+      "id": "CST201-U3-Q030",
+      "type": "program",
+      "topic": "Recursion - Fibonacci Series",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["recursion", "fibonacci", "iteration", "loops"],
+      "question": "Write programs to generate Fibonacci series using recursion and loop. (6)"
+    },
+    {
+      "id": "CST201-U3-Q031",
+      "type": "mcq",
+      "topic": "Function Prototype",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["function-prototype", "declaration", "syntax"],
+      "question": "What is the purpose of a function prototype in C?",
+      "options": {
+        "A": "To define the function body",
+        "B": "To inform the compiler about function signature before definition",
+        "C": "To allocate memory for the function",
+        "D": "To execute the function"
+      },
+      "correct": "B",
+      "explanation": "Function prototype declares the function signature (return type, name, parameters) to the compiler before the actual definition. This enables type checking and allows calling the function before its definition."
+    },
+    {
+      "id": "CST201-U3-Q032",
+      "type": "mcq",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["recursion", "stack", "memory"],
+      "question": "Which data structure is used by the compiler to manage function calls during recursion?",
+      "options": {
+        "A": "Queue",
+        "B": "Stack",
+        "C": "Tree",
+        "D": "Linked List"
+      },
+      "correct": "B",
+      "explanation": "The call stack (or runtime stack) is used to manage function calls. Each recursive call pushes a new activation record onto the stack, storing local variables and return addresses."
+    },
+    {
+      "id": "CST201-U3-Q033",
+      "type": "mcq",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["storage-class", "static", "scope", "lifetime"],
+      "question": "What is the scope and lifetime of a static local variable?",
+      "options": {
+        "A": "Scope: Function; Lifetime: Entire program execution",
+        "B": "Scope: Global; Lifetime: Function execution",
+        "C": "Scope: Global; Lifetime: Entire program execution",
+        "D": "Scope: Function; Lifetime: Function execution"
+      },
+      "correct": "A",
+      "explanation": "static local variables have function scope (visible only within the function) but lifetime is the entire program execution (value persists between function calls)."
+    },
+    {
+      "id": "CST201-U3-Q034",
+      "type": "mcq",
+      "topic": "Parameter Passing",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["call-by-value", "call-by-reference", "parameter-passing"],
+      "question": "In call by value parameter passing, what is passed to the function?",
+      "options": {
+        "A": "Address of the variable",
+        "B": "Copy of the variable's value",
+        "C": "Reference to the variable",
+        "D": "Pointer to the variable"
+      },
+      "correct": "B",
+      "explanation": "In call by value, a copy of the actual parameter's value is passed to the function. Changes made to the parameter inside the function do not affect the original variable."
+    },
+    {
+      "id": "CST201-U3-Q035",
+      "type": "mcq",
+      "topic": "Return Values",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["return-statement", "return-type", "functions"],
+      "question": "How many values can a function return using the return statement in C?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "Multiple values",
+        "D": "Unlimited"
+      },
+      "correct": "B",
+      "explanation": "A function can return only one value using the return statement. To return multiple values, we use pointers or structures."
+    },
+    {
+      "id": "CST201-U3-Q036",
+      "type": "mcq",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["recursion", "base-case", "termination"],
+      "question": "What is essential for a recursive function to avoid infinite recursion?",
+      "options": {
+        "A": "A loop statement",
+        "B": "A base case (termination condition)",
+        "C": "A global variable",
+        "D": "A static variable"
+      },
+      "correct": "B",
+      "explanation": "Every recursive function must have a base case (termination condition) that stops further recursive calls, preventing infinite recursion and stack overflow."
+    },
+    {
+      "id": "CST201-U3-Q037",
+      "type": "mcq",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["storage-class", "extern", "global-variables"],
+      "question": "What is the purpose of the extern storage class?",
+      "options": {
+        "A": "To store variables in CPU registers",
+        "B": "To declare a global variable defined in another file",
+        "C": "To make variables persist between function calls",
+        "D": "To limit variable scope to a function"
+      },
+      "correct": "B",
+      "explanation": "extern is used to declare a global variable or function that is defined in another source file. It tells the compiler the variable exists elsewhere."
+    },
+    {
+      "id": "CST201-U3-Q038",
+      "type": "mcq",
+      "topic": "Storage Classes",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["storage-class", "register", "cpu-registers"],
+      "question": "What is the advantage of using register storage class?",
+      "options": {
+        "A": "Variables persist between function calls",
+        "B": "Faster access as variables are stored in CPU registers",
+        "C": "Variables become global",
+        "D": "Memory is saved"
+      },
+      "correct": "B",
+      "explanation": "register suggests storing the variable in CPU registers for faster access. However, it's only a suggestion; the compiler may ignore it. We cannot use & operator on register variables."
+    },
+    {
+      "id": "CST201-U3-Q039",
+      "type": "mcq",
+      "topic": "Function Signature",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["function-signature", "function-overloading", "c-language"],
+      "question": "Does C support function overloading (multiple functions with the same name)?",
+      "options": {
+        "A": "Yes, based on different parameter types",
+        "B": "Yes, based on different return types",
+        "C": "No, C does not support function overloading",
+        "D": "Yes, but only in C99 standard"
+      },
+      "correct": "C",
+      "explanation": "C does NOT support function overloading. Each function must have a unique name. Function overloading is a feature of C++."
+    },
+    {
+      "id": "CST201-U3-Q040",
+      "type": "mcq",
+      "topic": "Recursion vs Iteration",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["recursion", "iteration", "performance", "memory"],
+      "question": "Which of the following is a disadvantage of recursion compared to iteration?",
+      "options": {
+        "A": "Code is harder to understand",
+        "B": "More memory consumption due to stack usage",
+        "C": "Cannot solve complex problems",
+        "D": "Slower compilation time"
+      },
+      "correct": "B",
+      "explanation": "Recursion uses more memory because each recursive call consumes stack space for local variables and return addresses. Iteration uses less memory as it reuses the same variables."
+    },
+    {
+      "id": "CST201-U3-Q041",
+      "type": "mcq",
+      "topic": "Scope and Lifetime",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["scope", "lifetime", "auto-variables", "local-variables"],
+      "question": "What is the default initial value of an auto (local) variable in C?",
+      "options": {
+        "A": "0",
+        "B": "NULL",
+        "C": "Garbage value",
+        "D": "-1"
+      },
+      "correct": "C",
+      "explanation": "auto (local) variables are not automatically initialized and contain garbage (unpredictable) values until explicitly assigned. Only global and static variables are initialized to 0."
+    },
+    {
+      "id": "CST201-U3-Q042",
+      "type": "mcq",
+      "topic": "Library Functions",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["library-functions", "header-files", "predefined-functions"],
+      "question": "Which header file contains the prototype for the printf() function?",
+      "options": {
+        "A": "stdlib.h",
+        "B": "stdio.h",
+        "C": "conio.h",
+        "D": "string.h"
+      },
+      "correct": "B",
+      "explanation": "printf() and scanf() are declared in stdio.h (Standard Input/Output header file). stdio.h must be included to use these functions."
+    }
+  ]
+}
