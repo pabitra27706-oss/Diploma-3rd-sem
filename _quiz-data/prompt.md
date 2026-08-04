@@ -1,3 +1,7 @@
+Here is the updated prompt with all modifications integrated:
+
+---
+
 # PROMPT FOR JSON DATA CREATION — Quiz Question Papers
 
 ---
@@ -22,6 +26,7 @@ Output:
 
 ```
 ✅ One file per unit
+✅ One reply = One unit JSON file (complete, no splitting)
 ✅ Map every question to correct unit using syllabus
 ✅ Assign proper topic based on syllabus unit content
 ✅ Determine difficulty intelligently
@@ -30,6 +35,11 @@ Output:
 ✅ For non-MCQ: NO explanation/modelAnswer field
 ✅ Never skip any question from the paper
 ✅ Never guess — use syllabus to decide unit/topic
+✅ After all PYQ questions, add EXTRA questions for syllabus gaps
+✅ Mark EXTRA questions with source: "EXTRA"
+✅ Mark PYQ questions with source: "PYQ"
+✅ Before generating each unit, do a silent audit of all PYQs
+✅ Wait for "Next" before generating next unit file
 ```
 
 ---
@@ -44,6 +54,22 @@ _quiz-data/
     unit-3.json
     unit-4.json
     unit-5.json  (if subject has 5 units)
+```
+
+---
+
+## Reply Format Per Unit
+
+```
+For each unit, output in this exact order:
+
+1. File header comment showing file path
+2. Complete JSON (one single code block)
+3. Audit table (PYQ verification)
+4. Unit summary (PYQ count, EXTRA count, Total)
+5. EXTRA justification (why each extra was added)
+
+Then wait for "Next" before proceeding to next unit.
 ```
 
 ---
@@ -191,11 +217,16 @@ If not mentioned:
 Extract from paper metadata
 Integer only
 Example: 2024
+
+For EXTRA questions:
+  Use the most recent paper year of that subject
+  Example: if latest paper is 2024, use 2024
 ```
 
 ### `source`
 ```
-Always "PYQ" for these conversions
+"PYQ"   → Question directly from a previous year paper
+"EXTRA" → Question added to fill syllabus gaps not covered by PYQs
 ```
 
 ### `tags`
@@ -258,6 +289,213 @@ DO NOT INCLUDE THIS FIELD
 Non-MCQ questions will be exported to AI for evaluation
 No need to store answers in JSON
 Keeps file size small
+```
+
+---
+
+## EXTRA Questions Rules
+
+```
+After adding all PYQ questions for a unit:
+
+1. Review the syllabus topics for that unit
+2. Identify topics NOT covered by any PYQ question
+3. Add questions for those missing topics
+4. Mark them with source: "EXTRA"
+5. Use year of most recent paper for that subject
+6. Continue sequential numbering from last PYQ question
+
+How many EXTRA to add:
+  - Add as many as needed to cover all syllabus topics
+  - Minimum 2-3 per unit if gaps exist
+  - No artificial limit — quality over quantity
+  - Do NOT add EXTRA if PYQs already cover the topic well
+
+What makes a good EXTRA question:
+  - Directly from syllabus topic list
+  - Important concept for exams
+  - Not already covered by any PYQ
+  - Mix of MCQ, theory, program types
+```
+
+---
+
+## Processing Steps
+
+When I give you a paper:
+
+### Step 1: Extract Metadata
+```
+Identify:
+- Subject code
+- Paper code
+- Year
+- Month
+```
+
+### Step 2: Audit All Papers First (Silent)
+```
+Before generating any JSON:
+- Read ALL questions from ALL papers given
+- Group by unit using syllabus
+- Note which syllabus topics are covered by PYQs
+- Note which syllabus topics have NO PYQ coverage
+- Plan EXTRA questions for gaps
+```
+
+### Step 3: Generate Unit 1 JSON Only
+```
+Output:
+1. File path header
+2. Complete unit-1.json
+3. Audit table
+4. Summary
+5. EXTRA justification
+
+Then STOP and wait for "Next"
+```
+
+### Step 4: On "Next" → Generate Unit 2 JSON
+```
+Same format as Step 3
+Wait for "Next" again
+```
+
+### Step 5: Continue Until All Units Done
+```
+Each "Next" triggers one unit file
+Never output two unit files in one reply
+```
+
+### Step 6: Final Summary After Last Unit
+```
+Show complete subject summary table:
+| Unit | Title | PYQ | EXTRA | Total |
+```
+
+---
+
+## Categorize Questions by Unit
+```
+Read each question
+Match topic to syllabus
+Assign to correct unit
+Group all unit 1 questions, unit 2 questions, etc.
+```
+
+## Generate Questions Array
+```
+For each question:
+1. Generate ID
+2. Determine type
+3. Extract topic from syllabus
+4. Assign difficulty
+5. Note marks
+6. Add metadata (year, source)
+7. Generate tags
+8. Format question text with marks in brackets
+9. For MCQ: extract options, identify correct, write SHORT explanation (1-2 lines)
+10. For non-MCQ: NO explanation/modelAnswer field
+```
+
+---
+
+## Validate Before Output
+```
+Check:
+- All questions from paper are included
+- No duplicate IDs
+- All required fields present
+- Marks sum makes sense
+- Topics match syllabus
+- MCQ explanations are SHORT
+- Non-MCQ have NO explanation/modelAnswer
+- EXTRA questions cover syllabus gaps
+- source field is "PYQ" or "EXTRA" correctly set
+- totalQuestions count matches actual question count
+```
+
+---
+
+## Special Cases
+
+### MCQ with "Any ten" instruction
+```
+Include ALL MCQs in the JSON
+User can filter/select during quiz
+Don't skip any
+```
+
+### Multi-part questions
+```
+Keep as ONE question
+Example: "2. a) ... b) ... c) ..."
+
+In JSON:
+question: "a) Explain algorithm characteristics (3)\nb) What is asymptotic notation (2)\nc) Define Big-O (3)"
+marks: 8  (sum of all parts)
+type: "theory"
+NO modelAnswer field
+```
+
+### Questions spanning multiple units
+```
+Assign to the PRIMARY unit based on main concept
+If question asks "Compare bubble sort and merge sort":
+  → Both are sorting → Unit 2
+  
+If question asks "Use Prim's algorithm on this graph":
+  → Graph algorithm → Unit 4
+```
+
+### Fill in the blanks
+```
+type: "short"
+marks: 1
+Include "________" in question text
+NO modelAnswer field
+```
+
+### Diagrams in questions
+```
+If question says "draw diagram" or "construct tree":
+type: "numerical"
+Keep question text as-is
+NO modelAnswer field
+```
+
+### Duplicate questions across papers
+```
+If same question appears in multiple papers:
+  - Include it ONCE only
+  - Use the earliest year
+  - Note in audit table as duplicate
+```
+
+---
+
+## Quality Checklist
+
+Before giving output, verify:
+
+```
+✅ Every question has all required fields
+✅ IDs are sequential and properly formatted
+✅ Units are correctly assigned based on syllabus
+✅ Topics match syllabus terminology exactly
+✅ Difficulty makes sense (not all easy, not all hard)
+✅ Tags are relevant and lowercase
+✅ MCQ explanations are SHORT (1-2 lines maximum)
+✅ Non-MCQ questions have NO explanation/modelAnswer field
+✅ Marks distribution is reasonable
+✅ No questions skipped from original paper
+✅ totalQuestions count is accurate
+✅ File names follow pattern: unit-1.json, unit-2.json, etc.
+✅ JSON is valid and properly formatted
+✅ source field is "PYQ" or "EXTRA" for every question
+✅ EXTRA questions cover all remaining syllabus gaps
+✅ One reply contains exactly one unit JSON file
+✅ Output stops after each unit and waits for "Next"
 ```
 
 ---
@@ -519,166 +757,39 @@ Keeps file size small
 
 ---
 
-## Processing Steps
+## Output Format Per Unit
 
-When I give you a paper:
+```
+# File: _quiz-data/{SUBJECT}/unit-{N}.json
 
-### Step 1: Extract Metadata
-```
-Identify:
-- Subject code
-- Paper code
-- Year
-- Month
-```
-
-### Step 2: Categorize Questions by Unit
-```
-Read each question
-Match topic to syllabus
-Assign to correct unit
-Group all unit 1 questions, unit 2 questions, etc.
-```
-
-### Step 3: Generate Questions Array
-```
-For each question:
-1. Generate ID
-2. Determine type
-3. Extract topic from syllabus
-4. Assign difficulty
-5. Note marks
-6. Add metadata (year, source)
-7. Generate tags
-8. Format question text with marks in brackets
-9. For MCQ: extract options, identify correct, write SHORT explanation (1-2 lines)
-10. For non-MCQ: NO explanation/modelAnswer field
-```
-
-### Step 4: Create Unit Files
-```
-Create one JSON file per unit
-Include only questions belonging to that unit
-Number questions sequentially within each file
-Calculate totalQuestions
-```
-
-### Step 5: Validate
-```
-Check:
-- All questions from paper are included
-- No duplicate IDs
-- All required fields present
-- Marks sum makes sense
-- Topics match syllabus
-- MCQ explanations are SHORT
-- Non-MCQ have NO explanation/modelAnswer
-```
+{complete JSON in single code block}
 
 ---
 
-## Special Cases
+**Unit N Audit — PYQ Verification:**
 
-### MCQ with "Any ten" instruction
-```
-Include ALL MCQs in the JSON
-User can filter/select during quiz
-Don't skip any
-```
-
-### Multi-part questions
-```
-Keep as ONE question
-Example: "2. a) ... b) ... c) ..."
-
-In JSON:
-question: "a) Explain algorithm characteristics (3)\nb) What is asymptotic notation (2)\nc) Define Big-O (3)"
-marks: 8  (sum of all parts)
-type: "theory"
-NO modelAnswer field
-```
-
-### Questions spanning multiple units
-```
-Assign to the PRIMARY unit based on main concept
-If question asks "Compare bubble sort and merge sort":
-  → Both are sorting → Unit 2
-  
-If question asks "Use Prim's algorithm on this graph":
-  → Graph algorithm → Unit 4
-```
-
-### Fill in the blanks
-```
-type: "short"
-marks: 1
-Include "________" in question text
-NO modelAnswer field
-```
-
-### Diagrams in questions
-```
-If question says "draw diagram" or "construct tree":
-type: "numerical"
-Keep question text as-is
-NO modelAnswer field
-```
+| Q# | Question | Paper Source | Type |
+|---|---|---|---|
+| Q001 | ... | P1 Dec 2024 | ✅ PYQ |
+| Q002 | ... | — | ⭐ EXTRA |
 
 ---
 
-## Quality Checklist
+**Unit N Summary:**
 
-Before giving output, verify:
+| Category | Count |
+|---|---|
+| PYQ Questions | X |
+| EXTRA Questions | Y |
+| Total | Z |
 
-```
-✅ Every question has all required fields
-✅ IDs are sequential and properly formatted
-✅ Units are correctly assigned based on syllabus
-✅ Topics match syllabus terminology exactly
-✅ Difficulty makes sense (not all easy, not all hard)
-✅ Tags are relevant and lowercase
-✅ MCQ explanations are SHORT (1-2 lines maximum)
-✅ Non-MCQ questions have NO explanation/modelAnswer field
-✅ Marks distribution is reasonable
-✅ No questions skipped from original paper
-✅ totalQuestions count is accurate
-✅ File names follow pattern: unit-1.json, unit-2.json, etc.
-✅ JSON is valid and properly formatted
-```
+**EXTRA Justification:**
+- QX: reason
+- QY: reason
 
 ---
 
-## Output Format
-
-For each paper I give you, reply with:
-
-```
-Subject: {CODE}
-Paper: {PAPER_CODE}
-Year: {YEAR}
-Month: {MONTH}
-
-Unit distribution:
-Unit 1: X questions
-Unit 2: Y questions
-Unit 3: Z questions
-...
-
----
-
-File: _quiz-data/{SUBJECT}/unit-1.json
-
-{complete JSON}
-
----
-
-File: _quiz-data/{SUBJECT}/unit-2.json
-
-{complete JSON}
-
----
-
-[Continue for all units]
+Ready for Unit {N+1}? Type Next
 ```
 
 ---
@@ -693,12 +804,10 @@ File: _quiz-data/{SUBJECT}/unit-2.json
 - Be consistent within a subject
 - Keep JSON files as small as possible
 - Quality > Quantity
-
----
-
-**Ready to receive papers. Give me ONE paper at a time.**
-
-**I will process it completely before moving to the next.**
+- **One reply = One unit file. Always wait for "Next"**
+- **Always add EXTRA questions for uncovered syllabus topics**
+- **source field must be "PYQ" or "EXTRA" — never blank**
+- **Duplicate questions across papers: include once, use earliest year**
 
 ---
 
