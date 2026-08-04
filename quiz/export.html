@@ -1,14 +1,424 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Export quiz results and view quiz history" />
+  <title>Export &amp; History — QuizApp</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/export.css" />
 </head>
-
 <body>
-  
-</body>
 
+  <!-- ── Site Header ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="site-header-inner">
+      <a href="index.html" class="site-logo" aria-label="Go to quiz home">
+        QuizApp
+      </a>
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          aria-label="Toggle dark/light theme"
+          title="Toggle theme"
+        >
+          <span class="icon-sun" aria-hidden="true">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span class="icon-moon" aria-hidden="true">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main Content ────────────────────────────────────────── -->
+  <main class="export-main" id="export-main" role="main">
+
+    <!-- ── Page Header ───────────────────────────────────────── -->
+    <div class="export-page-header">
+      <div class="container">
+        <div class="export-header-inner">
+          <a href="index.html" class="back-link" aria-label="Back to home">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </a>
+          <div class="export-header-text">
+            <h1 class="export-page-title">Export &amp; History</h1>
+            <p class="export-page-subtitle">
+              Download your latest quiz results or browse past quizzes
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         TAB NAVIGATION
+    ══════════════════════════════════════════════════════════ -->
+    <div class="container">
+      <nav
+        class="export-tabs"
+        role="tablist"
+        aria-label="Export page sections"
+      >
+        <button
+          class="export-tab active"
+          id="tab-export"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-export"
+        >
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+        <button
+          class="export-tab"
+          id="tab-history"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-history"
+        >
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          History
+        </button>
+      </nav>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         EXPORT PANEL
+    ══════════════════════════════════════════════════════════ -->
+    <div
+      class="container"
+      id="panel-export"
+      role="tabpanel"
+      aria-labelledby="tab-export"
+    >
+
+      <!-- No result to export state -->
+      <div class="export-empty hidden" id="export-empty-state">
+        <div class="empty-state">
+          <span class="empty-state-icon" aria-hidden="true">
+            <svg class="icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          </span>
+          <p class="empty-state-title">No Quiz to Export</p>
+          <p class="empty-state-desc">
+            Complete a quiz first, then come here to export your results.
+          </p>
+          <a href="index.html" class="btn btn-primary mt-4">Start a Quiz</a>
+        </div>
+      </div>
+
+      <!-- Export Content (visible when there is result data) -->
+      <div class="export-content hidden" id="export-content">
+
+        <!-- ── Quiz Info Card ──────────────────────────────────── -->
+        <section
+          class="export-section"
+          aria-labelledby="export-info-title"
+        >
+          <div class="section-card">
+            <div class="section-card-header">
+              <h2 class="section-card-title" id="export-info-title">
+                Quiz Summary
+              </h2>
+            </div>
+            <div class="section-card-body">
+              <div class="export-summary-grid" id="export-summary-grid">
+                <!-- Filled by JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Format Selection ────────────────────────────────── -->
+        <section
+          class="export-section"
+          aria-labelledby="format-title"
+        >
+          <div class="section-card">
+            <div class="section-card-header">
+              <h2 class="section-card-title" id="format-title">
+                Export Format
+              </h2>
+            </div>
+            <div class="section-card-body">
+              <div
+                class="format-cards"
+                role="radiogroup"
+                aria-labelledby="format-title"
+              >
+                <!-- Markdown -->
+                <label class="format-card" for="fmt-md">
+                  <input
+                    type="radio"
+                    id="fmt-md"
+                    name="format"
+                    value="md"
+                    checked
+                  />
+                  <div class="format-card-inner">
+                    <div class="format-card-icon" aria-hidden="true">
+                      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div class="format-card-body">
+                      <span class="format-card-title">Markdown (.md)</span>
+                      <span class="format-card-desc">
+                        Best for AI evaluation. Structured with headings and rubric.
+                      </span>
+                    </div>
+                    <span class="format-card-check" aria-hidden="true">
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  </div>
+                </label>
+
+                <!-- Plain Text -->
+                <label class="format-card" for="fmt-txt">
+                  <input
+                    type="radio"
+                    id="fmt-txt"
+                    name="format"
+                    value="txt"
+                  />
+                  <div class="format-card-inner">
+                    <div class="format-card-icon" aria-hidden="true">
+                      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <div class="format-card-body">
+                      <span class="format-card-title">Plain Text (.txt)</span>
+                      <span class="format-card-desc">
+                        Simple text format. Readable anywhere.
+                      </span>
+                    </div>
+                    <span class="format-card-check" aria-hidden="true">
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  </div>
+                </label>
+
+                <!-- JSON -->
+                <label class="format-card" for="fmt-json">
+                  <input
+                    type="radio"
+                    id="fmt-json"
+                    name="format"
+                    value="json"
+                  />
+                  <div class="format-card-inner">
+                    <div class="format-card-icon" aria-hidden="true">
+                      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <div class="format-card-body">
+                      <span class="format-card-title">JSON (.json)</span>
+                      <span class="format-card-desc">
+                        Machine-readable structured data. Best for programmatic use.
+                      </span>
+                    </div>
+                    <span class="format-card-check" aria-hidden="true">
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── File Preview ────────────────────────────────────── -->
+        <section
+          class="export-section"
+          aria-labelledby="preview-title"
+        >
+          <div class="section-card">
+            <div class="section-card-header">
+              <div class="preview-header-row">
+                <h2 class="section-card-title" id="preview-title">
+                  Preview
+                </h2>
+                <div class="preview-header-right">
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    id="btn-copy-export"
+                    aria-label="Copy export content to clipboard"
+                  >
+                    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="section-card-body preview-body">
+              <!-- Filename preview -->
+              <div class="filename-preview" id="filename-preview" aria-live="polite">
+                <!-- Filled by JS -->
+              </div>
+
+              <!-- Content preview -->
+              <div class="export-preview-wrap">
+                <pre class="export-preview-content" id="export-preview-content" tabindex="0" aria-label="Export content preview">
+                  <!-- Filled by JS -->
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Copy Success Toast ──────────────────────────────── -->
+        <div
+          class="copy-toast hidden"
+          id="copy-toast"
+          role="status"
+          aria-live="polite"
+        >
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Copied to clipboard!
+        </div>
+
+        <!-- ── Download Button ─────────────────────────────────── -->
+        <div class="export-download-row">
+          <button
+            class="btn btn-primary btn-lg btn-full"
+            id="btn-download-export"
+            aria-label="Download export file"
+          >
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download File
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         HISTORY PANEL
+    ══════════════════════════════════════════════════════════ -->
+    <div
+      class="container hidden"
+      id="panel-history"
+      role="tabpanel"
+      aria-labelledby="tab-history"
+    >
+
+      <!-- History Actions Bar -->
+      <div class="history-actions-bar">
+        <span class="history-count" id="history-count" aria-live="polite">
+          <!-- Filled by JS: "12 quizzes" -->
+        </span>
+        <button
+          class="btn btn-danger btn-sm"
+          id="btn-clear-history"
+          aria-label="Clear all quiz history"
+        >
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Clear All
+        </button>
+      </div>
+
+      <!-- History Empty State -->
+      <div class="history-empty-state hidden" id="history-empty-state">
+        <div class="empty-state">
+          <span class="empty-state-icon" aria-hidden="true">
+            <svg class="icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          </span>
+          <p class="empty-state-title">No Quiz History</p>
+          <p class="empty-state-desc">
+            Your completed quizzes will appear here.
+          </p>
+          <a href="index.html" class="btn btn-primary mt-4">Take a Quiz</a>
+        </div>
+      </div>
+
+      <!-- History List -->
+      <div
+        class="history-full-list"
+        id="history-full-list"
+        aria-label="Quiz history list"
+        aria-live="polite"
+      >
+        <!-- Filled by JS -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ── Confirm Clear History Modal ─────────────────────────── -->
+  <div
+    class="modal-overlay"
+    id="clear-modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="clear-modal-title"
+  >
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="clear-modal-title">Clear History?</h2>
+        <button
+          class="btn-icon"
+          id="close-clear-modal"
+          aria-label="Close"
+        >
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-base" style="line-height:1.6">
+          This will permanently delete all your quiz history. This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-clear">
+          Cancel
+        </button>
+        <button class="btn btn-danger" id="btn-confirm-clear">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Clear All History
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Delete Single Entry Modal ───────────────────────────── -->
+  <div
+    class="modal-overlay"
+    id="delete-modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="delete-modal-title"
+  >
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="delete-modal-title">Delete Entry?</h2>
+        <button
+          class="btn-icon"
+          id="close-delete-modal"
+          aria-label="Close"
+        >
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-base" style="line-height:1.6">
+          Delete this quiz from your history?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-delete">
+          Cancel
+        </button>
+        <button class="btn btn-danger" id="btn-confirm-delete">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Scripts ─────────────────────────────────────────────── -->
+  <script src="js/common.js"></script>
+  <script src="js/export.js"></script>
+
+</body>
 </html>

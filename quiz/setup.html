@@ -1,14 +1,941 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Configure your quiz settings and filters" />
+  <title>Quiz Setup — QuizApp</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/setup.css" />
 </head>
-
 <body>
-  
-</body>
 
+  <!-- ── Site Header ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="site-header-inner">
+      <a href="index.html" class="site-logo" aria-label="Go to quiz home">
+        <svg class="icon" width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+        QuizApp
+      </a>
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          aria-label="Toggle dark/light theme"
+          title="Toggle theme"
+        >
+          <span class="icon-sun" aria-hidden="true">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </span>
+          <span class="icon-moon" aria-hidden="true">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Header ─────────────────────────────────────────── -->
+  <div class="page-header">
+    <div class="container">
+      <div class="page-header-inner">
+        <a href="index.html" class="back-link" aria-label="Back to home">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back
+        </a>
+        <div class="page-header-text">
+          <h1 class="page-title">
+            <svg class="icon page-title-icon" width="24" height="24" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <line x1="4" y1="21" x2="4" y2="14"/>
+              <line x1="4" y1="10" x2="4" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12" y2="3"/>
+              <line x1="20" y1="21" x2="20" y2="16"/>
+              <line x1="20" y1="12" x2="20" y2="3"/>
+              <line x1="1" y1="14" x2="7" y2="14"/>
+              <line x1="9" y1="8" x2="15" y2="8"/>
+              <line x1="17" y1="16" x2="23" y2="16"/>
+            </svg>
+            Quiz Setup
+          </h1>
+          <p class="page-subtitle">Configure your quiz filters and preferences</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step Progress Indicator ─────────────────────────────── -->
+  <div class="container">
+    <div class="step-progress" aria-hidden="true">
+      <div class="step-dot active" data-step-label="Mode"></div>
+      <div class="step-line"></div>
+      <div class="step-dot active" data-step-label="Subject"></div>
+      <div class="step-line"></div>
+      <div class="step-dot active" data-step-label="Count"></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step-label="Filters"></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step-label="Order"></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step-label="Timer"></div>
+    </div>
+  </div>
+
+  <!-- ── Main Content ────────────────────────────────────────── -->
+  <main class="main-content" id="main">
+    <div class="container">
+
+      <form id="setup-form" novalidate aria-label="Quiz setup form">
+
+        <!-- ══ Section 1: Mode — ALWAYS OPEN ════════════════════ -->
+        <section class="setup-section" aria-labelledby="mode-section-title">
+          <div class="setup-section-header">
+            <h2 class="setup-section-title" id="mode-section-title">
+              <span class="section-num" aria-hidden="true">1</span>
+              Quiz Mode
+            </h2>
+            <p class="setup-section-desc">
+              Choose how questions are answered and evaluated
+            </p>
+          </div>
+
+          <div class="mode-cards" role="group" aria-label="Select quiz mode">
+            <!-- MCQ Mode -->
+            <label class="mode-card" for="mode-mcq">
+              <input
+                type="radio"
+                id="mode-mcq"
+                name="mode"
+                value="mcq"
+                checked
+              />
+              <div class="mode-card-inner">
+                <div class="mode-card-icon" aria-hidden="true">
+                  <svg class="icon" width="24" height="24" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                </div>
+                <div class="mode-card-body">
+                  <span class="mode-card-title">MCQ Only</span>
+                  <span class="mode-card-desc">
+                    Select A / B / C / D — instant score after submission
+                  </span>
+                  <div class="mode-card-tags">
+                    <span class="tag">Auto Scored</span>
+                    <span class="tag">Explanations</span>
+                  </div>
+                </div>
+              </div>
+            </label>
+
+            <!-- All Types Mode -->
+            <label class="mode-card" for="mode-all">
+              <input
+                type="radio"
+                id="mode-all"
+                name="mode"
+                value="all"
+              />
+              <div class="mode-card-inner">
+                <div class="mode-card-icon" aria-hidden="true">
+                  <svg class="icon" width="24" height="24" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </div>
+                <div class="mode-card-body">
+                  <span class="mode-card-title">All Types</span>
+                  <span class="mode-card-desc">
+                    MCQ + Theory + Programming — export answers for AI evaluation
+                  </span>
+                  <div class="mode-card-tags">
+                    <span class="tag">All Question Types</span>
+                    <span class="tag">AI Evaluated</span>
+                  </div>
+                </div>
+              </div>
+            </label>
+          </div>
+        </section>
+
+        <!-- ══ Section 2: Subject & Unit — ALWAYS OPEN ══════════ -->
+        <section class="setup-section" aria-labelledby="subject-section-title">
+          <div class="setup-section-header">
+            <h2 class="setup-section-title" id="subject-section-title">
+              <span class="section-num" aria-hidden="true">2</span>
+              Subject &amp; Unit
+            </h2>
+            <p class="setup-section-desc">
+              Choose which subject and unit(s) to include
+            </p>
+          </div>
+
+          <!-- Subject Selector -->
+          <div class="form-group mb-6">
+            <label class="form-label" for="subject-select">
+              Subject <span class="required" aria-label="required">*</span>
+            </label>
+            <select
+              class="form-select"
+              id="subject-select"
+              name="subject"
+              required
+              aria-describedby="subject-hint"
+            >
+              <option value="">Select Subject</option>
+              <option value="CST201">Computer Programming in C</option>
+              <option value="CST203">Scripting Languages (Python)</option>
+              <option value="CST205">Data Structures</option>
+              <option value="CST207">Computer System Organization</option>
+              <option value="CST209">Algorithms</option>
+              <option value="all">All Subjects Mix</option>
+            </select>
+            <span class="form-hint" id="subject-hint">
+              "All Subjects Mix" draws from every subject randomly
+            </span>
+            <span class="form-error" id="subject-error" role="alert">
+              Please select a subject
+            </span>
+          </div>
+
+          <!-- Unit Selector -->
+          <div id="unit-section" aria-live="polite">
+            <fieldset class="units-fieldset" aria-describedby="unit-hint">
+              <legend class="form-label">Units</legend>
+              <div id="unit-options" class="unit-options">
+                <p class="text-secondary text-sm unit-placeholder">
+                  <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       aria-hidden="true">
+                    <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+                    <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0
+                             0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24
+                             a2 2 0 0 0-1.79 1.11z"/>
+                  </svg>
+                  Select a subject above to see unit options.
+                </p>
+              </div>
+              <div class="unit-controls" id="unit-controls" hidden>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  id="btn-select-all-units"
+                  aria-label="Select all units"
+                >
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       aria-hidden="true">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  Select All
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  id="btn-clear-units"
+                  aria-label="Clear unit selection"
+                >
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2.5"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                  Clear
+                </button>
+              </div>
+              <span class="form-hint" id="unit-hint">
+                Leave all unchecked to include questions from all units
+              </span>
+            </fieldset>
+          </div>
+        </section>
+
+        <!-- ══ Section 3: Question Count — ALWAYS OPEN ══════════ -->
+        <section class="setup-section" aria-labelledby="count-section-title">
+          <div class="setup-section-header">
+            <h2 class="setup-section-title" id="count-section-title">
+              <span class="section-num" aria-hidden="true">3</span>
+              Question Count
+            </h2>
+            <p class="setup-section-desc">
+              How many questions do you want?
+            </p>
+          </div>
+
+          <!-- Count Presets -->
+          <div
+            class="count-presets"
+            role="group"
+            aria-label="Quick question count selection"
+          >
+            <button type="button" class="count-btn active" data-count="5"  aria-pressed="false">5</button>
+            <button type="button" class="count-btn"        data-count="10" aria-pressed="true">10</button>
+            <button type="button" class="count-btn"        data-count="15" aria-pressed="false">15</button>
+            <button type="button" class="count-btn"        data-count="20" aria-pressed="false">20</button>
+            <button type="button" class="count-btn"        data-count="auto" aria-pressed="false">Auto</button>
+            <button type="button" class="count-btn"        data-count="custom" aria-pressed="false">Custom</button>
+          </div>
+
+          <!-- Custom Count Input -->
+          <div class="form-group mt-4" id="custom-count-group" hidden>
+            <label class="form-label" for="custom-count">
+              Custom Count
+            </label>
+            <input
+              type="number"
+              class="form-input"
+              id="custom-count"
+              name="custom-count"
+              min="1"
+              max="100"
+              placeholder="Enter number (1–100)"
+              aria-describedby="custom-count-hint"
+            />
+            <span class="form-hint" id="custom-count-hint">
+              Between 1 and 100 questions
+            </span>
+            <span class="form-error" id="custom-count-error" role="alert">
+              Please enter a valid number between 1 and 100
+            </span>
+          </div>
+
+          <!-- Auto info -->
+          <div class="alert alert-info mt-4" id="auto-count-info" hidden>
+            <svg class="icon alert-icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span>
+              Auto mode includes all available questions matching your filters.
+            </span>
+          </div>
+
+          <!-- Hidden actual count field -->
+          <input type="hidden" id="question-count" name="count" value="10" />
+        </section>
+
+        <!-- ══ Section 4: Filters — COLLAPSIBLE (collapsed) ══════ -->
+        <section class="setup-section setup-section--collapsible"
+                 aria-labelledby="filters-section-title">
+          <details class="section-collapse" data-section="filters">
+            <summary class="section-collapse-header setup-summary">
+              <div class="setup-summary-left">
+                <span class="section-num" aria-hidden="true">4</span>
+                <div class="setup-summary-text">
+                  <h2 class="setup-section-title-inline"
+                      id="filters-section-title">
+                    Filters
+                  </h2>
+                  <p class="setup-section-desc-inline">
+                    Refine which questions are included
+                  </p>
+                </div>
+              </div>
+              <div class="setup-summary-right">
+                <span class="section-optional-badge">Optional</span>
+                <span class="section-collapse-arrow" aria-hidden="true">
+                  <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2.5"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </div>
+            </summary>
+
+            <div class="section-collapse-body setup-collapse-body">
+
+              <!-- Difficulty -->
+              <div class="filter-group">
+                <p class="filter-group-label" id="diff-group-label">Difficulty</p>
+                <div class="filter-chips" role="group" aria-labelledby="diff-group-label">
+                  <label class="chip-label">
+                    <input type="radio" name="difficulty" value="mixed" checked />
+                    <span class="chip">
+                      <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
+                           fill="none" stroke="currentColor" stroke-width="2"
+                           stroke-linecap="round" stroke-linejoin="round"
+                           aria-hidden="true">
+                        <polyline points="16 3 21 3 21 8"/>
+                        <line x1="4" y1="20" x2="21" y2="3"/>
+                        <polyline points="21 16 21 21 16 21"/>
+                        <line x1="15" y1="15" x2="21" y2="21"/>
+                        <line x1="4" y1="4" x2="9" y2="9"/>
+                      </svg>
+                      Mixed
+                    </span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="radio" name="difficulty" value="easy" />
+                    <span class="chip chip-success">Easy</span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="radio" name="difficulty" value="medium" />
+                    <span class="chip chip-warning">Medium</span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="radio" name="difficulty" value="hard" />
+                    <span class="chip chip-error">Hard</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Source -->
+              <div class="filter-group">
+                <p class="filter-group-label" id="source-group-label">Source</p>
+                <div class="filter-chips" role="group" aria-labelledby="source-group-label">
+                  <label class="chip-label">
+                    <input type="radio" name="source" value="all" checked />
+                    <span class="chip">All Sources</span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="radio" name="source" value="PYQ" />
+                    <span class="chip">
+                      <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
+                           fill="none" stroke="currentColor" stroke-width="2"
+                           stroke-linecap="round" stroke-linejoin="round"
+                           aria-hidden="true">
+                        <polyline points="21 8 21 21 3 21 3 8"/>
+                        <rect x="1" y="3" width="22" height="5"/>
+                        <line x1="10" y1="12" x2="14" y2="12"/>
+                      </svg>
+                      PYQ Only
+                    </span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="radio" name="source" value="original" />
+                    <span class="chip">
+                      <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
+                           fill="none" stroke="currentColor" stroke-width="2"
+                           stroke-linecap="round" stroke-linejoin="round"
+                           aria-hidden="true">
+                        <path d="M12 2l1.09 3.26L16.36 6l-3.27 1.09L12 10.36
+                                 l-1.09-3.27L7.64 6l3.27-1.09L12 2z"/>
+                        <path d="M5 15l.54 1.63L7.18 17l-1.64.54L5 19.18
+                                 l-.54-1.64L2.82 17l1.64-.54L5 15z"/>
+                        <path d="M19 11l.54 1.63L21.18 13l-1.64.54L19 15.18
+                                 l-.54-1.64L16.82 13l1.64-.54L19 11z"/>
+                      </svg>
+                      Original Only
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Marks -->
+              <div class="filter-group">
+                <p class="filter-group-label" id="marks-group-label">
+                  Marks Filter
+                  <span class="text-secondary text-xs font-normal">
+                    (leave all unchecked = include all)
+                  </span>
+                </p>
+                <div class="filter-chips marks-chips" role="group"
+                     aria-labelledby="marks-group-label">
+                  <label class="chip-label" aria-label="1 mark questions">
+                    <input type="checkbox" name="marks" value="1" />
+                    <span class="chip">1 mark</span>
+                  </label>
+                  <label class="chip-label" aria-label="2 mark questions">
+                    <input type="checkbox" name="marks" value="2" />
+                    <span class="chip">2 marks</span>
+                  </label>
+                  <label class="chip-label" aria-label="4 mark questions">
+                    <input type="checkbox" name="marks" value="4" />
+                    <span class="chip">4 marks</span>
+                  </label>
+                  <label class="chip-label" aria-label="6 mark questions">
+                    <input type="checkbox" name="marks" value="6" />
+                    <span class="chip">6 marks</span>
+                  </label>
+                  <label class="chip-label" aria-label="8 mark questions">
+                    <input type="checkbox" name="marks" value="8" />
+                    <span class="chip">8 marks</span>
+                  </label>
+                  <label class="chip-label" aria-label="10 mark questions">
+                    <input type="checkbox" name="marks" value="10" />
+                    <span class="chip">10 marks</span>
+                  </label>
+                </div>
+                <div class="marks-presets" role="group" aria-label="Marks range shortcuts">
+                  <button type="button" class="btn btn-secondary btn-sm"
+                    data-marks-preset="low" aria-label="Select low marks (1-2)">
+                    Low (1–2)
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-sm"
+                    data-marks-preset="medium" aria-label="Select medium marks (4-6)">
+                    Medium (4–6)
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-sm"
+                    data-marks-preset="high" aria-label="Select high marks (8-10)">
+                    High (8–10)
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-sm"
+                    data-marks-preset="clear" aria-label="Clear marks filter">
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+              <!-- Year Filter -->
+              <div class="filter-group">
+                <label class="form-label" for="year-filter">
+                  Year Filter
+                  <span class="text-secondary text-xs font-normal">
+                    (optional — excludes original questions)
+                  </span>
+                </label>
+                <select
+                  class="form-select"
+                  id="year-filter"
+                  name="year"
+                  aria-describedby="year-hint"
+                >
+                  <option value="">All Years (no filter)</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                </select>
+                <span class="form-hint" id="year-hint">
+                  Selecting a year shows only PYQ from that year
+                </span>
+              </div>
+
+              <!-- Type Filter -->
+              <div class="filter-group" id="type-filter-group">
+                <p class="filter-group-label" id="type-group-label">
+                  Question Types
+                  <span class="text-secondary text-xs font-normal">
+                    (leave all unchecked = include all)
+                  </span>
+                </p>
+                <div class="filter-chips" role="group" aria-labelledby="type-group-label">
+                  <label class="chip-label">
+                    <input type="checkbox" name="types" value="mcq" />
+                    <span class="chip">MCQ</span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="checkbox" name="types" value="theory" />
+                    <span class="chip">Theory</span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="checkbox" name="types" value="program" />
+                    <span class="chip">Programming</span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="checkbox" name="types" value="numerical" />
+                    <span class="chip">Numerical</span>
+                  </label>
+                  <label class="chip-label">
+                    <input type="checkbox" name="types" value="short" />
+                    <span class="chip">Short Answer</span>
+                  </label>
+                </div>
+              </div>
+
+            </div><!-- /section-collapse-body -->
+          </details>
+        </section>
+
+        <!-- ══ Section 5: Order & Balance — COLLAPSIBLE (collapsed) -->
+        <section class="setup-section setup-section--collapsible"
+                 aria-labelledby="order-section-title">
+          <details class="section-collapse" data-section="order">
+            <summary class="section-collapse-header setup-summary">
+              <div class="setup-summary-left">
+                <span class="section-num" aria-hidden="true">5</span>
+                <div class="setup-summary-text">
+                  <h2 class="setup-section-title-inline"
+                      id="order-section-title">
+                    Order &amp; Balance
+                  </h2>
+                  <p class="setup-section-desc-inline">
+                    Control how questions are selected and ordered
+                  </p>
+                </div>
+              </div>
+              <div class="setup-summary-right">
+                <span class="section-optional-badge">Optional</span>
+                <span class="section-collapse-arrow" aria-hidden="true">
+                  <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2.5"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </div>
+            </summary>
+
+            <div class="section-collapse-body setup-collapse-body">
+              <div class="two-col-filters">
+
+                <!-- Order -->
+                <div class="filter-group">
+                  <p class="filter-group-label" id="order-group-label">Order</p>
+                  <div class="filter-chips" role="group" aria-labelledby="order-group-label">
+                    <label class="chip-label">
+                      <input type="radio" name="order" value="random" checked />
+                      <span class="chip">
+                        <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             aria-hidden="true">
+                          <polyline points="16 3 21 3 21 8"/>
+                          <line x1="4" y1="20" x2="21" y2="3"/>
+                          <polyline points="21 16 21 21 16 21"/>
+                          <line x1="15" y1="15" x2="21" y2="21"/>
+                          <line x1="4" y1="4" x2="9" y2="9"/>
+                        </svg>
+                        Random
+                      </span>
+                    </label>
+                    <label class="chip-label">
+                      <input type="radio" name="order" value="grouped" />
+                      <span class="chip">
+                        <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             aria-hidden="true">
+                          <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                          <polyline points="2 17 12 22 22 17"/>
+                          <polyline points="2 12 12 17 22 12"/>
+                        </svg>
+                        Grouped by Unit
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Balance -->
+                <div class="filter-group">
+                  <p class="filter-group-label" id="balance-group-label">Balance</p>
+                  <div class="filter-chips" role="group" aria-labelledby="balance-group-label">
+                    <label class="chip-label">
+                      <input type="radio" name="balance" value="random" checked />
+                      <span class="chip">Random</span>
+                    </label>
+                    <label class="chip-label">
+                      <input type="radio" name="balance" value="balanced" />
+                      <span class="chip">
+                        <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             aria-hidden="true">
+                          <line x1="12" y1="3" x2="12" y2="21"/>
+                          <polyline points="1 12 5 8 9 12"/>
+                          <polyline points="15 12 19 8 23 12"/>
+                          <path d="M1 12a4 4 0 0 0 8 0"/>
+                          <path d="M15 12a4 4 0 0 0 8 0"/>
+                        </svg>
+                        Balanced Difficulty
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- /section-collapse-body -->
+          </details>
+        </section>
+
+        <!-- ══ Section 6: Timer — COLLAPSIBLE (collapsed) ════════ -->
+        <section class="setup-section setup-section--collapsible"
+                 aria-labelledby="timer-section-title">
+          <details class="section-collapse" data-section="timer">
+            <summary class="section-collapse-header setup-summary">
+              <div class="setup-summary-left">
+                <span class="section-num" aria-hidden="true">6</span>
+                <div class="setup-summary-text">
+                  <h2 class="setup-section-title-inline"
+                      id="timer-section-title">
+                    Timer
+                  </h2>
+                  <p class="setup-section-desc-inline">
+                    Optional countdown timer during the quiz
+                  </p>
+                </div>
+              </div>
+              <div class="setup-summary-right">
+                <span class="section-optional-badge">Optional</span>
+                <span class="section-collapse-arrow" aria-hidden="true">
+                  <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2.5"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </div>
+            </summary>
+
+            <div class="section-collapse-body setup-collapse-body">
+
+              <!-- Timer Toggle -->
+              <label class="toggle-row" for="timer-toggle">
+                <div class="toggle-row-text">
+                  <span class="toggle-row-title">
+                    <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Enable Timer
+                  </span>
+                  <span class="toggle-row-desc">
+                    Auto-submit when time runs out
+                  </span>
+                </div>
+                <div class="toggle-switch" role="switch" aria-checked="true">
+                  <input
+                    type="checkbox"
+                    id="timer-toggle"
+                    name="timer"
+                    checked
+                    aria-describedby="timer-toggle-hint"
+                  />
+                  <span class="toggle-knob" aria-hidden="true"></span>
+                </div>
+              </label>
+
+              <!-- Timer Duration -->
+              <div id="timer-duration-group" class="timer-duration-group">
+                <div class="timer-display" aria-live="polite">
+                  <div class="timer-preview-wrap">
+                    <span
+                      class="timer-preview"
+                      id="timer-preview"
+                      aria-label="Timer duration"
+                    >
+                      00:00
+                    </span>
+                    <span class="timer-preview-label">minutes</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="timer-minutes">
+                    Duration (minutes)
+                  </label>
+                  <div class="timer-input-row">
+                    <button
+                      type="button"
+                      class="btn btn-secondary timer-adj-btn"
+                      id="timer-dec"
+                      aria-label="Decrease timer by 5 minutes"
+                    >
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                           fill="none" stroke="currentColor" stroke-width="2.5"
+                           stroke-linecap="round" stroke-linejoin="round"
+                           aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                      </svg>
+                      5
+                    </button>
+                    <input
+                      type="number"
+                      class="form-input timer-input"
+                      id="timer-minutes"
+                      name="timer-minutes"
+                      min="1"
+                      max="300"
+                      value="10"
+                      aria-describedby="timer-hint"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-secondary timer-adj-btn"
+                      id="timer-inc"
+                      aria-label="Increase timer by 5 minutes"
+                    >
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                           fill="none" stroke="currentColor" stroke-width="2.5"
+                           stroke-linecap="round" stroke-linejoin="round"
+                           aria-hidden="true">
+                        <line x1="12" y1="5" x2="12" y2="19"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                      </svg>
+                      5
+                    </button>
+                  </div>
+                  <span class="form-hint" id="timer-hint">
+                    Default is auto-calculated from question marks
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  id="btn-recalc-timer"
+                  aria-label="Reset timer to auto-calculated default"
+                >
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       aria-hidden="true">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <polyline points="1 20 1 14 7 14"/>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/>
+                    <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/>
+                  </svg>
+                  Reset to Auto
+                </button>
+              </div>
+
+            </div><!-- /section-collapse-body -->
+          </details>
+        </section>
+
+        <!-- ══ Quiz Summary Card — ALWAYS VISIBLE ════════════════ -->
+        <section class="setup-section setup-section--summary"
+                 aria-labelledby="summary-title">
+          <div class="quiz-summary-card" role="region" aria-labelledby="summary-title">
+            <div class="quiz-summary-header">
+              <h2 class="quiz-summary-title" id="summary-title">
+                <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                Quiz Preview
+              </h2>
+              <span class="quiz-summary-status" id="summary-status" aria-live="polite">
+                <!-- Filled by JS -->
+              </span>
+            </div>
+            <div class="quiz-summary-body" id="quiz-summary-body">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ Error / Warning Messages ══════════════════════════ -->
+        <div
+          class="alert alert-warning"
+          id="setup-warning"
+          role="alert"
+          aria-live="polite"
+          hidden
+        >
+          <svg class="icon alert-icon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0
+                     0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span id="setup-warning-text"></span>
+        </div>
+
+        <div
+          class="alert alert-error"
+          id="setup-error"
+          role="alert"
+          aria-live="assertive"
+          hidden
+        >
+          <svg class="icon alert-icon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="15" y1="9" x2="9" y2="15"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <span id="setup-error-text"></span>
+        </div>
+
+        <!-- ══ Form Actions ══════════════════════════════════════ -->
+        <div class="setup-actions">
+          <a href="index.html" class="btn btn-secondary btn-lg">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Cancel
+          </a>
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg"
+            id="btn-start-quiz"
+            aria-describedby="start-quiz-hint"
+          >
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <span id="btn-start-icon" aria-hidden="true"></span>
+            Start Quiz
+          </button>
+        </div>
+        <p class="form-hint text-center mt-4" id="start-quiz-hint">
+          Questions will be loaded when the quiz starts
+        </p>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- ── Scripts ─────────────────────────────────────────────── -->
+  <script src="js/common.js"></script>
+  <script src="js/setup.js"></script>
+
+</body>
 </html>

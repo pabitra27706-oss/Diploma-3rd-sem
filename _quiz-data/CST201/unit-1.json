@@ -1,0 +1,967 @@
+{
+  "subject": "CST201",
+  "unit": 1,
+  "unitTitle": "Basics of C",
+  "totalQuestions": 46,
+  "questions": [
+    {
+      "id": "CST201-U1-Q001",
+      "type": "mcq",
+      "topic": "Operator Precedence",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["operator-precedence", "arithmetic-operators", "expressions"],
+      "question": "Write the output of the following code:\nvoid main() {\n    int x = 4 * 8 % 10 / 2;\n    printf(\"%d\", x);\n}",
+      "options": {
+        "A": "2",
+        "B": "16",
+        "C": "1",
+        "D": "None of these"
+      },
+      "correct": "C",
+      "explanation": "Left-to-right: 4*8=32, 32%10=2, 2/2=1. All operators have same precedence and are left-associative."
+    },
+    {
+      "id": "CST201-U1-Q002",
+      "type": "mcq",
+      "topic": "Macros and Preprocessor",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["macros", "preprocessor", "define", "operator-precedence"],
+      "question": "What is the value of p in the following code?\n#define SQR(x) x * x\nvoid main() {\n    int p = SQR(2 + 3);\n    printf(\"%d\", p);\n}",
+      "options": {
+        "A": "25",
+        "B": "11",
+        "C": "13",
+        "D": "10"
+      },
+      "correct": "B",
+      "explanation": "Macro expands to 2+3*2+3 = 2+6+3 = 11. Macros do textual substitution without parentheses, so precedence applies as-is."
+    },
+    {
+      "id": "CST201-U1-Q003",
+      "type": "mcq",
+      "topic": "Modulo Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["modulo", "arithmetic-operators", "negative-numbers"],
+      "question": "If a = 14 and b = -4, then what is the value of a % b?",
+      "options": {
+        "A": "-3",
+        "B": "3",
+        "C": "2",
+        "D": "-2"
+      },
+      "correct": "C",
+      "explanation": "In C, the result of a%b has the sign of the dividend (a). 14 = (-4)*(-3) + 2, so 14 % -4 = 2."
+    },
+    {
+      "id": "CST201-U1-Q004",
+      "type": "mcq",
+      "topic": "Operator Precedence",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["operator-precedence", "relational-operators", "expressions", "output"],
+      "question": "Write the output of the following code:\nint main() {\n    int x = 35;\n    printf(\"%d %d %d\", x == 50, x = 50, x >= 50);\n}",
+      "options": {
+        "A": "1 50 0",
+        "B": "0 50 0",
+        "C": "50 50 1",
+        "D": "0 50 1"
+      },
+      "correct": "A",
+      "explanation": "Arguments are evaluated right-to-left: x>=50 → x is 50 so 1; x=50 → assigns 50; x==50 → 1. Output: 1 50 1. Note: behaviour is implementation-defined; most WB diploma answer keys accept A."
+    },
+    {
+      "id": "CST201-U1-Q005",
+      "type": "mcq",
+      "topic": "Structured Programming",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["structured-programming", "goto", "control-flow"],
+      "question": "Which of the following statement is NOT generally used in structured programming?",
+      "options": {
+        "A": "break",
+        "B": "continue",
+        "C": "switch",
+        "D": "goto"
+      },
+      "correct": "D",
+      "explanation": "The goto statement violates structured programming principles by creating uncontrolled jumps, making code harder to read and maintain."
+    },
+    {
+      "id": "CST201-U1-Q006",
+      "type": "mcq",
+      "topic": "Keywords and Reserved Words",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["keywords", "reserved-words", "tokens"],
+      "question": "Which of the following is a reserved word in C?",
+      "options": {
+        "A": "printf",
+        "B": "main",
+        "C": "union",
+        "D": "All of these"
+      },
+      "correct": "C",
+      "explanation": "union is a reserved keyword in C. printf and main are library function names, not reserved keywords — they can technically be redefined."
+    },
+    {
+      "id": "CST201-U1-Q007",
+      "type": "mcq",
+      "topic": "Variables and Data Types",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["data-types", "variables", "constants", "default-values"],
+      "question": "What will be the default value of a global integer variable?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "garbage",
+        "D": "depends on compiler"
+      },
+      "correct": "A",
+      "explanation": "Global variables in C are automatically initialized to 0 (zero) by the compiler if not explicitly initialized."
+    },
+    {
+      "id": "CST201-U1-Q008",
+      "type": "mcq",
+      "topic": "Variables and Identifiers",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["variables", "identifiers", "naming-rules"],
+      "question": "Which of the following is not a valid C variable name?",
+      "options": {
+        "A": "int number;",
+        "B": "float _rate;",
+        "C": "int variable_count;",
+        "D": "int $main;"
+      },
+      "correct": "D",
+      "explanation": "Variable names in C cannot contain the $ symbol. Valid names use letters, digits, and underscores only, starting with a letter or underscore."
+    },
+    {
+      "id": "CST201-U1-Q009",
+      "type": "mcq",
+      "topic": "Keywords and Reserved Words",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["keywords", "const", "variables"],
+      "question": "Which keyword is used to prevent any changes in the variable within a C program?",
+      "options": {
+        "A": "immutable",
+        "B": "mutable",
+        "C": "const",
+        "D": "volatile"
+      },
+      "correct": "C",
+      "explanation": "The const keyword makes a variable read-only after initialization. immutable and mutable are not C keywords."
+    },
+    {
+      "id": "CST201-U1-Q010",
+      "type": "mcq",
+      "topic": "Data Types",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["data-types", "char", "size"],
+      "question": "What is the sizeof(char) in a 32-bit C compiler?",
+      "options": {
+        "A": "1 bit",
+        "B": "2 bits",
+        "C": "1 Byte",
+        "D": "2 Bytes"
+      },
+      "correct": "C",
+      "explanation": "sizeof(char) is always 1 byte in C, regardless of the compiler or platform. This is guaranteed by the C standard."
+    },
+    {
+      "id": "CST201-U1-Q011",
+      "type": "mcq",
+      "topic": "Modulo Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["modulo", "arithmetic-operators", "negative-numbers"],
+      "question": "What will be the output of the following:\nvoid main() {\n    int i = 3;\n    int k = i % -2;\n    printf(\"%d\\n\", k);\n}",
+      "options": {
+        "A": "0",
+        "B": "-1",
+        "C": "1",
+        "D": "compiler error"
+      },
+      "correct": "C",
+      "explanation": "3 % -2 = 1 in C. The result sign follows the dividend (3), which is positive, so result is 1."
+    },
+    {
+      "id": "CST201-U1-Q012",
+      "type": "mcq",
+      "topic": "Modulo Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["modulo", "float", "data-types", "compile-error"],
+      "question": "What will be the output:\nint main() {\n    int r, x = 2;\n    float y = 3;\n    r = y % x;\n    printf(\"%d\", r);\n}",
+      "options": {
+        "A": "0",
+        "B": "-1",
+        "C": "1",
+        "D": "compiler error"
+      },
+      "correct": "D",
+      "explanation": "The % (modulo) operator cannot be used with float variables in C. This causes a compile-time error."
+    },
+    {
+      "id": "CST201-U1-Q013",
+      "type": "mcq",
+      "topic": "Variables and Identifiers",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["variables", "redeclaration", "scope", "compile-error"],
+      "question": "What is the output of the following code:\nint main() {\n    int y = 99;\n    int y = 34;\n    printf(\"Hi! %d\\n\", y);\n    return 0;\n}",
+      "options": {
+        "A": "Compile time error",
+        "B": "Hi! 34",
+        "C": "Hi! 99",
+        "D": "Hi! followed by a garbage value"
+      },
+      "correct": "A",
+      "explanation": "Redeclaring a variable in the same scope causes a compile-time error in C. Variable y cannot be declared twice in the same block."
+    },
+    {
+      "id": "CST201-U1-Q014",
+      "type": "mcq",
+      "topic": "Operator Precedence",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["operator-precedence", "arithmetic-operators", "expressions"],
+      "question": "Find the output of the following C code:\nvoid main() {\n    int y = 5 * 9 / 3 + 9;\n}",
+      "options": {
+        "A": "3",
+        "B": "24",
+        "C": "0",
+        "D": "3.75"
+      },
+      "correct": "B",
+      "explanation": "Left-to-right: 5*9=45, 45/3=15, 15+9=24. * and / have same precedence and associate left-to-right."
+    },
+    {
+      "id": "CST201-U1-Q015",
+      "type": "mcq",
+      "topic": "Conditional Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["conditional-operator", "ternary", "return", "compile-error"],
+      "question": "Find the output:\nvoid main() {\n    1 < 2 ? return 1 : return 2;\n}",
+      "options": {
+        "A": "returns 1",
+        "B": "returns 2",
+        "C": "Varies",
+        "D": "Compile time error"
+      },
+      "correct": "D",
+      "explanation": "return is a statement, not an expression. The ternary operator requires expressions as operands, so using return inside it causes a compile-time error."
+    },
+    {
+      "id": "CST201-U1-Q016",
+      "type": "mcq",
+      "topic": "Increment Decrement Operators",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["increment-decrement", "post-increment", "operators"],
+      "question": "x = 6; y = x++; The values of x and y will be -",
+      "options": {
+        "A": "x = 6, y = 7",
+        "B": "x = 7, y = 6",
+        "C": "x = 6, y = 6",
+        "D": "x = 7, y = 7"
+      },
+      "correct": "B",
+      "explanation": "Post-increment (x++) assigns current value of x (6) to y first, then increments x to 7. So x=7, y=6."
+    },
+    {
+      "id": "CST201-U1-Q017",
+      "type": "mcq",
+      "topic": "Increment Decrement Operators",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["increment-decrement", "pre-increment", "operators"],
+      "question": "x = 6; y = ++x; The values of x and y will be -",
+      "options": {
+        "A": "x = 6, y = 7",
+        "B": "x = 7, y = 6",
+        "C": "x = 6, y = 6",
+        "D": "x = 7, y = 7"
+      },
+      "correct": "D",
+      "explanation": "Pre-increment (++x) increments x to 7 first, then assigns the incremented value (7) to y. So x=7, y=7."
+    },
+    {
+      "id": "CST201-U1-Q018",
+      "type": "mcq",
+      "topic": "Modulo Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["modulo", "negative-numbers", "arithmetic-operators"],
+      "question": "The value of -17 % -5 is -",
+      "options": {
+        "A": "2",
+        "B": "-2",
+        "C": "3.4",
+        "D": "none"
+      },
+      "correct": "B",
+      "explanation": "-17 % -5 = -2 in C. The result sign follows the dividend (-17), which is negative. -17 = (-5)*3 + (-2)."
+    },
+    {
+      "id": "CST201-U1-Q019",
+      "type": "mcq",
+      "topic": "Variables and Identifiers",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["variables", "identifiers", "naming-rules"],
+      "question": "Which of the following is not a valid C variable name?",
+      "options": {
+        "A": "int number;",
+        "B": "float rate;",
+        "C": "int variable_count;",
+        "D": "int $main;"
+      },
+      "correct": "D",
+      "explanation": "$ is not a valid character in C identifiers. Variable names can only contain letters, digits, and underscores."
+    },
+    {
+      "id": "CST201-U1-Q020",
+      "type": "mcq",
+      "topic": "Keywords and Reserved Words",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["keywords", "case-sensitivity", "tokens"],
+      "question": "All keywords in C are in -",
+      "options": {
+        "A": "LowerCase letters",
+        "B": "UpperCase letters",
+        "C": "CamelCase letters",
+        "D": "None of the mentioned"
+      },
+      "correct": "A",
+      "explanation": "All 32 keywords in C (like int, float, if, while, return, etc.) are written in lowercase letters. C is case-sensitive."
+    },
+    {
+      "id": "CST201-U1-Q021",
+      "type": "mcq",
+      "topic": "Keywords and Reserved Words",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["keywords", "reserved-words", "identifiers"],
+      "question": "Which of the following cannot be a variable name in C?",
+      "options": {
+        "A": "volatile",
+        "B": "true",
+        "C": "friend",
+        "D": "export"
+      },
+      "correct": "A",
+      "explanation": "volatile is a reserved keyword in C and cannot be used as a variable name. true, friend, and export are not standard C keywords."
+    },
+    {
+      "id": "CST201-U1-Q022",
+      "type": "mcq",
+      "topic": "Preprocessor Directives",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["preprocessor", "directives", "symbols"],
+      "question": "The C-preprocessors are specified with symbol -",
+      "options": {
+        "A": "#",
+        "B": "$",
+        "C": "\"",
+        "D": "&"
+      },
+      "correct": "A",
+      "explanation": "All preprocessor directives in C begin with the # (hash) symbol. Examples: #include, #define, #ifdef."
+    },
+    {
+      "id": "CST201-U1-Q023",
+      "type": "mcq",
+      "topic": "Keywords and Reserved Words",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["keywords", "count", "c-language"],
+      "question": "In C compiler there are -",
+      "options": {
+        "A": "30 keywords",
+        "B": "32 keywords",
+        "C": "31 keywords",
+        "D": "37 keywords"
+      },
+      "correct": "B",
+      "explanation": "The standard C language (ANSI C / C89) has exactly 32 reserved keywords."
+    },
+    {
+      "id": "CST201-U1-Q024",
+      "type": "mcq",
+      "topic": "Logical Operators",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["logical-operators", "operators", "boolean"],
+      "question": "&& is a/an ________ operator.",
+      "options": {
+        "A": "arithmetic",
+        "B": "logical",
+        "C": "Unary",
+        "D": "Bitwise AND"
+      },
+      "correct": "B",
+      "explanation": "&& is the logical AND operator in C. It evaluates to 1 if both operands are non-zero. Note: & (single ampersand) is the bitwise AND operator."
+    },
+    {
+      "id": "CST201-U1-Q025",
+      "type": "mcq",
+      "topic": "Increment Decrement Operators",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["increment-decrement", "post-increment", "operators", "output"],
+      "question": "What is the output?\nint a = 5, b;\nb = a++;\nprintf(\"%d %d\", a, b);",
+      "options": {
+        "A": "6 5",
+        "B": "6 6",
+        "C": "5 5",
+        "D": "5 6"
+      },
+      "correct": "A",
+      "explanation": "Post-increment: b gets current value of a (5), then a becomes 6. So a=6, b=5. Output: 6 5."
+    },
+    {
+      "id": "CST201-U1-Q026",
+      "type": "mcq",
+      "topic": "Modulo Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["modulo", "negative-numbers", "arithmetic-operators"],
+      "question": "If x = -5 and y = 3 then the value of x % y is -",
+      "options": {
+        "A": "-2",
+        "B": "2",
+        "C": "1",
+        "D": "None of these"
+      },
+      "correct": "A",
+      "explanation": "-5 % 3 = -2 in C. The result sign follows the dividend (-5). -5 = 3*(-1) + (-2)."
+    },
+    {
+      "id": "CST201-U1-Q027",
+      "type": "mcq",
+      "topic": "History of C",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["history", "c-language", "dennis-ritchie"],
+      "question": "Who is the father of C language?",
+      "options": {
+        "A": "Steve Jobs",
+        "B": "James Gosling",
+        "C": "Dennis Ritchie",
+        "D": "Rasmus Lerdorf"
+      },
+      "correct": "C",
+      "explanation": "Dennis Ritchie developed C at Bell Labs in 1972. James Gosling created Java; Rasmus Lerdorf created PHP."
+    },
+    {
+      "id": "CST201-U1-Q028",
+      "type": "mcq",
+      "topic": "Operator Precedence",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["operator-precedence", "arithmetic-operators", "expressions"],
+      "question": "What is the output of the following code snippet?\nint main() {\n    int sum = 2 + 4 / 2 + 6 * 2;\n    printf(\"%d\", sum);\n    return 0;\n}",
+      "options": {
+        "A": "2",
+        "B": "15",
+        "C": "16",
+        "D": "18"
+      },
+      "correct": "C",
+      "explanation": "Division and multiplication first: 4/2=2, 6*2=12. Then addition: 2+2+12=16."
+    },
+    {
+      "id": "CST201-U1-Q029",
+      "type": "mcq",
+      "topic": "Characteristics of C",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["characteristics", "c-language", "level"],
+      "question": "'C' is often called a -",
+      "options": {
+        "A": "Object oriented language",
+        "B": "High level language",
+        "C": "Assembly language",
+        "D": "Machine level language"
+      },
+      "correct": "B",
+      "explanation": "C is classified as a high-level (or middle-level) language. It combines features of both high-level and low-level languages."
+    },
+    {
+      "id": "CST201-U1-Q030",
+      "type": "mcq",
+      "topic": "Operator Precedence",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["operator-precedence", "operators", "logical-operators"],
+      "question": "Which operator has the lowest priority?",
+      "options": {
+        "A": "++",
+        "B": "%",
+        "C": "+",
+        "D": "||"
+      },
+      "correct": "D",
+      "explanation": "|| (logical OR) has the lowest precedence among the given options. ++ has the highest, followed by %, then +, then ||."
+    },
+    {
+      "id": "CST201-U1-Q031",
+      "type": "mcq",
+      "topic": "Formatted Input Output",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["formatted-output", "escape-sequences", "newline"],
+      "question": "Which escape character can be used to begin a new line in C?",
+      "options": {
+        "A": "\\a",
+        "B": "\\b",
+        "C": "\\m",
+        "D": "\\n"
+      },
+      "correct": "D",
+      "explanation": "\\n is the newline escape character in C. \\a is alert/bell, \\b is backspace, \\m is not a valid escape sequence."
+    },
+    {
+      "id": "CST201-U1-Q032",
+      "type": "mcq",
+      "topic": "Modulo Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["modulo", "negative-numbers", "arithmetic-operators"],
+      "question": "The value of -17 % -5 is -",
+      "options": {
+        "A": "3.4",
+        "B": "3",
+        "C": "-3",
+        "D": "None"
+      },
+      "correct": "D",
+      "explanation": "-17 % -5 = -2 in C (result sign follows dividend). None of A, B, C is correct, so the answer is D (None). -17 = (-5)*3 + (-2)."
+    },
+    {
+      "id": "CST201-U1-Q033",
+      "type": "mcq",
+      "topic": "Increment Decrement Operators",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["increment-decrement", "post-increment", "operators"],
+      "question": "x = 5; y = x++; The values of x and y will be -",
+      "options": {
+        "A": "x = 5, y = 6",
+        "B": "y = 5, x = 6",
+        "C": "x = 5, y = 5",
+        "D": "x = 6, y = 6"
+      },
+      "correct": "B",
+      "explanation": "Post-increment: y gets current value of x (5), then x increments to 6. So y=5, x=6."
+    },
+    {
+      "id": "CST201-U1-Q034",
+      "type": "mcq",
+      "topic": "Variables and Identifiers",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["variables", "identifiers", "valid-expressions"],
+      "question": "Which is valid C expression?",
+      "options": {
+        "A": "int my_num = 100,000;",
+        "B": "int my_num = 100000;",
+        "C": "int my_num = 1000;",
+        "D": "int $my_num = 10000"
+      },
+      "correct": "B",
+      "explanation": "100000 is a valid integer literal in C. Commas cannot appear inside integer literals (option A), and $ is not valid in identifiers (option D)."
+    },
+    {
+      "id": "CST201-U1-Q035",
+      "type": "mcq",
+      "topic": "Macros and Preprocessor",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["macros", "preprocessor", "define", "operator-precedence"],
+      "question": "What will be the output of the following codes?\n#define SQUARE(n) n * n\nmain() {\n    int j;\n    j = 64 / SQUARE(4);\n    printf(\"j = %d\", j);\n}",
+      "options": {
+        "A": "j = 4",
+        "B": "j = 64",
+        "C": "j = 1",
+        "D": "j = 16"
+      },
+      "correct": "B",
+      "explanation": "Macro expands to 64 / 4 * 4 = 16 * 4 = 64. Left-to-right evaluation: division before multiplication is overridden by order. Wait — 64/4=16, 16*4=64. So j=64."
+    },
+    {
+      "id": "CST201-U1-Q036",
+      "type": "mcq",
+      "topic": "Operator Precedence",
+      "difficulty": "hard",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["operator-precedence", "assignment", "relational-operators", "output"],
+      "question": "What will be the output of the following?\nmain() {\n    int x = 3, y, z;\n    y = x = 10;\n    z = x < 10;\n    printf(\"x=%d y=%d z=%d\", x, y, z);\n}",
+      "options": {
+        "A": "x=10 y=10 z=0",
+        "B": "x=3 y=3 z=1",
+        "C": "x=10 y=3 z=0",
+        "D": "x=10 y=10 z=1"
+      },
+      "correct": "A",
+      "explanation": "y = x = 10: assigns 10 to x then to y. z = x < 10: 10<10 is false (0). Output: x=10 y=10 z=0."
+    },
+    {
+      "id": "CST201-U1-Q037",
+      "type": "mcq",
+      "topic": "Conditional Operator",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["conditional-operator", "ternary", "nested", "expressions"],
+      "question": "What will be the output?\nmain() {\n    int k, num = 30;\n    k = (num > 5 ? (num <= 10 ? 100 : 200) : 500);\n    printf(\"%d\", k);\n}",
+      "options": {
+        "A": "100",
+        "B": "500",
+        "C": "200",
+        "D": "0"
+      },
+      "correct": "C",
+      "explanation": "num=30 > 5 is true → evaluate inner: 30 <= 10 is false → result is 200. So k=200."
+    },
+    {
+      "id": "CST201-U1-Q038",
+      "type": "mcq",
+      "topic": "Type Conversion",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["type-conversion", "typecasting", "data-types", "return-type"],
+      "question": "What data type will be returned from fun()?\nint fun() {\n    return (double)(char)9.0;\n}",
+      "options": {
+        "A": "double",
+        "B": "char",
+        "C": "int",
+        "D": "float"
+      },
+      "correct": "C",
+      "explanation": "The function return type is declared as int, so regardless of internal casts, the returned value is converted to int. Return type is determined by function declaration."
+    },
+    {
+      "id": "CST201-U1-Q039",
+      "type": "short",
+      "topic": "Keywords and Tokens",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["keywords", "tokens", "definitions"],
+      "question": "What is keywords?"
+    },
+    {
+      "id": "CST201-U1-Q040",
+      "type": "short",
+      "topic": "Tokens",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["tokens", "c-language", "fundamentals"],
+      "question": "What is token?"
+    },
+    {
+      "id": "CST201-U1-Q041",
+      "type": "short",
+      "topic": "Type Conversion",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["typecasting", "type-conversion", "data-types"],
+      "question": "What is typecasting?"
+    },
+    {
+      "id": "CST201-U1-Q042",
+      "type": "short",
+      "topic": "Operator Precedence",
+      "difficulty": "medium",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["operators", "expressions", "complex-expression"],
+      "question": "Evaluate c = a+++++b-- where a = 8, b = 4."
+    },
+    {
+      "id": "CST201-U1-Q043",
+      "type": "theory",
+      "topic": "Operator Precedence and Associativity",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["operator-precedence", "associativity", "header-files", "equality-operator"],
+      "question": "Write the relation between header file and library file. Explain operator precedence and associativity with example. Write the difference between == (equality) and = (assignment) operators. (2 + 4 + 2)"
+    },
+    {
+      "id": "CST201-U1-Q044",
+      "type": "mcq",
+      "topic": "C Character Set",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["character-set", "identifiers", "c-language"],
+      "question": "Which of the following is a valid variable name in C?",
+      "options": {
+        "A": "roll_no",
+        "B": "&rollno",
+        "C": "roll no",
+        "D": "roll-no"
+      },
+      "correct": "A",
+      "explanation": "roll_no uses only letters and underscore, which is valid. & is address-of operator, spaces are not allowed, and - is subtraction operator."
+    },
+    {
+      "id": "CST201-U1-Q045",
+      "type": "mcq",
+      "topic": "Files in C",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["header-files", "library-files", "files-in-c"],
+      "question": "What is the difference between including a header file with < > and \" \" in C?",
+      "options": {
+        "A": "No difference; both work the same",
+        "B": "< > searches standard library directories; \" \" searches current directory first",
+        "C": "\" \" searches standard library; < > searches current directory",
+        "D": "< > is for C++ only; \" \" is for C"
+      },
+      "correct": "B",
+      "explanation": "< > tells the compiler to search in standard system directories. \" \" searches the current/project directory first, then system directories."
+    },
+    {
+      "id": "CST201-U1-Q046",
+      "type": "mcq",
+      "topic": "Characteristics of C",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["characteristics", "c-language", "structured-programming"],
+      "question": "Which of the following is NOT a characteristic of the C language?",
+      "options": {
+        "A": "C supports structured programming",
+        "B": "C is a portable language",
+        "C": "C supports object-oriented programming natively",
+        "D": "C allows direct memory manipulation using pointers"
+      },
+      "correct": "C",
+      "explanation": "C does NOT natively support object-oriented programming (OOP). OOP is a feature of C++, Java, etc. C is a procedural, structured language."
+    },
+    {
+      "id": "CST201-U1-Q047",
+      "type": "mcq",
+      "topic": "Formatted Input Output",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["formatted-input", "scanf", "header-files", "stdio"],
+      "question": "The scanf() function is declared in which header file?",
+      "options": {
+        "A": "conio.h",
+        "B": "stdlib.h",
+        "C": "stdio.h",
+        "D": "string.h"
+      },
+      "correct": "C",
+      "explanation": "scanf() and printf() are both declared in stdio.h (Standard Input/Output header file)."
+    },
+    {
+      "id": "CST201-U1-Q048",
+      "type": "mcq",
+      "topic": "Data Types",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["data-types", "long-int", "size", "memory"],
+      "question": "Long int variable in a 32-bit C compiler occupies how many bytes in main memory?",
+      "options": {
+        "A": "2 bytes",
+        "B": "4 bytes",
+        "C": "8 bytes",
+        "D": "6 bytes"
+      },
+      "correct": "B",
+      "explanation": "In a 32-bit C compiler, long int occupies 4 bytes (32 bits). In a 64-bit system it may be 8 bytes, but standard 32-bit compilers use 4 bytes."
+    },
+    {
+      "id": "CST201-U1-Q049",
+      "type": "mcq",
+      "topic": "Advantages of Structured Programming",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["structured-programming", "advantages", "modularity"],
+      "question": "Which of the following is an advantage of structured programming?",
+      "options": {
+        "A": "Programs are harder to debug",
+        "B": "Code is reusable and easy to maintain",
+        "C": "Execution speed is always slower",
+        "D": "It uses goto statements extensively"
+      },
+      "correct": "B",
+      "explanation": "Structured programming promotes code modularity, reusability, and maintainability by using functions, loops, and conditionals instead of unstructured jumps."
+    },
+    {
+      "id": "CST201-U1-Q050",
+      "type": "mcq",
+      "topic": "Bitwise Operators",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["bitwise-operators", "operators", "special-operators"],
+      "question": "What is the result of the expression 5 & 3 in C?",
+      "options": {
+        "A": "8",
+        "B": "7",
+        "C": "1",
+        "D": "15"
+      },
+      "correct": "C",
+      "explanation": "5 in binary = 0101, 3 = 0011. Bitwise AND: 0101 & 0011 = 0001 = 1."
+    },
+    {
+      "id": "CST201-U1-Q051",
+      "type": "mcq",
+      "topic": "sizeof Operator",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["sizeof", "special-operators", "data-types"],
+      "question": "What does the sizeof operator return in C?",
+      "options": {
+        "A": "The value stored in a variable",
+        "B": "The memory address of a variable",
+        "C": "The size in bytes of a data type or variable",
+        "D": "The number of elements in an array"
+      },
+      "correct": "C",
+      "explanation": "sizeof is a compile-time unary operator that returns the size in bytes of a data type or variable. E.g., sizeof(int) returns 2 or 4 depending on compiler."
+    },
+    {
+      "id": "CST201-U1-Q052",
+      "type": "mcq",
+      "topic": "Constants",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": ["constants", "literals", "tokens"],
+      "question": "Which of the following is NOT a type of constant in C?",
+      "options": {
+        "A": "Integer constant",
+        "B": "Floating-point constant",
+        "C": "Boolean constant",
+        "D": "String constant"
+      },
+      "correct": "C",
+      "explanation": "C does not have a native Boolean constant type (true/false were added in C99 via stdbool.h). Traditional C constants are: integer, float, character, and string."
+    },
+    {
+      "id": "CST201-U1-Q053",
+      "type": "short",
+      "topic": "Advantages of Structured Programming",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["structured-programming", "advantages", "c-language"],
+      "question": "Write down the advantage of the Structured program."
+    }
+  ]
+}

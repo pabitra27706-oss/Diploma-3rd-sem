@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Quiz play screen" />
+  <title>Quiz — QuizApp</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/play.css" />
+</head>
+<body>
+
+  <!-- ── Loading Screen ──────────────────────────────────────── -->
+  <div class="loading-screen" id="loading-screen" role="status" aria-label="Loading quiz">
+    <div class="loading-inner">
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="loading-title">Loading Quiz</p>
+      <p class="loading-desc" id="loading-desc">Fetching questions…</p>
+    </div>
+  </div>
+
+  <!-- ── Empty / Error Screen ────────────────────────────────── -->
+  <div class="error-screen hidden" id="error-screen" role="alert" aria-live="assertive">
+    <div class="error-inner">
+      <!-- Alert circle icon -->
+      <div class="error-icon" aria-hidden="true">
+        <svg class="icon" width="56" height="56" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <h1 class="error-title" id="error-title">No Questions Found</h1>
+      <p class="error-desc" id="error-desc">
+        No questions matched your filters. Try adjusting your settings.
+      </p>
+      <div class="error-actions">
+        <a href="setup.html" class="btn btn-primary">
+          <!-- Sliders icon -->
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <line x1="4" y1="21" x2="4" y2="14"/>
+            <line x1="4" y1="10" x2="4" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12" y2="3"/>
+            <line x1="20" y1="21" x2="20" y2="16"/>
+            <line x1="20" y1="12" x2="20" y2="3"/>
+            <line x1="1" y1="14" x2="7" y2="14"/>
+            <line x1="9" y1="8" x2="15" y2="8"/>
+            <line x1="17" y1="16" x2="23" y2="16"/>
+          </svg>
+          Edit Filters
+        </a>
+        <a href="index.html" class="btn btn-secondary">
+          <!-- Home icon -->
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Go Home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Fewer Questions Warning Modal ───────────────────────── -->
+  <div
+    class="modal-overlay"
+    id="fewer-modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="fewer-modal-title"
+  >
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="fewer-modal-title">
+          <!-- Alert triangle icon -->
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" style="color: var(--warning);">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0
+                     0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Fewer Questions Available
+        </h2>
+      </div>
+      <div class="modal-body">
+        <p id="fewer-modal-desc" class="text-base" style="line-height:1.6;"></p>
+      </div>
+      <div class="modal-footer">
+        <a href="setup.html" class="btn btn-secondary">
+          <!-- Sliders icon -->
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <line x1="4" y1="21" x2="4" y2="14"/>
+            <line x1="4" y1="10" x2="4" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12" y2="3"/>
+            <line x1="20" y1="21" x2="20" y2="16"/>
+            <line x1="20" y1="12" x2="20" y2="3"/>
+            <line x1="1" y1="14" x2="7" y2="14"/>
+            <line x1="9" y1="8" x2="15" y2="8"/>
+            <line x1="17" y1="16" x2="23" y2="16"/>
+          </svg>
+          Edit Filters
+        </a>
+        <button class="btn btn-primary" id="btn-continue-fewer">
+          <!-- Check icon -->
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Continue Anyway
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Submit Confirm Modal ────────────────────────────────── -->
+  <div
+    class="modal-overlay"
+    id="submit-modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="submit-modal-title"
+  >
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="submit-modal-title">
+          <!-- Flag icon -->
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" style="color: var(--accent);">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+            <line x1="4" y1="22" x2="4" y2="15"/>
+          </svg>
+          Submit Quiz?
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="submit-modal-stats" id="submit-modal-stats">
+          <!-- Filled by JS -->
+        </div>
+        <p class="submit-modal-note text-sm text-secondary mt-4">
+          You won't be able to change your answers after submitting.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-submit">
+          <!-- Chevron left icon -->
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Keep Going
+        </button>
+        <button class="btn btn-primary" id="btn-confirm-submit">
+          <!-- Flag icon -->
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+            <line x1="4" y1="22" x2="4" y2="15"/>
+          </svg>
+          Submit Quiz
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Timer Warning Toast ──────────────────────────────────── -->
+  <div
+    class="timer-toast hidden"
+    id="timer-toast"
+    role="alert"
+    aria-live="assertive"
+  >
+    <!-- Clock icon -->
+    <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round"
+         aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+    <span>5 minutes remaining!</span>
+  </div>
+
+  <!-- ── Main Quiz Layout ─────────────────────────────────────── -->
+  <div class="quiz-layout hidden" id="quiz-layout">
+
+    <!-- ── Top Bar ───────────────────────────────────────────── -->
+    <header class="quiz-topbar" role="banner">
+      <div class="quiz-topbar-inner">
+
+        <!-- Left: Logo + Meta -->
+        <div class="quiz-topbar-left">
+          <a
+            href="index.html"
+            class="quiz-logo"
+            aria-label="Exit quiz and go home"
+            id="btn-exit-quiz"
+          >
+            <!-- App icon -->
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+            <span class="quiz-logo-text">QuizApp</span>
+          </a>
+          <div class="quiz-meta" id="quiz-meta">
+            <!-- Filled by JS: Subject · Unit -->
+          </div>
+        </div>
+
+        <!-- Center: Timer -->
+        <div class="quiz-topbar-center">
+          <div
+            class="quiz-timer"
+            id="quiz-timer"
+            role="timer"
+            aria-label="Time remaining"
+            aria-live="off"
+            hidden
+          >
+            <!-- Clock icon -->
+            <span class="timer-icon" aria-hidden="true">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </span>
+            <span class="timer-value" id="timer-value">00:00</span>
+          </div>
+        </div>
+
+        <!-- Right: Theme + Submit -->
+        <div class="quiz-topbar-right">
+          <button
+            class="theme-toggle"
+            aria-label="Toggle dark/light theme"
+            title="Toggle theme"
+          >
+            <span class="icon-sun" aria-hidden="true">
+              <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+            </span>
+            <span class="icon-moon" aria-hidden="true">
+              <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </span>
+          </button>
+          <button
+            class="btn btn-danger btn-sm"
+            id="btn-submit-quiz"
+            aria-label="Submit quiz"
+          >
+            <!-- Flag icon -->
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+            Submit
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Progress Bar -->
+      <div
+        class="quiz-progress"
+        role="progressbar"
+        aria-label="Quiz progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        id="quiz-progress-bar-wrap"
+      >
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+    </header>
+
+    <!-- ── Body ─────────────────────────────────────────────── -->
+    <div class="quiz-body">
+
+      <!-- ── Palette Sidebar ──────────────────────────────────── -->
+      <aside
+        class="palette-sidebar"
+        id="palette-sidebar"
+        aria-label="Question palette"
+      >
+        <div class="palette-header">
+          <h2 class="palette-title">
+            <!-- Grid icon -->
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Questions
+          </h2>
+          <button
+            class="btn-icon palette-close"
+            id="btn-close-palette"
+            aria-label="Close question palette"
+          >
+            <!-- X icon -->
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="palette-legend" aria-label="Palette legend">
+          <div class="legend-item">
+            <span class="legend-dot answered" aria-hidden="true"></span>
+            <span>Answered</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot current" aria-hidden="true"></span>
+            <span>Current</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot skipped" aria-hidden="true"></span>
+            <span>Skipped</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot unanswered" aria-hidden="true"></span>
+            <span>Not visited</span>
+          </div>
+        </div>
+
+        <div class="question-palette" id="question-palette"
+             role="navigation" aria-label="Jump to question">
+          <!-- Filled by JS -->
+        </div>
+
+        <div class="palette-footer">
+          <div class="palette-stats" id="palette-stats">
+            <!-- Filled by JS -->
+          </div>
+          <button
+            class="btn btn-primary btn-full"
+            id="btn-submit-quiz-palette"
+            aria-label="Submit quiz from palette"
+          >
+            <!-- Flag icon -->
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+            Submit Quiz
+          </button>
+        </div>
+      </aside>
+
+      <!-- Palette Overlay (mobile) -->
+      <div
+        class="palette-overlay"
+        id="palette-overlay"
+        aria-hidden="true"
+      ></div>
+
+      <!-- ── Question Area ─────────────────────────────────────── -->
+      <main class="question-area" id="question-area" role="main">
+
+        <!-- Question Counter Row -->
+        <div class="question-counter-row">
+          <div class="question-counter-left">
+            <button
+              class="btn btn-secondary btn-sm"
+              id="btn-toggle-palette"
+              aria-label="Toggle question palette"
+              aria-expanded="false"
+              aria-controls="palette-sidebar"
+            >
+              <!-- Menu / hamburger icon -->
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+              <span class="palette-btn-label">Questions</span>
+            </button>
+            <span class="question-counter" id="question-counter" aria-live="polite">
+              Question 1 of 1
+            </span>
+          </div>
+          <div class="question-counter-right">
+            <span class="question-mode-badge" id="question-mode-badge">MCQ</span>
+          </div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="question-card" id="current-question-card">
+
+          <div class="question-header" id="question-header">
+            <div class="question-header-left">
+              <span class="question-number" id="q-number">Q1</span>
+              <div class="question-meta-tags" id="q-meta-tags">
+                <!-- topic, difficulty tags filled by JS -->
+              </div>
+            </div>
+            <div class="question-header-right">
+              <span class="question-marks" id="q-marks">1 mark</span>
+            </div>
+          </div>
+
+          <div class="question-body">
+            <p class="question-text" id="question-text">
+              <!-- Question text filled by JS -->
+            </p>
+          </div>
+
+          <!-- MCQ Options -->
+          <div
+            class="options-container"
+            id="options-container"
+            role="radiogroup"
+            aria-label="Answer options"
+          >
+            <!-- Filled by JS for MCQ questions -->
+          </div>
+
+          <!-- Text Answer (non-MCQ) -->
+          <div class="text-answer-container hidden" id="text-answer-container">
+            <div class="text-answer-header">
+              <label class="form-label" for="text-answer">
+                Your Answer
+              </label>
+              <span class="char-count" id="char-count" aria-live="polite">
+                0 characters
+              </span>
+            </div>
+            <textarea
+              class="form-textarea"
+              id="text-answer"
+              name="text-answer"
+              placeholder="Type your answer here…"
+              rows="6"
+              aria-describedby="text-answer-hint"
+            ></textarea>
+            <p class="form-hint" id="text-answer-hint">
+              Write a detailed answer. This will be exported for AI evaluation.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons" role="navigation" aria-label="Question navigation">
+          <button
+            class="btn btn-secondary"
+            id="btn-prev"
+            aria-label="Previous question"
+            disabled
+          >
+            <!-- Chevron left icon -->
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Previous
+          </button>
+
+          <button
+            class="btn btn-outline"
+            id="btn-skip"
+            aria-label="Skip this question"
+          >
+            <!-- Skip forward icon -->
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <polygon points="5 4 15 12 5 20 5 4"/>
+              <line x1="19" y1="5" x2="19" y2="19"/>
+            </svg>
+            Skip
+          </button>
+
+          <button
+            class="btn btn-primary"
+            id="btn-next"
+            aria-label="Next question"
+          >
+            Next
+            <!-- Chevron right icon -->
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Submit Button -->
+        <div class="mobile-submit-row">
+          <button
+            class="btn btn-danger btn-full"
+            id="btn-submit-mobile"
+            aria-label="Submit quiz"
+          >
+            <!-- Flag icon -->
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+            Submit Quiz
+          </button>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ── Scripts ─────────────────────────────────────────────── -->
+  <script src="js/common.js"></script>
+  <script src="js/play.js"></script>
+
+  <!-- ── Swipe Gesture (play.html only — does NOT modify play.js) ── -->
+  <script>
+    (function () {
+      'use strict';
+
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var touchEndX   = 0;
+      var touchEndY   = 0;
+      var MIN_SWIPE   = 50;   /* minimum horizontal px to count as swipe */
+      var MAX_VERT    = 80;   /* max vertical drift before ignoring swipe */
+      var isSwiping   = false;
+      var swipeDelta  = 0;
+
+      var area = document.getElementById('question-area');
+      if (!area) return;
+
+      /* ── Touch Start ─────────────────────────────── */
+      area.addEventListener('touchstart', function (e) {
+        /* ignore touches on textarea / input */
+        var tag = e.target.tagName.toLowerCase();
+        if (tag === 'textarea' || tag === 'input') return;
+
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+        isSwiping   = false;
+        swipeDelta  = 0;
+      }, { passive: true });
+
+      /* ── Touch Move — visual feedback ───────────── */
+      area.addEventListener('touchmove', function (e) {
+        var tag = e.target.tagName.toLowerCase();
+        if (tag === 'textarea' || tag === 'input') return;
+
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        var dy = e.changedTouches[0].clientY - touchStartY;
+
+        /* only apply translate if horizontal-dominant swipe */
+        if (Math.abs(dx) > Math.abs(dy)) {
+          isSwiping  = true;
+          swipeDelta = dx;
+          var card = document.getElementById('current-question-card');
+          if (card) {
+            /* clamp translate to ±60px for subtle feedback */
+            var clamped = Math.max(-60, Math.min(60, dx * 0.35));
+            card.style.transform  = 'translateX(' + clamped + 'px)';
+            card.style.transition = 'none';
+          }
+        }
+      }, { passive: true });
+
+      /* ── Touch End — navigate ────────────────────── */
+      area.addEventListener('touchend', function (e) {
+        var tag = e.target.tagName.toLowerCase();
+        if (tag === 'textarea' || tag === 'input') return;
+
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
+
+        /* reset card position with spring-back */
+        var card = document.getElementById('current-question-card');
+        if (card) {
+          card.style.transition = 'transform 200ms ease';
+          card.style.transform  = 'translateX(0)';
+        }
+
+        if (!isSwiping) return;
+
+        var dx = touchEndX - touchStartX;
+        var dy = touchEndY - touchStartY;
+
+        /* ignore vertical-dominant or too-short swipes */
+        if (Math.abs(dy) > MAX_VERT) return;
+        if (Math.abs(dx) < MIN_SWIPE) return;
+
+        if (dx < 0) {
+          /* swipe left → next question */
+          if (typeof goNext === 'function') goNext();
+        } else {
+          /* swipe right → previous question */
+          if (typeof goPrev === 'function') goPrev();
+        }
+
+        isSwiping  = false;
+        swipeDelta = 0;
+      }, { passive: true });
+
+    }());
+  </script>
+
+</body>
+</html>

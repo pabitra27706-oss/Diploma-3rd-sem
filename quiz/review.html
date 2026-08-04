@@ -1,14 +1,441 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Review your quiz answers before export" />
+  <title>Review Answers — QuizApp</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/review.css" />
 </head>
-
 <body>
-  
-</body>
 
+  <!-- ── Site Header ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="site-header-inner">
+      <a href="index.html" class="site-logo" aria-label="Go to quiz home">
+        <svg class="icon" width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+        QuizApp
+      </a>
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          aria-label="Toggle dark/light theme"
+          title="Toggle theme"
+        >
+          <span class="icon-sun" aria-hidden="true">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </span>
+          <span class="icon-moon" aria-hidden="true">
+            <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Loading State ───────────────────────────────────────── -->
+  <div class="loading-state" id="loading-state" role="status" aria-label="Loading review">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Loading your answers…</p>
+  </div>
+
+  <!-- ── No Data State ───────────────────────────────────────── -->
+  <div class="empty-state hidden" id="no-data-state">
+    <!-- Inbox icon -->
+    <span class="empty-state-icon" aria-hidden="true">
+      <svg class="icon" width="48" height="48" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+        <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6
+                 l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+      </svg>
+    </span>
+    <p class="empty-state-title">No Quiz to Review</p>
+    <p class="empty-state-desc">
+      Complete a quiz first to review your answers here.
+    </p>
+    <a href="index.html" class="btn btn-primary">
+      <!-- Home icon -->
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Go Home
+    </a>
+  </div>
+
+  <!-- ── Main Review Content ─────────────────────────────────── -->
+  <main class="review-main hidden" id="review-main" role="main">
+
+    <!-- ── Page Header ───────────────────────────────────────── -->
+    <div class="review-page-header">
+      <div class="container">
+        <div class="review-header-inner">
+
+          <div class="review-header-left">
+            <h1 class="review-title">
+              <!-- Clipboard icon -->
+              <svg class="icon review-title-icon" width="28" height="28"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6
+                         a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+              </svg>
+              Review Answers
+            </h1>
+            <p class="review-subtitle" id="review-subtitle">
+              <!-- Filled by JS -->
+            </p>
+          </div>
+
+          <div class="review-header-right">
+            <div class="review-header-stats" id="review-header-stats">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Sticky Action Bar ──────────────────────────────────── -->
+    <div class="review-action-bar" id="review-action-bar"
+         role="toolbar" aria-label="Review actions">
+      <div class="container">
+        <div class="action-bar-inner">
+
+          <!-- Left: Jump + Filter -->
+          <div class="action-bar-left">
+            <button
+              class="btn btn-secondary btn-sm"
+              id="btn-show-palette"
+              aria-label="Show question navigation palette"
+              aria-expanded="false"
+              aria-controls="review-palette-panel"
+            >
+              <!-- Menu icon -->
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+              <span class="action-bar-label">Jump To</span>
+            </button>
+
+            <div class="filter-pills" role="group" aria-label="Filter questions">
+              <button
+                class="filter-pill active"
+                data-filter="all"
+                aria-pressed="true"
+              >All</button>
+              <button
+                class="filter-pill"
+                data-filter="answered"
+                aria-pressed="false"
+              >Answered</button>
+              <button
+                class="filter-pill"
+                data-filter="unanswered"
+                aria-pressed="false"
+              >Unanswered</button>
+            </div>
+          </div>
+
+          <!-- Right: Export -->
+          <div class="action-bar-right">
+            <a
+              href="export.html"
+              class="btn btn-primary btn-sm"
+              id="btn-go-export"
+              aria-label="Export answers for AI evaluation"
+            >
+              <!-- Upload / share icon -->
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              Export for AI
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Review Palette Overlay ─────────────────────────────── -->
+    <div
+      class="review-palette-overlay hidden"
+      id="review-palette-overlay"
+      aria-hidden="true"
+    ></div>
+
+    <!-- ── Review Palette Panel ──────────────────────────────── -->
+    <div
+      class="review-palette-panel hidden"
+      id="review-palette-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Question navigation"
+    >
+      <div class="palette-panel-header">
+        <h2 class="palette-panel-title">
+          <!-- Grid icon -->
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Jump to Question
+        </h2>
+        <button
+          class="btn-icon"
+          id="btn-close-palette-panel"
+          aria-label="Close navigation panel"
+        >
+          <!-- X icon -->
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="palette-panel-legend">
+        <div class="legend-item">
+          <span class="legend-dot answered" aria-hidden="true"></span>
+          <span>Answered</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot unanswered" aria-hidden="true"></span>
+          <span>Unanswered</span>
+        </div>
+      </div>
+
+      <div
+        class="palette-panel-grid"
+        id="palette-panel-grid"
+        role="navigation"
+        aria-label="Question list"
+      >
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- ── Question List ──────────────────────────────────────── -->
+    <div class="container review-container">
+
+      <!-- Info Banner for All Types mode -->
+      <div class="alert alert-info review-info-banner" id="review-info-banner">
+        <!-- Info icon -->
+        <svg class="icon alert-icon" width="18" height="18" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <div>
+          <strong>All Types Mode:</strong> Review your answers below.
+          You can edit any answer before exporting for AI evaluation.
+          Click <strong>Export for AI</strong> when you are satisfied.
+        </div>
+      </div>
+
+      <!-- Question Review List -->
+      <div
+        class="review-question-list"
+        id="review-question-list"
+        aria-label="Question list"
+        aria-live="polite"
+      >
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- Bottom Action Row -->
+      <div class="review-bottom-actions">
+        <a href="index.html" class="btn btn-secondary">
+          <!-- Chevron left -->
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back to Home
+        </a>
+        <div class="review-bottom-right">
+          <a
+            href="play.html"
+            class="btn btn-outline"
+            id="btn-retry-quiz"
+            aria-label="Retry this quiz with the same settings"
+          >
+            <!-- Refresh icon -->
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <polyline points="23 4 23 10 17 10"/>
+              <polyline points="1 20 1 14 7 14"/>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/>
+              <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/>
+            </svg>
+            Retry Quiz
+          </a>
+          <a
+            href="export.html"
+            class="btn btn-primary"
+            aria-label="Export answers"
+          >
+            <!-- Upload icon -->
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Export for AI
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── Edit Answer Modal ───────────────────────────────────── -->
+  <div
+    class="modal-overlay"
+    id="edit-modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="edit-modal-title"
+  >
+    <div class="modal modal--wide">
+      <div class="modal-header">
+        <h2 class="modal-title" id="edit-modal-title">
+          <!-- Edit / pencil icon -->
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14
+                     a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1
+                     1-4 9.5-9.5z"/>
+          </svg>
+          Edit Answer
+        </h2>
+        <button
+          class="btn-icon"
+          id="close-edit-modal"
+          aria-label="Close edit modal"
+        >
+          <!-- X icon -->
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="edit-modal-question" id="edit-modal-question"></p>
+        <div class="form-group mt-4">
+          <label class="form-label" for="edit-answer-textarea">
+            Your Answer
+          </label>
+          <textarea
+            class="form-textarea"
+            id="edit-answer-textarea"
+            rows="8"
+            placeholder="Type your answer here…"
+            aria-describedby="edit-char-count"
+          ></textarea>
+          <span
+            class="form-hint"
+            id="edit-char-count"
+            aria-live="polite"
+          >0 characters</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-edit">
+          <!-- X icon -->
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+          Cancel
+        </button>
+        <button class="btn btn-primary" id="btn-save-edit">
+          <!-- Check icon -->
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Save Answer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Scripts ─────────────────────────────────────────────── -->
+  <script src="js/common.js"></script>
+  <script src="js/review.js"></script>
+
+</body>
 </html>
