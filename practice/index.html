@@ -1,211 +1,441 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Practice - Diploma 3rd Sem</title>
-
-    <!-- PWA Meta -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#1a1a2e">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/variables.css">
-    <link rel="stylesheet" href="/assets/css/main.css">
-    
-    <style>
-        .coming-soon-container {
-            min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--spacing-xl);
-        }
-
-        .coming-soon-content {
-            text-align: center;
-            max-width: 500px;
-        }
-
-        .coming-soon-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto var(--spacing-xl);
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: var(--radius-2xl);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-
-        .coming-soon-icon svg {
-            width: 64px;
-            height: 64px;
-            fill: white;
-        }
-
-        .coming-soon-title {
-            font-size: var(--text-3xl);
-            font-weight: var(--font-bold);
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .coming-soon-subtitle {
-            font-size: var(--text-lg);
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-xl);
-            line-height: 1.6;
-        }
-
-        .coming-soon-features {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-            text-align: left;
-        }
-
-        .coming-soon-features h3 {
-            font-size: var(--text-base);
-            font-weight: var(--font-semibold);
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .coming-soon-features ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .coming-soon-features li {
-            padding: var(--spacing-sm) 0;
-            padding-left: var(--spacing-lg);
-            color: var(--text-secondary);
-            font-size: var(--text-sm);
-            position: relative;
-        }
-
-        .coming-soon-features li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--accent-primary);
-        }
-
-        .back-home-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-md) var(--spacing-xl);
-            background: var(--accent-primary);
-            color: white;
-            border-radius: var(--radius-lg);
-            font-weight: var(--font-semibold);
-            transition: all var(--transition-base);
-            text-decoration: none;
-        }
-
-        .back-home-btn:hover {
-            background: var(--accent-secondary);
-            transform: translateY(-2px);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Practice Hub - WB Diploma 3rd Semester CST">
+  <title>Practice Hub | WB Diploma CST</title>
+  <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <!-- Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <a href="/index.html" class="icon-btn">
-                    <svg class="icon"><use href="/assets/icons/sprite.svg#arrow-left"></use></svg>
-                </a>
-                <div class="header-title">
-                    <h1>Practice</h1>
-                    <p>Day-wise question practice</p>
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="icon icon-sun"><use href="/assets/icons/sprite.svg#sun"></use></svg>
-                    <svg class="icon icon-moon"><use href="/assets/icons/sprite.svg#moon"></use></svg>
-                </button>
-            </div>
-        </header>
+  <!-- ══════════════════════════════════════ HEADER -->
+  <header class="site-header">
+    <nav class="header-nav" role="navigation" aria-label="Site navigation">
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="coming-soon-container">
-                <div class="coming-soon-content">
-                    <div class="coming-soon-icon">
-                        <svg><use href="/assets/icons/sprite.svg#edit"></use></svg>
-                    </div>
-                    
-                    <h2 class="coming-soon-title">Coming Soon</h2>
-                    <p class="coming-soon-subtitle">
-                        The Practice system is being built in Chat 8. It will feature day-wise question practice with progress tracking.
-                    </p>
+      <a href="/" class="nav-back" aria-label="Go to home">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#home"></use></svg>
+        <span>Home</span>
+      </a>
 
-                    <div class="coming-soon-features">
-                        <h3>
-                            <svg class="icon"><use href="/assets/icons/sprite.svg#zap"></use></svg>
-                            What to expect
-                        </h3>
-                        <ul>
-                            <li>30-day structured practice roadmap</li>
-                            <li>Subject-wise daily questions</li>
-                            <li>Progress tracking with localStorage</li>
-                            <li>Instant answer verification</li>
-                            <li>Review previous day's answers</li>
-                            <li>Bookmarkable questions</li>
-                        </ul>
-                    </div>
+      <div class="header-center">
+        <div class="header-logo">
+          <svg class="icon icon-lg" aria-hidden="true"><use href="/assets/icons/sprite.svg#filter"></use></svg>
+        </div>
+        <div>
+          <h1 class="page-title">Practice Hub</h1>
+          <p class="page-subtitle" id="total-count-header">Loading questions...</p>
+        </div>
+      </div>
 
-                    <a href="/index.html" class="back-home-btn">
-                        <svg class="icon"><use href="/assets/icons/sprite.svg#home"></use></svg>
-                        <span>Back to Home</span>
-                    </a>
-                </div>
-            </div>
-        </main>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark mode">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#moon"></use></svg>
+        </button>
+      </div>
 
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <a href="/index.html" class="nav-item">
-                <svg class="icon"><use href="/assets/icons/sprite.svg#home"></use></svg>
-                <span>Home</span>
-            </a>
-            <a href="/practice/index.html" class="nav-item active">
-                <svg class="icon"><use href="/assets/icons/sprite.svg#edit"></use></svg>
-                <span>Practice</span>
-            </a>
-            <a href="/quiz/index.html" class="nav-item">
-                <svg class="icon"><use href="/assets/icons/sprite.svg#award"></use></svg>
-                <span>Quiz</span>
-            </a>
-            <a href="/bookmarks/index.html" class="nav-item">
-                <svg class="icon"><use href="/assets/icons/sprite.svg#bookmark"></use></svg>
-                <span>Saved</span>
-            </a>
-        </nav>
+    </nav>
+  </header>
 
+  <!-- ══════════════════════════════════════ LOADING SCREEN -->
+  <div id="loading-screen" class="loading-screen" aria-live="polite" aria-busy="true">
+    <div class="loading-content">
+      <div class="loading-rings">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+      </div>
+      <p class="loading-text">Loading question bank...</p>
+      <div class="loading-progress">
+        <div class="loading-bar" id="load-bar"></div>
+      </div>
+      <p class="loading-sub" id="load-status">Fetching CST201...</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ MAIN -->
+  <main class="main-content" id="main" hidden>
+
+    <!-- ────────────────────────── STATS ROW -->
+    <section class="stats-row" aria-label="Question bank statistics">
+      <div class="stat-card">
+        <span class="stat-num" id="stat-total">0</span>
+        <span class="stat-label">Total Questions</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" id="stat-subjects">5</span>
+        <span class="stat-label">Subjects</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" id="stat-completed">0</span>
+        <span class="stat-label">Completed</span>
+      </div>
+      <div class="stat-card stat-card--accent">
+        <span class="stat-num" id="stat-matched">0</span>
+        <span class="stat-label">Matching Now</span>
+      </div>
+    </section>
+
+    <!-- ────────────────────────── 10-DAY ROADMAP -->
+    <section class="section-block" aria-labelledby="roadmap-heading">
+      <div class="section-header">
+        <div class="section-title-group">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#calendar"></use></svg>
+          <h2 id="roadmap-heading" class="section-title">10-Day Roadmap</h2>
+        </div>
+        <span class="section-badge">Quick Start</span>
+      </div>
+
+      <div id="day-cards-grid" class="day-cards-grid" role="list" aria-label="Practice days">
+        <!-- JS renders -->
+      </div>
+
+      <!-- Roadmap progress overall -->
+      <div class="roadmap-overall">
+        <div class="roadmap-overall-label">
+          <span>Overall Roadmap Progress</span>
+          <span id="roadmap-pct">0%</span>
+        </div>
+        <div class="roadmap-bar-track">
+          <div class="roadmap-bar-fill" id="roadmap-bar-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────── DIVIDER -->
+    <div class="or-divider" role="separator">
+      <span class="or-text">Build Custom Session</span>
     </div>
 
-    <!-- Scripts -->
-    <script src="/assets/js/theme.js"></script>
+    <!-- ────────────────────────── FILTER PANEL -->
+    <section class="section-block filter-section" aria-labelledby="filter-heading">
+      <div class="section-header">
+        <div class="section-title-group">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#filter"></use></svg>
+          <h2 id="filter-heading" class="section-title">Filter Questions</h2>
+        </div>
+        <button type="button" id="reset-filters" class="reset-btn" aria-label="Reset all filters">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#refresh"></use></svg>
+          Reset
+        </button>
+      </div>
 
+      <!-- Live count banner -->
+      <div class="live-count-banner" id="live-count-banner" role="status" aria-live="polite" aria-atomic="true">
+        <div class="live-count-inner">
+          <div class="live-count-num-wrap">
+            <span class="live-count-num" id="live-count">0</span>
+          </div>
+          <div class="live-count-info">
+            <span class="live-count-label">Questions match your filters</span>
+            <span class="live-count-sub" id="live-count-sub">Select filters to narrow down</span>
+          </div>
+        </div>
+        <div class="live-count-bar-track">
+          <div class="live-count-bar-fill" id="live-count-bar"></div>
+        </div>
+      </div>
+
+      <form id="filter-form" class="filter-form" novalidate>
+
+        <!-- ── SUBJECT -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Subject</span>
+            <span class="filter-group-count" id="fg-count-subject">All</span>
+          </div>
+          <div class="chip-selector" id="chips-subject" role="group" aria-label="Filter by subject">
+            <button type="button" class="chip chip--all chip--active" data-group="subject" data-value="all">All</button>
+            <button type="button" class="chip" data-group="subject" data-value="CST201">
+              <span class="chip-code">CST201</span>
+              <span class="chip-name">C Programming</span>
+            </button>
+            <button type="button" class="chip" data-group="subject" data-value="CST203">
+              <span class="chip-code">CST203</span>
+              <span class="chip-name">Python</span>
+            </button>
+            <button type="button" class="chip" data-group="subject" data-value="CST205">
+              <span class="chip-code">CST205</span>
+              <span class="chip-name">Data Structures</span>
+            </button>
+            <button type="button" class="chip" data-group="subject" data-value="CST207">
+              <span class="chip-code">CST207</span>
+              <span class="chip-name">Comp. Org.</span>
+            </button>
+            <button type="button" class="chip" data-group="subject" data-value="CST209">
+              <span class="chip-code">CST209</span>
+              <span class="chip-name">Algorithms</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── UNIT -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Unit</span>
+            <span class="filter-group-count" id="fg-count-unit">All</span>
+          </div>
+          <div class="chip-selector" id="chips-unit" role="group" aria-label="Filter by unit">
+            <button type="button" class="chip chip--all chip--active" data-group="unit" data-value="all">All</button>
+            <button type="button" class="chip chip--number" data-group="unit" data-value="1">1</button>
+            <button type="button" class="chip chip--number" data-group="unit" data-value="2">2</button>
+            <button type="button" class="chip chip--number" data-group="unit" data-value="3">3</button>
+            <button type="button" class="chip chip--number" data-group="unit" data-value="4">4</button>
+            <button type="button" class="chip chip--number" data-group="unit" data-value="5">5</button>
+          </div>
+        </div>
+
+        <!-- ── DIFFICULTY -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Difficulty</span>
+            <span class="filter-group-count" id="fg-count-difficulty">All</span>
+          </div>
+          <div class="chip-selector" id="chips-difficulty" role="group" aria-label="Filter by difficulty">
+            <button type="button" class="chip chip--all chip--active" data-group="difficulty" data-value="all">All</button>
+            <button type="button" class="chip chip--easy" data-group="difficulty" data-value="easy">
+              <span class="diff-dot"></span> Easy
+            </button>
+            <button type="button" class="chip chip--medium" data-group="difficulty" data-value="medium">
+              <span class="diff-dot"></span> Medium
+            </button>
+            <button type="button" class="chip chip--hard" data-group="difficulty" data-value="hard">
+              <span class="diff-dot"></span> Hard
+            </button>
+          </div>
+        </div>
+
+        <!-- ── TYPE -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Question Type</span>
+            <span class="filter-group-count" id="fg-count-type">All</span>
+          </div>
+          <div class="chip-selector" id="chips-type" role="group" aria-label="Filter by type">
+            <button type="button" class="chip chip--all chip--active" data-group="type" data-value="all">All</button>
+            <button type="button" class="chip chip--type-theory" data-group="type" data-value="theory">Theory</button>
+            <button type="button" class="chip chip--type-program" data-group="type" data-value="program">Program</button>
+            <button type="button" class="chip chip--type-numerical" data-group="type" data-value="numerical">Numerical</button>
+            <button type="button" class="chip chip--type-short" data-group="type" data-value="short">Short</button>
+          </div>
+        </div>
+
+        <!-- ── MARKS -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Marks</span>
+            <span class="filter-group-count" id="fg-count-marks">All</span>
+          </div>
+          <div class="chip-selector" id="chips-marks" role="group" aria-label="Filter by marks">
+            <button type="button" class="chip chip--all chip--active" data-group="marks" data-value="all">All</button>
+            <button type="button" class="chip chip--marks" data-group="marks" data-value="2">2</button>
+            <button type="button" class="chip chip--marks" data-group="marks" data-value="4">4</button>
+            <button type="button" class="chip chip--marks" data-group="marks" data-value="6">6</button>
+            <button type="button" class="chip chip--marks" data-group="marks" data-value="8">8</button>
+            <button type="button" class="chip chip--marks" data-group="marks" data-value="10">10</button>
+          </div>
+        </div>
+
+        <!-- ── YEAR -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Year</span>
+            <span class="filter-group-count" id="fg-count-year">All</span>
+          </div>
+          <div class="chip-selector" id="chips-year" role="group" aria-label="Filter by year">
+            <button type="button" class="chip chip--all chip--active" data-group="year" data-value="all">All</button>
+            <button type="button" class="chip chip--number" data-group="year" data-value="2021">2021</button>
+            <button type="button" class="chip chip--number" data-group="year" data-value="2022">2022</button>
+            <button type="button" class="chip chip--number" data-group="year" data-value="2023">2023</button>
+            <button type="button" class="chip chip--number" data-group="year" data-value="2024">2024</button>
+          </div>
+        </div>
+
+        <!-- ── MONTH -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Month</span>
+            <span class="filter-group-count" id="fg-count-month">All</span>
+          </div>
+          <div class="chip-selector" id="chips-month" role="group" aria-label="Filter by month">
+            <button type="button" class="chip chip--all chip--active" data-group="month" data-value="all">All</button>
+            <button type="button" class="chip" data-group="month" data-value="January">January</button>
+            <button type="button" class="chip" data-group="month" data-value="March">March</button>
+            <button type="button" class="chip" data-group="month" data-value="June">June</button>
+            <button type="button" class="chip" data-group="month" data-value="December">December</button>
+          </div>
+        </div>
+
+        <!-- ── PRACTICE DAY -->
+        <div class="filter-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Practice Day</span>
+            <span class="filter-group-count" id="fg-count-day">All</span>
+          </div>
+          <div class="chip-selector" id="chips-day" role="group" aria-label="Filter by practice day">
+            <button type="button" class="chip chip--all chip--active" data-group="day" data-value="all">All</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="1">1</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="2">2</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="3">3</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="4">4</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="5">5</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="6">6</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="7">7</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="8">8</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="9">9</button>
+            <button type="button" class="chip chip--number" data-group="day" data-value="10">10</button>
+          </div>
+        </div>
+
+        <!-- ── TOPIC (Dynamic) -->
+        <div class="filter-group filter-group--full" id="topic-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Topic</span>
+            <span class="filter-group-count" id="fg-count-topic">Dynamic</span>
+          </div>
+          <div class="search-dropdown-wrapper" id="topic-wrapper">
+            <div class="search-dropdown-trigger" id="topic-trigger" role="combobox"
+              aria-expanded="false" aria-haspopup="listbox" aria-controls="topic-listbox"
+              tabindex="0">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#filter"></use></svg>
+              <span id="topic-trigger-text">All topics (dynamic)</span>
+              <svg class="icon icon-sm dropdown-arrow" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+            </div>
+            <div class="search-dropdown-panel" id="topic-panel" hidden>
+              <div class="dropdown-search-wrap">
+                <input type="text" class="dropdown-search" id="topic-search"
+                  placeholder="Search topics..." aria-label="Search topics" autocomplete="off">
+              </div>
+              <div class="dropdown-options" id="topic-listbox" role="listbox"
+                aria-label="Topic options" aria-multiselectable="true">
+              </div>
+            </div>
+          </div>
+          <div class="selected-pills" id="topic-pills"></div>
+        </div>
+
+        <!-- ── PAPER CODE (Dynamic) -->
+        <div class="filter-group filter-group--full" id="paper-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Paper Code</span>
+            <span class="filter-group-count" id="fg-count-paper">Dynamic</span>
+          </div>
+          <div class="search-dropdown-wrapper" id="paper-wrapper">
+            <div class="search-dropdown-trigger" id="paper-trigger" role="combobox"
+              aria-expanded="false" aria-haspopup="listbox" aria-controls="paper-listbox"
+              tabindex="0">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#calendar"></use></svg>
+              <span id="paper-trigger-text">All papers (dynamic)</span>
+              <svg class="icon icon-sm dropdown-arrow" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+            </div>
+            <div class="search-dropdown-panel" id="paper-panel" hidden>
+              <div class="dropdown-search-wrap">
+                <input type="text" class="dropdown-search" id="paper-search"
+                  placeholder="Search papers..." aria-label="Search papers" autocomplete="off">
+              </div>
+              <div class="dropdown-options" id="paper-listbox" role="listbox"
+                aria-label="Paper options" aria-multiselectable="true">
+              </div>
+            </div>
+          </div>
+          <div class="selected-pills" id="paper-pills"></div>
+        </div>
+
+        <!-- ── TAGS (Dynamic) -->
+        <div class="filter-group filter-group--full" id="tags-group">
+          <div class="filter-group-header">
+            <span class="filter-group-label">Tags</span>
+            <span class="filter-group-count" id="fg-count-tags">Dynamic</span>
+          </div>
+          <div class="search-dropdown-wrapper" id="tags-wrapper">
+            <div class="search-dropdown-trigger" id="tags-trigger" role="combobox"
+              aria-expanded="false" aria-haspopup="listbox" aria-controls="tags-listbox"
+              tabindex="0">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#bookmark"></use></svg>
+              <span id="tags-trigger-text">All tags (dynamic)</span>
+              <svg class="icon icon-sm dropdown-arrow" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+            </div>
+            <div class="search-dropdown-panel" id="tags-panel" hidden>
+              <div class="dropdown-search-wrap">
+                <input type="text" class="dropdown-search" id="tags-search"
+                  placeholder="Search tags..." aria-label="Search tags" autocomplete="off">
+              </div>
+              <div class="dropdown-options" id="tags-listbox" role="listbox"
+                aria-label="Tag options" aria-multiselectable="true">
+              </div>
+            </div>
+          </div>
+          <div class="selected-pills" id="tags-pills"></div>
+        </div>
+
+      </form>
+
+      <!-- ── ACTION BUTTONS -->
+      <div class="filter-actions">
+        <button type="button" id="save-preset" class="action-btn action-btn--ghost">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#save"></use></svg>
+          Save Preset
+        </button>
+        <button type="button" id="start-session" class="action-btn action-btn--primary" disabled>
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+          Start Practice
+          <span class="btn-count-badge" id="btn-count-badge">0</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ────────────────────────── SAVED PRESETS -->
+    <section class="section-block" aria-labelledby="presets-heading">
+      <div class="section-header">
+        <div class="section-title-group">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#bookmark"></use></svg>
+          <h2 id="presets-heading" class="section-title">Saved Presets</h2>
+        </div>
+      </div>
+      <div id="presets-list" class="presets-list" role="list" aria-label="Saved presets">
+        <div class="empty-state" id="no-presets-msg">
+          <svg class="icon icon-xl empty-icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#bookmark"></use></svg>
+          <p class="empty-title">No presets yet</p>
+          <p class="empty-sub">Build a filter combination and save it for quick access later.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════ PRESET MODAL -->
+  <div id="preset-modal" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="modal-heading" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-heading" class="modal-title">Save Filter Preset</h3>
+        <button type="button" id="modal-close" class="icon-btn" aria-label="Close modal">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#close"></use></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="modal-label" for="preset-name-input">Preset name</label>
+        <input type="text" id="preset-name-input" class="modal-input"
+          placeholder="e.g. CST205 Medium Theory" maxlength="50" autocomplete="off">
+        <p class="modal-hint" id="modal-hint">Will save <strong id="modal-q-count">0</strong> questions</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modal-cancel" class="action-btn action-btn--ghost">Cancel</button>
+        <button type="button" id="modal-save" class="action-btn action-btn--primary">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#save"></use></svg>
+          Save Preset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ TOAST -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive" hidden>
+    <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#check"></use></svg>
+    <span id="toast-msg"></span>
+  </div>
+
+  <script src="js/index.js"></script>
 </body>
 </html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Practice Session - WB Diploma 3rd Semester CST">
+  <title>Practice Session | WB Diploma CST</title>
+  <link rel="stylesheet" href="css/session.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════ HEADER -->
+  <header class="site-header">
+    <nav class="header-nav" role="navigation" aria-label="Session navigation">
+      <a href="index.html" class="nav-back" aria-label="Back to Practice Hub">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-left"></use></svg>
+        <span>Back</span>
+      </a>
+      <div class="header-center">
+        <span class="header-q-counter" id="header-counter" role="status" aria-live="polite">Q1 / 0</span>
+      </div>
+      <div class="header-actions">
+        <button id="scroll-to-filters" class="icon-btn" aria-label="Show filters and controls" title="Scroll up to filters">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#filter"></use></svg>
+        </button>
+        <button id="bookmark-btn" class="icon-btn" aria-label="Bookmark session" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#bookmark"></use></svg>
+        </button>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark mode">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#moon"></use></svg>
+        </button>
+      </div>
+    </nav>
+    <!-- Mini progress in header -->
+    <div class="header-prog-track">
+      <div class="header-prog-fill" id="header-prog-fill"></div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════ LOADING -->
+  <div id="loading-screen" class="loading-screen" aria-live="polite" aria-busy="true">
+    <div class="loading-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+    </div>
+    <p class="loading-text">Loading session...</p>
+  </div>
+
+  <!-- ══════════════════════════════════════ MAIN -->
+  <main class="main-content" id="main" hidden>
+
+    <!--
+      ═══════════════════════════════════════════
+      ABOVE-FOLD SECTION (hidden above screen)
+      User scrolls/swipes DOWN to reveal these
+      ═══════════════════════════════════════════
+    -->
+    <section class="above-fold" id="above-fold" aria-label="Session controls and filters">
+
+      <!-- Pull indicator -->
+      <div class="pull-hint" aria-hidden="true">
+        <div class="pull-hint-bar"></div>
+        <span>Scroll down for questions</span>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="above-section">
+        <h2 class="above-heading">Active Filters</h2>
+        <div class="chips-bar">
+          <div id="active-chips" class="active-chips" role="list"></div>
+          <button type="button" id="clear-chips-btn" class="clear-chips-btn" hidden
+            aria-label="Clear all filters">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#close"></use></svg>
+            Clear all
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="above-section">
+        <h2 class="above-heading">Progress</h2>
+        <div class="progress-strip">
+          <div class="progress-strip-inner">
+            <div class="prog-numbers" role="status" aria-live="polite" aria-atomic="true">
+              <span class="prog-done-num" id="prog-done">0</span>
+              <span class="prog-sep"> / </span>
+              <span id="prog-total">0</span>
+              <span class="prog-label"> done</span>
+            </div>
+            <div class="prog-track-wrap">
+              <div class="prog-track" role="progressbar" id="prog-track"
+                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-fill" id="prog-fill"></div>
+              </div>
+            </div>
+            <div class="prog-pct" id="prog-pct" aria-hidden="true">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="above-section">
+        <h2 class="above-heading">Sort</h2>
+        <div class="sort-chips">
+          <button type="button" class="sort-chip sort-chip--active" data-sort="default">Default</button>
+          <button type="button" class="sort-chip" data-sort="difficulty">Difficulty</button>
+          <button type="button" class="sort-chip" data-sort="marks">Marks</button>
+          <button type="button" class="sort-chip" data-sort="year">Year</button>
+          <button type="button" class="sort-chip" data-sort="topic">Topic</button>
+          <button type="button" class="sort-chip" data-sort="random">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#shuffle"></use></svg>
+            Random
+          </button>
+        </div>
+      </div>
+
+      <!-- Jump -->
+      <div class="above-section">
+        <h2 class="above-heading">Jump to Question</h2>
+        <div class="jump-group">
+          <label for="jump-input" class="sr-only">Jump to question number</label>
+          <input type="number" id="jump-input" class="jump-input"
+            min="1" placeholder="Enter number..." aria-label="Jump to question number">
+          <button type="button" id="jump-btn" class="jump-go-btn">Go</button>
+        </div>
+      </div>
+
+      <!-- Scroll down indicator -->
+      <div class="scroll-down-hint" id="scroll-down-hint" aria-hidden="true">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+        <span>Scroll down to questions</span>
+      </div>
+
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════
+      QUESTION ZONE — this is what fills the screen
+      ═══════════════════════════════════════════
+    -->
+    <div class="question-zone" id="question-zone">
+
+      <!-- Swipe hint (shows briefly on first load) -->
+      <div class="swipe-hint" id="swipe-hint" aria-hidden="true">
+        <div class="swipe-hint-inner">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-left"></use></svg>
+          <span>Swipe to navigate</span>
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+        </div>
+      </div>
+
+      <!-- No questions state -->
+      <div id="no-questions" class="empty-card" role="alert" hidden>
+        <div class="empty-icon-wrap">
+          <svg class="icon icon-xl" aria-hidden="true"><use href="/assets/icons/sprite.svg#filter"></use></svg>
+        </div>
+        <h2 class="empty-title">No Questions Found</h2>
+        <p class="empty-sub">No questions match your filters.</p>
+        <a href="index.html" class="action-btn action-btn--primary">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-left"></use></svg>
+          Back to Dashboard
+        </a>
+      </div>
+
+      <!-- Swipe container -->
+      <div class="swipe-container" id="swipe-container">
+
+        <!-- Question card (single card, content swapped on swipe) -->
+        <article id="question-card" class="q-card" hidden aria-labelledby="q-text">
+
+          <!-- Badges row -->
+          <div class="q-card-top">
+            <div class="q-badges">
+              <span class="badge badge--subject" id="q-subject"></span>
+              <span class="badge badge--unit" id="q-unit"></span>
+              <span class="badge badge--type" id="q-type"></span>
+              <span class="badge badge--diff" id="q-diff"></span>
+              <span class="badge badge--marks" id="q-marks"></span>
+            </div>
+          </div>
+
+          <!-- Source info -->
+          <div class="q-source-row">
+            <div class="q-meta-item">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#bookmark"></use></svg>
+              <span id="q-topic">-</span>
+            </div>
+            <div class="q-meta-sep" aria-hidden="true"></div>
+            <div class="q-meta-item">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#calendar"></use></svg>
+              <span id="q-from">-</span>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="q-tags-row" id="q-tags-row"></div>
+
+          <!-- Done banner -->
+          <div id="done-banner" class="done-banner" hidden role="status">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#check"></use></svg>
+            Completed
+          </div>
+
+          <!-- Divider -->
+          <div class="q-divider" role="separator"></div>
+
+          <!-- Question text -->
+          <h2 class="q-text" id="q-text" aria-live="polite"></h2>
+
+          <!-- Answer toggle -->
+          <div class="answer-toggle-row">
+            <button type="button" id="answer-toggle-btn" class="answer-toggle-btn"
+              aria-expanded="false" aria-controls="answer-panel">
+              <span class="answer-toggle-icon" id="toggle-icon-wrap" aria-hidden="true">
+                <svg class="icon"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+              </span>
+              <span id="answer-toggle-text">Show Answer</span>
+            </button>
+          </div>
+
+          <!-- Answer panel -->
+          <div id="answer-panel" class="answer-panel" aria-hidden="true">
+            <div class="answer-panel-inner" id="answer-panel-inner">
+              <div class="answer-header">
+                <div class="answer-header-left">
+                  <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#check"></use></svg>
+                  <span>Answer</span>
+                </div>
+                <button type="button" id="copy-answer-btn" class="copy-btn" aria-label="Copy answer">
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#save"></use></svg>
+                  <span id="copy-btn-text">Copy</span>
+                </button>
+              </div>
+              <div id="answer-body" class="answer-body"></div>
+            </div>
+          </div>
+
+        </article>
+
+      </div><!-- /swipe-container -->
+
+      <!-- Swipe direction indicators (appear during swipe) -->
+      <div class="swipe-indicator swipe-indicator--left" id="swipe-ind-left" aria-hidden="true">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-left"></use></svg>
+        <span>Prev</span>
+      </div>
+      <div class="swipe-indicator swipe-indicator--right" id="swipe-ind-right" aria-hidden="true">
+        <span>Next</span>
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+      </div>
+
+      <!-- Question dots navigation -->
+      <div class="q-dots-bar" id="q-dots-bar" aria-hidden="true">
+        <!-- Generated by JS: max 10 dots shown -->
+      </div>
+
+    </div><!-- /question-zone -->
+
+  </main>
+
+  <!-- ══════════════════════════════════════ FIXED BOTTOM BAR -->
+  <nav class="bottom-bar" id="bottom-bar" aria-label="Question actions" hidden>
+
+    <button type="button" id="prev-btn" class="bottom-btn" aria-label="Previous question" disabled>
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-left"></use></svg>
+    </button>
+
+    <button type="button" id="mark-btn" class="mark-btn" aria-label="Mark question as done">
+      <span class="mark-btn-inner" id="mark-btn-inner">
+        <svg class="icon" aria-hidden="true" id="mark-icon">
+          <use href="/assets/icons/sprite.svg#check"></use>
+        </svg>
+        <span id="mark-text">Done</span>
+      </span>
+    </button>
+
+    <span class="bottom-counter" id="bottom-counter" role="status" aria-live="polite">1/0</span>
+
+    <button type="button" id="next-btn" class="bottom-btn" aria-label="Next question">
+      <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+    </button>
+
+  </nav>
+
+  <!-- ══════════════════════════════════════ RESUME MODAL -->
+  <div id="resume-modal" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="resume-title" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="resume-title" class="modal-title">Resume Session?</h3>
+      </div>
+      <div class="modal-body">
+        <p id="resume-desc" class="modal-desc"></p>
+        <div class="resume-stats" id="resume-stats"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="start-over-btn" class="action-btn action-btn--ghost">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#refresh"></use></svg>
+          Start Over
+        </button>
+        <button type="button" id="resume-btn" class="action-btn action-btn--primary">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#arrow-right"></use></svg>
+          Resume
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ COMPLETION -->
+  <div id="completion-overlay" class="completion-overlay" role="dialog" aria-modal="true"
+    aria-labelledby="completion-title" hidden>
+    <div class="completion-card">
+      <div class="confetti-wrap" id="confetti-wrap" aria-hidden="true"></div>
+      <div class="completion-icon-ring">
+        <svg class="icon icon-xl" aria-hidden="true"><use href="/assets/icons/sprite.svg#check"></use></svg>
+      </div>
+      <h2 id="completion-title" class="completion-title">Session Complete!</h2>
+      <p id="completion-stats" class="completion-stats"></p>
+      <div class="completion-score">
+        <div class="score-ring-wrap">
+          <svg class="score-ring" viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="score-ring-bg" cx="40" cy="40" r="34"/>
+            <circle class="score-ring-fill" id="score-ring-fill" cx="40" cy="40" r="34"/>
+          </svg>
+          <span class="score-pct" id="score-pct">100%</span>
+        </div>
+      </div>
+      <div class="completion-actions">
+        <a href="index.html" class="action-btn action-btn--ghost">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#home"></use></svg>
+          Dashboard
+        </a>
+        <button type="button" id="practice-again-btn" class="action-btn action-btn--primary">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#refresh"></use></svg>
+          Again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ TOAST -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive" hidden>
+    <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#check"></use></svg>
+    <span id="toast-msg"></span>
+  </div>
+
+  <script src="js/session.js"></script>
+</body>
+</html>
