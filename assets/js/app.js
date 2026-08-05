@@ -9,7 +9,7 @@
 
 var APP_CONFIG = {
   version: '1.0.0',
-  examDate: new Date(2025, 4, 15),
+  examDate: new Date(2026, 12, 15),
   streakGracePeriodHours: 26,
   toastDuration: 3500,
   skeletonDelay: 600
