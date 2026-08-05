@@ -1,0 +1,883 @@
+{
+  "subject": "CST205",
+  "unit": 2,
+  "unitTitle": "Queues, Recursion and Linked Lists",
+  "totalQuestions": 65,
+  "questions": [
+    {
+      "id": "CST205-U2-Q001",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["queue", "fifo", "definition"],
+      "question": "________ is a pile in which items are added at one end and removed from the other.",
+      "options": {
+        "A": "List",
+        "B": "Queue",
+        "C": "Stack",
+        "D": "Array"
+      },
+      "correct": "B",
+      "explanation": "Queue follows FIFO — items are added at the rear and removed from the front."
+    },
+    {
+      "id": "CST205-U2-Q002",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["queue", "fifo", "removal-order"],
+      "question": "If the characters 'D', 'C', 'B', 'A' are placed in a queue (in that order), and then removed one at a time, in what order will they be removed?",
+      "options": {
+        "A": "ABCD",
+        "B": "ABDC",
+        "C": "DCAB",
+        "D": "DCBA"
+      },
+      "correct": "D",
+      "explanation": "Queue is FIFO — the first element inserted (D) is the first removed, giving order DCBA."
+    },
+    {
+      "id": "CST205-U2-Q003",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["queue", "time-complexity", "operations"],
+      "question": "Typical time requirement for operation on queues is -",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n²)"
+      },
+      "correct": "A",
+      "explanation": "Enqueue and dequeue operations on a queue take constant O(1) time as they always operate at fixed ends."
+    },
+    {
+      "id": "CST205-U2-Q004",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["queue", "fifo", "definition"],
+      "question": "Queue is:",
+      "options": {
+        "A": "LIFO",
+        "B": "FIFO",
+        "C": "FILO",
+        "D": "LILO"
+      },
+      "correct": "B",
+      "explanation": "Queue follows FIFO (First In First Out) — the first element added is the first to be removed."
+    },
+    {
+      "id": "CST205-U2-Q005",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["queue", "linear", "data-structure"],
+      "question": "Queue is a:",
+      "options": {
+        "A": "Linear data structure",
+        "B": "Non-linear data structure",
+        "C": "Both a and b",
+        "D": "None of the above"
+      },
+      "correct": "A",
+      "explanation": "Queue is a linear data structure where elements are arranged sequentially and accessed at two ends."
+    },
+    {
+      "id": "CST205-U2-Q006",
+      "type": "mcq",
+      "topic": "Circular Queue",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["circular-queue", "full-condition", "front", "rear"],
+      "question": "The circular queue will be full only when -",
+      "options": {
+        "A": "front = max - 1 and rear = max - 1",
+        "B": "front = 0 and rear = max - 1",
+        "C": "front = max - 1 and rear = 0",
+        "D": "front = 0 and rear = 0"
+      },
+      "correct": "B",
+      "explanation": "In a circular queue, full condition is when front = 0 and rear = max - 1, meaning no empty slots remain."
+    },
+    {
+      "id": "CST205-U2-Q007",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["queue", "full-condition", "array", "rear"],
+      "question": "A normal queue, if implemented using an array of size MAX_SIZE, gets full when -",
+      "options": {
+        "A": "Rear = MAX_SIZE - 1",
+        "B": "Front = (rear + 1) mod MAX_SIZE",
+        "C": "Front = rear + 1",
+        "D": "Rear = front"
+      },
+      "correct": "A",
+      "explanation": "A linear queue implemented using array is full when Rear reaches MAX_SIZE - 1 (last index)."
+    },
+    {
+      "id": "CST205-U2-Q008",
+      "type": "mcq",
+      "topic": "De-Queue",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["dequeue", "double-ended", "queue"],
+      "question": "A data structure where elements can be added or removed at either end but not in the middle is called -",
+      "options": {
+        "A": "Stacks",
+        "B": "queues",
+        "C": "dequeue",
+        "D": "linked lists"
+      },
+      "correct": "C",
+      "explanation": "A DeQueue (Double Ended Queue) allows insertion and deletion at both front and rear ends."
+    },
+    {
+      "id": "CST205-U2-Q009",
+      "type": "mcq",
+      "topic": "Types of Queues",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["queue", "types", "priority", "circular"],
+      "question": "Which of the following is not the type of queue?",
+      "options": {
+        "A": "Priority queue",
+        "B": "Circular queue",
+        "C": "Ordinary queue",
+        "D": "Single ended queue"
+      },
+      "correct": "D",
+      "explanation": "Single ended queue is not a standard queue type. Valid types include priority queue, circular queue, dequeue, and ordinary queue."
+    },
+    {
+      "id": "CST205-U2-Q010",
+      "type": "mcq",
+      "topic": "Singly Linked List",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["linked-list", "binary-search", "limitation"],
+      "question": "Linked List is not a suitable data structure for which one of the following problems?",
+      "options": {
+        "A": "Insertion sort",
+        "B": "Linear search",
+        "C": "Binary search",
+        "D": "Polynomial addition"
+      },
+      "correct": "C",
+      "explanation": "Binary search requires random access using index, which is not possible in linked lists — sequential access only."
+    },
+    {
+      "id": "CST205-U2-Q011",
+      "type": "mcq",
+      "topic": "Linked List Representation",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["linked-list", "node", "pointer", "definition"],
+      "question": "A linear collection of data elements where the linear node is given by means of pointer is called -",
+      "options": {
+        "A": "Linked list",
+        "B": "node list",
+        "C": "primitive list",
+        "D": "None of these"
+      },
+      "correct": "A",
+      "explanation": "A linked list is a linear collection of nodes where each node contains data and a pointer to the next node."
+    },
+    {
+      "id": "CST205-U2-Q012",
+      "type": "mcq",
+      "topic": "Doubly Linked List",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["doubly-linked-list", "deletion", "pointer"],
+      "question": "Which is the correct notation to delete the last node p from a doubly linked list? (prev is the pointer to the previous node and next is the pointer pointing to the next node)",
+      "options": {
+        "A": "p->next = NULL",
+        "B": "p = NULL",
+        "C": "p->prev->next = NULL",
+        "D": "None of these"
+      },
+      "correct": "C",
+      "explanation": "To delete the last node p, set p->prev->next = NULL so the second-last node no longer points to p."
+    },
+    {
+      "id": "CST205-U2-Q013",
+      "type": "mcq",
+      "topic": "Doubly Linked List",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["doubly-linked-list", "insertion", "pointer-exchange"],
+      "question": "Inserting a new node in between two nodes in a doubly Linked list requires -",
+      "options": {
+        "A": "four pointer exchanges",
+        "B": "two pointer exchanges",
+        "C": "one pointer exchange",
+        "D": "no pointer exchanges"
+      },
+      "correct": "A",
+      "explanation": "Inserting between two nodes in a doubly linked list requires 4 pointer updates: new node's prev and next, plus updates to the adjacent nodes' pointers."
+    },
+    {
+      "id": "CST205-U2-Q014",
+      "type": "mcq",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["circular-linked-list", "null", "next-field"],
+      "question": "Which type of linked list does not store NULL in the next field?",
+      "options": {
+        "A": "singly linked list",
+        "B": "circular linked list",
+        "C": "doubly linked list",
+        "D": "all of these"
+      },
+      "correct": "B",
+      "explanation": "In a circular linked list, the last node points back to the first node instead of NULL."
+    },
+    {
+      "id": "CST205-U2-Q015",
+      "type": "mcq",
+      "topic": "Linked List Representation",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["linked-list", "stack", "queue", "implementation"],
+      "question": "Linked list is used to implement data structures like -",
+      "options": {
+        "A": "stack",
+        "B": "tree",
+        "C": "queue",
+        "D": "all of these"
+      },
+      "correct": "D",
+      "explanation": "Linked lists can be used to implement stacks, queues, trees, and many other data structures dynamically."
+    },
+    {
+      "id": "CST205-U2-Q016",
+      "type": "mcq",
+      "topic": "Doubly Linked List",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["linked-list", "four-pointers", "multi-linked"],
+      "question": "Which type of linked list can have four pointers per node?",
+      "options": {
+        "A": "circular doubly linked list",
+        "B": "multi-linked list",
+        "C": "header linked list",
+        "D": "doubly linked list"
+      },
+      "correct": "B",
+      "explanation": "A multi-linked list node can have multiple pointers, potentially four or more, pointing in different directions."
+    },
+    {
+      "id": "CST205-U2-Q017",
+      "type": "mcq",
+      "topic": "Singly Linked List",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["linked-list", "sequential-access", "random-access"],
+      "question": "A linked list is a -",
+      "options": {
+        "A": "Random access structure",
+        "B": "Sequential access structures",
+        "C": "Both",
+        "D": "None of these"
+      },
+      "correct": "B",
+      "explanation": "Linked list supports only sequential access — you must traverse from the head to reach any node."
+    },
+    {
+      "id": "CST205-U2-Q018",
+      "type": "mcq",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["circular-linked-list", "null", "next-field"],
+      "question": "Which type of linked list does not store NULL in next field?",
+      "options": {
+        "A": "Singly linked list",
+        "B": "Circular linked list",
+        "C": "Doubly linked list",
+        "D": "All of these"
+      },
+      "correct": "B",
+      "explanation": "Circular linked list's last node points back to the first node, so it stores no NULL in the next field."
+    },
+    {
+      "id": "CST205-U2-Q019",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["queue", "operation", "traversal"],
+      "question": "________ is not the operation that can be performed on queue.",
+      "options": {
+        "A": "Traversal",
+        "B": "Insertion",
+        "C": "Deletion",
+        "D": "Retrieval"
+      },
+      "correct": "A",
+      "explanation": "Traversal is not a standard queue operation. Queue supports Insertion (enqueue), Deletion (dequeue), and Retrieval (peek)."
+    },
+    {
+      "id": "CST205-U2-Q020",
+      "type": "theory",
+      "topic": "Linear Queue",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["queue", "circular-queue", "linear-queue", "comparison"],
+      "question": "Point out the differences between linear queue and circular queue."
+    },
+    {
+      "id": "CST205-U2-Q021",
+      "type": "program",
+      "topic": "Queue Operations",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["queue", "insert", "algorithm", "linear-queue"],
+      "question": "Write an insert algorithm for linear queue and explain."
+    },
+    {
+      "id": "CST205-U2-Q022",
+      "type": "theory",
+      "topic": "Types of Queues",
+      "difficulty": "easy",
+      "marks": 3,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["priority-queue", "definition", "applications"],
+      "question": "What is a priority queue? Give its applications. (2 + 1)"
+    },
+    {
+      "id": "CST205-U2-Q023",
+      "type": "theory",
+      "topic": "Circular Queue",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["circular-queue", "linear-queue", "comparison", "concept"],
+      "question": "Explain the concept of a circular queue. How is it better than a linear queue? (3 + 2)"
+    },
+    {
+      "id": "CST205-U2-Q024",
+      "type": "program",
+      "topic": "Circular Queue",
+      "difficulty": "hard",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["circular-queue", "insert", "delete", "algorithm", "array"],
+      "question": "What are circular queues? Write the algorithms one for inserting an element into a circular queue and other for deleting an element from a circular queue using arrays."
+    },
+    {
+      "id": "CST205-U2-Q025",
+      "type": "theory",
+      "topic": "De-Queue",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["dequeue", "double-ended-queue", "operations", "example"],
+      "question": "What is a DeQueue? Explain its operation with example."
+    },
+    {
+      "id": "CST205-U2-Q026",
+      "type": "numerical",
+      "topic": "Queue Operations",
+      "difficulty": "medium",
+      "marks": 8,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["queue", "operations", "trace", "enqueue", "dequeue"],
+      "question": "Draw the queue structure in each case when the following operations are performed on an empty queue:\ni) Add A, B, C, D, E, F (3)\nii) Delete two letters (1)\niii) Add G (1)\niv) Add H (1)\nv) Delete four letters (1)\nvi) Add M (1)"
+    },
+    {
+      "id": "CST205-U2-Q027",
+      "type": "program",
+      "topic": "Circular Queue",
+      "difficulty": "hard",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["circular-queue", "array", "pseudocode", "implementation"],
+      "question": "Write pseudocode to implement a circular queue using an array."
+    },
+    {
+      "id": "CST205-U2-Q028",
+      "type": "program",
+      "topic": "Types of Queues",
+      "difficulty": "hard",
+      "marks": 8,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["circular-queue", "insertion", "deletion", "algorithm"],
+      "question": "Write Insertion and Deletion algorithm of circular queue. (4 + 4)"
+    },
+    {
+      "id": "CST205-U2-Q029",
+      "type": "theory",
+      "topic": "De-Queue",
+      "difficulty": "medium",
+      "marks": 2,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["dequeue", "input-restricted", "output-restricted"],
+      "question": "Explain input and output restricted deque."
+    },
+    {
+      "id": "CST205-U2-Q030",
+      "type": "theory",
+      "topic": "Types of Queues",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["priority-queue", "types", "ackermann", "explanation"],
+      "question": "Explain Priority queue and its types. What will be the value of A(1,5) by using Ackerman function."
+    },
+    {
+      "id": "CST205-U2-Q031",
+      "type": "short",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["fifo", "queue", "definition"],
+      "question": "What is FIFO?"
+    },
+    {
+      "id": "CST205-U2-Q032",
+      "type": "short",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["queue", "applications", "uses"],
+      "question": "Write two applications of queue."
+    },
+    {
+      "id": "CST205-U2-Q033",
+      "type": "short",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["queue", "full-condition", "rear", "definition"],
+      "question": "Define queue full condition."
+    },
+    {
+      "id": "CST205-U2-Q034",
+      "type": "short",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["queue", "rear", "definition"],
+      "question": "What is rear of a queue?"
+    },
+    {
+      "id": "CST205-U2-Q035",
+      "type": "short",
+      "topic": "De-Queue",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["dequeue", "double-ended", "definition"],
+      "question": "Define De-Queue?"
+    },
+    {
+      "id": "CST205-U2-Q036",
+      "type": "short",
+      "topic": "Linear Queue",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["linear-queue", "disadvantages", "circular-queue"],
+      "question": "What are the disadvantages of linear queue?"
+    },
+    {
+      "id": "CST205-U2-Q037",
+      "type": "theory",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["recursion", "iteration", "comparison", "difference"],
+      "question": "Write the differences between recursion & iteration."
+    },
+    {
+      "id": "CST205-U2-Q038",
+      "type": "program",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["tower-of-hanoi", "recursion", "algorithm", "function"],
+      "question": "Write the recursive function of the Tower of Hanoi problem."
+    },
+    {
+      "id": "CST205-U2-Q039",
+      "type": "theory",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["recursion", "iteration", "comparison", "preference"],
+      "question": "Differentiate between an iterative function and a recursive function. Which one will you prefer to use and in what circumstances? (2 + 1 + 1)"
+    },
+    {
+      "id": "CST205-U2-Q040",
+      "type": "program",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["gcd", "recursion", "algorithm", "function"],
+      "question": "Write a recursive function to calculate the GCD of two numbers."
+    },
+    {
+      "id": "CST205-U2-Q041",
+      "type": "theory",
+      "topic": "Singly Linked List",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["array", "linked-list", "comparison", "difference"],
+      "question": "Point out the differences between array & linked list."
+    },
+    {
+      "id": "CST205-U2-Q042",
+      "type": "program",
+      "topic": "Singly Linked List",
+      "difficulty": "medium",
+      "marks": 5,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["linked-list", "insertion", "beginning", "algorithm"],
+      "question": "Write an algorithm to add a data item at the beginning into a singly linked list and explain it."
+    },
+    {
+      "id": "CST205-U2-Q043",
+      "type": "program",
+      "topic": "Singly Linked List",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["linked-list", "insertion", "end", "algorithm"],
+      "question": "Write down the algorithm to insert a new element at the end of a singly linked list and explain it."
+    },
+    {
+      "id": "CST205-U2-Q044",
+      "type": "theory",
+      "topic": "Singly Linked List",
+      "difficulty": "medium",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["linked-list", "array", "comparison"],
+      "question": "Make a comparison between a linked list and a linear array."
+    },
+    {
+      "id": "CST205-U2-Q045",
+      "type": "theory",
+      "topic": "Singly Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["linked-list", "array", "preference", "when-to-use"],
+      "question": "Which one will you prefer to use and when? (1 + 1)"
+    },
+    {
+      "id": "CST205-U2-Q046",
+      "type": "theory",
+      "topic": "Doubly Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["doubly-linked-list", "advantages", "singly-linked-list"],
+      "question": "Why is a doubly linked list more useful than a singly linked list?"
+    },
+    {
+      "id": "CST205-U2-Q047",
+      "type": "theory",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["circular-linked-list", "advantages", "uses"],
+      "question": "Give the advantages and uses of a circular linked list. (1 + 1)"
+    },
+    {
+      "id": "CST205-U2-Q048",
+      "type": "theory",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["circular-linked-list", "diagram", "explanation"],
+      "question": "Draw a diagram of a circular linked list and explain it."
+    },
+    {
+      "id": "CST205-U2-Q049",
+      "type": "theory",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 4,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["header-linked-list", "circular-linked-list", "definition", "example"],
+      "question": "Define the following terms, with examples:\ni) Header linked list\nii) Circular linked list (2 + 2)"
+    },
+    {
+      "id": "CST205-U2-Q050",
+      "type": "program",
+      "topic": "Singly Linked List",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": ["linked-list", "insertion", "beginning", "algorithm"],
+      "question": "Write an algorithm to insert a node at the beginning of a single linked list."
+    },
+    {
+      "id": "CST205-U2-Q051",
+      "type": "theory",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["header-node", "header-linked-list", "use"],
+      "question": "Specify the use of a header node in a header linked list."
+    },
+    {
+      "id": "CST205-U2-Q052",
+      "type": "numerical",
+      "topic": "Linked List Representation",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["polynomial", "linked-list", "representation"],
+      "question": "Give the linked representation of the following polynomial: 7x¹y² - 8x¹y + 3xy + 11x + 4"
+    },
+    {
+      "id": "CST205-U2-Q053",
+      "type": "theory",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": ["circular-linked-list", "singly-linked-list", "difference"],
+      "question": "Explain the difference between a circular linked list and a singly linked list."
+    },
+    {
+      "id": "CST205-U2-Q054",
+      "type": "program",
+      "topic": "Singly Linked List",
+      "difficulty": "medium",
+      "marks": 10,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["linked-list", "insertion", "count", "algorithm"],
+      "question": "Write algorithms to perform the following operations on a linear singly linked list:\na) add an item after a given node (5)\nb) count number of nodes (5)"
+    },
+    {
+      "id": "CST205-U2-Q055",
+      "type": "theory",
+      "topic": "Doubly Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["doubly-linked-list", "definition", "structure"],
+      "question": "What is doubly linked list?"
+    },
+    {
+      "id": "CST205-U2-Q056",
+      "type": "theory",
+      "topic": "Singly Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["linked-list", "disadvantages"],
+      "question": "What are the disadvantages of linked list?"
+    },
+    {
+      "id": "CST205-U2-Q057",
+      "type": "theory",
+      "topic": "Linked List Representation",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["polynomial", "linked-list", "representation", "example"],
+      "question": "Explain the Polynomial equation of linked list: 3x³ + 2x² - 5x + 2 = 0"
+    },
+    {
+      "id": "CST205-U2-Q058",
+      "type": "theory",
+      "topic": "Doubly Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": ["doubly-linked-list", "advantages"],
+      "question": "Write the advantages of doubly linked list."
+    },
+    {
+      "id": "CST205-U2-Q059",
+      "type": "short",
+      "topic": "Recursion",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["backtracking", "recursion", "definition"],
+      "question": "What is Backtracking?"
+    },
+    {
+      "id": "CST205-U2-Q060",
+      "type": "short",
+      "topic": "Circular Linked List",
+      "difficulty": "easy",
+      "marks": 2,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["dummy-header", "linked-list", "header-node"],
+      "question": "Explain about dummy header."
+    },
+    {
+      "id": "CST205-U2-Q061",
+      "type": "program",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": ["binary-tree", "traversal", "recursion", "algorithm"],
+      "question": "Write a recursive algorithm for binary tree traversal with an example."
+    },
+    {
+      "id": "CST205-U2-Q062",
+      "type": "mcq",
+      "topic": "Queue Operations",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2024,
+      "source": "EXTRA",
+      "tags": ["queue", "enqueue", "insertion", "operation"],
+      "question": "Adding an element in a queue is called ________ operation.",
+      "options": {
+        "A": "Push",
+        "B": "Enqueue",
+        "C": "Insert",
+        "D": "Add"
+      },
+      "correct": "B",
+      "explanation": "Inserting an element into a queue is called Enqueue (or Insert) — this happens at the rear end."
+    },
+    {
+      "id": "CST205-U2-Q063",
+      "type": "theory",
+      "topic": "Applications of Queues",
+      "difficulty": "medium",
+      "marks": 4,
+      "year": 2024,
+      "source": "EXTRA",
+      "tags": ["queue", "round-robin", "applications", "scheduling"],
+      "question": "Explain the Round Robin algorithm as an application of queue. How does it use the queue data structure?"
+    },
+    {
+      "id": "CST205-U2-Q064",
+      "type": "program",
+      "topic": "Singly Linked List",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2024,
+      "source": "EXTRA",
+      "tags": ["linked-list", "deletion", "first", "middle", "end", "algorithm"],
+      "question": "Write algorithms to delete a node from the following positions in a singly linked list:\na) First position (2)\nb) Middle (given position) (2)\nc) Last position (2)"
+    },
+    {
+      "id": "CST205-U2-Q065",
+      "type": "program",
+      "topic": "Linked List Representation",
+      "difficulty": "hard",
+      "marks": 6,
+      "year": 2024,
+      "source": "EXTRA",
+      "tags": ["linked-list", "stack", "queue", "implementation", "operations"],
+      "question": "a) Show how a stack can be implemented using a linked list. Write push and pop operations. (3)\nb) Show how a queue can be implemented using a linked list. Write enqueue and dequeue operations. (3)"
+    }
+  ]
+}
