@@ -17,7 +17,7 @@ This is a complete study companion app designed specifically for WB Polytechnic 
 - **Practice System** with day-wise question practice
 - **Quiz System** with difficulty-based challenges
 - **Previous Year Questions** organized by subject, year, and month
-- **30-Day Roadmap** for structured exam preparation
+- **10-Day Roadmap** for structured exam preparation
 - **Bookmark System** to save important pages
 - **Dark/Light Themes** with user preference persistence
 - **100% Offline Support** after first load
@@ -36,7 +36,7 @@ This is a complete study companion app designed specifically for WB Polytechnic 
 | **Practice Mode** | Daily practice questions with progress tracking |
 | **Quiz System** | Timed quizzes with instant results and explanations |
 | **PYQ Viewer** | Filter previous year questions by subject, year, and month |
-| **Roadmap** | 30-day study plan with daily targets |
+| **Roadmap** | 10-day study plan with daily targets |
 | **Bookmarks** | Save any page for quick access later |
 | **Study Tips** | Subject-specific preparation suggestions |
 
@@ -248,7 +248,7 @@ Diploma-3rd-sem/
 │   ├── viewer.css
 │   └── viewer.js
 │
-├── roadmap/                      # 30-day revision roadmap
+├── roadmap/                      # 10-day revision roadmap
 │   ├── index.html
 │   ├── index.css
 │   └── index.js
@@ -818,7 +818,7 @@ Special thanks to:
 3. **Bookmark Important Pages**: Quick access from bookmarks section
 4. **Use Offline**: Download once, study anywhere
 5. **Dark Mode**: Easier on eyes during night study sessions
-6. **Practice Daily**: Follow the 30-day roadmap consistently
+6. **Practice Daily**: Follow the 10-day roadmap consistently
 
 ---
 

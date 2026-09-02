@@ -1,28 +1,38 @@
 /**
  * Service Worker for Offline Support
  * Caches critical assets and provides offline fallback
+ *
+ * NOTE: All asset paths are RELATIVE to this file (sw.js), not to the
+ * domain root. The site is deployed as a GitHub Pages *project* site
+ * (https://<user>.github.io/Diploma-3rd-sem/), so root-absolute paths like
+ * "/index.html" would resolve to the wrong origin path and 404 — which made
+ * cache.addAll() reject and prevented the worker from ever installing.
  */
 
-const CACHE_NAME = 'diploma-3rd-sem-v1.0.0';
-const OFFLINE_PAGE = '/offline.html';
+const CACHE_NAME = 'diploma-3rd-sem-v1.0.1';
+
+// Resolve a path relative to the service worker's own location
+const rel = (path) => new URL(path, self.location.href).href;
+
+const OFFLINE_PAGE = rel('./offline.html');
 
 // Assets to cache immediately on install
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/assets/css/variables.css',
-  '/assets/css/main.css',
-  '/assets/js/theme.js',
-  '/assets/js/app.js',
-  '/assets/icons/sprite.svg',
-  '/manifest.json'
-];
+  './',
+  './index.html',
+  './offline.html',
+  './assets/css/variables.css',
+  './assets/css/main.css',
+  './assets/js/theme.js',
+  './assets/js/app.js',
+  './assets/icons/sprite.svg',
+  './manifest.json'
+].map(rel);
 
 // Install event - cache critical assets
 self.addEventListener('install', (event) => {
   console.log('[SW] Installing service worker...');
-  
+
   event.waitUntil(
     caches.open(CACHE_NAME)
     .then((cache) => {
@@ -36,7 +46,7 @@ self.addEventListener('install', (event) => {
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   console.log('[SW] Activating service worker...');
-  
+
   event.waitUntil(
     caches.keys()
     .then((cacheNames) => {
@@ -57,10 +67,10 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') return;
-  
+
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) return;
-  
+
   event.respondWith(
     caches.match(event.request)
     .then((cachedResponse) => {
@@ -69,7 +79,7 @@ self.addEventListener('fetch', (event) => {
         fetchAndCache(event.request);
         return cachedResponse;
       }
-      
+
       // Not in cache, fetch from network
       return fetch(event.request)
         .then((response) => {

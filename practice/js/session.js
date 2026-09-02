@@ -55,16 +55,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initTheme() {
   const html  = document.documentElement;
   const btn   = document.getElementById('theme-toggle');
-  const saved = localStorage.getItem('theme') || 'light';
+  const saved = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   html.setAttribute('data-theme', saved);
   btn.querySelector('use').setAttribute('href',
-    `/assets/icons/sprite.svg#${saved === 'dark' ? 'sun' : 'moon'}`);
+    `../assets/icons/sprite.svg#${saved === 'dark' ? 'sun' : 'moon'}`);
   btn.addEventListener('click', () => {
     const n = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', n);
     localStorage.setItem('theme', n);
     btn.querySelector('use').setAttribute('href',
-      `/assets/icons/sprite.svg#${n === 'dark' ? 'sun' : 'moon'}`);
+      `../assets/icons/sprite.svg#${n === 'dark' ? 'sun' : 'moon'}`);
   });
 }
 
@@ -72,10 +73,10 @@ function initTheme() {
 async function loadAll() {
   for (const sub of SUBJECTS) {
     try {
-      const reg = await fetch(`/_data/${sub}/registry.json`).then(r => r.json());
+      const reg = await fetch(`../_data/${sub}/registry.json`).then(r => r.json());
       for (const paper of reg.papers || []) {
         try {
-          const d = await fetch(`/_data/${sub}/${paper.fileName}`).then(r => r.json());
+          const d = await fetch(`../_data/${sub}/${paper.fileName}`).then(r => r.json());
           if (d.questions) S.all.push(...d.questions.map(q => ({...q, subjectCode: sub})));
         } catch {}
       }
@@ -914,7 +915,7 @@ function renderChips() {
       ch.innerHTML = `<span>${escHtml(fn(v))}</span>
         <button class="chip-remove" aria-label="Remove ${escHtml(fn(v))}">
           <svg class="icon icon-sm" aria-hidden="true">
-            <use href="/assets/icons/sprite.svg#close"></use>
+            <use href="../assets/icons/sprite.svg#close"></use>
           </svg>
         </button>`;
       ch.querySelector('.chip-remove').addEventListener('click', () => removeFilter(key, v));

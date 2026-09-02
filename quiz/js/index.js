@@ -282,19 +282,25 @@ function renderSubjectOptions(container, presetKey) {
   const list = createElement('div', 'subject-option-list');
 
   Object.values(SUBJECTS).forEach(sub => {
+    const available = isSubjectAvailable(sub.code);
     const btn = document.createElement('button');
     btn.className = 'subject-option-btn';
-    btn.setAttribute('aria-label', `Select ${sub.name}`);
+    btn.setAttribute('aria-label', available ? `Select ${sub.name}` : `${sub.name} — questions coming soon`);
+    btn.disabled = !available;
+    if (!available) btn.style.opacity = '0.55';
     btn.innerHTML = `
       <span class="subject-option-code">${sub.code}</span>
       <span class="subject-option-info">
         <span class="subject-option-name">${sub.name}</span>
-        <span class="subject-option-meta">${sub.units} units · ${sub.credits} credits</span>
+        <span class="subject-option-meta">${available
+          ? `${sub.units} units · ${sub.credits} credits`
+          : 'Question bank coming soon'}</span>
       </span>
-      <span aria-hidden="true">→</span>
+      <span aria-hidden="true">${available ? '→' : '⏳'}</span>
     `;
 
     btn.addEventListener('click', () => {
+      if (!available) return;
       _pickedSubject = sub.code;
       const preset   = PRESETS[presetKey];
 
@@ -390,9 +396,11 @@ function renderSubjectCards() {
   grid.innerHTML = '';
 
   Object.values(SUBJECTS).forEach(sub => {
+    const available = isSubjectAvailable(sub.code);
     const card = document.createElement('div');
     card.className = 'subject-card';
     card.setAttribute('role', 'listitem');
+    const disabledAttr = available ? '' : 'disabled';
 
     card.innerHTML = `
       <span class="subject-card-code">${sub.code}</span>
@@ -400,6 +408,7 @@ function renderSubjectCards() {
       <div class="subject-card-meta">
         <span class="tag">${sub.units} Units</span>
         <span class="tag">${sub.credits} Credits</span>
+        ${available ? '' : '<span class="tag">Coming soon</span>'}
       </div>
       <div class="subject-card-actions">
         <button
@@ -407,6 +416,7 @@ function renderSubjectCards() {
           data-subject="${sub.code}"
           data-action="mcq"
           aria-label="Start MCQ quiz for ${sub.name}"
+          ${disabledAttr}
         >
           ⚡ MCQ Quiz
         </button>
@@ -415,6 +425,7 @@ function renderSubjectCards() {
           data-subject="${sub.code}"
           data-action="full"
           aria-label="Start full test for ${sub.name}"
+          ${disabledAttr}
         >
           📘 Full Test
         </button>

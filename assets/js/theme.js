@@ -6,7 +6,10 @@
 
 class ThemeManager {
   constructor() {
-    this.storageKey = 'diploma-3rd-sem-theme';
+    // Shared key used by every module (practice, quiz, pyq, roadmap, subjects)
+    // so the user's choice follows them across the whole site.
+    this.storageKey = 'theme';
+    this.legacyStorageKey = 'diploma-3rd-sem-theme';
     this.html = document.documentElement;
     this.toggle = null;
     this.isAnimating = false;
@@ -141,7 +144,16 @@ class ThemeManager {
   
   getSavedTheme() {
     try {
-      const saved = localStorage.getItem(this.storageKey);
+      let saved = localStorage.getItem(this.storageKey);
+      // Migrate a preference saved under the old dashboard-only key
+      if (saved !== 'dark' && saved !== 'light') {
+        const legacy = localStorage.getItem(this.legacyStorageKey);
+        if (legacy === 'dark' || legacy === 'light') {
+          saved = legacy;
+          localStorage.setItem(this.storageKey, legacy);
+          localStorage.removeItem(this.legacyStorageKey);
+        }
+      }
       // Validate — only accept known values
       if (saved === 'dark' || saved === 'light') return saved;
       return null;

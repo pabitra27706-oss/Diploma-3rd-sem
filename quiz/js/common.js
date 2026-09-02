@@ -30,7 +30,10 @@ const SUBJECTS = {
     code: 'CST207',
     name: 'Computer System Organization',
     credits: 4,
-    units: 5
+    units: 5,
+    // No question bank exists yet under _quiz-data/CST207/ — flag it so the
+    // UI can say "coming soon" instead of failing with a fetch error.
+    available: false
   },
   CST209: {
     code: 'CST209',
@@ -105,7 +108,7 @@ const TIMER_MARKS_MAP = {
 
 /* ── Storage Keys ───────────────────────────────────────────── */
 const STORAGE_KEYS = {
-  THEME:    'quiz-theme',
+  THEME:    'theme',   // shared with the rest of the site
   HISTORY:  'quiz-history',
   SETTINGS: 'quiz-settings',
   AUTOSAVE_PREFIX: 'quiz-autosave-'
@@ -114,6 +117,16 @@ const STORAGE_KEYS = {
 /* ══════════════════════════════════════════════════════════════
    SUBJECT & UNIT HELPERS
 ══════════════════════════════════════════════════════════════ */
+
+/**
+ * Whether a subject has a question bank available in _quiz-data/
+ * @param {string} code
+ * @returns {boolean}
+ */
+function isSubjectAvailable(code) {
+  const sub = SUBJECTS[code];
+  return !!sub && sub.available !== false;
+}
 
 /**
  * Get full subject display name from code
@@ -204,7 +217,10 @@ function renderUnits(subjectCode, container, selectedUnits = []) {
  * Initialise theme from localStorage or system preference
  */
 function initTheme() {
-  const saved = getFromStorage(STORAGE_KEYS.THEME);
+  // The theme key is shared site-wide and stored as a RAW string (not JSON),
+  // so read it directly instead of via getFromStorage()/JSON.parse.
+  let saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEYS.THEME); } catch (e) { /* ignore */ }
   if (saved === 'dark' || saved === 'light') {
     applyTheme(saved);
   }
@@ -217,7 +233,7 @@ function initTheme() {
  */
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  saveToStorage(STORAGE_KEYS.THEME, theme);
+  try { localStorage.setItem(STORAGE_KEYS.THEME, theme); } catch (e) { /* ignore */ }
 }
 
 /**
@@ -491,16 +507,20 @@ function filterQuestions(questions, filters) {
       if (!filters.marks.map(Number).includes(Number(q.marks))) return false;
     }
 
-    // ── Year filter (excludes original if year specified)
+    // ── Year filter (only PYQ questions carry a meaningful year)
     if (filters.year && filters.year !== null) {
-      if (q.source === 'original') return false;
-      if (q.year && Number(q.year) !== Number(filters.year)) return false;
+      if (q.source !== 'PYQ') return false;
+      if (!q.year || Number(q.year) !== Number(filters.year)) return false;
     }
 
     // ── Source filter
+    // Data files use "PYQ" for past-paper questions and either "original" or
+    // "EXTRA" for author-written syllabus-gap questions; treat every non-PYQ
+    // source as "original" so those questions are not silently dropped.
     if (filters.source && filters.source !== 'all') {
-      if (filters.source === 'PYQ' && q.source !== 'PYQ') return false;
-      if (filters.source === 'original' && q.source !== 'original') return false;
+      const isPYQ = q.source === 'PYQ';
+      if (filters.source === 'PYQ' && !isPYQ) return false;
+      if (filters.source === 'original' && isPYQ) return false;
     }
 
     return true;
@@ -1027,7 +1047,7 @@ async function fetchMultipleUnits(subjectCode, units) {
  * @returns {Promise<Array>}
  */
 async function fetchAllSubjectQuestions(filters) {
-  const codes = Object.keys(SUBJECTS);
+  const codes = Object.keys(SUBJECTS).filter(code => isSubjectAvailable(code));
   const promises = codes.map(code =>
     fetchMultipleUnits(code, filters.unit || 'all')
   );

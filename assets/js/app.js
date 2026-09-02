@@ -9,7 +9,8 @@
 
 var APP_CONFIG = {
   version: '1.0.0',
-  examDate: new Date(2026, 12, 15),
+  // JS months are 0-based: 11 = December. (12 would silently roll over to 15 Jan 2027.)
+  examDate: new Date(2026, 11, 15),
   streakGracePeriodHours: 26,
   toastDuration: 3500,
   skeletonDelay: 600
@@ -847,6 +848,33 @@ var Storage = {
       console.error('[Storage] clear error:', e);
       return false;
     }
+  },
+
+  /**
+   * Remove data written by the other modules (practice, quiz, PYQ, roadmap)
+   * so that "Reset all app data" really does what the confirm dialog says.
+   */
+  clearModuleData: function() {
+    var prefixes = [
+      'practice-',     // practice-day-N, practice-session-*, practice-presets, practice-bookmarks
+      'quiz-',         // quiz-history, quiz-result, quiz-settings, quiz-autosave-*, quiz-pending-config
+      'pyq_'           // pyq_<subject>_<paper>_<answers|results|bookmarks>
+    ];
+    var exact = ['practice-progress', 'bookmarks'];
+    try {
+      var toRemove = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (!key) continue;
+        var matchesPrefix = prefixes.some(function(p) { return key.indexOf(p) === 0; });
+        if (matchesPrefix || exact.indexOf(key) !== -1) toRemove.push(key);
+      }
+      toRemove.forEach(function(key) { localStorage.removeItem(key); });
+      return true;
+    } catch (e) {
+      console.error('[Storage] clearModuleData error:', e);
+      return false;
+    }
   }
 };
 
@@ -1256,19 +1284,73 @@ function renderStreak() {
   );
 }
 
+/**
+ * Read the practice module's own progress records.
+ * The practice pages (practice/js/session.js) persist:
+ *   practice-day-<N>       -> { total, completed: [questionIds], lastVisited }
+ *   practice-session-<id>  -> { completed: [questionIds], currentIndex, lastVisited }
+ * Returns { days: { day1: {completed:boolean, done:n, total:n}, ... }, questions: Set<id> }
+ */
+function getPracticeSummary() {
+  var days = {};
+  var questionIds = {};
+
+  try {
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      if (!key) continue;
+
+      var dayMatch = key.match(/^practice-day-(\d+)$/);
+      if (dayMatch) {
+        var dayData = Storage.get(key) || {};
+        var done  = Array.isArray(dayData.completed) ? dayData.completed.length : 0;
+        var total = typeof dayData.total === 'number' ? dayData.total : 0;
+        days['day' + dayMatch[1]] = {
+          done:      done,
+          total:     total,
+          completed: total > 0 && done >= total
+        };
+        (dayData.completed || []).forEach(function(id) { questionIds[id] = true; });
+        continue;
+      }
+
+      if (key.indexOf('practice-session-') === 0) {
+        var sess = Storage.get(key) || {};
+        (sess.completed || []).forEach(function(id) { questionIds[id] = true; });
+      }
+    }
+  } catch (e) {
+    console.warn('[Practice] Could not read practice progress:', e);
+  }
+
+  // Merge any legacy records saved under the dashboard's own key
+  var legacy = Storage.get(Storage.keys.practiceProgress) || {};
+  Object.keys(legacy).forEach(function(k) {
+    if (!days[k] && legacy[k] && legacy[k].completed === true) {
+      days[k] = { done: 0, total: 0, completed: true };
+    }
+  });
+
+  return { days: days, questions: questionIds };
+}
+
 function renderPracticeCount() {
   var practiceValue = document.getElementById('practiceValue');
   if (!practiceValue) return;
-  var progress = Storage.get(Storage.keys.practiceProgress) || {};
-  var done = Object.values(progress).filter(function(p) { return p.completed; }).length;
-  practiceValue.textContent = done;
+  var summary = getPracticeSummary();
+  // "Practiced" = number of distinct questions the student has marked done
+  practiceValue.textContent = Object.keys(summary.questions).length;
 }
 
 function renderQuizCount() {
   var quizValue = document.getElementById('quizValue');
   if (!quizValue) return;
-  var scores = Storage.get(Storage.keys.quizScores) || [];
-  quizValue.textContent = scores.length;
+  // The quiz module (quiz/js/common.js) stores completed quizzes under 'quiz-history'
+  var history = Storage.get('quiz-history');
+  var scores  = Storage.get(Storage.keys.quizScores);
+  var count   = (Array.isArray(history) ? history.length : 0) +
+                (Array.isArray(scores)  ? scores.length  : 0);
+  quizValue.textContent = count;
 }
 
 // ================================
@@ -1379,7 +1461,7 @@ function renderSubjects() {
   var grid = document.getElementById('subjectGrid');
   if (!grid) return;
 
-  var practiceProgress = Storage.get(Storage.keys.practiceProgress) || {};
+  var practiceProgress = getPracticeSummary().days;
 
   grid.innerHTML = APP_STATE.subjects.map(function(subject) {
 
@@ -1598,6 +1680,7 @@ function setupMenu() {
         '- Quiz scores\n- Study streak\n\nCannot be undone!'
       )) return;
       Storage.clear();
+      Storage.clearModuleData();
       Streak.reset();
       Toast.success('App data reset. Reloading...');
       setTimeout(function() { window.location.reload(); }, 1500);
