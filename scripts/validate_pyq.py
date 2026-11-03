@@ -187,7 +187,7 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
         "fileName": path.name,
         "regulation": "Revised 2022",
         "fullMarks": 60,
-        "totalQuestions": 23,
+        "totalQuestions": len(paper.get("questions", [])),
         "sourceStatus": "verified-against-attached-scan",
         "answerKeyStatus": "no-official-key; model answers",
         "schemaVersion": "pilot-v1",
@@ -217,18 +217,38 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
     if "OCR" not in source_note or "normaliz" not in source_note.lower():
         report.error(f"{label}: sourceNote must describe OCR verification and normalization")
 
-    # December 2024 Python pilot retains its scan-specific identity checks.
-    if path.name == "CST203-P005-2024-12.json":
-        exact = {
-            "sourcePaperCode": "307/2(N)",
+    # Scan-specific identity checks for rebuilt December 2024 papers.
+    exact_by_file = {
+        "CST203-P005-2024-12.json": {
+            "sourcePaperCode": "307/2(N)", "scanSetNumber": "3096266",
+            "sourceFile": "Python, Dec 2024.pdf",
+        },
+        "CST201-P005-2024-12.json": {
+            "sourcePaperCode": "307/1(N)", "scanSetNumber": "3090511",
+            "sourceFile": "Programming in C, Dec 2024.pdf",
+        },
+        "CST205-P005-2024-12.json": {
+            "sourcePaperCode": "307/3(N)", "scanSetNumber": "3102091",
+            "sourceFile": "Data Structure, Dec 2024.pdf",
+        },
+        "CST207-P005-2024-12.json": {
+            "sourcePaperCode": "307/4(N)", "scanSetNumber": "3107808",
+            "sourceFile": "CSO, Dec 2024.pdf",
+        },
+        "CST209-P005-2024-12.json": {
+            "sourcePaperCode": "307/5(N)", "scanSetNumber": "3113544",
+            "sourceFile": "Algorithm, Dec 2024.pdf",
+        },
+    }
+    exact = exact_by_file.get(path.name)
+    if exact:
+        exact.update({
             "examSession": "December 2024",
-            "scanSetNumber": "3096266",
             "year": 2024,
             "month": "December",
             "monthNumber": 12,
             "duration": "3 Hours",
-            "sourceFile": "Python, Dec 2024.pdf",
-        }
+        })
         for key, value in exact.items():
             if paper.get(key) != value:
                 report.error(f"{label}: {key}={paper.get(key)!r}, expected {value!r}")

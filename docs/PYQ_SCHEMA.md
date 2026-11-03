@@ -1,9 +1,10 @@
 # PYQ paper schema — rebuilt-paper `v1`
 
-This document describes the schema used by rebuilt papers. The first pilot was December 2024 Python; the January 2024 batch applied the same schema to five more papers:
+This document describes the schema used by rebuilt papers. The first pilot was December 2024 Python; the January 2024 batch applied it to five more papers, and the December 2024 follow-up applied it to the remaining four subjects:
 
 - Pilot paper: `_data/CST203/CST203-P005-2024-12.json`
 - January 2024 batch: `_data/CST{201,203,205,207,209}/*-P004-2024-01.json`
+- December 2024 follow-up: `_data/CST{201,205,207,209}/*-P005-2024-12.json`
 - Registry entry: `_data/CST203/registry.json` → `P005`
 - Source: user-attached `Python, Dec 2024.pdf`
 - Printed paper code: `307/2(N)`
@@ -11,7 +12,7 @@ This document describes the schema used by rebuilt papers. The first pilot was D
 - Session: December 2024, 3 hours, full marks 60
 - Schema: `pilot-v1`
 
-Six papers are rebuilt so far; the remaining 19 are intentionally left in their legacy format for now. They continue to work through the viewer/practice fallback paths. The January 2026 attached PDFs are not yet added to any registry.
+Ten papers are rebuilt so far; the remaining 15 are intentionally left in their legacy format for now. They continue to work through the viewer/practice fallback paths. The January 2026 attached PDFs are not yet added to any registry.
 
 ---
 
@@ -211,8 +212,9 @@ The exam-paper viewer renders `subparts` with their printed mark splits. Practic
 |---|---|
 | December 2024 Python pilot (`CST203 / P005`) | Done |
 | January 2024, all five subjects (`P004`) | Done — 5 papers, 115 questions |
-| December 2024, remaining four subjects | Next batch after review |
-| March 2023 attached scans | Later; duplicate/mislabelled `2235` / `3013` / `526` mappings must be resolved |
+| December 2024, remaining four subjects (`P005`) | Done — 4 papers, 95 questions; CST207 has 14 MCQs as printed |
+| March 2023 attached scans | Next batch after review |
+| March 2023 duplicate/mislabelled mappings | Resolve `2235` / `3013` / `526` before rebuilding that batch |
 | Papers without attached scans | Paused; user chose to supply/stop for scans before touching them |
 | January 2026 attached PDFs | Later/separate; not yet registry papers |
 

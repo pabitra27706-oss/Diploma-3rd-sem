@@ -850,13 +850,14 @@ This app:
 
 ## PYQ data rebuild pilot
 
-Six papers have been rebuilt from attached exam scans using the `pilot-v1` schema: the December 2024 Python pilot (`CST203 / P005`) and all five January 2024 papers (`P004`). Rebuilt papers carry explicit Group A / Group B metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. The remaining 19 papers stay in legacy format and continue to work through the viewer/practice fallbacks.
+Ten papers have been rebuilt from attached exam scans using the `pilot-v1` schema: the December 2024 Python pilot (`CST203 / P005`), all five January 2024 papers (`P004`), and the four remaining December 2024 papers (`P005`). Rebuilt papers carry explicit Group A / Group B metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. The remaining 15 papers stay in legacy format and continue to work through the viewer/practice fallbacks.
 
 - Pilot data: `_data/CST203/CST203-P005-2024-12.json`
 - January 2024 batch: `_data/CST*/*-P004-2024-01.json`
+- December 2024 follow-up: `_data/CST*/*-P005-2024-12.json`
 - Schema and source-fidelity notes: `docs/PYQ_SCHEMA.md`
 - Validator: `python3 scripts/validate_pyq.py`
 - Exam-paper view: `pyq/viewer.html?subject=CST203&paper=P005`
 - Practice / review: `pyq/answers.html?subject=CST203&paper=P005`
 
-No official answer key was supplied; all answers in the pilot are explicitly labeled as model answers. This pilot does not resolve the wider legacy / Revised-2022 regulation ambiguity or the CST209 Unit 5 and credit/hour conflicts.
+No official answer key was supplied; all answers in the rebuilt papers are explicitly labeled as model answers. This pilot does not resolve the wider legacy / Revised-2022 regulation ambiguity or the CST209 Unit 5 and credit/hour conflicts.
