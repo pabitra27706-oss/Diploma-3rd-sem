@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """Validate PYQ paper data.
 
-The repository contains one rebuilt pilot paper (``schemaVersion: pilot-v1``)
-and 24 legacy papers.  Legacy records are checked for viewer/practice
-fallback compatibility and report warnings only; the pilot paper is checked
-strictly against its source-faithful schema.
+Rebuilt papers use ``schemaVersion: pilot-v1``. Legacy papers are checked for
+viewer/practice fallback compatibility and report warnings only.
 
 Usage:
     python3 scripts/validate_pyq.py
@@ -97,7 +95,7 @@ def correct_index(q: dict, entries: list[dict] | None) -> int:
 
 
 def validate_common(paper: dict, path: Path, meta: dict | None, report: Report) -> None:
-    label = f"{path.relative_to(ROOT)}"
+    label = str(path.relative_to(ROOT))
 
     for key in ("subject", "paperCode", "fileName", "questions", "totalQuestions"):
         if key not in paper:
@@ -159,65 +157,81 @@ def validate_common(paper: dict, path: Path, meta: dict | None, report: Report) 
                 report.warn(f"{label}: {qid} image path does not exist: {image}")
 
 
-def validate_pilot_registry(meta: dict | None, report: Report) -> None:
-    label = "_data/CST203/registry.json P005"
+def validate_pilot_registry(paper: dict, path: Path, meta: dict | None, report: Report) -> None:
+    label = f"{path.relative_to(ROOT)} registry"
     if not meta:
         report.error(f"{label}: registry entry missing")
         return
 
-    required = {
-        "examSession": "December 2024",
-        "scanSetNumber": "3096266",
-        "regulation": "Revised 2022",
-        "sourceFile": "Python, Dec 2024.pdf",
-        "sourceStatus": "verified-against-attached-scan",
-        "duration": "3 Hours",
-        "fullMarks": 60,
-        "schemaVersion": "pilot-v1",
-        "answerKeyStatus": "no-official-key; model answers",
-    }
-    for key, expected in required.items():
-        if meta.get(key) != expected:
-            report.error(f"{label}: {key}={meta.get(key)!r}, expected {expected!r}")
-    if meta.get("sourcePaperCode") != "307/2(N)":
-        report.error(f"{label}: sourcePaperCode must be '307/2(N)'")
-    if meta.get("scanSetNumber") == meta.get("sourcePaperCode"):
+    for key in ("examSession", "regulation", "sourceFile", "sourceStatus", "duration",
+                "fullMarks", "schemaVersion", "answerKeyStatus"):
+        if meta.get(key) != paper.get(key):
+            report.error(f"{label}: {key}={meta.get(key)!r}, paper has {paper.get(key)!r}")
+
+    if meta.get("sourcePaperCode") != paper.get("sourcePaperCode"):
+        report.error(f"{label}: sourcePaperCode does not match paper")
+    if paper.get("scanSetNumber") and meta.get("scanSetNumber") != paper["scanSetNumber"]:
+        report.error(f"{label}: scanSetNumber does not match paper")
+    if meta.get("scanSetNumber") and meta.get("scanSetNumber") == meta.get("sourcePaperCode"):
         report.error(f"{label}: scan/set number must not be used as a paper code")
 
 
 def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
     label = str(path.relative_to(ROOT))
+    subject = paper.get("subject")
+    paper_code = paper.get("paperCode")
+    paper_index = paper.get("paperIndex")
+    file_name = paper.get("fileName")
+
     expected = {
-        "subject": "CST203",
-        "paperIndex": 5,
-        "paperCode": "P005",
-        "fileName": "CST203-P005-2024-12.json",
-        "sourcePaperCode": "307/2(N)",
-        "examSession": "December 2024",
-        "scanSetNumber": "3096266",
+        "fileName": path.name,
         "regulation": "Revised 2022",
-        "year": 2024,
-        "month": "December",
-        "monthNumber": 12,
-        "duration": "3 Hours",
         "fullMarks": 60,
         "totalQuestions": 23,
-        "sourceFile": "Python, Dec 2024.pdf",
         "sourceStatus": "verified-against-attached-scan",
         "answerKeyStatus": "no-official-key; model answers",
         "schemaVersion": "pilot-v1",
     }
+    if subject != path.parent.name:
+        expected["subject"] = path.parent.name
+    if paper_code:
+        expected["paperCode"] = paper_code
+    if isinstance(paper_index, int):
+        expected["paperIndex"] = paper_index
+
     for key, value in expected.items():
         if paper.get(key) != value:
             report.error(f"{label}: {key}={paper.get(key)!r}, expected {value!r}")
 
-    if paper.get("sourcePaperCode") == paper.get("scanSetNumber"):
+    for key in ("sourcePaperCode", "examSession", "year", "month", "monthNumber",
+                "duration", "sourceFile", "sourceNote"):
+        if key not in paper:
+            report.error(f"{label}: missing required root field '{key}'")
+
+    if paper.get("scanSetNumber") and paper.get("scanSetNumber") == paper.get("sourcePaperCode"):
         report.error(f"{label}: scan set number must not be used as the paper code")
-    if "official" in str(paper.get("answerKeyStatus", "")).lower() and "no-official" not in str(paper.get("answerKeyStatus", "")).lower():
-        report.error(f"{label}: answerKeyStatus must not claim an official key")
+    status = str(paper.get("answerKeyStatus", "")).lower()
+    if "no-official-key" not in status or "official key" in status:
+        report.error(f"{label}: answerKeyStatus must explicitly deny an official key")
     source_note = str(paper.get("sourceNote", ""))
     if "OCR" not in source_note or "normaliz" not in source_note.lower():
         report.error(f"{label}: sourceNote must describe OCR verification and normalization")
+
+    # December 2024 Python pilot retains its scan-specific identity checks.
+    if path.name == "CST203-P005-2024-12.json":
+        exact = {
+            "sourcePaperCode": "307/2(N)",
+            "examSession": "December 2024",
+            "scanSetNumber": "3096266",
+            "year": 2024,
+            "month": "December",
+            "monthNumber": 12,
+            "duration": "3 Hours",
+            "sourceFile": "Python, Dec 2024.pdf",
+        }
+        for key, value in exact.items():
+            if paper.get(key) != value:
+                report.error(f"{label}: {key}={paper.get(key)!r}, expected {value!r}")
 
 
 def validate_pilot_format(paper: dict, path: Path, report: Report) -> dict:
@@ -227,10 +241,10 @@ def validate_pilot_format(paper: dict, path: Path, report: Report) -> dict:
         report.error(f"{label}: missing paperFormat object")
         return {}
 
-    if fmt.get("timeAllowed") != "3 Hours":
-        report.error(f"{label}: paperFormat.timeAllowed must be '3 Hours'")
-    if fmt.get("totalMarks") != 60:
-        report.error(f"{label}: paperFormat.totalMarks must be 60")
+    if fmt.get("timeAllowed") != paper.get("duration"):
+        report.error(f"{label}: paperFormat.timeAllowed must equal root duration")
+    if fmt.get("totalMarks") != paper.get("fullMarks"):
+        report.error(f"{label}: paperFormat.totalMarks must equal root fullMarks")
     if not isinstance(fmt.get("generalInstructions"), list) or not fmt["generalInstructions"]:
         report.error(f"{label}: paperFormat.generalInstructions must be a non-empty array")
 
@@ -239,32 +253,23 @@ def validate_pilot_format(paper: dict, path: Path, report: Report) -> dict:
         report.error(f"{label}: paperFormat.groups must contain Group A and Group B")
         return {}
 
-    expected_groups = {
-        "A": {"groupLabel": "GROUP-A", "totalSet": 15, "answerAny": 10, "marksEach": 2, "maxMarks": 20},
-        "B": {"groupLabel": "GROUP-B", "totalSet": 8, "answerAny": 5, "marksEach": 8, "maxMarks": 40},
-    }
     for group in groups:
         gid = group.get("id")
-        spec = expected_groups.get(gid)
-        if not spec:
+        if gid not in ("A", "B"):
             report.error(f"{label}: unexpected group id '{gid}'")
             continue
-        for key, value in spec.items():
-            if group.get(key) != value:
-                report.error(f"{label}: Group {gid} {key}={group.get(key)!r}, expected {value!r}")
-        if group.get("maxMarks") != group.get("marksEach", 0) * group.get("answerAny", 0):
-            report.error(f"{label}: Group {gid} maxMarks does not equal marksEach × answerAny")
         qids = group.get("questionIds")
         if not isinstance(qids, list):
             report.error(f"{label}: Group {gid} questionIds must be an array")
-        elif len(qids) != group.get("totalSet"):
-            report.error(f"{label}: Group {gid} has {len(qids)} questionIds but totalSet={group.get('totalSet')}")
-        if not group.get("instruction"):
-            report.error(f"{label}: Group {gid} missing instruction")
-        if not group.get("markSplit"):
-            report.error(f"{label}: Group {gid} missing markSplit")
+            qids = []
+        if group.get("totalSet") != len(qids):
+            report.error(f"{label}: Group {gid} totalSet={group.get('totalSet')} but questionIds has {len(qids)}")
+        if group.get("maxMarks") != group.get("marksEach", 0) * group.get("answerAny", 0):
+            report.error(f"{label}: Group {gid} maxMarks does not equal marksEach × answerAny")
         if isinstance(group.get("marksFilter"), list) and group["marksFilter"] != [group.get("marksEach")]:
             report.error(f"{label}: Group {gid} marksFilter must match marksEach")
+        if not group.get("instruction") or not group.get("groupLabel") or not group.get("markSplit"):
+            report.error(f"{label}: Group {gid} missing groupLabel/instruction/markSplit")
 
     group_max_total = sum(g.get("maxMarks", 0) for g in groups if isinstance(g, dict))
     if group_max_total != paper.get("fullMarks"):
@@ -300,6 +305,8 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
         report.error(f"{label}: questions not assigned to any group: {sorted(unassigned)}")
 
     source_numbers = []
+    id_prefix = f"{paper.get('subject')}-{paper.get('paperCode')}-Q"
+
     for q in questions:
         if not isinstance(q, dict):
             continue
@@ -328,7 +335,7 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
             report.error(f"{label}: {qid} answerStatus must be 'model-answer'")
         if q.get("sourceStatus") != "verified-against-attached-scan":
             report.error(f"{label}: {qid} sourceStatus must be 'verified-against-attached-scan'")
-        if "Python, Dec 2024.pdf" not in str(q.get("sourcePage", "")):
+        if str(paper.get("sourceFile")) not in str(q.get("sourcePage", "")):
             report.error(f"{label}: {qid} sourcePage must name the attached scan")
         if q.get("hasImage") is not False or q.get("image") is not None:
             report.error(f"{label}: {qid} hasImage/image must be false/null")
@@ -339,12 +346,12 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
         if q.get("difficulty") not in ("easy", "medium", "hard"):
             report.error(f"{label}: {qid} difficulty must be easy/medium/hard")
         if q.get("practiceDay") != 1:
-            report.error(f"{label}: {qid} practiceDay must be 1 for this pilot")
-        if q.get("year") != 2024 or q.get("month") != "December" or q.get("monthNumber") != 12:
-            report.error(f"{label}: {qid} year/month metadata is wrong")
-        if q.get("paperCode") != "P005" or q.get("paperIndex") != 5:
-            report.error(f"{label}: {qid} paperCode/paperIndex is wrong")
-        if not isinstance(q.get("id"), str) or not q["id"].startswith("CST203-P005-Q"):
+            report.error(f"{label}: {qid} practiceDay must be 1 for a rebuilt batch")
+        if q.get("year") != paper.get("year") or q.get("month") != paper.get("month") or q.get("monthNumber") != paper.get("monthNumber"):
+            report.error(f"{label}: {qid} year/month metadata does not match paper")
+        if q.get("paperCode") != paper.get("paperCode") or q.get("paperIndex") != paper.get("paperIndex"):
+            report.error(f"{label}: {qid} paperCode/paperIndex does not match paper")
+        if not isinstance(q.get("id"), str) or not q["id"].startswith(id_prefix):
             report.error(f"{label}: {qid} id prefix is wrong")
 
         if gid == "A":
@@ -365,8 +372,8 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
                 report.error(f"{label}: {qid} correct='{q.get('correct')}' does not resolve")
             if q.get("type") != "mcq":
                 report.error(f"{label}: {qid} type must be 'mcq'")
-            if q.get("markSplit") != "1+1":
-                report.error(f"{label}: {qid} markSplit must be '1+1'")
+            if group.get("marksEach") == 2 and q.get("markSplit") != "1+1":
+                report.error(f"{label}: {qid} markSplit must be '1+1' for 2-mark MCQs")
         elif gid == "B":
             subparts = q.get("subparts")
             if not isinstance(subparts, list) or not subparts:
@@ -467,22 +474,20 @@ def main() -> int:
             fmt = validate_pilot_format(paper, path, report)
             if fmt:
                 validate_pilot_questions(paper, path, fmt, report)
-            if path.parent.name == "CST203" and paper.get("paperCode") == "P005":
-                validate_pilot_registry(meta, report)
+            validate_pilot_registry(paper, path, meta, report)
         else:
             legacy_count += 1
             if paper.get("paperFormat"):
                 report.warn(f"{path.relative_to(ROOT)}: has paperFormat but no recognized schemaVersion; viewer fallback will use it as-is")
 
-    report.info(f"validated {len(paper_paths)} paper files: {pilot_count} pilot-v1, {legacy_count} legacy")
+    report.info(f"validated {len(paper_paths)} paper files: {pilot_count} rebuilt pilot-v1, {legacy_count} legacy")
     report.info(f"validated {question_count} question objects")
-    report.info(f"pilot file: _data/CST203/CST203-P005-2024-12.json")
     print()
     print(f"SUMMARY: {len(report.errors)} error(s), {len(report.warnings)} warning(s)")
     if report.errors:
-        print("RESULT: FAIL — pilot schema errors must be fixed")
+        print("RESULT: FAIL — rebuilt-paper schema errors must be fixed")
         return 1
-    print("RESULT: PASS — pilot schema valid; legacy warnings are non-fatal fallback-compatibility notes")
+    print("RESULT: PASS — rebuilt papers valid; legacy warnings are non-fatal fallback-compatibility notes")
     return 0
 
 

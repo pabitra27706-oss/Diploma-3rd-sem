@@ -1,8 +1,9 @@
-# PYQ paper schema — pilot `v1`
+# PYQ paper schema — rebuilt-paper `v1`
 
-This document describes the **single-paper pilot** rebuild of the December 2024 Python question paper:
+This document describes the schema used by rebuilt papers. The first pilot was December 2024 Python; the January 2024 batch applied the same schema to five more papers:
 
-- Paper: `_data/CST203/CST203-P005-2024-12.json`
+- Pilot paper: `_data/CST203/CST203-P005-2024-12.json`
+- January 2024 batch: `_data/CST{201,203,205,207,209}/*-P004-2024-01.json`
 - Registry entry: `_data/CST203/registry.json` → `P005`
 - Source: user-attached `Python, Dec 2024.pdf`
 - Printed paper code: `307/2(N)`
@@ -10,7 +11,7 @@ This document describes the **single-paper pilot** rebuild of the December 2024 
 - Session: December 2024, 3 hours, full marks 60
 - Schema: `pilot-v1`
 
-The other 24 papers are intentionally left in their legacy format. They continue to work through the viewer/practice fallback paths.
+Six papers are rebuilt so far; the remaining 19 are intentionally left in their legacy format for now. They continue to work through the viewer/practice fallback paths. The January 2026 attached PDFs are not yet added to any registry.
 
 ---
 
@@ -203,6 +204,17 @@ The exam-paper viewer renders `subparts` with their printed mark splits. Practic
 `pyq/select.html` now shows the exam session, scan/set number, and source status for the pilot paper while leaving legacy entries unchanged.
 
 ---
+
+## Batch status
+
+| Batch | Status |
+|---|---|
+| December 2024 Python pilot (`CST203 / P005`) | Done |
+| January 2024, all five subjects (`P004`) | Done — 5 papers, 115 questions |
+| December 2024, remaining four subjects | Next batch after review |
+| March 2023 attached scans | Later; duplicate/mislabelled `2235` / `3013` / `526` mappings must be resolved |
+| Papers without attached scans | Paused; user chose to supply/stop for scans before touching them |
+| January 2026 attached PDFs | Later/separate; not yet registry papers |
 
 ## Validation
 
