@@ -324,3 +324,140 @@ body {
   .tool-btn span { display: none; }
   .tool-btn { padding: 0.4rem 0.5rem; }
 }
+/* ─── Pilot schema: structured exam paper ─── */
+.paper-source-note {
+  margin: 0.75rem 0 1rem;
+  padding: 0.55rem 0.75rem;
+  border-left: 3px solid var(--paper-border, #9ca3af);
+  background: rgba(127, 127, 127, 0.06);
+  color: var(--paper-muted, #4b5563);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.paper-instructions {
+  margin-bottom: 1.25rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--paper-border, #d1d5db);
+  background: rgba(127, 127, 127, 0.05);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.paper-instructions strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.paper-instructions ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.paper-instructions li {
+  margin-bottom: 0.2rem;
+}
+
+.group-extra-instruction {
+  font-size: 0.8rem;
+  text-align: center;
+  margin: -0.55rem 0 0.65rem;
+  color: var(--paper-muted, #4b5563);
+  font-style: italic;
+}
+
+.group-mark-split {
+  font-weight: normal;
+  color: var(--paper-muted, #4b5563);
+}
+
+.exam-question {
+  align-items: flex-start;
+}
+
+.exam-question-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.exam-code {
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--paper-border, #d1d5db);
+  background: rgba(127, 127, 127, 0.08);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.exam-options {
+  margin-top: 0.4rem;
+}
+
+.exam-option {
+  line-height: 1.55;
+}
+
+.exam-subparts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.exam-subpart {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: 0.5rem;
+  align-items: start;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.exam-subpart-label {
+  font-weight: bold;
+}
+
+.exam-subpart-mark {
+  font-size: 0.82rem;
+  font-weight: bold;
+  color: var(--paper-muted, #4b5563);
+  white-space: nowrap;
+}
+
+.exam-note {
+  margin-top: 0.6rem;
+  padding: 0.45rem 0.65rem;
+  border-left: 3px solid #6b7280;
+  background: rgba(127, 127, 127, 0.07);
+  color: var(--paper-muted, #4b5563);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.exam-syllabus-note {
+  border-left-color: #b45309;
+  background: rgba(180, 83, 9, 0.07);
+}
+
+@media print {
+  .paper-source-note,
+  .paper-instructions,
+  .exam-note {
+    background: transparent !important;
+  }
+
+  .exam-code {
+    background: transparent !important;
+  }
+
+  .exam-question,
+  .exam-subpart {
+    page-break-inside: avoid;
+  }
+}

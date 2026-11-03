@@ -39,8 +39,16 @@
         <span class="info-value" id="infoSession">—</span>
       </div>
       <div class="info-row">
+        <span class="info-label">Set / Scan No.</span>
+        <span class="info-value" id="infoSet">—</span>
+      </div>
+      <div class="info-row">
         <span class="info-label">Source Code</span>
         <span class="info-value" id="infoSource">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Source Status</span>
+        <span class="info-value" id="infoStatus">—</span>
       </div>
     </div>
 
@@ -157,15 +165,18 @@
         if (!paper) throw new Error(`Paper ${paperCode} not found`);
 
         // Fill info
+        const sessionLabel = paper.examSession || `${paper.month} ${paper.year}`;
         document.getElementById('infoSubject').textContent =
           `${SUBJECT_NAMES[subjectCode] || subjectCode} (${subjectCode})`;
         document.getElementById('infoPaper').textContent = paper.paperCode;
-        document.getElementById('infoSession').textContent =
-          `${paper.month} ${paper.year}`;
+        document.getElementById('infoSession').textContent = sessionLabel;
+        document.getElementById('infoSet').textContent = paper.scanSetNumber || '—';
         document.getElementById('infoSource').textContent =
           paper.sourcePaperCode || '—';
+        document.getElementById('infoStatus').textContent =
+          paper.sourceStatus || 'legacy record';
         document.getElementById('headerTitle').textContent =
-          `${subjectCode} · ${paper.month} ${paper.year}`;
+          `${subjectCode} · ${sessionLabel}`;
 
         // Set links
         document.getElementById('paperModeCard').href =

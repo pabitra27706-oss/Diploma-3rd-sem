@@ -847,3 +847,15 @@ This app:
 **Status:** Active Development
 ```
 
+
+## PYQ data rebuild pilot
+
+The December 2024 Python paper (`CST203 / P005`) is the first question paper rebuilt from the attached exam scan. It uses the `pilot-v1` schema with explicit Group A / Group B metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. The other 24 papers remain in legacy format and continue to work through the viewer/practice fallbacks.
+
+- Paper data: `_data/CST203/CST203-P005-2024-12.json`
+- Schema and source-fidelity notes: `docs/PYQ_SCHEMA.md`
+- Validator: `python3 scripts/validate_pyq.py`
+- Exam-paper view: `pyq/viewer.html?subject=CST203&paper=P005`
+- Practice / review: `pyq/answers.html?subject=CST203&paper=P005`
+
+No official answer key was supplied; all answers in the pilot are explicitly labeled as model answers. This pilot does not resolve the wider legacy / Revised-2022 regulation ambiguity or the CST209 Unit 5 and credit/hour conflicts.
