@@ -98,7 +98,7 @@ function renderPaper(data, meta) {
     sourceNote.textContent = noteParts.join(' · ');
   }
 
-  // Render body
+  // Render full exam paper for print / Save as PDF
   const body = document.getElementById('paperBody');
   body.innerHTML = '';
 
@@ -110,9 +110,134 @@ function renderPaper(data, meta) {
     renderWithFallback(body, data);
   }
 
+  // Render a compact question overview for screen reading
+  const overview = document.getElementById('paperOverview');
+  if (overview) {
+    renderOverview(overview, data);
+  }
+
   // Show paper
   document.getElementById('loadingState').classList.add('hidden');
   document.getElementById('paperWrapper').classList.remove('hidden');
+}
+
+// ─── Compact screen overview ──────────────────────────────
+function renderOverview(container, data) {
+  container.innerHTML = '';
+
+  const intro = document.createElement('div');
+  intro.className = 'overview-intro';
+  const introTitle = document.createElement('strong');
+  introTitle.textContent = 'Screen overview';
+  const introText = document.createElement('span');
+  introText.textContent = ' Full question wording, options, code, and subparts are in the printable exam paper.';
+  intro.appendChild(introTitle);
+  intro.appendChild(introText);
+  container.appendChild(intro);
+
+  const groups = buildOverviewGroups(data);
+
+  groups.forEach(group => {
+    const card = document.createElement('section');
+    card.className = 'overview-group';
+
+    const heading = document.createElement('h2');
+    heading.textContent = group.groupLabel;
+    card.appendChild(heading);
+
+    const meta = document.createElement('div');
+    meta.className = 'overview-meta';
+    meta.textContent =
+      `${group.totalSet} question${group.totalSet === 1 ? '' : 's'} · answer any ${group.answerAny} · ${group.marksEach} mark${group.marksEach === 1 ? '' : 's'} each · ${group.maxMarks} marks total`;
+    card.appendChild(meta);
+
+    const list = document.createElement('ol');
+    list.className = 'overview-list';
+
+    group.questions.forEach((q, i) => {
+      const item = document.createElement('li');
+      item.className = 'overview-item';
+
+      const num = document.createElement('span');
+      num.className = 'overview-num';
+      num.textContent = q.sourceNumber || `${i + 1}`;
+
+      const text = document.createElement('span');
+      text.className = 'overview-text';
+      text.textContent = summarizeQuestion(q);
+
+      const marks = document.createElement('span');
+      marks.className = 'overview-marks';
+      marks.textContent = `${q.marks}m`;
+
+      item.appendChild(num);
+      item.appendChild(text);
+      item.appendChild(marks);
+      list.appendChild(item);
+    });
+
+    card.appendChild(list);
+    container.appendChild(card);
+  });
+
+  const note = document.createElement('div');
+  note.className = 'overview-print-note';
+  note.textContent = 'Use Print / Save as PDF to view or export the complete exam paper.';
+  container.appendChild(note);
+}
+
+function buildOverviewGroups(data) {
+  if (data.paperFormat && Array.isArray(data.paperFormat.groups)) {
+    const byId = new Map(data.questions.map(q => [q.id, q]));
+    return data.paperFormat.groups.map((group, i) => {
+      let questions = [];
+      if (Array.isArray(group.questionIds) && group.questionIds.length > 0) {
+        questions = group.questionIds.map(id => byId.get(id)).filter(Boolean);
+      } else if (Array.isArray(group.marksFilter)) {
+        questions = data.questions.filter(q => group.marksFilter.includes(q.marks));
+      }
+      const marksEach = group.marksEach || (questions[0] && questions[0].marks) || 0;
+      const answerAny = group.answerAny || questions.length;
+      return {
+        groupLabel: group.groupLabel || group.title || `Group ${group.id || i + 1}`,
+        totalSet: group.totalSet || questions.length,
+        answerAny,
+        marksEach,
+        maxMarks: group.maxMarks || marksEach * answerAny,
+        questions
+      };
+    }).filter(group => group.questions.length > 0);
+  }
+
+  // Legacy fallback: group by marks
+  const buckets = {};
+  data.questions.forEach(q => {
+    const m = q.marks || 0;
+    if (!buckets[m]) buckets[m] = [];
+    buckets[m].push(q);
+  });
+
+  return Object.keys(buckets)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .map(m => ({
+      groupLabel: `Group (${m} mark${m === 1 ? '' : 's'})`,
+      totalSet: buckets[m].length,
+      answerAny: buckets[m].length,
+      marksEach: m,
+      maxMarks: m * buckets[m].length,
+      questions: buckets[m]
+    }));
+}
+
+function summarizeQuestion(q) {
+  let text = String(q.question || '')
+    .replace(/```[\s\S]*?```/g, ' [code] ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!text && q.topic) text = q.topic;
+  if (text.length > 120) text = text.slice(0, 117).trim() + '…';
+  return text || 'Question';
 }
 
 // ─── Render with paperFormat ─────────────────────────────
