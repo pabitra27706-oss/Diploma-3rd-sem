@@ -850,17 +850,17 @@ This app:
 
 ## PYQ data rebuild pilot
 
-Fourteen papers have been rebuilt from attached exam scans using the `pilot-v1` schema: the December 2024 Python pilot (`CST203 / P005`), all five January 2024 papers (`P004`), the four remaining December 2024 papers (`P005`), and four March 2023 papers (`CST201`, `CST203`, `CST205`, `CST207` / `P003`). Rebuilt papers carry explicit Group A / Group B metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. The remaining 11 papers stay in legacy format and continue to work through the viewer/practice fallbacks.
+Fifteen papers have been rebuilt from attached exam scans using the `pilot-v1` schema: the December 2024 Python pilot (`CST203 / P005`), all five January 2024 papers (`P004`), the four remaining December 2024 papers (`P005`), and all five March 2023 papers (`CST201`, `CST203`, `CST205`, `CST207`, `CST209` / `P003`). Rebuilt papers carry explicit Group A / Group B metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. The remaining 10 papers stay in legacy format and continue to work through the viewer/practice fallbacks.
 
 - Pilot data: `_data/CST203/CST203-P005-2024-12.json`
 - January 2024 batch: `_data/CST*/*-P004-2024-01.json`
 - December 2024 follow-up: `_data/CST*/*-P005-2024-12.json`
-- March 2023 attached-scan batch: `_data/CST{201,203,205,207}/*-P003-2023-03.json`
+- March 2023 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P003-2023-03.json`
 - Schema and source-fidelity notes: `docs/PYQ_SCHEMA.md`
 - Validator: `python3 scripts/validate_pyq.py`
 - Exam-paper view: `pyq/viewer.html?subject=CST203&paper=P005`
 - Practice / review: `pyq/answers.html?subject=CST203&paper=P005`
 
-The March 2023 papers use 25 one-mark Group A MCQs (answer any 20) and nine eight-mark Group B questions (answer any five), 2.5 hours, full marks 60. Their printed `2235`, `3013`, and `526` are scan/set numbers, not paper codes; `regulation` is `null` because of the legacy / Revised-2022 ambiguity. Duplicate `P002`/`P003` legacy records remain untouched, and March 2023 Algorithms (`CST209`) is paused until a matching scan is supplied.
+The March 2023 papers use 25 one-mark Group A MCQs (answer any 20) and nine eight-mark Group B questions (answer any five), 2.5 hours, full marks 60. Their printed `2235`, `3013`, `526`, and `2235` are scan/set numbers, not paper codes; `regulation` is `null` because of the legacy / Revised-2022 ambiguity. Duplicate `P002` legacy records remain untouched. `CST209 / P003` was rebuilt only after the user supplied `Algorithms, March 2023.pdf`; the generic `Algorithms .pdf` is January 2026 and was not used.
 
 No official answer key was supplied; all answers in the rebuilt papers are explicitly labeled as model answers, and the source text is source-faithful rather than 100% verbatim. This staged rebuild does not resolve the wider legacy / Revised-2022 regulation ambiguity or the CST209 Unit 5 and credit/hour conflicts.

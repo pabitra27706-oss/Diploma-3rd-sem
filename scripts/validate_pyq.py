@@ -260,6 +260,10 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
             "sourcePaperCode": "307/4(N)", "scanSetNumber": "526",
             "sourceFile": "CSO, March 2023.pdf",
         },
+        "CST209-P003-2023-03.json": {
+            "sourcePaperCode": "307/5(N)", "scanSetNumber": "2235",
+            "sourceFile": "Algorithms, March 2023.pdf",
+        },
     }
     exact = exact_by_file.get(path.name)
     if exact:

@@ -5,7 +5,7 @@ This document describes the schema used by rebuilt papers. The first pilot was D
 - Pilot paper: `_data/CST203/CST203-P005-2024-12.json`
 - January 2024 batch: `_data/CST{201,203,205,207,209}/*-P004-2024-01.json`
 - December 2024 follow-up: `_data/CST{201,205,207,209}/*-P005-2024-12.json`
-- March 2023 attached-scan batch: `_data/CST{201,203,205,207}/*-P003-2023-03.json`
+- March 2023 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P003-2023-03.json`
 - Registry entry: `_data/CST203/registry.json` → `P005`
 - Source: user-attached `Python, Dec 2024.pdf`
 - Printed paper code: `307/2(N)`
@@ -13,7 +13,7 @@ This document describes the schema used by rebuilt papers. The first pilot was D
 - Session: December 2024, 3 hours, full marks 60
 - Schema: `pilot-v1`
 
-Fourteen papers are rebuilt so far; the remaining 11 are intentionally left in their legacy format for now. They continue to work through the viewer/practice fallback paths. March 2023 papers use 25 one-mark Group A MCQs (answer any 20) plus nine eight-mark Group B questions (answer any five), `2.5 Hours`, and `regulation: null` because of the legacy / Revised-2022 ambiguity. The January 2026 attached PDFs are not yet added to any registry.
+Fifteen papers are rebuilt so far; the remaining 10 are intentionally left in their legacy format for now. They continue to work through the viewer/practice fallback paths. March 2023 papers use 25 one-mark Group A MCQs (answer any 20) plus nine eight-mark Group B questions (answer any five), `2.5 Hours`, and `regulation: null` because of the legacy / Revised-2022 ambiguity. The January 2026 attached PDFs are not yet added to any registry.
 
 ---
 
@@ -214,9 +214,9 @@ The exam-paper viewer renders `subparts` with their printed mark splits. Practic
 | December 2024 Python pilot (`CST203 / P005`) | Done |
 | January 2024, all five subjects (`P004`) | Done — 5 papers, 115 questions |
 | December 2024, remaining four subjects (`P005`) | Done — 4 papers, 95 questions; CST207 has 14 MCQs as printed |
-| March 2023 attached scans (`CST201`, `CST203`, `CST205`, `CST207` / `P003`) | Done — 4 papers, 136 questions; 25 one-mark MCQs + 9 theory questions each |
-| March 2023 duplicate/mislabelled mappings | Canonical `P003` entries rebuilt from attached scans; `2235`, `3013`, `526` recorded as scan/set numbers; duplicate `P002`/`P003` legacy records left untouched |
-| March 2023 Algorithms (`CST209`) | Paused; no March 2023 Algorithms scan supplied; generic `Algorithms .pdf` is January 2026 |
+| March 2023 attached scans (`CST201`, `CST203`, `CST205`, `CST207`, `CST209` / `P003`) | Done — 5 papers, 170 questions; 25 one-mark MCQs + 9 theory questions each |
+| March 2023 duplicate/mislabelled mappings | Canonical `P003` entries rebuilt from attached scans; `2235`, `3013`, `526` recorded as scan/set numbers; duplicate `P002` legacy records left untouched |
+| March 2023 Algorithms (`CST209`) | Done after user supplied `Algorithms, March 2023.pdf`; generic `Algorithms .pdf` is January 2026 and was not used |
 | Papers without attached scans | Paused; user chose to supply/stop for scans before touching them |
 | January 2026 attached PDFs | Later/separate; not yet registry papers |
 
@@ -229,9 +229,9 @@ python3 scripts/validate_pyq.py
 The validator:
 
 - checks all five registries and all 25 paper JSON files
-- strictly validates every `pilot-v1` paper, its group math, question coverage, MCQ options/correct values, subpart mark sums, provenance, and no-official-key disclaimer
+- strictly validates all 15 `pilot-v1` papers, their group math, question coverage, MCQ options/correct values, subpart mark sums, provenance, and no-official-key disclaimer
 - allows March 2023 `regulation: null` while still requiring `"Revised 2022"` for Jan/Dec 2024 papers
-- checks exact source-file, paper-code, and scan/set-number identity for Dec 2024 and March 2023 papers
+- checks exact source-file, paper-code, and scan/set-number identity for Dec 2024 and all five March 2023 papers
 - checks that registry entries do not mistake printed scan/set numbers for paper codes
 - checks all legacy papers for viewer/practice fallback compatibility
 - reports legacy inconsistencies as **warnings**, not errors
@@ -250,7 +250,7 @@ Known legacy warnings are deliberately non-fatal at this stage: declared-vs-actu
 
 This staged rebuild does **not**:
 
-- rebuild the remaining 11 legacy papers without user-supplied scans
+- rebuild the remaining 10 legacy papers without user-supplied scans
 - add the five attached January 2026 papers to any registry
 - resolve the wider legacy vs Revised-2022 regulation ambiguity
 - silently normalize the CST209 Unit 5 or credit/hour conflicts between the attached syllabus and other evidence
