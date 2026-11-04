@@ -188,9 +188,15 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
         and paper.get("paperCode") == "P003"
         and paper.get("year") == 2023
     )
+    is_june_2022 = (
+        paper.get("examSession") == "June 2022"
+        and paper.get("year") == 2022
+        and paper.get("month") == "June"
+    )
+    is_ambiguous_regulation = is_march_2023 or is_june_2022
     expected = {
         "fileName": path.name,
-        "regulation": None if is_march_2023 else "Revised 2022",
+        "regulation": None if is_ambiguous_regulation else "Revised 2022",
         "fullMarks": 60,
         "totalQuestions": len(paper.get("questions", [])),
         "sourceStatus": "verified-against-attached-scan",
@@ -264,6 +270,26 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
             "sourcePaperCode": "307/5(N)", "scanSetNumber": "2235",
             "sourceFile": "Algorithms, March 2023.pdf",
         },
+        "CST201-P002-2022-06.json": {
+            "sourcePaperCode": "307/1(N)", "scanSetNumber": "1459",
+            "sourceFile": "C Programming, June 2022.pdf",
+        },
+        "CST203-P001-2022-06.json": {
+            "sourcePaperCode": "307/2(N)", "scanSetNumber": "1438",
+            "sourceFile": "Python, June 2022.pdf",
+        },
+        "CST205-P002-2022-06.json": {
+            "sourcePaperCode": "307/3(N)", "scanSetNumber": "1441",
+            "sourceFile": "Data Structure, June 2022.pdf",
+        },
+        "CST207-P002-2022-06.json": {
+            "sourcePaperCode": "307/4(N)", "scanSetNumber": "1466",
+            "sourceFile": "CSO, June 2022.pdf",
+        },
+        "CST209-P001-2022-06.json": {
+            "sourcePaperCode": "307/5(N)", "scanSetNumber": "1455",
+            "sourceFile": "Algorithms, June 2022.pdf",
+        },
     }
     exact = exact_by_file.get(path.name)
     if exact:
@@ -274,6 +300,15 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
                 "month": "March",
                 "monthNumber": 3,
                 "duration": "2.5 Hours",
+                "regulation": None,
+            })
+        elif is_june_2022:
+            exact.update({
+                "examSession": "June 2022",
+                "year": 2022,
+                "month": "June",
+                "monthNumber": 6,
+                "duration": "3 Hours",
                 "regulation": None,
             })
         else:
@@ -304,13 +339,13 @@ def validate_pilot_format(paper: dict, path: Path, report: Report) -> dict:
         report.error(f"{label}: paperFormat.generalInstructions must be a non-empty array")
 
     groups = fmt.get("groups")
-    if not isinstance(groups, list) or len(groups) != 2:
-        report.error(f"{label}: paperFormat.groups must contain Group A and Group B")
+    if not isinstance(groups, list) or len(groups) not in (2, 3):
+        report.error(f"{label}: paperFormat.groups must contain 2 or 3 groups")
         return {}
 
     for group in groups:
         gid = group.get("id")
-        if gid not in ("A", "B"):
+        if gid not in ("A", "B", "C"):
             report.error(f"{label}: unexpected group id '{gid}'")
             continue
         qids = group.get("questionIds")
@@ -325,6 +360,28 @@ def validate_pilot_format(paper: dict, path: Path, report: Report) -> dict:
             report.error(f"{label}: Group {gid} marksFilter must match marksEach")
         if not group.get("instruction") or not group.get("groupLabel") or not group.get("markSplit"):
             report.error(f"{label}: Group {gid} missing groupLabel/instruction/markSplit")
+
+        if isinstance(group.get("sections"), list):
+            for sec in group["sections"]:
+                if not isinstance(sec, dict):
+                    report.error(f"{label}: Group {gid} has a non-object section")
+                    continue
+                if sec.get("maxMarks") != sec.get("marksEach", 0) * sec.get("answerAny", 0):
+                    report.error(f"{label}: Group {gid} section {sec.get('id')} maxMarks mismatch")
+                qids = sec.get("questionIds")
+                if isinstance(qids, list) and sec.get("totalSet") != len(qids):
+                    report.error(f"{label}: Group {gid} section {sec.get('id')} totalSet mismatch")
+
+        if isinstance(group.get("choiceSets"), list):
+            for cs in group["choiceSets"]:
+                if not isinstance(cs, dict):
+                    report.error(f"{label}: Group {gid} has a non-object choiceSet")
+                    continue
+                if cs.get("maxMarks") != cs.get("marksEach", 0) * cs.get("answerAny", 0):
+                    report.error(f"{label}: Group {gid} choiceSet {cs.get('id')} maxMarks mismatch")
+                qids = cs.get("questionIds")
+                if isinstance(qids, list) and cs.get("totalSet") != len(qids):
+                    report.error(f"{label}: Group {gid} choiceSet {cs.get('id')} totalSet mismatch")
 
     group_max_total = sum(g.get("maxMarks", 0) for g in groups if isinstance(g, dict))
     if group_max_total != paper.get("fullMarks"):
@@ -409,46 +466,48 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
         if not isinstance(q.get("id"), str) or not q["id"].startswith(id_prefix):
             report.error(f"{label}: {qid} id prefix is wrong")
 
-        if gid == "A":
+        qtype = q.get("type")
+        if qtype == "mcq":
             opts = q.get("options")
             if not isinstance(opts, list) or len(opts) < 2:
-                report.error(f"{label}: {qid} Group A MCQ needs an options array")
-                continue
-            keys = []
-            for opt in opts:
-                if not isinstance(opt, dict) or not opt.get("key") or not opt.get("text"):
-                    report.error(f"{label}: {qid} option must be an object with key and text")
-                else:
-                    keys.append(str(opt["key"]))
-            if len(set(keys)) != len(keys):
-                report.error(f"{label}: {qid} has duplicate option keys")
-            entries = option_entries(q)
-            if correct_index(q, entries) < 0:
-                report.error(f"{label}: {qid} correct='{q.get('correct')}' does not resolve")
-            if q.get("type") != "mcq":
-                report.error(f"{label}: {qid} type must be 'mcq'")
+                report.error(f"{label}: {qid} MCQ needs an options array")
+            else:
+                keys = []
+                for opt in opts:
+                    if not isinstance(opt, dict) or not opt.get("key") or not opt.get("text"):
+                        report.error(f"{label}: {qid} option must be an object with key and text")
+                    else:
+                        keys.append(str(opt["key"]))
+                if len(set(keys)) != len(keys):
+                    report.error(f"{label}: {qid} has duplicate option keys")
+                entries = option_entries(q)
+                if correct_index(q, entries) < 0:
+                    report.error(f"{label}: {qid} correct='{q.get('correct')}' does not resolve")
             if group.get("marksEach") == 2 and q.get("markSplit") != "1+1":
                 report.error(f"{label}: {qid} markSplit must be '1+1' for 2-mark MCQs")
-        elif gid == "B":
+        elif qtype in ("theory", "short", "program", "numerical"):
             subparts = q.get("subparts")
-            if not isinstance(subparts, list) or not subparts:
-                report.error(f"{label}: {qid} Group B theory needs subparts")
-                continue
-            total = 0
-            for sp in subparts:
-                if not isinstance(sp, dict) or not sp.get("label") or not sp.get("text") or not isinstance(sp.get("marks"), int):
-                    report.error(f"{label}: {qid} subpart must have label, text, marks")
-                else:
-                    total += sp["marks"]
-            if total != q.get("marks"):
-                report.error(f"{label}: {qid} subpart marks sum={total}, expected {q.get('marks')}")
-            expected_split = "+".join(str(sp.get("marks")) for sp in subparts if isinstance(sp, dict))
-            if q.get("markSplit") != expected_split:
-                report.error(f"{label}: {qid} markSplit='{q.get('markSplit')}', expected '{expected_split}'")
-            if q.get("type") != "theory":
-                report.error(f"{label}: {qid} type must be 'theory'")
+            if isinstance(subparts, list) and subparts:
+                total = 0
+                for sp in subparts:
+                    if not isinstance(sp, dict) or not sp.get("label") or not sp.get("text") or not isinstance(sp.get("marks"), int):
+                        report.error(f"{label}: {qid} subpart must have label, text, marks")
+                    else:
+                        total += sp["marks"]
+                if total != q.get("marks"):
+                    report.error(f"{label}: {qid} subpart marks sum={total}, expected {q.get('marks')}")
+                expected_split = "+".join(str(sp.get("marks")) for sp in subparts if isinstance(sp, dict))
+                if q.get("markSplit") != expected_split:
+                    report.error(f"{label}: {qid} markSplit='{q.get('markSplit')}', expected '{expected_split}'")
+            elif q.get("markSplit") != str(q.get("marks")):
+                report.error(f"{label}: {qid} markSplit='{q.get('markSplit')}' should be '{q.get('marks')}' for a single-part question")
+        else:
+            report.error(f"{label}: {qid} unsupported type '{qtype}'")
 
-    for gid in ("A", "B"):
+        if gid == "C" and not q.get("choiceSet"):
+            report.error(f"{label}: {qid} Group C alternative needs choiceSet metadata")
+
+    for gid in ("A", "B", "C"):
         nums = [num for group, num in source_numbers if group == gid]
         if len(set(nums)) != len(nums):
             report.error(f"{label}: Group {gid} has duplicate sourceNumber values")

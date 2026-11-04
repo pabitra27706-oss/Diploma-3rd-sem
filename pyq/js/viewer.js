@@ -295,6 +295,24 @@ function renderWithFormat(container, data) {
       section.appendChild(extra);
     }
 
+    if (Array.isArray(group.sections) && group.sections.length > 0) {
+      const sectionInfo = document.createElement('div');
+      sectionInfo.className = 'group-extra-instruction';
+      sectionInfo.textContent = group.sections.map(s =>
+        `${s.id}: ${s.title} — answer any ${s.answerAny} of ${s.totalSet}`
+      ).join(' · ');
+      section.appendChild(sectionInfo);
+    }
+
+    if (Array.isArray(group.choiceSets) && group.choiceSets.length > 0) {
+      const choiceInfo = document.createElement('div');
+      choiceInfo.className = 'group-extra-instruction';
+      choiceInfo.textContent = `Choice sets: ${group.choiceSets.map(cs =>
+        `${cs.id} (${cs.totalSet} alternatives, answer any ${cs.answerAny})`
+      ).join(' · ')}`;
+      section.appendChild(choiceInfo);
+    }
+
     // Marks / choice note
     const marksNote = document.createElement('div');
     marksNote.className = 'group-marks-note';
