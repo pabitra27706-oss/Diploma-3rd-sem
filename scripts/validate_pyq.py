@@ -183,9 +183,14 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
     paper_index = paper.get("paperIndex")
     file_name = paper.get("fileName")
 
+    is_march_2023 = (
+        paper.get("examSession") == "March 2023"
+        and paper.get("paperCode") == "P003"
+        and paper.get("year") == 2023
+    )
     expected = {
         "fileName": path.name,
-        "regulation": "Revised 2022",
+        "regulation": None if is_march_2023 else "Revised 2022",
         "fullMarks": 60,
         "totalQuestions": len(paper.get("questions", [])),
         "sourceStatus": "verified-against-attached-scan",
@@ -239,16 +244,42 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
             "sourcePaperCode": "307/5(N)", "scanSetNumber": "3113544",
             "sourceFile": "Algorithm, Dec 2024.pdf",
         },
+        "CST201-P003-2023-03.json": {
+            "sourcePaperCode": "307/1(N)", "scanSetNumber": "2235",
+            "sourceFile": "C Programming, March 2023.pdf",
+        },
+        "CST203-P003-2023-03.json": {
+            "sourcePaperCode": "307/2(N)", "scanSetNumber": "3013",
+            "sourceFile": "Python, March 2023.pdf",
+        },
+        "CST205-P003-2023-03.json": {
+            "sourcePaperCode": "307/3(N)", "scanSetNumber": "2235",
+            "sourceFile": "Data Structures, March 2023.pdf",
+        },
+        "CST207-P003-2023-03.json": {
+            "sourcePaperCode": "307/4(N)", "scanSetNumber": "526",
+            "sourceFile": "CSO, March 2023.pdf",
+        },
     }
     exact = exact_by_file.get(path.name)
     if exact:
-        exact.update({
-            "examSession": "December 2024",
-            "year": 2024,
-            "month": "December",
-            "monthNumber": 12,
-            "duration": "3 Hours",
-        })
+        if is_march_2023:
+            exact.update({
+                "examSession": "March 2023",
+                "year": 2023,
+                "month": "March",
+                "monthNumber": 3,
+                "duration": "2.5 Hours",
+                "regulation": None,
+            })
+        else:
+            exact.update({
+                "examSession": "December 2024",
+                "year": 2024,
+                "month": "December",
+                "monthNumber": 12,
+                "duration": "3 Hours",
+            })
         for key, value in exact.items():
             if paper.get(key) != value:
                 report.error(f"{label}: {key}={paper.get(key)!r}, expected {value!r}")
