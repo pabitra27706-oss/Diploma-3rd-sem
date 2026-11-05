@@ -181,7 +181,8 @@ Diploma-3rd-sem/
 │   │   ├── CST201-P002-2022-06.json   # June 2022 paper
 │   │   ├── CST201-P003-2023-03.json   # March 2023 paper
 │   │   ├── CST201-P004-2024-01.json   # January 2024 paper
-│   │   └── CST201-P005-2024-12.json   # December 2024 paper
+│   │   ├── CST201-P005-2024-12.json   # December 2024 paper
+│   │   └── CST201-P006-2026-01.json   # January 2026 paper
 │   ├── CST203/                   # Python data
 │   │   ├── meta.json
 │   │   ├── registry.json
@@ -313,6 +314,7 @@ CST201-P002-2022-06.json   ← June 2022
 CST201-P003-2023-03.json   ← March 2023
 CST201-P004-2024-01.json   ← January 2024
 CST201-P005-2024-12.json   ← December 2024
+CST201-P006-2026-01.json   ← January 2026
 ```
 
 ### Rules
@@ -331,13 +333,14 @@ CST201-P005-2024-12.json   ← December 2024
 | P003 | CST201-P003-2023-03.json | 307/1(N) | 2023 | March |
 | P004 | CST201-P004-2024-01.json | 307/1(N) | 2024 | January |
 | P005 | CST201-P005-2024-12.json | 307/1(N) | 2024 | December |
+| P006 | CST201-P006-2026-01.json | 307/1(N) | 2026 | January |
 
 ### Registry File Format (`_data/CST201/registry.json`)
 
 ```json
 {
   "subject": "CST201",
-  "totalPapers": 5,
+  "totalPapers": 6,
   "papers": [
     {
       "paperIndex": 1,
@@ -383,6 +386,15 @@ CST201-P005-2024-12.json   ← December 2024
       "year": 2024,
       "month": "December",
       "monthNumber": 12
+    },
+    {
+      "paperIndex": 6,
+      "paperCode": "P006",
+      "fileName": "CST201-P006-2026-01.json",
+      "sourcePaperCode": "307/1(N)",
+      "year": 2026,
+      "month": "January",
+      "monthNumber": 1
     }
   ]
 }
@@ -850,18 +862,19 @@ This app:
 
 ## PYQ data rebuild pilot
 
-Twenty papers have been rebuilt from attached exam scans using the `pilot-v1` schema: the December 2024 Python pilot (`CST203 / P005`), all five January 2024 papers (`P004`), the four remaining December 2024 papers (`P005`), all five March 2023 papers (`CST201`, `CST203`, `CST205`, `CST207`, `CST209` / `P003`), and all five June 2022 papers (`CST201 / P002`, `CST203 / P001`, `CST205 / P002`, `CST207 / P002`, `CST209 / P001`). Rebuilt papers carry explicit group/section/choice-set metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. The remaining five papers stay in legacy format and continue to work through the viewer/practice fallbacks.
+Twenty-five papers have been rebuilt from attached exam scans using the `pilot-v1` schema: the December 2024 Python pilot (`CST203 / P005`), all five January 2024 papers (`P004`), the four remaining December 2024 papers (`P005`), all five March 2023 papers (`CST201`, `CST203`, `CST205`, `CST207`, `CST209` / `P003`), all five June 2022 papers (`CST201 / P002`, `CST203 / P001`, `CST205 / P002`, `CST207 / P002`, `CST209 / P001`), and five new January 2026 papers (`CST{201,203,205,207,209} / P006`). Rebuilt papers carry explicit group/section/choice-set metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. The five remaining legacy records stay in legacy format and continue to work through the viewer/practice fallbacks.
 
 - Pilot data: `_data/CST203/CST203-P005-2024-12.json`
 - January 2024 batch: `_data/CST*/*-P004-2024-01.json`
 - December 2024 follow-up: `_data/CST*/*-P005-2024-12.json`
 - March 2023 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P003-2023-03.json`
 - June 2022 attached-scan batch: `CST201-P002`, `CST203-P001`, `CST205-P002`, `CST207-P002`, `CST209-P001` (`*-2022-06.json`)
+- January 2026 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P006-2026-01.json`
 - Schema and source-fidelity notes: `docs/PYQ_SCHEMA.md`
 - Validator: `python3 scripts/validate_pyq.py`
 - Exam-paper view: `pyq/viewer.html?subject=CST203&paper=P005`
 - Practice / review: `pyq/answers.html?subject=CST203&paper=P005`
 
-The March 2023 papers use 25 one-mark Group A MCQs (answer any 20) and nine eight-mark Group B questions (answer any five), 2.5 hours, full marks 60. Their printed `2235`, `3013`, `526`, and `2235` are scan/set numbers, not paper codes. The June 2022 papers use Group A (Q1 MCQs, Q2 fill-in-the-blanks, Q3 short answers; answer any 10 from each), Group B (Q4, answer any six at 2 marks), and Group C (Q5–Q7, answer any one of three 6-mark alternatives from each), 3 hours, full marks 60; printed `1459`, `1438`, `1441`, `1466`, and `1455` are scan/set numbers, not paper codes. March 2023 and June 2022 use `regulation: null` because of the legacy / Revised-2022 ambiguity. Duplicate March `P002` legacy records remain untouched. `CST209 / P003` was rebuilt only after the user supplied `Algorithms, March 2023.pdf`; the generic `Algorithms .pdf` is January 2026 and was not used. The June 2022 batch was built only from the five user-attached June scans.
+The March 2023 papers use 25 one-mark Group A MCQs (answer any 20) and nine eight-mark Group B questions (answer any five), 2.5 hours, full marks 60. Their printed `2235`, `3013`, `526`, and `2235` are scan/set numbers, not paper codes. The June 2022 papers use Group A (Q1 MCQs, Q2 fill-in-the-blanks, Q3 short answers; answer any 10 from each), Group B (Q4, answer any six at 2 marks), and Group C (Q5–Q7, answer any one of three 6-mark alternatives from each), 3 hours, full marks 60; printed `1459`, `1438`, `1441`, `1466`, and `1455` are scan/set numbers, not paper codes. The January 2026 papers use 15 two-mark Group A MCQs (answer any 10; 1 mark for the answer and 1 mark for the explanation) and nine eight-mark Group B questions (answer any five), 2.5 hours, full marks 60; printed `5966`, `5906`, `5933`, `5926`, and `5927` are scan/set numbers, not paper codes. March 2023, June 2022, and January 2026 use `regulation: null`; the January 2026 scans do not explicitly print a regulation, so it was not inferred from the separate syllabus PDF. Duplicate March `P002` legacy records remain untouched. `CST209 / P003` was rebuilt only after the user supplied `Algorithms, March 2023.pdf`; the generic `Algorithms .pdf` was not used as a March 2023 scan and is now the January 2026 Algorithms source. The June 2022 batch was built only from the five user-attached June scans; the January 2026 batch was built only from the five user-attached generic 2026 scans.
 
 No official answer key was supplied; all answers in the rebuilt papers are explicitly labeled as model answers, and the source text is source-faithful rather than 100% verbatim. This staged rebuild does not resolve the wider legacy / Revised-2022 regulation ambiguity or the CST209 Unit 5 and credit/hour conflicts.

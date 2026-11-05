@@ -193,7 +193,12 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
         and paper.get("year") == 2022
         and paper.get("month") == "June"
     )
-    is_ambiguous_regulation = is_march_2023 or is_june_2022
+    is_january_2026 = (
+        paper.get("examSession") == "January 2026"
+        and paper.get("paperCode") == "P006"
+        and paper.get("year") == 2026
+    )
+    is_ambiguous_regulation = is_march_2023 or is_june_2022 or is_january_2026
     expected = {
         "fileName": path.name,
         "regulation": None if is_ambiguous_regulation else "Revised 2022",
@@ -290,6 +295,26 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
             "sourcePaperCode": "307/5(N)", "scanSetNumber": "1455",
             "sourceFile": "Algorithms, June 2022.pdf",
         },
+        "CST201-P006-2026-01.json": {
+            "sourcePaperCode": "307/1(N)", "scanSetNumber": "5966",
+            "sourceFile": "Computer Programming in C.pdf",
+        },
+        "CST203-P006-2026-01.json": {
+            "sourcePaperCode": "307/2(N)", "scanSetNumber": "5906",
+            "sourceFile": "Scripting languages (PYTHON).pdf",
+        },
+        "CST205-P006-2026-01.json": {
+            "sourcePaperCode": "307/3(N)", "scanSetNumber": "5933",
+            "sourceFile": "Data Structures .pdf",
+        },
+        "CST207-P006-2026-01.json": {
+            "sourcePaperCode": "307/4(N)", "scanSetNumber": "5926",
+            "sourceFile": "Computer Science and Organization .pdf",
+        },
+        "CST209-P006-2026-01.json": {
+            "sourcePaperCode": "307/5(N)", "scanSetNumber": "5927",
+            "sourceFile": "Algorithms .pdf",
+        },
     }
     exact = exact_by_file.get(path.name)
     if exact:
@@ -309,6 +334,15 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
                 "month": "June",
                 "monthNumber": 6,
                 "duration": "3 Hours",
+                "regulation": None,
+            })
+        elif is_january_2026:
+            exact.update({
+                "examSession": "January 2026",
+                "year": 2026,
+                "month": "January",
+                "monthNumber": 1,
+                "duration": "2.5 Hours",
                 "regulation": None,
             })
         else:
@@ -561,8 +595,8 @@ def main() -> int:
     metas = validate_registries(report)
 
     paper_paths = sorted(DATA.glob("CST*/CST*-P*.json"))
-    if len(paper_paths) != 25:
-        report.warn(f"_data: expected 25 paper JSONs, found {len(paper_paths)}")
+    if len(paper_paths) != 30:
+        report.warn(f"_data: expected 30 paper JSONs, found {len(paper_paths)}")
 
     pilot_count = 0
     legacy_count = 0
