@@ -182,7 +182,7 @@ The exam-paper viewer renders `subparts` with their printed mark splits. Practic
 
 `pyq/viewer.html`, `pyq/js/viewer.js`, `pyq/css/viewer.css`:
 
-- on screen, shows a compact question-list overview with group choice rules and one-line question summaries
+- on screen, shows a compact question-list overview with group choice rules, one-line question summaries, MCQ option lines, and code snippets; full question wording, subparts, and print layout remain in Print / Save as PDF
 - **Print / Save as PDF** shows the full exam paper with `paperFormat.generalInstructions`, Group A and Group B headings, instructions, choice rules, and marks notes
 - the full print paper numbers Group A by Roman source number and Group B by printed source number
 - the full print paper renders code blocks, structured options, subparts, source notes, and syllabus notes
