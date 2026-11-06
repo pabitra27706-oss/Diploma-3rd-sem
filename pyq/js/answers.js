@@ -40,6 +40,66 @@ const SUBJECT_NAMES = {
 
 const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+/**
+ * Normalize legacy string-array options, pilot object-array options, and
+ * quiz-style object-map options into { key, text, index } records.
+ */
+function getOptions(q) {
+  if (!q || !q.options) return null;
+
+  if (Array.isArray(q.options)) {
+    return q.options.map((opt, i) => {
+      const fallback = OPTION_LETTERS[i] || String.fromCharCode(65 + i);
+      if (typeof opt === 'string') {
+        return { key: fallback, text: opt, index: i };
+      }
+      return {
+        key: opt.key || opt.label || fallback,
+        text: opt.text || opt.value || '',
+        index: i
+      };
+    });
+  }
+
+  if (typeof q.options === 'object') {
+    return Object.entries(q.options).map(([key, text], i) => ({
+      key: key,
+      text: String(text),
+      index: i
+    }));
+  }
+
+  return null;
+}
+
+/** Resolve numeric, letter, or object-key correct values to an option index. */
+function getCorrectIndex(q, options) {
+  if (!options || options.length === 0) return -1;
+
+  if (typeof q.correct === 'number' && q.correct >= 0 && q.correct < options.length) {
+    return q.correct;
+  }
+
+  if (typeof q.correct === 'string') {
+    const target = q.correct.trim().toLowerCase();
+    if (/^\d+$/.test(target)) {
+      const n = parseInt(target, 10);
+      if (n >= 0 && n < options.length) return n;
+    }
+    const byKey = options.findIndex(o => String(o.key).toLowerCase() === target);
+    if (byKey >= 0) return byKey;
+    const upper = target.toUpperCase();
+    const byLetter = options.findIndex((o, i) =>
+      (OPTION_LETTERS[i] || '').toUpperCase() === upper ||
+      String(o.key).toUpperCase() === upper
+    );
+    if (byLetter >= 0) return byLetter;
+  }
+
+  return -1;
+}
+
+
 const TYPE_LABELS = {
   theory: 'Theory',
   program: 'Program',
@@ -548,14 +608,16 @@ async function init() {
     questions = paperData.questions || [];
     if (questions.length === 0) throw new Error('No questions in this paper');
 
+    const sessionLabel = paperMeta.examSession || `${paperMeta.month} ${paperMeta.year}`;
+    const setLabel = paperMeta.scanSetNumber ? ` · Set ${paperMeta.scanSetNumber}` : '';
+
     document.getElementById('headerTitle').textContent =
       `${subjectCode} · ${paperMeta.paperCode}`;
     document.getElementById('headerSub').textContent =
-      `${SUBJECT_NAMES[subjectCode] || ''} · ${paperMeta.month} ${paperMeta.year}`;
-    document.getElementById('sidebarTitle').textContent =
-      `${paperMeta.month} ${paperMeta.year}`;
+      `${SUBJECT_NAMES[subjectCode] || ''} · ${sessionLabel}${setLabel}`;
+    document.getElementById('sidebarTitle').textContent = sessionLabel;
     document.title =
-      `Practice ${subjectCode} ${paperMeta.month} ${paperMeta.year}`;
+      `Practice ${subjectCode} ${sessionLabel}`;
 
     const ls = document.getElementById('loadingScreen');
     ls.classList.add('fade-out');
@@ -626,12 +688,21 @@ function renderPracticeView() {
   const isBookmarked = bookmarks.includes(q.id);
   const prevResult = userResults[q.id];
   const prevAnswer = userAnswers[q.id];
-  const isMCQ = Array.isArray(q.options) && q.options.length > 0;
+  const options = getOptions(q);
+  const correctIndex = getCorrectIndex(q, options);
+  const isMCQ = options && options.length > 0;
   const isAnswered = isMCQ ? prevResult !== undefined : false;
   const isAnswerVisible = visibleAnswers.has(q.id);
 
   const typeLabel = TYPE_LABELS[q.type] || q.type || 'Question';
   const diffClass = q.difficulty ? `q-badge-difficulty-${q.difficulty}` : '';
+  const sourceNoteHTML = q.sourceNote
+    ? `<div class="source-note"><strong>Source note:</strong> ${escapeHtml(q.sourceNote)}</div>`
+    : '';
+  const syllabusNoteHTML = q.syllabusNote
+    ? `<div class="syllabus-note"><strong>Syllabus note:</strong> ${escapeHtml(q.syllabusNote)}</div>`
+    : '';
+
 
   let bodyHTML = '';
 
@@ -639,13 +710,13 @@ function renderPracticeView() {
     bodyHTML = `
       <div class="q-text rich-content">${renderRichContent(q.question)}</div>
       <div class="mcq-grid">
-        ${q.options.map((opt, oi) => {
+        ${options.map((opt, oi) => {
           let cardClass = 'mcq-card';
           let iconHTML = '';
 
           if (isAnswered) {
             cardClass += ' disabled';
-            if (oi === q.correct) {
+            if (oi === correctIndex) {
               cardClass += ' correct';
               iconHTML = `<div class="mcq-card-icon icon-correct">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -667,8 +738,8 @@ function renderPracticeView() {
           return `
             <div class="${cardClass}" data-index="${oi}" role="button" tabindex="0">
               ${iconHTML}
-              <span class="mcq-letter">${OPTION_LETTERS[oi]}</span>
-              <span class="mcq-text">${escapeHtml(opt)}</span>
+              <span class="mcq-letter">${opt.key || OPTION_LETTERS[oi]}</span>
+              <span class="mcq-text">${escapeHtml(opt.text)}</span>
             </div>
           `;
         }).join('')}
@@ -759,6 +830,9 @@ function renderPracticeView() {
         <span class="q-number">Q${currentIndex + 1}</span>
         <span class="q-badge q-badge-type">${typeLabel}</span>
         <span class="q-badge q-badge-marks">${q.marks}m</span>
+        ${q.group ? `<span class="q-badge q-badge-group">Group ${q.group}</span>` : ''}
+        ${q.sourceNumber ? `<span class="q-badge q-badge-source">Source ${q.sourceNumber}</span>` : ''}
+        ${q.markSplit && q.group === 'B' ? `<span class="q-badge q-badge-split">${q.markSplit}</span>` : ''}
         ${q.unit ? `<span class="q-badge q-badge-unit">Unit ${q.unit}</span>` : ''}
         ${q.difficulty ? `<span class="q-badge ${diffClass}">${q.difficulty}</span>` : ''}
         <span class="q-header-spacer"></span>
@@ -768,17 +842,17 @@ function renderPracticeView() {
           </svg>
         </button>
       </div>
-      <div class="q-body">${bodyHTML}</div>
+      <div class="q-body">${bodyHTML}${sourceNoteHTML}${syllabusNoteHTML}</div>
       ${feedbackHTML}
       ${theoryAnswerHTML}
     </div>
   `;
 
-  attachPracticeEvents(q, isMCQ, isAnswered);
+  attachPracticeEvents(q, isMCQ, isAnswered, correctIndex);
   buildNavDots();
 }
 
-function attachPracticeEvents(q, isMCQ, isAnswered) {
+function attachPracticeEvents(q, isMCQ, isAnswered, correctIndex) {
   // Bookmark
   document.getElementById('bookmarkBtn')?.addEventListener('click', () => {
     const idx = bookmarks.indexOf(q.id);
@@ -795,11 +869,11 @@ function attachPracticeEvents(q, isMCQ, isAnswered) {
   });
 
   // MCQ click
-  if (isMCQ && !isAnswered) {
+  if (isMCQ && correctIndex >= 0 && !isAnswered) {
     document.querySelectorAll('.mcq-card').forEach(card => {
       const handler = () => {
         const sel = parseInt(card.dataset.index);
-        const correct = sel === q.correct;
+        const correct = sel === correctIndex;
         userAnswers[q.id] = sel;
         userResults[q.id] = correct ? 'correct' : 'wrong';
         saveState();
@@ -845,32 +919,41 @@ function renderReviewView() {
 
   questions.forEach((q, i) => {
     const isBookmarked = bookmarks.includes(q.id);
-    const isMCQ = Array.isArray(q.options) && q.options.length > 0;
+    const options = getOptions(q);
+    const correctIndex = getCorrectIndex(q, options);
+    const isMCQ = options && options.length > 0;
     const typeLabel = TYPE_LABELS[q.type] || q.type || 'Question';
     const diffClass = q.difficulty ? `q-badge-difficulty-${q.difficulty}` : '';
+  const sourceNoteHTML = q.sourceNote
+    ? `<div class="source-note"><strong>Source note:</strong> ${escapeHtml(q.sourceNote)}</div>`
+    : '';
+  const syllabusNoteHTML = q.syllabusNote
+    ? `<div class="syllabus-note"><strong>Syllabus note:</strong> ${escapeHtml(q.syllabusNote)}</div>`
+    : '';
+
 
     let mcqHtml = '';
     if (isMCQ) {
       mcqHtml = '<div style="margin-top:0.5rem;">';
-      q.options.forEach((opt, oi) => {
-        const marker = oi === q.correct
+      options.forEach((opt, oi) => {
+        const marker = oi === correctIndex
           ? ' <strong style="color:var(--success)">[Correct]</strong>'
           : '';
         mcqHtml += `<p style="margin:0.2rem 0;font-size:0.9rem;">
-          ${OPTION_LETTERS[oi]}) ${escapeHtml(opt)}${marker}
+          ${opt.key || OPTION_LETTERS[oi]}) ${escapeHtml(opt.text)}${marker}
         </p>`;
       });
       mcqHtml += '</div>';
     }
 
     let correctOptionHtml = '';
-    if (isMCQ && q.correct !== undefined && q.correct !== null) {
+    if (isMCQ && correctIndex >= 0) {
       correctOptionHtml = `
         <div class="review-correct-option">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
-          <span>Answer: ${OPTION_LETTERS[q.correct]}) ${escapeHtml(q.options[q.correct])}</span>
+          <span>Answer: ${options[correctIndex].key || OPTION_LETTERS[correctIndex]}) ${escapeHtml(options[correctIndex].text)}</span>
         </div>
       `;
     }
@@ -881,6 +964,9 @@ function renderReviewView() {
           <span class="q-number">Q${i + 1}</span>
           <span class="q-badge q-badge-type">${typeLabel}</span>
           <span class="q-badge q-badge-marks">${q.marks}m</span>
+          ${q.group ? `<span class="q-badge q-badge-group">Group ${q.group}</span>` : ''}
+          ${q.sourceNumber ? `<span class="q-badge q-badge-source">Source ${q.sourceNumber}</span>` : ''}
+          ${q.markSplit && q.group === 'B' ? `<span class="q-badge q-badge-split">${q.markSplit}</span>` : ''}
           ${q.unit ? `<span class="q-badge q-badge-unit">Unit ${q.unit}</span>` : ''}
           ${q.difficulty ? `<span class="q-badge ${diffClass}">${q.difficulty}</span>` : ''}
           <span class="q-header-spacer"></span>
@@ -893,6 +979,8 @@ function renderReviewView() {
         <div class="q-body">
           <div class="q-text rich-content">${renderRichContent(q.question)}</div>
           ${mcqHtml}
+          ${sourceNoteHTML}
+          ${syllabusNoteHTML}
         </div>
         <div class="review-card-answer">
           <div class="review-answer-label">
@@ -1441,7 +1529,9 @@ function buildPrintContent() {
   `;
 
   questions.forEach((q, i) => {
-    const isMCQ = Array.isArray(q.options) && q.options.length > 0;
+    const options = getOptions(q);
+    const correctIndex = getCorrectIndex(q, options);
+    const isMCQ = options && options.length > 0;
 
     html += `<div class="print-q-block">`;
     html += `<div class="print-q-num">Q${i + 1}. [${TYPE_LABELS[q.type] || q.type}] [${q.marks}m]${q.unit ? ` [Unit ${q.unit}]` : ''}</div>`;
@@ -1449,10 +1539,10 @@ function buildPrintContent() {
 
     if (isMCQ) {
       html += '<div class="print-q-options">';
-      q.options.forEach((opt, oi) => {
-        const isC = oi === q.correct;
+      options.forEach((opt, oi) => {
+        const isC = oi === correctIndex;
         html += `<div class="print-q-option ${isC ? 'correct-option' : ''}">
-          ${OPTION_LETTERS[oi]}) ${escapeHtml(opt)}${isC ? ' [Correct]' : ''}
+          ${opt.key || OPTION_LETTERS[oi]}) ${escapeHtml(opt.text)}${isC ? ' [Correct]' : ''}
         </div>`;
       });
       html += '</div>';

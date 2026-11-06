@@ -18,6 +18,13 @@
       <span>Back</span>
     </a>
     <div class="toolbar-center" id="toolbarTitle">Loading...</div>
+    <a class="tool-btn" id="practiceLink" href="#" aria-label="Practice this paper with answers">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 20h9"/>
+        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+      </svg>
+      <span>Practice</span>
+    </a>
     <button class="tool-btn" id="printBtn" aria-label="Print this paper">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="6 9 6 2 18 2 18 9"/>
@@ -61,14 +68,19 @@
           <span id="paperMonthYear"></span>
         </div>
         <div class="paper-marks-row">
-          <span>Time: 3 Hours</span>
+          <span id="paperDuration">Time: 3 Hours</span>
           <span id="paperTotalMarks"></span>
         </div>
       </div>
 
       <div class="paper-divider"></div>
 
-      <!-- Questions will be injected here -->
+      <div class="paper-source-note" id="paperSourceNote"></div>
+
+      <!-- Compact screen overview (full paper is print/PDF only) -->
+      <div class="paper-overview" id="paperOverview"></div>
+
+      <!-- Full exam paper; hidden on screen, shown when printing -->
       <div class="paper-body" id="paperBody"></div>
 
     </div>
