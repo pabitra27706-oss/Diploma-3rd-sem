@@ -130,7 +130,7 @@ function renderOverview(container, data) {
   const introTitle = document.createElement('strong');
   introTitle.textContent = 'Screen overview';
   const introText = document.createElement('span');
-  introText.textContent = ' Full question wording, options, code, and subparts are in the printable exam paper.';
+  introText.textContent = ' MCQ options and code snippets are shown below. Use Print / Save as PDF for the complete exam paper with full wording, subparts, and print layout.';
   intro.appendChild(introTitle);
   intro.appendChild(introText);
   container.appendChild(intro);
@@ -167,9 +167,9 @@ function renderOverview(container, data) {
       num.className = 'overview-num';
       num.textContent = q.sourceNumber || `${i + 1}`;
 
-      const text = document.createElement('span');
+      const text = document.createElement('div');
       text.className = 'overview-text';
-      text.textContent = summarizeQuestion(q);
+      appendOverviewContent(text, q);
 
       const marks = document.createElement('span');
       marks.className = 'overview-marks';
@@ -244,6 +244,64 @@ function summarizeQuestion(q) {
   if (!text && q.topic) text = q.topic;
   if (text.length > 120) text = text.slice(0, 117).trim() + '…';
   return text || 'Question';
+}
+
+function appendOverviewContent(container, q) {
+  const summary = document.createElement('div');
+  summary.className = 'overview-summary';
+  summary.textContent = summarizeQuestion(q);
+  container.appendChild(summary);
+
+  const questionText = String(q.question || '');
+  const subpartText = Array.isArray(q.subparts)
+    ? q.subparts.map(sp => (sp && sp.text) ? String(sp.text) : '').join('\n')
+    : '';
+  const sourceText = [questionText, subpartText].filter(Boolean).join('\n');
+  const codeBlocks = extractOverviewCodeBlocks(sourceText);
+
+  if (codeBlocks.length > 0) {
+    codeBlocks.forEach(code => {
+      const pre = document.createElement('pre');
+      pre.className = 'overview-code';
+      pre.textContent = code;
+      container.appendChild(pre);
+    });
+  } else if (looksLikeCode(questionText)) {
+    const pre = document.createElement('pre');
+    pre.className = 'overview-code';
+    pre.textContent = questionText.trim();
+    container.appendChild(pre);
+  }
+
+  const options = normalizeOptions(q);
+  if (options.length > 0) {
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'overview-options';
+    options.forEach(opt => {
+      const option = document.createElement('div');
+      option.className = 'overview-option';
+      option.textContent = `${opt.key}) ${opt.text}`;
+      optionsDiv.appendChild(option);
+    });
+    container.appendChild(optionsDiv);
+  }
+}
+
+function extractOverviewCodeBlocks(text) {
+  const blocks = [];
+  const pattern = /```[ \t]*[A-Za-z0-9+#_-]*[ \t]*\r?\n?([\s\S]*?)```/g;
+  let match;
+  while ((match = pattern.exec(String(text || ''))) !== null) {
+    const code = match[1].trim();
+    if (code) blocks.push(code);
+  }
+  return blocks;
+}
+
+function looksLikeCode(text) {
+  const value = String(text || '');
+  if (!value.includes('\n')) return false;
+  return /(\b(?:printf|scanf|#include|#define|main\(|def |print\(|import |return|class )|[{;]|\b(?:int|float|char|void)\s+\w)/.test(value);
 }
 
 // ─── Render with paperFormat ─────────────────────────────
