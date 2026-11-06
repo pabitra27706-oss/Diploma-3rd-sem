@@ -147,8 +147,13 @@ function renderOverview(container, data) {
 
     const meta = document.createElement('div');
     meta.className = 'overview-meta';
-    meta.textContent =
-      `${group.totalSet} question${group.totalSet === 1 ? '' : 's'} · answer any ${group.answerAny} · ${group.marksEach} mark${group.marksEach === 1 ? '' : 's'} each · ${group.maxMarks} marks total`;
+    if (Array.isArray(group.sections) && group.sections.length > 0) {
+      meta.textContent =
+        `${group.totalSet} question${group.totalSet === 1 ? '' : 's'} · answer any ${group.answerAny} · mixed marks by section · ${group.maxMarks} marks total`;
+    } else {
+      meta.textContent =
+        `${group.totalSet} question${group.totalSet === 1 ? '' : 's'} · answer any ${group.answerAny} · ${group.marksEach} mark${group.marksEach === 1 ? '' : 's'} each · ${group.maxMarks} marks total`;
+    }
     card.appendChild(meta);
 
     const list = document.createElement('ol');
@@ -204,6 +209,7 @@ function buildOverviewGroups(data) {
         answerAny,
         marksEach,
         maxMarks: group.maxMarks || marksEach * answerAny,
+        sections: Array.isArray(group.sections) ? group.sections : null,
         questions
       };
     }).filter(group => group.questions.length > 0);
@@ -319,8 +325,15 @@ function renderWithFormat(container, data) {
     const choiceNote = group.answerAny && group.totalSet
       ? ` · answer any ${group.answerAny} of ${group.totalSet}`
       : '';
-    marksNote.textContent =
-      `[${group.marksEach || groupQuestions[0].marks} × ${group.answerAny || groupQuestions.length} = ${group.maxMarks || (group.marksEach || groupQuestions[0].marks) * (group.answerAny || groupQuestions.length)}]${choiceNote}`;
+    if (Array.isArray(group.sections) && group.sections.length > 0) {
+      const sectionMarks = group.sections.map(s =>
+        `${s.marksEach} × ${s.answerAny} = ${s.maxMarks}`
+      ).join(' + ');
+      marksNote.textContent = `[${sectionMarks} = ${group.maxMarks}]${choiceNote}`;
+    } else {
+      marksNote.textContent =
+        `[${group.marksEach || groupQuestions[0].marks} × ${group.answerAny || groupQuestions.length} = ${group.maxMarks || (group.marksEach || groupQuestions[0].marks) * (group.answerAny || groupQuestions.length)}]${choiceNote}`;
+    }
     if (group.markSplit) {
       const split = document.createElement('span');
       split.className = 'group-mark-split';

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Validate PYQ paper data.
 
-Rebuilt papers use ``schemaVersion: pilot-v1``. Legacy papers are checked for
-viewer/practice fallback compatibility and report warnings only.
+All 30 registry papers now use ``schemaVersion: pilot-v1``. Legacy fallback
+compatibility is still checked and reports warnings only.
 
 Usage:
     python3 scripts/validate_pyq.py
@@ -185,8 +185,14 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
 
     is_march_2023 = (
         paper.get("examSession") == "March 2023"
-        and paper.get("paperCode") == "P003"
+        and paper.get("paperCode") in ("P002", "P003")
         and paper.get("year") == 2023
+    )
+    is_march_2021 = (
+        paper.get("examSession") == "March 2021"
+        and paper.get("paperCode") == "P001"
+        and paper.get("year") == 2021
+        and paper.get("month") == "March"
     )
     is_june_2022 = (
         paper.get("examSession") == "June 2022"
@@ -198,11 +204,12 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
         and paper.get("paperCode") == "P006"
         and paper.get("year") == 2026
     )
-    is_ambiguous_regulation = is_march_2023 or is_june_2022 or is_january_2026
+    is_ambiguous_regulation = (is_march_2023 or is_march_2021 or is_june_2022
+                               or is_january_2026)
     expected = {
         "fileName": path.name,
         "regulation": None if is_ambiguous_regulation else "Revised 2022",
-        "fullMarks": 60,
+        "fullMarks": 70 if is_march_2021 else 60,
         "totalQuestions": len(paper.get("questions", [])),
         "sourceStatus": "verified-against-attached-scan",
         "answerKeyStatus": "no-official-key; model answers",
@@ -315,6 +322,26 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
             "sourcePaperCode": "307/5(N)", "scanSetNumber": "5927",
             "sourceFile": "Algorithms .pdf",
         },
+        "CST201-P001-2021-03.json": {
+            "sourcePaperCode": "332(S)", "scanSetNumber": None,
+            "sourceFile": "cs-it-cst-3-sem-c-programming-332-s-mar-2021.pdf",
+        },
+        "CST205-P001-2021-03.json": {
+            "sourcePaperCode": "336(S)", "scanSetNumber": None,
+            "sourceFile": "cst-3-sem-data-structures-336-s-mar-2021.pdf",
+        },
+        "CST207-P001-2021-03.json": {
+            "sourcePaperCode": "337(S)", "scanSetNumber": None,
+            "sourceFile": "cst-3-sem-computer-organisation-and-architecture-337-s-mar-2021.pdf",
+        },
+        "CST203-P002-2023-03.json": {
+            "sourcePaperCode": "307/2(N)", "scanSetNumber": None,
+            "sourceFile": "cst-3-sem-scripting-languages-python-307-2-n-mar-2023.pdf",
+        },
+        "CST209-P002-2023-03.json": {
+            "sourcePaperCode": "307/5(N)", "scanSetNumber": None,
+            "sourceFile": "cst-3-sem-algorithms-307-5-n-mar-2023.pdf",
+        },
     }
     exact = exact_by_file.get(path.name)
     if exact:
@@ -344,6 +371,16 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
                 "monthNumber": 1,
                 "duration": "2.5 Hours",
                 "regulation": None,
+            })
+        elif is_march_2021:
+            exact.update({
+                "examSession": "March 2021",
+                "year": 2021,
+                "month": "March",
+                "monthNumber": 3,
+                "duration": "3 Hours",
+                "regulation": None,
+                "fullMarks": 70,
             })
         else:
             exact.update({
@@ -388,23 +425,47 @@ def validate_pilot_format(paper: dict, path: Path, report: Report) -> dict:
             qids = []
         if group.get("totalSet") != len(qids):
             report.error(f"{label}: Group {gid} totalSet={group.get('totalSet')} but questionIds has {len(qids)}")
-        if group.get("maxMarks") != group.get("marksEach", 0) * group.get("answerAny", 0):
-            report.error(f"{label}: Group {gid} maxMarks does not equal marksEach × answerAny")
-        if isinstance(group.get("marksFilter"), list) and group["marksFilter"] != [group.get("marksEach")]:
-            report.error(f"{label}: Group {gid} marksFilter must match marksEach")
         if not group.get("instruction") or not group.get("groupLabel") or not group.get("markSplit"):
             report.error(f"{label}: Group {gid} missing groupLabel/instruction/markSplit")
 
-        if isinstance(group.get("sections"), list):
-            for sec in group["sections"]:
+        sections = group.get("sections")
+        if isinstance(sections, list) and sections:
+            section_qids: list[str] = []
+            section_marks = 0
+            section_answers = 0
+            section_sets = 0
+            section_mark_values = set()
+            for sec in sections:
                 if not isinstance(sec, dict):
                     report.error(f"{label}: Group {gid} has a non-object section")
                     continue
                 if sec.get("maxMarks") != sec.get("marksEach", 0) * sec.get("answerAny", 0):
                     report.error(f"{label}: Group {gid} section {sec.get('id')} maxMarks mismatch")
-                qids = sec.get("questionIds")
-                if isinstance(qids, list) and sec.get("totalSet") != len(qids):
+                sqids = sec.get("questionIds")
+                if isinstance(sqids, list) and sec.get("totalSet") != len(sqids):
                     report.error(f"{label}: Group {gid} section {sec.get('id')} totalSet mismatch")
+                if isinstance(sqids, list):
+                    section_qids.extend(sqids)
+                    section_sets += len(sqids)
+                section_marks += sec.get("maxMarks", 0)
+                section_answers += sec.get("answerAny", 0)
+                if isinstance(sec.get("marksEach"), int):
+                    section_mark_values.add(sec["marksEach"])
+            if group.get("maxMarks") != section_marks:
+                report.error(f"{label}: Group {gid} maxMarks={group.get('maxMarks')} but sections total {section_marks}")
+            if group.get("answerAny") != section_answers:
+                report.error(f"{label}: Group {gid} answerAny={group.get('answerAny')} but sections total {section_answers}")
+            if group.get("totalSet") != section_sets:
+                report.error(f"{label}: Group {gid} totalSet={group.get('totalSet')} but sections total {section_sets}")
+            if isinstance(group.get("marksFilter"), list) and set(group["marksFilter"]) != section_mark_values:
+                report.error(f"{label}: Group {gid} marksFilter must cover section marks")
+            if sorted(section_qids) != sorted(qids):
+                report.error(f"{label}: Group {gid} section questionIds do not exactly match group questionIds")
+        else:
+            if group.get("maxMarks") != group.get("marksEach", 0) * group.get("answerAny", 0):
+                report.error(f"{label}: Group {gid} maxMarks does not equal marksEach × answerAny")
+            if isinstance(group.get("marksFilter"), list) and group["marksFilter"] != [group.get("marksEach")]:
+                report.error(f"{label}: Group {gid} marksFilter must match marksEach")
 
         if isinstance(group.get("choiceSets"), list):
             for cs in group["choiceSets"]:
@@ -432,6 +493,7 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
     by_id = {q.get("id"): q for q in questions if isinstance(q, dict)}
     assigned: list[str] = []
     group_by_id: dict[str, dict] = {}
+    section_by_id: dict[str, dict] = {}
 
     for group in fmt.get("groups", []):
         qids = group.get("questionIds", [])
@@ -442,6 +504,13 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
                 report.error(f"{label}: Group {group.get('id')} references missing question '{qid}'")
             assigned.append(qid)
             group_by_id[qid] = group
+        for section in group.get("sections", []):
+            if not isinstance(section, dict):
+                continue
+            for qid in section.get("questionIds", []):
+                if qid not in qids:
+                    report.error(f"{label}: Group {group.get('id')} section references question outside the group: '{qid}'")
+                section_by_id[qid] = section
 
     duplicates = [qid for qid, count in Counter(assigned).items() if count > 1]
     if duplicates:
@@ -473,8 +542,10 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
                 report.error(f"{label}: {qid} missing required field '{key}'")
         if q.get("group") != gid:
             report.error(f"{label}: {qid} group='{q.get('group')}' but is listed in Group {gid}")
-        if q.get("marks") != group.get("marksEach"):
-            report.error(f"{label}: {qid} marks={q.get('marks')}, expected {group.get('marksEach')}")
+        section = section_by_id.get(qid)
+        expected_marks = section.get("marksEach") if section else group.get("marksEach")
+        if q.get("marks") != expected_marks:
+            report.error(f"{label}: {qid} marks={q.get('marks')}, expected {expected_marks}")
         if not q.get("answer"):
             report.error(f"{label}: {qid} has no answer")
         if q.get("answerStatus") != "model-answer":
@@ -517,7 +588,7 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
                 entries = option_entries(q)
                 if correct_index(q, entries) < 0:
                     report.error(f"{label}: {qid} correct='{q.get('correct')}' does not resolve")
-            if group.get("marksEach") == 2 and q.get("markSplit") != "1+1":
+            if expected_marks == 2 and q.get("markSplit") != "1+1":
                 report.error(f"{label}: {qid} markSplit must be '1+1' for 2-mark MCQs")
         elif qtype in ("theory", "short", "program", "numerical"):
             subparts = q.get("subparts")
@@ -635,7 +706,10 @@ def main() -> int:
     if report.errors:
         print("RESULT: FAIL — rebuilt-paper schema errors must be fixed")
         return 1
-    print("RESULT: PASS — rebuilt papers valid; legacy warnings are non-fatal fallback-compatibility notes")
+    if legacy_count:
+        print("RESULT: PASS — rebuilt papers valid; legacy fallback warnings are non-fatal compatibility notes")
+    else:
+        print("RESULT: PASS — all 30 registry papers are rebuilt and schema-valid")
     return 0
 
 

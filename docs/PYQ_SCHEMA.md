@@ -1,6 +1,6 @@
 # PYQ paper schema — rebuilt-paper `v1`
 
-This document describes the schema used by rebuilt papers. The first pilot was December 2024 Python; the January 2024 batch applied it to five more papers, the December 2024 follow-up applied it to the remaining four subjects, the March 2023 batch applied it to five attached scans, the June 2022 batch added a three-group A/B/C format, and the January 2026 batch added five new `P006` registry papers:
+This document describes the schema used by rebuilt papers. The first pilot was December 2024 Python; the January 2024 batch applied it to five more papers, the December 2024 follow-up applied it to the remaining four subjects, the March 2023 batch applied it to five attached scans, the June 2022 batch added a three-group A/B/C format, the January 2026 batch added five new `P006` registry papers, and the final legacy batch rebuilt the last five records from newly attached WBSCTE PDFs:
 
 - Pilot paper: `_data/CST203/CST203-P005-2024-12.json`
 - January 2024 batch: `_data/CST{201,203,205,207,209}/*-P004-2024-01.json`
@@ -8,6 +8,8 @@ This document describes the schema used by rebuilt papers. The first pilot was D
 - March 2023 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P003-2023-03.json`
 - June 2022 attached-scan batch: `_data/CST201/CST201-P002-2022-06.json`, `_data/CST203/CST203-P001-2022-06.json`, `_data/CST205/CST205-P002-2022-06.json`, `_data/CST207/CST207-P002-2022-06.json`, `_data/CST209/CST209-P001-2022-06.json`
 - January 2026 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P006-2026-01.json`
+- March 2021 `(S)` attached scans: `_data/CST201/CST201-P001-2021-03.json`, `_data/CST205/CST205-P001-2021-03.json`, `_data/CST207/CST207-P001-2021-03.json`
+- March 2023 `P002` duplicate attached scans: `_data/CST203/CST203-P002-2023-03.json`, `_data/CST209/CST209-P002-2023-03.json`
 - Registry entry: `_data/CST203/registry.json` → `P005`
 - Source: user-attached `Python, Dec 2024.pdf`
 - Printed paper code: `307/2(N)`
@@ -15,7 +17,7 @@ This document describes the schema used by rebuilt papers. The first pilot was D
 - Session: December 2024, 3 hours, full marks 60
 - Schema: `pilot-v1`
 
-Twenty-five papers are rebuilt so far; the five remaining legacy records are intentionally left in their legacy format for now. They continue to work through the viewer/practice fallback paths. March 2023 papers use 25 one-mark Group A MCQs (answer any 20) plus nine eight-mark Group B questions (answer any five), `2.5 Hours`. June 2022 papers use Group A (Q1 MCQs, Q2 fill-in-the-blanks, Q3 short answers; answer any 10 from each section), Group B (Q4, answer any six at 2 marks), and Group C (Q5–Q7, answer any one of three 6-mark alternatives from each question), `3 Hours`. January 2026 papers use 15 two-mark Group A MCQs (answer any 10; 1 mark for the answer and 1 mark for the explanation) plus nine eight-mark Group B questions (answer any five), `2.5 Hours`. All June 2022 Group C alternatives are separate question objects with `choiceSet` metadata. March 2023, June 2022, and January 2026 use `regulation: null`; for January 2026 the attached scans do not explicitly print a regulation, so it is not inferred from the separate syllabus PDF.
+All 30 registry papers are rebuilt; no legacy-format paper records remain, though the viewer/practice fallback paths are retained for compatibility. March 2023 papers use 25 one-mark Group A MCQs (answer any 20) plus nine eight-mark Group B questions (answer any five), `2.5 Hours`. June 2022 papers use Group A (Q1 MCQs, Q2 fill-in-the-blanks, Q3 short answers; answer any 10 from each section), Group B (Q4, answer any six at 2 marks), and Group C (Q5–Q7, answer any one of three 6-mark alternatives from each question), `3 Hours`. January 2026 papers use 15 two-mark Group A MCQs (answer any 10; 1 mark for the answer and 1 mark for the explanation) plus nine eight-mark Group B questions (answer any five), `2.5 Hours`. The March 2021 `(S)` papers use a compulsory Q1 with two `sections`: a 2-mark answer-any-five section and a 1-mark MCQ answer-any-ten section (or the swapped 1-mark MCQ / 2-mark short-answer order in CST205/CST207), followed by 10-mark long-answer questions, `3 Hours`, full marks 70. The two March 2023 `P002` duplicates use the same Group A/Group B structure as canonical `P003` but are sourced from the newly attached WBSCTE PDF reprints; those reprints show no printed scan/set number, so `scanSetNumber` is `null`. All June 2022 Group C alternatives are separate question objects with `choiceSet` metadata. March 2021, March 2023, June 2022, and January 2026 use `regulation: null`; for January 2026 the attached scans do not explicitly print a regulation, so it is not inferred from the separate syllabus PDF.
 
 ---
 
@@ -64,14 +66,14 @@ Do not present these as official WBSCTE answers.
 |---|---|
 | `subject`, `paperIndex`, `paperCode`, `fileName` | Existing repository identity fields |
 | `sourcePaperCode` | Printed paper code, e.g. `307/2(N)` |
-| `examSession`, `scanSetNumber`, `regulation` | Session, printed scan/set number, and regulation/cohort label; March 2023, June 2022, and January 2026 use `null` for regulation |
+| `examSession`, `scanSetNumber`, `regulation` | Session, printed scan/set number, and regulation/cohort label; March 2021, March 2023, June 2022, and January 2026 use `null` for regulation; `scanSetNumber` is `null` when the attached PDF prints no set number |
 | `year`, `month`, `monthNumber` | Existing date fields |
 | `duration`, `fullMarks`, `totalQuestions` | Exam metadata and actual number of question objects |
 | `sourceFile`, `sourceStatus`, `sourceNote` | Provenance and verification details |
 | `answerKeyStatus` | Explicit disclaimer that answers are model answers |
 | `schemaVersion` | `pilot-v1`; enables strict validation |
 | `paperFormat` | Group/choice/marks metadata |
-| `questions` | 23 objects in older Jan/Dec papers (15 Group A + 8 Group B; CST207 Dec has 14 + 8); 34 objects in March 2023 papers (25 Group A + 9 Group B); 62–66 objects in June 2022 papers; 24 objects in January 2026 papers (15 Group A + 9 Group B) |
+| `questions` | 23 objects in older Jan/Dec papers (15 Group A + 8 Group B; CST207 Dec has 14 + 8); 34 objects in March 2023 `P002`/`P003` papers (25 Group A + 9 Group B); 62–66 objects in June 2022 papers; 24 objects in January 2026 papers (15 Group A + 9 Group B); 25–28 objects in March 2021 `(S)` papers (mixed-mark Q1 sections + 10-mark long answers) |
 
 ---
 
@@ -124,8 +126,8 @@ All pilot questions include the legacy fields plus:
 
 | Field | Meaning |
 |---|---|
-| `group` | `A` or `B` |
-| `sourceNumber` | Printed source number, e.g. `i`, `2`, `9` |
+| `group` | `A`, `B`, or `C`; March 2021 Group A is split into `paperFormat.groups[].sections` with per-section marks |
+| `sourceNumber` | Printed source number, e.g. `i`, `2`, `9`; section-prefixed values such as `Q1A(i)` / `Q1B(i)` keep the source numbers unique within Group A |
 | `sourcePage` | Attached PDF page and source question number |
 | `sourceStatus` | `verified-against-attached-scan` |
 | `answerStatus` | `model-answer` |
@@ -152,7 +154,7 @@ All pilot questions include the legacy fields plus:
 }
 ```
 
-`correct` accepts a letter/key (`"B"`) in the pilot. The UI also accepts numeric indices and legacy string-array options. Older Jan/Dec and January 2026 MCQs are 2 marks with `markSplit: "1+1"`; March 2023 and June 2022 Q1 MCQs are 1 mark with `markSplit: "1"`; June 2022 short answers and Q5–Q7 alternatives use single whole-mark splits.
+`correct` accepts a letter/key (`"B"`) in the pilot. The UI also accepts numeric indices and legacy string-array options. Older Jan/Dec and January 2026 MCQs are 2 marks with `markSplit: "1+1"`; March 2023 and June 2022 Q1 MCQs are 1 mark with `markSplit: "1"`; March 2021 one-mark MCQs use `markSplit: "1"` while its 2-mark program/short answers use `markSplit: "2"`; June 2022 short answers and Q5–Q7 alternatives use single whole-mark splits.
 
 ### Group B — subjective
 
@@ -217,11 +219,13 @@ The exam-paper viewer renders `subparts` with their printed mark splits. Practic
 | January 2024, all five subjects (`P004`) | Done — 5 papers, 115 questions |
 | December 2024, remaining four subjects (`P005`) | Done — 4 papers, 95 questions; CST207 has 14 MCQs as printed |
 | March 2023 attached scans (`CST201`, `CST203`, `CST205`, `CST207`, `CST209` / `P003`) | Done — 5 papers, 170 questions; 25 one-mark MCQs + 9 theory questions each |
-| March 2023 duplicate/mislabelled mappings | Canonical `P003` entries rebuilt from attached scans; `2235`, `3013`, `526` recorded as scan/set numbers; duplicate `P002` legacy records left untouched |
+| March 2023 duplicate/mislabelled mappings | Canonical `P003` entries rebuilt from attached scans; `2235`, `3013`, `526` recorded as scan/set numbers; duplicate `P002` records now also rebuilt from the newly attached WBSCTE PDFs, with `scanSetNumber: null` |
 | March 2023 Algorithms (`CST209`) | Done after user supplied `Algorithms, March 2023.pdf`; generic `Algorithms .pdf` is January 2026 and was not used |
 | June 2022 attached scans (`CST201` / `P002`, `CST203` / `P001`, `CST205` / `P002`, `CST207` / `P002`, `CST209` / `P001`) | Done — 5 papers, 321 questions; A/B/C format, 3 Hours, full marks 60; `regulation: null`; printed set numbers `1459`, `1438`, `1441`, `1466`, `1455`; all Q5–Q7 a/b/c alternatives separately modeled |
-| Papers without attached scans | Paused; user chose to supply/stop for scans before touching them |
+| Papers without attached scans | All five now supplied and rebuilt; no unscanned legacy records remain |
 | January 2026 attached PDFs (`CST{201,203,205,207,209}` / `P006`) | Done — 5 new registry papers, 120 questions; 15 two-mark MCQs + 9 theory questions each, 2.5 Hours, full marks 60; `regulation: null` because no regulation is printed; set numbers `5966`, `5906`, `5933`, `5926`, `5927` |
+| March 2021 `(S)` attached PDFs (`CST201` / `P001`, `CST205` / `P001`, `CST207` / `P001`) | Done — 3 papers, 80 questions; mixed-mark compulsory Q1 sections + 10-mark long answers, 3 Hours, full marks 70; `regulation: null`; printed paper codes `332(S)`, `336(S)`, `337(S)` |
+| March 2023 `P002` duplicate PDFs (`CST203`, `CST209`) | Done — 2 papers, 68 questions; same 25 MCQ + 9 theory format as canonical `P003`, 2.5 Hours, full marks 60; `regulation: null`; no printed set number in the attached reprints |
 
 ## Validation
 
@@ -232,20 +236,20 @@ python3 scripts/validate_pyq.py
 The validator:
 
 - checks all five registries and all 30 paper JSON files
-- strictly validates all 25 `pilot-v1` papers, their group/section/choice-set math, question coverage, MCQ options/correct values, subpart mark sums, provenance, and no-official-key disclaimer
-- allows March 2023, June 2022, and January 2026 `regulation: null` while still requiring `"Revised 2022"` for Jan/Dec 2024 papers
-- checks exact source-file, paper-code, and scan/set-number identity for Dec 2024, all five March 2023 papers, all five June 2022 papers, and all five January 2026 papers
+- strictly validates all 30 `pilot-v1` papers, their group/section/choice-set math, question coverage, MCQ options/correct values, subpart mark sums, provenance, and no-official-key disclaimer
+- allows March 2021, March 2023, June 2022, and January 2026 `regulation: null` while still requiring `"Revised 2022"` for Jan/Dec 2024 papers
+- checks exact source-file, paper-code, and scan/set-number identity for Dec 2024, March 2023, June 2022, January 2026, and all five final legacy records; `scanSetNumber: null` is accepted where the attached PDF prints no set number
 - checks that registry entries do not mistake printed scan/set numbers for paper codes
-- checks all legacy papers for viewer/practice fallback compatibility
-- reports legacy inconsistencies as **warnings**, not errors
+- retains legacy viewer/practice fallback compatibility checks; there are no remaining legacy-format paper records
+- reports any fallback inconsistencies as **warnings**, not errors
 
 A successful run ends with:
 
 ```text
-RESULT: PASS — rebuilt papers valid; legacy warnings are non-fatal fallback-compatibility notes
+RESULT: PASS — all 30 registry papers are rebuilt and schema-valid
 ```
 
-Known legacy warnings are deliberately non-fatal at this stage: declared-vs-actual `totalQuestions` mismatches and a legacy image path.
+No legacy `totalQuestions` mismatch or missing-image warnings remain after the final batch.
 
 ---
 
@@ -253,10 +257,9 @@ Known legacy warnings are deliberately non-fatal at this stage: declared-vs-actu
 
 This staged rebuild does **not**:
 
-- rebuild the remaining five legacy papers without user-supplied scans
 - resolve the wider legacy vs Revised-2022 regulation ambiguity
 - silently normalize the CST209 Unit 5 or credit/hour conflicts between the attached syllabus and other evidence
-- merge legacy `(S)`, special `305-*`/`307-S-N`, or January 2026 cohorts into regular-paper evidence
+- merge the March 2021 `(S)`, special `305-*`/`307-S-N`, or January 2026 cohorts into regular-paper evidence
 - claim 100% verbatim accuracy; all answers are model answers and official keys were not supplied
 
 Those remain separate evidence categories for a later, separately approved expansion.
