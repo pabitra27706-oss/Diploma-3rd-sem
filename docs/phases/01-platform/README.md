@@ -1,6 +1,6 @@
 # Phase 1 — Platform and deploy integrity
 
-**Status:** 📋 planned · **Parts:** 6 · **Depends on:** 0 · **Owner gates:** none (no deploy)
+**Status:** ✅ platform implementation complete (full syllabus-strict subtask deferred per recorded Phase 2 decision; see record.md) · **Parts:** 6 · **Depends on:** 0 · **Owner gates:** none (no deploy)
 
 ## Goal
 

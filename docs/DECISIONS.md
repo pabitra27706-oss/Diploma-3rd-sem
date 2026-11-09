@@ -92,3 +92,5 @@
 - Whether a custom domain is ever intended (changes the base path).
 - Whether the six empty PWA icons are replaced by generated artwork or by a
   single icon at two sizes (design decision, Phase 1).
+
+- 2026-11-09 — Phase 1 implementation: reuse Font Awesome Free 6.5.1 locally (upstream licenses retained); deterministic stdlib metadata generator and custom geometric PWA icons. No runtime dependencies added. Strict site/platform gates replace baseline CI. Full syllabus coverage remains advisory per the existing Phase 2 decision, despite the contradictory Phase 1 task; seven source-gated tags were not edited.

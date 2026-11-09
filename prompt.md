@@ -12,7 +12,7 @@
 
 - Site: Diploma 3rd Semester — CST Study Hub
 - Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch
-  `arena/6b499a13-diploma-3rd-sem`
+  `arena/e7d831f7-diploma-3rd-sem`
 - Live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/` ·
   **base path `/Diploma-3rd-sem/`**
 - Stack: zero-build static HTML/CSS/JS + JSON + service worker, GitHub Pages
@@ -60,21 +60,28 @@
   (no third-party analytics); domain = readiness only, no purchase.
 - **Open gates:** license (MIT/GPL-3.0), content verification per batch
   (Phase 2.5 / 8.6), deploy (never requested), domain purchase (not requested).
-- Next: **phase 1 — Platform and deploy integrity** — parts 1.1 base-path sweep;
-  1.2 PWA shell; 1.3 install/update UX; 1.4 link, sprite, dead-file repair;
-  1.5 web presence (404/robots/sitemap/canonical/OG); 1.6 CI strict.
+- **Phase 1 platform implementation ✅ (2026-11-09):** scope-relative manifest/SW,
+  six real icons, install/update controller, link/sprite repairs, locally hosted
+  Font Awesome 6.5.1, 404, generated sitemap/robots/metadata, real before/after
+  screenshots, strict site/platform CI. `check_site.py --strict`: 0 errors,
+  97 warnings, 0 root-relative. PYQ/JSON/JS/platform checks pass. Headless Chromium
+  offline and waiting-worker update tests pass; real phone/iOS install and social
+  unfurl remain unverified. No deploy/PR/merge.
+- **Explicit unresolved subtask:** full syllabus `--strict` still fails on seven
+  existing Unit-5 records in four-unit courses. Coverage remains advisory per
+  the recorded Phase 2 decision; no source-gated content changed. Not a full
+  syllabus-strict success or an owner waiver.
+- Next: **phase 2 — Truthful data pipeline** (all six parts).
 
 ## How to continue
 
-1. Read `docs/phases/01-platform/README.md` and `tasks.md`, then
-   `docs/ROADMAP.md`, `docs/DECISIONS.md`, `docs/DESIGN.md`, `docs/AUDIT.md` —
-   trust the repo, not memory.
-2. Create `docs/phases/01-platform/record.md` from
-   `webflow/templates/docs-system/PHASE_RECORD.md` at the start.
-3. Implement all six parts, evidence-first, one area at a time; screenshot the
-   touched areas before and after.
-4. End with: `check_site.py --strict` → 0 errors and 0 root-relative paths ·
-   `validate_pyq.py` PASS · `validate_syllabus.py` run · JS/JSON parse clean ·
-   `site-preview` artifact · record written (including what could not be
-   verified without a browser) · roadmap row ✅ · this file updated · short
-   report · **the next-chat prompt printed in chat** · stop at the deploy gate.
+1. Read `docs/phases/02-data-pipeline/{README.md,tasks.md}`, the Phase 1 record,
+   `docs/ROADMAP.md`, `docs/DECISIONS.md`, `docs/DESIGN.md`, `docs/AUDIT.md`.
+2. Create Phase 2 `record.md` from the phase-record template before implementation.
+3. Implement 2.1 validator; 2.2 practice-day map; 2.3 computed counts/unit maps;
+   2.4 duplicate provenance; 2.5 answer-key coverage (owner verification gate);
+   2.6 bank currency. Never invent or retag answers without source verification.
+4. Keep strict site/platform checks green, run all validators and JS/JSON parse,
+   capture evidence, update docs and this prompt; print next-chat prompt in chat.
+   Stop at deploy gate. Read the Phase 1 record for browser limitations and the
+   unresolved full-syllabus-strict acceptance subtask.

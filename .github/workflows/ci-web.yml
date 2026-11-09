@@ -77,10 +77,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Baseline mode: the report is the gate evidence and the summary below.
-          # Flip to --strict once the WARN debt tracked in docs/ROADMAP.md is zero;
-          # ERRORS are already real breakage and are listed in the summary.
-          python3 scripts/check_site.py --report site-check.txt
+          python3 scripts/check_site.py --strict --report site-check.txt
           {
             echo "### Site check"
             echo '```'
@@ -90,15 +87,19 @@ jobs:
             echo "Full report: the \`site-check\` artifact (or the job log)."
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Fail on unresolved links if the tree is clean
-        shell: bash
+      - name: Platform integrity and deterministic generated files
+        run: python3 scripts/check_platform.py
+
+      - name: Data validator (when introduced in Phase 2)
         run: |
-          set -euo pipefail
-          errors=$(head -n 1 site-check.txt | sed -E 's/site-check: ([0-9]+) error.*/\1/')
-          echo "errors=$errors"
-          if [ "$errors" != "0" ]; then
-            echo "::warning::$errors unresolved reference(s) — tracked in docs/ROADMAP.md. CI flips to strict in the phase that clears them."
+          if [ -f scripts/validate_data.py ]; then
+            python3 scripts/validate_data.py
           fi
+
+      - name: Asset budgets summary
+        run: |
+          python3 scripts/report_budgets.py > budgets.txt
+          cat budgets.txt >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload the downloadable site preview
         uses: actions/upload-artifact@v4
