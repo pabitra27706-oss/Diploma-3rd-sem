@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../assets/css/pwa.css">
 
 
+<script defer src="../assets/js/data-catalog.js"></script>
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/quiz/setup.html">
@@ -245,12 +246,12 @@
               <option value="CST201">Computer Programming in C</option>
               <option value="CST203">Scripting Languages (Python)</option>
               <option value="CST205">Data Structures</option>
-              <option value="CST207">Computer System Organization</option>
+
               <option value="CST209">Algorithms</option>
               <option value="all">All Subjects Mix</option>
             </select>
             <span class="form-hint" id="subject-hint">
-              "All Subjects Mix" draws from every subject randomly
+              "All Subjects Mix" draws only from subjects with a quiz bank. CST207 is unavailable until a verified bank exists.
             </span>
             <span class="form-error" id="subject-error" role="alert">
               Please select a subject
@@ -452,41 +453,7 @@
               <div class="filter-group">
                 <p class="filter-group-label" id="source-group-label">Source</p>
                 <div class="filter-chips" role="group" aria-labelledby="source-group-label">
-                  <label class="chip-label">
-                    <input type="radio" name="source" value="all" checked />
-                    <span class="chip">All Sources</span>
-                  </label>
-                  <label class="chip-label">
-                    <input type="radio" name="source" value="PYQ" />
-                    <span class="chip">
-                      <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
-                           fill="none" stroke="currentColor" stroke-width="2"
-                           stroke-linecap="round" stroke-linejoin="round"
-                           aria-hidden="true">
-                        <polyline points="21 8 21 21 3 21 3 8"/>
-                        <rect x="1" y="3" width="22" height="5"/>
-                        <line x1="10" y1="12" x2="14" y2="12"/>
-                      </svg>
-                      PYQ Only
-                    </span>
-                  </label>
-                  <label class="chip-label">
-                    <input type="radio" name="source" value="original" />
-                    <span class="chip">
-                      <svg class="icon chip-icon" width="14" height="14" viewBox="0 0 24 24"
-                           fill="none" stroke="currentColor" stroke-width="2"
-                           stroke-linecap="round" stroke-linejoin="round"
-                           aria-hidden="true">
-                        <path d="M12 2l1.09 3.26L16.36 6l-3.27 1.09L12 10.36
-                                 l-1.09-3.27L7.64 6l3.27-1.09L12 2z"/>
-                        <path d="M5 15l.54 1.63L7.18 17l-1.64.54L5 19.18
-                                 l-.54-1.64L2.82 17l1.64-.54L5 15z"/>
-                        <path d="M19 11l.54 1.63L21.18 13l-1.64.54L19 15.18
-                                 l-.54-1.64L16.82 13l1.64-.54L19 11z"/>
-                      </svg>
-                      Original Only
-                    </span>
-                  </label>
+                  <!-- Source choices are derived from the loaded quiz bank. -->
                 </div>
               </div>
 
@@ -560,15 +527,9 @@
                   aria-describedby="year-hint"
                 >
                   <option value="">All Years (no filter)</option>
-                  <option value="2024">2024</option>
-                  <option value="2023">2023</option>
-                  <option value="2022">2022</option>
-                  <option value="2021">2021</option>
-                  <option value="2020">2020</option>
-                  <option value="2019">2019</option>
-                </select>
+                  </select>
                 <span class="form-hint" id="year-hint">
-                  Selecting a year shows only PYQ from that year
+                  Years and sources come from available quiz data; empty combinations are disabled.
                 </span>
               </div>
 
@@ -951,7 +912,9 @@
           Questions will be loaded when the quiz starts
         </p>
 
-      </form>
+      <p id="data-availability" role="status">Loading question inventory…</p>
+<p>Non-MCQ items have no verified key — not graded. Some unit mappings are under source review; January 2026 remains in PYQ/Practice pending review.</p>
+</form>
     </div>
   </main>
 

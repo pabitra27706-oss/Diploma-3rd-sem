@@ -123,7 +123,12 @@ let _subjectModalOver = null;
    INIT
 ══════════════════════════════════════════════════════════════ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  try { await loadQuizCatalog(); } catch {
+    const grid = qs('#subjects-grid');
+    if (grid) grid.textContent = 'Question inventory unavailable. Reconnect and reload; no empty quiz will be offered.';
+    return;
+  }
   renderSubjectCards();
   renderHistoryList();
   renderStats();
@@ -281,7 +286,7 @@ function closeSubjectModal() {
 function renderSubjectOptions(container, presetKey) {
   const list = createElement('div', 'subject-option-list');
 
-  Object.values(SUBJECTS).forEach(sub => {
+  availableQuizSubjects().forEach(sub => {
     const btn = document.createElement('button');
     btn.className = 'subject-option-btn';
     btn.setAttribute('aria-label', `Select ${sub.name}`);
@@ -388,8 +393,11 @@ function renderSubjectCards() {
   if (!grid) return;
 
   grid.innerHTML = '';
+  const note = document.createElement('p');
+  note.textContent = 'CST207: no quiz bank yet (paper questions remain available in Practice). January 2026 questions await source/key review before quiz import.';
+  grid.append(note);
 
-  Object.values(SUBJECTS).forEach(sub => {
+  availableQuizSubjects().forEach(sub => {
     const card = document.createElement('div');
     card.className = 'subject-card';
     card.setAttribute('role', 'listitem');
@@ -400,6 +408,7 @@ function renderSubjectCards() {
       <div class="subject-card-meta">
         <span class="tag">${sub.units} Units</span>
         <span class="tag">${sub.credits} Credits</span>
+        <span class="tag">${sub.quizCount} questions</span>
       </div>
       <div class="subject-card-actions">
         <button
@@ -532,7 +541,7 @@ function buildHistoryItem(entry) {
     scoreHTML = `
       <div class="history-item-score">
         <span class="history-score-value">—</span>
-        <span class="history-score-label">AI Eval</span>
+        <span class="history-score-label">Not auto-graded</span>
       </div>
     `;
   }

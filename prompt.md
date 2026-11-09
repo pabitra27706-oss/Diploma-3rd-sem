@@ -12,7 +12,7 @@
 
 - Site: Diploma 3rd Semester — CST Study Hub
 - Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch
-  `arena/e7d831f7-diploma-3rd-sem`
+  `arena/be3d9178-diploma-3rd-sem`
 - Live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/` ·
   **base path `/Diploma-3rd-sem/`**
 - Stack: zero-build static HTML/CSS/JS + JSON + service worker, GitHub Pages
@@ -79,7 +79,27 @@
   existing Unit-5 records in four-unit courses. Coverage remains advisory per
   the recorded Phase 2 decision; no source-gated content changed. Not a full
   syllabus-strict success or an owner waiver.
-- Next: **phase 2 — Truthful data pipeline** (all six parts).
+- **Phase 2 🚧 (2026-11-09):** mechanical pipeline implemented, **not complete**.
+  `scripts/{build_data_catalog,build_practice_days,validate_data}.py`, generated
+  `_data/{catalog,practice-days}.json`, data review docs, safe no-key scoring/UI,
+  runtime counts and actual bank source/year options. 992 raw IDs preserved;
+  923 exact-unique Practice questions across 10 days (92–93/day), 69 safe aliases.
+  321 generic topics labelled; four count mismatches fixed. 456 non-MCQ quiz keys
+  missing/ungraded; 90 text-only candidate joins, 366 unmatched, **0 imported**.
+  CST207 not offered for quizzes; 120 January-2026 PYQs remain in paper/Practice
+  only pending review. Cache version `data-2026-11-09`.
+- **Phase 2 gate:** full data strict FAILS on 10 fingerprinted source-review
+  findings: seven PYQ unit tags, CST209 Unit-5 bank (35 questions), CST201 U3/U4
+  reversed bank mappings. Full syllabus strict FAILS on 3 grouped errors.
+  CI uses exact `--check-baseline` regression checking, **not** strict approval.
+  No new unit/source/answer text invented or retagged. Review
+  `docs/data/source-review-batch-01.md` (first 40 key candidates with citations)
+  and `validation-exceptions.json`. Need explicit owner/source dispositions.
+- Phase 2 checks: site/platform/PYQ PASS (site 0 errors / 97 warnings), 5 unit
+  tests, 23 JS/CJS + 60 JSON parse PASS. Real headless Chromium data/filter/no-key
+  and offline/update regression tests PASS. Screenshots under Phase 2 folder.
+- Next: **continue Phase 2 at source-verification gate**, NOT Phase 3.
+
 
 ## How to continue
 
@@ -88,7 +108,10 @@
 2. Create Phase 2 `record.md` from the phase-record template before implementation.
 3. Implement 2.1 validator; 2.2 practice-day map; 2.3 computed counts/unit maps;
    2.4 duplicate provenance; 2.5 answer-key coverage (owner verification gate);
-   2.6 bank currency. Never invent or retag answers without source verification.
+   2.6 bank currency. The mechanical work is already implemented: do not redo it.
+   Resolve the source-review gate with the owner before applying any question
+   remapping, reprint labels or answer imports; never infer approval from a
+   generic “continue”. Keep Phase 2 in progress until full strict gates pass.
 4. Keep strict site/platform checks green, run all validators and JS/JSON parse,
    capture evidence, update docs and this prompt; print next-chat prompt in chat.
    Stop at deploy gate. Read the Phase 1 record for browser limitations and the

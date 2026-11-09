@@ -486,7 +486,7 @@ function renderCards() {
       <div class="day-number">${isDone ? '✓' : dayData.day}</div>
       <div class="day-info">
         <div class="day-title">Day ${dayData.day} — ${dayData.title}</div>
-        <div class="day-subtitle">${Object.keys(dayData.subjects).length} subjects</div>
+        <div class="day-subtitle">${Object.keys(dayData.subjects).length} subjects · ${dayData.practiceCount ?? "Unavailable"} mixed-revision questions</div>
       </div>
       <div class="day-actions">
         <button class="btn-done" data-key="${key}" aria-label="${isDone ? 'Mark incomplete' : 'Mark complete'}">
@@ -501,6 +501,10 @@ function renderCards() {
     /* ── Body ── */
     const body = document.createElement('div');
     body.className = 'day-body';
+    const practiceLink = document.createElement('a');
+    practiceLink.href = `../practice/session.html?days=${dayData.day}`;
+    practiceLink.textContent = `Practise ${dayData.practiceCount ?? "available"} mixed-revision questions (separate from the reading topics below)`;
+    body.append(practiceLink);
 
     Object.entries(dayData.subjects).forEach(([code, topics]) => {
       const hidden = (activeFilter !== 'all' && activeFilter !== code) ? ' hidden' : '';
@@ -593,7 +597,14 @@ function toggleTheme() {
 /* ============================================================
    INIT
    ============================================================ */
-function init() {
+async function init() {
+  try {
+    const schedule = await StudyData.practiceDays();
+    ROADMAP.forEach(day => {
+      const actual = schedule.days.find(d => d.day === day.day);
+      day.practiceCount = actual?.count;
+    });
+  } catch (error) { console.warn('Practice schedule unavailable', error); }
   initTheme();
   loadProgress();
   renderAll();

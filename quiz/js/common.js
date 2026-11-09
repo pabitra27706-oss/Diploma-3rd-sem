@@ -77,6 +77,28 @@ const UNIT_TITLES = {
   }
 };
 
+
+let QUIZ_CATALOG = null;
+async function loadQuizCatalog() {
+  if (QUIZ_CATALOG) return QUIZ_CATALOG;
+  const catalog = await StudyData.catalog();
+  QUIZ_CATALOG = catalog;
+  Object.entries(catalog.subjects).forEach(([code, meta]) => {
+    if (!SUBJECTS[code]) return;
+    SUBJECTS[code].name = meta.title;
+    SUBJECTS[code].credits = meta.credits;
+    SUBJECTS[code].units = meta.syllabusUnits;
+    SUBJECTS[code].quizCount = meta.quizCount;
+    SUBJECTS[code].available = meta.quizCount > 0;
+    UNIT_TITLES[code] = Object.fromEntries(meta.banks.map(bank => [bank.unit,
+      bank.title + ((code === 'CST201' && [3,4].includes(bank.unit)) || bank.unit > meta.syllabusUnits ? ' — mapping under review' : '')]));
+  });
+  return catalog;
+}
+function availableQuizSubjects() {
+  return Object.values(SUBJECTS).filter(s => s.available === true);
+}
+
 /* ── Question Type Labels ───────────────────────────────────── */
 const QUESTION_TYPES = {
   mcq:       'Multiple Choice',
@@ -146,9 +168,9 @@ function getUnitTitle(subjectCode, unitNumber) {
  */
 function getUnitOptions(subjectCode) {
   if (!SUBJECTS[subjectCode]) return [];
-  const count = SUBJECTS[subjectCode].units;
+  const units = QUIZ_CATALOG?.subjects[subjectCode]?.banks.map(b => b.unit) || [];
   const options = [];
-  for (let i = 1; i <= count; i++) {
+  for (const i of units) {
     options.push({
       value: i,
       label: getUnitTitle(subjectCode, i)
@@ -492,15 +514,11 @@ function filterQuestions(questions, filters) {
     }
 
     // ── Year filter (excludes original if year specified)
-    if (filters.year && filters.year !== null) {
-      if (q.source === 'original') return false;
-      if (q.year && Number(q.year) !== Number(filters.year)) return false;
-    }
+    if (filters.year && Number(q.year) !== Number(filters.year)) return false;
 
     // ── Source filter
     if (filters.source && filters.source !== 'all') {
-      if (filters.source === 'PYQ' && q.source !== 'PYQ') return false;
-      if (filters.source === 'original' && q.source !== 'original') return false;
+      if (q.source !== filters.source) return false;
     }
 
     return true;
@@ -992,7 +1010,7 @@ async function fetchQuestions(subjectCode, unit) {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     // Support both {questions: [...]} and plain array
-    return Array.isArray(data) ? data : (data.questions || []);
+    return (Array.isArray(data) ? data : (data.questions || [])).map(q => ({ ...q, unit: data.unit || Number(unit), subject: subjectCode }));
   } catch (e) {
     console.warn(`Could not load questions for ${subjectCode} unit ${unit}:`, e);
     return [];
@@ -1006,12 +1024,13 @@ async function fetchQuestions(subjectCode, unit) {
  * @returns {Promise<Array>}
  */
 async function fetchMultipleUnits(subjectCode, units) {
+  await loadQuizCatalog();
   const subjectInfo = SUBJECTS[subjectCode];
-  if (!subjectInfo) return [];
+  if (!subjectInfo?.available) return [];
 
   let unitList;
   if (units === 'all') {
-    unitList = Array.from({ length: subjectInfo.units }, (_, i) => i + 1);
+    unitList = QUIZ_CATALOG.subjects[subjectCode].banks.map(bank => bank.unit);
   } else {
     unitList = Array.isArray(units) ? units : [units];
   }
@@ -1027,7 +1046,8 @@ async function fetchMultipleUnits(subjectCode, units) {
  * @returns {Promise<Array>}
  */
 async function fetchAllSubjectQuestions(filters) {
-  const codes = Object.keys(SUBJECTS);
+  await loadQuizCatalog();
+  const codes = availableQuizSubjects().map(s => s.code);
   const promises = codes.map(code =>
     fetchMultipleUnits(code, filters.unit || 'all')
   );
@@ -1076,7 +1096,8 @@ function calculateScore(questions, answers) {
   let incorrect = 0;
   let unanswered = 0;
 
-  questions.forEach(q => {
+  const gradable = questions.filter(q => q.type === 'mcq' && q.options && Object.prototype.hasOwnProperty.call(q.options, q.correct));
+  gradable.forEach(q => {
     const ans = answers[q.id];
     if (!ans) {
       unanswered++;
@@ -1087,10 +1108,10 @@ function calculateScore(questions, answers) {
     }
   });
 
-  const total = questions.length;
+  const total = gradable.length;
   const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
 
-  return { score: correct, total, correct, incorrect, unanswered, percentage };
+  return { score: correct, total, correct, incorrect, unanswered, percentage, ungraded: questions.length - total };
 }
 
 /* ══════════════════════════════════════════════════════════════

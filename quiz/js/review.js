@@ -245,6 +245,8 @@ function buildQuestionCard(q, displayNum) {
     const answerBox = buildTextAnswerBox(q, userAnswer, hasAnswer);
     body.appendChild(answerBox);
 
+    body.appendChild(createElement('p', 'badge badge-neutral', 'No key — not graded'));
+
     // Model answer (collapsible)
     if (q.modelAnswer) {
       const modelBox = buildModelAnswerBox(q);

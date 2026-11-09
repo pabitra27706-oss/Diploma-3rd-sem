@@ -562,8 +562,8 @@ def validate_pilot_questions(paper: dict, path: Path, fmt: dict, report: Report)
             report.error(f"{label}: {qid} unit must be 1-5")
         if q.get("difficulty") not in ("easy", "medium", "hard"):
             report.error(f"{label}: {qid} difficulty must be easy/medium/hard")
-        if q.get("practiceDay") != 1:
-            report.error(f"{label}: {qid} practiceDay must be 1 for a rebuilt batch")
+        if type(q.get("practiceDay")) is not int or not 1 <= q["practiceDay"] <= 10:
+            report.error(f"{label}: {qid} practiceDay must be an integer in 1..10")
         if q.get("year") != paper.get("year") or q.get("month") != paper.get("month") or q.get("monthNumber") != paper.get("monthNumber"):
             report.error(f"{label}: {qid} year/month metadata does not match paper")
         if q.get("paperCode") != paper.get("paperCode") or q.get("paperIndex") != paper.get("paperIndex"):

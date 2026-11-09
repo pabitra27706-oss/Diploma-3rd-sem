@@ -32,7 +32,10 @@ const NUMERIC   = new Set(['units','marks','year','practiceDay']);
 /* ═══════════════════════════════ BOOT */
 document.addEventListener('DOMContentLoaded', async () => {
   initTheme();
-  await loadAllData();
+  try { await loadAllData(); } catch (error) {
+    document.getElementById('load-status').textContent = 'Question inventory unavailable. Reconnect and reload.';
+    console.warn(error); return;
+  }
   hideLoading();
   renderStats();
   renderRoadmapCards();
@@ -65,6 +68,7 @@ function syncThemeIcon(btn, theme) {
 
 /* ═══════════════════════════════ DATA LOADING */
 async function loadAllData() {
+  const { aliases } = await StudyData.catalog();
   const bar    = document.getElementById('load-bar');
   const status = document.getElementById('load-status');
   const total  = SUBJECTS.length;
@@ -73,14 +77,14 @@ async function loadAllData() {
   for (const sub of SUBJECTS) {
     status.textContent = `Fetching ${sub}...`;
     try {
-      const reg = await fetch(`/_data/${sub}/registry.json`).then(r => r.json());
+      const reg = await fetch(`../_data/${sub}/registry.json`).then(r => r.json());
       if (!reg.papers) { loaded++; continue; }
 
       for (const paper of reg.papers) {
         try {
-          const data = await fetch(`/_data/${sub}/${paper.fileName}`).then(r => r.json());
+          const data = await fetch(`../_data/${sub}/${paper.fileName}`).then(r => r.json());
           if (data.questions) {
-            S.all.push(...data.questions.map(q => ({ ...q, subjectCode: sub })));
+            S.all.push(...data.questions.filter(q => !aliases[q.id]).map(q => ({ ...q, subjectCode: sub })));
           }
         } catch (e) { console.warn('Paper error:', e.message); }
       }

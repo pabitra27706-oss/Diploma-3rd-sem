@@ -37,7 +37,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   S.key       = makeKey(S.filters);
   S.startTime = Date.now();
 
-  await loadAll();
+  try { await loadAll(); } catch (error) {
+    document.getElementById('loading-screen').textContent = 'Question inventory unavailable. Reconnect and reload.';
+    console.warn(error); return;
+  }
 
   S.filtered  = applyFilters(S.all, S.filters);
   S.questions = sortQ(S.filtered, 'default');
@@ -70,13 +73,14 @@ function initTheme() {
 
 /* ═══════════════════════════════ DATA */
 async function loadAll() {
+  const { aliases } = await StudyData.catalog();
   for (const sub of SUBJECTS) {
     try {
-      const reg = await fetch(`/_data/${sub}/registry.json`).then(r => r.json());
+      const reg = await fetch(`../_data/${sub}/registry.json`).then(r => r.json());
       for (const paper of reg.papers || []) {
         try {
-          const d = await fetch(`/_data/${sub}/${paper.fileName}`).then(r => r.json());
-          if (d.questions) S.all.push(...d.questions.map(q => ({...q, subjectCode: sub})));
+          const d = await fetch(`../_data/${sub}/${paper.fileName}`).then(r => r.json());
+          if (d.questions) S.all.push(...d.questions.filter(q => !aliases[q.id]).map(q => ({...q, subjectCode: sub})));
         } catch {}
       }
     } catch {}

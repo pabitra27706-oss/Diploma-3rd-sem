@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Syntax — every JS file must parse
         shell: bash
@@ -45,7 +47,7 @@ jobs:
             echo "::error file=$f::JavaScript does not parse"
             node --check "$f" || true
             fail=1
-          done < <(find . -path ./.git -prune -o -path ./node_modules -prune -o -name '*.js' -print0)
+          done < <(find . -path ./.git -prune -o -path ./node_modules -prune -o \( -name '*.js' -o -name '*.cjs' \) -print0)
           echo "JS files checked: $count"
           exit $fail
 
@@ -90,11 +92,12 @@ jobs:
       - name: Platform integrity and deterministic generated files
         run: python3 scripts/check_platform.py
 
-      - name: Data validator (when introduced in Phase 2)
+      - name: Data regression gate (source-verification exceptions pending)
         run: |
-          if [ -f scripts/validate_data.py ]; then
-            python3 scripts/validate_data.py
-          fi
+          # Full --strict remains blocked; accept only the exact fingerprinted
+          # findings in docs/data/validation-exceptions.json, never new errors.
+          python3 scripts/validate_data.py --check-baseline
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Asset budgets summary
         run: |

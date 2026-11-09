@@ -72,6 +72,8 @@
   — The folder-per-phase convention the owner asked for; git history keeps the
   old file.
 
+- 2026-11-09 — Phase 2 reversible implementation: seeded mixed-revision schedule (`diploma-phase2-v1`), exact-content aliases only (no punctuation-stripping semantic merges), raw IDs retained; counts and actual bank filters generated with stdlib. All 456 keyless quiz non-MCQs are missing/ungraded; no answer imported on text similarity. CST207 quiz selection withheld until a verified bank exists. January 2026 stays available in PYQ/Practice, not imported into quiz banks before source/key review. Phase remains in progress; exact fingerprinted regression ledger is not an owner waiver or strict data pass.
+
 ## Third-party licences (everything shipped, per reuse-first §3)
 
 - 2026-11-06 — Font Awesome (CDN, 38 pages) — **not verified in this repo, no

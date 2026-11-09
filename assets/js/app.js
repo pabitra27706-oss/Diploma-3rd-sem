@@ -1724,3 +1724,14 @@ window.APP = {
     getSubjectByCode:  getSubjectByCode
   }
 };
+// Pipeline metadata replaces repeated subject counts, without retagging question content.
+document.addEventListener('DOMContentLoaded', async function() {
+  try {
+    var catalog = await StudyData.catalog();
+    APP_STATE.subjects.forEach(function(subject) {
+      var meta = catalog.subjects[subject.code];
+      if (meta) { subject.units = meta.syllabusUnits; subject.name = meta.title; subject.credits = meta.credits; }
+    });
+    if (!document.getElementById('appContainer')?.classList.contains('hidden')) renderSubjects();
+  } catch (error) { console.warn('Subject counts unavailable', error); }
+});

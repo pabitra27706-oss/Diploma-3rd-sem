@@ -33,6 +33,7 @@ const state = {
 ══════════════════════════════════════════════════════════════ */
 
 let formEl, subjectEl, unitOptionsEl, unitControlsEl;
+let setupQuestions = [];
 let customCountGroup, customCountEl, autoCountInfo, countHiddenEl;
 let timerToggleEl, timerDurationGroup, timerMinEl, timerPreviewEl;
 let summaryBodyEl, summaryStatusEl;
@@ -42,8 +43,18 @@ let setupWarningEl, setupWarningText, setupErrorEl, setupErrorText;
    INIT
 ══════════════════════════════════════════════════════════════ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   cacheDOMRefs();
+  const start = document.getElementById('btn-start-quiz');
+  if (start) start.disabled = true;
+  try {
+    await loadQuizCatalog();
+    setupQuestions = await fetchAllSubjectQuestions({});
+    buildInventoryChoices();
+  } catch {
+    document.getElementById('data-availability').textContent = 'Question inventory unavailable. Reconnect and reload.';
+    return;
+  }
   readURLParams();
   bindAllEvents();
   updateSummary();
@@ -101,13 +112,11 @@ function readURLParams() {
   // Apply unit (after subject rendered)
   if (unit && unit !== 'all') {
     const unitNums = unit.split(',').map(Number).filter(Boolean);
-    setTimeout(() => {
-      unitNums.forEach(u => {
-        const cb = unitOptionsEl?.querySelector(`input[value="${u}"]`);
-        if (cb) cb.checked = true;
-      });
-      state.units = unitNums;
-    }, 50);
+    state.units = [];
+    unitNums.forEach(u => {
+      const cb = unitOptionsEl?.querySelector(`input[value="${u}"]`);
+      if (cb) { cb.checked = true; state.units.push(u); }
+    });
   }
 
   // Mode
@@ -458,14 +467,6 @@ function bindYearFilter() {
   if (!yearEl) return;
   yearEl.addEventListener('change', e => {
     state.year = e.target.value ? parseInt(e.target.value, 10) : null;
-    // If year is set, source must be PYQ
-    if (state.year) {
-      const pyqInput = document.querySelector('input[name="source"][value="PYQ"]');
-      if (pyqInput) {
-        pyqInput.checked = true;
-        state.source = 'PYQ';
-      }
-    }
     updateSummary();
   });
 }
@@ -639,6 +640,11 @@ function validateForm() {
   clearFieldError('subject-error');
   clearFieldError('custom-count-error');
 
+  if (inventorySelection().length === 0) {
+    showError('No questions match these filters. Change the selection.');
+    return false;
+  }
+
   // Subject is required
   if (!state.subject) {
     showFieldError('subject-error', 'Please select a subject');
@@ -680,6 +686,7 @@ function validateForm() {
 ══════════════════════════════════════════════════════════════ */
 
 function updateSummary() {
+  updateInventoryAvailability();
   if (!summaryBodyEl) return;
 
   const subjectName = state.subject
@@ -847,4 +854,41 @@ function clearFieldError(fieldId) {
     el.textContent = '';
     el.classList.remove('visible');
   }
+}
+// All displayed availability is computed from loaded records, never declared totals.
+function inventoryFilters(overrides = {}) {
+  return { ...state, unit: state.units.length ? state.units : 'all', ...overrides };
+}
+function inventorySelection() { return filterQuestions(setupQuestions, inventoryFilters()); }
+function buildInventoryChoices() {
+  const group = document.querySelector('[aria-labelledby="source-group-label"]');
+  group.replaceChildren();
+  const sources = ['all', ...new Set(setupQuestions.map(q => q.source).filter(Boolean))];
+  sources.forEach(source => {
+    const label = document.createElement('label'); label.className = 'chip-label';
+    const input = document.createElement('input'); input.type = 'radio'; input.name = 'source'; input.value = source; input.checked = source === 'all';
+    const span = document.createElement('span'); span.className = 'chip'; span.textContent = source === 'all' ? 'All Sources' : source;
+    label.append(input, span); group.append(label);
+  });
+  const yearEl = document.getElementById('year-filter');
+  yearEl.replaceChildren(new Option('All Years (no filter)', ''));
+  [...new Set(setupQuestions.map(q => q.year).filter(Boolean))].sort((a,b) => b-a).forEach(year => yearEl.add(new Option(String(year), String(year))));
+}
+function updateInventoryAvailability() {
+  const withoutSourceYear = filterQuestions(setupQuestions, inventoryFilters({ source: 'all', year: null }));
+  document.querySelectorAll('input[name="source"]').forEach(input => {
+    input.disabled = input.value !== 'all' && !withoutSourceYear.some(q => q.source === input.value);
+    if (input.checked && input.disabled) state.source = 'all';
+  });
+  const selected = document.querySelector(`input[name="source"][value="${state.source}"]`);
+  if (selected) selected.checked = true;
+  const withoutYear = filterQuestions(setupQuestions, inventoryFilters({year: null}));
+  const yearEl = document.getElementById('year-filter');
+  [...yearEl.options].forEach(opt => { opt.disabled = Boolean(opt.value) && !withoutYear.some(q => Number(q.year) === Number(opt.value)); });
+  if (state.year && !withoutYear.some(q => Number(q.year) === Number(state.year))) state.year = null;
+  yearEl.value = state.year ? String(state.year) : '';
+  const matched = inventorySelection();
+  const missing = matched.filter(q => q.type !== 'mcq').length;
+  document.getElementById('data-availability').textContent = `${matched.length} available questions · ${missing} without an auto-gradable key (not graded).`;
+  document.getElementById('btn-start-quiz').disabled = !state.subject || matched.length === 0;
 }

@@ -21,7 +21,7 @@ if(await page.getByRole('button',{name:'Install app',exact:true}).isVisible())th
 console.log('PASS install event/accepted state');
 const sw=require('path').resolve(__dirname,'../sw.js');const original=fs.readFileSync(sw,'utf8');
 try{
-fs.writeFileSync(sw,original.replace('platform-2026-11-09','platform-2026-11-09-test'));
+fs.writeFileSync(sw,original.replace(/const VERSION = '([^']+)'/, (_, version) => `const VERSION = '${version}-test'`));
 await page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();await r.update()});
 await page.getByRole('button',{name:'Reload to update',exact:true}).waitFor();
 console.log('PASS waiting update, no automatic quiz reload',page.url());

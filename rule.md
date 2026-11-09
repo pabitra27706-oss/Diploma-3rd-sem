@@ -9,7 +9,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/6b499a13-diploma-3rd-sem`
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/be3d9178-diploma-3rd-sem`
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler

@@ -168,6 +168,10 @@ function applyHistoryEntry(entry) {
     percentage: entry.percentage || 0
   };
 
+  if (entry.mode !== 'mcq' || entry.score === null) {
+    resultState.scoreData = { score: 0, total: 0, correct: 0, incorrect: 0, unanswered: 0, percentage: 0, ungraded: entry.total || 0 };
+  }
+
   hideEl(dom.loadingState);
   showEl(dom.resultMain);
 
@@ -209,7 +213,7 @@ function renderScoreHero() {
   if (!sd) return;
 
   const pct   = sd.percentage;
-  const grade = getGrade(pct);
+  const grade = sd.total === 0 ? { cls: 'unanswered', emoji: '📖', label: 'Not graded', title: 'No auto-gradable key in this attempt' } : getGrade(pct);
 
   // Result badge
   if (dom.resultBadgeWrap) {
@@ -223,13 +227,13 @@ function renderScoreHero() {
 
   // Score fraction
   if (dom.scoreFraction) {
-    dom.scoreFraction.textContent = `${sd.score}/${sd.total}`;
+    dom.scoreFraction.textContent = sd.total ? `${sd.score}/${sd.total} (MCQ only)` : 'Not graded';
     dom.scoreFraction.className   = `score-fraction ${grade.cls}`;
   }
 
   // Percentage
   if (dom.scorePercentage) {
-    dom.scorePercentage.textContent = `${pct}%`;
+    dom.scorePercentage.textContent = sd.total ? `${pct}%` : '—';
   }
 
   // Title
@@ -247,7 +251,7 @@ function renderScoreHero() {
         : getUnitTitle(cfg.subject, cfg.unit);
     const dateStr = formatDate(res.completedAt || Date.now());
     dom.scoreSubtitle.textContent =
-      `${subjectName} · ${unitLabel} · ${dateStr}`;
+      `${subjectName} · ${unitLabel} · ${dateStr} · ${sd.ungraded || 0} not graded`;
   }
 
   // Stats
@@ -416,10 +420,10 @@ function getFilteredQuestions() {
 
   switch (resultState.qFilter) {
     case 'correct':
-      return questions.filter(q => answers[q.id] === q.correct);
+      return questions.filter(q => q.type === 'mcq' && answers[q.id] === q.correct);
     case 'incorrect':
       return questions.filter(q =>
-        answers[q.id] && answers[q.id] !== q.correct
+        q.type === 'mcq' && answers[q.id] && answers[q.id] !== q.correct
       );
     case 'unanswered':
       return questions.filter(q => !answers[q.id]);
@@ -435,7 +439,9 @@ function buildResultQuestionCard(q, displayNum) {
   const isAnswered = !!userAnswer;
 
   let statusCls, statusIcon, statusLabel;
-  if (!isAnswered) {
+  if (q.type !== 'mcq') {
+    statusCls = 'unanswered'; statusIcon = '—'; statusLabel = 'No key — not graded';
+  } else if (!isAnswered) {
     statusCls   = 'unanswered';
     statusIcon  = '—';
     statusLabel = 'Unanswered';

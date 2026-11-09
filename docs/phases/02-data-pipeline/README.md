@@ -1,6 +1,6 @@
 # Phase 2 — Truthful data pipeline
 
-**Status:** 📋 planned · **Parts:** 6 · **Depends on:** 1 · **Owner gates:** content verification (2.5, 2.6)
+**Status:** 🚧 implemented mechanically, source verification pending (see record.md) · **Parts:** 6 · **Depends on:** 1 · **Owner gates:** content verification (2.5, 2.6)
 
 ## Goal
 

@@ -392,6 +392,9 @@ function renderQuestion(index) {
   // Question text
   if (dom.questionText) {
     dom.questionText.textContent = q.question;
+    if (q.type !== 'mcq') {
+      dom.qMetaTags?.appendChild(createElement('span', 'badge badge-neutral', 'No key — not graded'));
+    }
   }
 
   // Render MCQ or text answer
