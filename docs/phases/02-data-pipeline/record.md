@@ -71,6 +71,6 @@ Owner/source evidence needed for disposition of these records, confirmed reprint
 
 ## CI / publication
 
-CI verification pending branch push. No PR, merge, deploy, Pages setting, domain,
+CI run **42636841353** green on implementation commit **b473636e5aa9b913a35d4316a8c89f6f7d688957**. Artifact `site-preview` **13682738528** uploaded (4,188,302 bytes), including eight real screenshots, generated review documents and static site. `site-check` artifact **13682553738**. This green regression run is not full strict data/syllabus acceptance. Documentation-only follow-up records this evidence. No PR, merge, deploy, Pages setting, domain,
 license, or source-content authorization implied. End-of-chat report and Termux
 commands are required even though the phase is paused at the source gate.

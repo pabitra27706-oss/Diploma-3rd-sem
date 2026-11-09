@@ -98,6 +98,7 @@
 - Phase 2 checks: site/platform/PYQ PASS (site 0 errors / 97 warnings), 5 unit
   tests, 23 JS/CJS + 60 JSON parse PASS. Real headless Chromium data/filter/no-key
   and offline/update regression tests PASS. Screenshots under Phase 2 folder.
+- **Phase 2 CI evidence:** run `42636841353` green on `b473636`; `site-preview` artifact `13682738528` contains eight screenshots and review docs. This is a regression/baseline green, not full data/syllabus-strict approval.
 - Next: **continue Phase 2 at source-verification gate**, NOT Phase 3.
 
 
