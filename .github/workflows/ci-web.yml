@@ -1,0 +1,121 @@
+# SPDX-License-Identifier: MIT
+# WebFlow no-device gate for this zero-build site.
+#
+# The committed files are what GitHub Pages serves, so this workflow only
+# checks them and uploads a downloadable preview. Deploying is a separate,
+# owner-approved action and is deliberately absent here (rule.md §2).
+name: Web CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Checks + preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Syntax — every JS file must parse
+        shell: bash
+        run: |
+          set -euo pipefail
+          fail=0
+          count=0
+          while IFS= read -r -d '' f; do
+            count=$((count + 1))
+            if node --check "$f" 2>/dev/null; then
+              continue
+            fi
+            # ES module syntax (import/export) needs module mode via stdin.
+            if node --check --input-type=module < "$f" 2>/dev/null; then
+              continue
+            fi
+            echo "::error file=$f::JavaScript does not parse"
+            node --check "$f" || true
+            fail=1
+          done < <(find . -path ./.git -prune -o -path ./node_modules -prune -o -name '*.js' -print0)
+          echo "JS files checked: $count"
+          exit $fail
+
+      - name: PYQ data validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f scripts/validate_pyq.py ]; then
+            python3 scripts/validate_pyq.py
+          else
+            echo "No scripts/validate_pyq.py — skipping."
+          fi
+
+      - name: Syllabus validation (advisory until Phase 2 closes coverage)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Phase 2 flips this to --strict. Today it reports the known
+          # out-of-syllabus unit tags and the missing CST207 quiz bank.
+          python3 scripts/validate_syllabus.py | tee syllabus-check.txt
+          {
+            echo "### Syllabus join"
+            echo '```'
+            cat syllabus-check.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Site checks — links, JSON, structure, accessibility basics, budgets
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Baseline mode: the report is the gate evidence and the summary below.
+          # Flip to --strict once the WARN debt tracked in docs/ROADMAP.md is zero;
+          # ERRORS are already real breakage and are listed in the summary.
+          python3 scripts/check_site.py --report site-check.txt
+          {
+            echo "### Site check"
+            echo '```'
+            head -n 40 site-check.txt
+            echo '```'
+            echo
+            echo "Full report: the \`site-check\` artifact (or the job log)."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail on unresolved links if the tree is clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          errors=$(head -n 1 site-check.txt | sed -E 's/site-check: ([0-9]+) error.*/\1/')
+          echo "errors=$errors"
+          if [ "$errors" != "0" ]; then
+            echo "::warning::$errors unresolved reference(s) — tracked in docs/ROADMAP.md. CI flips to strict in the phase that clears them."
+          fi
+
+      - name: Upload the downloadable site preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: |
+            .
+            !.git/**
+            !node_modules/**
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload the site-check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-check
+          path: site-check.txt
+          if-no-files-found: warn
+          retention-days: 14

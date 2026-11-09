@@ -1,0 +1,114 @@
+# SPDX-License-Identifier: MIT
+# Copy to .github/workflows/ci-web.yml in a static site repository.
+#
+# Zero build step: the committed files ARE the artifact. This workflow only
+# checks them and uploads a downloadable preview, so every phase is visible on
+# a phone without a deploy. Deploying is a separate, owner-approved action and
+# is deliberately NOT in this file.
+#
+# Checks are stdlib-only (python3 + node preinstalled on the runner), so the
+# same commands run on a phone through a terminal.
+name: Web CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Checks + preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Syntax — every JS file must parse
+        shell: bash
+        run: |
+          set -euo pipefail
+          fail=0
+          while IFS= read -r f; do
+            if [[ "$f" == *.mjs ]]; then
+              node --check --input-type=module < "$f" || fail=1
+            else
+              node --check "$f" || fail=1
+            fi
+          done < <(find . -path ./.git -prune -o -path ./node_modules -prune -o -name '*.js' -print)
+          exit $fail
+
+      - name: Syntax — every JSON file must parse
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, pathlib, sys
+          bad = 0
+          for p in pathlib.Path('.').rglob('*.json'):
+              if any(part in {'.git', 'node_modules'} for part in p.parts):
+                  continue
+              try:
+                  json.loads(p.read_text(encoding='utf-8'))
+              except Exception as exc:
+                  print(f'::error file={p}::{exc}')
+                  bad += 1
+          print(f'JSON files checked; failures: {bad}')
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Site checks — links, structure, a11y basics, budgets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f scripts/check_site.py ]; then
+            python3 scripts/check_site.py --report site-check.txt
+            cat site-check.txt >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '::warning::scripts/check_site.py is missing — the no-device gate is not running.'
+            echo 'scripts/check_site.py missing: no-device gate not running' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - name: Data validation (optional per repo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f scripts/validate_data.py ]; then
+            python3 scripts/validate_data.py
+          else
+            echo 'No scripts/validate_data.py — skipping.'
+          fi
+
+      - name: Lighthouse budgets (advisory until Phase 2)
+        shell: bash
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          npm --yes install --no-save @lhci/cli@0.14.x
+          npx --yes @lhci/cli@0.14.x autorun \
+            --collect.staticDistDir=. \
+            --collect.numberOfRuns=1 \
+            --assert.preset=lighthouse:recommended \
+            --assert.assertions.categories:performance=0.85 \
+            --assert.assertions.categories:accessibility=0.9
+        # Advisory only: the runner's CPU is not a phone. Real budgets are
+        # measured by scripts/check_site.py (bytes, request counts).
+
+      - name: Upload the downloadable site preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: |
+            .
+            !.git/**
+            !node_modules/**
+          if-no-files-found: error
+          retention-days: 14
