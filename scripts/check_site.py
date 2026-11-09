@@ -256,7 +256,7 @@ def check_html(report: Report, sprite_symbols: set[str]) -> None:
         for attr, value in page.refs:
             root_relative = value.startswith("/") and not value.startswith("//")
             if root_relative:
-                report.warn(where, f"root-relative {attr} in `{value}` (breaks project-Pages subpath)")
+                report.error(where, f"root-relative {attr} in `{value}` (breaks project-Pages subpath)")
             target = local_target(value)
             if target is None:
                 continue

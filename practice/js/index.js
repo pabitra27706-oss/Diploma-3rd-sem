@@ -59,7 +59,7 @@ function initTheme() {
 }
 function syncThemeIcon(btn, theme) {
   btn.querySelector('use').setAttribute('href',
-    `/assets/icons/sprite.svg#${theme === 'dark' ? 'sun' : 'moon'}`);
+    `../assets/icons/sprite.svg#${theme === 'dark' ? 'sun' : 'moon'}`);
   btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
 }
 
@@ -173,10 +173,10 @@ function renderRoadmapCards() {
     let statusIcon = '';
     if (status === 'done') {
       statusIcon = `<span class="day-card__status-icon" aria-hidden="true">
-        <svg class="icon"><use href="/assets/icons/sprite.svg#check"></use></svg></span>`;
+        <svg class="icon"><use href="../assets/icons/sprite.svg#check"></use></svg></span>`;
     } else if (status === 'active') {
       statusIcon = `<span class="day-card__status-icon" aria-hidden="true">
-        <svg class="icon"><use href="/assets/icons/sprite.svg#refresh"></use></svg></span>`;
+        <svg class="icon"><use href="../assets/icons/sprite.svg#refresh"></use></svg></span>`;
     }
 
     a.innerHTML = `${statusIcon}
@@ -427,7 +427,7 @@ function renderPills(id) {
     const pill = document.createElement('span');
     pill.className = 'sel-pill';
     pill.innerHTML = `${esc(val)}<button class="sel-pill-remove" aria-label="Remove ${esc(val)}">
-      <svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons/sprite.svg#close"></use></svg>
+      <svg class="icon icon-sm" aria-hidden="true"><use href="../assets/icons/sprite.svg#close"></use></svg>
     </button>`;
     pill.querySelector('.sel-pill-remove').addEventListener('click', () => {
       toggleDropdownOption(id, val);
@@ -687,7 +687,7 @@ function renderPresets() {
     card.setAttribute('role', 'listitem');
     card.innerHTML = `
       <div class="preset-icon" aria-hidden="true">
-        <svg class="icon"><use href="/assets/icons/sprite.svg#bookmark"></use></svg>
+        <svg class="icon"><use href="../assets/icons/sprite.svg#bookmark"></use></svg>
       </div>
       <div class="preset-body">
         <p class="preset-name">${esc(p.name)}</p>
@@ -695,10 +695,10 @@ function renderPresets() {
       </div>
       <div class="preset-actions">
         <button class="preset-btn preset-btn--load" data-id="${p.id}" data-action="load" aria-label="Load ${esc(p.name)}">
-          <svg class="icon icon-sm"><use href="/assets/icons/sprite.svg#download"></use></svg>Load
+          <svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#download"></use></svg>Load
         </button>
         <button class="preset-btn preset-btn--del" data-id="${p.id}" data-action="del" aria-label="Delete ${esc(p.name)}">
-          <svg class="icon icon-sm"><use href="/assets/icons/sprite.svg#delete"></use></svg>Del
+          <svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#delete"></use></svg>Del
         </button>
       </div>`;
     card.addEventListener('click', e => {
