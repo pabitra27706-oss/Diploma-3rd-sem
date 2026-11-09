@@ -22,6 +22,13 @@
 
 ## Rules digest (full rules: `./rule.md` — self-contained)
 
+- **Owner delivery rule (2026-11-09):** after every completed phase, write a
+  short report directly in chat (changes, actual checks, blockers, next step,
+  publication status). At the end of **every chat**, even docs-only or incomplete
+  work, give copyable Termux local-testing commands and the exact browser URL.
+  State prerequisites, checkout assumptions, and whether changes are pushed;
+  see `rule.md` §7.
+
 - One **phase** per chat; a phase is one whole capability with 4–6 parts and its
   own folder under `docs/phases/`. No work outside those parts.
 - Never create/switch branches, push `main`, force-push, or `reset --hard`.

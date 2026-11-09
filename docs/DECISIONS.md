@@ -94,3 +94,11 @@
   single icon at two sizes (design decision, Phase 1).
 
 - 2026-11-09 — Phase 1 implementation: reuse Font Awesome Free 6.5.1 locally (upstream licenses retained); deterministic stdlib metadata generator and custom geometric PWA icons. No runtime dependencies added. Strict site/platform gates replace baseline CI. Full syllabus coverage remains advisory per the existing Phase 2 decision, despite the contradictory Phase 1 task; seven source-gated tags were not edited.
+
+## Owner delivery requirements
+
+- 2026-11-09 — After every completed phase, provide a little report directly in
+  chat. After every chat, provide copyable Termux commands for local testing and
+  the browser URL, including prerequisites/check-out assumptions as needed.
+  Applies to documentation-only and incomplete-phase chats too. Persisted in
+  `rule.md` §7; does not authorize PRs, merges, deployment, or content edits.

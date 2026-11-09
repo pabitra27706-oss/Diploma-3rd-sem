@@ -130,3 +130,32 @@ Checks green (`scripts/check_site.py` errors = 0; see the WARN trend) ·
 next-chat prompt printed in chat · short report — then stop at the deploy gate.
 A **public launch** additionally needs every item in
 `webflow/templates/site-checklist.md` green and an explicit deploy command.
+
+## 7. Chat delivery — owner-required reports and Termux testing
+
+- **After every completed phase**, write a short report **directly in chat**,
+  not only in a file or artifact. Include what changed, checks actually run and
+  their results, remaining blockers/unverified behaviour, and the next step.
+  State clearly whether anything was pushed, opened as a PR, merged or deployed;
+  do not imply that a phase is fully green when an acceptance item is blocked.
+- **At the end of every chat**, including rules-only, documentation, bug-fix and
+  incomplete-phase chats, include a copyable **Termux local-testing command
+  block** and the exact browser URL. Do not wait for phase completion.
+- Commands must match the current static stack and session branch. State the
+  checkout-directory assumption and any one-time prerequisites (`pkg install
+  python git` when needed). Do not assume the user's checkout is current: say
+  which branch/revision contains the changes and whether it has been pushed.
+  Never suggest a destructive reset, overwrite local changes, or present an
+  unpushed change as available through `git pull`.
+- The basic zero-build preview, assuming the checkout is `~/Diploma-3rd-sem`:
+
+  ```sh
+  cd ~/Diploma-3rd-sem
+  python -m http.server 8000 --bind 127.0.0.1
+  ```
+
+  Open `http://127.0.0.1:8000/`; stop with Ctrl+C. This basic command serves
+  the checkout at `/`, not a simulated `/Diploma-3rd-sem/` deployment. For path
+  or PWA changes, additionally provide relevant checks or a project-subpath
+  preview method. Never claim a local preview proves real-device installation,
+  deployed behaviour, or browser checks that were not run.
