@@ -1,6 +1,7 @@
 # Phase 1 — Platform and deploy integrity
 
-- Status: ✅ implementation complete; CI verification pending · Date: 2026-11-09 · Branch: arena/e7d831f7-diploma-3rd-sem
+- Status: ✅ platform implementation verified (syllabus-strict exception below) · Date: 2026-11-09 · Branch: arena/e7d831f7-diploma-3rd-sem
+- CI: run **42633146154** green on implementation commit **560073ed93899d559439ead7f00177baba4e8ae7**. `site-preview` artifact **13680983233** uploaded (3,522,982 bytes); `site-check` artifact **13680878245**. Documentation-only follow-up records this evidence.
 - Starting tip: 114dd75. Prior main CI: 42631720212 success; no open PRs.
 - No deploy, PR, merge, license or content changes authorized.
 

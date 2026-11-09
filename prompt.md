@@ -67,6 +67,7 @@
   97 warnings, 0 root-relative. PYQ/JSON/JS/platform checks pass. Headless Chromium
   offline and waiting-worker update tests pass; real phone/iOS install and social
   unfurl remain unverified. No deploy/PR/merge.
+- **Phase 1 CI evidence:** run `42633146154` green on `560073e`; `site-preview` artifact `13680983233` includes six before/after screenshots and the static site.
 - **Explicit unresolved subtask:** full syllabus `--strict` still fails on seven
   existing Unit-5 records in four-unit courses. Coverage remains advisory per
   the recorded Phase 2 decision; no source-gated content changed. Not a full
