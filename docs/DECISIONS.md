@@ -19,6 +19,19 @@
 - 2026-11-06 — License? — **Open (GATE).** The README badge links `LICENSE`,
   which does not exist. Owner must choose MIT or GPL-3.0 before a launch
   phase; until then no new license text is invented.
+- 2026-11-06 — Build the full suggested capability set? — **Yes, all of it**
+  (the 18 gaps in the 2026-11-06 gap report: install/update, search, repeated
+  questions, mock papers, backup/restore, 404/SEO, reading controls, print,
+  weak topics, flashcards, notes, formula sheets, syllabus coverage, sharing,
+  WCAG 2.2, daily goal, offline-data policy, Bengali UI). Each is mapped to a
+  phase part in `docs/ROADMAP.md`; nothing is deferred silently.
+- 2026-11-06 — Phase shape? — **Big phases.** Ten phases (0–9), each with its
+  own folder under `docs/phases/`, holding a `README.md` and `tasks.md`. A phase
+  is one whole capability with 4–6 parts, not a task list.
+- 2026-11-06 — Syllabus? — **Committed to the repo.** The Council's Revised-2022
+  PDF is stored unmodified at `docs/syllabus/syllabus-3rd-sem-2022.pdf`, with a
+  transcription (`syllabus.md`, `syllabus.json`) and a validator. The PDF is the
+  authority for units, hours and modules; content that disagrees is the bug.
 
 ## Law waivers (owner-approved exceptions to `rule.md`)
 
@@ -44,6 +57,21 @@
 - 2026-11-06 — `scripts/check_site.py` uses only the Python standard library so
   the same command runs on a phone and in CI with no install step.
 
+- 2026-11-06 — **Usage measurement implemented as local-only + direct
+  contact**: an in-site "was this useful?" prompt that stores a count locally and
+  never transmits, plus a working feedback route and `docs/MEASUREMENT.md`
+  stating what cannot be known. No third-party analytics is added. — It is the
+  only option that satisfies the recorded no-analytics/no-third-party decision;
+  real analytics would be a new GATE. — reversible on objection.
+- 2026-11-06 — **Custom domain: readiness only.** The base path is centralised
+  in one constant and `docs/DOMAIN.md` documents a migration, but nothing is
+  purchased, registered, or configured. — Buying a domain is a money action and
+  therefore a GATE; readiness costs nothing and removes a future rewrite.
+- 2026-11-06 — **Old phase record moved** from `docs/phases/00-bootstrap.md`
+  into `docs/phases/00-foundation/` (README + tasks), deleting the flat file.
+  — The folder-per-phase convention the owner asked for; git history keeps the
+  old file.
+
 ## Third-party licences (everything shipped, per reuse-first §3)
 
 - 2026-11-06 — Font Awesome (CDN, 38 pages) — **not verified in this repo, no
@@ -55,6 +83,9 @@
 
 ## Open (gate or decide-once items not yet asked)
 
+- Which FLASHCARD scheduler: FSRS-style (more accurate, more code) or fixed
+  Leitner intervals (simpler, explainable)? Default recorded in Phase 5.2.
+- Font Awesome: remove entirely or self-host a subset (Phase 1.3 decision).
 - Site licence: MIT or GPL-3.0 (GATE).
 - Who verifies syllabus/answer-key content, and against which source edition
   (needed before Phase 7).

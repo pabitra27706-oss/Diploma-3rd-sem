@@ -4,7 +4,9 @@
 > **Working on this repo?** Read [`rule.md`](rule.md) first (operating rules and
 > the deploy gate), then [`prompt.md`](prompt.md) (current state),
 > [`docs/ROADMAP.md`](docs/ROADMAP.md), [`docs/DECISIONS.md`](docs/DECISIONS.md)
-> and [`docs/AUDIT.md`](docs/AUDIT.md) (2026-11-06 baseline). The reusable
+> [`docs/AUDIT.md`](docs/AUDIT.md) (2026-11-06 baseline) and
+> [`docs/syllabus/`](docs/syllabus/README.md) (the course authority). Each phase
+> has its own folder under [`docs/phases/`](docs/phases/README.md). The reusable
 > playbook these rules come from lives in [`webflow/`](webflow/README.md).
 
 > A comprehensive Progressive Web App (PWA) for West Bengal Polytechnic Diploma 3rd Semester students in Computer Science & Technology stream.

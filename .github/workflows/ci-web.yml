@@ -59,6 +59,20 @@ jobs:
             echo "No scripts/validate_pyq.py — skipping."
           fi
 
+      - name: Syllabus validation (advisory until Phase 2 closes coverage)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Phase 2 flips this to --strict. Today it reports the known
+          # out-of-syllabus unit tags and the missing CST207 quiz bank.
+          python3 scripts/validate_syllabus.py | tee syllabus-check.txt
+          {
+            echo "### Syllabus join"
+            echo '```'
+            cat syllabus-check.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Site checks — links, JSON, structure, accessibility basics, budgets
         shell: bash
         run: |

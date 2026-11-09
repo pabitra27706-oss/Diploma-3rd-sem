@@ -106,6 +106,16 @@ already answered in chat or docs · taste with an obvious default.
   wording, and year/month labels are verified by a human against a source
   before they ship. The agent may restructure, deduplicate, and flag; it may
   not invent an answer.
+- **The syllabus is the content authority:** `docs/syllabus/syllabus-3rd-sem-2022.pdf`
+  defines units, hours and modules. Content that disagrees is the bug; never
+  re-tag a record to a unit the syllabus does not declare without an owner
+  decision. `scripts/validate_syllabus.py` is the join.
+- **Generated data is reproducible:** practice days, search indexes, coverage
+  data, cards and the sitemap come from a committed script, are committed as
+  data, and are never hand-edited. Re-running a generator must produce
+  identical bytes.
+- **A phase is a folder:** `docs/phases/NN-slug/{README.md,tasks.md,record.md}`.
+  A phase without a record is not done.
 - **No secrets or personal data** in git or chat; no other student's data.
 - **Reuse stays lawful:** MIT/Apache/BSD code may be depended on or adapted with
   attribution; studied sources are re-implemented clean-room. One library per

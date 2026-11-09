@@ -53,7 +53,11 @@ That is the whole set — nothing else is needed from anywhere.
   parts listed in its phase record. Each part is verifiable; the phase lands
   as one increment.
 - A v1 roadmap is roughly **5–8 phases** including bootstrap. Past ~10 rows,
-  phases are too small — merge them.
+  phases are too small — merge them. A large phase may own a folder —
+  `docs/phases/NN-<slug>/` with `README.md` (goal, evidence, scope, done-means),
+  `tasks.md` (parts with acceptance criteria) and `record.md` — as this
+  repository does; the flat `docs/phases/NN-<slug>.md` form is the minimum, not
+  the maximum.
 - Anything smaller than about half a day of work joins a neighbouring phase.
 - Bugs reported later are their own small fix chats — they don't need phases.
 
