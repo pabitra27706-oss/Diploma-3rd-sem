@@ -827,7 +827,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** Python includes numeric types (`int`, `float`, `complex`), `bool`, sequences (`str`, `list`, `tuple`, `range`), mappings (`dict`), sets (`set`, `frozenset`), and `NoneType`. They differ in mutability, ordering, and allowed operations.\n\n**b)** Indentation defines blocks instead of braces. Consistent indentation after `if`, `for`, `while`, `def`, `class`, and `try` determines statement grouping; incorrect indentation raises `IndentationError`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 5 marks (categories 3 + examples 2) + b) 3 marks.**\n\n**a) Built-in data types in Python**\n\n| Category | Types | Example |\n|---|---|---|\n| Numeric | int, float, complex | 20, 3.14, 2 + 3j |\n| Text sequence | str | \"Python\" |\n| Binary sequence | bytes, bytearray, memoryview | b\"Py\" |\n| Sequence (mutable) | list, range | [1, 2], range(5) |\n| Sequence (immutable) | tuple | (1, 2) |\n| Mapping | dict | {\"a\": 1} |\n| Set | set, frozenset | {1, 2} |\n| Boolean | bool | True, False |\n| None type | NoneType | None |\n\nThey differ in mutability, ordering, allowed operations and memory layout, which is why a list can be changed but a tuple cannot, and a dict is accessed by key instead of index.\n\n**b) Importance of indentation**\n\nIndentation defines code blocks in Python instead of braces. The block under if, for, while, def, class and try must be indented consistently; wrong indentation raises IndentationError and changes program meaning.\n\n```python\nif marks >= 40:\n    print(\"Pass\")   # indented: part of the if block\nprint(\"Done\")       # not indented: runs regardless\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -868,7 +868,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** Strings are immutable sequences of Unicode characters written with single, double, or triple quotes: `'text'`, `\"text\"`, `\"\"\"text\"\"\"`.\n\n**b)** ```python\ns = input(\"String: \")\nprint(\"Palindrome\" if s == s[::-1] else \"Not palindrome\")\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 3 marks + b) 5 marks (program 4 + explanation 1).**\n\n**a) Representing a string**\n\nStrings are immutable sequences of Unicode characters, written with single quotes, double quotes or triple quotes:\n\n```python\ns1 = 'Hello'\ns2 = \"Diploma\"\ns3 = '''Multi-line\nstring'''\nprint(s1[0])   # H\n```\nCharacters are accessed by index (s[0]), sliced (s[1:4]), and cannot be changed in place.\n\n**b) Palindrome program**\n\n```python\ns = input(\"Enter a string: \")\nif s == s[::-1]:\n    print(\"Palindrome\")\nelse:\n    print(\"Not palindrome\")\n```\ns[::-1] reverses the string; equality with the original decides the result. Example: \"madam\" -> Palindrome; \"python\" -> Not palindrome.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -909,7 +909,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** A `list` is ordered and mutable: `[1, 2]`. A `tuple` is ordered and immutable: `(1, 2)`. A `dict` stores key–value pairs: `{\"a\": 1}`.\n\n**b)** Indexing returns one element, e.g. `a[2]`. Slicing returns a new list over a range, e.g. `a[1:4]`, with optional start, stop, and step.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 5 marks + b) 3 marks.**\n\n**a) Lists, Tuples and Dictionaries**\n\n| | Example | Nature |\n|---|---|---|\n| List | [1, 2, 3] | Ordered, mutable, indexed by position |\n| Tuple | (1, 2, 3) | Ordered, immutable |\n| Dictionary | {\"roll\": 1} | Unordered mapping of unique keys to values |\n\n```python\nlst = [1, 2, 3]\nlst[0] = 9          # allowed\n\ntpl = (1, 2, 3)\n# tpl[0] = 9        # TypeError\n\nd = {\"name\": \"Riya\"}\nprint(d[\"name\"])    # Riya\n```\n\n**b) Indexing vs Slicing**\n\n- **Indexing** returns one element at a position: a[2].\n- **Slicing** returns a new sequence over a range: a[1:4], with optional start, stop and step (a[::-1] reverses).\n\n```python\na = [10, 20, 30, 40, 50]\nprint(a[2])    # 30   (indexing)\nprint(a[1:4])  # [20, 30, 40]   (slicing)\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -952,7 +952,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** A loop repeats a block while a condition holds or over a sequence, enabling iteration without duplicated code: `for` and `while`.\n\n**b)** `break` exits the loop immediately; `continue` skips the remaining body and starts the next iteration:\n```python\nfor n in range(5):\n    if n == 3: break\n    if n % 2 == 0: continue\n    print(n)\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Loop and its importance**\n\nA loop repeats a block of code \u2014 either over a sequence (for) or while a condition holds (while). Loops are essential because they avoid writing the same code repeatedly and make programs shorter, easier to maintain and able to handle data of any size:\n\n```python\nfor i in range(5):\n    print(i)\n```\n\n**b) break and continue**\n\n- **break** exits the loop immediately.\n- **continue** skips the rest of the current iteration and starts the next one.\n\n```python\nfor n in range(6):\n    if n % 2 == 0:\n        continue      # skip even numbers\n    if n == 5:\n        break\n    print(n)\n# Output: 1 3\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -994,7 +994,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** Logical operators combine Boolean values: `and`, `or`, `not`. Identity operators compare object identity: `is`, `is not`. Example: `[] is []` is `False`, while `x = []; x is x` is `True`.\n\n**b)** Although the scan labels the second part as logical/identity operators, the code uses bitwise operators. Output:\n```text\n1\n7\n6\n-6\n10\n2\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 2 marks + b) 6 marks (output of the printed snippet).**\n\n**a) Logical and Identity operators**\n\n- **Logical operators** combine boolean expressions: and, or, not.\n```python\nprint(True and False)   # False\nprint(True or False)    # True\nprint(not True)         # False\n```\n- **Identity operators** compare whether two objects are the same object in memory: is, is not.\n```python\nx = []\nprint([] is [])      # False  (two different list objects)\nprint(x is x)        # True   (same object)\n```\n\n**b) Output of the snippet**\n\nWith a = 5 (binary 101) and b = 3 (binary 011):\n\n| Statement | Operation | Output |\n|---|---|---|\n| print(a & b) | bitwise AND | 1 |\n| print(a | b) | bitwise OR | 7 |\n| print(a ^ b) | bitwise XOR | 6 |\n| print(~a) | bitwise NOT | -6 |\n| print(a << 1) | left shift by 1 | 10 |\n| print(a >> 1) | right shift by 1 | 2 |\n\nNote: the question text describes logical/identity operators, but the printed snippet uses bitwise operators; the outputs above are for the printed snippet.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1037,7 +1037,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** A built-in function such as `len()` is supplied by Python; a user-defined function is created with `def` to package application-specific logic.\n\n**b)** A lambda is an anonymous single-expression function, e.g. `square = lambda x: x*x`. It is useful for short callbacks passed to `map()`, `filter()`, or `sorted(key=...)`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 3 marks + b) 5 marks (syntax 2 + use 3).**\n\n**a) User-defined vs built-in function**\n\n| Built-in function | User-defined function |\n|---|---|\n| Supplied with Python, e.g. len(), print(), max() | Created by the programmer with def |\n| Ready to use | Written for application-specific logic |\n| Defined in Python's core/library | Defined in the current script or module |\n\n**b) Lambda function**\n\nA lambda is an anonymous, single-expression function defined with lambda instead of def:\n\n```python\nsquare = lambda x: x * x\nprint(square(5))   # 25\n```\nIt is used for short, throwaway functions, especially as arguments to map(), filter() and sorted(key=...):\n```python\nnums = [1, 2, 3]\nprint(list(map(lambda x: x * 2, nums)))   # [2, 4, 6]\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1078,7 +1078,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** Packages organize related modules into a namespace, support reusable distribution, and avoid module-name collisions.\n\n**b)** A module is one `.py` file, e.g. `math_utils.py`; a package is a directory containing modules, traditionally with `__init__.py`, e.g. `mypkg/math_utils.py`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 2 marks + b) 6 marks.**\n\n**a) Purpose of packages**\n\nPackages group related modules into a namespace, make code reusable and distributable, and prevent name clashes between modules of different projects.\n\n**b) Module vs Package**\n\n| Module | Package |\n|---|---|\n| One .py file | A directory containing modules |\n| Example: math_utils.py | Example: myproject/utils/ with __init__.py |\n| import math_utils | import myproject.utils |\n\n```python\n# mypackage/__init__.py   (makes the folder a package)\n# mypackage/math_utils.py\ndef add(a, b):\n    return a + b\n\n# main.py\nfrom mypackage import math_utils\nprint(math_utils.add(2, 3))   # 5\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1119,7 +1119,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** `open()` returns a file object; `read()`, `readline()`, and `readlines()` read; `write()` and `writelines()` write. Use `with open(\"f.txt\", \"w\") as f: f.write(\"data\")` to close automatically.\n\n**b)** A lambda is an anonymous single-expression function used for short callbacks: `lambda x: x + 1`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) File read and write functions**\n\n- open(name, mode) \u2014 returns a file object\n- read([n]) \u2014 reads up to n characters (or the whole file)\n- readline() \u2014 reads one line\n- readlines() \u2014 reads all lines into a list\n- write(s) \u2014 writes string s, returns the character count\n- writelines(seq) \u2014 writes an iterable of strings\n\n```python\nwith open(\"demo.txt\", \"w\") as f:\n    f.write(\"Line 1\\nLine 2\\n\")\nwith open(\"demo.txt\", \"r\") as f:\n    print(f.readlines())   # ['Line 1\\n', 'Line 2\\n']\n```\nwith closes the file automatically.\n\n**b) Lambda function**\n\nAn anonymous one-expression function:\n```python\ndouble = lambda x: x * 2\nprint(double(4))   # 8\n```\nUsed for short callbacks with map(), filter(), sorted().\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1161,7 +1161,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** The `re` module compiles patterns and matches text: `re.search(r\"\\d+\", \"abc123\")` finds `123`; `^`, `$`, `.`, `*`, `+`, `[]`, and groups define patterns.\n\n**b)** Django separates the model (data/database), template/view (presentation), and controller/view (request logic). In Django terminology, Model–Template–View maps roughly to MVC: the framework itself acts as the controller.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Regular expressions in Python**\n\nThe re module provides pattern matching on strings. A pattern describes the shape of text to find using literals and metacharacters such as ^, $, ., *, +, [], () and \\d.\n\n```python\nimport re\nprint(re.search(r\"\\d+\", \"abc123\").group())   # 123\nprint(re.findall(r\"\\d+\", \"a1 b22 c3\"))       # ['1', '22', '3']\nprint(re.split(r\"\\s+\", \"a  b c\"))            # ['a', 'b', 'c']\n```\nCommon functions: re.match() (start of string), re.search() (anywhere), re.findall() (all matches), re.split() and re.sub().\n\n**b) Django MVC/MTV architecture**\n\nDjango follows **MVT** (Model-View-Template), which is Django's name for MVC:\n- **Model** \u2014 data and database logic\n- **Template** \u2014 presentation (HTML)\n- **View** \u2014 request logic that connects Model and Template\n\nDjango itself acts as the controller via its URL dispatcher, which routes requests to views.\n\n```python\n# models.py\nclass Student(models.Model):\n    name = models.CharField(max_length = 50)\n\n# views.py\ndef student_list(request):\n    students = Student.objects.all()\n    return render(request, \"list.html\", {\"students\": students})\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
