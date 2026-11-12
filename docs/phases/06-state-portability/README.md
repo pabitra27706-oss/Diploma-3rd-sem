@@ -1,6 +1,6 @@
 # Phase 6 — One state, notes and portability
 
-**Status:** 📋 planned · **Parts:** 6 · **Depends on:** 1, 3 · **Owner gates:** none
+**Status:** 🚧 implementation in progress · **Parts:** 6 · **Depends on:** 1, 3 · **Owner gates:** none
 
 ## Goal
 

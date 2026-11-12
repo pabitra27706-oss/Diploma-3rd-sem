@@ -1,6 +1,6 @@
 # Phase 8 — Content depth and syllabus coverage
 
-**Status:** 📋 planned · **Parts:** 6 · **Depends on:** 2, 7 · **Owner gates:** content verification (8.1, 8.6)
+**Status:** 🚧 implementation in progress · **Parts:** 6 · **Depends on:** 2, 7 · **Owner gates:** content verification (8.1, 8.6)
 
 ## Goal
 

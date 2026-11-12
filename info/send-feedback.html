@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="../assets/js/storage.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Feedback - Study Hub</title>
@@ -125,6 +126,7 @@
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/info/send-feedback.html">
+<meta name="app-build" content="study-safety-2026-11-09">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Send Feedback - Study Hub">
@@ -141,6 +143,8 @@
 <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
 <link rel="manifest" href="../manifest.json">
 <!-- /presence -->
+<link rel="stylesheet" href="../assets/css/accessibility.css">
+<script defer src="../assets/js/accessibility.js"></script>
 </head>
 <body>
     <div class="professional-container">
@@ -164,80 +168,23 @@
             </p>
         </div>
         
-        <div class="feedback-form">
-            <div class="form-group">
-                <label><i class="fas fa-tag"></i> Feedback Type</label>
-                <div class="feedback-types">
-                    <div class="type-card" onclick="selectType('bug')">
-                        <div class="type-icon">🐛</div>
-                        <h4>Bug Report</h4>
-                        <p>Something's not working</p>
-                    </div>
-                    
-                    <div class="type-card" onclick="selectType('feature')">
-                        <div class="type-icon">💡</div>
-                        <h4>Feature Request</h4>
-                        <p>Suggest new features</p>
-                    </div>
-                    
-                    <div class="type-card" onclick="selectType('content')">
-                        <div class="type-icon">📚</div>
-                        <h4>Content Request</h4>
-                        <p>Need more study materials</p>
-                    </div>
-                    
-                    <div class="type-card" onclick="selectType('other')">
-                        <div class="type-card" onclick="selectType('other')">
-                        <div class="type-icon">💬</div>
-                        <h4>General Feedback</h4>
-                        <p>Share your experience</p>
-                    </div>
-                </div>
-                
-                <input type="hidden" id="feedbackType" value="">
-            </div>
-            
-            <div class="form-group">
-                <label><i class="fas fa-pencil-alt"></i> Your Feedback</label>
-                <textarea id="feedbackMessage" placeholder="Please describe your feedback in detail...
-• For bugs: What were you doing? What happened? What should have happened?
-• For features: How would this feature help you?
-• For content: Which subjects/materials do you need?
+        <form class="feedback-form" id="feedback-form" novalidate>
+            <p>This page prepares an email; it does not submit feedback to a server. Review and send the message in your email app. You can copy it instead if no email app is configured.</p>
+            <fieldset class="form-group"><legend>Feedback type</legend><div class="feedback-types">
+              <button type="button" class="type-card" data-feedback-type="bug" aria-pressed="false">🐛 Bug report</button>
+              <button type="button" class="type-card" data-feedback-type="feature" aria-pressed="false">💡 Feature request</button>
+              <button type="button" class="type-card" data-feedback-type="content" aria-pressed="false">📚 Content request</button>
+              <button type="button" class="type-card selected" data-feedback-type="other" aria-pressed="true">💬 General feedback</button>
+            </div></fieldset>
+            <div class="form-group"><label for="feedbackMessage">Your feedback</label><textarea id="feedbackMessage" minlength="10" maxlength="2000" required aria-describedby="message-help feedback-error" placeholder="What happened, what you expected, and how to reproduce it"></textarea><p id="message-help"><span id="charCount">0</span> / 2000 characters. Minimum 10 non-space characters.</p></div>
+            <div class="form-group"><label for="userEmail">Contact email (optional)</label><input type="email" id="userEmail" autocomplete="email" aria-describedby="email-help feedback-error" placeholder="your.email@example.com"><p id="email-help">Included only if you choose to provide it; no response time is promised.</p></div>
+            <p id="feedback-error" role="alert"></p>
+            <button class="submit-btn" type="submit">Open email app</button>
+            <button type="button" id="copy-feedback">Copy feedback instead</button>
+            <p id="feedback-status" role="status"></p>
+            <label for="feedback-preview">Prepared message (manual copy fallback)</label><textarea id="feedback-preview" rows="8" readonly></textarea>
+        </form>
 
-Thank you for helping improve the app! 😊" 
-                         oninput="updateCharCount()"></textarea>
-                <div class="char-count">
-                    <span id="charCount">0</span> / 2000 characters
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label><i class="fas fa-envelope"></i> Contact Email (Optional)</label>
-                <input type="email" id="userEmail" placeholder="your.email@example.com" 
-                       style="width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 10px;">
-                <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">
-                    Provide your email if you'd like a response
-                </p>
-            </div>
-            
-            <button class="submit-btn" onclick="submitFeedback()">
-                <i class="fas fa-paper-plane"></i> Send Feedback
-            </button>
-        </div>
-        
-        <div class="thank-you" id="thankYouMessage">
-            <div class="thank-you-icon">🎉</div>
-            <h2 style="color: #27ae60;">Thank You!</h2>
-            <p style="color: #666; line-height: 1.6; margin: 20px 0;">
-                Your feedback has been recorded. I'll review it and work on improvements.<br>
-                If you provided an email, I'll contact you if needed.
-            </p>
-            <a href="professional-hub.html" class="contact-btn" 
-               style="background: #27ae60; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; display: inline-block;">
-                Back to Hub
-            </a>
-        </div>
-        
         <div class="faq-section" style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 30px 0;">
             <h3 style="color: #2c3e50; margin-bottom: 20px;">
                 <i class="fas fa-lightbulb"></i> Tips for Effective Feedback
@@ -272,8 +219,7 @@ Thank you for helping improve the app! 😊"
                 <i class="fas fa-users"></i> Community Driven
             </h4>
             <p style="color: #856404; margin: 0;">
-                Every week, I review feedback and implement the most requested features. 
-                Your suggestions directly shape the app's future!
+                Suggestions can help prioritize future work. This static site cannot confirm receipt, review time, or whether a request will be implemented.
             </p>
         </div>
         
@@ -287,95 +233,6 @@ Thank you for helping improve the app! 😊"
         </footer>
     </div>
     
-    <script>
-        let selectedType = '';
-        
-        function selectType(type) {
-            selectedType = type;
-            document.getElementById('feedbackType').value = type;
-            
-            // Remove selected class from all
-            document.querySelectorAll('.type-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            // Add to clicked
-            event.currentTarget.classList.add('selected');
-            
-            // Update placeholder based on type
-            const textarea = document.getElementById('feedbackMessage');
-            switch(type) {
-                case 'bug':
-                    textarea.placeholder = 'Please describe the bug in detail...\n\n• What were you doing when it happened?\n• What exactly went wrong?\n• What should have happened instead?\n\nApp Version: [Automatically included]\nDevice: [Optional - e.g., Samsung Galaxy M32]\n\nScreenshots help a lot if you can attach them via email!';
-                    break;
-                case 'feature':
-                    textarea.placeholder = 'Tell us about your feature idea...\n\n• What feature would you like?\n• How would it help your studying?\n• Any examples from other apps?\n\nThank you for your creative ideas! 💡';
-                    break;
-                case 'content':
-                    textarea.placeholder = 'What study materials do you need?...\n\n• Which subject/topic?\n• Specific chapters or question types?\n• Any particular difficulty level?\n\nI\'ll try to add them in future updates! 📚';
-                    break;
-                default:
-                    textarea.placeholder = 'Share your thoughts...\n\n• What do you like about the app?\n• What could be improved?\n• Any general suggestions?\n\nYour feedback is valuable! 😊';
-            }
-        }
-        
-        function updateCharCount() {
-            const textarea = document.getElementById('feedbackMessage');
-            const charCount = document.getElementById('charCount');
-            charCount.textContent = textarea.value.length;
-            
-            if (textarea.value.length > 2000) {
-                charCount.style.color = '#e74c3c';
-            } else if (textarea.value.length > 1500) {
-                charCount.style.color = '#f39c12';
-            } else {
-                charCount.style.color = '#666';
-            }
-        }
-        
-        function submitFeedback() {
-            const message = document.getElementById('feedbackMessage').value;
-            const email = document.getElementById('userEmail').value;
-            const type = selectedType || 'other';
-            
-            if (!message.trim()) {
-                alert('Please enter your feedback message');
-                return;
-            }
-            
-            if (message.length < 10) {
-                alert('Please provide more details (at least 10 characters)');
-                return;
-            }
-            
-            // Prepare email
-            const subject = `Study Hub Feedback: ${type.charAt(0).toUpperCase() + type.slice(1)}`;
-            let body = `Feedback Type: ${type}\n\n`;
-            body += `Message:\n${message}\n\n`;
-            body += `Email: ${email || 'Not provided'}\n`;
-            body += `Submitted on: ${new Date().toLocaleString()}\n`;
-            body += `---\nApp Version: 1.0\n`;
-            
-            // Encode for mailto
-            const mailtoLink = `mailto:chakraborttypabi2772006@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
-            // Show thank you message
-            document.querySelector('.feedback-form').style.display = 'none';
-            document.getElementById('thankYouMessage').style.display = 'block';
-            
-            // Open email client after a delay
-            setTimeout(() => {
-                window.location.href = mailtoLink;
-            }, 1500);
-        }
-        
-        document.querySelector('.back-to-study').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = 'professional-hub.html';
-        });
-        
-        // Initialize
-        updateCharCount();
-    </script>
+    <script defer src="../assets/js/feedback.js"></script>
 </body>
 </html>

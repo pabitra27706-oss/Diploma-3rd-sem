@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="../assets/js/storage.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - Study Hub</title>
@@ -90,6 +91,7 @@
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/info/privacy-policy.html">
+<meta name="app-build" content="study-safety-2026-11-09">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Privacy Policy - Study Hub">
@@ -106,6 +108,8 @@
 <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
 <link rel="manifest" href="../manifest.json">
 <!-- /presence -->
+<link rel="stylesheet" href="../assets/css/accessibility.css">
+<script defer src="../assets/js/accessibility.js"></script>
 </head>
 <body>
     <div class="professional-container">
@@ -131,10 +135,10 @@
         
         <div class="no-data">
             <h3 style="color: #155724; margin-bottom: 10px;">
-                <i class="fas fa-check-circle"></i> Important: We Don't Collect Personal Data
+                <i class="fas fa-check-circle"></i> Important: Local Study Data Stays on This Device
             </h3>
             <p style="color: #155724; line-height: 1.6; margin: 0;">
-                <strong>3rd Semester Study Hub does NOT collect, store, or share any personal information.</strong> 
+                <strong>The quiz engine does not automatically upload your profile, notes or answers. Your chosen name, study progress, notes and quiz answers can be stored locally in this browser.</strong>
                 The app works entirely offline after initial setup.
             </p>
         </div>
@@ -142,7 +146,7 @@
         <div class="privacy-container">
             <div class="privacy-section">
                 <h3 style="color: #2c3e50; margin-bottom: 15px;">
-                    <i class="fas fa-database"></i> Information We Do NOT Collect
+                    <i class="fas fa-database"></i> Study Data and Device Access
                 </h3>
                 <div class="data-flow">
                     <div class="data-item">
@@ -151,7 +155,7 @@
                         </div>
                         <h4 style="color: #2c3e50; margin-bottom: 8px;">Personal Info</h4>
                         <p style="color: #666; margin: 0; font-size: 0.95rem;">
-                            No names, emails, or contact details
+                            Your chosen display name can be stored locally. Contact details you choose to send by email are separate from local study storage.
                         </p>
                     </div>
                     
@@ -231,13 +235,13 @@
                     <i class="fas fa-shield-alt"></i> Data Security
                 </h3>
                 <p style="color: #666; line-height: 1.6;">
-                    Since no personal data is collected, there is no data to secure. 
+                    Your locally saved name, notes and answers may be sensitive; protect access to your browser profile.
                     The study materials are stored locally on your device and are not transmitted anywhere.
                 </p>
                 
                 <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
                     <span class="compliance-badge">
-                        <i class="fas fa-lock"></i> No Data Collection
+                        <i class="fas fa-lock"></i> No Automatic Quiz Uploads
                     </span>
                     <span class="compliance-badge">
                         <i class="fas fa-home"></i> Local Storage Only
@@ -291,7 +295,7 @@
                 </h3>
                 <p style="color: #666; line-height: 1.6;">
                     This app is designed for educational use by students of all ages. 
-                    As no personal data is collected, there are no specific age restrictions. 
+                    This study site is intended for diploma students and does not require an account.
                     However, we encourage younger students to use the app under adult supervision.
                 </p>
             </div>
@@ -351,5 +355,5 @@
             window.location.href = 'professional-hub.html';
         });
     </script>
-</body>
+<section aria-labelledby="quiz-storage-title"><h2 id="quiz-storage-title">Quiz storage and reset</h2><p>Quiz attempts are local snapshots under <code>diploma-3rd-sem-attempt-*</code>; legacy <code>quiz-autosave-*</code> saves are retained until verified migration. <code>quiz-history</code>, <code>quiz-result</code>, and <code>quiz-pending-config</code> store history, results and settings. <code>diploma-3rd-sem-quiz-mistakes</code> stores the mistake queue and resolution count. No quiz data is uploaded. Clear history, discard attempt and clear mistake queue are separate controls; homepage reset does not clear them all. Clear browser site data to remove all local quiz data.</p></section><section aria-labelledby="storage-boundary-title"><h2 id="storage-boundary-title">Current storage boundary and backup</h2><p>Student records now pass through the first-party storage module and use the <code>d3s:</code> namespace. Legacy records migrate on read after a verified copy. Old quiz/theme key names above describe compatibility names, not separate current stores.</p><table><caption>Local record groups</caption><thead><tr><th scope="col">Group</th><th scope="col">Purpose</th><th scope="col">Reset</th></tr></thead><tbody><tr><td>Progress</td><td>Quiz attempts/history/mistakes, Practice progress, cards, local goals, chosen display name and bookmarks</td><td>Reset progress</td></tr><tr><td>Notes</td><td>Section notes and saved highlights</td><td>Reset notes</td></tr><tr><td>Preferences</td><td>Theme, reading settings, language, local usefulness counts and migration metadata</td><td>Reset preferences</td></tr></tbody></table><p><a href="../settings.html">Settings and backup</a> shows record counts and estimated bytes, offers independent group resets, and requires typing RESET for everything. The homepage's older reset is not a substitute. Backups contain private local data and are downloaded or copied only at your request. No backup is uploaded. Interrupted imports temporarily retain original records in <code>d3s:restore-journal</code> for rollback; exports during pending recovery return those originals. A session-only usefulness marker prevents repeated prompts in the same tab and is not part of student-data backups. Origin storage estimates also include resource caches.</p><p>Resource requests fetch first-party pages, scripts, styles, icons and derived data. Service workers cache visited resources. Optional email feedback opens your email client; it is separate from the local storage system.</p></section></body>
 </html>

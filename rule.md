@@ -9,7 +9,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/6b499a13-diploma-3rd-sem`
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/be3d9178-diploma-3rd-sem`
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -52,7 +52,16 @@ audience, language, base path, design direction, time budget, hosting.
 reversible implementation choices (log under Agent decisions) · anything
 already answered in chat or docs · taste with an obvious default.
 
-## 4. Work cycle — one phase per chat
+## 4. Work cycle — original per-phase process
+
+**Owner-approved sequencing exception (2026-11-09):** the owner delegated
+implementation decisions across phases 1–9 and requested one dedicated final
+cross-device phase. Cross-phase engineering batches may proceed without
+repeated sequencing questions; maintain separate phase records. This supersedes
+only the older one-phase-per-chat restriction below, not source-integrity,
+verification, identity, release or publication gates. Focused regression checks
+continue during implementation. See `docs/DECISIONS.md` and `docs/STATUS.md`.
+
 
 1. Verify state first: `git status`, `git log`, PRs, CI runs. Trust the
    repository, not memory.

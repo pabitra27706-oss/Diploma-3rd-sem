@@ -108,6 +108,14 @@ def check_coverage(data: dict) -> tuple[list[str], list[str], dict]:
         quiz_by_subject[code][unit] += count
         quiz_questions[code] += count
 
+    for code, counts in quiz_by_subject.items():
+        if code not in declared:
+            continue
+        limit = len(declared[code]['units'])
+        invalid = {u: n for u, n in counts.items() if not u.isdigit() or not 1 <= int(u) <= limit}
+        if invalid:
+            errors.append(f"{code}: quiz bank unit(s) outside syllabus 1..{limit}: {invalid}")
+
     rows = []
     for code, subject in sorted(declared.items()):
         units = len(subject["units"])

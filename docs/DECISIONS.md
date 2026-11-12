@@ -72,6 +72,8 @@
   — The folder-per-phase convention the owner asked for; git history keeps the
   old file.
 
+- 2026-11-09 — Phase 2 reversible implementation: seeded mixed-revision schedule (`diploma-phase2-v1`), exact-content aliases only (no punctuation-stripping semantic merges), raw IDs retained; counts and actual bank filters generated with stdlib. All 456 keyless quiz non-MCQs are missing/ungraded; no answer imported on text similarity. CST207 quiz selection withheld until a verified bank exists. January 2026 stays available in PYQ/Practice, not imported into quiz banks before source/key review. Phase remains in progress; exact fingerprinted regression ledger is not an owner waiver or strict data pass.
+
 ## Third-party licences (everything shipped, per reuse-first §3)
 
 - 2026-11-06 — Font Awesome (CDN, 38 pages) — **not verified in this repo, no
@@ -102,3 +104,84 @@
   the browser URL, including prerequisites/check-out assumptions as needed.
   Applies to documentation-only and incomplete-phase chats too. Persisted in
   `rule.md` §7; does not authorize PRs, merges, deployment, or content edits.
+
+## Owner delegation and immutable PYQs — 2026-11-09
+
+- Owner delegates reversible technical choices and requests progress through the
+  remaining phases without repeated technical questions. This permits independent
+  Phase 3 engine work while Phase 2 source-review findings remain recorded; it
+  does not certify answers or resolve those findings.
+- Owner explicitly confirms: **“PYQs are authoritative—do not alter them.”**
+  All existing `_data/<subject>/*.json` paper and registry bytes are frozen at
+  this checkpoint. `pyq-integrity.json` records their hashes; maintenance scripts
+  must not rewrite them. Schedules, aliases, coverage and annotations are derived
+  sidecars. The current syllabus remains authority for current-course coverage,
+  not permission to rewrite historical papers. Unverified keys remain ungraded.
+- A broad permission statement is not a pedagogical verification or proof of
+  source accuracy. License, release/publication and deployment are not changed
+  during this engineering work. Phase 2 is not relabelled complete.
+
+## Implementation first, dedicated device acceptance — 2026-11-09
+
+- Owner requests completing the implementation phases first, followed by one
+  dedicated phase for cross-device testing. Do not repeatedly pause feature
+  engineering for real-device acceptance.
+- Keep per-change syntax, deterministic, integrity and focused browser checks
+  during implementation to prevent accumulating regressions. Consolidate full
+  device/browser/responsive/accessibility/offline/update acceptance in Phase 10.
+- Deferred device evidence is not a pass. Record unresolved implementation and
+  factual/source gates honestly; this sequencing does not waive them, authorize
+  publication, or permit edits to immutable PYQs.
+
+## Implementation batch across phases 4–9 — 2026-11-09
+
+- Reconfirmed owner request: implement phases 1–9 before dedicated Phase 10
+  cross-device acceptance. Added source-preserving discovery/cards/coverage,
+  centralized local storage + backup/notes/preferences, shared accessibility
+  safeguards and request-reduced runtime pools. Per-phase records distinguish
+  present implementation from pending acceptance/source/feature gates.
+- Serving remains zero-build. Checked-in script concatenations use a small
+  first-party deterministic generator; no package manager/runtime dependency.
+- Fixed Leitner scheduling is deliberately not branded FSRS. Existing model
+  answers and keyed explanations are labelled with their verification limits.
+- No new license, factual certification, domain configuration or deployment is
+  inferred. No original PYQ/registry byte edits. No PR/merge/push this batch.
+
+## Documentation handoff completed — 2026-11-09
+
+Owner asks to finish the documentation and explain what remains. Updated the
+root README against current code, removed the nonexistent-license badge and
+unqualified complete/offline claims, replaced the stale continuation prompt,
+aligned roadmap/phase sequencing, expanded test instructions, and added
+`docs/STATUS.md` plus the unexecuted Phase 10 task/matrix templates.
+Documentation is current; unfinished implementation and verification are not
+relabelled complete. No license is selected and no PR, merge, push or deployment
+is performed by this documentation pass.
+
+
+## Explicit main-merge authorization — 2026-11-09
+
+Owner says “Ok merge to main” after the documented handoff. This authorizes
+committing/pushing the accumulated current-branch changes and opening/merging
+the corresponding PR to main after safety/CI checks. It does not certify phases
+2–9 complete, resolve source/license gates, or authorize deployment, Pages or
+domain configuration changes. Operation result is recorded in Git/PR history.
+
+
+## Preserve main and reconcile PR #7 — 2026-11-09
+
+Owner explicitly approves preserving newer main and merging the code. Adopt
+main commit `cfe3a63decb270826da40ea50b9392efc58b2f1d` as the fixed authoritative
+PYQ/registry snapshot. All 35 files match that commit byte-for-byte, including
+removal of this branch's earlier embedded schedule/topic metadata; scheduling
+remains in derived sidecars. Preserve main's manifest/icon fixes as well.
+
+The integrity manifest records this source commit. Paper semantic tests pin to
+it, while quiz-bank semantic tests retain their original base. The same ten
+source-review finding codes, targets and messages remain; only CST209-P001-Q56's
+content fingerprint changes to match the explicitly adopted upstream answer.
+This is preservation, not pedagogical certification or a waiver. Rebuilt cards,
+search metadata, coverage and Practice runtime pool from the adopted sources.
+Twelve Python tests, four Node suites, seven focused Chromium suites, site
+(0 errors/28 warnings), platform and integrity checks pass locally. Hosted CI
+and merge result are recorded on PR #7. No deployment/domain settings changed.

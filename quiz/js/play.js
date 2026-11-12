@@ -21,6 +21,11 @@ const quizState = {
   startTime:     null,
   autosaveKey:   null,
   timerRunning:  false,
+  attemptId:     null,
+  endsAt:        null,
+  remainingMs:   null,
+  flags:         {},
+  legacyKey:     null,
   submitted:     false
 };
 
@@ -37,21 +42,33 @@ let dom = {};
 document.addEventListener('DOMContentLoaded', async () => {
   cacheDOMRefs();
 
-  // Check for resume first
-  const resumeKey = getParam('resume');
-  if (resumeKey) {
-    const saved = getFromStorage(resumeKey);
-    if (saved) {
-      await resumeQuiz(saved);
+  try {
+    if (getParam('paperFile')) {
+      const data = await QuizPaper.load(getParam('subject'), getParam('paperFile'));
+      await resumeQuiz(QuizAttempts.save({...data,answers:{},flags:{}})); return;
+    }
+    if (getParam('mistakes') === '1') {
+      const questions=QuizAttempts.mistakeQuestions();
+      if (!questions.length) throw new Error('Your mistake queue is empty.');
+      const attempt=QuizAttempts.save({config:{subject:'all',unit:'all',mode:'all',timer:false,mistakes:true},questions,answers:{},flags:{}});
+      await resumeQuiz(attempt); return;
+    }
+    const retryId = getParam('retry');
+    if (retryId) {
+      const entry = QuizAttempts.historyEntry(retryId);
+      await resumeQuiz(QuizAttempts.retry(entry, getParam('shuffle') === '1'));
       return;
     }
-  }
+    const resumeKey = getParam('resume');
+    if (resumeKey) {
+      const saved = QuizAttempts.get(resumeKey);
+      if (!saved || saved.status !== 'active') throw new Error('This attempt is no longer active. Choose a new quiz.');
+      await resumeQuiz(saved); return;
+    }
+    quizState.config = parseConfig();
+    await loadAndStartQuiz();
+  } catch (error) { showErrorScreen('Cannot open attempt', error.message); }
 
-  // Parse config from URL
-  quizState.config = parseConfig();
-
-  // Load questions
-  await loadAndStartQuiz();
 });
 
 /* ── Cache DOM references ─────────────────────────────────── */
@@ -234,7 +251,12 @@ async function loadAndStartQuiz() {
     quizState.visited      = new Set();
 
     // Create autosave key
-    quizState.autosaveKey = STORAGE_KEYS.AUTOSAVE_PREFIX + getTimestamp();
+    const attempt = QuizAttempts.save({config:cfg,questions:selected,answers:{},flags:{},status:'active'});
+    quizState.attemptId = attempt.id;
+    quizState.autosaveKey = attempt.autosaveKey;
+    quizState.startTime = attempt.startedAt;
+    quizState.endsAt = attempt.endsAt;
+    quizState.remainingMs = attempt.remainingMs;
 
     initQuizUI();
 
@@ -242,7 +264,7 @@ async function loadAndStartQuiz() {
     console.error('Quiz load error:', err);
     showErrorScreen(
       'Failed to Load Quiz',
-      'An error occurred while loading. Please try again.'
+      err.message + ' Use Reload to retry; no partial quiz was started.'
     );
   }
 }
@@ -280,6 +302,12 @@ function sortByUnit(questions) {
 ══════════════════════════════════════════════════════════════ */
 
 async function resumeQuiz(saved) {
+  saved = QuizAttempts.normalize(saved);
+  quizState.attemptId = saved.id;
+  quizState.endsAt = saved.endsAt;
+  quizState.remainingMs = saved.remainingMs;
+  quizState.flags = saved.flags || {};
+  quizState.legacyKey = saved.legacyKey;
   quizState.config        = saved.config;
   quizState.questions     = saved.questions;
   quizState.totalCount    = saved.questions.length;
@@ -319,6 +347,19 @@ function initQuizUI() {
     dom.questionModeBadge.textContent = cfg.mode === 'mcq' ? 'MCQ' : 'All Types';
   }
 
+  if (cfg.paper) {
+    const notice = document.createElement('section'); notice.setAttribute('aria-label','Paper instructions');
+    const heading = document.createElement('h2'); heading.textContent = `Paper practice — ${cfg.paper.examSession}`;
+    const summary = document.createElement('p');
+    summary.textContent = `${quizState.questions.length} set questions · ${cfg.paper.setMarks} marks across all set questions · printed maximum ${cfg.paper.fullMarks} · ${cfg.paper.duration}. ${cfg.paper.notice}`;
+    notice.append(heading,summary);
+    const warning = document.createElement('p'); warning.setAttribute('role','status');
+    warning.textContent = cfg.paper.setMarks !== cfg.paper.fullMarks ? 'Unverified overall total: set-question marks differ from the printed maximum (choice/group rules apply). This is not an official scored mock examination.' : 'Paper maximum is historical; current syllabus reconciliation is still pending.';
+    notice.append(warning);
+    for (const text of cfg.paper.instructions) notice.appendChild(createElement('p','',text));
+    for (const group of cfg.paper.groups) notice.appendChild(createElement('p','',group.instruction || group.title || group.id));
+    dom.quizLayout.prepend(notice);
+  }
   // Build palette
   buildPalette();
 
@@ -327,14 +368,21 @@ function initQuizUI() {
 
   // Start timer if enabled
   if (cfg.timer && cfg.timerMins > 0) {
-    initTimer(cfg.timerMins * 60);
+    initTimer(Math.max(0, (quizState.endsAt - Date.now()) / 1000));
   }
 
   // Bind all UI events
   bindUIEvents();
 
-  // Initial autosave
+  // Keep the selected attempt addressable on refresh and after reopening the tab.
+  window.history.replaceState(null, '', buildURL('play.html', {resume:quizState.autosaveKey}));
   doAutosave();
+  setInterval(doAutosave, 5000);
+  window.addEventListener('pagehide', doAutosave);
+  document.addEventListener('visibilitychange', () => {
+    doAutosave();
+    if (!quizState.submitted && quizState.endsAt && Date.now() >= quizState.endsAt) autoSubmitQuiz();
+  });
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -389,9 +437,18 @@ function renderQuestion(index) {
     }
   }
 
+  if (dom.qMetaTags) {
+    const flag = createElement('button', 'btn btn-outline btn-sm', quizState.flags[q.id] ? 'Unmark question' : 'Mark for review');
+    flag.type = 'button'; flag.setAttribute('aria-pressed', String(Boolean(quizState.flags[q.id])));
+    flag.addEventListener('click', () => { quizState.flags[q.id] = !quizState.flags[q.id]; doAutosave(); renderQuestion(index); });
+    dom.qMetaTags.appendChild(flag);
+  }
   // Question text
   if (dom.questionText) {
-    dom.questionText.textContent = q.question;
+    dom.questionText.textContent = (cfgPaperLabel(q)) + q.question;
+    if (q.type !== 'mcq') {
+      dom.qMetaTags?.appendChild(createElement('span', 'badge badge-neutral', q.modelAnswer ? 'Supplied model answer — self-review only' : 'No key — not graded'));
+    }
   }
 
   // Render MCQ or text answer
@@ -501,7 +558,7 @@ function renderTextAnswer(q) {
     dom.textAnswer.classList.remove('mono');
     if (dom.textAnswerContainer.querySelector('.form-hint')) {
       dom.textAnswerContainer.querySelector('.form-hint').textContent =
-        'Write a detailed answer. This will be exported for AI evaluation.';
+        'Write a detailed answer. This will be exported for manual review.';
     }
   }
 
@@ -552,6 +609,7 @@ function goToQuestion(index) {
 
   quizState.currentIndex = index;
   renderQuestion(index);
+  doAutosave();
 
   // Close palette on mobile
   closePaletteOnMobile();
@@ -588,7 +646,7 @@ function saveCurrentTextAnswer() {
     if (val) {
       quizState.answers[q.id] = dom.textAnswer.value;
       quizState.skipped.delete(q.id);
-    }
+    } else { delete quizState.answers[q.id]; }
   }
 }
 
@@ -671,7 +729,7 @@ function updatePaletteStats() {
   if (!dom.paletteStats) return;
 
   const total    = quizState.totalCount;
-  const answered = Object.keys(quizState.answers).length;
+  const answered = Object.values(quizState.answers).filter(QuizAttempts.hasAnswer).length;
   const skipped  = quizState.skipped.size;
   const remaining = total - answered - skipped;
 
@@ -718,7 +776,7 @@ function closePaletteOnMobile() {
 ══════════════════════════════════════════════════════════════ */
 
 function updateProgress() {
-  const answered = Object.keys(quizState.answers).length;
+  const answered = Object.values(quizState.answers).filter(QuizAttempts.hasAnswer).length;
   const pct      = quizState.totalCount > 0
     ? Math.round((answered / quizState.totalCount) * 100)
     : 0;
@@ -758,7 +816,8 @@ function initTimer(durationSeconds) {
       }
     },
     // onWarning
-    () => {
+    (threshold) => {
+      if (dom.timerToast) dom.timerToast.textContent = threshold === 600 ? '10 minutes remaining' : '1 minute remaining';
       showTimerToast();
     },
     // onExpire
@@ -784,20 +843,25 @@ function autoSubmitQuiz() {
    AUTOSAVE
 ══════════════════════════════════════════════════════════════ */
 
+function attemptSnapshot() {
+  return {schemaVersion:1,id:quizState.attemptId,config:quizState.config,questions:quizState.questions,
+    answers:quizState.answers,flags:quizState.flags,skipped:[...quizState.skipped],visited:[...quizState.visited],
+    currentIndex:quizState.currentIndex,startedAt:quizState.startTime,endsAt:quizState.endsAt,
+    remainingMs:quizState.endsAt ? Math.max(0,quizState.endsAt-Date.now()) : null,
+    autosaveKey:quizState.autosaveKey,legacyKey:quizState.legacyKey,status:'active'};
+}
 function doAutosave() {
-  const state = {
-    config:       quizState.config,
-    questions:    quizState.questions,
-    answers:      quizState.answers,
-    skipped:      [...quizState.skipped],
-    visited:      [...quizState.visited],
-    currentIndex: quizState.currentIndex,
-    startTime:    quizState.startTime,
-    autosaveKey:  quizState.autosaveKey,
-    savedAt:      getTimestamp()
-  };
-
-  saveToStorage(quizState.autosaveKey, state);
+  if (quizState.submitted || !quizState.questions.length) return;
+  saveCurrentTextAnswer();
+  try {
+    const saved = QuizAttempts.save(attemptSnapshot());
+    quizState.answers = saved.answers;
+    const notice = document.getElementById('attempt-save-error'); if (notice) notice.remove();
+  } catch (error) {
+    let notice = document.getElementById('attempt-save-error');
+    if (!notice) { notice = document.createElement('p'); notice.id = 'attempt-save-error'; notice.setAttribute('role','alert'); dom.quizLayout.prepend(notice); }
+    notice.textContent = 'This attempt could not be saved on this device. Keep this tab open. ' + error.message;
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -808,7 +872,7 @@ function openSubmitModal() {
   saveCurrentTextAnswer();
 
   const total    = quizState.totalCount;
-  const answered = Object.keys(quizState.answers).length;
+  const answered = Object.values(quizState.answers).filter(QuizAttempts.hasAnswer).length;
   const skipped  = quizState.skipped.size;
   const unanswered = total - answered;
 
@@ -848,47 +912,13 @@ function submitQuiz() {
   const answers   = quizState.answers;
   const elapsed   = Math.round((Date.now() - quizState.startTime) / 1000);
 
-  // Calculate score (MCQ mode)
-  let scoreData = null;
-  if (cfg.mode === 'mcq') {
-    scoreData = calculateScore(questions, answers);
+  try {
+    const result = QuizAttempts.finish(attemptSnapshot());
+  } catch (error) {
+    quizState.submitted = false;
+    showErrorScreen('Submission could not be saved', error.message + ' Your existing autosave was retained.');
+    return;
   }
-
-  // Build result object
-  const result = {
-    config:    cfg,
-    questions: questions,
-    answers:   answers,
-    skipped:   [...quizState.skipped],
-    elapsed:   elapsed,
-    score:     scoreData ? scoreData.score    : null,
-    total:     scoreData ? scoreData.total    : questions.length,
-    correct:   scoreData ? scoreData.correct  : null,
-    incorrect: scoreData ? scoreData.incorrect: null,
-    unanswered:scoreData ? scoreData.unanswered : null,
-    percentage:scoreData ? scoreData.percentage : null,
-    completedAt: getTimestamp()
-  };
-
-  // Save result to storage for result page
-  saveToStorage('quiz-result', result);
-
-  // Save to history
-  saveToHistory({
-    subject:    cfg.subject,
-    unit:       cfg.unit,
-    mode:       cfg.mode,
-    score:      result.score,
-    total:      result.total,
-    percentage: result.percentage,
-    elapsed:    elapsed,
-    questionIds: questions.map(q => q.id),
-    answers:    answers,
-    completedAt: result.completedAt
-  });
-
-  // Clear autosave
-  clearSpecificQuizState(quizState.autosaveKey);
 
   // Navigate based on mode
   if (cfg.mode === 'mcq') {
@@ -1069,4 +1099,7 @@ function showErrorScreen(title, desc) {
     if (dom.errorTitle) dom.errorTitle.textContent = title;
     if (dom.errorDesc)  dom.errorDesc.textContent  = desc;
   }
+}
+function cfgPaperLabel(q) {
+  return quizState.config.paper ? `${q.group ? 'Group '+q.group+' · ' : ''}${q.sourceNumber || q.id}\n` : '';
 }

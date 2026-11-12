@@ -1,6 +1,6 @@
 # Phase 5 — Study system
 
-**Status:** 📋 planned · **Parts:** 5 · **Depends on:** 2 (keys), 3 (mistakes), 6 (storage) · **Owner gates:** content verification for card backs
+**Status:** 🚧 implementation in progress · **Parts:** 5 · **Depends on:** 2 (keys), 3 (mistakes), 6 (storage) · **Owner gates:** content verification for card backs
 
 ## Goal
 

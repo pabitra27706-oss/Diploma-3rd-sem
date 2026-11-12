@@ -123,11 +123,19 @@ let _subjectModalOver = null;
    INIT
 ══════════════════════════════════════════════════════════════ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  try { await loadQuizCatalog(); } catch {
+    const grid = qs('#subjects-grid');
+    if (grid) grid.textContent = 'Question inventory unavailable. Reconnect and reload; no empty quiz will be offered.';
+    return;
+  }
   renderSubjectCards();
   renderHistoryList();
   renderStats();
-  checkAutosave();
+  try { checkAutosave(); } catch(error) {
+    const section=qs('#resume-section');section?.removeAttribute('hidden');
+    const desc=qs('#resume-desc');if(desc) desc.textContent=error.message;
+  }
   bindPresetCards();
   bindSubjectModal();
   bindResumeButtons();
@@ -281,7 +289,7 @@ function closeSubjectModal() {
 function renderSubjectOptions(container, presetKey) {
   const list = createElement('div', 'subject-option-list');
 
-  Object.values(SUBJECTS).forEach(sub => {
+  availableQuizSubjects().forEach(sub => {
     const btn = document.createElement('button');
     btn.className = 'subject-option-btn';
     btn.setAttribute('aria-label', `Select ${sub.name}`);
@@ -388,8 +396,11 @@ function renderSubjectCards() {
   if (!grid) return;
 
   grid.innerHTML = '';
+  const note = document.createElement('p');
+  note.textContent = 'CST207: no quiz bank yet (paper questions remain available in Practice). January 2026 questions await source/key review before quiz import.';
+  grid.append(note);
 
-  Object.values(SUBJECTS).forEach(sub => {
+  availableQuizSubjects().forEach(sub => {
     const card = document.createElement('div');
     card.className = 'subject-card';
     card.setAttribute('role', 'listitem');
@@ -400,6 +411,7 @@ function renderSubjectCards() {
       <div class="subject-card-meta">
         <span class="tag">${sub.units} Units</span>
         <span class="tag">${sub.credits} Credits</span>
+        <span class="tag">${sub.quizCount} questions</span>
       </div>
       <div class="subject-card-actions">
         <button
@@ -532,7 +544,7 @@ function buildHistoryItem(entry) {
     scoreHTML = `
       <div class="history-item-score">
         <span class="history-score-value">—</span>
-        <span class="history-score-label">AI Eval</span>
+        <span class="history-score-label">${entry.outcome === 'abandoned' ? 'Abandoned' : 'Not scored'}</span>
       </div>
     `;
   }
@@ -565,7 +577,7 @@ function renderStats() {
 
   // MCQ entries with scores
   const mcqEntries = history.filter(
-    h => h.mode === 'mcq' && h.score !== undefined && h.total
+    h => h.mode === 'mcq' && h.score !== undefined && h.score !== null && h.outcome !== 'abandoned' && h.total
   );
 
   let avgScore = '—';
@@ -642,7 +654,7 @@ function checkAutosave() {
   if (!section) return;
 
   // Build description
-  const subjectName = getSubjectName(saved.subject || 'all');
+  const subjectName = getSubjectName(saved.config?.subject || 'all');
   const savedAt     = formatDateTime(saved.savedAt);
   const qDone       = saved.currentIndex || 0;
   const qTotal      = saved.questions?.length || 0;

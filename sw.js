@@ -1,5 +1,5 @@
 /* Scope-relative, first-party-only shell. Updates activate only on user request. */
-const VERSION = 'platform-2026-11-09';
+const VERSION = 'study-safety-2026-11-09';
 const CACHE_PREFIX = 'diploma-3rd-sem-';
 const CACHE_NAME = CACHE_PREFIX + VERSION;
 const BASE = new URL('./', self.location.href);
@@ -7,7 +7,7 @@ const OFFLINE_PAGE = new URL('offline.html', BASE).href;
 const PRECACHE_ASSETS = [
   './', 'index.html', 'offline.html', 'assets/css/variables.css',
   'assets/css/main.css', 'assets/css/pwa.css', 'assets/js/theme.js',
-  'assets/js/app.js', 'assets/js/pwa.js', 'assets/icons/sprite.svg', 'manifest.json'
+  'assets/js/storage.js', 'assets/js/accessibility.js', 'assets/css/accessibility.css', 'assets/js/app.js', 'assets/js/pwa.js', 'assets/js/data-catalog.js', 'assets/icons/sprite.svg', 'manifest.json'
 ].map(path => new URL(path, BASE).href);
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_ASSETS)));
@@ -23,7 +23,7 @@ self.addEventListener('message', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (event.request.method !== 'GET' || url.origin !== BASE.origin || !url.pathname.startsWith(BASE.pathname)) return;
-  const isData = /\/(?:_data|_quiz-data)\//.test(url.pathname);
+  const isData = /\/(?:_data|_quiz-data|assets\/search|assets\/cards|assets\/data)\//.test(url.pathname);
   const key = new URL(url);
   if (isData) key.searchParams.set('v', VERSION);
   const refresh = async () => {

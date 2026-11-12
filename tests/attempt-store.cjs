@@ -1,0 +1,37 @@
+/* Pure deterministic storage/state tests, no browser packages required. */
+const fs=require('node:fs'), vm=require('node:vm'), assert=require('node:assert/strict');
+let now=1800000000000, id=0, quota=false;
+const map=new Map();
+const localStorage=new Proxy({getItem:key=>map.has(key)?map.get(key):null,setItem:(key,value)=>{if(quota)throw new Error('quota exceeded');map.set(key,value);},removeItem:key=>map.delete(key)}, {ownKeys:()=>[...map.keys()],getOwnPropertyDescriptor:()=>({enumerable:true,configurable:true})});
+class FakeDate extends Date {static now(){return now;}}
+const sandbox={localStorage,StudyStorage:{legacy:localStorage},Date:FakeDate,crypto:{randomUUID:()=>`test-${++id}`},console};
+vm.runInNewContext(fs.readFileSync(require('node:path').resolve(__dirname,'../quiz/js/attempt-store.js'),'utf8'),sandbox);
+const A=sandbox.QuizAttempts;
+const questions=[{id:'CST201-U1-1',type:'mcq',question:'fixture one',options:{A:'yes',B:'no'},correct:'A',marks:2}, {id:'CST201-U1-2',type:'mcq',question:'fixture two',options:{A:'yes',B:'no'},correct:'B',marks:3}, {id:'CST201-U1-3',type:'theory',question:'fixture theory',marks:5,answerStatus:'missing'}];
+const config={subject:'CST201',unit:'all',mode:'mcq',timer:true,timerMins:10};
+let a=A.save({config,questions,answers:{[questions[0].id]:'A',[questions[1].id]:' '},flags:{[questions[1].id]:true},currentIndex:1});
+assert.equal(a.questionIds.length,3);assert.equal(Object.keys(a.answers).length,1);
+now+=30000;let resumed=A.get(a.autosaveKey);assert.equal(resumed.remainingMs,570000);assert.equal(resumed.currentIndex,1);assert(resumed.flags[questions[1].id]);
+now+=270000;resumed=A.get(a.autosaveKey);assert.equal(resumed.remainingMs,300000);
+now+=305000;assert.equal(A.get(a.autosaveKey).remainingMs,0);
+console.log('PASS 30s/5min/expired wall-clock resume, order/index/flags, empty answers');
+const legacyKey='quiz-autosave-123';localStorage.setItem(legacyKey,JSON.stringify({config,questions,answers:{},startTime:now-30000,autosaveKey:legacyKey}));
+let migrated=A.get(legacyKey);assert.equal(migrated.remainingMs,570000);assert(map.has(legacyKey));assert(map.has(migrated.autosaveKey));assert.equal(A.get(migrated.autosaveKey).id,migrated.id);
+console.log('PASS legacy migration retains source and does not reset duration');
+a=A.save({config,questions,answers:{[questions[0].id]:'B'},flags:{[questions[1].id]:true}});
+const result=A.finish(a);assert.equal(result.incorrect,1);assert.equal(result.unanswered,1);assert.equal(result.assessment.ungraded,1);assert.equal(result.score,0);
+assert.equal(Object.keys(A.mistakes().items).length,3);
+const retry=A.retry(result);assert.equal(JSON.stringify(retry.questionIds),JSON.stringify(result.questionIds));assert(retry.flags[questions[1].id]);assert.equal(Object.keys(retry.answers).length,0);assert.notEqual(retry.id,result.id);
+retry.answers={[questions[0].id]:'A',[questions[1].id]:'B',[questions[2].id]:'written answer'};A.finish(retry);assert.equal(A.mistakes().resolvedCount,2);assert.equal(Object.keys(A.mistakes().items).length,1);
+console.log('PASS wrong vs unanswered, exact retry/flags, durable mistake resolution');
+const theory=A.finish(A.save({config:{...config,mode:'all'},questions:[questions[2]],answers:{}}));assert.equal(theory.score,null);assert.equal(theory.outcome,'not scored');
+A.edit(theory.historyId,{[questions[2].id]:'edited'});assert.equal(A.historyEntry(theory.historyId).answers[questions[2].id],'edited');
+A.clearMistakes();assert.equal(Object.keys(A.mistakes().items).length,0);
+console.log('PASS unscored state, linked review edits, queue clear');
+const frozen=JSON.stringify(A.history());
+quota=true;
+assert.throws(()=>A.save({config,questions,answers:{}}),/quota/);
+quota=false;
+assert.equal(JSON.stringify(A.history()),frozen);
+assert.equal(A.score([{...questions[0],autoMarking:false}],{[questions[0].id]:'A'}).marksObtained,0);
+console.log('PASS storage failure does not discard history; paper marking split is not guessed');

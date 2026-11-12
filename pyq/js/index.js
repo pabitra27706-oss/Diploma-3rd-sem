@@ -1,5 +1,5 @@
 // ─── Theme ───────────────────────────────────────────────
-const savedTheme = localStorage.getItem('theme') ||
+const savedTheme = StudyStorage.legacy.getItem('theme') ||
   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
 document.documentElement.setAttribute('data-theme', savedTheme);
@@ -38,7 +38,7 @@ if (themeToggle) {
     const next = current === 'dark' ? 'light' : 'dark';
     
     document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    StudyStorage.legacy.setItem('theme', next);
     updateThemeIcon(next);
   });
 }

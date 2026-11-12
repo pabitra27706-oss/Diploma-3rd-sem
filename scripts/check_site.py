@@ -298,6 +298,11 @@ def check_css(report: Report) -> None:
 
 
 def check_js_sizes(report: Report) -> None:
+    # Static templates/strings can hide domain-root fetches from the HTML parser.
+    for path in walk((".js",)):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for match in re.finditer(r"(?:fetch\(\s*)[\"'`]/(?!/)(?:_data|_quiz-data|assets)/", text):
+            report.error(rel(path), f"root-relative fetch near offset {match.start()} (breaks project-Pages subpath)")
     for path in walk((".js",)):
         size = path.stat().st_size
         if path.name == "sw.js":

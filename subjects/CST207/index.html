@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="../../assets/js/storage.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CST207 – Computer System Organization | Diploma 3rd Semester</title>
@@ -235,6 +236,7 @@
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST207/index.html">
+<meta name="app-build" content="study-safety-2026-11-09">
 <meta property="og:type" content="website">
 <meta property="og:title" content="CST207 – Computer System Organization | Diploma 3rd Semester">
 <meta property="og:description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
@@ -250,9 +252,12 @@
 <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
 <link rel="manifest" href="../../manifest.json">
 <!-- /presence -->
+<link rel="stylesheet" href="../../assets/css/accessibility.css">
+<script defer src="../../assets/js/accessibility.js"></script>
 </head>
 
 <body class="subject-cst207">
+<a class="skip-study-content" href="#study-main-content">Skip to study content</a>
 
   <!-- Scroll Progress -->
   <div class="scroll-progress" id="scrollProgress"></div>
@@ -364,7 +369,7 @@
   <!-- ═══════════════════════════════════════
        MAIN CONTAINER
        ═══════════════════════════════════════ -->
-  <div class="container">
+  <main class="container" id="study-main-content">
 
     <!-- ── Progress Dashboard ── -->
     <div class="progress-dashboard card-glass animate-in" id="progressDashboard">
@@ -827,7 +832,7 @@
       </div>
     </section>
 
-  </div><!-- end container -->
+  </main><!-- end container -->
 
   <!-- ═══════════════════════════════════════
        FAB SPEED DIAL
@@ -915,7 +920,7 @@
       var unitProgress = {};
 
       try {
-        unitProgress = JSON.parse(localStorage.getItem(progressKey)) || {};
+        unitProgress = JSON.parse(StudyStorage.legacy.getItem(progressKey)) || {};
       } catch (e) {
         unitProgress = {};
       }
@@ -974,7 +979,7 @@
               unitProgress[unitKey] = {};
             }
             unitProgress[unitKey].timestamp = Date.now();
-            localStorage.setItem(progressKey, JSON.stringify(unitProgress));
+            StudyStorage.legacy.setItem(progressKey, JSON.stringify(unitProgress));
           }
         });
       });
@@ -1087,5 +1092,6 @@
     });
   </script>
 
+<script defer src="../../assets/js/unit-discovery.js"></script>
 </body>
 </html>

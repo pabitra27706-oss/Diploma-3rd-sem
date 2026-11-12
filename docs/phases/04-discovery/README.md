@@ -1,6 +1,6 @@
 # Phase 4 — Discovery and sharing
 
-**Status:** 📋 planned · **Parts:** 5 · **Depends on:** 2 · **Owner gates:** none
+**Status:** 🚧 implementation in progress · **Parts:** 5 · **Depends on:** 2 · **Owner gates:** none
 
 ## Goal
 

@@ -11,7 +11,7 @@
 ══════════════════════════════════════════════════════════════ */
 
 const reviewState = {
-  result:          null,   // Loaded from localStorage quiz-result
+  result:          null,   // Loaded from StudyStorage.legacy quiz-result
   questions:       [],
   answers:         {},
   config:          null,
@@ -73,7 +73,8 @@ function cacheDOMRefs() {
 ══════════════════════════════════════════════════════════════ */
 
 function loadReviewData() {
-  const result = getFromStorage('quiz-result');
+  const historyId = getParam('historyId');
+  const result = historyId ? QuizAttempts.historyEntry(historyId) : QuizAttempts.current();
 
   if (!result || !result.questions || result.questions.length === 0) {
     showNoData();
@@ -96,8 +97,16 @@ function loadReviewData() {
   showEl(dom.reviewMain);
 
   renderPageHeader();
+  if (reviewState.config.paper) {
+    const a=QuizAttempts.score(reviewState.questions,reviewState.answers);
+    const note=document.createElement('p'); note.setAttribute('role','status');
+    note.textContent=`Keyed MCQs: ${a.correct} correct, ${a.incorrect} wrong, ${a.unanswered} unanswered; Paper marks are not automatically awarded (explanation splits and choice rules need review). Printed paper maximum ${reviewState.config.paper.fullMarks}; no automatic overall grade or answer-any enforcement.`;
+    dom.reviewMain.prepend(note);
+  }
   renderInfoBanner();
   renderQuestionList();
+  const targetId=getParam('q');
+  if(targetId){const target=[...document.querySelectorAll('[data-question-id]')].find(el=>el.dataset.questionId===targetId);if(target){target.tabIndex=-1;target.focus();target.scrollIntoView({block:'center'});}else{const note=document.createElement('p');note.textContent='The linked question is not in this local attempt.';note.setAttribute('role','status');dom.reviewMain.prepend(note);}}
   buildPalettePanel();
   bindEvents();
   updateRetryLink();
@@ -224,6 +233,10 @@ function buildQuestionCard(q, displayNum) {
   // ── Header
   const header = buildCardHeader(q, displayNum, hasAnswer, isMCQ);
   card.appendChild(header);
+  const copyLink=document.createElement('button');copyLink.type='button';copyLink.textContent='Copy review link (this device)';
+  copyLink.onclick=async()=>{const url=new URL(location.href);url.search=new URLSearchParams({historyId:reviewState.result?.historyId || getParam('historyId') || '',q:q.id}).toString();try{await navigator.clipboard.writeText(url.href);copyLink.textContent='Review link copied';}catch{const field=document.createElement('input');field.value=url.href;field.setAttribute('aria-label','Review link — select and copy');card.append(field);field.focus();field.select();}};
+  card.append(copyLink);
+
 
   // ── Body
   const body = document.createElement('div');
@@ -237,6 +250,8 @@ function buildQuestionCard(q, displayNum) {
   const qText = createElement('p', 'review-q-text', q.question);
   body.appendChild(qText);
 
+  if (q.sourcePage) body.appendChild(createElement('p','text-secondary',`Source: ${q.sourcePage}`));
+
   // Answer display
   if (isMCQ) {
     const optionsEl = buildMCQOptionsReview(q, userAnswer);
@@ -244,6 +259,8 @@ function buildQuestionCard(q, displayNum) {
   } else {
     const answerBox = buildTextAnswerBox(q, userAnswer, hasAnswer);
     body.appendChild(answerBox);
+
+    body.appendChild(createElement('p', 'badge badge-neutral', q.modelAnswer ? 'Supplied model answer — self-review only' : 'No key — not graded'));
 
     // Model answer (collapsible)
     if (q.modelAnswer) {
@@ -557,12 +574,11 @@ function saveEditedAnswer() {
   // Update state
   reviewState.answers[qId] = newVal;
 
-  // Persist to quiz-result in storage
-  const result = getFromStorage('quiz-result');
-  if (result) {
-    result.answers = reviewState.answers;
-    saveToStorage('quiz-result', result);
-  }
+  try {
+    const id = reviewState.result.historyId;
+    if (id) reviewState.result = QuizAttempts.edit(id, reviewState.answers);
+    else { reviewState.result.answers = QuizAttempts.cleanAnswers(reviewState.answers, reviewState.questions.map(q=>q.id)); QuizAttempts.setCurrent(reviewState.result); }
+  } catch (error) { alert('Edit could not be saved: '+error.message); return; }
 
   closeEditModal();
 
@@ -635,27 +651,14 @@ function setFilter(filter) {
 ══════════════════════════════════════════════════════════════ */
 
 function updateRetryLink() {
-  if (!dom.btnRetryQuiz) return;
-  const cfg = reviewState.config;
-  if (!cfg) return;
-
-  const params = {
-    subject:    cfg.subject   || 'all',
-    unit:       Array.isArray(cfg.unit) ? cfg.unit.join(',') : (cfg.unit || 'all'),
-    mode:       cfg.mode      || 'all',
-    count:      cfg.count     || 10,
-    difficulty: cfg.difficulty|| 'mixed',
-    source:     cfg.source    || 'all',
-    order:      cfg.order     || 'random',
-    balance:    cfg.balance   || 'random',
-    timer:      cfg.timer     ? '1' : '0',
-    timerMins:  cfg.timerMins || 10,
-    types:      (cfg.types || []).join(','),
-    marks:      (cfg.marks || []).join(','),
-    year:       cfg.year || ''
-  };
-
-  dom.btnRetryQuiz.href = buildURL('play.html', params);
+  if (dom.btnRetryQuiz) dom.btnRetryQuiz.addEventListener('click', event => {
+    event.preventDefault();
+    try { const a=QuizAttempts.retry(reviewState.result); location.href=buildURL('play.html',{resume:a.autosaveKey}); }
+    catch(error) { alert(error.message); }
+  });
+  document.querySelectorAll('a[href*="export.html"]').forEach(link => {
+    link.href=buildURL('export.html',{historyId:reviewState.result.historyId || null});
+  });
 }
 
 /* ══════════════════════════════════════════════════════════════

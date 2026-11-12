@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
      ========================================================== */
 
   function getPreferredTheme() {
-    var saved = localStorage.getItem("theme");
+    var saved = StudyStorage.legacy.getItem("theme");
     if (saved === "dark" || saved === "light") return saved;
     if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       return "dark";
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    StudyStorage.legacy.setItem("theme", theme);
     updateThemeIcons(theme);
   }
 
@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* Restore saved state */
     if (sectionId) {
-      var saved = localStorage.getItem(getSectionKey(sectionId));
+      var saved = StudyStorage.legacy.getItem(getSectionKey(sectionId));
       if (saved === "collapsed") {
         contentEl.classList.add("collapsed");
         contentEl.style.maxHeight = "0";
@@ -261,11 +261,11 @@ document.addEventListener("DOMContentLoaded", function () {
       if (isCollapsed) {
         expandSection(contentEl, iconEl);
         titleEl.setAttribute("aria-expanded", "true");
-        if (sectionId) localStorage.setItem(getSectionKey(sectionId), "expanded");
+        if (sectionId) StudyStorage.legacy.setItem(getSectionKey(sectionId), "expanded");
       } else {
         collapseSection(contentEl, iconEl);
         titleEl.setAttribute("aria-expanded", "false");
-        if (sectionId) localStorage.setItem(getSectionKey(sectionId), "collapsed");
+        if (sectionId) StudyStorage.legacy.setItem(getSectionKey(sectionId), "collapsed");
       }
     });
 
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getBookmarks() {
     try {
-      return JSON.parse(localStorage.getItem("bookmarks")) || [];
+      return JSON.parse(StudyStorage.legacy.getItem("bookmarks")) || [];
     } catch (e) {
       return [];
     }
@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", function () {
         subject: StudyApp.getSubjectFromBody(),
         timestamp: Date.now()
       });
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+      StudyStorage.legacy.setItem("bookmarks", JSON.stringify(bookmarks));
       showToast("Page bookmarked! 🔖", 2500, "success");
     }
   }
@@ -496,7 +496,7 @@ document.addEventListener("DOMContentLoaded", function () {
           var titleEl = section.querySelector(".section-title");
           if (titleEl) titleEl.setAttribute("aria-expanded", "true");
           if (section.id) {
-            localStorage.setItem(getSectionKey(section.id), "expanded");
+            StudyStorage.legacy.setItem(getSectionKey(section.id), "expanded");
           }
         }
       }
@@ -639,7 +639,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* Only run on first visit per page */
     var key = "typewriter_" + StudyApp.getPageId();
-    if (localStorage.getItem(key)) {
+    if (StudyStorage.legacy.getItem(key)) {
       elements.forEach(function (el) {
         el.classList.add("done", "no-cursor");
       });
@@ -676,7 +676,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 500);
     });
 
-    localStorage.setItem(key, "true");
+    StudyStorage.legacy.setItem(key, "true");
   }
 
   initTypewriter();
@@ -1311,7 +1311,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var visitedSections = {};
 
     try {
-      visitedSections = JSON.parse(localStorage.getItem(storageKey)) || {};
+      visitedSections = JSON.parse(StudyStorage.legacy.getItem(storageKey)) || {};
     } catch (e) {
       visitedSections = {};
     }
@@ -1416,7 +1416,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var id = entry.target.id;
             if (!visitedSections[id]) {
               visitedSections[id] = true;
-              localStorage.setItem(storageKey, JSON.stringify(visitedSections));
+              StudyStorage.legacy.setItem(storageKey, JSON.stringify(visitedSections));
 
               /* Update widget */
               var items = sectionList.querySelectorAll(".progress-section-item");
@@ -1465,7 +1465,7 @@ document.addEventListener("DOMContentLoaded", function () {
   (function () {
     var html = document.documentElement;
     var hardcoded = html.getAttribute("data-theme");
-    var saved = localStorage.getItem("theme");
+    var saved = StudyStorage.legacy.getItem("theme");
     if (saved && hardcoded !== saved) {
       html.setAttribute("data-theme", saved);
     }

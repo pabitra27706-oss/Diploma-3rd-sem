@@ -1,6 +1,6 @@
 # Phase 7 — Inclusion and trust
 
-**Status:** 📋 planned · **Parts:** 5 · **Depends on:** 1 · **Owner gates:** license (7.5)
+**Status:** 🚧 implementation in progress · **Parts:** 5 · **Depends on:** 1 · **Owner gates:** license (7.5)
 
 ## Goal
 

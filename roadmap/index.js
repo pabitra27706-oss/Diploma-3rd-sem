@@ -413,7 +413,7 @@ let activeFilter = 'all';
    ============================================================ */
 function loadProgress() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = StudyStorage.legacy.getItem(STORAGE_KEY);
     progress = raw ? JSON.parse(raw) : {};
   } catch {
     progress = {};
@@ -421,7 +421,7 @@ function loadProgress() {
 }
 
 function saveProgress() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  StudyStorage.legacy.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
 function toggleDay(dayKey) {
@@ -486,7 +486,7 @@ function renderCards() {
       <div class="day-number">${isDone ? '✓' : dayData.day}</div>
       <div class="day-info">
         <div class="day-title">Day ${dayData.day} — ${dayData.title}</div>
-        <div class="day-subtitle">${Object.keys(dayData.subjects).length} subjects</div>
+        <div class="day-subtitle">${Object.keys(dayData.subjects).length} subjects · ${dayData.practiceCount ?? "Unavailable"} mixed-revision questions</div>
       </div>
       <div class="day-actions">
         <button class="btn-done" data-key="${key}" aria-label="${isDone ? 'Mark incomplete' : 'Mark complete'}">
@@ -501,6 +501,10 @@ function renderCards() {
     /* ── Body ── */
     const body = document.createElement('div');
     body.className = 'day-body';
+    const practiceLink = document.createElement('a');
+    practiceLink.href = `../practice/session.html?days=${dayData.day}`;
+    practiceLink.textContent = `Practise ${dayData.practiceCount ?? "available"} mixed-revision questions (separate from the reading topics below)`;
+    body.append(practiceLink);
 
     Object.entries(dayData.subjects).forEach(([code, topics]) => {
       const hidden = (activeFilter !== 'all' && activeFilter !== code) ? ' hidden' : '';
@@ -578,7 +582,7 @@ function applyFilter(subject) {
    THEME
    ============================================================ */
 function initTheme() {
-  const saved = localStorage.getItem('theme');
+  const saved = StudyStorage.legacy.getItem('theme');
   const pref  = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', saved || pref);
 }
@@ -587,13 +591,20 @@ function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme');
   const next    = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+  StudyStorage.legacy.setItem('theme', next);
 }
 
 /* ============================================================
    INIT
    ============================================================ */
-function init() {
+async function init() {
+  try {
+    const schedule = await StudyData.practiceDays();
+    ROADMAP.forEach(day => {
+      const actual = schedule.days.find(d => d.day === day.day);
+      day.practiceCount = actual?.count;
+    });
+  } catch (error) { console.warn('Practice schedule unavailable', error); }
   initTheme();
   loadProgress();
   renderAll();
