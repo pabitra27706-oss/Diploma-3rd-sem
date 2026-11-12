@@ -857,7 +857,7 @@
         }
       ],
       "markSplit": "2+3+3",
-      "answer": "**i)** Indentation defines blocks in Python instead of braces.\n\n**ii)** A list is mutable and uses `[]`; a tuple is immutable and uses `()`.\n\n**iii)**\n```python\nif marks >= 40:\n    print(\"pass\")\nelse:\n    print(\"fail\")\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 2 marks + ii) 3 marks (difference 2 + example 1) + iii) 3 marks (concept 1 + program 2).**\n\n**i) Purpose of indentation**\n\nPython uses indentation (spaces or tabs at the start of a line) to define blocks of code instead of braces { }. Statements at the same indentation level belong to the same block \u2014 for example the body of if, for, while, def and class. Incorrect indentation raises IndentationError.\n\n**ii) List vs Tuple**\n\n| List | Tuple |\n|---|---|\n| Mutable \u2014 contents can change | Immutable \u2014 contents cannot change after creation |\n| Written with [] | Written with () |\n| Slightly slower | Slightly faster |\n| Use for collections that change | Use for fixed collections or as dictionary keys |\n\n```python\nlst = [1, 2, 3]\nlst[0] = 9        # allowed\ntpl = (1, 2, 3)\n# tpl[0] = 9     # TypeError\n```\n\n**iii) if statement**\n\nThe if statement executes a block only when a condition is true:\n\n```python\nmarks = 55\nif marks >= 40:\n    print(\"Pass\")\nelse:\n    print(\"Fail\")\n# Output: Pass\n```\nIf marks >= 40 is true, \"Pass\" prints; otherwise the else block runs.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -901,7 +901,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**i)** `a[start:stop:step]` returns a new list, stopping before `stop`.\n\n```python\na = [0,1,2,3,4]\na[1:4]    # [1,2,3]\na[::-1]   # [4,3,2,1,0]\n```\n\n**ii)** A dictionary maps unique keys to values.\n\n```python\nstudent = {\"roll\": 1, \"name\": \"A\"}\nprint(student[\"name\"])\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 4 marks (syntax 2 + examples 2) + ii) 4 marks (definition 2 + example 2).**\n\n**i) List slicing**\n\na[start:stop:step] returns a new list containing elements from start up to (but not including) stop, stepping by step. Omitted values default to start = 0, stop = length of the list, step = 1. The original list is not changed.\n\n```python\na = [0, 1, 2, 3, 4]\nprint(a[1:4])   # [1, 2, 3]\nprint(a[::2])   # [0, 2, 4]\nprint(a[::-1])  # [4, 3, 2, 1, 0]\n```\n\n**ii) Python Dictionary**\n\nA dictionary stores data as key -> value pairs. Keys must be unique and immutable; values can be of any type.\n\n```python\nstudent = {\"roll\": 101, \"name\": \"Riya\", \"marks\": 85}\nprint(student[\"name\"])   # Riya\nstudent[\"city\"] = \"Kolkata\"   # add new pair\nprint(student)           # {'roll': 101, 'name': 'Riya', 'marks': 85, 'city': 'Kolkata'}\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -943,7 +943,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**i)** `for` iterates over an iterable or a known count; `while` repeats while a condition remains true.\n\n**ii)**\n```python\nn = int(input(\"n: \"))\ns = sum(int(d) for d in str(abs(n)))\nprint(s)\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 3 marks + ii) 5 marks (program 3 + explanation/output 2).**\n\n**i) for loop vs while loop**\n\n| for loop | while loop |\n|---|---|\n| Iterates over a sequence or a known count | Repeats while a condition is true |\n| Loop variable is managed automatically | Condition and counter must be managed manually |\n| Best when the number of iterations is known | Best when repetitions depend on a condition |\n\n```python\nfor i in range(5):          # fixed 5 iterations\n    print(i)\ni = 0\nwhile i < 5:                # condition-based\n    print(i)\n    i += 1\n```\n\n**ii) Sum of digits program**\n\n```python\nn = int(input(\"Enter a number: \"))\ntotal = 0\nnum = abs(n)\nwhile num > 0:\n    total = total + num % 10\n    num = num // 10\nprint(\"Sum of digits:\", total)\n```\nExample: input 123 -> output Sum of digits: 6 because 1 + 2 + 3 = 6.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -991,7 +991,7 @@
         }
       ],
       "markSplit": "3+2+3",
-      "answer": "**i)** Matched by position: `f(1, 2)`.\n\n**ii)** Parameters with fallback values: `def f(x, y=10): ...`.\n\n**iii)** `*args` collects extra positional arguments into a tuple and `**kwargs` collects keyword arguments into a dictionary.\n\n```python\ndef demo(a, b=2, *args, **kwargs):\n    print(a, b, args, kwargs)\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 3 marks + ii) 2 marks + iii) 3 marks.**\n\n**i) Positional arguments**\n\nArguments are matched to parameters by position: the first argument goes to the first parameter, and so on:\n```python\ndef subtract(a, b):\n    return a - b\nprint(subtract(10, 4))   # 6\nprint(subtract(4, 10))   # -6  (order matters)\n```\n\n**ii) Default arguments**\n\nA parameter is given a fallback value in the definition; if the caller omits that argument, the default is used:\n```python\ndef wish(name, msg = \"Good morning\"):\n    print(msg, name)\nwish(\"Riya\")              # Good morning Riya\nwish(\"Riya\", \"Hello\")     # Hello Riya\n```\n\n**iii) Variable-length arguments**\n\n*args collects extra positional arguments into a tuple; **kwargs collects extra keyword arguments into a dictionary:\n```python\ndef total(*nums):\n    return sum(nums)\nprint(total(1, 2, 3, 4))   # 10\n\ndef info(**details):\n    print(details)\ninfo(name = \"Riya\", city = \"Kolkata\")   # {'name': 'Riya', 'city': 'Kolkata'}\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1034,7 +1034,7 @@
         }
       ],
       "markSplit": "6+2",
-      "answer": "**i)** Common modes: `\"r\"` read, `\"w\"` write/truncate, `\"a\"` append, `\"r+\"` read/write, `\"b\"` binary, `\"t\"` text, and `\"x\"` exclusive creation.\n\n```python\nwith open(\"a.txt\", \"r\") as f: data = f.read()\nwith open(\"b.txt\", \"w\") as f: f.write(\"Hello\")\n```\n\n**ii)** Pattern matching finds strings that conform to a pattern, commonly with the `re` module: `re.findall(r\"\\d+\", text)`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 6 marks + ii) 2 marks.**\n\n**i) File opening modes**\n\n| Mode | Meaning |\n|---|---|\n| \"r\" | Read (default); file must exist |\n| \"w\" | Write; creates a new file or truncates an existing one |\n| \"a\" | Append; writes at the end of an existing file |\n| \"r+\" | Read and write |\n| \"w+\" | Write and read; truncates existing file |\n| \"a+\" | Append and read |\n| \"b\" | Binary mode (combined: \"rb\", \"wb\") |\n| \"t\" | Text mode (default) |\n| \"x\" | Exclusive creation; fails if the file already exists |\n\n```python\nwith open(\"notes.txt\", \"r\") as f:     # read text\n    data = f.read()\nwith open(\"log.txt\", \"a\") as f:       # append text\n    f.write(\"new entry\\n\")\nwith open(\"image.png\", \"rb\") as f:    # read binary\n    content = f.read()\n```\n\n**ii) Pattern matching**\n\nPattern matching means checking whether a string follows a specified pattern (a sequence of characters or a regular expression). In Python this is done with the re module, e.g. re.search(r\"\\d+\", \"abc123\") finds \"123\". Python 3.10 also added structural pattern matching with match ... case.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1077,7 +1077,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**i)** MVC separates Model (data/logic), View (presentation), and Controller (input/coordination). Django is usually described as MVT: Model, View, Template.\n\n**ii)** Django is a batteries-included Python web framework with ORM, admin, authentication, forms, routing, and security defaults. It suits database-driven applications that need rapid, maintainable development.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 3 marks + ii) 5 marks.**\n\n**i) MVC**\n\nMVC (Model-View-Controller) separates an application into:\n- **Model** \u2014 data and business logic\n- **View** \u2014 user interface / presentation\n- **Controller** \u2014 handles user input and updates the Model and View\n\nDjango is commonly described as **MVT** (Model-View-Template), where Django's URL dispatcher and views take the controller's role.\n\n**ii) Django and why use it**\n\nDjango is a high-level, batteries-included Python web framework. Reasons to use it:\n- Built-in ORM, admin panel, authentication, forms and security features\n- Follows the MVT pattern and promotes rapid, clean development\n- Scales well and has excellent documentation and a large ecosystem\n\n```bash\npip install django\ndjango-admin startproject mysite\ncd mysite\npython manage.py migrate\npython manage.py runserver\n```\nThen open http://127.0.0.1:8000 in the browser to see the Django welcome page.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1126,7 +1126,7 @@
         }
       ],
       "markSplit": "4+2+2",
-      "answer": "**i)**\n```python\nt = (1, 2, 3)\nfor x in t:\n    print(x)\n```\n\n**ii)** `pass` is a null statement used where syntax requires a statement.\n\n**iii)** A `for ... else` suite runs when the loop finishes normally without `break`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 4 marks + ii) 2 marks + iii) 2 marks.**\n\n**i) Print tuple elements with for loop**\n\n```python\nt = (10, 20, 30)\nfor x in t:\n    print(x)\n# Output:\n# 10\n# 20\n# 30\n```\nThe loop variable x takes each element of the tuple in turn.\n\n**ii) pass statement**\n\npass is a null statement: it does nothing. It is used where Python syntax requires a statement but no action is needed \u2014 for example in empty function or class bodies, or as a placeholder:\n```python\ndef future_feature():\n    pass      # to be implemented later\n```\n\n**iii) else clause of a for loop**\n\nThe else block after a for loop runs when the loop finishes normally, that is, without hitting break. It is useful for search operations:\n```python\nfor x in [2, 4, 6, 8]:\n    if x % 5 == 0:\n        print(\"multiple of 5 found\")\n        break\nelse:\n    print(\"no multiple of 5\")\n# Output: no multiple of 5\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1169,7 +1169,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**i)** Local names are bound inside a function; global names are module-level. Rebinding a global inside a function requires `global name`.\n\n```python\nx = 10\ndef f():\n    y = 2       # local\n    return x + y  # x is global\n```\n\n**ii)**\n```python\ndef total(values):\n    return sum(values)\nprint(total([1, 2, 3]))\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: i) 4 marks + ii) 4 marks.**\n\n**i) Local vs Global variables**\n\n| Local variable | Global variable |\n|---|---|\n| Declared inside a function | Declared outside all functions, at module level |\n| Accessible only inside that function | Accessible throughout the module |\n| Created when the function runs, destroyed when it ends | Exists for the lifetime of the program |\n\n```python\nx = 10                         # global\ndef show():\n    y = 20                     # local\n    print(x, y)                # x read from global, y is local\nshow()\n# print(y)                    # NameError: y is not defined\n```\nTo rebind a global inside a function, use global x.\n\n**ii) Pass a list to a function**\n\n```python\ndef show_marks(marks):\n    total = 0\n    for m in marks:\n        total = total + m\n    print(\"Total:\", total)\n\nscores = [75, 82, 90]\nshow_marks(scores)   # Total: 247\n```\nLists are passed by reference, so changes made to the list inside the function affect the original list.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

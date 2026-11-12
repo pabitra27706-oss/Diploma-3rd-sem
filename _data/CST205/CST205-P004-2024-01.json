@@ -1161,7 +1161,7 @@
         }
       ],
       "markSplit": "3+1+1+1+1+1",
-      "answer": "```text\nstart: []\ni)    [A, B, C, D, E, F]\nii)   [C, D, E, F]\niii)  [C, D, E, F, G]\niv)   [C, D, E, F, G, H]\nv)    [G, H]\nvi)   [G, H, M]\n```\n\nThe queue is FIFO, so deletions remove from the front.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: 8 marks (trace of queue operations).**\n\n**Queue operations trace**\n\nA queue is **FIFO** (First-In-First-Out): elements are added at the rear and removed from the front.\n\nStarting with an empty queue `[]`:\n\n| Step | Operation | Queue (front \u2192 rear) |\n|---|---|---|\n| Start | \u2014 | `[]` |\n| i) | Add A, B, C, D, E, F | `[A, B, C, D, E, F]` |\n| ii) | Delete two letters | `[C, D, E, F]` (A, B removed) |\n| iii) | Add G | `[C, D, E, F, G]` |\n| iv) | Add H | `[C, D, E, F, G, H]` |\n| v) | Delete four letters | `[G, H]` (C, D, E, F removed) |\n| vi) | Add M | `[G, H, M]` |\n\n**Final queue: `[G, H, M]`** (front = G, rear = M).\n\nExplanation: After step (iv), the queue holds C D E F G H. Deleting four letters removes C, D, E, F from the front, leaving G H. Adding M appends it at the rear \u2192 G H M.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

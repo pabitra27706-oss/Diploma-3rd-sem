@@ -905,7 +905,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** Start → input a,b,c → test `a>=b` → inside, test `a>=c`; else test `b>=c` → output max → stop.\n\n**b)**\n```c\nint a,b,c,max;\nscanf(\"%d%d%d\", &a, &b, &c);\nmax = (a>b) ? ((a>c)?a:c) : ((b>c)?b:c);\nprintf(\"%d\", max);\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks (flowchart) + b) 4 marks (program).**\n\n**a) Flowchart of nested if-else structure**\n\nA nested `if-else` places one `if-else` inside the body of another `if` or `else`.\n\n```\n          [Start]\n             |\n             v\n       [Input a, b, c]\n             |\n             v\n        [a >= b?] ----No----> [b >= c?] ----No----> [max = c]\n          |Yes                         |Yes\n          v                            v\n     [a >= c?] ------------------> [max = b]\n       |No\n       v\n   [max = a]\n       |\n       v\n    [Print max]\n       |\n       v\n      [Stop]\n```\nLogic: if `a >= b`, compare `a` with `c`; otherwise compare `b` with `c`. The largest of the three is selected.\n\n**b) C program to input three integers and display the maximum**\n\n```c\n#include <stdio.h>\nint main() {\n    int a, b, c, max;\n    printf(\"Enter three integers: \");\n    scanf(\"%d %d %d\", &a, &b, &c);\n    if (a >= b) {\n        if (a >= c) max = a;\n        else max = c;\n    } else {\n        if (b >= c) max = b;\n        else max = c;\n    }\n    printf(\"Maximum number = %d\\n\", max);\n    return 0;\n}\n```\nExample: input `12 7 19` \u2192 output `Maximum number = 19`.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1082,7 +1082,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** `return` ends a function and optionally sends a value back to the caller.\n\n**b)**\n```c\ndouble term = 1.0, sum = 0.0;\nint n, i;\nscanf(\"%d\", &n);\nfor (i = 1; i <= n; i++) { term /= i; sum += term; }\nprintf(\"%f\", sum);\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 2 marks + b) 6 marks (program).**\n\n**a) Use of the `return` statement**\n\nThe `return` statement:\n1. **Terminates** the execution of a function and transfers control back to the calling function.\n2. Optionally **sends a value** back to the caller (the function's return type must match).\n3. After `return`, no further statement in that function executes.\n\n```c\nint square(int x) {\n    return x * x;   // sends x*x back and ends the function\n}\n```\n\n**b) C program to calculate `sum = 1/1! + 1/2! + ... + 1/n!`**\n\n```c\n#include <stdio.h>\nint main() {\n    int n, i;\n    double fact = 1.0, term = 1.0, sum = 0.0;\n    printf(\"Enter n: \");\n    scanf(\"%d\", &n);\n    for (i = 1; i <= n; i++) {\n        fact = fact * i;       // i!\n        term = 1.0 / fact;     // 1/i!\n        sum = sum + term;      // accumulate\n    }\n    printf(\"Sum of series = %.6f\\n\", sum);\n    return 0;\n}\n```\nExample: input `n = 3` \u2192 `1/1! + 1/2! + 1/3! = 1 + 0.5 + 0.166667 = 1.666667`.\nThe factorial is built incrementally (`fact *= i`) so it is not recomputed from scratch each time.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1125,7 +1125,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** Recursion is a function calling itself with a smaller problem until a base case stops it, e.g. `factorial(n) = n * factorial(n-1)`.\n\n**b)**\n```c\nint gcd(int a, int b) {\n    return b == 0 ? (a < 0 ? -a : a) : gcd(b, a % b);\n}\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks + b) 4 marks (program).**\n\n**a) What is recursion? Explain with example.**\n\n**Recursion** is a technique in which a function calls itself to solve a smaller instance of the same problem, until a **base case** is reached that stops the recursion.\n\nExample \u2014 factorial:\n```c\nint fact(int n) {\n    if (n <= 1) return 1;   // base case\n    return n * fact(n - 1); // recursive step\n}\n```\n`fact(4)` = `4 \u00d7 fact(3)` = `4 \u00d7 3 \u00d7 fact(2)` = `4 \u00d7 3 \u00d7 2 \u00d7 fact(1)` = `24`.\n\nKey points:\n- Every recursive function must have a **base case** to avoid infinite recursion (stack overflow).\n- Each recursive call creates a new activation record on the call stack.\n- Recursion is elegant for problems like factorial, Fibonacci, GCD, tower of Hanoi, tree traversal.\n\n**b) Recursive function with two integer parameters to calculate GCD**\n\n```c\n#include <stdio.h>\nint gcd(int a, int b) {\n    if (b == 0) return a;        // base case\n    return gcd(b, a % b);        // recursive step (Euclid)\n}\nint main() {\n    int x, y;\n    printf(\"Enter two numbers: \");\n    scanf(\"%d %d\", &x, &y);\n    printf(\"GCD = %d\\n\", gcd(x, y));\n    return 0;\n}\n```\nExample: `gcd(48, 18)` \u2192 `gcd(18, 12)` \u2192 `gcd(12, 6)` \u2192 `gcd(6, 0)` \u2192 returns **6**.\nThis uses Euclid's algorithm: `gcd(a, b) = gcd(b, a % b)` until `b == 0`.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

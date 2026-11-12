@@ -1355,7 +1355,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** Python is a high-level, interpreted, dynamically typed language. Features: simple syntax, indentation blocks, rich standard library, cross-platform, object-oriented/functional support, automatic memory management.\n\n**b)** Local names are bound inside a function; global names are module-level. Rebinding a global inside a function requires `global name`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 5 marks (definition 2 + features 3) + b) 3 marks.**\n\n**a) Define Python. Features of Python**\n\nPython is a high-level, interpreted, dynamically typed, general-purpose programming language created by Guido van Rossum. It emphasizes readability and lets programmers write fewer lines of code than languages like C or Java.\n\n**Features:**\n1. Simple, easy-to-learn syntax resembling English\n2. Interpreted \u2014 executed line by line, no separate compilation\n3. Dynamically typed \u2014 variable types are decided at runtime\n4. Object-oriented and functional programming support\n5. Platform independent / cross-platform\n6. Huge standard library and rich ecosystem of third-party packages\n7. Automatic memory management (garbage collection)\n8. Open source and free\n\n**b) Local vs Global variable**\n\nA **local variable** is declared inside a function and can be used only within that function. A **global variable** is declared outside all functions at module level and can be accessed anywhere in the program. To change a global variable inside a function, the global keyword is required:\n\n```python\nx = 100                  # global\ndef demo():\n    y = 10               # local\n    print(x, y)\ndemo()\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1404,7 +1404,7 @@
         }
       ],
       "markSplit": "3+2+3",
-      "answer": "**a)** `\", \".join([\"a\",\"b\"])` → `\"a, b\"`; `\"a,b\".split(\",\")` → `[\"a\",\"b\"]`.\n\n**b)** Mutable objects (list, dict, set) can change in place; immutable objects (int, str, tuple) cannot.\n\n**c)** `s=\"cat\"; s[0]=\"b\"` raises `TypeError`; operations create a new string instead, e.g. `\"b\" + s[1:]`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 3 marks + b) 2 marks + c) 3 marks.**\n\n**a) join() and split()**\n\n- join() joins elements of an iterable into one string, using the string it is called on as the separator.\n- split() breaks a string into a list of substrings using a separator.\n\n```python\nwords = [\"Python\", \"is\", \"easy\"]\nprint(\", \".join(words))   # Python, is, easy\n\ntext = \"apple,banana,mango\"\nprint(text.split(\",\"))    # ['apple', 'banana', 'mango']\n```\n\n**b) Mutable vs Immutable**\n\n- **Mutable** objects can be changed after creation: list, dict, set.\n- **Immutable** objects cannot be changed after creation: int, float, str, tuple, bool.\n\n```python\nlst = [1, 2]\nlst[0] = 9        # allowed: list is mutable\ns = \"hi\"\n# s[0] = \"H\"     # TypeError: str does not support item assignment\n```\n\n**c) Why strings are immutable**\n\nOnce created, a string object cannot be modified in memory. Any \"change\" creates a new string object. This makes strings hashable (usable as dictionary keys), thread-safe and enables memory optimizations such as interning:\n\n```python\ns = \"cat\"\n# s[0] = \"b\"     # TypeError\ns = \"b\" + s[1:]   # new object: \"bat\"\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1447,7 +1447,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)**\n```python\nfor i in range(5):\n    if i == 2: continue   # skip 2\n    if i == 4: break      # leave loop\n    print(i)\n```\n\n**b)**\n```python\nn=int(input()); ok=n>=2\nfor i in range(2,int(n**0.5)+1):\n    if n%i==0: ok=False; break\nprint(\"prime\" if ok else \"not prime\")\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks (break 2 + continue 2) + b) 4 marks (program 3 + explanation 1).**\n\n**a) break and continue**\n\n- **break** terminates the nearest enclosing loop immediately.\n- **continue** skips the rest of the current iteration and jumps to the next iteration.\n\n```python\nfor i in range(6):\n    if i == 2:\n        continue   # skip 2\n    if i == 5:\n        break      # stop at 5\n    print(i)\n# Output: 0 1 3 4\n```\n\n**b) Prime number program**\n\n```python\nn = int(input(\"Enter a number: \"))\nif n < 2:\n    print(\"Not prime\")\nelse:\n    for i in range(2, int(n ** 0.5) + 1):\n        if n % i == 0:\n            print(\"Not prime\")\n            break\n    else:\n        print(\"Prime\")\n```\nDivisors are checked only up to sqrt(n), since any larger factor would already have a matching smaller factor.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1490,7 +1490,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** A dict maps unique keys to values. Common methods: `get`, `keys`, `values`, `items`, `update`, `pop`, `popitem`, `clear`, `copy`, `setdefault`.\n\n**b)** Lists are mutable and use `[]`; tuples are immutable and use `()`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks (definition 2 + methods 2) + b) 4 marks.**\n\n**a) Dictionary and its methods**\n\nA dictionary stores data as unique key -> value pairs. Common methods:\n- get(key) \u2014 value for a key, None if missing\n- keys() \u2014 all keys\n- values() \u2014 all values\n- items() \u2014 all (key, value) pairs\n- update() \u2014 add or update multiple pairs\n- pop(key) \u2014 remove a key and return its value\n- popitem() \u2014 remove the last inserted pair\n- clear() \u2014 remove all pairs\n- copy() \u2014 shallow copy\n\n```python\nstudent = {\"roll\": 101, \"name\": \"Riya\"}\nprint(student.get(\"name\"))      # Riya\nstudent[\"city\"] = \"Kolkata\"\nprint(student.keys())           # dict_keys(['roll', 'name', 'city'])\n```\n\n**b) Tuple vs List**\n\n| Tuple | List |\n|---|---|\n| Immutable | Mutable |\n| Written with () | Written with [] |\n| Can be used as dictionary keys | Cannot be used as dictionary keys |\n| Generally faster | Slightly slower |\n\n```python\ntpl = (1, 2, 3)\nlst = [1, 2, 3]\n# tpl[0] = 9    # TypeError\nlst[0] = 9      # allowed\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1534,7 +1534,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** `return` ends a function and sends a value back: `def sq(x): return x*x`.\n\n**b)** A required argument has no default and must be supplied; a default argument has a fallback, e.g. `def f(x, y=10)`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks (purpose 2 + example 2) + b) 4 marks (required 2 + default 2).**\n\n**a) return statement**\n\nreturn ends the function execution and sends a value back to the caller. If no expression is given, the function returns None:\n\n```python\ndef square(x):\n    return x * x\nresult = square(5)\nprint(result)   # 25\n```\n\n**b) Required and default arguments**\n\n- **Required argument** \u2014 has no default value and must be passed during the call:\n```python\ndef add(a, b):          # a and b are required\n    return a + b\n```\n- **Default argument** \u2014 has a fallback value in the definition:\n```python\ndef wish(name, msg = \"Hello\"):\n    print(msg, name)\nwish(\"Riya\")            # Hello Riya  (default msg used)\nwish(\"Riya\", \"Hi\")      # Hi Riya     (default overridden)\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1578,7 +1578,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Arithmetic `+`, comparison `==`, logical `and`, assignment `=`, identity `is`, membership `in`, bitwise `&`, and unary `not`/`-`.\n\n**b)** `import math`, `from math import sqrt`, or `import numpy as np`.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Types of operators**\n\n| Type | Example | Purpose |\n|---|---|---|\n| Arithmetic | +, -, *, /, //, %, ** | Mathematical operations |\n| Comparison | ==, !=, >, <, >=, <= | Compare two values |\n| Logical | and, or, not | Combine boolean conditions |\n| Assignment | =, +=, -=, *=, /= | Assign values to variables |\n| Identity | is, is not | Compare object identity |\n| Membership | in, not in | Test membership in a sequence |\n| Bitwise | &, |, ^, ~, <<, >> | Operate on bits |\n\n```python\nprint(10 // 3)   # 3\nprint(5 > 3 and 2 < 4)   # True\nprint(\"a\" in \"apple\")    # True\n```\n\n**b) Importing a module**\n\n```python\nimport math\nprint(math.sqrt(16))      # 4.0\n```\nOther styles: from math import sqrt or import numpy as np.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1626,7 +1626,7 @@
         }
       ],
       "markSplit": "2+3+3",
-      "answer": "**a)** A module is a `.py` file; a package is a directory of modules, conventionally with `__init__.py`.\n\n**b)** `*args` collects extra positional arguments; `**kwargs` collects keyword arguments:\n```python\ndef f(*args, **kwargs): print(args, kwargs)\n```\n\n**c)**\n```python\nfrom datetime import datetime\nprint(datetime.now())\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 2 marks + b) 3 marks + c) 3 marks.**\n\n**a) Module and Package**\n\n- **Module**: a single .py file that can be imported, e.g. math, random, or a file my_utils.py.\n- **Package**: a folder containing multiple modules, usually with an __init__.py file, e.g. import college.cse.marks.\n\n**b) Arbitrary arguments**\n\n*args collects extra positional arguments into a tuple; **kwargs collects extra keyword arguments into a dictionary:\n\n```python\ndef demo(*args, **kwargs):\n    print(\"Positional:\", args)\n    print(\"Keyword:\", kwargs)\ndemo(1, 2, 3, x = 10, y = 20)\n# Positional: (1, 2, 3)\n# Keyword: {'x': 10, 'y': 20}\n```\n\n**c) Print current date and time**\n\n```python\nfrom datetime import datetime\nprint(\"Current date and time:\", datetime.now())\n# Output: Current date and time: 2024-01-15 14:30:00.123456\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1671,7 +1671,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** `r` read, `w` write/truncate, `a` append, `r+` read/write, `x` exclusive create, `b` binary, `t` text. Example: `with open(\"a.txt\",\"r\") as f: ...`.\n\n**b)** `read(n)` returns up to `n` characters/bytes (or the whole file); `write(s)` writes a string and returns the character count.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) File access modes**\n\n| Mode | Use |\n|---|---|\n| \"r\" | Read only; file must exist |\n| \"w\" | Write only; creates or truncates the file |\n| \"a\" | Append; write at the end of the file |\n| \"r+\" | Read and write |\n| \"b\" | Binary mode (combined: \"rb\", \"wb\") |\n\n```python\nwith open(\"data.txt\", \"r\") as f:     # read\n    text = f.read()\nwith open(\"log.txt\", \"a\") as f:      # append\n    f.write(\"entry\\n\")\n```\n\n**b) read() and write()**\n\n- read(n) reads up to n characters (or the whole file if n is omitted).\n- write(s) writes string s to the file and returns the number of characters written.\n\n```python\nwith open(\"demo.txt\", \"w\") as f:\n    n = f.write(\"Hello Python\")      # n = 12\nwith open(\"demo.txt\", \"r\") as f:\n    print(f.read(5))                 # Hello\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1715,7 +1715,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** MVC separates Model (data/business logic), View (presentation), and Controller (input/coordination). Django is usually described as MVT: Model, View, Template.\n\n**b)**\n```bash\npip install django\ndjango-admin startproject mysite\ncd mysite\npython manage.py migrate\npython manage.py runserver\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 3 marks (1 mark per term) + b) 5 marks.**\n\n**a) MVC framework**\n\nMVC divides an application into:\n- **Model** \u2014 data and business logic\n- **View** \u2014 presentation / user interface\n- **Controller** \u2014 receives input, processes it with the Model, and selects the View\n\nDjango follows a similar pattern called **MVT** \u2014 Model, View, Template \u2014 where Django itself handles the controller duties.\n\n**b) Steps to create and run a Django project**\n\n```bash\npip install django                  # install Django\ndjango-admin startproject mysite    # create project\ncd mysite\npython manage.py migrate            # set up the database\npython manage.py runserver          # start the development server\n```\nThen open http://127.0.0.1:8000 in the browser to see the Django welcome page.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

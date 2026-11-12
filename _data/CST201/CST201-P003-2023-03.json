@@ -1354,7 +1354,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)**\n```c\nint gcd(int a,int b){ while(b){int t=a%b;a=b;b=t;} return a<0?-a:a; }\n```\n\n**b)** `if (n % 5 == 0 && n % 11 == 0) printf(\"divisible\"); else printf(\"not divisible\");`",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks (program) + b) 4 marks (program).**\n\n**a) C program to find the GCD of two numbers**\n\n```c\n#include <stdio.h>\nint gcd(int a, int b) {\n    while (b != 0) {\n        int t = a % b;\n        a = b;\n        b = t;\n    }\n    return a;\n}\nint main() {\n    int x, y;\n    printf(\"Enter two numbers: \");\n    scanf(\"%d %d\", &x, &y);\n    printf(\"GCD of %d and %d = %d\\n\", x, y, gcd(x, y));\n    return 0;\n}\n```\nExample: input `48 18` \u2192 output `GCD of 48 and 18 = 6`. Uses Euclid's algorithm: repeatedly replace `(a, b)` with `(b, a % b)` until `b` becomes 0.\n\n**b) C program to check whether a number is divisible by 5 and 11**\n\n```c\n#include <stdio.h>\nint main() {\n    int n;\n    printf(\"Enter a number: \");\n    scanf(\"%d\", &n);\n    if (n % 5 == 0 && n % 11 == 0) {\n        printf(\"%d is divisible by both 5 and 11.\\n\", n);\n    } else {\n        printf(\"%d is NOT divisible by both 5 and 11.\\n\", n);\n    }\n    return 0;\n}\n```\nThe condition `n % 5 == 0 && n % 11 == 0` is true only when the number leaves remainder 0 on division by both 5 and 11 (equivalently, divisible by 55).\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1612,7 +1612,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)**\n```c\nvoid add(int *a,int *b,int *r){ *r=*a+*b; }\nint x=2,y=3,z; add(&x,&y,&z);\n```\n\n**b)** A pointer stores an address. Advantages: pass-by-reference, dynamic memory, efficient array/string traversal, and data structures.",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks (program) + b) 4 marks (definition + advantages).**\n\n**a) C program to add two numbers using pointers and a function**\n\n```c\n#include <stdio.h>\nvoid add(int *a, int *b, int *result) {\n    *result = *a + *b;\n}\nint main() {\n    int x, y, z;\n    printf(\"Enter two numbers: \");\n    scanf(\"%d %d\", &x, &y);\n    add(&x, &y, &z);          // pass addresses\n    printf(\"Sum = %d\\n\", z);\n    return 0;\n}\n```\nExample: input `7 8` \u2192 output `Sum = 15`. The function receives the addresses of `x`, `y`, `z` and writes the sum directly into `z`'s memory location.\n\n**b) What is a pointer? Advantages of using pointers**\n\nA **pointer** is a variable that stores the memory address of another variable instead of a data value.\n\n**Advantages:**\n1. **Pass-by-reference**: functions can modify variables in the calling function (avoids copying large data).\n2. **Dynamic memory allocation**: memory can be allocated at run time using `malloc`, `calloc`, `realloc`.\n3. **Efficient array and string handling**: arrays and strings are processed using pointer arithmetic.\n4. **Building complex data structures**: linked lists, trees, graphs are created using pointers.\n5. **Faster execution**: accessing data via address is often faster than copying values.\n6. **Returning multiple values from a function**: through pointer parameters.\n\n```c\nint n = 100;\nint *ptr = &n;     // ptr stores address of n\nprintf(\"%d\", *ptr); // dereference \u2192 100\n```\n\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1655,7 +1655,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** `char c; scanf(\" %c\", &c); printf(\"%d\", c);`\n\n**b)**\n```c\nint isPrime(int n){ if(n<2)return 0; for(int i=2;i*i<=n;i++) if(n%i==0)return 0; return 1;}\nfor(int n=l;n<=r;n++) if(isPrime(n)) printf(\"%d \",n);\n```",
+      "answer": "\n**Mark distribution \u2014 Total 8 marks: a) 4 marks (program) + b) 4 marks (program).**\n\n**a) C program to find the ASCII value of a character**\n\n```c\n#include <stdio.h>\nint main() {\n    char ch;\n    printf(\"Enter a character: \");\n    scanf(\" %c\", &ch);\n    printf(\"ASCII value of '%c' = %d\\n\", ch, ch);\n    return 0;\n}\n```\nExample: input `'A'` \u2192 output `ASCII value of 'A' = 65`.\n\nA `char` is stored internally as its integer ASCII code, so printing it with `%d` gives the ASCII value.\n\n**b) C program to find all prime numbers between a given interval using functions**\n\n```c\n#include <stdio.h>\nint isPrime(int n) {\n    if (n < 2) return 0;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return 0;\n    }\n    return 1;\n}\nint main() {\n    int lo, hi, i;\n    printf(\"Enter lower and upper bound: \");\n    scanf(\"%d %d\", &lo, &hi);\n    printf(\"Prime numbers between %d and %d:\\n\", lo, hi);\n    for (i = lo; i <= hi; i++) {\n        if (isPrime(i)) {\n            printf(\"%d \", i);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```\nExample: input `10 30` \u2192 output `11 13 17 19 23 29`. The `isPrime` function returns 1 if `n` is prime (no divisor from 2 up to \u221an), else 0.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
