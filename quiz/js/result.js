@@ -11,7 +11,7 @@
 ══════════════════════════════════════════════════════════════ */
 
 const resultState = {
-  result:         null,    // Loaded from localStorage quiz-result
+  result:         null,    // Loaded from StudyStorage.legacy quiz-result
   questions:      [],
   answers:        {},
   config:         null,
@@ -88,7 +88,7 @@ function cacheDOMRefs() {
 ══════════════════════════════════════════════════════════════ */
 
 function loadCurrentResult() {
-  const result = getFromStorage('quiz-result');
+  const result = QuizAttempts.current();
 
   if (!result || !result.questions || result.questions.length === 0) {
     showNoData();
@@ -112,6 +112,7 @@ function loadFromHistory(historyId) {
   }
 
   resultState.viewingHistory = true;
+  if (entry.questions?.length) { applyResult(entry); return; }
 
   // History entries may not have full question data — show summary view
   applyHistoryEntry(entry);
@@ -148,8 +149,8 @@ function applyHistoryEntry(entry) {
     score:      entry.score,
     total:      entry.total,
     correct:    entry.score,
-    incorrect:  (entry.total || 0) - (entry.score || 0),
-    unanswered: 0,
+    incorrect:  Math.max(0, Object.values(entry.answers || {}).filter(QuizAttempts.hasAnswer).length - (entry.score || 0)),
+    unanswered: Math.max(0, (entry.total || 0) - Object.values(entry.answers || {}).filter(QuizAttempts.hasAnswer).length),
     percentage: entry.percentage,
     elapsed:    entry.elapsed,
     completedAt:entry.completedAt
@@ -163,8 +164,8 @@ function applyHistoryEntry(entry) {
     score:      entry.score      || 0,
     total:      entry.total      || 0,
     correct:    entry.score      || 0,
-    incorrect:  (entry.total || 0) - (entry.score || 0),
-    unanswered: 0,
+    incorrect:  Math.max(0, Object.values(entry.answers || {}).filter(QuizAttempts.hasAnswer).length - (entry.score || 0)),
+    unanswered: Math.max(0, (entry.total || 0) - Object.values(entry.answers || {}).filter(QuizAttempts.hasAnswer).length),
     percentage: entry.percentage || 0
   };
 
@@ -213,7 +214,7 @@ function renderScoreHero() {
   if (!sd) return;
 
   const pct   = sd.percentage;
-  const grade = sd.total === 0 ? { cls: 'unanswered', emoji: '📖', label: 'Not graded', title: 'No auto-gradable key in this attempt' } : getGrade(pct);
+  const grade = (sd.total === 0 || cfg.mode !== 'mcq' || res.outcome === 'abandoned') ? { cls: 'unanswered', emoji: '📖', label: res.outcome === 'abandoned' ? 'Abandoned' : 'Not graded', title: 'No overall automatic grade for this attempt' } : getGrade(pct);
 
   // Result badge
   if (dom.resultBadgeWrap) {
@@ -227,13 +228,13 @@ function renderScoreHero() {
 
   // Score fraction
   if (dom.scoreFraction) {
-    dom.scoreFraction.textContent = sd.total ? `${sd.score}/${sd.total} (MCQ only)` : 'Not graded';
+    dom.scoreFraction.textContent = res.outcome === 'abandoned' ? 'Abandoned' : sd.total ? `${sd.score}/${sd.total} (MCQ only)` : 'Not graded';
     dom.scoreFraction.className   = `score-fraction ${grade.cls}`;
   }
 
   // Percentage
   if (dom.scorePercentage) {
-    dom.scorePercentage.textContent = sd.total ? `${pct}%` : '—';
+    dom.scorePercentage.textContent = sd.total && cfg.mode === 'mcq' && res.outcome !== 'abandoned' ? `${pct}%` : '—';
   }
 
   // Title
@@ -491,6 +492,8 @@ function buildResultQuestionCard(q, displayNum) {
   // Question text
   body.appendChild(createElement('p', 'result-q-text', q.question));
 
+  if (q.type !== 'mcq') body.appendChild(createElement('pre', 'review-answer-text', userAnswer || 'No answer provided.'));
+
   // MCQ options (show full list with correct/incorrect highlighted)
   if (q.type === 'mcq' && q.options) {
     const optionsEl = buildMCQResultOptions(q, userAnswer);
@@ -718,27 +721,16 @@ function updateRetryLinks() {
     year:       cfg.year       || ''
   };
 
-  const url = buildURL('play.html', params);
-
-  if (dom.btnRetrySame) {
-    dom.btnRetrySame.addEventListener('click', () => {
-      window.location.href = url;
-    });
-  }
-
-  if (dom.btnRetryBottom) {
-    dom.btnRetryBottom.addEventListener('click', () => {
-      window.location.href = url;
-    });
-  }
-
-  // Export link — pass config so export page can read it
+  const entry = resultState.result;
+  const retry = () => {
+    try { const attempt = QuizAttempts.retry(entry); window.location.href = buildURL('play.html', {resume:attempt.autosaveKey}); }
+    catch (error) { alert(error.message); }
+  };
+  dom.btnRetrySame?.addEventListener('click', retry);
+  dom.btnRetryBottom?.addEventListener('click', retry);
   const exportBtn = qs('#btn-export-result');
-  if (exportBtn) {
-    exportBtn.href = buildURL('export.html', {
-      source: 'result'
-    });
-  }
+  if (exportBtn) exportBtn.href = buildURL('export.html', {historyId:entry?.historyId || null});
+
 }
 
 /* ══════════════════════════════════════════════════════════════

@@ -1,6 +1,6 @@
 # Phase 3 — Quiz and exam engine
 
-**Status:** 📋 planned · **Parts:** 6 · **Depends on:** 2 · **Owner gates:** none (marks reconciliation needs 8.5)
+**Status:** 🚧 implemented in part; paper-rule enforcement pending (see record.md) · **Parts:** 6 · **Depends on:** 2 · **Owner gates:** none (marks reconciliation needs 8.5)
 
 ## Goal
 

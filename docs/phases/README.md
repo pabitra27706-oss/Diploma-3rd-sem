@@ -3,6 +3,7 @@
 Every phase has its own folder. The folder is the task record: what the phase
 is for, what its parts are, how each part is accepted, and what "done" means.
 `docs/ROADMAP.md` is the status board; this folder is the detail.
+[Current handoff and remaining work](../STATUS.md) is the up-to-date summary.
 
 ```text
 docs/phases/
@@ -16,6 +17,7 @@ docs/phases/
   07-inclusion-trust/     accessibility, reading controls, i18n, truth
   08-content-depth/       syllabus coverage, sheets, labs, print
   09-performance-launch/  budgets, measurement, domain readiness, launch
+  10-device-acceptance/   final cross-device matrix after implementation 1–9
 ```
 
 ## Folder convention
@@ -34,7 +36,9 @@ not done, even if the code works.
 
 ## Rules that apply to every phase
 
-1. **One phase per chat.** No work outside the current phase's parts.
+1. **Owner-updated sequencing (2026-11-09).** Implement phases 1–9 first,
+   followed by dedicated Phase 10 cross-device acceptance. Cross-phase
+   engineering batches are permitted; keep a separate record for each phase.
 2. **Big by design.** A phase is one whole capability with 4–6 parts. If a
    folder grows a seventh part, the scope was wrong — move a part, do not split
    the phase.

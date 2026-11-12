@@ -52,7 +52,16 @@ audience, language, base path, design direction, time budget, hosting.
 reversible implementation choices (log under Agent decisions) · anything
 already answered in chat or docs · taste with an obvious default.
 
-## 4. Work cycle — one phase per chat
+## 4. Work cycle — original per-phase process
+
+**Owner-approved sequencing exception (2026-11-09):** the owner delegated
+implementation decisions across phases 1–9 and requested one dedicated final
+cross-device phase. Cross-phase engineering batches may proceed without
+repeated sequencing questions; maintain separate phase records. This supersedes
+only the older one-phase-per-chat restriction below, not source-integrity,
+verification, identity, release or publication gates. Focused regression checks
+continue during implementation. See `docs/DECISIONS.md` and `docs/STATUS.md`.
+
 
 1. Verify state first: `git status`, `git log`, PRs, CI runs. Trust the
    repository, not memory.

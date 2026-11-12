@@ -65,7 +65,7 @@ def schedule(papers, seed=DEFAULT_SEED):
     for day in range(1, 11):
         selected = [(s,q) for s,q in rows if mapping[q['id']] == day]
         days.append({'day':day, 'count':len(selected), 'subjects':dict(sorted(Counter(s for s,q in selected).items())), 'difficulty':dict(sorted(Counter(q['difficulty'] for s,q in selected).items())), 'ids':sorted(q['id'] for s,q in selected)})
-    return mapping, {'schemaVersion':1, 'seed':seed, 'algorithm':'subject/difficulty/unit/hash round-robin; exact-content aliases excluded', 'rawCount':sum(len(b['questions']) for _,b in papers), 'uniqueCount':len(rows), 'days':days}
+    return mapping, {'schemaVersion':1, 'seed':seed, 'algorithm':'subject/difficulty/unit/hash round-robin; exact-content aliases excluded', 'rawCount':sum(len(b['questions']) for _,b in papers), 'uniqueCount':len(rows), 'assignments':dict(sorted(mapping.items())), 'days':days}
 
 
 def generic_topic(q):

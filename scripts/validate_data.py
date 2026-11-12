@@ -85,7 +85,7 @@ def validate(root=ROOT):
         days=load(root/'_data/practice-days.json')
         mapping,summary=schedule(papers,days['seed'])
         if days!=summary:error('schedule','_data/practice-days.json','stale day metadata')
-        if any(q['practiceDay']!=mapping[q['id']] for _,p in papers for q in p['questions']):error('schedule','_data','stored assignment differs from deterministic schedule')
+        if days.get('assignments') != mapping:error('schedule','_data','derived assignments differ from deterministic schedule')
         sizes=[d['count'] for d in summary['days']];mean=sum(sizes)/10
         if not mean or any(abs(n-mean)>.15*mean for n in sizes):error('balance','_data/practice-days.json','day balance exceeds ±15%')
         warnings.append(f"{len(expected['normalizedCandidateClusters'])} normalized duplicate candidate clusters; {len(expected['aliases'])} exact aliases retained")

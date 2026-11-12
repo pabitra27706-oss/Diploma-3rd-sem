@@ -413,7 +413,7 @@ let activeFilter = 'all';
    ============================================================ */
 function loadProgress() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = StudyStorage.legacy.getItem(STORAGE_KEY);
     progress = raw ? JSON.parse(raw) : {};
   } catch {
     progress = {};
@@ -421,7 +421,7 @@ function loadProgress() {
 }
 
 function saveProgress() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  StudyStorage.legacy.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
 function toggleDay(dayKey) {
@@ -582,7 +582,7 @@ function applyFilter(subject) {
    THEME
    ============================================================ */
 function initTheme() {
-  const saved = localStorage.getItem('theme');
+  const saved = StudyStorage.legacy.getItem('theme');
   const pref  = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', saved || pref);
 }
@@ -591,7 +591,7 @@ function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme');
   const next    = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+  StudyStorage.legacy.setItem('theme', next);
 }
 
 /* ============================================================

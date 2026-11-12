@@ -49,12 +49,12 @@ const assert = require('node:assert/strict');
     await page.getByText('No key — not graded', {exact:true}).waitFor();
     console.log('PASS ungradable questions labelled and excluded from score');
     await page.evaluate(() => {
-      localStorage.setItem('quiz-result', JSON.stringify({config:{subject:'CST201',unit:'all',mode:'all'}, questions:[{id:'test-theory',type:'theory',question:'Test fixture',answerStatus:'missing'}],answers:{'test-theory':'Test answer'},completedAt:Date.now()}));
+      StudyStorage.legacy.setItem('quiz-result', JSON.stringify({config:{subject:'CST201',unit:'all',mode:'all'}, questions:[{id:'test-theory',type:'theory',question:'Test fixture',answerStatus:'missing'}],answers:{'test-theory':'Test answer'},completedAt:Date.now()}));
     });
     await page.goto(base + 'quiz/result.html');
     await page.waitForURL('**/review.html');
     await page.getByText('No key — not graded', {exact:true}).waitFor();
-    await page.evaluate(() => localStorage.setItem('quiz-history',JSON.stringify([{historyId:'test-history',subject:'CST201',unit:'all',mode:'all',score:null,total:1,completedAt:Date.now()}])));
+    await page.evaluate(() => StudyStorage.legacy.setItem('quiz-history',JSON.stringify([{historyId:'test-history',subject:'CST201',unit:'all',mode:'all',score:null,total:1,completedAt:Date.now()}])));
     await page.goto(base + 'quiz/result.html?historyId=test-history');
     await page.getByText('Not graded', {exact:true}).first().waitFor();
     assert.equal(await page.locator('#stat-incorrect').textContent(), '0');

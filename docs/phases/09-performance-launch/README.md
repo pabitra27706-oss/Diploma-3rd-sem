@@ -1,6 +1,6 @@
 # Phase 9 — Performance, measurement and launch
 
-**Status:** 📋 planned · **Parts:** 6 · **Depends on:** 1–8 · **Owner gates:** analytics decision (9.4), deploy (9.6), domain (9.5)
+**Status:** 🚧 implementation in progress · **Parts:** 6 · **Depends on:** 1–8 · **Owner gates:** analytics decision (9.4), deploy (9.6), domain (9.5)
 
 ## Goal
 

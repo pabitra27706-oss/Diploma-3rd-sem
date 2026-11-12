@@ -129,7 +129,7 @@
 
   function loadHighlights() {
     try {
-      state.highlights = JSON.parse(localStorage.getItem(HIGHLIGHTS_KEY)) || [];
+      state.highlights = JSON.parse(StudyStorage.legacy.getItem(HIGHLIGHTS_KEY)) || [];
     } catch (e) {
       state.highlights = [];
     }
@@ -137,7 +137,7 @@
 
   function saveHighlights() {
     try {
-      localStorage.setItem(HIGHLIGHTS_KEY, JSON.stringify(state.highlights));
+      StudyStorage.legacy.setItem(HIGHLIGHTS_KEY, JSON.stringify(state.highlights));
     } catch (e) {
       console.warn("Failed to save highlights:", e);
     }
@@ -145,7 +145,7 @@
 
   function loadNotes() {
     try {
-      state.notes = JSON.parse(localStorage.getItem(NOTES_KEY)) || [];
+      state.notes = JSON.parse(StudyStorage.legacy.getItem(NOTES_KEY)) || [];
     } catch (e) {
       state.notes = [];
     }
@@ -153,7 +153,7 @@
 
   function saveNotes() {
     try {
-      localStorage.setItem(NOTES_KEY, JSON.stringify(state.notes));
+      StudyStorage.legacy.setItem(NOTES_KEY, JSON.stringify(state.notes));
     } catch (e) {
       console.warn("Failed to save notes:", e);
     }

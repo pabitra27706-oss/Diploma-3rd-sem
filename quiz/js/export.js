@@ -91,7 +91,13 @@ function cacheDOMRefs() {
 ══════════════════════════════════════════════════════════════ */
 
 function loadExportData() {
-  const result = getFromStorage('quiz-result');
+  const historyId = getParam('historyId');
+  const result = historyId ? QuizAttempts.historyEntry(historyId) : QuizAttempts.current();
+  if (historyId && !result?.questions?.length) {
+    showEl(dom.exportEmptyState); hideEl(dom.exportContent);
+    dom.exportEmptyState.textContent = 'This selected legacy history entry has no question snapshot. It cannot be exported accurately; the current quiz has not been substituted.';
+    return;
+  }
 
   if (!result || !result.questions || result.questions.length === 0) {
     showEl(dom.exportEmptyState);
@@ -214,6 +220,7 @@ function updateExportPreview() {
     total:     exportState.result.total,
     totalMarks:exportState.questions.reduce((s, q) => s + (q.marks || 0), 0),
     metadata:  {
+      attemptId: exportState.result.historyId || exportState.result.id,
       date: exportState.result.completedAt || Date.now()
     }
   };
@@ -223,13 +230,15 @@ function updateExportPreview() {
   exportState.generatedContent = content;
 
   // Generate filename
-  const filename = generateFilename({
+  const filenameBase = generateFilename({
     subject: cfg.subject || 'all',
     unit:    Array.isArray(cfg.unit) ? cfg.unit.join('-') : (cfg.unit || 'all'),
     mode:    cfg.mode    || 'mcq',
     count:   exportState.questions.length,
     format:  format
   });
+  const attemptId = String(exportState.result.historyId || exportState.result.id || 'current').replace(/[^a-zA-Z0-9_-]/g, '');
+  const filename = filenameBase.replace(/(\.[^.]+)$/, `-${attemptId}$1`);
   exportState.filename = filename;
 
   // Render filename
@@ -363,7 +372,7 @@ function buildHistoryCard(entry) {
       </div>
     `;
   } else {
-    scoreBadge = '<span class="history-score-badge good">AI Eval</span>';
+    scoreBadge = `<span class="history-score-badge">${entry.outcome === 'abandoned' ? 'Abandoned' : 'Not scored'}</span>`;
     const totalQs = entry.questionIds ? entry.questionIds.length : '?';
     scoreHTML = `
       <div class="history-stat">
@@ -409,6 +418,7 @@ function buildHistoryCard(entry) {
       </div>
     </div>
     <div class="history-card-footer">
+      <a class="btn btn-outline btn-sm" href="export.html?historyId=${encodeURIComponent(entry.historyId)}">Export this attempt</a>
       <a
         href="result.html?historyId=${entry.historyId}"
         class="btn btn-secondary btn-sm"
@@ -431,14 +441,14 @@ function buildHistoryCard(entry) {
             data-retry="reshuffled"
             role="menuitem"
           >
-            <span>🔀</span> Reshuffled
+            <span>🔀</span> Same questions, shuffled
           </button>
           <button
             class="retry-menu-item"
             data-retry="fresh"
             role="menuitem"
           >
-            <span>✨</span> Fresh Similar
+            <span>↩</span> Same questions, same order
           </button>
         </div>
       </div>
@@ -473,32 +483,11 @@ function handleRetry(historyId, type) {
   const entry = getHistoryEntry(historyId);
   if (!entry) return;
 
-  const params = {
-    subject:    entry.subject || 'all',
-    unit:       Array.isArray(entry.unit) ? entry.unit.join(',') : (entry.unit || 'all'),
-    mode:       entry.mode   || 'mcq',
-    count:      entry.total  || 10,
-    difficulty: 'mixed',
-    source:     'all',
-    order:      'random',
-    balance:    'random',
-    timer:      '1',
-    timerMins:  10,
-    types:      '',
-    marks:      '',
-    year:       ''
-  };
+  try {
+    const attempt = QuizAttempts.retry(entry, type === 'reshuffled');
+    window.location.href = buildURL('play.html', {resume:attempt.autosaveKey});
+  } catch (error) { alert(error.message); }
 
-  if (type === 'reshuffled') {
-    // Same question count and settings, reshuffled
-    params.order = 'random';
-  } else if (type === 'fresh') {
-    // Fresh set of similar questions
-    params.order   = 'random';
-    params.balance = 'random';
-  }
-
-  window.location.href = buildURL('play.html', params);
 }
 
 /* ══════════════════════════════════════════════════════════════

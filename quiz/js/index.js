@@ -132,7 +132,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderSubjectCards();
   renderHistoryList();
   renderStats();
-  checkAutosave();
+  try { checkAutosave(); } catch(error) {
+    const section=qs('#resume-section');section?.removeAttribute('hidden');
+    const desc=qs('#resume-desc');if(desc) desc.textContent=error.message;
+  }
   bindPresetCards();
   bindSubjectModal();
   bindResumeButtons();
@@ -541,7 +544,7 @@ function buildHistoryItem(entry) {
     scoreHTML = `
       <div class="history-item-score">
         <span class="history-score-value">—</span>
-        <span class="history-score-label">Not auto-graded</span>
+        <span class="history-score-label">${entry.outcome === 'abandoned' ? 'Abandoned' : 'Not scored'}</span>
       </div>
     `;
   }
@@ -574,7 +577,7 @@ function renderStats() {
 
   // MCQ entries with scores
   const mcqEntries = history.filter(
-    h => h.mode === 'mcq' && h.score !== undefined && h.total
+    h => h.mode === 'mcq' && h.score !== undefined && h.score !== null && h.outcome !== 'abandoned' && h.total
   );
 
   let avgScore = '—';
@@ -651,7 +654,7 @@ function checkAutosave() {
   if (!section) return;
 
   // Build description
-  const subjectName = getSubjectName(saved.subject || 'all');
+  const subjectName = getSubjectName(saved.config?.subject || 'all');
   const savedAt     = formatDateTime(saved.savedAt);
   const qDone       = saved.currentIndex || 0;
   const qTotal      = saved.questions?.length || 0;

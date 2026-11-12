@@ -8,12 +8,7 @@ from data_pipeline import ROOT, stores, dump, normal, generic_topic, inventory, 
 
 def main():
     papers,banks=stores()
-    # Raw answer-bearing paper objects stay unchanged except explicit topic-quality metadata.
-    for path, paper in papers:
-        paper['totalQuestions']=len(paper['questions'])
-        for q in paper['questions']:
-            q['topicQuality']='generic' if generic_topic(q) else 'specific'
-        path.write_text(dump(paper))
+    # PYQ papers and registries are immutable. Only derived quiz/catalog metadata may change.
     for path, bank in banks:
         bank['totalQuestions']=len(bank['questions'])
         for q in bank['questions']:
@@ -22,8 +17,6 @@ def main():
                 q['answerStatus']='missing'
                 q['gradable']=False
         path.write_text(dump(bank))
-    for path in sorted((ROOT/'_data').glob('*/registry.json')):
-        reg=load(path);reg['totalPapers']=len(reg['papers']);path.write_text(dump(reg))
     catalog=inventory(papers,banks)
     (ROOT/'_data/catalog.json').write_text(dump(catalog))
     out=ROOT/'docs/data';out.mkdir(exist_ok=True)

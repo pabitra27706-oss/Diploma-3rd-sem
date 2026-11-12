@@ -50,13 +50,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initTheme() {
   const html = document.documentElement;
   const btn  = document.getElementById('theme-toggle');
-  const saved = localStorage.getItem('theme') || 'light';
+  const saved = StudyStorage.legacy.getItem('theme') || 'light';
   html.setAttribute('data-theme', saved);
   syncThemeIcon(btn, saved);
   btn.addEventListener('click', () => {
     const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    StudyStorage.legacy.setItem('theme', next);
     syncThemeIcon(btn, next);
   });
 }
@@ -68,32 +68,13 @@ function syncThemeIcon(btn, theme) {
 
 /* ═══════════════════════════════ DATA LOADING */
 async function loadAllData() {
-  const { aliases } = await StudyData.catalog();
-  const bar    = document.getElementById('load-bar');
-  const status = document.getElementById('load-status');
-  const total  = SUBJECTS.length;
-  let loaded   = 0;
-
-  for (const sub of SUBJECTS) {
-    status.textContent = `Fetching ${sub}...`;
-    try {
-      const reg = await fetch(`../_data/${sub}/registry.json`).then(r => r.json());
-      if (!reg.papers) { loaded++; continue; }
-
-      for (const paper of reg.papers) {
-        try {
-          const data = await fetch(`../_data/${sub}/${paper.fileName}`).then(r => r.json());
-          if (data.questions) {
-            S.all.push(...data.questions.filter(q => !aliases[q.id]).map(q => ({ ...q, subjectCode: sub })));
-          }
-        } catch (e) { console.warn('Paper error:', e.message); }
-      }
-    } catch (e) { console.warn('Registry error:', e.message); }
-
-    loaded++;
-    bar.style.width = `${Math.round((loaded / total) * 100)}%`;
-    await tick(); // Let browser breathe
-  }
+  document.getElementById('load-status').textContent='Loading derived practice pool…';
+  const response=await fetch('../assets/data/practice-pool.json');
+  if(!response.ok)throw Error('Practice pool unavailable');
+  const data=await response.json();
+  if(data.schemaVersion!==1||!Array.isArray(data.questions)||!data.questions.length)throw Error('Invalid practice pool');
+  S.all=data.questions;
+  document.getElementById('load-bar').style.width='100%';
 
   // Compute total completed across all sessions
   S.totalCompletedAll = computeTotalCompleted();
@@ -105,11 +86,11 @@ function tick() { return new Promise(r => setTimeout(r, 0)); }
 function computeTotalCompleted() {
   const allIds = new Set(S.all.map(q => q.id));
   const done   = new Set();
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
+  for (let i = 0; i < StudyStorage.legacy.length; i++) {
+    const key = StudyStorage.legacy.key(i);
     if (!key.startsWith('practice-session-')) continue;
     try {
-      const sess = JSON.parse(localStorage.getItem(key));
+      const sess = JSON.parse(StudyStorage.legacy.getItem(key));
       if (sess.completed) sess.completed.forEach(id => { if (allIds.has(id)) done.add(id); });
     } catch {}
   }
@@ -198,7 +179,7 @@ function renderRoadmapCards() {
 
 function getDayProgress(day) {
   try {
-    const raw = localStorage.getItem(`practice-day-${day}`);
+    const raw = StudyStorage.legacy.getItem(`practice-day-${day}`);
     return raw ? JSON.parse(raw) : { completed: [] };
   } catch { return { completed: [] }; }
 }
@@ -588,13 +569,13 @@ function buildURL(filters) {
 
 /* ═══════════════════════════════ PRESETS */
 function loadPresetsFromStorage() {
-  try { S.presets = JSON.parse(localStorage.getItem('practice-presets') || '[]'); }
+  try { S.presets = JSON.parse(StudyStorage.legacy.getItem('practice-presets') || '[]'); }
   catch { S.presets = []; }
   renderPresets();
 }
 
 function savePresetsToStorage() {
-  localStorage.setItem('practice-presets', JSON.stringify(S.presets));
+  StudyStorage.legacy.setItem('practice-presets', JSON.stringify(S.presets));
 }
 
 function openPresetModal() {

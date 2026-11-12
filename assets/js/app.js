@@ -808,7 +808,7 @@ var Storage = {
 
   get: function(key) {
     try {
-      var value = localStorage.getItem(key);
+      var value = StudyStorage.legacy.getItem(key);
       return value ? JSON.parse(value) : null;
     } catch (e) {
       console.error('[Storage] get error:', e);
@@ -818,7 +818,7 @@ var Storage = {
 
   set: function(key, value) {
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      StudyStorage.legacy.setItem(key, JSON.stringify(value));
       return true;
     } catch (e) {
       console.error('[Storage] set error:', e);
@@ -828,7 +828,7 @@ var Storage = {
 
   remove: function(key) {
     try {
-      localStorage.removeItem(key);
+      StudyStorage.legacy.removeItem(key);
       return true;
     } catch (e) {
       console.error('[Storage] remove error:', e);

@@ -74,3 +74,12 @@ Owner/source evidence needed for disposition of these records, confirmed reprint
 CI run **42636841353** green on implementation commit **b473636e5aa9b913a35d4316a8c89f6f7d688957**. Artifact `site-preview` **13682738528** uploaded (4,188,302 bytes), including eight real screenshots, generated review documents and static site. `site-check` artifact **13682553738**. This green regression run is not full strict data/syllabus acceptance. Documentation-only follow-up records this evidence. No PR, merge, deploy, Pages setting, domain,
 license, or source-content authorization implied. End-of-chat report and Termux
 commands are required even though the phase is paused at the source gate.
+
+
+## Sequencing supersession — 2026-11-09
+
+The earlier “Phase 3 must not start yet” instruction above describes the original
+checkpoint, not current owner direction. The owner subsequently delegated
+implementation phases 1–9 before a dedicated device phase. Later engineering
+proceeds independently; the source findings remain open and no raw PYQ changes
+are permitted. See `docs/DECISIONS.md` and current `docs/STATUS.md`.

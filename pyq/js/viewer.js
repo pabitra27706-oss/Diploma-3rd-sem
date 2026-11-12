@@ -1,5 +1,5 @@
 // ─── Theme ───────────────────────────────────────────────
-const savedTheme = localStorage.getItem('theme') ||
+const savedTheme = StudyStorage.legacy.getItem('theme') ||
   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -70,6 +70,14 @@ function renderPaper(data, meta) {
   if (practiceLink) {
     practiceLink.href = `answers.html?subject=${subjectCode}&paper=${paperCode}`;
   }
+
+  let attempt = document.getElementById('attempt-paper-link');
+  if (!attempt) {
+    attempt = document.createElement('a'); attempt.id='attempt-paper-link'; attempt.className='tool-btn';
+    attempt.textContent='Attempt this paper';
+    document.getElementById('practiceLink')?.parentElement.append(attempt);
+  }
+  attempt.href='../quiz/play.html?'+new URLSearchParams({subject:subjectCode,paperFile:meta.fileName});
 
   // Fill paper header
   document.getElementById('paperSubjectName').textContent =

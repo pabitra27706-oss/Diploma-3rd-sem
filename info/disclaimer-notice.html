@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="../assets/js/storage.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disclaimer - Study Hub</title>
@@ -89,6 +90,7 @@
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/info/disclaimer-notice.html">
+<meta name="app-build" content="study-safety-2026-11-09">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Disclaimer - Study Hub">
@@ -105,6 +107,8 @@
 <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
 <link rel="manifest" href="../manifest.json">
 <!-- /presence -->
+<link rel="stylesheet" href="../assets/css/accessibility.css">
+<script defer src="../assets/js/accessibility.js"></script>
 </head>
 <body>
     <div class="professional-container">
@@ -242,8 +246,8 @@
                 return;
             }
             
-            // Store acknowledgement in localStorage (optional)
-            localStorage.setItem('disclaimerAccepted', 'true');
+            // Store acknowledgement in StudyStorage.legacy (optional)
+            StudyStorage.legacy.setItem('disclaimerAccepted', 'true');
             
             alert('Thank you for understanding. Enjoy your studies! 📚');
             window.location.href = 'professional-hub.html';
@@ -255,7 +259,7 @@
         });
         
         // Optional: Check if already accepted
-        if (localStorage.getItem('disclaimerAccepted')) {
+        if (StudyStorage.legacy.getItem('disclaimerAccepted')) {
             document.getElementById('understandDisclaimer').checked = true;
         }
     </script>

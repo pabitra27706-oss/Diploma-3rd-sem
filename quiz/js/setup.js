@@ -34,6 +34,8 @@ const state = {
 
 let formEl, subjectEl, unitOptionsEl, unitControlsEl;
 let setupQuestions = [];
+let previewQuestions = [];
+let previewSignature = null;
 let customCountGroup, customCountEl, autoCountInfo, countHiddenEl;
 let timerToggleEl, timerDurationGroup, timerMinEl, timerPreviewEl;
 let summaryBodyEl, summaryStatusEl;
@@ -49,14 +51,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (start) start.disabled = true;
   try {
     await loadQuizCatalog();
-    setupQuestions = await fetchAllSubjectQuestions({});
+    const poolResponse=await fetch('../assets/data/quiz-pool.json');
+    if(!poolResponse.ok)throw Error('Quiz pool unavailable');
+    const pool=await poolResponse.json();
+    if(pool.schemaVersion!==1||!Array.isArray(pool.questions)||!pool.questions.length)throw Error('Invalid quiz pool');
+    setupQuestions=pool.questions;
     buildInventoryChoices();
-  } catch {
-    document.getElementById('data-availability').textContent = 'Question inventory unavailable. Reconnect and reload.';
+    buildMarksChoices();
+  } catch (error) {
+    document.getElementById('data-availability').textContent = 'Question inventory unavailable: '+error.message+' Reconnect and reload to retry.';
     return;
   }
   readURLParams();
   bindAllEvents();
+  bindPaperMode();
   updateSummary();
 });
 
@@ -814,11 +822,13 @@ function launchQuiz() {
     year:       state.year || ''
   };
 
-  // Save config for play.html to read
-  saveToStorage('quiz-pending-config', params);
-
-  const url = buildURL('play.html', params);
-  window.location.href = url;
+  try {
+    updateInventoryAvailability();
+    const config={...state,subject:state.subject || 'all',unit:state.units.length ? [...state.units] : 'all',count:previewQuestions.length,timer:state.timerEnabled,timerMins:state.timerEnabled ? state.timerMinutes : 0};
+    QuizAttempts.setPendingConfig(config);
+    const attempt=QuizAttempts.save({config,questions:previewQuestions,answers:{},flags:{},status:'active'});
+    window.location.href=buildURL('play.html',{resume:attempt.autosaveKey});
+  } catch(error) { showError('Cannot save the selected attempt: '+error.message); }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -887,8 +897,64 @@ function updateInventoryAvailability() {
   [...yearEl.options].forEach(opt => { opt.disabled = Boolean(opt.value) && !withoutYear.some(q => Number(q.year) === Number(opt.value)); });
   if (state.year && !withoutYear.some(q => Number(q.year) === Number(state.year))) state.year = null;
   yearEl.value = state.year ? String(state.year) : '';
+  document.querySelectorAll('input[name="marks"]').forEach(input => {
+    const pool=filterQuestions(setupQuestions, inventoryFilters({marks:[]}));
+    input.disabled = !pool.some(q => Number(q.marks)===Number(input.value));
+    if(input.disabled) input.checked=false;
+  });
+  state.marks=[...document.querySelectorAll('input[name="marks"]:checked')].map(i=>Number(i.value));
+  document.querySelectorAll('input[name="difficulty"]').forEach(input => {
+    input.disabled = input.value !== 'mixed' && !filterQuestions(setupQuestions,inventoryFilters({difficulty:'mixed'})).some(q=>q.difficulty===input.value);
+    if(input.disabled && input.checked) { state.difficulty='mixed'; document.querySelector('input[name="difficulty"][value="mixed"]').checked=true; }
+  });
+  document.querySelectorAll('input[name="types"]').forEach(input => {
+    input.disabled = !filterQuestions(setupQuestions,inventoryFilters({types:[],mode:'all'})).some(q=>q.type===input.value) || (state.mode==='mcq' && input.value!=='mcq');
+    if(input.disabled) input.checked=false;
+  });
+  state.types=[...document.querySelectorAll('input[name="types"]:checked')].map(i=>i.value);
   const matched = inventorySelection();
   const missing = matched.filter(q => q.type !== 'mcq').length;
-  document.getElementById('data-availability').textContent = `${matched.length} available questions · ${missing} without an auto-gradable key (not graded).`;
+  const signature=JSON.stringify({ids:matched.map(q=>q.id),count:state.count,order:state.order,balance:state.balance});
+  if(signature!==previewSignature) {
+    previewSignature=signature;
+    const count=state.count===0 ? matched.length : Math.min(state.count,matched.length);
+    previewQuestions=state.balance==='balanced' ? pickBalanced(matched,count) : pickRandom(matched,count);
+    if(state.order==='grouped') previewQuestions.sort((a,b)=>Number(a.unit)-Number(b.unit));
+  }
+  const minutes=Math.max(1,Math.ceil(calculateTimerDuration(previewQuestions)/60));
+  if(state.timerAuto) {state.timerMinutes=minutes;if(timerMinEl) timerMinEl.value=minutes;updateTimerPreview(minutes);}
+  document.getElementById('data-availability').textContent = `${previewQuestions.length} selected questions · ${previewQuestions.reduce((sum,q)=>sum+Number(q.marks||0),0)} marks · ${state.timerEnabled ? state.timerMinutes+' min' : 'untimed'} · from ${matched.length} available. This exact set will start; ${previewQuestions.filter(q=>q.type!=='mcq').length} self-review items have no automatic grade.`;
   document.getElementById('btn-start-quiz').disabled = !state.subject || matched.length === 0;
+}
+
+function buildMarksChoices() {
+  const existing = document.querySelector('input[name="marks"]');
+  const group = existing?.closest('.filter-chips');
+  if (!group) return;
+  group.replaceChildren();
+  [...new Set(setupQuestions.map(q => Number(q.marks)).filter(n => n > 0))].sort((a,b) => a-b).forEach(marks => {
+    const label=document.createElement('label'); label.className='chip-label';
+    const input=document.createElement('input');input.type='checkbox';input.name='marks';input.value=String(marks);
+    const span=document.createElement('span');span.className='chip';span.textContent=`${marks} mark${marks===1?'':'s'}`;
+    label.append(input,span);group.append(label);
+  });
+}
+
+function bindPaperMode() {
+  const subject=document.getElementById('paper-subject'), paper=document.getElementById('paper-file'), start=document.getElementById('start-paper'), status=document.getElementById('paper-load-status');
+  Object.entries(QUIZ_CATALOG.subjects).forEach(([code,s])=>subject.add(new Option(s.title,code)));
+  let request=0;
+  subject.addEventListener('change', async()=>{
+    const current=++request;
+    paper.disabled=true;start.disabled=true;paper.replaceChildren();
+    if(!subject.value) return;
+    status.textContent='Loading registered papers…';
+    try {
+      const registry=await QuizPaper.registry(subject.value);
+      if(current!==request) return;
+      registry.papers.forEach(p=>paper.add(new Option(`${p.examSession} · ${p.duration} · printed ${p.fullMarks} marks`,p.fileName)));
+      paper.disabled=!registry.papers.length;start.disabled=paper.disabled;status.textContent='Original questions and answers are not changed.';
+    } catch(error) { if(current===request) status.textContent=error.message; }
+  });
+  start.addEventListener('click',()=>{location.href=buildURL('play.html',{subject:subject.value,paperFile:paper.value});});
 }

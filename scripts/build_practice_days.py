@@ -15,8 +15,8 @@ def main():
     for path,paper in papers:
         for q in paper['questions']:
             changed += q.get('practiceDay') != mapping[q['id']]
-            q['practiceDay']=mapping[q['id']]
-        if not args.dry_run: path.write_text(dump(paper))
+            # Never write schedules into authoritative paper files.
+
     if not args.dry_run:
         (ROOT/'_data/practice-days.json').write_text(dump(summary))
     print(f"practice-days: {summary['rawCount']} preserved records, {summary['uniqueCount']} unique, {changed} assignments changed; seed={args.seed}")

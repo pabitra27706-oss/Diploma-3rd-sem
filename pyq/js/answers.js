@@ -5,7 +5,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 // ─── Theme ───────────────────────────────────────────────
-const savedTheme = localStorage.getItem('theme') ||
+const savedTheme = StudyStorage.legacy.getItem('theme') ||
   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -24,7 +24,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   const cur = document.documentElement.getAttribute('data-theme');
   const next = cur === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+  StudyStorage.legacy.setItem('theme', next);
   updateThemeIcon(next);
 });
 
@@ -111,8 +111,9 @@ const TYPE_LABELS = {
 
 // ─── URL Params ──────────────────────────────────────────
 const params = new URLSearchParams(window.location.search);
-const subjectCode = params.get('subject');
-const paperCode = params.get('paper');
+const paperParam = params.get('paper') || '';
+const subjectCode = params.get('subject') || (/^CST\d{3}-/.test(paperParam) ? paperParam.split('-')[0] : null);
+const paperCode = paperParam.match(/(?:^|-)(P\d{3})(?:-|$)/)?.[1] || paperParam;
 
 
 // ─── State ───────────────────────────────────────────────
@@ -129,9 +130,9 @@ let bookmarks = [];
 
 function loadState() {
   try {
-    userAnswers = JSON.parse(localStorage.getItem(storageKey('answers'))) || {};
-    userResults = JSON.parse(localStorage.getItem(storageKey('results'))) || {};
-    bookmarks = JSON.parse(localStorage.getItem(storageKey('bookmarks'))) || [];
+    userAnswers = JSON.parse(StudyStorage.legacy.getItem(storageKey('answers'))) || {};
+    userResults = JSON.parse(StudyStorage.legacy.getItem(storageKey('results'))) || {};
+    bookmarks = JSON.parse(StudyStorage.legacy.getItem(storageKey('bookmarks'))) || [];
   } catch {
     userAnswers = {};
     userResults = {};
@@ -140,9 +141,9 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem(storageKey('answers'), JSON.stringify(userAnswers));
-  localStorage.setItem(storageKey('results'), JSON.stringify(userResults));
-  localStorage.setItem(storageKey('bookmarks'), JSON.stringify(bookmarks));
+  StudyStorage.legacy.setItem(storageKey('answers'), JSON.stringify(userAnswers));
+  StudyStorage.legacy.setItem(storageKey('results'), JSON.stringify(userResults));
+  StudyStorage.legacy.setItem(storageKey('bookmarks'), JSON.stringify(bookmarks));
 }
 
 
@@ -626,11 +627,14 @@ async function init() {
       document.getElementById('appShell').classList.remove('hidden');
     }, 400);
 
+    const target=params.get('q');
+    if(target){const index=questions.findIndex(q=>q.id===target);if(index>=0)currentIndex=index;else document.getElementById('headerSub').textContent+=' · Requested question not found; showing this paper.';}
     buildSidebar();
     buildNavDots();
     updateProgress();
     renderView();
     initSwipe();
+    if(params.get('q'))setTimeout(()=>{const card=document.querySelector('.question-card');card?.focus();card?.scrollIntoView({block:'center'});},450);
 
   } catch (err) {
     showError(err.message);
@@ -673,6 +677,7 @@ function renderView() {
   } else {
     renderReviewView();
   }
+  decorateQuestionLinks();
 }
 
 
@@ -1707,3 +1712,20 @@ document.querySelectorAll('.modal-overlay').forEach(o => {
 // ═══════════════════════════════════════════════════════════
 
 init();
+
+// Canonical links contain source identity, never local answers or student data.
+function decorateQuestionLinks() {
+  document.querySelectorAll('#questionContainer .question-card').forEach((card,index)=>{
+    const q=questions[currentMode==='practice'?currentIndex:index];if(!q)return;
+    card.tabIndex=-1;
+    const url=new URL('answers.html',location.href);url.search=new URLSearchParams({subject:subjectCode,paper:paperCode,q:q.id}).toString();
+    const controls=document.createElement('div');controls.className='question-share';
+    const copy=document.createElement('button');copy.type='button';copy.textContent='Copy question link';
+    copy.onclick=async()=>{try{await navigator.clipboard.writeText(url.href);copy.textContent='Link copied';}catch{const field=document.createElement('input');field.value=url.href;field.setAttribute('aria-label','Question link — select and copy');controls.append(field);field.focus();field.select();}};
+    controls.append(copy);
+    if(navigator.share){const share=document.createElement('button');share.type='button';share.textContent='Share question';share.onclick=()=>navigator.share({title:q.question.slice(0,80),url:url.href}).catch(()=>{});controls.append(share);}
+    const provenance=document.createElement('p');provenance.textContent=`Answer status: ${q.answerStatus||'unverified'} · Source status: ${q.sourceStatus||'unverified'} · Citation: ${q.sourcePage||'not recorded'}${q.verifiedOn?' · Verification date: '+q.verifiedOn:''}`;controls.append(provenance);
+    card.append(controls);
+    if(params.get('q')===q.id){card.style.outline='3px solid var(--accent, #5268d9)';document.title=q.id+' — '+q.question.slice(0,60);}
+  });
+}

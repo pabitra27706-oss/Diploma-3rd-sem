@@ -1,889 +1,148 @@
+# Diploma 3rd Semester — CST Study Hub
 
-# Diploma 3rd Semester - Study Hub
+A first-party, zero-build static study site for West Bengal diploma CST students.
+HTML, CSS, JavaScript and checked-in JSON can be served directly; no package
+installation or build is required to run the site.
 
-> **Working on this repo?** Read [`rule.md`](rule.md) first (operating rules and
-> the deploy gate), then [`prompt.md`](prompt.md) (current state),
-> [`docs/ROADMAP.md`](docs/ROADMAP.md), [`docs/DECISIONS.md`](docs/DECISIONS.md)
-> [`docs/AUDIT.md`](docs/AUDIT.md) (2026-11-06 baseline) and
-> [`docs/syllabus/`](docs/syllabus/README.md) (the course authority). Each phase
-> has its own folder under [`docs/phases/`](docs/phases/README.md). The reusable
-> playbook these rules come from lives in [`webflow/`](webflow/README.md).
+**Implementation is in progress, not all phases complete.** See
+[Current status and remaining work](docs/STATUS.md) for the handoff,
+[Roadmap](docs/ROADMAP.md) for phase status, and
+[Decisions](docs/DECISIONS.md) for owner instructions and gates.
 
-> A comprehensive Progressive Web App (PWA) for West Bengal Polytechnic Diploma 3rd Semester students in Computer Science & Technology stream.
+## What exists in the working tree
 
-[![PWA](https://img.shields.io/badge/PWA-Enabled-blue)](https://web.dev/progressive-web-apps/)
-[![Offline](https://img.shields.io/badge/Offline-Ready-green)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Offline_Service_workers)
-[![License](https://img.shields.io/badge/License-Educational-orange)](LICENSE)
+- Five theory subjects, unit notes and source-linked previous-year papers.
+- **30 papers / 992 archived questions**; exact-content aliases retain their
+  source IDs. Practice uses **923 unique questions** across ten derived days.
+- **872 quiz-bank questions**: 416 keyed MCQs and 456 non-MCQ items without
+  automatic grading. CST207 currently has no quiz bank.
+- Timed quiz snapshots, autosave/resume, marked flags, history, exact retry,
+  selected-attempt export, answer edits and a local mistake queue.
+- Paper practice with original instructions and registry duration. **Answer-any
+  rules and explanation-mark splits are not enforced; there is no automatic
+  overall paper grade.**
+- [Search](search.html), [repeated-question explorer](repeated.html), question
+  deep links and related-material links on subject/unit pages. Search covers
+  question stems, topics, unit headings and this device's section notes—not
+  every informational page.
+- **1,339 revision cards** generated from existing model answers and keyed MCQ
+  explanations, a fixed Leitner scheduler, and a [Today screen](today.html)
+  with local goals and sample-qualified weak-area trends. Cards are not newly
+  certified answers, and no recall-improvement claim is made.
+- Plain-text section notes and [settings/backup](settings.html), with namespaced
+  storage, import preview, group resets and interrupted-import recovery.
+  **IndexedDB migration is not implemented.**
+- [Syllabus coverage](coverage.html), [exam-pattern caveats](exam-pattern.html),
+  and [practical-course/internship task pages](courses.html). These do not claim
+  completed lab solutions or reconciled historical paper totals.
+- Shared reading/focus/reduced-motion safeguards and a small English/Bengali
+  settings-label catalog. This is not full bilingual coverage or audited WCAG
+  conformance.
+- Scope-relative PWA support. Previously loaded resources can work offline;
+  uncached first visits still need a connection. Full device/install/update
+  acceptance is deferred to a dedicated final phase.
 
----
+Counts above describe the current generated data, not a guarantee of verified
+answers or complete syllabus coverage. Global bookmark/Study Tips placeholder
+pages are not advertised as finished features.
 
-## 📚 Overview
+## Authoritative content and verification
 
-This is a complete study companion app designed specifically for WB Polytechnic students. It includes:
+Original paper and registry files under `_data/<subject>/` are **byte-frozen**
+by [_data/pyq-integrity.json](_data/pyq-integrity.json). Do not edit them or
+refresh the baseline to hide a change. New schedules, indexes, cards and coverage
+are derived sidecars. Unknown answers remain ungraded.
 
-- **5 Core Subjects** with detailed unit-wise content
-- **Practice System** with day-wise question practice
-- **Quiz System** with difficulty-based challenges
-- **Previous Year Questions** organized by subject, year, and month
-- **30-Day Roadmap** for structured exam preparation
-- **Bookmark System** to save important pages
-- **Dark/Light Themes** with user preference persistence
-- **100% Offline Support** after first load
-- **Installable** as a native-like app on any device
+The [2022 syllabus package](docs/syllabus/README.md) supplies current-course
+coverage references; it does not authorize rewriting historical papers.
+Ten data findings and three grouped syllabus errors remain under source review.
+An exact-baseline regression pass is **not** a full strict-data pass.
 
----
+## Run locally
 
-## 🎯 Features
+For a fresh clone with the repository's default directory name:
 
-### Core Functionality
-
-| Feature | Description |
-|---------|-------------|
-| **Subject Pages** | Complete notes for all 5 subjects (CST201, CST203, CST205, CST207, CST209) |
-| **Unit-wise Content** | Each subject divided into units with explanations, examples, formulas |
-| **Practice Mode** | Daily practice questions with progress tracking |
-| **Quiz System** | Timed quizzes with instant results and explanations |
-| **PYQ Viewer** | Filter previous year questions by subject, year, and month |
-| **Roadmap** | 30-day study plan with daily targets |
-| **Bookmarks** | Save any page for quick access later |
-| **Study Tips** | Subject-specific preparation suggestions |
-
-### Technical Features
-
-- ✅ **No Dependencies** - Pure HTML, CSS, JavaScript
-- ✅ **No Build Process** - Works directly in browser
-- ✅ **PWA Compliant** - Installable, offline-ready
-- ✅ **Mobile First** - Optimized for phone screens
-- ✅ **Theme Toggle** - Dark/Light mode with localStorage
-- ✅ **SVG Icons** - Scalable, theme-friendly icon system
-- ✅ **Service Worker** - Smart caching for offline access
-- ✅ **localStorage** - Progress and preferences saved locally
-
----
-
-## 📖 Subjects Covered
-
-| Code | Subject | Credits | Units |
-|------|---------|---------|-------|
-| **CST201** | Computer Programming in C | 2 | 5 |
-| **CST203** | Scripting Languages (Python) | 2 | 5 |
-| **CST205** | Data Structures | 2 | 4 |
-| **CST207** | Computer System Organization | 4 | 5 |
-| **CST209** | Algorithms | 4 | 5 |
-
-**Total Credits:** 14
-
----
-
-## 🚀 Quick Start
-
-### For Students (Using the App)
-
-#### Option 1: Direct Access
-1. Open the app URL in your browser
-2. On first launch, enter your name
-3. Start exploring subjects and practice!
-
-#### Option 2: Install as App
-**Android (Chrome):**
-1. Open the website
-2. Tap menu (⋮) → "Add to Home Screen"
-3. Confirm installation
-4. Launch from home screen like any app
-
-**iOS (Safari):**
-1. Open the website
-2. Tap Share button (□↑)
-3. Scroll and tap "Add to Home Screen"
-4. Confirm and launch
-
-**Desktop (Chrome/Edge):**
-1. Open the website
-2. Look for install icon (⊕) in address bar
-3. Click "Install"
-4. App opens in its own window
-
----
-
-## 💻 For Developers
-
-### Local Setup
-
-**Requirements:**
-- Modern browser (Chrome 90+, Firefox 88+, Safari 14+)
-- Local web server (for PWA features)
-
-**Steps:**
-
-1. **Clone or Download**
-   ```bash
-   git clone <repository-url>
-   cd Diploma-3rd-sem
-   ```
-
-2. **Serve Locally**
-
-   Using Python:
-   ```bash
-   python -m http.server 8000
-   ```
-
-   Using Node.js:
-   ```bash
-   npx serve
-   ```
-
-   Using PHP:
-   ```bash
-   php -S localhost:8000
-   ```
-
-3. **Open Browser**
-   ```
-   http://localhost:8000
-   ```
-
-4. **Test PWA Features**
-   - Open DevTools → Application → Service Workers
-   - Check manifest in Application → Manifest
-   - Test offline by toggling Network → Offline
-
----
-
-## 📁 Project Structure
-
-```
-Diploma-3rd-sem/
-│
-├── index.html                    # Main dashboard/homepage
-├── manifest.json                 # PWA manifest
-├── sw.js                         # Service Worker
-├── offline.html                  # Offline fallback page
-├── README.md                     # This file
-│
-├── assets/                       # Static assets
-│   ├── css/
-│   │   ├── variables.css         # CSS custom properties (theme variables)
-│   │   └── main.css              # Main stylesheet
-│   ├── js/
-│   │   ├── theme.js              # Theme toggle logic
-│   │   └── app.js                # Main app logic
-│   ├── icons/
-│   │   └── sprite.svg            # SVG icon sprite (30+ icons)
-│   ├── images/
-│   │   └── questions/            # Question diagram images
-│   │       └── {SUBJECT}-{PAPERCODE}-Q{N}.png
-│   └── pwa/                      # PWA icons (72x72 to 512x512)
-│
-├── _templates/                   # Reusable templates for new pages
-│   ├── base-structure.html       # HTML skeleton
-│   ├── variables.css             # CSS variables to copy
-│   └── README.md                 # Template usage guide
-│
-├── _data/                        # Question data (JSON)
-│   ├── manifest.json             # Master index of all subjects and papers
-│   ├── CST201/                   # C Programming data
-│   │   ├── meta.json             # Subject metadata
-│   │   ├── registry.json         # Fixed paper registry for CST201
-│   │   ├── CST201-P001-2021-03.json   # March 2021 paper
-│   │   ├── CST201-P002-2022-06.json   # June 2022 paper
-│   │   ├── CST201-P003-2023-03.json   # March 2023 paper
-│   │   ├── CST201-P004-2024-01.json   # January 2024 paper
-│   │   ├── CST201-P005-2024-12.json   # December 2024 paper
-│   │   └── CST201-P006-2026-01.json   # January 2026 paper
-│   ├── CST203/                   # Python data
-│   │   ├── meta.json
-│   │   ├── registry.json
-│   │   └── CST203-P001-YYYY-MM.json
-│   ├── CST205/                   # Data Structures data
-│   │   ├── meta.json
-│   │   ├── registry.json
-│   │   └── CST205-P001-YYYY-MM.json
-│   ├── CST207/                   # CSO data
-│   │   ├── meta.json
-│   │   ├── registry.json
-│   │   └── CST207-P001-YYYY-MM.json
-│   └── CST209/                   # Algorithms data
-│       ├── meta.json
-│       ├── registry.json
-│       └── CST209-P001-YYYY-MM.json
-│
-├── subjects/                     # Subject pages
-│   ├── CST201/                   # C Programming
-│   │   ├── index.html            # Subject home
-│   │   ├── index.css
-│   │   ├── index.js
-│   │   ├── units/
-│   │   │   ├── common.css        # Shared styles for all units
-│   │   │   ├── common.js         # Shared logic for all units
-│   │   │   ├── unit-1.html
-│   │   │   ├── unit-2.html
-│   │   │   ├── unit-3.html
-│   │   │   ├── unit-4.html
-│   │   │   └── unit-5.html
-│   │   └── resources/
-│   │       ├── formula-sheet.html
-│   │       ├── formula-sheet.css
-│   │       └── formula-sheet.js
-│   ├── CST203/                   # Python (same structure)
-│   ├── CST205/                   # Data Structures
-│   ├── CST207/                   # Computer System Organization
-│   └── CST209/                   # Algorithms
-│
-├── practice/                     # Practice system
-│   ├── index.html                # Practice dashboard
-│   ├── index.css
-│   ├── index.js
-│   ├── session.html              # Active practice session
-│   ├── session.css
-│   └── session.js
-│
-├── quiz/                         # Quiz system
-│   ├── index.html                # Quiz selector
-│   ├── index.css
-│   ├── index.js
-│   ├── play.html                 # Quiz session
-│   ├── play.css
-│   ├── play.js
-│   ├── result.html               # Quiz results
-│   ├── result.css
-│   └── result.js
-│
-├── pyq/                          # Previous Year Questions
-│   ├── index.html                # Subject selector
-│   ├── index.css
-│   ├── index.js
-│   ├── viewer.html               # Question viewer
-│   ├── viewer.css
-│   └── viewer.js
-│
-├── roadmap/                      # 30-day revision roadmap
-│   ├── index.html
-│   ├── index.css
-│   └── index.js
-│
-├── bookmarks/                    # Saved pages viewer
-│   ├── index.html
-│   ├── index.css
-│   └── index.js
-│
-├── suggestions/                  # Study tips
-│   ├── index.html                # Subject selector
-│   ├── index.css
-│   ├── index.js
-│   └── subjects/
-│       ├── CST201/
-│       │   ├── tips.html
-│       │   ├── tips.css
-│       │   └── tips.js
-│       └── ...
-│
-├── info/                         # Information pages
-│   ├── about.html
-│   ├── about.css
-│   ├── usage-guide.html
-│   ├── usage-guide.css
-│   ├── contact.html
-│   ├── contact.css
-│   ├── credits.html
-│   └── credits.css
-│
-└── _dev/                         # Development files (not for production)
-    ├── README.md                 # Development notes
-    ├── chat-progress.md          # Multi-chat build tracker
-    ├── structure-notes.md        # Architecture decisions
-    └── todo.txt                  # Future improvements
+```sh
+git clone --single-branch --branch arena/be3d9178-diploma-3rd-sem \
+  https://github.com/pabitra27706-oss/Diploma-3rd-sem.git
+python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
----
+Run the server from the directory **containing** `Diploma-3rd-sem`, then open:
 
-## 📋 Paper Registry System
+**http://127.0.0.1:8000/Diploma-3rd-sem/**
 
-### Why a Fixed Registry?
+Stop with Ctrl+C. If already cloned, update that checkout using `git pull
+--ff-only` rather than cloning again. Unpushed Arena changes are not available
+through a fresh clone or pull. The canonical publication base is
+`/Diploma-3rd-sem/`; this documentation does not confirm the live site has the
+current working-tree changes.
 
-Each exam paper is assigned a **permanent paper code** (`P001`, `P002`, etc.) per subject.
-This code never changes — it is the stable key used across:
-- JSON file names
-- JavaScript fetch calls
-- Service Worker cache entries
-- localStorage references
-- PYQ viewer filters
+## Checks
 
-### File Naming Convention
+From the repository root, with Python 3 and Node.js available:
 
-```
-{SUBJECT_CODE}-{PAPER_CODE}-{YEAR}-{MONTH_2DIGIT}.json
-```
-
-**Examples:**
-```
-CST201-P001-2021-03.json   ← March 2021
-CST201-P002-2022-06.json   ← June 2022
-CST201-P003-2023-03.json   ← March 2023
-CST201-P004-2024-01.json   ← January 2024
-CST201-P005-2024-12.json   ← December 2024
-CST201-P006-2026-01.json   ← January 2026
+```sh
+python3 scripts/check_pyq_integrity.py
+python3 scripts/check_platform.py
+python3 scripts/check_site.py --strict --quiet
+python3 scripts/validate_pyq.py
+python3 scripts/validate_data.py --check-baseline
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+node tests/attempt-store.cjs
+node tests/study-store.cjs
+node tests/storage.cjs
+node tests/storage-recovery.cjs
 ```
 
-### Rules
-- Paper codes are assigned **per subject** independently
-- Codes are assigned in order of **year ascending → month ascending**
-- Same year, different month = different paper code
-- Once assigned, a paper code is **permanent and never renamed**
-- New papers discovered later get the **next available code** (append-only)
+`validate_data.py --strict` and `validate_syllabus.py --strict` still report
+recorded source-review failures. See [test instructions](tests/README.md) for
+optional development-only Chromium regressions and their limits.
 
-### CST201 — Registered Papers
+## Regenerating checked-in outputs
 
-| Paper Code | File Name | Source Code | Year | Month |
-|------------|-----------|-------------|------|-------|
-| P001 | CST201-P001-2021-03.json | 332(S) | 2021 | March |
-| P002 | CST201-P002-2022-06.json | 307/1(N) | 2022 | June |
-| P003 | CST201-P003-2023-03.json | 307/1(N) | 2023 | March |
-| P004 | CST201-P004-2024-01.json | 307/1(N) | 2024 | January |
-| P005 | CST201-P005-2024-12.json | 307/1(N) | 2024 | December |
-| P006 | CST201-P006-2026-01.json | 307/1(N) | 2026 | January |
+Only contributors editing sources need to regenerate. Serving the site remains
+zero-build. Review the resulting diff and run the integrity guard afterwards.
 
-### Registry File Format (`_data/CST201/registry.json`)
-
-```json
-{
-  "subject": "CST201",
-  "totalPapers": 6,
-  "papers": [
-    {
-      "paperIndex": 1,
-      "paperCode": "P001",
-      "fileName": "CST201-P001-2021-03.json",
-      "sourcePaperCode": "332(S)",
-      "year": 2021,
-      "month": "March",
-      "monthNumber": 3
-    },
-    {
-      "paperIndex": 2,
-      "paperCode": "P002",
-      "fileName": "CST201-P002-2022-06.json",
-      "sourcePaperCode": "307/1(N)",
-      "year": 2022,
-      "month": "June",
-      "monthNumber": 6
-    },
-    {
-      "paperIndex": 3,
-      "paperCode": "P003",
-      "fileName": "CST201-P003-2023-03.json",
-      "sourcePaperCode": "307/1(N)",
-      "year": 2023,
-      "month": "March",
-      "monthNumber": 3
-    },
-    {
-      "paperIndex": 4,
-      "paperCode": "P004",
-      "fileName": "CST201-P004-2024-01.json",
-      "sourcePaperCode": "307/1(N)",
-      "year": 2024,
-      "month": "January",
-      "monthNumber": 1
-    },
-    {
-      "paperIndex": 5,
-      "paperCode": "P005",
-      "fileName": "CST201-P005-2024-12.json",
-      "sourcePaperCode": "307/1(N)",
-      "year": 2024,
-      "month": "December",
-      "monthNumber": 12
-    },
-    {
-      "paperIndex": 6,
-      "paperCode": "P006",
-      "fileName": "CST201-P006-2026-01.json",
-      "sourcePaperCode": "307/1(N)",
-      "year": 2026,
-      "month": "January",
-      "monthNumber": 1
-    }
-  ]
-}
+```sh
+python3 scripts/build_data_catalog.py
+python3 scripts/build_practice_days.py
+python3 scripts/build_search_index.py
+python3 scripts/build_cards.py
+python3 scripts/build_runtime_data.py
+python3 scripts/build_coverage.py
+python3 scripts/build_runtime_bundles.py
+python3 scripts/generate_presence.py
+python3 scripts/check_pyq_integrity.py
 ```
 
----
-
-## 🎯 Data Structure
-
-### Question File Format
-
-Every question JSON file follows this root structure:
-
-```json
-{
-  "subject": "CST201",
-  "paperIndex": 5,
-  "paperCode": "P005",
-  "fileName": "CST201-P005-2024-12.json",
-  "sourcePaperCode": "307/1(N)",
-  "year": 2024,
-  "month": "December",
-  "monthNumber": 12,
-  "totalQuestions": 24,
-  "questions": [...]
-}
-```
-
-### Question Object Schema
-
-```json
-{
-  "id": "CST201-P005-Q1",
-  "paperCode": "P005",
-  "paperIndex": 5,
-  "unit": 2,
-  "topic": "Operator Precedence",
-  "question": "What is operator precedence? Explain with example.",
-  "answer": "Operator precedence defines the order...",
-  "marks": 6,
-  "type": "theory",
-  "difficulty": "easy",
-  "year": 2024,
-  "month": "December",
-  "monthNumber": 12,
-  "hasImage": false,
-  "image": null,
-  "tags": ["c-programming", "operators", "operator-precedence"],
-  "practiceDay": 2
-}
-```
-
-### Question Image Path Convention
-
-If a question has a diagram:
-```
-"hasImage": true,
-"image": "assets/images/questions/CST201-P005-Q3.png"
-```
-
-Image files are stored at:
-```
-assets/images/questions/{SUBJECT}-{PAPERCODE}-Q{NUMBER}.png
-```
-
-### Subject Metadata (`_data/CST201/meta.json`)
-
-```json
-{
-  "code": "CST201",
-  "name": "Computer Programming in C",
-  "credits": 2,
-  "totalUnits": 5,
-  "units": [
-    {
-      "unit": 1,
-      "title": "Introduction to C Programming",
-      "topics": ["History of C", "Data Types", "Operators"]
-    },
-    {
-      "unit": 2,
-      "title": "Control Flow",
-      "topics": ["if-else", "loops", "switch-case"]
-    }
-  ]
-}
-```
-
-### Master Data Manifest (`_data/manifest.json`)
-
-```json
-{
-  "version": "1.0.0",
-  "lastUpdated": "2025-01",
-  "subjects": [
-    {
-      "code": "CST201",
-      "name": "Computer Programming in C",
-      "credits": 2,
-      "totalUnits": 5,
-      "registryFile": "_data/CST201/registry.json",
-      "totalPapers": 5
-    },
-    {
-      "code": "CST203",
-      "name": "Scripting Languages (Python)",
-      "credits": 2,
-      "totalUnits": 5,
-      "registryFile": "_data/CST203/registry.json",
-      "totalPapers": 0
-    },
-    {
-      "code": "CST205",
-      "name": "Data Structures",
-      "credits": 2,
-      "totalUnits": 4,
-      "registryFile": "_data/CST205/registry.json",
-      "totalPapers": 0
-    },
-    {
-      "code": "CST207",
-      "name": "Computer System Organization",
-      "credits": 4,
-      "totalUnits": 5,
-      "registryFile": "_data/CST207/registry.json",
-      "totalPapers": 0
-    },
-    {
-      "code": "CST209",
-      "name": "Algorithms",
-      "credits": 4,
-      "totalUnits": 5,
-      "registryFile": "_data/CST209/registry.json",
-      "totalPapers": 0
-    }
-  ]
-}
-```
-
----
-
-## 🔧 LocalStorage Schema
-
-The app stores user data locally:
-
-```javascript
-{
-  // Theme preference
-  "diploma-3rd-sem-theme": "dark",
-
-  // First launch flag
-  "diploma-3rd-sem-first-launch": true,
-
-  // Student name
-  "diploma-3rd-sem-student-name": "Rahul",
-
-  // Last visited subject
-  "diploma-3rd-sem-last-visited": {
-    "subjectCode": "CST201",
-    "timestamp": 1705334400000
-  },
-
-  // Bookmarked pages
-  "diploma-3rd-sem-bookmarks": [
-    {
-      "url": "/subjects/CST205/units/unit-2.html",
-      "title": "Unit 2 - Linear Data Structures",
-      "subject": "CST205",
-      "timestamp": 1705334400000
-    }
-  ],
-
-  // Practice progress per day
-  "diploma-3rd-sem-practice-progress": {
-    "day1": { "completed": true, "score": 8, "total": 10 },
-    "day2": { "completed": false }
-  },
-
-  // Quiz scores
-  "diploma-3rd-sem-quiz-scores": [
-    {
-      "subject": "CST205",
-      "difficulty": "medium",
-      "score": 8,
-      "total": 10,
-      "date": "2025-01-15"
-    }
-  ],
-
-  // PYQ last selected filter
-  "diploma-3rd-sem-pyq-last-filter": {
-    "subject": "CST201",
-    "paperCode": "P005",
-    "year": 2024,
-    "month": "December",
-    "monthNumber": 12
-  }
-}
-```
-
----
-
-## 🌐 Browser Support
-
-| Browser | Version | Status |
-|---------|---------|--------|
-| Chrome | 90+ | ✅ Fully Supported |
-| Safari | 14+ | ✅ Fully Supported |
-| Firefox | 88+ | ✅ Fully Supported |
-| Edge | 90+ | ✅ Fully Supported |
-| Opera | 76+ | ✅ Fully Supported |
-| Samsung Internet | 14+ | ✅ Fully Supported |
-
-**Note:** PWA features (install, offline) require HTTPS in production.
-
----
-
-## 📱 PWA Features
-
-### Installability
-- Manifest file with proper icons
-- Service worker for offline support
-- Standalone display mode
-- Custom splash screen
-
-### Offline Support
-- All visited pages cached
-- Study materials accessible offline
-- User data persists locally
-- Automatic sync when online
-
-### App Shortcuts
-Quick access to key features from home screen:
-- Practice
-- Quiz
-- PYQs
-- Roadmap
-
----
-
-## 🛠️ Development Workflow
-
-### Multi-Chat Development Strategy
-
-This project is designed to be built across multiple AI chat sessions:
-
-| Chat | Scope | Deliverable |
-|------|-------|-------------|
-| **Chat 1** | Foundation | Dashboard, templates, PWA setup, icons |
-| **Chat 2** | CST201 | C Programming subject with all units |
-| **Chat 3** | CST203 | Python subject with all units |
-| **Chat 4** | CST205 | Data Structures subject with all units |
-| **Chat 5** | CST207 | Computer System Organization subject |
-| **Chat 6** | CST209 | Algorithms subject |
-| **Chat 7** | PYQ System | Complete PYQ viewer with paper registry support |
-| **Chat 8** | Practice | Day-wise practice system |
-| **Chat 9** | Quiz | Quiz system with results |
-| **Chat 10** | Roadmap + Misc | Roadmap, bookmarks, suggestions, info |
-
-### Adding New Content
-
-**To add a new unit:**
-1. Copy `_templates/base-structure.html`
-2. Update title, breadcrumb, content
-3. Link to `common.css` and add inline styles if needed
-4. Save as `subjects/SUBJECT/units/unit-X.html`
-
-**To add a new paper (questions):**
-1. Register the paper first by adding it to `_data/SUBJECT/registry.json`
-2. Assign the next available `paperCode` (P006, P007, etc.)
-3. Create the file using the exact `fileName` from registry
-4. File name must follow: `{SUBJECT}-{PAPERCODE}-{YEAR}-{MONTH_2DIGIT}.json`
-5. Add question objects following the full schema
-6. Update `_data/manifest.json` to increment `totalPapers`
-7. Questions automatically appear in PYQ viewer, Practice, and Quiz
-
-**To add a question image:**
-1. Save image as `assets/images/questions/{SUBJECT}-{PAPERCODE}-Q{N}.png`
-2. Set `"hasImage": true` and `"image": "assets/images/questions/..."` in the question object
-
-**To add a new page:**
-1. Use template structure
-2. Link to `/assets/css/variables.css`
-3. Include `/assets/js/theme.js` for theme toggle
-4. Use SVG icons from sprite
-
----
-
-## 🎓 For Educators
-
-### Contributing Content
-
-You can help by:
-- Adding more question files to `_data/` following the paper registry system
-- Improving explanations in unit pages
-- Adding solved examples
-- Creating formula sheets
-- Writing study tips
-
-### Question Guidelines
-
-When adding questions:
-- Always register the paper in `registry.json` first
-- Use the permanent `paperCode` in file name and all question `id` fields
-- Use clear, concise language
-- Provide complete answers
-- Tag with correct unit, topic, and practiceDay
-- Set appropriate difficulty
-- Include marks distribution
-
----
-
-## 🐛 Known Issues & Limitations
-
-- **iOS Safari**: Install prompt doesn't auto-show (manual Add to Home Screen required)
-- **localStorage Limit**: ~5-10MB depending on browser (sufficient for this app)
-- **No Backend**: All data is static JSON (no user accounts, cloud sync)
-- **Image Optimization**: Large images in answers may increase cache size
-
----
-
-## 🗺️ Roadmap
-
-### Version 1.1 (Planned)
-- [ ] Flashcard system for quick revision
-- [ ] Formula quick reference cards
-- [ ] Progress analytics dashboard
-- [ ] Solved example videos (YouTube embeds)
-
-### Version 1.2 (Future)
-- [ ] Study group features
-- [ ] Exam date countdown customization
-- [ ] Export bookmarks as PDF
-- [ ] Voice-based quiz mode
-
-### Version 2.0 (Future)
-- [ ] Backend integration (optional)
-- [ ] Multi-semester support
-- [ ] Community contributions
-- [ ] Real-time study sessions
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`feature/add-xyz`)
-3. **Commit** your changes with clear messages
-4. **Test** thoroughly in multiple browsers
-5. **Submit** a pull request
-
-### Contribution Areas
-- 📝 Content (questions, notes, examples)
-- 🎨 UI/UX improvements
-- 🐛 Bug fixes
-- 📚 Documentation
-- ♿ Accessibility enhancements
-- 🌐 Translations (future)
-
----
-
-## 📄 License
-
-This project is created for **educational purposes** only.
-
-- **Free to use** for personal study
-- **Free to modify** for your institution
-- **Free to share** with fellow students
-- **Attribution appreciated** but not required
-
-### Credits
-
-**Developed for:**
-West Bengal State Council of Technical Education (WBSCTE)
-
-**Target Audience:**
-Diploma 3rd Semester - Computer Science & Technology Students
-
-**Inspiration:**
-Built to help students access quality study material anytime, anywhere, even offline.
-
----
-
-## 📞 Support & Feedback
-
-- **Bug Reports**: Use the Contact page in the app
-- **Feature Requests**: Submit via feedback form
-- **General Questions**: Check Usage Guide in app menu
-
----
-
-## 📊 Statistics
-
-- **5** Core Subjects
-- **23** Total Units
-- **500+** Practice Questions (target)
-- **30** Days Roadmap
-- **100%** Offline Capable
-- **0** External Dependencies
-- **~215** Total Files (when complete)
-
----
-
-## 🏆 Acknowledgments
-
-Special thanks to:
-- WB Polytechnic faculty for syllabus guidance
-- Students who provided feedback during development
-- Open-source community for web standards and best practices
-
----
-
-## 📜 Changelog
-
-### v1.0.0 (January 2025)
-- ✨ Initial release
-- ✅ Complete dashboard with welcome screen
-- ✅ Dark/Light theme toggle
-- ✅ PWA setup with offline support
-- ✅ SVG icon system
-- ✅ Template structure for future development
-- ✅ Paper registry system for stable file naming
-- ✅ Data schema and manifest setup
-
----
-
-## 💡 Tips for Best Experience
-
-1. **Install the App**: Works better as installed PWA
-2. **Enable Notifications**: Get study reminders (future feature)
-3. **Bookmark Important Pages**: Quick access from bookmarks section
-4. **Use Offline**: Download once, study anywhere
-5. **Dark Mode**: Easier on eyes during night study sessions
-6. **Practice Daily**: Follow the 30-day roadmap consistently
-
----
-
-## 🔒 Privacy
-
-This app:
-- ✅ Stores data **only on your device** (localStorage)
-- ✅ No tracking or analytics
-- ✅ No user accounts required
-- ✅ No data sent to servers
-- ✅ Completely offline-capable
-- ✅ No cookies used
-
-**Your data stays yours.**
-
----
-
-**Made with 💙 for WB Polytechnic Students**
-
-*Study smart. Study offline. Excel in exams.*
-
----
-
-**Version:** 1.0.0
-**Last Updated:** January 2025
-**Status:** Active Development
-```
-
-
-## PYQ data rebuild pilot
-
-All 30 registry papers have been rebuilt from attached exam scans using the `pilot-v1` schema: the December 2024 Python pilot (`CST203 / P005`), all five January 2024 papers (`P004`), the four remaining December 2024 papers (`P005`), all five March 2023 papers (`CST201`, `CST203`, `CST205`, `CST207`, `CST209` / `P003`), all five June 2022 papers (`CST201 / P002`, `CST203 / P001`, `CST205 / P002`, `CST207 / P002`, `CST209 / P001`), five new January 2026 papers (`CST{201,203,205,207,209} / P006`), and the final five legacy records (three March 2021 `(S)` papers and two March 2023 `P002` duplicates). Rebuilt papers carry explicit group/section/choice-set metadata, choice rules, structured MCQ options and correct choices, mark splits, source notes, and model answers. No legacy-format paper records remain; the viewer/practice fallback paths are retained for compatibility.
-
-- Pilot data: `_data/CST203/CST203-P005-2024-12.json`
-- January 2024 batch: `_data/CST*/*-P004-2024-01.json`
-- December 2024 follow-up: `_data/CST*/*-P005-2024-12.json`
-- March 2023 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P003-2023-03.json`
-- June 2022 attached-scan batch: `CST201-P002`, `CST203-P001`, `CST205-P002`, `CST207-P002`, `CST209-P001` (`*-2022-06.json`)
-- January 2026 attached-scan batch: `_data/CST{201,203,205,207,209}/*-P006-2026-01.json`
-- Final legacy attached-scan batch: `_data/CST201/CST201-P001-2021-03.json`, `_data/CST205/CST205-P001-2021-03.json`, `_data/CST207/CST207-P001-2021-03.json`, `_data/CST203/CST203-P002-2023-03.json`, `_data/CST209/CST209-P002-2023-03.json`
-- Schema and source-fidelity notes: `docs/PYQ_SCHEMA.md`
-- Validator: `python3 scripts/validate_pyq.py`
-- Exam-paper view: `pyq/viewer.html?subject=CST203&paper=P005`
-- Practice / review: `pyq/answers.html?subject=CST203&paper=P005`
-
-The March 2023 papers use 25 one-mark Group A MCQs (answer any 20) and nine eight-mark Group B questions (answer any five), 2.5 hours, full marks 60. Their printed `2235`, `3013`, `526`, and `2235` are scan/set numbers, not paper codes. The June 2022 papers use Group A (Q1 MCQs, Q2 fill-in-the-blanks, Q3 short answers; answer any 10 from each), Group B (Q4, answer any six at 2 marks), and Group C (Q5–Q7, answer any one of three 6-mark alternatives from each), 3 hours, full marks 60; printed `1459`, `1438`, `1441`, `1466`, and `1455` are scan/set numbers, not paper codes. The January 2026 papers use 15 two-mark Group A MCQs (answer any 10; 1 mark for the answer and 1 mark for the explanation) and nine eight-mark Group B questions (answer any five), 2.5 hours, full marks 60; printed `5966`, `5906`, `5933`, `5926`, and `5927` are scan/set numbers, not paper codes. The final three March 2021 `(S)` papers use a compulsory mixed-mark Q1 plus 10-mark long-answer questions, 3 hours, full marks 70; their `332(S)`, `336(S)`, and `337(S)` identifiers are printed paper codes, and no separate scan/set number is visible. The two March 2023 `P002` duplicates now use the same 2.5-hour/60-mark Group A/Group B structure as canonical `P003`; their attached WBSCTE PDF reprints show no printed scan/set number, while canonical `P003` remains intact. March 2021, March 2023, June 2022, and January 2026 use `regulation: null`; the January 2026 scans do not explicitly print a regulation, so it was not inferred from the separate syllabus PDF. `CST209 / P003` was rebuilt only after the user supplied `Algorithms, March 2023.pdf`; the generic `Algorithms .pdf` was not used as a March 2023 scan and is now the January 2026 Algorithms source. The June 2022 batch was built only from the five user-attached June scans; the January 2026 batch was built only from the five user-attached generic 2026 scans; the final legacy batch was built only from the five newly attached WBSCTE PDFs.
-
-No official answer key was supplied; all answers in the rebuilt papers are explicitly labeled as model answers, and the source text is source-faithful rather than 100% verbatim. The rebuild does not resolve the wider legacy / Revised-2022 regulation ambiguity or the CST209 Unit 5 and credit/hour conflicts; the March 2021 `(S)` and January 2026 cohorts remain evidentially separate.
+Do not edit generated bundles directly. Source scripts remain under `quiz/js/`;
+concatenation has no runtime dependency. Read the
+[cache policy](docs/CACHE-POLICY.md) before changing worker dependencies.
+
+## Privacy, rights and release status
+
+Student data is local to the browser; no third-party runtime analytics or quiz
+upload endpoint is added. Backups contain private notes/answers and should be
+kept private. Feedback prepares an email draft or copied text; the site cannot
+confirm receipt. See [Privacy](info/privacy-policy.html) and
+[Measurement](docs/MEASUREMENT.md).
+
+**Repository license is not selected.** No blanket license is claimed for the
+code or third-party educational material. Existing asset notices remain in
+place; see [Credits](info/credits.html). License/content-rights review is a
+release gate, not an implementation decision to invent.
+
+The owner authorized merging the working branch on 2026-11-09. Consult Git and
+the pull request for the actual merge result; a merge does not certify unfinished
+phases. Device acceptance, deployment and domain configuration remain separate
+gates. See [domain readiness](docs/DOMAIN.md).
+
+## Contributor handoff
+
+Read [rule.md](rule.md), [prompt.md](prompt.md),
+[docs/STATUS.md](docs/STATUS.md), and the relevant
+[phase record](docs/phases/README.md) before editing. Owner-approved sequencing
+is implementation phases 1–9 first, then
+[Phase 10 cross-device acceptance](docs/phases/10-device-acceptance/README.md).
+Focused safety/regression checks continue during implementation.

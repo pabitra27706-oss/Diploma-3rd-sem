@@ -1,6 +1,6 @@
 /**
  * Theme Management System
- * Handles dark/light mode toggle with localStorage persistence
+ * Handles dark/light mode toggle with StudyStorage.legacy persistence
  * Enhanced: system preference sync, smooth transitions, meta tag updates
  */
 
@@ -141,20 +141,20 @@ class ThemeManager {
   
   getSavedTheme() {
     try {
-      const saved = localStorage.getItem(this.storageKey);
+      const saved = StudyStorage.legacy.getItem(this.storageKey);
       // Validate — only accept known values
       if (saved === 'dark' || saved === 'light') return saved;
       return null;
     } catch (e) {
-      // localStorage unavailable (private browsing, etc.)
-      console.warn('[Theme] localStorage unavailable:', e.message);
+      // StudyStorage.legacy unavailable (private browsing, etc.)
+      console.warn('[Theme] StudyStorage.legacy unavailable:', e.message);
       return null;
     }
   }
   
   saveTheme(theme) {
     try {
-      localStorage.setItem(this.storageKey, theme);
+      StudyStorage.legacy.setItem(this.storageKey, theme);
     } catch (e) {
       console.warn('[Theme] Could not save theme:', e.message);
     }

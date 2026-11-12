@@ -58,14 +58,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initTheme() {
   const html  = document.documentElement;
   const btn   = document.getElementById('theme-toggle');
-  const saved = localStorage.getItem('theme') || 'light';
+  const saved = StudyStorage.legacy.getItem('theme') || 'light';
   html.setAttribute('data-theme', saved);
   btn.querySelector('use').setAttribute('href',
     `../assets/icons/sprite.svg#${saved === 'dark' ? 'sun' : 'moon'}`);
   btn.addEventListener('click', () => {
     const n = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', n);
-    localStorage.setItem('theme', n);
+    StudyStorage.legacy.setItem('theme', n);
     btn.querySelector('use').setAttribute('href',
       `../assets/icons/sprite.svg#${n === 'dark' ? 'sun' : 'moon'}`);
   });
@@ -73,18 +73,11 @@ function initTheme() {
 
 /* ═══════════════════════════════ DATA */
 async function loadAll() {
-  const { aliases } = await StudyData.catalog();
-  for (const sub of SUBJECTS) {
-    try {
-      const reg = await fetch(`../_data/${sub}/registry.json`).then(r => r.json());
-      for (const paper of reg.papers || []) {
-        try {
-          const d = await fetch(`../_data/${sub}/${paper.fileName}`).then(r => r.json());
-          if (d.questions) S.all.push(...d.questions.filter(q => !aliases[q.id]).map(q => ({...q, subjectCode: sub})));
-        } catch {}
-      }
-    } catch {}
-  }
+  const response=await fetch('../assets/data/practice-pool.json');
+  if(!response.ok)throw Error('Practice pool unavailable');
+  const data=await response.json();
+  if(data.schemaVersion!==1||!Array.isArray(data.questions)||!data.questions.length)throw Error('Invalid practice pool');
+  S.all=data.questions;
   const ls = document.getElementById('loading-screen');
   ls.style.opacity    = '0';
   ls.style.transition = 'opacity 0.3s';
@@ -151,7 +144,7 @@ function makeKey(f) {
 /* ═══════════════════════════════ RESUME */
 function checkResume() {
   let saved;
-  try { saved = JSON.parse(localStorage.getItem(S.key)); } catch {}
+  try { saved = JSON.parse(StudyStorage.legacy.getItem(S.key)); } catch {}
   if (!saved || !saved.completed?.length) { startFresh(); return; }
 
   const modal = document.getElementById('resume-modal');
@@ -181,7 +174,7 @@ function checkResume() {
 
   document.getElementById('start-over-btn').addEventListener('click', () => {
     modal.hidden = true;
-    localStorage.removeItem(S.key);
+    StudyStorage.legacy.removeItem(S.key);
     startFresh();
   }, { once: true });
 }
@@ -826,7 +819,7 @@ function updateProgress() {
 /* ═══════════════════════════════ PERSISTENCE */
 function saveProgress() {
   try {
-    localStorage.setItem(S.key, JSON.stringify({
+    StudyStorage.legacy.setItem(S.key, JSON.stringify({
       completed:    [...S.done],
       currentIndex: S.index,
       lastVisited:  new Date().toISOString()
@@ -840,7 +833,7 @@ function syncDay() {
     const dqs  = S.questions.filter(q => Number(q.practiceDay) === day);
     const done = dqs.filter(q => S.done.has(q.id));
     try {
-      localStorage.setItem(`practice-day-${day}`, JSON.stringify({
+      StudyStorage.legacy.setItem(`practice-day-${day}`, JSON.stringify({
         total:       dqs.length,
         completed:   done.map(q => q.id),
         lastVisited: new Date().toISOString()
@@ -888,7 +881,7 @@ function spawnConfetti() {
 }
 
 function practiceAgain() {
-  localStorage.removeItem(S.key);
+  StudyStorage.legacy.removeItem(S.key);
   S.done      = new Set();
   S.index     = 0;
   S.questions = sortQ(S.filtered, S.sort);
@@ -1002,7 +995,7 @@ function updateURL() {
 function initBookmark() {
   const btn = document.getElementById('bookmark-btn');
   let bm    = [];
-  try { bm = JSON.parse(localStorage.getItem('practice-bookmarks') || '[]'); } catch {}
+  try { bm = JSON.parse(StudyStorage.legacy.getItem('practice-bookmarks') || '[]'); } catch {}
   if (bm.includes(location.href)) {
     S.bookmarked = true;
     btn.classList.add('is-bookmarked');
@@ -1013,7 +1006,7 @@ function initBookmark() {
 function toggleBookmark() {
   const btn = document.getElementById('bookmark-btn');
   let bm    = [];
-  try { bm = JSON.parse(localStorage.getItem('practice-bookmarks') || '[]'); } catch {}
+  try { bm = JSON.parse(StudyStorage.legacy.getItem('practice-bookmarks') || '[]'); } catch {}
 
   if (S.bookmarked) {
     bm = bm.filter(u => u !== location.href);
@@ -1028,7 +1021,7 @@ function toggleBookmark() {
     btn.setAttribute('aria-pressed', 'true');
     showToast('Bookmarked!');
   }
-  try { localStorage.setItem('practice-bookmarks', JSON.stringify(bm)); } catch {}
+  try { StudyStorage.legacy.setItem('practice-bookmarks', JSON.stringify(bm)); } catch {}
 }
 
 /* ═══════════════════════════════ COPY ANSWER */

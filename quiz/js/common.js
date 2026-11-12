@@ -223,12 +223,12 @@ function renderUnits(subjectCode, container, selectedUnits = []) {
 ══════════════════════════════════════════════════════════════ */
 
 /**
- * Initialise theme from localStorage or system preference
+ * Initialise theme from StudyStorage.legacy or system preference
  */
 function initTheme() {
   const saved = getFromStorage(STORAGE_KEYS.THEME);
   if (saved === 'dark' || saved === 'light') {
-    applyTheme(saved);
+    document.documentElement.setAttribute('data-theme', saved);
   }
   // If no saved preference, CSS media query handles it automatically
 }
@@ -267,42 +267,42 @@ function toggleTheme() {
 ══════════════════════════════════════════════════════════════ */
 
 /**
- * Save data to localStorage as JSON
+ * Save data to StudyStorage.legacy as JSON
  * @param {string} key
  * @param {*} data
  */
 function saveToStorage(key, data) {
   try {
-    localStorage.setItem(key, JSON.stringify(data));
+    StudyStorage.legacy.setItem(key, JSON.stringify(data));
   } catch (e) {
-    console.warn('localStorage write failed:', e);
+    console.warn('StudyStorage.legacy write failed:', e);
   }
 }
 
 /**
- * Read and parse data from localStorage
+ * Read and parse data from StudyStorage.legacy
  * @param {string} key
  * @returns {*} Parsed data or null
  */
 function getFromStorage(key) {
   try {
-    const raw = localStorage.getItem(key);
+    const raw = StudyStorage.legacy.getItem(key);
     return raw ? JSON.parse(raw) : null;
   } catch (e) {
-    console.warn('localStorage read failed:', e);
+    console.warn('StudyStorage.legacy read failed:', e);
     return null;
   }
 }
 
 /**
- * Remove a key from localStorage
+ * Remove a key from StudyStorage.legacy
  * @param {string} key
  */
 function clearStorage(key) {
   try {
-    localStorage.removeItem(key);
+    StudyStorage.legacy.removeItem(key);
   } catch (e) {
-    console.warn('localStorage remove failed:', e);
+    console.warn('StudyStorage.legacy remove failed:', e);
   }
 }
 
@@ -396,30 +396,21 @@ function calculateTimerDuration(questions) {
  */
 function startTimer(durationSeconds, onTick, onWarning, onExpire) {
   stopTimer();
-  _timerRemaining = durationSeconds;
+  const deadline = Date.now() + Math.max(0, durationSeconds)*1000;
+  const warned = new Set();
+  _timerRemaining = Math.max(0, Math.ceil(durationSeconds));
   _timerPaused = false;
-
-  _timerInterval = setInterval(() => {
+  function tick() {
     if (_timerPaused) return;
-
-    _timerRemaining--;
-    const formatted = formatTime(_timerRemaining);
-
-    if (typeof onTick === 'function') {
-      onTick(_timerRemaining, formatted);
+    _timerRemaining = Math.max(0, Math.ceil((deadline-Date.now())/1000));
+    if (typeof onTick === 'function') onTick(_timerRemaining,formatTime(_timerRemaining));
+    for (const threshold of [600,60]) {
+      if (_timerRemaining <= threshold && !warned.has(threshold)) { warned.add(threshold); onWarning?.(threshold); }
     }
-
-    if (_timerRemaining === 300 && typeof onWarning === 'function') {
-      onWarning();
-    }
-
-    if (_timerRemaining <= 0) {
-      stopTimer();
-      if (typeof onExpire === 'function') {
-        onExpire();
-      }
-    }
-  }, 1000);
+    if (_timerRemaining <= 0) { stopTimer(); onExpire?.(); }
+  }
+  _timerInterval = setInterval(tick, 1000);
+  tick();
 }
 
 /**
@@ -597,114 +588,18 @@ function pickBalanced(questions, count) {
 ══════════════════════════════════════════════════════════════ */
 
 /**
- * Save current quiz state to localStorage
+ * Save current quiz state to StudyStorage.legacy
  * @param {Object} state - Full quiz state object
  */
-function saveQuizState(state) {
-  const key = state.autosaveKey || (STORAGE_KEYS.AUTOSAVE_PREFIX + getTimestamp());
-  state.autosaveKey = key;
-  state.savedAt = getTimestamp();
-  saveToStorage(key, state);
-  return key;
-}
-
-/**
- * Load the most recent quiz autosave
- * @returns {Object|null} Saved quiz state or null
- */
-function loadQuizState() {
-  try {
-    const keys = Object.keys(localStorage).filter(k =>
-      k.startsWith(STORAGE_KEYS.AUTOSAVE_PREFIX)
-    );
-    if (keys.length === 0) return null;
-
-    // Find most recent
-    keys.sort((a, b) => {
-      const tA = parseInt(a.replace(STORAGE_KEYS.AUTOSAVE_PREFIX, ''), 10);
-      const tB = parseInt(b.replace(STORAGE_KEYS.AUTOSAVE_PREFIX, ''), 10);
-      return tB - tA;
-    });
-
-    return getFromStorage(keys[0]);
-  } catch (e) {
-    return null;
-  }
-}
-
-/**
- * Clear all quiz autosaves
- */
-function clearQuizState() {
-  try {
-    Object.keys(localStorage)
-      .filter(k => k.startsWith(STORAGE_KEYS.AUTOSAVE_PREFIX))
-      .forEach(k => localStorage.removeItem(k));
-  } catch (e) {
-    console.warn('Could not clear quiz state:', e);
-  }
-}
-
-/**
- * Clear a specific autosave key
- * @param {string} key
- */
-function clearSpecificQuizState(key) {
-  clearStorage(key);
-}
-
-/* ══════════════════════════════════════════════════════════════
-   HISTORY MANAGEMENT
-══════════════════════════════════════════════════════════════ */
-
-/**
- * Save a completed quiz to history
- * @param {Object} quiz - Quiz result object
- */
-function saveToHistory(quiz) {
-  const history = getHistory();
-  quiz.historyId = 'hist-' + getTimestamp();
-  quiz.completedAt = getTimestamp();
-  history.unshift(quiz); // newest first
-
-  // Keep last 50 entries
-  const trimmed = history.slice(0, 50);
-  saveToStorage(STORAGE_KEYS.HISTORY, trimmed);
-}
-
-/**
- * Get all history entries
- * @returns {Array}
- */
-function getHistory() {
-  return getFromStorage(STORAGE_KEYS.HISTORY) || [];
-}
-
-/**
- * Clear all quiz history
- */
-function clearHistory() {
-  clearStorage(STORAGE_KEYS.HISTORY);
-}
-
-/**
- * Get a single history entry by ID
- * @param {string} historyId
- * @returns {Object|null}
- */
-function getHistoryEntry(historyId) {
-  const history = getHistory();
-  return history.find(h => h.historyId === historyId) || null;
-}
-
-/**
- * Delete a single history entry
- * @param {string} historyId
- */
-function deleteHistoryEntry(historyId) {
-  const history = getHistory().filter(h => h.historyId !== historyId);
-  saveToStorage(STORAGE_KEYS.HISTORY, history);
-}
+function saveQuizState(state) { return QuizAttempts.save(state).autosaveKey; }
+function loadQuizState() { return QuizAttempts.latest(); }
+function clearQuizState() { QuizAttempts.all().filter(a => a.status === 'active').forEach(a => QuizAttempts.abandon(a.autosaveKey)); }
+function clearSpecificQuizState(key) { const a = QuizAttempts.get(key); if (a?.status === 'active') QuizAttempts.abandon(key); }
+function saveToHistory(quiz) { return QuizAttempts.setHistory(quiz); }
+function getHistory() { return QuizAttempts.history(); }
+function clearHistory() { QuizAttempts.clearHistory(); }
+function getHistoryEntry(historyId) { return QuizAttempts.historyEntry(historyId); }
+function deleteHistoryEntry(historyId) { QuizAttempts.deleteHistory(historyId); }
 
 /* ══════════════════════════════════════════════════════════════
    SETTINGS MANAGEMENT
@@ -771,7 +666,7 @@ function generateAllTypesMarkdown(data) {
   const total        = questions.length;
 
   let md = `# Quiz Evaluation Request\n\n`;
-  md += `## Instructions for AI\n`;
+  md += `## Instructions for a human reviewer\n`;
   md += `Evaluate the following quiz answers based on concept coverage, not exact wording.\n\n`;
   md += `**Scoring Rubric:**\n`;
   md += `- Award marks based on understanding shown\n`;
@@ -806,7 +701,7 @@ function generateAllTypesMarkdown(data) {
     md += `---\n\n`;
   });
 
-  return md;
+  return `Attempt: ${data.metadata?.attemptId || "legacy-current"}\n\n` + md;
 }
 
 /**
@@ -837,7 +732,7 @@ function generateMCQMarkdown(data) {
     const userAns  = answers[q.id] || '—';
     const correct  = q.correct;
     const isRight  = userAns === correct;
-    const status   = isRight ? '✓ Correct' : '✗ Incorrect';
+    const status   = !QuizAttempts.hasAnswer(answers[q.id]) ? '— Unanswered' : isRight ? '✓ Correct' : '✗ Incorrect';
 
     md += `## Question ${i + 1}\n`;
     md += `**Question:** ${q.question}\n\n`;
@@ -857,7 +752,7 @@ function generateMCQMarkdown(data) {
     md += `\n---\n\n`;
   });
 
-  return md;
+  return `Attempt: ${data.metadata?.attemptId || "legacy-current"}\n\n` + md;
 }
 
 /**
@@ -875,7 +770,8 @@ function generateJSONExport(data) {
         ? 'All Units'
         : getUnitTitle(data.subject, data.unit),
       mode: data.mode,
-      score: data.score || null,
+      attemptId: data.metadata?.attemptId || null,
+      score: data.score ?? null,
       totalQuestions: data.questions.length
     },
     questions: data.questions.map((q, i) => ({
@@ -886,7 +782,7 @@ function generateJSONExport(data) {
       marks: q.marks,
       userAnswer: data.answers[q.id] || null,
       correctAnswer: q.correct || null,
-      isCorrect: q.type === 'mcq'
+      isCorrect: q.type === 'mcq' && QuizAttempts.hasAnswer(data.answers[q.id])
         ? (data.answers[q.id] === q.correct)
         : null,
       explanation: q.explanation || null,
@@ -934,7 +830,7 @@ function generateTXTExport(data) {
     if (q.correct) {
       const isRight = userAnswer === q.correct;
       txt += `   Correct Ans  : ${q.correct}\n`;
-      txt += `   Status       : ${isRight ? 'Correct' : 'Incorrect'}\n`;
+      txt += `   Status       : ${!QuizAttempts.hasAnswer(data.answers[q.id]) ? 'Unanswered' : isRight ? 'Correct' : 'Incorrect'}\n`;
     }
 
     if (q.modelAnswer) {
@@ -948,7 +844,7 @@ function generateTXTExport(data) {
     txt += `\n${'-'.repeat(50)}\n\n`;
   });
 
-  return txt;
+  return `Attempt: ${data.metadata?.attemptId || "legacy-current"}\n\n` + txt;
 }
 
 /**
@@ -1012,8 +908,7 @@ async function fetchQuestions(subjectCode, unit) {
     // Support both {questions: [...]} and plain array
     return (Array.isArray(data) ? data : (data.questions || [])).map(q => ({ ...q, unit: data.unit || Number(unit), subject: subjectCode }));
   } catch (e) {
-    console.warn(`Could not load questions for ${subjectCode} unit ${unit}:`, e);
-    return [];
+    throw new Error(`Could not load ${subjectCode} unit ${unit}. Reconnect and retry. ${e.message}`);
   }
 }
 
@@ -1091,28 +986,7 @@ function buildPresetConfig(preset) {
  * @param {Object} answers - { questionId: selectedOption }
  * @returns {Object} { score, total, correct, incorrect, unanswered, percentage }
  */
-function calculateScore(questions, answers) {
-  let correct   = 0;
-  let incorrect = 0;
-  let unanswered = 0;
-
-  const gradable = questions.filter(q => q.type === 'mcq' && q.options && Object.prototype.hasOwnProperty.call(q.options, q.correct));
-  gradable.forEach(q => {
-    const ans = answers[q.id];
-    if (!ans) {
-      unanswered++;
-    } else if (ans === q.correct) {
-      correct++;
-    } else {
-      incorrect++;
-    }
-  });
-
-  const total = gradable.length;
-  const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
-
-  return { score: correct, total, correct, incorrect, unanswered, percentage, ungraded: questions.length - total };
-}
+function calculateScore(questions, answers) { return QuizAttempts.score(questions, answers); }
 
 /* ══════════════════════════════════════════════════════════════
    DOM HELPERS
