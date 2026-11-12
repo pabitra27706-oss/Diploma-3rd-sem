@@ -29,9 +29,12 @@ class PipelineTests(unittest.TestCase):
         self.assertNotEqual(first,different)
 
     def test_no_semantic_or_answer_changes(self):
-        # The phase's base commit is the source snapshot, not a moving main branch.
-        base='646dea2aa44c3de207e8a46cfcf2c45c5d822310'
+        # Papers use the explicitly approved, pinned main snapshot; quiz sources
+        # retain the original phase base. Neither follows a moving branch.
+        paper_base=json.loads((ROOT/'_data/pyq-integrity.json').read_text())['sourceCommit']
+        quiz_base='646dea2aa44c3de207e8a46cfcf2c45c5d822310'
         for path,store in sum((list(s) for s in stores()),[]):
+            base=paper_base if path.is_relative_to(ROOT/'_data') else quiz_base
             original=json.loads(subprocess.check_output(['git','show',base+':'+path.relative_to(ROOT).as_posix()]))
             before={q['id']:q for q in original['questions']}
             self.assertEqual(set(before),{q['id'] for q in store['questions']})

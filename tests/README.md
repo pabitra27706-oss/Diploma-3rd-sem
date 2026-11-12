@@ -23,8 +23,10 @@ node tests/storage-recovery.cjs
 Python discovery currently covers 12 tests: source-preserving/idempotent
 pipeline transformations, mutation detection, integrity guard changes/additions/
 removals, compact discovery, card-source resolution, bundle/source consistency,
-runtime pools and coverage joins. Source-comparison tests require Git history
-containing `646dea2aa44c3de207e8a46cfcf2c45c5d822310`; do not use a shallow clone
+runtime pools and coverage joins. Paper comparisons pin to the owner-approved
+sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons retain
+`646dea2aa44c3de207e8a46cfcf2c45c5d822310`. Both commits must be in Git history;
+do not use a shallow clone
 for these checks. CI checks out full history.
 
 Node suites cover attempt persistence/migration/retries/mistakes, fixed Leitner

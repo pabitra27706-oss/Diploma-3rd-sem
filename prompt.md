@@ -36,6 +36,15 @@ and actual Git status take precedence over older narrative.
 6. Do not claim all phases done while implementation or factual gates are open.
    Focused safety/regression tests continue before final device acceptance.
 
+## Approved source reconciliation for PR #7
+
+Owner authorizes preserving main's newer sources and merging the code. The
+fixed PYQ/registry baseline is now main commit
+`cfe3a63decb270826da40ea50b9392efc58b2f1d`; all 35 originals match it exactly.
+Main's icon/manifest fix is preserved. Derived artifacts have been regenerated;
+the same ten source-review findings remain open. Consult PR #7 for CI/merge
+result; do not treat earlier unpushed/blocked checkpoint notes as current state.
+
 ## Current implementation
 
 Phase 1 platform implementation is complete with deferred final hardware

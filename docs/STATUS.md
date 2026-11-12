@@ -3,6 +3,15 @@
 Documentation checkpoint: **2026-11-09**. This is the current handoff; older
 phase evidence remains historical unless explicitly superseded here.
 
+## Current source reconciliation
+
+Owner approved preserving newer main for PR #7. Papers/registries now match
+`cfe3a63decb270826da40ea50b9392efc58b2f1d` byte-for-byte; the immutable manifest
+pins that commit. Derived data is regenerated and all local regression suites
+pass again. Existing source-review findings remain open; no new answer
+certification is inferred. Delivery history below is the earlier checkpoint;
+use PR #7/Git for the current CI and merge result.
+
 ## Delivery state
 
 **Merge authorization update:** on 2026-11-09 the owner requested merging this

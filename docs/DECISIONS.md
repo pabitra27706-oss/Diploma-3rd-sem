@@ -166,3 +166,22 @@ committing/pushing the accumulated current-branch changes and opening/merging
 the corresponding PR to main after safety/CI checks. It does not certify phases
 2–9 complete, resolve source/license gates, or authorize deployment, Pages or
 domain configuration changes. Operation result is recorded in Git/PR history.
+
+
+## Preserve main and reconcile PR #7 — 2026-11-09
+
+Owner explicitly approves preserving newer main and merging the code. Adopt
+main commit `cfe3a63decb270826da40ea50b9392efc58b2f1d` as the fixed authoritative
+PYQ/registry snapshot. All 35 files match that commit byte-for-byte, including
+removal of this branch's earlier embedded schedule/topic metadata; scheduling
+remains in derived sidecars. Preserve main's manifest/icon fixes as well.
+
+The integrity manifest records this source commit. Paper semantic tests pin to
+it, while quiz-bank semantic tests retain their original base. The same ten
+source-review finding codes, targets and messages remain; only CST209-P001-Q56's
+content fingerprint changes to match the explicitly adopted upstream answer.
+This is preservation, not pedagogical certification or a waiver. Rebuilt cards,
+search metadata, coverage and Practice runtime pool from the adopted sources.
+Twelve Python tests, four Node suites, seven focused Chromium suites, site
+(0 errors/28 warnings), platform and integrity checks pass locally. Hosted CI
+and merge result are recorded on PR #7. No deployment/domain settings changed.
