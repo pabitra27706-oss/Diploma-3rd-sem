@@ -83,3 +83,33 @@ checkpoint, not current owner direction. The owner subsequently delegated
 implementation phases 1–9 before a dedicated device phase. Later engineering
 proceeds independently; the source findings remain open and no raw PYQ changes
 are permitted. See `docs/DECISIONS.md` and current `docs/STATUS.md`.
+
+## Continuation checkpoint — 2026-11-12
+
+The current Arena session branch starts from merge commit
+`125eb947413eb3901f4d3e98cd63c6fc31aa7fae` (PR #7 merge); this is a new
+continuation, not the earlier `arena/be3d9178-diploma-3rd-sem` working tree.
+No PYQ, registry, quiz-bank, generated-data, or application source files were
+changed in this checkpoint. The existing Phase 2 implementation was rechecked
+before choosing the next safe step.
+
+- `check_pyq_integrity.py`: PASS, 0 changed/added/missing originals.
+- `validate_pyq.py`: PASS, 30 papers / 992 question objects, 0 errors/warnings.
+- Phase 2 tests: PASS, 5 tests (deterministic/idempotent schedule generation,
+  dry-run, mutation detection, immutable-source comparison, strict-vs-baseline).
+  This checkout was initially shallow; fetched main history as required by the
+  repository test instructions, so the pinned source comparison ran rather than
+  being treated as an implementation failure.
+- `validate_data.py --check-baseline`: PASS only as a ledger match; it reports
+  the same 10 source-review errors and 80 duplicate candidates / 69 exact aliases.
+- `validate_data.py --strict`: expected BLOCKED, exit 1 on those 10 findings.
+- `validate_syllabus.py --strict`: expected BLOCKED, 3 grouped errors: four
+  CST205 and three CST209 out-of-syllabus PYQ tags, plus the 35-record CST209
+  Unit-5 bank. CST207's absent quiz bank remains a warning.
+- `check_site.py --strict --quiet`: PASS, 0 errors / 28 warnings;
+  `check_platform.py`: PASS, 0 errors.
+
+**Next safe action:** source review by the owner for the already-prepared batch
+at `docs/data/source-review-batch-01.md` (including question-level CST201 bank
+mapping and reprint confirmation). No data retag, key import, or false strict
+pass is authorized by this continuation request. Phase 2 remains in progress.

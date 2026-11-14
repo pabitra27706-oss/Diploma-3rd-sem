@@ -688,13 +688,23 @@ function generateAllTypesMarkdown(data) {
   md += `- **Mode:** All Types\n`;
   md += `- **Total Questions:** ${total}\n`;
   md += `- **Date:** ${dateStr}\n\n`;
+  if (data.paper) {
+    const selected = new Set(data.paperSelection || []);
+    md += `## Paper practice record — not an official grade\n`;
+    md += `- **Paper:** ${data.paper.examSession || data.paper.fileName}\n`;
+    md += `- **Printed duration / maximum:** ${data.paper.duration} / ${data.paper.fullMarks} marks\n`;
+    md += `- **Questions selected for answer-choice limits:** ${selected.size}\n`;
+    md += `- **Marking:** no overall paper grade is calculated; explanations and written responses are not automatically graded.\n\n`;
+  }
   md += `---\n\n`;
 
+  const paperSelection = new Set(data.paperSelection || []);
   questions.forEach((q, i) => {
     const userAnswer = answers[q.id] || '_(No answer provided)_';
     const modelAnswer = q.modelAnswer || '_(No model answer available)_';
 
     md += `## Question ${i + 1} (${q.marks} marks)\n`;
+    if (data.paper) md += `**Paper answer-choice selection:** ${paperSelection.has(q.id) ? 'Selected' : 'Not selected'}\n`;
     md += `**Question:** ${q.question}\n\n`;
     md += `**User Answer:**\n${userAnswer}\n\n`;
     md += `**Model Answer:**\n${modelAnswer}\n\n`;
@@ -761,6 +771,7 @@ function generateMCQMarkdown(data) {
  * @returns {string} Pretty-printed JSON
  */
 function generateJSONExport(data) {
+  const paperSelection = new Set(data.paperSelection || []);
   const exportData = {
     exportedAt: new Date().toISOString(),
     quiz: {
@@ -772,7 +783,9 @@ function generateJSONExport(data) {
       mode: data.mode,
       attemptId: data.metadata?.attemptId || null,
       score: data.score ?? null,
-      totalQuestions: data.questions.length
+      totalQuestions: data.questions.length,
+      paperPractice: data.paper || null,
+      paperSelectionQuestionIds: data.paper ? [...paperSelection] : null
     },
     questions: data.questions.map((q, i) => ({
       number: i + 1,
@@ -780,6 +793,7 @@ function generateJSONExport(data) {
       type: q.type,
       question: q.question,
       marks: q.marks,
+      selectedForPaperAnswerChoice: data.paper ? paperSelection.has(q.id) : null,
       userAnswer: data.answers[q.id] || null,
       correctAnswer: q.correct || null,
       isCorrect: q.type === 'mcq' && QuizAttempts.hasAnswer(data.answers[q.id])
@@ -810,14 +824,21 @@ function generateTXTExport(data) {
   txt += `Unit    : ${unitTitle}\n`;
   txt += `Mode    : ${data.mode}\n`;
   txt += `Date    : ${dateStr}\n`;
+  if (data.paper) {
+    txt += `Paper   : ${data.paper.examSession || data.paper.fileName}\n`;
+    txt += `Paper max/duration: ${data.paper.fullMarks} marks / ${data.paper.duration}\n`;
+    txt += `Paper marking: no automatic overall grade\n`;
+  }
   if (data.score !== undefined && data.score !== null) {
     txt += `Score   : ${data.score}/${data.questions.length}\n`;
   }
   txt += `${'='.repeat(50)}\n\n`;
 
+  const paperSelection = new Set(data.paperSelection || []);
   data.questions.forEach((q, i) => {
     const userAnswer = data.answers[q.id] || 'No answer';
     txt += `Q${i + 1}. [${q.marks} marks] ${q.question}\n`;
+    if (data.paper) txt += `   Paper answer-choice selection: ${paperSelection.has(q.id) ? 'Selected' : 'Not selected'}\n`;
 
     if (q.options) {
       Object.entries(q.options).forEach(([k, v]) => {

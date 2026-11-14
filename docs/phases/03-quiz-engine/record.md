@@ -104,3 +104,61 @@ completion/discard, even after verified namespace-copy migration. Focused quiz,
 Practice and warmed-paper offline regressions pass against the real boundary.
 Setup now consumes a generated 872-question pool and a checked-in concatenated
 script; snapshot/preview/filter behavior is unchanged and regression-tested.
+
+
+## Continuation — paper rules implementation, 2026-11-12
+
+- **Reused:** ADAPT the repo's existing immutable `paperFormat.groups`, nested
+  `sections`, question IDs, source-number labels, registry duration and printed
+  instructions. BUILD a small dependency-free rule adapter because no compatible
+  first-party enforcement module existed. No external library or data rewrite.
+- `quiz/js/paper-rules.js` derives group/section quotas from structured source
+  metadata. For explicit “one alternative from each Q…” instructions, it
+  partitions the existing source-number labels into per-question pools; it
+  rejects ambiguous, overlapping or incomplete metadata instead of guessing.
+  A cross-file test confirms all 30 registered papers map every question into
+  exactly one supported quota, with no unsupported pools.
+- The paper screen now has an accessible choice tracker. It prevents selecting
+  above each printed quota, saves intended choices through reload/history, and
+  includes them in review and Markdown/JSON/TXT exports. It remains an answer
+  choice aid: written responses and explanation marks are not machine graded.
+- Where the general instruction explicitly states a 30-minute collection rule
+  and exactly one structured group identifies the same first section, a separate
+  deadline is derived. For those **7** registered papers, the attempt starts in
+  that section, later groups stay closed until its deadline or confirmed early
+  finish, and the collected group cannot be reopened. The deadline/lock survive
+  resume. Papers without such an explicit matched rule receive no invented
+  section clock.
+- PYQ and registry bytes remain immutable. The service-worker cache version was
+  bumped to `quiz-paper-rules-2026-11-12`; checked-in quiz setup bundle and
+  generated page build metadata were regenerated.
+
+### Fresh local checks
+
+- Python unittest discovery: **12 PASS**.
+- Node suites: **6 PASS** — attempts (including paper selection/timed-state
+  persistence), paper rules across all 30 registries, paper export formats,
+  study scheduler/trends, storage/backup and recovery.
+- JS/CJS parse sweep across assets, quiz, practice and tests: PASS. Asset report:
+  37 JS files / 751,972 bytes (largest generated setup bundle 95,556 bytes),
+  23 CSS files / 579,028 bytes, and 80 JSON files / 5,221,885 bytes; these are
+  uncompressed source/check-out sizes, not transfer or Lighthouse measurements.
+- PYQ integrity: **0 changed/added/missing**; PYQ validation: 30 papers / 992
+  questions, 0 errors/warnings.
+- Exact data baseline: PASS as ledger match only; Phase 2's source findings
+  remain. Site strict: **0 errors / 28 warnings**; platform check: **0 errors**;
+  `git diff --check`: PASS.
+- Fresh browser/Chromium run: **not run** in this environment (Playwright and a
+  Chromium executable are absent). The updated quiz browser regression includes
+  answer-any limits, reload, timed-section lock, and paper export, but its result
+  remains unverified until run in a browser. Historical 2026-11-09 browser
+  evidence is not counted as a pass for this change.
+
+### Remaining in Phase 3
+
+Official paper marks/overall grade remain withheld: explanation-mark splits and
+printed maxima still need the source reconciliation tracked under Phase 8.5.
+Source-stated paper-section timer evidence has been implemented for the 7
+matched records, but no real device/background timer behavior has been observed;
+that acceptance belongs to Phase 10. Hosted CI has not run on this unpushed
+continuation. Phase 3 remains **in progress**, not complete.

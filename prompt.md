@@ -7,11 +7,13 @@ and actual Git status take precedence over older narrative.
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- Active branch: `arena/be3d9178-diploma-3rd-sem`. Do not create/switch/rename
-  branches or push another branch.
-- Pre-merge checkpoint tip: `ac428d1`; the owner subsequently authorized
-  committing/pushing the accumulated implementation and merging through a PR.
-  Inspect actual Git/PR state rather than assuming that checkpoint is current.
+- Active branch: use the branch named in the latest Arena system note. For this
+  continuation it is `arena/71382686-diploma-3rd-sem`, based on
+  `125eb947413eb3901f4d3e98cd63c6fc31aa7fae`. Never create/switch/rename
+  branches or push another branch. Older branch names below are historical.
+- PR #7 was merged into main; this continuation starts at merge commit
+  `125eb947413eb3901f4d3e98cd63c6fc31aa7fae`. The pre-merge checkpoint tip
+  `ac428d1` and its later history are historical; inspect actual Git state.
 - Zero-build static HTML/CSS/JS/JSON; publication base `/Diploma-3rd-sem/`.
   Canonical configured URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
   This is not confirmation that the live site has current changes.
@@ -56,8 +58,8 @@ per-phase remainder table and the source/rights gates.
   456 non-MCQ ungraded). CST207 has no quiz bank. Originals remain unchanged.
 - Quiz: versioned attempt snapshots, deadline-based timers, autosave/resume,
   flags, score boundaries, history/export/exact retries/edits and mistake queue.
-  Paper practice preserves sources and duration but does not enforce choices,
-  section timing or explanation-mark rules; no official overall paper grade.
+  Paper choice quotas and seven explicit 30-minute section locks are implemented
+  from existing metadata; marks/explanations remain ungraded pending reconciliation.
 - Discovery/study: compact search/repeat sidecars, source deep links, related
   unit material, 1,339 model/keyed-source cards, fixed Leitner scheduling,
   Today/goals/streaks, sample-qualified weak-area trends. Not newly certified facts.
@@ -71,23 +73,31 @@ per-phase remainder table and the source/rights gates.
   sheet work remains. License remains a gate.
 - Performance: compact derived pools and checked-in script bundles; measured
   Practice/setup cold loads are 12 requests each. CSS/cache/root-path/launch
-  work remains. Current worker VERSION: `study-safety-2026-11-09`.
+  work remains. Current worker VERSION: `quiz-paper-rules-2026-11-12`.
 
 ## Evidence and limits
 
-Latest implementation checkpoint: 12 Python tests, four Node suites and seven
-focused Chromium suites PASS; full 48 JS/CJS + JSON parse PASS. Site strict
-0 errors / 28 warnings, platform 0 errors, immutable-PYQ guard 0 changes.
-Full data strict still has 10 ledger findings; syllabus strict has 3 grouped
-errors. An exact-baseline pass is not a full strict pass. Hosted CI has not run
-on the unpushed implementation. Historical Phase 2 CI is recorded in its record.
+Broad historical implementation checkpoint (2026-11-09): 12 Python tests,
+four Node suites, seven focused Chromium suites, 48 JS/CJS + JSON parse, site
+strict 0/28, platform 0 errors and PYQ guard 0 changes. This is not fresh device
+or browser evidence for later modifications.
+
+Fresh Phase 3 paper-rule checkpoint (2026-11-12): 12 Python tests and six Node
+suites pass; JS/CJS parse sweep passes; 30 registered-paper rules map with no
+unsupported/uncovered question pools, including seven explicit 30-minute
+sections; site strict is 0 errors / 28 warnings; platform check is 0 errors;
+PYQ validation and integrity pass. Browser/Chromium and hosted CI were not run.
+Official paper marks remain withheld. Phase 2 exact-baseline match remains only
+an exception-ledger pass, not full strict data/syllabus acceptance; ten data
+findings and three grouped syllabus errors stay source-gated.
 
 ## How to continue safely
 
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
-2. Use `docs/STATUS.md`'s remaining order. Next major gaps are paper rules and
-   the asynchronous IndexedDB storage path, then remaining discovery/study,
+2. Use `docs/STATUS.md`'s remaining order. Paper choice/timed-section engineering
+   is implemented; complete its focused browser acceptance. Next major engineering
+   gap is the asynchronous IndexedDB storage path, then remaining discovery/study,
    accessibility/language, cited content and performance/cache work.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
    visible; record new evidence/dispositions in derived metadata and decisions.
@@ -100,9 +110,9 @@ on the unpushed implementation. Historical Phase 2 CI is recorded in its record.
 
 ## Termux delivery convention
 
-Existing checkout: `$HOME/study-hub-phase2`, tracking the active branch. Use
-`git pull --ff-only`, then symlink it as
-`$TMPDIR/study-hub-server/Diploma-3rd-sem` and serve that parent with Python on
-127.0.0.1:8000. Exact URL:
-`http://127.0.0.1:8000/Diploma-3rd-sem/`.
-State that unpushed changes cannot be obtained by pull. Stop server with Ctrl+C.
+Assume an existing checkout at `$HOME/Diploma-3rd-sem` that contains the
+current session branch/revision; never switch or reset the user's checkout.
+Current continuation changes are unpushed and cannot be obtained by `git pull`.
+Symlink the checkout as `$TMPDIR/study-hub-server/Diploma-3rd-sem` and serve its
+parent with Python on 127.0.0.1:8000. Exact URL:
+`http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop server with Ctrl+C.

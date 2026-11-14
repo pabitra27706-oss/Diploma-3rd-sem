@@ -1,5 +1,5 @@
 /* Scope-relative, first-party-only shell. Updates activate only on user request. */
-const VERSION = 'study-safety-2026-11-09';
+const VERSION = 'quiz-paper-rules-2026-11-12';
 const CACHE_PREFIX = 'diploma-3rd-sem-';
 const CACHE_NAME = CACHE_PREFIX + VERSION;
 const BASE = new URL('./', self.location.href);

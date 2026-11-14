@@ -59,12 +59,41 @@ const assert=require('node:assert/strict');
     console.log('PASS forced bank failure is explicit, not partial/empty success');
     await page.goto(base+'quiz/play.html?subject=CST205&paperFile=CST205-P006-2026-01.json');
     await page.waitForFunction(()=>quizState.questions.length===24);
-    const paper=await page.evaluate(()=>({count:quizState.questions.length,minutes:quizState.config.timerMins,set:quizState.config.paper.setMarks,sum:quizState.questions.reduce((s,q)=>s+q.marks,0)}));
-    assert.equal(paper.minutes,150);assert.equal(paper.set,paper.sum);
+    const paper=await page.evaluate(()=>({count:quizState.questions.length,minutes:quizState.config.timerMins,set:quizState.config.paper.setMarks,sum:quizState.questions.reduce((s,q)=>s+q.marks,0),rules:quizState.config.paper.rules}));
+    assert.equal(paper.minutes,150);assert.equal(paper.set,paper.sum);assert.equal(paper.rules.unsupported.length,0);
     await page.getByText(/Unverified overall total/).waitFor();
+    await page.locator('#paper-choice-toggle').check();
+    for(let i=15;i<20;i++){await page.evaluate(index=>goToQuestion(index),i);await page.locator('#paper-choice-toggle').check();}
+    await page.evaluate(()=>goToQuestion(20));
+    assert.equal(await page.locator('#paper-choice-toggle').isDisabled(),true,'sixth Group B selection exceeds answer-any five');
+    const selectedBeforeReload=await page.evaluate(()=>[...quizState.paperSelection]);assert.equal(selectedBeforeReload.length,6);
+    await page.reload();await page.waitForFunction(()=>quizState.questions.length===24 && quizState.currentIndex===20);
+    assert.deepEqual(await page.evaluate(()=>[...quizState.paperSelection]),selectedBeforeReload);
+    assert((await page.locator('#paper-choice-status').innerText()).includes('5/5 selected'));
     await page.evaluate(()=>submitQuiz());await page.waitForURL('**/review.html');
     await page.getByText(/no automatic overall grade/).waitFor();
-    console.log('PASS immutable paper practice, source duration/set marks, explicit marking limitation');
+    await page.getByText(/Recorded choices/).waitFor();
+    const paperHistory=await page.evaluate(()=>QuizAttempts.current());
+    await page.goto(base+'quiz/export.html?historyId='+paperHistory.historyId);
+    await page.waitForFunction(()=>exportState.generatedContent.includes('Paper practice record'));
+    const paperExport=await page.evaluate(()=>exportState.generatedContent);
+    assert(paperExport.includes('Paper answer-choice selection: Selected'));
+    console.log('PASS immutable paper rules enforce/persist/export group answer-any choices and keep overall marking ungraded');
+
+    await page.goto(base+'quiz/play.html?subject=CST209&paperFile=CST209-P002-2023-03.json');
+    await page.waitForFunction(()=>quizState.questions.length===34);
+    const timed=await page.evaluate(()=>quizState.config.paper.rules.timedRules[0]);
+    assert.equal(timed.durationMs,1800000);assert.equal(timed.questionIds.length,25);
+    const outsideIndex=await page.evaluate(()=>quizState.questions.findIndex(q=>!quizState.config.paper.rules.timedRules[0].questionIds.includes(q.id)));
+    await page.evaluate(index=>goToQuestion(index),outsideIndex);assert.equal(await page.evaluate(()=>quizState.currentIndex),0,'remaining paper stays locked before timed section closes');
+    await page.evaluate(()=>{quizState.paperSectionEndsAt=Date.now()+1000;doAutosave();});await page.clock.fastForward(1500);
+    await page.waitForFunction(()=>quizState.paperSectionClosed && !quizState.config.paper.rules.timedRules[0].questionIds.includes(quizState.questions[quizState.currentIndex].id));
+    const sectionIndex=await page.evaluate(()=>quizState.currentIndex);await page.evaluate(()=>goToQuestion(0));assert.equal(await page.evaluate(()=>quizState.currentIndex),sectionIndex,'collected timed section cannot be reopened');
+    await page.reload();await page.waitForFunction(()=>quizState.paperSectionClosed && quizState.questions.length===34);
+    assert.equal(await page.evaluate(()=>quizState.paperSectionClosed),true);
+    await page.evaluate(()=>submitQuiz());await page.waitForURL('**/review.html');await page.getByText(/no automatic overall grade/).waitFor();
+    console.log('PASS source-stated 30-minute paper section ordering, lock at deadline and reload persistence');
+
     await page.goto(base+'quiz/index.html');await page.getByRole('heading',{name:'Practice my mistakes'}).waitFor();
     assert.deepEqual(errors,[]);
   } finally {await browser.close();}

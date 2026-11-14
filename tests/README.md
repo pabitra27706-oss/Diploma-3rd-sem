@@ -15,6 +15,8 @@ python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
+node tests/paper-rules.cjs
+node tests/paper-export.cjs
 node tests/study-store.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs
@@ -29,10 +31,11 @@ sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons retain
 do not use a shallow clone
 for these checks. CI checks out full history.
 
-Node suites cover attempt persistence/migration/retries/mistakes, fixed Leitner
-scheduling and seven-day trend boundaries, storage/reset/backup behavior, and
-injected quota/interrupted-import recovery. Injection is not proof of actual
-Safari eviction or private-mode behavior.
+Node suites cover attempt persistence/migration/retries/mistakes, paper choice
+and timed-section rules, fixed Leitner scheduling and seven-day trend
+boundaries, storage/reset/backup behavior, and injected quota/interrupted-import
+recovery. Injection is not proof of actual Safari eviction or private-mode
+behavior.
 
 For full strict findings, run separately:
 
@@ -70,7 +73,7 @@ Use an isolated local test profile; tests intentionally create local records.
 | Suite | Focused coverage |
 |---|---|
 | `data-browser.cjs` | Unique Practice pool/day counts, real bank filters, no-key scoring and live counts |
-| `quiz-engine-browser.cjs` | Virtual-clock resume, flags/order, exact preview/retry, selected exports/edit, fetch failure, honest paper-practice limits |
+| `quiz-engine-browser.cjs` | Virtual-clock resume, flags/order, exact preview/retry, selected exports/edit, fetch failure, paper answer-any/timed-section lock and resume behavior |
 | `discovery-study-browser.cjs` | Safe search query, exact-repeat count/source landing, card rating persistence and Today counts |
 | `storage-browser.cjs` | Notes on three pages, reading preferences, previewed restore and stale-preview invalidation |
 | `paper-offline.cjs` | Previously cached paper/registry/engine/review offline |

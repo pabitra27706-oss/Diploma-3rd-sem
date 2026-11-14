@@ -99,8 +99,14 @@ function loadReviewData() {
   renderPageHeader();
   if (reviewState.config.paper) {
     const a=QuizAttempts.score(reviewState.questions,reviewState.answers);
+    const selected=reviewState.result.paperSelection || [];
+    const choices=QuizPaperRules.status(reviewState.config.paper.rules,selected)
+      .map(rule=>`${rule.label}: ${rule.selectedCount}/${rule.answerAny} selected`).join('; ');
+    const timed=reviewState.config.paper.rules?.timedRules?.length
+      ? (reviewState.result.paperSectionClosed ? 'Timed section closed.' : 'Attempt ended before the timed section was closed.')
+      : '';
     const note=document.createElement('p'); note.setAttribute('role','status');
-    note.textContent=`Keyed MCQs: ${a.correct} correct, ${a.incorrect} wrong, ${a.unanswered} unanswered; Paper marks are not automatically awarded (explanation splits and choice rules need review). Printed paper maximum ${reviewState.config.paper.fullMarks}; no automatic overall grade or answer-any enforcement.`;
+    note.textContent=`Keyed MCQs: ${a.correct} correct, ${a.incorrect} wrong, ${a.unanswered} unanswered. Recorded choices: ${choices || 'none'}. ${timed} Paper marks are not automatically awarded (explanation splits are not graded). Printed paper maximum ${reviewState.config.paper.fullMarks}; no automatic overall grade.`;
     dom.reviewMain.prepend(note);
   }
   renderInfoBanner();
@@ -249,6 +255,14 @@ function buildQuestionCard(q, displayNum) {
   // Question text
   const qText = createElement('p', 'review-q-text', q.question);
   body.appendChild(qText);
+
+  if (reviewState.config.paper?.rules) {
+    const rule = QuizPaperRules.constraintFor(reviewState.config.paper.rules, q.id);
+    if (rule) {
+      const selected = (reviewState.result.paperSelection || []).includes(q.id);
+      body.appendChild(createElement('p','badge badge-neutral',selected ? `Selected for ${rule.label}` : `Not selected for ${rule.label}`));
+    }
+  }
 
   if (q.sourcePage) body.appendChild(createElement('p','text-secondary',`Source: ${q.sourcePage}`));
 

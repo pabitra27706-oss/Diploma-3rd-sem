@@ -1,6 +1,6 @@
 # Phase 3 — Quiz and exam engine
 
-**Status:** 🚧 implemented in part; paper-rule enforcement pending (see record.md) · **Parts:** 6 · **Depends on:** 2 · **Owner gates:** none (marks reconciliation needs 8.5)
+**Status:** 🚧 implemented in part; source-backed answer-choice and timed-section tracking now implemented, while official paper marking remains withheld (see record.md) · **Parts:** 6 · **Depends on:** 2 · **Owner gates:** marks reconciliation needs 8.5
 
 ## Goal
 
@@ -54,8 +54,10 @@ Details: [`tasks.md`](tasks.md).
   questions.
 - Export from history produces the quiz you clicked, with its own answers.
 - History shows "not scored" as its own state, never 0/0%.
-- Mock paper: N questions, M marks, T minutes, from one real paper, marked
-  against that paper's total.
+- Paper practice: N questions, source duration and printed maximum from one
+  original paper; structured answer-choice/timed-section rules are enforced.
+  Official paper marks remain ungraded until source allocation and totals are
+  reconciled.
 - Mistakes are stored, listed, and re-practicable; clearing works.
 - The word "AI" does not appear in any feature that has no model.
 

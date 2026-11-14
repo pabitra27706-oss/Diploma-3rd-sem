@@ -219,6 +219,8 @@ function updateExportPreview() {
     score:     exportState.result.score,
     total:     exportState.result.total,
     totalMarks:exportState.questions.reduce((s, q) => s + (q.marks || 0), 0),
+    paper: cfg.paper ? {fileName:cfg.paper.fileName,examSession:cfg.paper.examSession,duration:cfg.paper.duration,fullMarks:cfg.paper.fullMarks,setMarks:cfg.paper.setMarks} : null,
+    paperSelection:exportState.result.paperSelection || [],
     metadata:  {
       attemptId: exportState.result.historyId || exportState.result.id,
       date: exportState.result.completedAt || Date.now()

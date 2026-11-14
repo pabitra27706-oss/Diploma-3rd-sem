@@ -32,7 +32,8 @@
     return {questions,config:{subject,unit:'all',mode:'all',count:questions.length,timer:true,timerMins:minutes(meta.duration),source:'PYQ',
       paper:{fileName:meta.fileName,examSession:meta.examSession,duration:meta.duration,fullMarks:meta.fullMarks,setMarks,
         instructions:paper.paperFormat?.generalInstructions || [],groups:paper.paperFormat?.groups || [],
-        notice:'Paper practice uses supplied model answers, not official marking. All set questions are shown; answer-any/group rules are not automatically enforced. MCQ correctness can be checked; automatic paper marks are not awarded because explanation splits and answer-any rules require review.'}}};
+        rules:globalThis.QuizPaperRules.build(paper.paperFormat?.groups || [], questions, paper.paperFormat?.generalInstructions || []),
+        notice:'Use the choice tracker to record the answers you intend to count under the printed group and section limits. Printed model answers are not official marking; no automatic paper grade is awarded.'}}};
   }
   globalThis.QuizPaper={registry,load,minutes};
 })();

@@ -20,7 +20,7 @@ Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 | 0 | Foundation | [`00-foundation`](phases/00-foundation/README.md) | 4 | Rules, playbook, gate, baseline, syllabus in the repo; CI green; nothing deployed | ✅ |
 | 1 | Platform and deploy integrity | [`01-platform`](phases/01-platform/README.md) | 6 | Zero root-relative paths; working install + update; real icons; zero dead links; 404/robots/sitemap/canonical; CI strict | ✅* |
 | 2 | Truthful data pipeline | [`02-data-pipeline`](phases/02-data-pipeline/README.md) | 6 | `validate_data.py` in CI; 10 real practice days; computed counts; syllabus-valid units; duplicates mapped; keys or "no key" | 🚧 |
-| 3 | Quiz and exam engine | [`03-quiz-engine`](phases/03-quiz-engine/README.md) | 6 | Reload-proof attempts; no empty quiz options; real-paper mock mode; honest history/export; mistake queue; no "AI" fiction | 🚧 |
+| 3 | Quiz and exam engine | [`03-quiz-engine`](phases/03-quiz-engine/README.md) | 6 | Reload-proof attempts; no empty quiz options; source-backed paper choice/timed-section tracking; honest ungraded paper totals; history/export; mistake queue; no "AI" fiction | 🚧 |
 | 4 | Discovery and sharing | [`04-discovery`](phases/04-discovery/README.md) | 5 | Site-wide search offline; repeated-question explorer; deep links + share; unit↔PYQ cross-links | 🚧 |
 | 5 | Study system | [`05-study-system`](phases/05-study-system/README.md) | 5 | Cards from verified content; deterministic scheduler; weak areas with denominators; daily goal + Today screen | 🚧 |
 | 6 | State, notes, portability | [`06-state-portability`](phases/06-state-portability/README.md) | 6 | One storage module; one theme key; truthful reset; notes on all unit pages; backup round-trip; IDB path | 🚧 |
@@ -79,3 +79,12 @@ Phase 2 (2026-11-09): mechanical pipeline and safe UI implemented; full data/syl
 ### Phase 3 engineering update — 2026-11-09
 
 Owner-delegated engine work is implemented and locally tested; see [record](phases/03-quiz-engine/record.md). Real-paper practice is **partial**, not an official scored mock: answer-any constraints and explanation-mark splits are not enforced. Phase 2 source gates remain open. Original PYQ and registry bytes are frozen by an integrity manifest/CI guard. No new deployment or merge.
+
+### Phase 3 continuation — 2026-11-12
+
+Source-backed answer-choice quotas and seven explicitly evidenced 30-minute
+section locks are now implemented from immutable `paperFormat` metadata; all 30
+registered papers pass the pure rules mapping test. Choices persist through
+reload and appear in review/exports. Official paper marks remain withheld. See
+[record](phases/03-quiz-engine/record.md) for local checks and the browser/hosted
+CI evidence still outstanding. Phase 3 remains 🚧.

@@ -32,8 +32,18 @@
     const id = input.id || uid();
     const endsAt = timed ? (Number(input.endsAt) || (legacy ? startedAt + Number(config.timerMins)*60000 : now + Number(input.remainingMs ?? Number(config.timerMins)*60000))) : null;
     const status = input.status || 'active';
+    const paperTimedRule = config.paper?.rules?.timedRules?.[0] || null;
+    const paperSectionEndsAt = paperTimedRule
+      ? (Number(input.paperSectionEndsAt) || startedAt + Number(paperTimedRule.durationMs))
+      : null;
+    const paperSectionClosed = paperTimedRule
+      ? (input.paperSectionClosed === true || now >= paperSectionEndsAt)
+      : false;
+    const paperChoiceIds = new Set((config.paper?.rules?.constraints || []).flatMap(rule => rule.questionIds || []));
+    const paperSelection = [...new Set((input.paperSelection || []).filter(questionId => ids.includes(questionId) && paperChoiceIds.has(questionId)))];
     return { ...copy(input), schemaVersion: 1, id, config, startedAt, startTime: startedAt,
       endsAt, remainingMs: timed ? Math.max(0, status === 'active' ? endsAt-now : Number(input.remainingMs || 0)) : null,
+      paperSelection, paperSectionEndsAt, paperSectionClosed,
       questionIds: ids, questions, answers: cleanAnswers(input.answers, ids),
       flags: input.flags || {}, skipped: (input.skipped || []).filter(id => ids.includes(id)), visited: input.visited || [],
       currentIndex: Math.max(0, Math.min(Number(input.currentIndex)||0, ids.length-1)),

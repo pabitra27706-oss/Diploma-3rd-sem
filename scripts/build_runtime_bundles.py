@@ -2,7 +2,7 @@
 """Checked-in, dependency-free concatenation: serving the site needs no build."""
 from data_pipeline import ROOT
 BUNDLES={
- 'assets/js/quiz-setup.bundle.js':['quiz/js/paper-attempt.js','quiz/js/attempt-store.js','quiz/js/common.js','quiz/js/setup.js'],
+ 'assets/js/quiz-setup.bundle.js':['quiz/js/paper-rules.js','quiz/js/paper-attempt.js','quiz/js/attempt-store.js','quiz/js/common.js','quiz/js/setup.js'],
  'assets/js/quiz-support.bundle.js':['quiz/js/attempt-store.js','quiz/js/mistakes.js'],
 }
 def build(root=ROOT):

@@ -42,23 +42,32 @@ quiz.
 
 ## 3.3 — Mock paper mode
 
-**Goal:** attempt one real paper, as it is set.
+**Goal:** attempt one real paper, as it is set, without implying unverified marks.
 
 **Steps**
 1. Entry: PYQ viewer → "Attempt this paper"; quiz setup → "Full paper".
-2. Build the attempt from that paper's records: group (A/B/C), marks per
-   question, duration from the registry (`2.5 Hours` / `3 Hours`).
-3. Timer from duration, with a warning at 10 minutes and 1 minute; auto-submit
-   at 0 with the answers given so far.
-4. Marking: per-question marks, total from the paper; no negative marking;
-   show both "answered correctly" and "marks obtained".
-5. Review: question, your answer, model answer, marks, source page.
-6. Display a banner when the paper's total does not match the syllabus ESE
-   pattern, until 8.5 reconciles it.
+2. Build the attempt from that paper's records: groups, marks per question,
+   duration from the registry (`2.5 Hours` / `3 Hours`).
+3. Build answer-any limits from structured `paperFormat` groups/sections and
+   source-numbered alternatives. Let the student record which responses count;
+   enforce each quota without grading answers or changing paper files. If source
+   metadata cannot be reconciled, disclose that and do not guess.
+4. Where both printed instruction and structured group identify a timed first
+   section, enforce its deadline, prevent opening later sections early, lock it
+   after collection, and preserve deadline/lock on resume. Never infer limits
+   from marks or total exam duration.
+5. Full-paper timer comes from registry duration, with 10-minute and 1-minute
+   warnings and auto-submit at zero.
+6. Keep supplied answer explanations and paper totals visible, but do not
+   calculate official per-question/overall paper marks until allocation and
+   syllabus-total sources are reconciled. Display the mismatch banner where
+   applicable; review includes answer, model answer, marks and source page.
 
-**Acceptance:** one paper attempted end-to-end offline; total marks equal the
-sum of question marks; the timer survives reload; the mismatch banner appears
-where applicable.
+**Acceptance:** all registered papers have reconciled, non-overlapping answer
+choice pools; over-quota selections are blocked; supported timed-section rules
+survive reload and cannot be reopened after collection; a paper attempt works
+offline after cache warm-up. Official marks remain explicitly ungraded pending
+source reconciliation.
 
 ## 3.4 — History, export, retry, review
 

@@ -3,6 +3,27 @@
 Documentation checkpoint: **2026-11-09**. This is the current handoff; older
 phase evidence remains historical unless explicitly superseded here.
 
+## Continuation checkpoint — 2026-11-12
+
+The latest Arena session is on `arena/71382686-diploma-3rd-sem`, based on
+`125eb947413eb3901f4d3e98cd63c6fc31aa7fae` (the PR #7 merge). This supersedes
+historical branch/tip labels below for this session. At the Phase 2 continuation
+checkpoint, immutable PYQ guard/PYQ validation passed, five focused data tests
+passed, the exact source-review baseline matched, site strict was 0 errors / 28
+warnings and platform check was 0 errors. Strict data/syllabus findings remain
+source-gated; see the Phase 2 record. No PYQ or registry changes were made then.
+
+### Phase 3 continuation — 2026-11-12
+
+Paper answer-choice tracking and explicit timed-section rules are now
+implemented from existing immutable paper metadata. Fresh local evidence:
+12 Python tests, 6 Node suites, JS/CJS parse sweep, PYQ guard/validation, site
+strict (0 errors / 28 warnings), and platform check (0 errors) pass. The 30-paper
+rules mapper reports no unsupported/uncovered question pools; 7 source-stated
+30-minute sections are recognized. Official paper marks remain withheld; strict
+Phase 2 findings remain. Chromium/browser acceptance and hosted CI were not run
+on this continuation. See the Phase 3 record for exact scope and limitations.
+
 ## Current source reconciliation
 
 Owner approved preserving newer main for PR #7. Papers/registries now match
@@ -37,7 +58,7 @@ deployment/domain changes or close unfinished phase gates.
 |---|---|---|
 | 1 — Platform | Subpath-safe PWA, local assets, presence metadata, install/update controller | Preserve regressions as later modules change. Original platform implementation is complete; final hardware/install acceptance moves to Phase 10. Full source/syllabus gates remain separate. |
 | 2 — Data | Deterministic inventory/scheduling, aliases, no-key labels, source-review ledger, immutable-PYQ guard | Resolve 10 source-backed data findings and 3 grouped syllabus errors; verify reprint relationships/key candidates and bank currency. No guessed keys or raw retags. |
-| 3 — Quiz | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes, read-only paper practice | Enforce answer-any/group/section choices and any timed paper-section constraints from explicit source rules. Handle explanation-mark allocation honestly. No official overall paper grade until rules and totals are reconciled. |
+| 3 — Quiz | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes; paper answer-choice quotas and seven explicit 30-minute section locks | Fresh Chromium acceptance for the new paper tracker/lock; reconcile explanation-mark splits and printed totals before official paper grading. No overall paper grade is claimed. |
 | 4 — Discovery | Compact search shards, safe search UI, exact-repeat explorer, question links, subject/unit related material | Finish remaining informational-page indexing and authored heading anchors; focused offline-search, back-button, share-fallback and keyboard acceptance. Do not describe current search as indexing every page. |
 | 5 — Study system | Source-linked cards, fixed Leitner reviews, Today/goals/streaks, weak-area denominators, local seven-day trends | Broader clock/day-rollover/new-card-cap edge cases and clearer card-level source-eligibility reporting. Cards use existing model/keyed material, not new certification. |
 | 6 — Storage/portability | Central namespaced boundary, verified legacy copy migration, notes, preferences, group reset, previewed backup/merge/replace, recovery journal | Implement IndexedDB threshold/async cutover/fallback and migration evidence; concurrent-tab transaction isolation/state sync; typed validation of further legacy variants. Current primary API remains synchronous local storage. |
@@ -69,10 +90,10 @@ These cannot be solved by declaring a feature complete:
 5. **Release:** hosted CI on the new tree, PR/merge, deployment and domain actions
    have not happened. A green local check is not permission to publish.
 
-## Latest recorded engineering evidence
+## Prior broad implementation evidence — 2026-11-09
 
-These are local results from the latest implementation checkpoint, not a claim
-that documentation-only edits reran all browser suites:
+These are historical local results from the broad implementation checkpoint;
+they are not fresh browser evidence for the 2026-11-12 paper-rule changes:
 
 - Python unittest discovery: **12 PASS**.
 - Four deterministic Node suites: attempt state, scheduler/trends, storage and

@@ -25,6 +25,9 @@ const quizState = {
   endsAt:        null,
   remainingMs:   null,
   flags:         {},
+  paperSelection:new Set(),
+  paperSectionEndsAt:null,
+  paperSectionClosed:false,
   legacyKey:     null,
   submitted:     false
 };
@@ -257,6 +260,9 @@ async function loadAndStartQuiz() {
     quizState.startTime = attempt.startedAt;
     quizState.endsAt = attempt.endsAt;
     quizState.remainingMs = attempt.remainingMs;
+    quizState.paperSelection = new Set(attempt.paperSelection || []);
+    quizState.paperSectionEndsAt = attempt.paperSectionEndsAt || null;
+    quizState.paperSectionClosed = Boolean(attempt.paperSectionClosed);
 
     initQuizUI();
 
@@ -307,6 +313,9 @@ async function resumeQuiz(saved) {
   quizState.endsAt = saved.endsAt;
   quizState.remainingMs = saved.remainingMs;
   quizState.flags = saved.flags || {};
+  quizState.paperSelection = new Set(saved.paperSelection || []);
+  quizState.paperSectionEndsAt = saved.paperSectionEndsAt || null;
+  quizState.paperSectionClosed = Boolean(saved.paperSectionClosed);
   quizState.legacyKey = saved.legacyKey;
   quizState.config        = saved.config;
   quizState.questions     = saved.questions;
@@ -348,7 +357,9 @@ function initQuizUI() {
   }
 
   if (cfg.paper) {
-    const notice = document.createElement('section'); notice.setAttribute('aria-label','Paper instructions');
+    const notice = document.createElement('section');
+    notice.className = 'paper-practice-notice';
+    notice.setAttribute('aria-label','Paper instructions and choice tracker');
     const heading = document.createElement('h2'); heading.textContent = `Paper practice — ${cfg.paper.examSession}`;
     const summary = document.createElement('p');
     summary.textContent = `${quizState.questions.length} set questions · ${cfg.paper.setMarks} marks across all set questions · printed maximum ${cfg.paper.fullMarks} · ${cfg.paper.duration}. ${cfg.paper.notice}`;
@@ -356,9 +367,33 @@ function initQuizUI() {
     const warning = document.createElement('p'); warning.setAttribute('role','status');
     warning.textContent = cfg.paper.setMarks !== cfg.paper.fullMarks ? 'Unverified overall total: set-question marks differ from the printed maximum (choice/group rules apply). This is not an official scored mock examination.' : 'Paper maximum is historical; current syllabus reconciliation is still pending.';
     notice.append(warning);
-    for (const text of cfg.paper.instructions) notice.appendChild(createElement('p','',text));
-    for (const group of cfg.paper.groups) notice.appendChild(createElement('p','',group.instruction || group.title || group.id));
+    for (const text of cfg.paper.instructions || []) notice.appendChild(createElement('p','',text));
+    for (const group of cfg.paper.groups || []) notice.appendChild(createElement('p','',group.instruction || group.title || group.id));
+    if (cfg.paper.rules?.unsupported?.length || cfg.paper.rules?.uncoveredQuestionIds?.length) {
+      const caveat = createElement('p','paper-rule-caveat','Some answer-choice metadata could not be reconciled; those choices are not enforced. Follow the printed instructions.');
+      caveat.setAttribute('role','status'); notice.appendChild(caveat);
+    }
+    for (const issue of cfg.paper.rules?.unsupportedTimed || []) {
+      const caveat = createElement('p','paper-rule-caveat',issue); caveat.setAttribute('role','status'); notice.appendChild(caveat);
+    }
+    const choiceHeading = createElement('h3','paper-choice-heading','Recorded answer choices');
+    notice.appendChild(choiceHeading);
+    const choiceStatus = document.createElement('div'); choiceStatus.id = 'paper-choice-status'; choiceStatus.setAttribute('role','status');
+    choiceStatus.setAttribute('aria-live','polite'); notice.appendChild(choiceStatus);
+    const timedRule = cfg.paper.rules?.timedRules?.[0];
+    if (timedRule) {
+      const sectionState = document.createElement('p'); sectionState.id = 'paper-section-state'; sectionState.setAttribute('role','status');
+      const endButton = createElement('button','btn btn-secondary btn-sm','Finish timed section and continue');
+      endButton.type = 'button'; endButton.id = 'paper-section-end';
+      endButton.addEventListener('click', () => {
+        if (confirm('End this timed section now? Its questions will be collected and locked for this attempt.')) finishPaperTimedSection();
+      });
+      const timerLabel = document.createElement('span'); timerLabel.id = 'paper-section-timer';
+      notice.append(sectionState,timerLabel,endButton);
+    }
     dom.quizLayout.prepend(notice);
+    renderPaperRuleNotice();
+    updatePaperSectionTimer();
   }
   // Build palette
   buildPalette();
@@ -378,11 +413,88 @@ function initQuizUI() {
   window.history.replaceState(null, '', buildURL('play.html', {resume:quizState.autosaveKey}));
   doAutosave();
   setInterval(doAutosave, 5000);
+  if (cfg.paper?.rules?.timedRules?.length) setInterval(updatePaperSectionTimer, 1000);
   window.addEventListener('pagehide', doAutosave);
   document.addEventListener('visibilitychange', () => {
+    updatePaperSectionTimer();
     doAutosave();
     if (!quizState.submitted && quizState.endsAt && Date.now() >= quizState.endsAt) autoSubmitQuiz();
   });
+}
+
+function renderPaperChoiceControl(question) {
+  const panel = qs('#paper-choice-control');
+  const toggle = qs('#paper-choice-toggle');
+  const hint = qs('#paper-choice-hint');
+  const rules = quizState.config?.paper?.rules;
+  if (!panel || !toggle || !rules) { if (panel) panel.hidden = true; return; }
+  const rule = QuizPaperRules.constraintFor(rules, question.id);
+  if (!rule) { panel.hidden = true; return; }
+
+  const selected = quizState.paperSelection.has(question.id);
+  const state = QuizPaperRules.status(rules, [...quizState.paperSelection]).find(item => item.id === rule.id);
+  panel.hidden = false;
+  toggle.checked = selected;
+  toggle.disabled = !selected && state.selectedCount >= rule.answerAny;
+  hint.textContent = `${rule.label}: ${state.selectedCount} of ${rule.answerAny} selected. This records your intended choices; it does not grade answers.`;
+  toggle.onchange = () => {
+    const next = new Set(quizState.paperSelection);
+    if (toggle.checked) next.add(question.id); else next.delete(question.id);
+    const validation = QuizPaperRules.validate(rules, [...next]);
+    if (!validation.valid) { toggle.checked = false; return; }
+    quizState.paperSelection = next;
+    doAutosave();
+    renderPaperRuleNotice();
+    renderPaperChoiceControl(question);
+  };
+}
+
+function renderPaperRuleNotice() {
+  const cfg = quizState.config;
+  if (!cfg?.paper) return;
+  const summary = qs('#paper-choice-status');
+  if (summary) {
+    summary.replaceChildren();
+    const states = QuizPaperRules.status(cfg.paper.rules, [...quizState.paperSelection]);
+    if (!states.length) summary.appendChild(createElement('p','', 'No structured answer-choice quotas are available for this paper; use its printed instructions.'));
+    for (const state of states) summary.appendChild(createElement('p','',`${state.label}: ${state.selectedCount}/${state.answerAny} selected · ${state.remaining} remaining`));
+  }
+  updatePaperSectionTimer();
+}
+
+function finishPaperTimedSection() {
+  const rule = quizState.config?.paper?.rules?.timedRules?.[0];
+  if (!rule || quizState.paperSectionClosed) return;
+  saveCurrentTextAnswer();
+  quizState.paperSectionClosed = true;
+  doAutosave();
+  updatePaperSectionTimer();
+  const timedIds = new Set(rule.questionIds);
+  const nextIndex = quizState.questions.findIndex(question => !timedIds.has(question.id));
+  if (nextIndex >= 0 && timedIds.has(quizState.questions[quizState.currentIndex]?.id)) goToQuestion(nextIndex);
+}
+
+function updatePaperSectionTimer() {
+  const cfg = quizState.config;
+  const rule = cfg?.paper?.rules?.timedRules?.[0];
+  if (!rule) return;
+  const state = qs('#paper-section-state');
+  const timer = qs('#paper-section-timer');
+  const end = qs('#paper-section-end');
+  if (!quizState.paperSectionClosed && Date.now() >= Number(quizState.paperSectionEndsAt || 0)) {
+    finishPaperTimedSection(false);
+    return;
+  }
+  if (quizState.paperSectionClosed) {
+    if (state) state.textContent = `${rule.label} is closed; its responses are frozen for this attempt.`;
+    if (timer) timer.textContent = '';
+    if (end) end.hidden = true;
+    return;
+  }
+  const seconds = Math.max(0, Math.ceil((quizState.paperSectionEndsAt - Date.now()) / 1000));
+  if (state) state.textContent = `Complete ${rule.label} first. When its source-stated time expires, its responses are collected and the remaining paper opens.`;
+  if (timer) timer.textContent = `Timed section remaining: ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2,'0')}. `;
+  if (end) end.hidden = false;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -457,6 +569,7 @@ function renderQuestion(index) {
   } else {
     renderTextAnswer(q);
   }
+  renderPaperChoiceControl(q);
 
   // Navigation buttons
   updateNavButtons(index);
@@ -603,6 +716,21 @@ function autoResizeTextarea(el) {
 
 function goToQuestion(index) {
   if (index < 0 || index >= quizState.totalCount) return;
+  const timedRule = quizState.config?.paper?.rules?.timedRules?.[0];
+  if (timedRule) {
+    const target = quizState.questions[index];
+    const targetIsTimed = timedRule.questionIds.includes(target?.id);
+    if (!quizState.paperSectionClosed && !targetIsTimed) {
+      const state = qs('#paper-section-state');
+      if (state) state.textContent = `Finish ${timedRule.label} before opening the remaining paper.`;
+      return;
+    }
+    if (quizState.paperSectionClosed && targetIsTimed) {
+      const state = qs('#paper-section-state');
+      if (state) state.textContent = `${timedRule.label} has been collected and is locked for this attempt.`;
+      return;
+    }
+  }
 
   // Save current text answer before leaving
   saveCurrentTextAnswer();
@@ -845,7 +973,9 @@ function autoSubmitQuiz() {
 
 function attemptSnapshot() {
   return {schemaVersion:1,id:quizState.attemptId,config:quizState.config,questions:quizState.questions,
-    answers:quizState.answers,flags:quizState.flags,skipped:[...quizState.skipped],visited:[...quizState.visited],
+    answers:quizState.answers,flags:quizState.flags,paperSelection:[...quizState.paperSelection],
+    paperSectionEndsAt:quizState.paperSectionEndsAt,paperSectionClosed:quizState.paperSectionClosed,
+    skipped:[...quizState.skipped],visited:[...quizState.visited],
     currentIndex:quizState.currentIndex,startedAt:quizState.startTime,endsAt:quizState.endsAt,
     remainingMs:quizState.endsAt ? Math.max(0,quizState.endsAt-Date.now()) : null,
     autosaveKey:quizState.autosaveKey,legacyKey:quizState.legacyKey,status:'active'};
@@ -902,13 +1032,20 @@ function closeSubmitModal() {
 
 function submitQuiz() {
   if (quizState.submitted) return;
-  quizState.submitted = true;
-
   saveCurrentTextAnswer();
+  const cfg = quizState.config;
+  if (cfg.paper?.rules) {
+    const selectionCheck = QuizPaperRules.validate(cfg.paper.rules, [...quizState.paperSelection]);
+    if (!selectionCheck.valid) {
+      const state = qs('#paper-section-state') || qs('#paper-choice-status');
+      if (state) state.textContent = selectionCheck.violations.map(item => item.reason).join(' ');
+      return;
+    }
+  }
+  quizState.submitted = true;
   stopTimer();
 
-  const cfg       = quizState.config;
-  const questions = quizState.questions;
+  const questions   = quizState.questions;
   const answers   = quizState.answers;
   const elapsed   = Math.round((Date.now() - quizState.startTime) / 1000);
 
