@@ -22,7 +22,9 @@ strict (0 errors / 28 warnings), and platform check (0 errors) pass. The 30-pape
 rules mapper reports no unsupported/uncovered question pools; 7 source-stated
 30-minute sections are recognized. Official paper marks remain withheld; strict
 Phase 2 findings remain. Chromium/browser acceptance and hosted CI were not run
-on this continuation. See the Phase 3 record for exact scope and limitations.
+on this continuation. The implementation is pushed to the active Arena branch;
+no PR, merge, deployment or publication was performed. See the Phase 3 record
+for exact scope and limitations.
 
 ## Current source reconciliation
 

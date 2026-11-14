@@ -160,5 +160,6 @@ Official paper marks/overall grade remain withheld: explanation-mark splits and
 printed maxima still need the source reconciliation tracked under Phase 8.5.
 Source-stated paper-section timer evidence has been implemented for the 7
 matched records, but no real device/background timer behavior has been observed;
-that acceptance belongs to Phase 10. Hosted CI has not run on this unpushed
-continuation. Phase 3 remains **in progress**, not complete.
+that acceptance belongs to Phase 10. Hosted CI has not run for this continuation. Phase 3 remains **in progress**,
+not complete. The implementation is pushed on the active Arena branch; no PR,
+merge, deployment or publication was performed.

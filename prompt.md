@@ -110,9 +110,9 @@ findings and three grouped syllabus errors stay source-gated.
 
 ## Termux delivery convention
 
-Assume an existing checkout at `$HOME/Diploma-3rd-sem` that contains the
-current session branch/revision; never switch or reset the user's checkout.
-Current continuation changes are unpushed and cannot be obtained by `git pull`.
-Symlink the checkout as `$TMPDIR/study-hub-server/Diploma-3rd-sem` and serve its
-parent with Python on 127.0.0.1:8000. Exact URL:
-`http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop server with Ctrl+C.
+For a fresh Termux checkout, clone the pushed active branch named in the latest
+Arena note, then symlink it as `$TMPDIR/study-hub-server/Diploma-3rd-sem` and
+serve its parent with Python on 127.0.0.1:8000. Existing clones should fetch and
+fast-forward that branch only; never switch/reset unrelated work. Exact URL:
+`http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop server with Ctrl+C. Always state
+whether any newer Arena changes are unpushed before providing these commands.
