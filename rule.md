@@ -5,11 +5,22 @@
 > `4bc8b0b`) — provenance only; the text below is authoritative for this site.
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
+>
+> **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`): branch and
+> license references corrected to the current session branch
+> `arena/26856d99-diploma-3rd-sem`; the prior `arena/be3d9178-...` branch is
+> merged and retired. **If this manual and Git disagree on the branch name, Git
+> is right — update this file.**
+>
+> **New-session reading order:** `rule.md` (this file) → `prompt.md` →
+> `docs/STATUS.md` → `docs/DECISIONS.md` → `docs/ROADMAP.md` → the relevant
+> `docs/phases/NN-*/record.md`. Trust the repository and the current branch, not
+> memory or older summaries.
 
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/be3d9178-diploma-3rd-sem`
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/26856d99-diploma-3rd-sem` (current session branch; the prior `arena/be3d9178-diploma-3rd-sem` was merged into main via PR #7 and is retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -17,7 +28,8 @@
   badge currently links a `LICENSE` file that does not exist)
 - Money: none — no ads, payments, donations, affiliates, or analytics
 - Scanned: 177 tracked files, 55 HTML pages, 20 standalone JS files, 55 JSON
-  files, 992 PYQ records, 872 quiz records (as of 2026-11-06)
+  files, 992 PYQ records, 872 quiz records (baseline 2026-11-06; rules
+  reconciled 2026-11-16 — see `docs/AUDIT-2026-11-16.md`)
 - Time budget: 4 weeks from 2026-11-06, unless a waiver is recorded
 
 ## 2. Branching and the deploy gate (law)

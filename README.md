@@ -63,7 +63,7 @@ An exact-baseline regression pass is **not** a full strict-data pass.
 For a fresh clone with the repository's default directory name:
 
 ```sh
-git clone --single-branch --branch arena/be3d9178-diploma-3rd-sem \
+git clone --single-branch --branch arena/26856d99-diploma-3rd-sem \
   https://github.com/pabitra27706-oss/Diploma-3rd-sem.git
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
