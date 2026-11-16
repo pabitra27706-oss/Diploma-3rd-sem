@@ -14,8 +14,10 @@ const quizState = {
   config:        null,     // Parsed URL config
   questions:     [],       // Final question array
   answers:       {},       // { questionId: answer }
+  explanations:  {},       // { questionId: writtenExplanation } for 2-mark MCQs
   skipped:       new Set(),// Set of question IDs that were skipped
   visited:       new Set(),// Set of question IDs visited
+  lockedGroups:  new Set(),// Locked paper section group IDs (e.g. 'A' after loose-script lock)
   currentIndex:  0,
   totalCount:    0,
   startTime:     null,
@@ -23,6 +25,8 @@ const quizState = {
   timerRunning:  false,
   attemptId:     null,
   endsAt:        null,
+  sectionEndsAt: null,
+  sectionExpiredHandled: false,
   remainingMs:   null,
   flags:         {},
   legacyKey:     null,
@@ -305,6 +309,8 @@ async function resumeQuiz(saved) {
   saved = QuizAttempts.normalize(saved);
   quizState.attemptId = saved.id;
   quizState.endsAt = saved.endsAt;
+  quizState.sectionEndsAt = saved.sectionEndsAt || null;
+  quizState.sectionExpiredHandled = Boolean(saved.sectionEndsAt && Date.now() >= saved.sectionEndsAt);
   quizState.remainingMs = saved.remainingMs;
   quizState.flags = saved.flags || {};
   quizState.legacyKey = saved.legacyKey;
@@ -312,6 +318,8 @@ async function resumeQuiz(saved) {
   quizState.questions     = saved.questions;
   quizState.totalCount    = saved.questions.length;
   quizState.answers       = saved.answers || {};
+  quizState.explanations  = saved.explanations || {};
+  quizState.lockedGroups  = new Set(saved.lockedGroups || []);
   quizState.skipped       = new Set(saved.skipped || []);
   quizState.visited       = new Set(saved.visited || []);
   quizState.currentIndex  = saved.currentIndex || 0;
@@ -354,7 +362,10 @@ function initQuizUI() {
     summary.textContent = `${quizState.questions.length} set questions · ${cfg.paper.setMarks} marks across all set questions · printed maximum ${cfg.paper.fullMarks} · ${cfg.paper.duration}. ${cfg.paper.notice}`;
     notice.append(heading,summary);
     const warning = document.createElement('p'); warning.setAttribute('role','status');
-    warning.textContent = cfg.paper.setMarks !== cfg.paper.fullMarks ? 'Unverified overall total: set-question marks differ from the printed maximum (choice/group rules apply). This is not an official scored mock examination.' : 'Paper maximum is historical; current syllabus reconciliation is still pending.';
+    const eseDiff = Number(cfg.paper.fullMarks) !== 60 ? ` Printed maximum (${cfg.paper.fullMarks}) differs from the current 60-mark ESE syllabus pattern.` : '';
+    warning.textContent = cfg.paper.setMarks !== cfg.paper.fullMarks
+      ? `Unverified overall total: set-question marks (${cfg.paper.setMarks}) differ from the printed maximum (${cfg.paper.fullMarks}); source choice/group quotas are enforced below.${eseDiff} This is not an official scored mock examination.`
+      : `Paper maximum is historical; current syllabus reconciliation is still pending.${eseDiff}`;
     notice.append(warning);
     for (const text of cfg.paper.instructions) notice.appendChild(createElement('p','',text));
     for (const group of cfg.paper.groups) notice.appendChild(createElement('p','',group.instruction || group.title || group.id));
@@ -448,8 +459,12 @@ function renderQuestion(index) {
     dom.questionText.textContent = (cfgPaperLabel(q)) + q.question;
     if (q.type !== 'mcq') {
       dom.qMetaTags?.appendChild(createElement('span', 'badge badge-neutral', q.modelAnswer ? 'Supplied model answer — self-review only' : 'No key — not graded'));
+    } else if (q.explanationMarks > 0) {
+      dom.qMetaTags?.appendChild(createElement('span', 'badge badge-neutral', '1m option (auto-checked) + 1m explanation (manual review)'));
     }
   }
+
+  renderPaperRuleBanner(q);
 
   // Render MCQ or text answer
   if (q.type === 'mcq') {
@@ -473,6 +488,65 @@ function renderQuestion(index) {
   }
 }
 
+function renderPaperRuleBanner(q) {
+  let banner = document.getElementById('paper-rule-banner');
+  if (!quizState.config?.paper) {
+    if (banner) banner.remove();
+    return;
+  }
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'paper-rule-banner';
+    banner.className = 'paper-rule-banner';
+    banner.style.cssText = 'margin:0.5rem 0 0.85rem;padding:0.65rem 0.9rem;border-radius:8px;border:1px solid var(--border,#cbd5e1);font-size:0.9rem;';
+    dom.questionText?.parentNode?.insertBefore(banner, dom.questionText);
+  }
+  banner.replaceChildren();
+  const snap = attemptSnapshot();
+  const access = QuizAttempts.questionAccess(snap, q.id);
+  if (access.rule) {
+    const quota = createElement('p', '', `${access.rule.label} — Answer any ${access.rule.answerAny} of ${access.rule.totalSet} · ${access.answeredInRule} / ${access.rule.answerAny} answered`);
+    quota.style.margin = '0';
+    quota.style.fontWeight = '600';
+    banner.appendChild(quota);
+  }
+  const ts = quizState.config.paper.timedSection;
+  if (ts && quizState.sectionEndsAt) {
+    const firstClosed = Date.now() >= quizState.sectionEndsAt || quizState.lockedGroups.has(String(ts.groupId));
+    const tsRow = document.createElement('div');
+    tsRow.style.cssText = 'display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.35rem;';
+    const tsText = document.createElement('span');
+    tsText.id = 'section-timer-status';
+    if (firstClosed) {
+      tsText.textContent = `Group ${ts.groupId} loose-script window closed — Group B unlocked.`;
+    } else {
+      const remSec = Math.max(0, Math.ceil((quizState.sectionEndsAt - Date.now()) / 1000));
+      const mm = String(Math.floor(remSec / 60)).padStart(2, '0');
+      const ss = String(remSec % 60).padStart(2, '0');
+      tsText.textContent = `Group ${ts.groupId} ${ts.minutes}-min window: ${mm}:${ss} remaining`;
+      const lockBtn = createElement('button', 'btn btn-outline btn-sm', `Lock Group ${ts.groupId} & unlock Group B`);
+      lockBtn.type = 'button';
+      lockBtn.addEventListener('click', () => {
+        quizState.lockedGroups.add(String(ts.groupId));
+        doAutosave();
+        renderQuestion(quizState.currentIndex);
+      });
+      tsRow.append(tsText, lockBtn);
+      banner.appendChild(tsRow);
+    }
+    if (firstClosed) {
+      tsRow.appendChild(tsText);
+      banner.appendChild(tsRow);
+    }
+  }
+  if (access.locked && access.reason) {
+    const lockMsg = createElement('p', '', access.reason);
+    lockMsg.setAttribute('role', 'status');
+    lockMsg.style.cssText = 'margin:0.4rem 0 0;color:var(--danger,#dc2626);font-weight:500;';
+    banner.appendChild(lockMsg);
+  }
+}
+
 /* ── Render MCQ Options ──────────────────────────────────────  */
 function renderMCQ(q) {
   showEl(dom.optionsContainer);
@@ -482,10 +556,11 @@ function renderMCQ(q) {
   dom.optionsContainer.setAttribute('aria-label', 'Answer options');
 
   const saved = quizState.answers[q.id];
+  const access = QuizAttempts.questionAccess(attemptSnapshot(), q.id);
 
   Object.entries(q.options || {}).forEach(([key, text]) => {
     const label = document.createElement('label');
-    label.className = 'option-card' + (saved === key ? ' selected' : '');
+    label.className = 'option-card' + (saved === key ? ' selected' : '') + (access.locked ? ' disabled' : '');
     label.setAttribute('for', `opt-${q.id}-${key}`);
 
     const radio = document.createElement('input');
@@ -494,6 +569,7 @@ function renderMCQ(q) {
     radio.name    = `question-${q.id}`;
     radio.value   = key;
     radio.checked = saved === key;
+    radio.disabled = access.locked;
     radio.setAttribute('aria-label', `Option ${key}: ${text}`);
 
     const optLabel = createElement('span', 'option-label', key);
@@ -505,39 +581,91 @@ function renderMCQ(q) {
     label.appendChild(optText);
     label.appendChild(optCheck);
 
-    // Select on click
-    label.addEventListener('click', () => {
-      selectMCQOption(q.id, key);
-    });
-
-    // Keyboard
-    radio.addEventListener('change', () => {
-      selectMCQOption(q.id, key);
-    });
+    if (!access.locked) {
+      label.addEventListener('click', () => {
+        selectMCQOption(q.id, key);
+      });
+      radio.addEventListener('change', () => {
+        selectMCQOption(q.id, key);
+      });
+    }
 
     dom.optionsContainer.appendChild(label);
   });
+
+  if ((QuizAttempts.hasAnswer(saved) || QuizAttempts.hasAnswer(quizState.explanations[q.id])) && !access.locked) {
+    const clearWrap = document.createElement('div');
+    clearWrap.style.marginTop = '0.6rem';
+    const clearBtn = createElement('button', 'btn btn-outline btn-sm', 'Clear selection');
+    clearBtn.type = 'button';
+    clearBtn.id = 'btn-clear-mcq';
+    clearBtn.addEventListener('click', () => clearMCQOption(q.id));
+    clearWrap.appendChild(clearBtn);
+    dom.optionsContainer.appendChild(clearWrap);
+  }
+
+  if (q.explanationMarks > 0) {
+    const explWrap = document.createElement('div');
+    explWrap.className = 'mcq-explanation-box';
+    explWrap.style.marginTop = '0.9rem';
+    const explLabel = createElement('label', 'form-label', 'Written explanation (1 mark — manual self-review, not auto-scored)');
+    explLabel.setAttribute('for', `mcq-expl-${q.id}`);
+    const explInput = document.createElement('textarea');
+    explInput.id = `mcq-expl-${q.id}`;
+    explInput.className = 'form-textarea';
+    explInput.rows = 3;
+    explInput.placeholder = 'Explain why your chosen option is correct (1 mark in paper rubric)…';
+    explInput.value = quizState.explanations[q.id] || '';
+    explInput.disabled = access.locked;
+    explInput.addEventListener('input', () => {
+      if (QuizAttempts.questionAccess(attemptSnapshot(), q.id).locked) return;
+      const val = explInput.value;
+      if (val.trim()) quizState.explanations[q.id] = val;
+      else delete quizState.explanations[q.id];
+      renderPaperRuleBanner(q);
+      updatePaletteItem(quizState.currentIndex);
+      updatePaletteStats();
+      doAutosave();
+    });
+    explWrap.append(explLabel, explInput);
+    dom.optionsContainer.appendChild(explWrap);
+  }
 }
 
 /**
  * Handle MCQ option selection
  */
 function selectMCQOption(questionId, optionKey) {
+  const access = QuizAttempts.questionAccess(attemptSnapshot(), questionId);
+  if (access.locked) {
+    renderQuestion(quizState.currentIndex);
+    return false;
+  }
   quizState.answers[questionId] = optionKey;
   quizState.skipped.delete(questionId);
 
-  // Update UI
-  dom.optionsContainer.querySelectorAll('.option-card').forEach(card => {
-    const radio = card.querySelector('input[type="radio"]');
-    const isSelected = radio && radio.value === optionKey;
-    card.classList.toggle('selected', isSelected);
-    if (radio) radio.checked = isSelected;
-  });
+  const curQ = quizState.questions[quizState.currentIndex];
+  if (curQ && curQ.id === questionId) {
+    renderQuestion(quizState.currentIndex);
+  }
 
   // Update palette
   updatePaletteItem(quizState.currentIndex);
   updatePaletteStats();
   doAutosave();
+  return true;
+}
+
+function clearMCQOption(questionId) {
+  const access = QuizAttempts.questionAccess(attemptSnapshot(), questionId);
+  if (access.locked) return false;
+  delete quizState.answers[questionId];
+  delete quizState.explanations[questionId];
+  updatePaletteItem(quizState.currentIndex);
+  updatePaletteStats();
+  doAutosave();
+  renderQuestion(quizState.currentIndex);
+  return true;
 }
 
 /* ── Render Text Answer ──────────────────────────────────────  */
@@ -562,8 +690,11 @@ function renderTextAnswer(q) {
     }
   }
 
+  const access = QuizAttempts.questionAccess(attemptSnapshot(), q.id);
+
   // Restore saved answer
   dom.textAnswer.value = quizState.answers[q.id] || '';
+  dom.textAnswer.disabled = access.locked;
   updateCharCount(dom.textAnswer.value.length);
 
   // Auto-resize
@@ -571,18 +702,26 @@ function renderTextAnswer(q) {
 
   // Save on input
   dom.textAnswer.oninput = () => {
+    if (QuizAttempts.questionAccess(attemptSnapshot(), q.id).locked) {
+      dom.textAnswer.value = quizState.answers[q.id] || '';
+      return;
+    }
     const val = dom.textAnswer.value;
-    quizState.answers[q.id] = val;
-    quizState.skipped.delete(q.id);
+    if (val.trim()) {
+      quizState.answers[q.id] = val;
+      quizState.skipped.delete(q.id);
+    } else {
+      delete quizState.answers[q.id];
+    }
     updateCharCount(val.length);
     autoResizeTextarea(dom.textAnswer);
+    renderPaperRuleBanner(q);
     updatePaletteItem(quizState.currentIndex);
     updatePaletteStats();
     doAutosave();
   };
 
-  // Focus
-  dom.textAnswer.focus();
+  if (!access.locked) dom.textAnswer.focus();
 }
 
 function updateCharCount(len) {
@@ -640,8 +779,16 @@ function skipQuestion() {
 
 function saveCurrentTextAnswer() {
   const q = quizState.questions[quizState.currentIndex];
-  if (!q || q.type === 'mcq') return;
-  if (dom.textAnswer) {
+  if (!q) return;
+  if (q.type === 'mcq') {
+    const explEl = document.getElementById(`mcq-expl-${q.id}`);
+    if (explEl && !explEl.disabled) {
+      if (explEl.value.trim()) quizState.explanations[q.id] = explEl.value;
+      else delete quizState.explanations[q.id];
+    }
+    return;
+  }
+  if (dom.textAnswer && !dom.textAnswer.disabled) {
     const val = dom.textAnswer.value.trim();
     if (val) {
       quizState.answers[q.id] = dom.textAnswer.value;
@@ -697,6 +844,14 @@ function updateAllPaletteItems() {
   quizState.questions.forEach((_, i) => updatePaletteItem(i));
 }
 
+function isQuestionAttempted(qid) {
+  return QuizAttempts.hasAnswer(quizState.answers[qid]) || QuizAttempts.hasAnswer(quizState.explanations[qid]);
+}
+
+function countAttemptedQuestions() {
+  return quizState.questions.filter(q => isQuestionAttempted(q.id)).length;
+}
+
 function updatePaletteItem(index) {
   if (!dom.questionPalette) return;
   const btn = dom.questionPalette.querySelector(`[data-index="${index}"]`);
@@ -704,7 +859,7 @@ function updatePaletteItem(index) {
 
   const q = quizState.questions[index];
   const isCurrent  = index === quizState.currentIndex;
-  const isAnswered  = q && !!quizState.answers[q.id];
+  const isAnswered  = q && isQuestionAttempted(q.id);
   const isSkipped   = q && quizState.skipped.has(q.id);
 
   btn.className = 'palette-item';
@@ -729,9 +884,9 @@ function updatePaletteStats() {
   if (!dom.paletteStats) return;
 
   const total    = quizState.totalCount;
-  const answered = Object.values(quizState.answers).filter(QuizAttempts.hasAnswer).length;
+  const answered = countAttemptedQuestions();
   const skipped  = quizState.skipped.size;
-  const remaining = total - answered - skipped;
+  const remaining = Math.max(0, total - answered - skipped);
 
   dom.paletteStats.innerHTML = `
     <div class="palette-stat">
@@ -776,7 +931,7 @@ function closePaletteOnMobile() {
 ══════════════════════════════════════════════════════════════ */
 
 function updateProgress() {
-  const answered = Object.values(quizState.answers).filter(QuizAttempts.hasAnswer).length;
+  const answered = countAttemptedQuestions();
   const pct      = quizState.totalCount > 0
     ? Math.round((answered / quizState.totalCount) * 100)
     : 0;
@@ -804,6 +959,25 @@ function initTimer(durationSeconds) {
     // onTick
     (remaining, formatted) => {
       if (dom.timerValue) dom.timerValue.textContent = formatted;
+      if (quizState.config?.paper?.timedSection && quizState.sectionEndsAt) {
+        const ts = quizState.config.paper.timedSection;
+        const tsEl = document.getElementById('section-timer-status');
+        if (Date.now() >= quizState.sectionEndsAt && !quizState.sectionExpiredHandled) {
+          quizState.sectionExpiredHandled = true;
+          quizState.lockedGroups.add(String(ts.groupId));
+          doAutosave();
+          renderQuestion(quizState.currentIndex);
+          if (dom.timerToast) {
+            dom.timerToast.textContent = `Group ${ts.groupId} ${ts.minutes}-minute window ended — Group B is now unlocked.`;
+            showTimerToast();
+          }
+        } else if (tsEl && !quizState.lockedGroups.has(String(ts.groupId)) && Date.now() < quizState.sectionEndsAt) {
+          const remSec = Math.max(0, Math.ceil((quizState.sectionEndsAt - Date.now()) / 1000));
+          const mm = String(Math.floor(remSec / 60)).padStart(2, '0');
+          const ss = String(remSec % 60).padStart(2, '0');
+          tsEl.textContent = `Group ${ts.groupId} ${ts.minutes}-min window: ${mm}:${ss} remaining`;
+        }
+      }
 
       // Color states
       if (dom.quizTimer) {
@@ -845,8 +1019,10 @@ function autoSubmitQuiz() {
 
 function attemptSnapshot() {
   return {schemaVersion:1,id:quizState.attemptId,config:quizState.config,questions:quizState.questions,
-    answers:quizState.answers,flags:quizState.flags,skipped:[...quizState.skipped],visited:[...quizState.visited],
+    answers:quizState.answers,explanations:quizState.explanations,lockedGroups:[...quizState.lockedGroups],
+    flags:quizState.flags,skipped:[...quizState.skipped],visited:[...quizState.visited],
     currentIndex:quizState.currentIndex,startedAt:quizState.startTime,endsAt:quizState.endsAt,
+    sectionEndsAt:quizState.sectionEndsAt,
     remainingMs:quizState.endsAt ? Math.max(0,quizState.endsAt-Date.now()) : null,
     autosaveKey:quizState.autosaveKey,legacyKey:quizState.legacyKey,status:'active'};
 }
@@ -856,6 +1032,7 @@ function doAutosave() {
   try {
     const saved = QuizAttempts.save(attemptSnapshot());
     quizState.answers = saved.answers;
+    quizState.explanations = saved.explanations || {};
     const notice = document.getElementById('attempt-save-error'); if (notice) notice.remove();
   } catch (error) {
     let notice = document.getElementById('attempt-save-error');
@@ -872,7 +1049,7 @@ function openSubmitModal() {
   saveCurrentTextAnswer();
 
   const total    = quizState.totalCount;
-  const answered = Object.values(quizState.answers).filter(QuizAttempts.hasAnswer).length;
+  const answered = countAttemptedQuestions();
   const skipped  = quizState.skipped.size;
   const unanswered = total - answered;
 

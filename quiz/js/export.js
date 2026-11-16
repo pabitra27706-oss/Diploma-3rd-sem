@@ -61,6 +61,7 @@ function cacheDOMRefs() {
     exportPreviewContent: qs('#export-preview-content'),
     btnCopyExport:      qs('#btn-copy-export'),
     btnDownloadExport:  qs('#btn-download-export'),
+    btnPrintExport:     qs('#btn-print-export'),
     copyToast:          qs('#copy-toast'),
 
     // Format radios
@@ -216,6 +217,8 @@ function updateExportPreview() {
     mode:      cfg.mode       || 'mcq',
     questions: exportState.questions,
     answers:   exportState.answers,
+    explanations: exportState.result.explanations || {},
+    paperSummary: exportState.result.paperSummary || null,
     score:     exportState.result.score,
     total:     exportState.result.total,
     totalMarks:exportState.questions.reduce((s, q) => s + (q.marks || 0), 0),
@@ -578,6 +581,9 @@ function bindEvents() {
 
   // Download
   dom.btnDownloadExport?.addEventListener('click', doDownload);
+
+  // Print / Save as PDF
+  dom.btnPrintExport?.addEventListener('click', () => window.print());
 
   // Copy
   dom.btnCopyExport?.addEventListener('click', doCopy);

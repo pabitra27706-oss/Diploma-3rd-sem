@@ -692,11 +692,15 @@ function generateAllTypesMarkdown(data) {
 
   questions.forEach((q, i) => {
     const userAnswer = answers[q.id] || '_(No answer provided)_';
-    const modelAnswer = q.modelAnswer || '_(No model answer available)_';
+    const userExpl = data.explanations?.[q.id];
+    const modelAnswer = q.modelAnswer || (q.correct ? `Correct option: ${q.correct}${q.explanation ? ' — ' + q.explanation : ''}` : '_(No model answer available)_');
 
     md += `## Question ${i + 1} (${q.marks} marks)\n`;
     md += `**Question:** ${q.question}\n\n`;
     md += `**User Answer:**\n${userAnswer}\n\n`;
+    if (userExpl) {
+      md += `**User Explanation (1 mark — manual review):**\n${userExpl}\n\n`;
+    }
     md += `**Model Answer:**\n${modelAnswer}\n\n`;
     md += `---\n\n`;
   });
@@ -772,7 +776,8 @@ function generateJSONExport(data) {
       mode: data.mode,
       attemptId: data.metadata?.attemptId || null,
       score: data.score ?? null,
-      totalQuestions: data.questions.length
+      totalQuestions: data.questions.length,
+      paperSummary: data.paperSummary || null
     },
     questions: data.questions.map((q, i) => ({
       number: i + 1,
@@ -781,6 +786,7 @@ function generateJSONExport(data) {
       question: q.question,
       marks: q.marks,
       userAnswer: data.answers[q.id] || null,
+      userExplanation: data.explanations?.[q.id] || null,
       correctAnswer: q.correct || null,
       isCorrect: q.type === 'mcq' && QuizAttempts.hasAnswer(data.answers[q.id])
         ? (data.answers[q.id] === q.correct)
@@ -826,6 +832,9 @@ function generateTXTExport(data) {
     }
 
     txt += `\n   Your Answer  : ${userAnswer}\n`;
+    if (data.explanations?.[q.id]) {
+      txt += `   Your Expl.   : ${data.explanations[q.id]}\n`;
+    }
 
     if (q.correct) {
       const isRight = userAnswer === q.correct;

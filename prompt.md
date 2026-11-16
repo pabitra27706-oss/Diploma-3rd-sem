@@ -65,9 +65,12 @@ per-phase remainder table and the source/rights gates.
   has no quiz bank. Originals remain unchanged; 10 source-review data findings
   remain open.
 - Quiz: versioned attempt snapshots, deadline-based timers, autosave/resume,
-  flags, score boundaries, history/export/exact retries/edits and mistake queue.
-  Paper practice preserves sources and duration but does not enforce choices,
-  section timing or explanation-mark rules; no official overall paper grade.
+  flags, score boundaries, history/export/exact retries/edits, mistake queue,
+  one-sentence MD/TXT/JSON/Print-PDF export guidance, and full mock paper
+  practice enforcing explicit `paperFormat` `answerAny` section/choiceSet quotas
+  across all 30 frozen PYQ papers, compulsory 30-minute Group A loose-script
+  windows on the seven `2023-03` papers, and `1m option + 1m written explanation`
+  splits on the fifteen `2024–2026` papers without fabricating an overall grade.
 - Discovery/study: compact search/repeat sidecars, source deep links, related
   unit material, 1,339 model/keyed-source cards, fixed Leitner scheduling,
   Today/goals/streaks, sample-qualified weak-area trends. Not newly certified facts.
@@ -85,20 +88,21 @@ per-phase remainder table and the source/rights gates.
 
 ## Evidence and limits
 
-Latest implementation checkpoint: 12 Python tests, four Node suites and seven
-focused Chromium suites PASS; full 48 JS/CJS + JSON parse PASS. Site strict
+Latest implementation checkpoint: 13 Python tests, six deterministic Node suites
+and seven focused Chromium suites PASS; full JS/CJS + JSON parse PASS. Site strict
 0 errors / 28 warnings, platform 0 errors, immutable-PYQ guard 0 changes.
 Full data strict still has 10 ledger findings; syllabus strict has 3 grouped
-errors. An exact-baseline pass is not a full strict pass. Hosted CI has not run
-on the unpushed implementation. Historical Phase 2 CI is recorded in its record.
+errors. An exact-baseline pass is not a full strict pass.
 
 ## How to continue safely
 
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
-2. Use `docs/STATUS.md`'s remaining order. Next major gaps are paper rules and
-   the asynchronous IndexedDB storage path, then remaining discovery/study,
-   accessibility/language, cited content and performance/cache work.
+2. Use `docs/STATUS.md`'s remaining order. Phase 2 is `✅*` (owner-verified on
+   Termux; source gates tracked separately) and Phase 3 (`03-quiz-engine`)
+   engineering is complete; next sequential phase is Phase 4 (`04-discovery` —
+   remaining informational-page indexing, authored heading anchors, offline
+   search/back-button/share-fallback/keyboard acceptance), followed by Phases 5–9.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
    visible; record new evidence/dispositions in derived metadata and decisions.
 4. Edit source scripts, not generated bundles. Regeneration order and check
@@ -116,16 +120,13 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git push origin arena/26856d99-diploma-3rd-sem   # ensure branch is current (agent already pushed)
-git pull --ff-only                               # get latest on the branch
+git pull --ff-only origin arena/47d8bf99-diploma-3rd-sem
 cd ..
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. The `git push`
-guarantees the branch is current before the pull; it is a no-op when the agent
-has already pushed. For a first-time setup, clone instead from the parent
-directory: `git clone --single-branch --branch arena/26856d99-diploma-3rd-sem
+Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
+directory: `git clone --branch arena/47d8bf99-diploma-3rd-sem
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling

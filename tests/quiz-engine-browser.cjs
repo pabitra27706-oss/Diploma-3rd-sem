@@ -59,12 +59,23 @@ const assert=require('node:assert/strict');
     console.log('PASS forced bank failure is explicit, not partial/empty success');
     await page.goto(base+'quiz/play.html?subject=CST205&paperFile=CST205-P006-2026-01.json');
     await page.waitForFunction(()=>quizState.questions.length===24);
-    const paper=await page.evaluate(()=>({count:quizState.questions.length,minutes:quizState.config.timerMins,set:quizState.config.paper.setMarks,sum:quizState.questions.reduce((s,q)=>s+q.marks,0)}));
-    assert.equal(paper.minutes,150);assert.equal(paper.set,paper.sum);
+    const paper=await page.evaluate(()=>({count:quizState.questions.length,minutes:quizState.config.timerMins,set:quizState.config.paper.setMarks,sum:quizState.questions.reduce((s,q)=>s+q.marks,0),rules:quizState.config.paper.rules.length}));
+    assert.equal(paper.minutes,150);assert.equal(paper.set,paper.sum);assert.equal(paper.rules,2);
     await page.getByText(/Unverified overall total/).waitFor();
+    await page.getByText(/Answer any 10 of 15/).waitFor();
+    await page.evaluate(()=>{
+      const mcqs = quizState.questions.filter(q=>q.type==='mcq');
+      for(let i=0;i<10;i++) quizState.answers[mcqs[i].id] = mcqs[i].correct;
+      quizState.explanations[mcqs[0].id] = 'Written 1-mark explanation';
+      doAutosave();
+      goToQuestion(10);
+    });
+    await page.getByText(/Choice limit reached/).waitFor();
+    assert.equal(await page.evaluate(()=>document.querySelector('input[type="radio"]').disabled),true);
     await page.evaluate(()=>submitQuiz());await page.waitForURL('**/review.html');
     await page.getByText(/no automatic overall grade/).waitFor();
-    console.log('PASS immutable paper practice, source duration/set marks, explicit marking limitation');
+    await page.getByText(/Verified MCQ option marks \(within section quotas\): 10 \/ 10/).waitFor();
+    console.log('PASS immutable paper practice, answer-any quota lock, 1+1 explanation split, explicit marking limitation');
     await page.goto(base+'quiz/index.html');await page.getByRole('heading',{name:'Practice my mistakes'}).waitFor();
     assert.deepEqual(errors,[]);
   } finally {await browser.close();}

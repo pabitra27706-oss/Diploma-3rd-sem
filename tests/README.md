@@ -15,6 +15,7 @@ python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
+node tests/quiz-engine-dom.cjs
 node tests/study-store.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs

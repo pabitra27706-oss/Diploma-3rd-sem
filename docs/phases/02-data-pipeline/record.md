@@ -1,6 +1,6 @@
 # Phase 2 — Truthful data pipeline
 
-- Status: 🚧 in progress (all engineering parts 2.1–2.6 implemented; paused at owner source-verification GATE) · Updated: 2026-11-16
+- Status: ✅* owner-verified engineering pass on Termux (`2026-11-16`, commit `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green; 10 fingerprinted data findings and 3 grouped syllabus findings remain tracked separately under the content/source-verification gate) · Updated: 2026-11-16
 - Branch: arena/be3d9178-diploma-3rd-sem **(retired — merged to main via PR #7; active session branch is `arena/47d8bf99-diploma-3rd-sem` from `main` `8405b15`)** · original starting tip: 646dea2
 - Main CI 42634392469 green; no open PR at start. Phase 1 merged via PR #4.
 
