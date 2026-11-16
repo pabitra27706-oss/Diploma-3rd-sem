@@ -8,7 +8,7 @@ from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlencode, urlsplit
-from data_pipeline import ROOT, stores, duplicates
+from data_pipeline import ROOT, stores, duplicates, load, generic_topic
 
 
 def fold(value):
@@ -33,6 +33,7 @@ def encode(value):
 
 def build(root=ROOT):
     papers,banks=stores(root); aliases,canonical,_=duplicates(papers)
+    syllabus={s['code']:s for s in load(root/'docs/syllabus/syllabus.json')['subjects']}
     rows={}; lookup={}; source_bytes=Counter()
     for path,paper in papers:
         subject=paper['subject']; source_bytes[subject]+=path.stat().st_size
@@ -41,17 +42,23 @@ def build(root=ROOT):
             title=q['question'][:80]
             row={'id':q['id'],'type':'pyq','subject':subject,'unit':q.get('unit'), 'topic':q.get('topic',''),'title':title,
                  'text':fold(q['question']+' '+q.get('topic','')),'year':paper.get('year'),'month':paper.get('month'), 'marks':q.get('marks'),'paper':paper['paperCode'],'url':url}
+            if generic_topic(q): row['genericTopic']=True
             rows.setdefault(subject,[]).append(row);lookup[q['id']]=row
     for path,bank in banks:
         subject=bank['subject'];source_bytes[subject]+=path.stat().st_size
         for q in bank['questions']:
-            rows.setdefault(subject,[]).append({'id':q['id'],'type':'quiz','subject':subject,'unit':bank['unit'], 'topic':q.get('topic',''),'title':q['question'][:80], 'text':fold(q['question']+' '+q.get('topic','')),'year':q.get('year'),'marks':q.get('marks'),'url':'quiz/setup.html?'+urlencode({'subject':subject,'unit':bank['unit']})})
+            qrow={'id':q['id'],'type':'quiz','subject':subject,'unit':bank['unit'], 'topic':q.get('topic',''),'title':q['question'][:80], 'text':fold(q['question']+' '+q.get('topic','')),'year':q.get('year'),'marks':q.get('marks'),'url':'quiz/setup.html?'+urlencode({'subject':subject,'unit':bank['unit']})}
+            if generic_topic(q): qrow['genericTopic']=True
+            rows.setdefault(subject,[]).append(qrow)
     for path in sorted((root/'subjects').glob('*/units/unit-*.html')):
         subject=path.parts[-3]; unit=int(re.search(r'unit-(\d+)',path.name)[1]);parser=Headings();parser.feed(path.read_text())
+        declared_units=len(syllabus[subject]['units']) if subject in syllabus else 0
         for i,(anchor,title) in enumerate(parser.rows):
             title=' '.join(title.split())
             if not title:continue
-            rows.setdefault(subject,[]).append({'id':f'{subject}-note-{unit}-{i}','type':'unit','subject':subject,'unit':unit,'title':title[:80],'text':fold(title),'url':str(path.relative_to(root))+('#'+anchor if anchor else '')})
+            urow={'id':f'{subject}-note-{unit}-{i}','type':'unit','subject':subject,'unit':unit,'title':title[:80],'text':fold(title),'url':str(path.relative_to(root))+('#'+anchor if anchor else '')}
+            if declared_units and unit>declared_units: urow['supplementary']=True
+            rows.setdefault(subject,[]).append(urow)
     output=root/'assets/search';output.mkdir(parents=True,exist_ok=True);manifest={'schemaVersion':1,'subjects':{}}
     for subject,entries in sorted(rows.items()):
         entries.sort(key=lambda r:r['id'])

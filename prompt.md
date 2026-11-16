@@ -7,13 +7,14 @@ and actual Git status take precedence over older narrative.
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- Active branch: `arena/26856d99-diploma-3rd-sem`. Do not create/switch/rename
-  branches or push another branch. The prior `arena/be3d9178-diploma-3rd-sem`
-  branch was merged into main via PR #7 (commit `125eb94`) and is retired.
-- Current branch tip: `125eb94` (the merge commit of PR #7, which brought the
-  prior `arena/be3d9178-diploma-3rd-sem` work into main). This branch is built
-  on that merge. Inspect actual Git/PR state rather than assuming an older
-  checkpoint is current.
+- Active branch: `arena/47d8bf99-diploma-3rd-sem` (branched from `main` at
+  `8405b15`). Do not create/switch/rename branches or push another branch.
+  Prior `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
+  `arena/26856d99-diploma-3rd-sem` (`8405b15`) branches were merged into `main`
+  and are retired.
+- Base `main` commit: `8405b15`; Phase 2 mechanical/UI completion is committed
+  on `arena/47d8bf99-diploma-3rd-sem`. Inspect actual Git/PR state rather than
+  assuming an older checkpoint is current.
 - Zero-build static HTML/CSS/JS/JSON; publication base `/Diploma-3rd-sem/`.
   Canonical configured URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
   This is not confirmation that the live site has current changes.
@@ -54,8 +55,15 @@ acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the comple
 per-phase remainder table and the source/rights gates.
 
 - Data: 992 raw PYQs, 923 exact-unique Practice questions, 69 aliases across
-  30 papers; ten derived Practice days. 872 quiz-bank items (416 keyed MCQs,
-  456 non-MCQ ungraded). CST207 has no quiz bank. Originals remain unchanged.
+  30 papers; ten derived Practice days; enriched `_data/catalog.json` and
+  `assets/data/practice-pool.json` (`aliases`, `alsoAppearedIn`, `topicQuality`);
+  all 5 subject hubs and 24 unit HTML pages aligned to `docs/syllabus/syllabus.json`
+  and enforced by `validate_data.py`; alias `?q=` deep-link resolution in Practice
+  and duplicate cross-reference links in PYQ Answers; generic placeholder topics
+  excluded from Practice topic dropdown, unit topic summaries and named weak-topic
+  analytics. 872 quiz-bank items (416 keyed MCQs, 456 non-MCQ ungraded). CST207
+  has no quiz bank. Originals remain unchanged; 10 source-review data findings
+  remain open.
 - Quiz: versioned attempt snapshots, deadline-based timers, autosave/resume,
   flags, score boundaries, history/export/exact retries/edits and mistake queue.
   Paper practice preserves sources and duration but does not enforce choices,

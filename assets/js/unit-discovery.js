@@ -16,8 +16,8 @@
     link('Browse related PYQs','search.html?'+new URLSearchParams({subject,unit:unit||''}),panel);
     const list=document.createElement('ul');panel.append(list);
     for(const row of pyqs.slice(0,3)){const li=document.createElement('li');list.append(li);link(row.title,'pyq/answers.html?'+new URLSearchParams({subject,paper:row.paper,q:row.id}),li);}
-    const topics=[...new Set(pyqs.map(r=>r.topic).filter(Boolean))].slice(0,10);const p=document.createElement('p');p.textContent='Stored topics: '+(topics.join(', ')||'No specific topics available');panel.append(p);
-    const units=[...new Set(rows.filter(r=>r.type==='unit').map(r=>Number(r.unit)))].sort((a,b)=>a-b);
+    const topics=[...new Set(pyqs.filter(r=>!r.genericTopic).map(r=>r.topic).filter(Boolean))].slice(0,10);const p=document.createElement('p');p.textContent='Stored topics: '+(topics.join(', ')||'No specific topics available');panel.append(p);
+    const units=[...new Set(rows.filter(r=>r.type==='unit'&&!r.supplementary).map(r=>Number(r.unit)))].sort((a,b)=>a-b);
     if(unit){const index=units.indexOf(Number(unit));if(index>0)link('Previous unit','subjects/'+subject+'/units/unit-'+units[index-1]+'.html');if(index>=0&&index<units.length-1)link('Next unit','subjects/'+subject+'/units/unit-'+units[index+1]+'.html');}
     else{const ul=document.createElement('ul');panel.append(ul);for(const u of units){const li=document.createElement('li');ul.append(li);link('Unit '+u+' · '+pyqs.filter(q=>Number(q.unit)===u).length+' PYQs','subjects/'+subject+'/units/unit-'+u+'.html',li);}}
     // Headings without IDs receive stable page-order IDs for copying section links.

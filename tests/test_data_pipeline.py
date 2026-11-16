@@ -74,4 +74,22 @@ class PipelineTests(unittest.TestCase):
                 self.assertIn(code,{e['code'] for e in errors},code)
                 target.write_bytes(original)
 
+    def test_syllabus_html_and_runtime_pool_mutations_detected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for folder in ['_data','_quiz-data','docs/syllabus','assets/data','subjects']:
+                shutil.copytree(ROOT/folder,root/folder)
+            cst209=root/'subjects/CST209/index.html'
+            orig_html=cst209.read_text()
+            cst209.write_text(orig_html.replace('<span class="count-value">4</span> Units','<span class="count-value">5</span> Units',1))
+            errors,_=validate(root)
+            self.assertIn('syllabus-html',{e['code'] for e in errors})
+            cst209.write_text(orig_html)
+            pool_path=root/'assets/data/practice-pool.json'
+            pool=json.loads(pool_path.read_text())
+            pool['aliases']={}
+            pool_path.write_text(dump(pool))
+            errors,_=validate(root)
+            self.assertIn('runtime-pool',{e['code'] for e in errors})
+
 if __name__=='__main__':unittest.main()

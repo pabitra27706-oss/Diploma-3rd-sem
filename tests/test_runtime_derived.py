@@ -4,14 +4,23 @@ import sys
 import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
-from data_pipeline import stores,duplicates,schedule
+from data_pipeline import stores,duplicates,schedule,generic_topic
+from build_runtime_data import derived_practice_question
 from build_runtime_bundles import BUNDLES
 class RuntimeDerivedTests(unittest.TestCase):
     def test_pools_keep_original_questions(self):
-        papers,banks=stores();aliases,_,_=duplicates(papers);assignment,_=schedule(papers)
-        expected={q['id']:dict(q,subjectCode=p['subject'],practiceDay=assignment[q['id']]) for _,p in papers for q in p['questions'] if q['id'] not in aliases}
-        actual=json.loads((ROOT/'assets/data/practice-pool.json').read_text())['questions']
+        papers,banks=stores();aliases,canonical,_=duplicates(papers);assignment,_=schedule(papers)
+        expected={
+            q['id']:derived_practice_question(p['subject'],q,assignment,canonical)
+            for _,p in papers for q in p['questions'] if q['id'] not in aliases
+        }
+        pool=json.loads((ROOT/'assets/data/practice-pool.json').read_text())
+        self.assertEqual(pool['aliases'],aliases)
+        actual=pool['questions']
         self.assertEqual({q['id']:q for q in actual},expected)
+        self.assertTrue(any(q.get('alsoAppearedIn') for q in actual))
+        for q in actual:
+            self.assertEqual(q['topicQuality'],'generic' if generic_topic(q) else 'specific')
         expected={q['id']:dict(q,subject=p['subject'],unit=p['unit']) for _,p in banks for q in p['questions']}
         actual=json.loads((ROOT/'assets/data/quiz-pool.json').read_text())['questions']
         self.assertEqual({q['id']:q for q in actual},expected)

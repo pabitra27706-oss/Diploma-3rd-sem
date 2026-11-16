@@ -18,12 +18,13 @@ node tests/attempt-store.cjs
 node tests/study-store.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs
+node tests/data-pipeline-consumers.cjs
 ```
 
-Python discovery currently covers 12 tests: source-preserving/idempotent
-pipeline transformations, mutation detection, integrity guard changes/additions/
-removals, compact discovery, card-source resolution, bundle/source consistency,
-runtime pools and coverage joins. Paper comparisons pin to the owner-approved
+Python discovery currently covers 13 tests: source-preserving/idempotent
+pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
+integrity guard changes/additions/removals, compact discovery, card-source
+resolution, bundle/source consistency, runtime pools and coverage joins. Paper comparisons pin to the owner-approved
 sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons retain
 `646dea2aa44c3de207e8a46cfcf2c45c5d822310`. Both commits must be in Git history;
 do not use a shallow clone

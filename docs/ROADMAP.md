@@ -74,7 +74,7 @@ results; do not treat their earlier checkpoints as passes on later changes.
 
 *Phase 1 platform implementation complete (2026-11-09). Full syllabus-strict subtask remains blocked by seven source-verification-gated PYQs; coverage stays advisory per the recorded Phase 2 decision. See `phases/01-platform/record.md`. Phone install/unfurl are still launch checks.
 
-Phase 2 (2026-11-09): mechanical pipeline and safe UI implemented; full data/syllabus strict gates remain blocked by source verification. See `phases/02-data-pipeline/record.md` and `data/source-review-batch-01.md`. Owner delegation now permits implementation of later phases while these source gates remain open; do not mark Phase 2 complete without evidence.
+Phase 2 (updated 2026-11-16 on `arena/47d8bf99-diploma-3rd-sem`): all mechanical pipeline, validator (`syllabus-html` + `runtime-pool`), subject/unit HTML syllabus alignment, alias deep-linking/PYQ duplicate cross-references, and generic-topic filtering deliverables are implemented and regression-tested; full data/syllabus strict gates remain blocked solely by owner source verification (`10` data findings + `3` grouped syllabus findings). See `phases/02-data-pipeline/record.md` and `data/source-review-batch-01.md`. Do not mark Phase 2 complete without owner disposition of the source gates.
 
 ### Phase 3 engineering update — 2026-11-09
 

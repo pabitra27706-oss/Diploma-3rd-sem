@@ -23,7 +23,10 @@
         questions: catalog.uniquePyqCount };
       document.querySelectorAll('[data-live-count]').forEach(el => {
         const value = counts[el.dataset.liveCount];
-        el.textContent = value.toLocaleString();
+        if (typeof value !== 'number') return;
+        const prefix = el.dataset.livePrefix || '';
+        const suffix = el.dataset.liveSuffix || '';
+        el.textContent = prefix + value.toLocaleString() + suffix;
         el.setAttribute('aria-label', `${value} ${el.dataset.liveCount}`);
       });
     } catch { document.querySelectorAll('[data-live-count]').forEach(el => { el.textContent = 'Unavailable'; }); }

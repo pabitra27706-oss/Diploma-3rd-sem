@@ -7,6 +7,7 @@
 /* ═══════════════════════════════ STATE */
 const S = {
   all:       [],   // All questions from data
+  aliases:   {},   // Alias question ID -> canonical question ID
   filtered:  [],   // Current filtered set
   filters: {
     subjects:    ['all'],
@@ -74,6 +75,7 @@ async function loadAllData() {
   const data=await response.json();
   if(data.schemaVersion!==1||!Array.isArray(data.questions)||!data.questions.length)throw Error('Invalid practice pool');
   S.all=data.questions;
+  S.aliases=data.aliases||{};
   document.getElementById('load-bar').style.width='100%';
 
   // Compute total completed across all sessions
@@ -91,7 +93,10 @@ function computeTotalCompleted() {
     if (!key.startsWith('practice-session-')) continue;
     try {
       const sess = JSON.parse(StudyStorage.legacy.getItem(key));
-      if (sess.completed) sess.completed.forEach(id => { if (allIds.has(id)) done.add(id); });
+      if (sess.completed) sess.completed.forEach(id => {
+        const canonical = S.aliases[id] || id;
+        if (allIds.has(canonical)) done.add(canonical);
+      });
     } catch {}
   }
   return done.size;
@@ -320,7 +325,7 @@ function populateDropdown(id, source) {
   const selKey = keyMap[id];
 
   if (id === 'topic') {
-    options = [...new Set(source.map(q => q.topic).filter(Boolean))].sort();
+    options = [...new Set(source.filter(q => q.topicQuality !== 'generic').map(q => q.topic).filter(Boolean))].sort();
   } else if (id === 'paper') {
     const map = new Map();
     source.forEach(q => {
