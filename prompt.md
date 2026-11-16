@@ -100,19 +100,25 @@ on the unpushed implementation. Historical Phase 2 CI is recorded in its record.
 6. Stop at publication gates. No commit/push is needed to preserve Arena files;
    inspect identities/diff and existing rules before any authorized Git operation.
 
-## Termux delivery convention
+## Termux delivery convention (post-phase test flow)
 
-Fresh clone from the parent directory (uses the current session branch):
+After a phase is complete and pushed, run this on your device to pull the
+current session branch and serve it at the real subpath. It follows **push →
+pull → run** on the branch named in `rule.md` §1:
 
 ```sh
-cd ~
-git clone --single-branch --branch arena/26856d99-diploma-3rd-sem \
-  https://github.com/pabitra27706-oss/Diploma-3rd-sem.git
-cd Diploma-3rd-sem
+cd ~/Diploma-3rd-sem
+git push origin arena/26856d99-diploma-3rd-sem   # ensure branch is current (agent already pushed)
+git pull --ff-only                               # get latest on the branch
+cd ..
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. If already
-cloned, run `git pull --ff-only` on the active branch. Unpushed Arena changes
-are not available through a fresh clone or pull; state which commit/branch holds
-a change before telling anyone to pull.
+Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. The `git push`
+guarantees the branch is current before the pull; it is a no-op when the agent
+has already pushed. For a first-time setup, clone instead from the parent
+directory: `git clone --single-branch --branch arena/26856d99-diploma-3rd-sem
+https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
+above from inside the checkout. Unpushed Arena changes are not available through
+a fresh clone or pull; state which commit/branch holds a change before telling
+anyone to pull.
