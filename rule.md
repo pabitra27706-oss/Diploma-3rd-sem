@@ -24,8 +24,7 @@
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
-- License: **unset — GATE** (`docs/DECISIONS.md` lists it as open; the README
-  badge currently links a `LICENSE` file that does not exist)
+- License: **MIT** (chosen 2026-11-16; see `LICENSE`). Covers the project's own code, documentation and authored content. Third-party examination-source material keeps unresolved, separate rights per `docs/DECISIONS.md`; this license does not relicense it.
 - Money: none — no ads, payments, donations, affiliates, or analytics
 - Scanned: 177 tracked files, 55 HTML pages, 20 standalone JS files, 55 JSON
   files, 992 PYQ records, 872 quiz records (baseline 2026-11-06; rules

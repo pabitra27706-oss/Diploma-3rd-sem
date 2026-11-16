@@ -18,7 +18,7 @@ and actual Git status take precedence over older narrative.
   Canonical configured URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
   This is not confirmation that the live site has current changes.
 - No money, analytics, external runtime dependencies or implicit publication.
-- Root license is unset. README no longer links a nonexistent license file.
+- Root license is **MIT** (chosen 2026-11-16; `LICENSE` added). Covers the project's own code/authored content; third-party exam material keeps separate rights (see `docs/DECISIONS.md`).
 
 ## Current owner instructions — do not re-ask
 

@@ -73,8 +73,10 @@ These cannot be solved by declaring a feature complete:
    Imported keys/reprint relationships need source evidence and recorded review.
 3. **Marks reconciliation:** historical printed maxima, set-question sums and
    the current 60-mark ESE pattern are not interchangeable. Keep visible warnings.
-4. **Rights/license:** no root license has been selected. Do not invent rights
-   to copied educational material or add a false license badge.
+4. **Rights/license:** repository is **MIT** (chosen 2026-11-16; `LICENSE`
+   added) for its own code/authored content. Third-party examination-source
+   material keeps unresolved rights and is a separate gate — do not invent rights
+   to that material or imply the MIT license covers it.
 5. **Release:** hosted CI on the new tree, PR/merge, deployment and domain actions
    have not happened. A green local check is not permission to publish.
 

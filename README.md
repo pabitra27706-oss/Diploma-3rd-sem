@@ -128,10 +128,12 @@ kept private. Feedback prepares an email draft or copied text; the site cannot
 confirm receipt. See [Privacy](info/privacy-policy.html) and
 [Measurement](docs/MEASUREMENT.md).
 
-**Repository license is not selected.** No blanket license is claimed for the
-code or third-party educational material. Existing asset notices remain in
-place; see [Credits](info/credits.html). License/content-rights review is a
-release gate, not an implementation decision to invent.
+**Repository license: MIT** (added 2026-11-16) — see [LICENSE](LICENSE). It
+covers the project's own code, documentation and authored content. Third-party
+examination-source material (previous-year question papers, syllabi, registries)
+is included for study use only and keeps its own, unresolved rights — see
+[docs/DECISIONS.md](docs/DECISIONS.md). Existing asset notices (e.g. Font Awesome)
+remain in place; see [Credits](info/credits.html).
 
 The owner authorized merging the working branch on 2026-11-09. Consult Git and
 the pull request for the actual merge result; a merge does not certify unfinished
