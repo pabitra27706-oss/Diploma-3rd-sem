@@ -1,7 +1,7 @@
 # Phase 3 — Quiz and exam engine
 
 - Status: 🚧 in progress · Date: 2026-11-09
-- Branch: arena/be3d9178-diploma-3rd-sem · starting tip ac428d1
+- Branch: arena/be3d9178-diploma-3rd-sem **(retired — merged to main via PR #7; current session branch is `arena/26856d99-diploma-3rd-sem`)** · starting tip ac428d1
 - Owner delegation permits independent engine work; Phase 2 source gates remain.
 - Owner confirms immutable authoritative PYQs; hash guard added before coding.
 
