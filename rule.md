@@ -5,19 +5,30 @@
 > `4bc8b0b`) — provenance only; the text below is authoritative for this site.
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
+>
+> **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`): branch and
+> license references corrected to the current session branch
+> `arena/26856d99-diploma-3rd-sem`; the prior `arena/be3d9178-...` branch is
+> merged and retired. **If this manual and Git disagree on the branch name, Git
+> is right — update this file.**
+>
+> **New-session reading order:** `rule.md` (this file) → `prompt.md` →
+> `docs/STATUS.md` → `docs/DECISIONS.md` → `docs/ROADMAP.md` → the relevant
+> `docs/phases/NN-*/record.md`. Trust the repository and the current branch, not
+> memory or older summaries.
 
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/be3d9178-diploma-3rd-sem`
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/26856d99-diploma-3rd-sem` (current session branch; the prior `arena/be3d9178-diploma-3rd-sem` was merged into main via PR #7 and is retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
-- License: **unset — GATE** (`docs/DECISIONS.md` lists it as open; the README
-  badge currently links a `LICENSE` file that does not exist)
+- License: **MIT** (chosen 2026-11-16; see `LICENSE`). Covers the project's own code, documentation and authored content. Third-party examination-source material keeps unresolved, separate rights per `docs/DECISIONS.md`; this license does not relicense it.
 - Money: none — no ads, payments, donations, affiliates, or analytics
 - Scanned: 177 tracked files, 55 HTML pages, 20 standalone JS files, 55 JSON
-  files, 992 PYQ records, 872 quiz records (as of 2026-11-06)
+  files, 992 PYQ records, 872 quiz records (baseline 2026-11-06; rules
+  reconciled 2026-11-16 — see `docs/AUDIT-2026-11-16.md`)
 - Time budget: 4 weeks from 2026-11-06, unless a waiver is recorded
 
 ## 2. Branching and the deploy gate (law)
@@ -85,6 +96,18 @@ continue during implementation. See `docs/DECISIONS.md` and `docs/STATUS.md`.
 6. Report (run id, tip sha, artifact, what is now visible), then **print the
    next-chat prompt IN CHAT** — one fully-filled copyable block from
    `webflow/templates/next-chat-prompt.md`. Then **stop at the deploy gate**.
+7. **Phase close-out — owner verification gate (never skip).** Once the phase's
+   checks are green, the chat report MUST include a clear **"What to test on the
+   website"** section: concrete steps, the exact URLs under `/Diploma-3rd-sem/`,
+   and the specific behaviour the owner should exercise to confirm the phase.
+   Then **wait for the owner's explicit signal before starting the next phase**:
+   - **"mark as pass"** → the phase is accepted. Set its roadmap status to ✅
+     (or ✅* with the recorded caveat), write the verification result into its
+     `record.md`, commit, and proceed to plan the next phase.
+   - **"add for later"** → the phase is not fully accepted. Record the open gap
+     in the phase `record.md` and `docs/STATUS.md`, keep status 🚧, and proceed
+     to the next phase. The gap stays visible; it is never silently dropped.
+   Neither phrase is ever assumed — silence means stop and wait.
 
 ## 5. Invariants — do not break
 
@@ -136,7 +159,9 @@ continue during implementation. See `docs/DECISIONS.md` and `docs/STATUS.md`.
 
 Checks green (`scripts/check_site.py` errors = 0; see the WARN trend) ·
 `site-preview` artifact uploaded · docs updated · `prompt.md` current ·
-next-chat prompt printed in chat · short report — then stop at the deploy gate.
+next-chat prompt printed in chat · short report with a **What to test on the
+website** section · **owner phase-acceptance signal received** ("mark as pass"
+or "add for later", per §4 step 7) — then stop at the deploy gate.
 A **public launch** additionally needs every item in
 `webflow/templates/site-checklist.md` green and an explicit deploy command.
 
@@ -145,8 +170,11 @@ A **public launch** additionally needs every item in
 - **After every completed phase**, write a short report **directly in chat**,
   not only in a file or artifact. Include what changed, checks actually run and
   their results, remaining blockers/unverified behaviour, and the next step.
-  State clearly whether anything was pushed, opened as a PR, merged or deployed;
-  do not imply that a phase is fully green when an acceptance item is blocked.
+  **Always include a "What to test on the website" section** with concrete URLs
+  and steps under `/Diploma-3rd-sem/`. State clearly whether anything was
+  pushed, opened as a PR, merged or deployed; do not imply that a phase is fully
+  green when an acceptance item is blocked. **Do not start the next phase until
+  the owner signals "mark as pass" or "add for later" (see §4 step 7).**
 - **At the end of every chat**, including rules-only, documentation, bug-fix and
   incomplete-phase chats, include a copyable **Termux local-testing command
   block** and the exact browser URL. Do not wait for phase completion.
@@ -156,15 +184,22 @@ A **public launch** additionally needs every item in
   which branch/revision contains the changes and whether it has been pushed.
   Never suggest a destructive reset, overwrite local changes, or present an
   unpushed change as available through `git pull`.
-- The basic zero-build preview, assuming the checkout is `~/Diploma-3rd-sem`:
+- **Canonical post-phase Termux block (branch-specific, copy-paste):** after a
+  phase is pushed, the owner runs this on their device to pull the current
+  session branch and serve it at the real subpath. It follows **push → pull →
+  run**, using the branch named in §1 (`arena/26856d99-diploma-3rd-sem`):
 
   ```sh
   cd ~/Diploma-3rd-sem
-  python -m http.server 8000 --bind 127.0.0.1
+  git push origin arena/26856d99-diploma-3rd-sem   # ensure branch is current (agent already pushed)
+  git pull --ff-only                               # get latest on the branch
+  cd ..
+  python3 -m http.server 8000 --bind 127.0.0.1
   ```
 
-  Open `http://127.0.0.1:8000/`; stop with Ctrl+C. This basic command serves
-  the checkout at `/`, not a simulated `/Diploma-3rd-sem/` deployment. For path
-  or PWA changes, additionally provide relevant checks or a project-subpath
-  preview method. Never claim a local preview proves real-device installation,
-  deployed behaviour, or browser checks that were not run.
+  Open `http://127.0.0.1:8000/Diploma-3rd-sem/`; stop with Ctrl+C. The `git
+  push` makes the block self-contained and guarantees the branch is current
+  before the pull; it is a no-op when the agent has already pushed. When the
+  session branch changes, update the branch name here to match §1. Never claim a
+  local preview proves real-device installation, deployed behaviour, or browser
+  checks that were not run.

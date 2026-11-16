@@ -1,7 +1,8 @@
 # Current status and remaining work
 
-Documentation checkpoint: **2026-11-09**. This is the current handoff; older
-phase evidence remains historical unless explicitly superseded here.
+Documentation checkpoint: **2026-11-09**; reconciled **2026-11-16** (branch/
+license audit — see `docs/AUDIT-2026-11-16.md`). This is the current handoff;
+older phase evidence remains historical unless explicitly superseded here.
 
 ## Current source reconciliation
 
@@ -20,9 +21,17 @@ the PR/Git history for the operation result. This permission does not authorize
 deployment/domain changes or close unfinished phase gates.
 
 
-- Branch: `arena/be3d9178-diploma-3rd-sem` (active).
-- Committed tip: `ac428d1` (Phase 2 evidence). Later engineering and this
-  documentation are saved in the working tree, **not committed/pushed**.
+- Branch: `arena/26856d99-diploma-3rd-sem` (active). The prior
+  `arena/be3d9178-diploma-3rd-sem` branch was merged into main via PR #7
+  (commit `125eb94`) and is retired.
+- Branch tip: `125eb94` (main merge of PR #7). Working tree is clean and matches
+  that tip; the previously-described "uncommitted working tree" state is obsolete
+  — PR #7 committed and merged that work.
+- Historical note: `docs/phases/02-data-pipeline/record.md` and
+  `docs/phases/03-quiz-engine/record.md` still name
+  `arena/be3d9178-diploma-3rd-sem` as the branch that work was performed on. That
+  is accurate history and is preserved intentionally; the *active* branch is the
+  one named above.
 - Hosted CI evidence for the older committed tree is not evidence that the
   current changes passed hosted CI. No new PR, merge or deployment occurred.
 - **Documentation handoff is updated; phases 1–9 are not all complete.**
@@ -64,8 +73,10 @@ These cannot be solved by declaring a feature complete:
    Imported keys/reprint relationships need source evidence and recorded review.
 3. **Marks reconciliation:** historical printed maxima, set-question sums and
    the current 60-mark ESE pattern are not interchangeable. Keep visible warnings.
-4. **Rights/license:** no root license has been selected. Do not invent rights
-   to copied educational material or add a false license badge.
+4. **Rights/license:** repository is **MIT** (chosen 2026-11-16; `LICENSE`
+   added) for its own code/authored content. Third-party examination-source
+   material keeps unresolved rights and is a separate gate — do not invent rights
+   to that material or imply the MIT license covers it.
 5. **Release:** hosted CI on the new tree, PR/merge, deployment and domain actions
    have not happened. A green local check is not permission to publish.
 

@@ -1,7 +1,7 @@
 # Phase 2 — Truthful data pipeline
 
 - Status: 🚧 in progress · Date: 2026-11-09
-- Branch: arena/be3d9178-diploma-3rd-sem · starting tip: 646dea2
+- Branch: arena/be3d9178-diploma-3rd-sem **(retired — merged to main via PR #7; current session branch is `arena/26856d99-diploma-3rd-sem`)** · starting tip: 646dea2
 - Main CI 42634392469 green; no open PR at start. Phase 1 merged via PR #4.
 
 ## Reused (before implementing each part)

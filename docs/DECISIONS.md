@@ -16,9 +16,10 @@
 - 2026-11-06 — Deployment? — **Not authorized.** No deploy, no Pages setting
   change, no announcement in this phase. The site is already live from earlier
   work; any change to that deployment needs an explicit command.
-- 2026-11-06 — License? — **Open (GATE).** The README badge links `LICENSE`,
-  which does not exist. Owner must choose MIT or GPL-3.0 before a launch
-  phase; until then no new license text is invented.
+- 2026-11-06 — License? — **Open (GATE).** Owner must choose MIT or GPL-3.0.
+  **Resolved 2026-11-16: MIT chosen** (see `LICENSE`); covers the project's own
+  code/authored content. Third-party exam-source material keeps unresolved
+  rights and is a separate gate — this license does not relicense it.
 - 2026-11-06 — Build the full suggested capability set? — **Yes, all of it**
   (the 18 gaps in the 2026-11-06 gap report: install/update, search, repeated
   questions, mock papers, backup/restore, 404/SEO, reading controls, print,
@@ -88,7 +89,8 @@
 - Which FLASHCARD scheduler: FSRS-style (more accurate, more code) or fixed
   Leitner intervals (simpler, explainable)? Default recorded in Phase 5.2.
 - Font Awesome: remove entirely or self-host a subset (Phase 1.3 decision).
-- Site licence: MIT or GPL-3.0 (GATE).
+- Site licence: **MIT (chosen 2026-11-16)** — see `LICENSE`. Content-rights
+  for third-party exam material remain a separate, unresolved gate.
 - Who verifies syllabus/answer-key content, and against which source edition
   (needed before Phase 7).
 - Whether a custom domain is ever intended (changes the base path).

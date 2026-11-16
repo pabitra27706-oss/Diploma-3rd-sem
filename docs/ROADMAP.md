@@ -59,7 +59,7 @@ results; do not treat their earlier checkpoints as passes on later changes.
 
 ## Gates still open
 
-- **License** (MIT or GPL-3.0) — Phase 7.5, needed before any public launch.
+- **License** — **MIT chosen 2026-11-16** (see `LICENSE`); covers project code/authored content. Third-party exam-source material rights remain a separate gate.
 - **Content verification** — Phase 2.5 and Phase 8.6, owner sign-off per batch.
 - **Measurement method** — Phase 9.4, local-only by default; real analytics is a
   new decision.

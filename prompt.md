@@ -1,22 +1,24 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-09. Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`,
+Updated 2026-11-16 (branch/license audit). Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`,
 `docs/ROADMAP.md` and the relevant phase record before continuing. Source files
 and actual Git status take precedence over older narrative.
 
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- Active branch: `arena/be3d9178-diploma-3rd-sem`. Do not create/switch/rename
-  branches or push another branch.
-- Pre-merge checkpoint tip: `ac428d1`; the owner subsequently authorized
-  committing/pushing the accumulated implementation and merging through a PR.
-  Inspect actual Git/PR state rather than assuming that checkpoint is current.
+- Active branch: `arena/26856d99-diploma-3rd-sem`. Do not create/switch/rename
+  branches or push another branch. The prior `arena/be3d9178-diploma-3rd-sem`
+  branch was merged into main via PR #7 (commit `125eb94`) and is retired.
+- Current branch tip: `125eb94` (the merge commit of PR #7, which brought the
+  prior `arena/be3d9178-diploma-3rd-sem` work into main). This branch is built
+  on that merge. Inspect actual Git/PR state rather than assuming an older
+  checkpoint is current.
 - Zero-build static HTML/CSS/JS/JSON; publication base `/Diploma-3rd-sem/`.
   Canonical configured URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
   This is not confirmation that the live site has current changes.
 - No money, analytics, external runtime dependencies or implicit publication.
-- Root license is unset. README no longer links a nonexistent license file.
+- Root license is **MIT** (chosen 2026-11-16; `LICENSE` added). Covers the project's own code/authored content; third-party exam material keeps separate rights (see `docs/DECISIONS.md`).
 
 ## Current owner instructions — do not re-ask
 
@@ -98,11 +100,25 @@ on the unpushed implementation. Historical Phase 2 CI is recorded in its record.
 6. Stop at publication gates. No commit/push is needed to preserve Arena files;
    inspect identities/diff and existing rules before any authorized Git operation.
 
-## Termux delivery convention
+## Termux delivery convention (post-phase test flow)
 
-Existing checkout: `$HOME/study-hub-phase2`, tracking the active branch. Use
-`git pull --ff-only`, then symlink it as
-`$TMPDIR/study-hub-server/Diploma-3rd-sem` and serve that parent with Python on
-127.0.0.1:8000. Exact URL:
-`http://127.0.0.1:8000/Diploma-3rd-sem/`.
-State that unpushed changes cannot be obtained by pull. Stop server with Ctrl+C.
+After a phase is complete and pushed, run this on your device to pull the
+current session branch and serve it at the real subpath. It follows **push →
+pull → run** on the branch named in `rule.md` §1:
+
+```sh
+cd ~/Diploma-3rd-sem
+git push origin arena/26856d99-diploma-3rd-sem   # ensure branch is current (agent already pushed)
+git pull --ff-only                               # get latest on the branch
+cd ..
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. The `git push`
+guarantees the branch is current before the pull; it is a no-op when the agent
+has already pushed. For a first-time setup, clone instead from the parent
+directory: `git clone --single-branch --branch arena/26856d99-diploma-3rd-sem
+https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
+above from inside the checkout. Unpushed Arena changes are not available through
+a fresh clone or pull; state which commit/branch holds a change before telling
+anyone to pull.

@@ -1,9 +1,15 @@
 # Phase 1 — Platform and deploy integrity
 
-- Status: ✅ platform implementation verified (syllabus-strict exception below) · Date: 2026-11-09 · Branch: arena/e7d831f7-diploma-3rd-sem
+- Status: ✅ platform implementation verified (syllabus-strict exception below) · Date: 2026-11-09 · Branch: arena/e7d831f7-diploma-3rd-sem **(retired — work later merged to main via PR #7; current session branch is `arena/26856d99-diploma-3rd-sem`)**
 - CI: run **42633146154** green on implementation commit **560073ed93899d559439ead7f00177baba4e8ae7**. `site-preview` artifact **13680983233** uploaded (3,522,982 bytes); `site-check` artifact **13680878245**. Documentation-only follow-up records this evidence.
 - Starting tip: 114dd75. Prior main CI: 42631720212 success; no open PRs.
 - No deploy, PR, merge, license or content changes authorized.
+- **Live deployment note (2026-11-16):** the platform *code* is verified, but the
+  live GitHub Pages site is currently broken because the repo has no `.nojekyll`
+  file — Jekyll drops the `_data/`/`_quiz-data/` directories, so the site shows
+  "Unavailable". The fix is staged on the session branch; see
+  `docs/AUDIT-2026-11-16.md` §9. It must reach `main` (the Pages source) to go
+  live. This is a deployment-infra gap, separate from the platform code.
 
 ## Reused
 
