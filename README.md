@@ -42,10 +42,15 @@ installation or build is required to run the site.
   coverage, exam-pattern, study, and info pages, plus this device's local
   section notes); the 18 excluded app/placeholder/fallback shells are listed in
   [`assets/search/manifest.json`](assets/search/manifest.json).
-- **1,339 revision cards** generated from existing model answers and keyed MCQ
-  explanations, a fixed Leitner scheduler, and a [Today screen](today.html)
-  with local goals and sample-qualified weak-area trends. Cards are not newly
-  certified answers, and no recall-improvement claim is made.
+- **1,339 revision cards** generated from existing model answers (923) and keyed
+  MCQ explanations (416), a documented fixed Leitner scheduler, and a
+  [Today screen](today.html) with one primary next action, local goals, an honest
+  resettable streak and sample-qualified weak-area trends. Every card shows which
+  kind of source it came from and cites its paper/session or quiz-bank unit; the
+  generated [card report](docs/data/cards.md) lists every skip with a reason, per
+  subject and per unit (on the frozen archive: 1 exact alias and 456 quiz items
+  with no stored key, and CST207 is previous-year questions only). Cards are not
+  newly certified answers, and no recall-improvement claim is made.
 - Plain-text section notes and [settings/backup](settings.html), with namespaced
   storage, import preview, group resets and interrupted-import recovery.
   **IndexedDB migration is not implemented.**
@@ -109,6 +114,8 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
 node tests/quiz-engine-dom.cjs
 node tests/study-store.cjs
+node tests/study-dom.cjs
+node tests/study-offline.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs
 node tests/data-pipeline-consumers.cjs
@@ -137,7 +144,9 @@ python3 scripts/check_pyq_integrity.py
 ```
 
 Do not edit generated bundles directly. Source scripts remain under `quiz/js/`;
-concatenation has no runtime dependency. Read the
+concatenation has no runtime dependency. `build_cards.py` rewrites
+[`assets/cards/`](assets/cards) and the generated
+[card report](docs/data/cards.md). Read the
 [cache policy](docs/CACHE-POLICY.md) before changing worker dependencies.
 
 ## Privacy, rights and release status

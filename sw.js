@@ -1,5 +1,5 @@
 /* Scope-relative, first-party-only shell. Updates activate only on user request. */
-const VERSION = 'study-safety-2026-11-09';
+const VERSION = 'study-2026-11-17';
 const CACHE_PREFIX = 'diploma-3rd-sem-';
 const CACHE_NAME = CACHE_PREFIX + VERSION;
 const BASE = new URL('./', self.location.href);
@@ -14,7 +14,9 @@ const PRECACHE_ASSETS = [
   'assets/js/unit-discovery.js', 'assets/js/app.js',
   'assets/js/pwa.js', 'assets/js/data-catalog.js', 'assets/icons/sprite.svg',
   'assets/search/manifest.json', 'assets/search/index-pages.json',
-  'assets/search/repeated.json', 'manifest.json'
+  'assets/search/repeated.json', 'manifest.json',
+  'cards.html', 'today.html', 'assets/js/study-store.js', 'assets/js/study-ui.js',
+  'quiz/js/attempt-store.js', 'assets/cards/manifest.json'
 ].map(path => new URL(path, BASE).href);
 
 async function warmSearchIndex() {
@@ -47,6 +49,36 @@ async function warmSearchIndex() {
   }));
 }
 
+async function warmStudyCards() {
+  const cache = await caches.open(CACHE_NAME);
+  const manifestUrl = new URL('assets/cards/manifest.json', BASE);
+  const manifestKey = new URL(manifestUrl);
+  manifestKey.searchParams.set('v', VERSION);
+  let manifestRes = await cache.match(manifestKey.href) || await cache.match(manifestUrl.href);
+  try {
+    const fresh = await fetch(manifestUrl.href);
+    if (fresh.ok) {
+      await cache.put(manifestUrl.href, fresh.clone());
+      await cache.put(manifestKey.href, fresh.clone());
+      manifestRes = fresh;
+    }
+  } catch {}
+  if (!manifestRes) return;
+  let manifest;
+  try { manifest = await manifestRes.clone().json(); } catch { return; }
+  await Promise.all(Object.values(manifest.subjects || {}).map(async meta => {
+    if (!meta || !meta.file) return;
+    const url = new URL('assets/cards/' + meta.file, BASE);
+    const key = new URL(url);
+    key.searchParams.set('v', VERSION);
+    if (await cache.match(key.href)) return;
+    try {
+      const res = await fetch(url.href);
+      if (res.ok) await cache.put(key.href, res);
+    } catch {}
+  }));
+}
+
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_ASSETS)));
 });
@@ -58,6 +90,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('message', event => {
   if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
   if (event.data?.type === 'WARM_SEARCH') event.waitUntil(warmSearchIndex());
+  if (event.data?.type === 'WARM_STUDY') event.waitUntil(warmStudyCards());
 });
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);

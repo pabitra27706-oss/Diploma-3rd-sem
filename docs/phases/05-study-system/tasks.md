@@ -3,6 +3,11 @@
 Everything here is local-first and additive: no existing page may lose a
 feature, and no card may exist without a source.
 
+**Acceptance status (2026-11-17):** every acceptance line in 5.1–5.5 below is
+covered by a committed check or test and is listed, with the measured numbers and
+the limits, in [`record.md`](record.md). Read that file for evidence; this file
+stays the plan.
+
 ## 5.1 — Card generation
 
 **Steps**
@@ -80,7 +85,11 @@ empty state; the date rollover uses local time consistently (see 6.2).
 
 ```sh
 python3 scripts/build_cards.py --report docs/data/cards.md
-python3 scripts/validate_data.py --strict
+python3 -m unittest tests.test_cards -v
+node tests/study-store.cjs
+node tests/study-dom.cjs
+node tests/study-offline.cjs
+python3 scripts/validate_data.py --check-baseline
 python3 scripts/check_site.py --strict
 ```
 

@@ -340,3 +340,39 @@ separate source-verification gate and needs the owner's explicit approval.
     `subjectLabel()` display names on screen and explicitly labelling quiz
     review links as local to this device.
 
+## Phase 5 study-system: scheduler, card citations and study cache — 2026-11-17
+
+- **Scheduler choice (agent decision, reversible):** fixed **Leitner** ladder
+  1/3/7/16/35 days instead of FSRS. Reason: it fits in one documented function,
+  is deterministic under fixed inputs, needs no dependency or parameter model,
+  and can be unit-tested exactly. The formula, the day-boundary rule and both
+  clock clamps are written in the `assets/js/study-store.js` header. Switching to
+  FSRS later is a recorded engineering decision, not a data change.
+- **Daily new-card cap counts today's introductions:** card state carries
+  `firstDay`, so the cap (`newLimit`, default 20) limits cards *introduced today*;
+  due reviews are never capped. The earlier lifetime-`reps` estimate could let
+  yesterday's introductions consume today's allowance.
+- **Card provenance is two-field:** `citation` keeps the raw archive provenance
+  for audit; `citationLabel` is the display-safe line (short subject name +
+  session/panel + printed question number). `verification` is a short code whose
+  sentence lives once in `assets/cards/manifest.json` → `verificationNotes`. This
+  keeps the payload compact without weakening the visible source rule and without
+  printing raw `CST20x` codes or internal question ids (owner decision
+  2026-11-17). No answer text, key or unit is written, shortened or certified.
+- **Skip accounting is explicit, not merged:** every excluded item carries a
+  reason (`alias`, `pyq-missing-answer`, `quiz-not-mcq`, `quiz-no-explanation`,
+  `quiz-no-key`) and the generated report shows totals per subject, per reason and
+  per unit. On the frozen archive that is 1,339 cards and 457 skips (1 alias + 456
+  keyless quiz items); CST207 is disclosed as PYQ-only. **Card backs remain under
+  the owner content-verification GATE** — generating a card is not certification.
+- **Study offline coverage:** `cards.html`, `today.html`, the study scripts, the
+  attempt store and `assets/cards/manifest.json` join the worker precache, and a
+  `WARM_STUDY` message caches all five subject shards under the versioned key
+  (mirroring Phase 4's `WARM_SEARCH`). The worker `VERSION` moves to
+  `study-2026-11-17` so old caches drop on activation. Coverage means "cached
+  after one study page load", not first-visit offline, and not survival under
+  browser eviction.
+- **Honest framing kept in the UI:** percentages require ≥ 5 observations in that
+  area, weak rows always print `correct / attempted` and the number of
+  contributing attempts, the streak counts only recorded local days and names its
+  reset start, and no screen claims that cards improve recall.

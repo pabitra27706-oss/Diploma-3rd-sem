@@ -1,9 +1,22 @@
-<!doctype html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+<head>
 <script src="./assets/js/storage.js"></script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Today — Study Hub</title><link rel="stylesheet" href="assets/css/variables.css"><link rel="stylesheet" href="assets/css/discovery.css"><script src="assets/js/theme.js"></script><script defer src="assets/js/pwa.js"></script><script defer src="quiz/js/attempt-store.js"></script><script defer src="assets/js/study-store.js"></script><script defer src="assets/js/subject-labels.js"></script><script defer src="assets/js/study-ui.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Today — Study Hub</title>
+<link rel="stylesheet" href="assets/css/variables.css">
+<link rel="stylesheet" href="assets/css/discovery.css">
+<script src="assets/js/theme.js"></script>
+<script defer src="assets/js/pwa.js"></script>
+<script defer src="quiz/js/attempt-store.js"></script>
+<script defer src="assets/js/study-store.js"></script>
+<script defer src="assets/js/subject-labels.js"></script>
+<script defer src="assets/js/study-ui.js"></script>
+
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/today.html">
-<meta name="app-build" content="study-safety-2026-11-09">
+<meta name="app-build" content="study-2026-11-17">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Today — Study Hub">
@@ -22,5 +35,58 @@
 <!-- /presence -->
 <link rel="stylesheet" href="./assets/css/accessibility.css">
 <script defer src="./assets/js/accessibility.js"></script>
-</head><body>
-<a class="skip-study-content" href="#study-main-content">Skip to study content</a><main class="discovery" id="study-main-content"><header><a href="index.html">Study Hub</a><a href="search.html">Search</a><a href="cards.html">Review cards</a></header><h1>Today</h1><p id="study-status" role="status">Loading local study summary…</p><section class="panel"><h2>Daily goal</h2><label for="goal">Activities per day</label><input id="goal" type="number" min="1" max="500" value="20"><button id="save-goal">Save goal</button><p id="goal-progress"></p><label for="new-limit">New cards per day</label><input id="new-limit" type="number" min="0" max="100" value="20"><button id="save-limit">Save limit</button><p id="streak"></p><button id="reset-streak">Reset streak start</button></section><section class="panel"><h2>Study next</h2><p id="due-count"></p><a href="cards.html">Review due and new cards</a><p id="mistake-count"></p><a href="quiz/index.html">Open local mistake queue</a></section><section class="panel"><h2>Question of the day</h2><p id="daily-question"></p><a id="daily-link" href="search.html">View source</a> <button id="another-question">Another question</button></section><section class="panel"><h2>Weak areas</h2><p>Keyed MCQs only. At least five question observations are needed for a percentage; this is practice history, not a prediction.</p><div id="weak-areas"></div></section></main></body></html>
+</head>
+<body>
+<a class="skip-study-content" href="#study-main-content">Skip to study content</a>
+<main class="discovery" id="study-main-content">
+<header><a href="index.html">Study Hub</a> <a href="search.html">Search</a> <a href="cards.html">Review cards</a> <a href="settings.html">Settings</a></header>
+<h1>Today</h1>
+<p>One screen for "what now". Everything below is computed from activity this device recorded: no account, no sync, no telemetry. Percentages describe practice history, never a prediction.</p>
+
+<p id="study-status" role="status">Loading local study summary…</p>
+
+<section class="panel" aria-labelledby="next-heading">
+<h2 id="next-heading">Study next</h2>
+<p id="plan-detail"></p>
+<p id="primary-action"></p>
+<div id="primary-why"></div>
+<p id="due-count"></p>
+<p id="mistake-count"></p>
+<p><a href="cards.html">Review due and new cards</a> · <a href="quiz/index.html">Open the local mistake queue</a> · <a href="practice/index.html">Practice from previous-year papers</a></p>
+</section>
+
+<section class="panel" aria-labelledby="goal-heading">
+<h2 id="goal-heading">Daily goal and new-card cap</h2>
+<form id="goal-form">
+<p><label for="goal">Activities per day (card reviews plus answered questions)</label> <input id="goal" type="number" min="1" max="500" step="1" value="20"> <button id="save-goal" type="button">Save goal</button></p>
+<p><label for="new-limit">New cards per day</label> <input id="new-limit" type="number" min="0" max="100" step="1" value="20"> <button id="save-limit" type="button">Save cap</button></p>
+</form>
+<progress id="goal-meter" max="20" value="0">0 of 20 activities</progress>
+<p id="goal-progress"></p>
+<p id="new-limit-help"></p>
+</section>
+
+<section class="panel" aria-labelledby="streak-heading">
+<h2 id="streak-heading">Local activity streak</h2>
+<p id="streak"></p>
+<p id="streak-reset-note"></p>
+<button id="reset-streak" type="button">Reset streak start to today</button>
+</section>
+
+<section class="panel" aria-labelledby="daily-heading">
+<h2 id="daily-heading">Question of the day</h2>
+<p>Picked from the local date, so every device shows the same question on the same day. It is a previous-year model answer, not a newly verified key.</p>
+<p id="daily-question">Loading…</p>
+<p id="daily-citation"></p>
+<p><a id="daily-link" href="search.html">View the source paper</a> <button id="another-question" type="button">Another question</button></p>
+</section>
+
+<section class="panel" aria-labelledby="weak-heading">
+<h2 id="weak-heading">Weak areas</h2>
+<p>Keyed MCQs only, from retained local practice history (up to 50 attempts). A percentage appears only after at least five observations in that area; the counts are always shown.</p>
+<p id="weak-summary"></p>
+<div id="weak-areas"></div>
+</section>
+</main>
+</body>
+</html>

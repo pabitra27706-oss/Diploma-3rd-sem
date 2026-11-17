@@ -2,12 +2,14 @@
 
 - Scope-relative URLs; no browser-facing localhost endpoints.
 - Shell dependencies are pre-cached in the versioned service-worker cache
-  (`VERSION = 'study-safety-2026-11-09'`), including core discovery shells and
-  compact metadata (`search.html`, `repeated.html`, `coverage.html`,
-  `exam-pattern.html`, `assets/css/discovery.css`, `assets/js/subject-labels.js`,
+  (`VERSION = 'study-2026-11-17'`), including core discovery shells and compact
+  metadata (`search.html`, `repeated.html`, `coverage.html`, `exam-pattern.html`,
+  `assets/css/discovery.css`, `assets/js/subject-labels.js`,
   `assets/js/discovery.js`, `assets/js/unit-discovery.js`,
   `assets/search/manifest.json`, `assets/search/index-pages.json`, and
-  `assets/search/repeated.json`).
+  `assets/search/repeated.json`) plus the Phase 5 study shell (`cards.html`,
+  `today.html`, `assets/js/study-store.js`, `assets/js/study-ui.js`,
+  `quiz/js/attempt-store.js`, and `assets/cards/manifest.json`).
 - Pages: network-first; on failure, returns the cached response, the pre-cached
   pathname shell (so deep links such as `search.html?q=...` and
   `repeated.html?subject=...` work offline), or `offline.html`.
@@ -18,6 +20,12 @@
   of being overwritten by the worker version. Visiting `search.html` sends a
   one-shot `WARM_SEARCH` message so the service worker caches all remaining
   subject shards in the background for offline cross-subject queries.
+- Card shards (`assets/cards/CST20x.json`) are cached per subject at
+  `?v=<VERSION>`. Loading `cards.html` or `today.html` sends a one-shot
+  `WARM_STUDY` message, so the worker caches the five subject shards plus the
+  card manifest in the background; a device can then review cards offline after
+  that first study-page load. A cold first visit and an installed-but-never-opened
+  study page are not covered.
 - Generated pools/cards without explicit content hashes add `?v=<VERSION>` and
   are refreshed in the background at their stable URLs; a cached response may be
   from the previous version until the next request. This limitation is visible

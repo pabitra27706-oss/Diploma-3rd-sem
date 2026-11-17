@@ -51,8 +51,9 @@ use PR #7/Git for the current CI and merge result.
 authorizes deployment, Pages or domain changes, and none closes an unfinished
 phase gate.
 
-- Branch: `arena/80b11bcf-diploma-3rd-sem` (active session branch, branched
-  from `main` at `9d47c7c76b2384c72944a0880df058a2518394ec`, the PR #11 merge).
+- Branch: `arena/4d3997da-diploma-3rd-sem` (active session branch, branched
+  from `main` at `7c20a5500118588419081362b7af869dc8c7806f`, the PR #12 merge of
+  the Phase 4 branch).
   Earlier branches `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
   `arena/858a50c7-...` (PR #9 `365b8f7`), `arena/47d8bf99-...` (PR #8
   `3e3cb2e1`), `arena/be3d9178-...` (PR #7 `125eb94`), and `arena/26856d99-...`
@@ -70,6 +71,10 @@ phase gate.
 - Phase 4 (`04-discovery`) engineering parts 4.1–4.5 are complete and
   gate-verified on `arena/80b11bcf-diploma-3rd-sem` (`🚧` pending owner local
   verification); see [`phases/04-discovery/record.md`](phases/04-discovery/record.md).
+- Phase 5 (`05-study-system`) parts 5.1–5.5 are complete and gate-verified on
+  `arena/4d3997da-diploma-3rd-sem` (`🚧` pending owner local verification); see
+  [`phases/05-study-system/record.md`](phases/05-study-system/record.md). The
+  offline worker version is now `study-2026-11-17`.
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
   `arena/be3d9178-diploma-3rd-sem` as the branch that work was performed on. That
@@ -91,7 +96,7 @@ phase gate.
 | 2 — Data (`✅*`) | Deterministic inventory/scheduling, enriched catalog & derived pools, all 5 subject + 24 unit HTML pages syllabus-aligned & validator-checked, alias deep links & PYQ repeat cross-refs, generic topics filtered, no-key labels, source-review ledger, immutable-PYQ guard | Owner/source GATE only: resolve 9 source-backed data findings and 3 grouped syllabus errors; verify the 15 normalized-stem candidate clusters and CST207/Jan-2026 bank additions. No guessed keys or raw retags. |
 | 3 — Quiz (`✅*`) | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes, full paper practice enforcing `paperFormat` `answerAny` section/choiceSet quotas across 28 papers, 30m `2023-03` Group A loose-script window, `1m option + 1m written explanation` split, ESE pattern warnings, Print/PDF export | Owner-approved with recorded caveats: no standalone CST207 quiz bank; 456 unkeyed items and subjective/written-explanation marks remain manual self-review; Phase 10 cross-device acceptance pending. |
 | 4 — Discovery (`🚧`) | 2,410 search entries across 5 subject shards + `index-pages.json` (50/68 HTML pages indexed, 18 explicitly excluded in `manifest.json`, all shards ≤ 40%), offline SW precache + `WARM_SEARCH`, XSS-safe keyboard/URL/`popstate` search UI, 1 exact alias + 15 unverified candidate repeat clusters (32 records), deep links + `navigator.share`/clipboard/input fallbacks across PYQ/Practice/Quiz, authored unit heading anchors + breadcrumbs + hub counts + filtered-PYQ URL handoff, `subjectLabel()` everywhere | Awaiting owner Termux/browser verification before closing `🚧` → `✅*`. Normalized candidate clusters remain pending source-verified dedup; physical phone latency/share-sheet/screen-reader testing in Phase 10. |
-| 5 — Study system | Source-linked cards, fixed Leitner reviews, Today/goals/streaks, weak-area denominators, local seven-day trends | Broader clock/day-rollover/new-card-cap edge cases and clearer card-level source-eligibility reporting. Cards use existing model/keyed material, not new certification. |
+| 5 — Study system (`🚧`) | Source-linked cards with per-unit eligibility reporting, documented Leitner scheduling (clock/day-rollover/new-card-cap edges tested), review UI with URL+`popstate` filters and empty-queue fallbacks, Today dashboard with one primary action, weak-area denominators/attempt counts/trends, offline card caching (`WARM_STUDY`) | Awaiting owner Termux/browser verification before closing `🚧` → `✅*`. Cards use existing model/keyed material, not new certification; answer certification stays a separate source gate. Device/screen-reader acceptance is Phase 10. |
 | 6 — Storage/portability | Central namespaced boundary, verified legacy copy migration, notes, preferences, group reset, previewed backup/merge/replace, recovery journal | Implement IndexedDB threshold/async cutover/fallback and migration evidence; concurrent-tab transaction isolation/state sync; typed validation of further legacy variants. Current primary API remains synchronous local storage. |
 | 7 — Inclusion/trust | Static landmarks/skip links on many legacy pages, shared focus/motion/reading controls, settings en/bn labels, truthful feedback/privacy | Remaining structure/heading/form warnings, full dialog/tab keyboard behavior, measured contrast/target/zoom evidence, wider Bengali UI catalog, credits/README maintenance and license/content-rights decision. No WCAG compliance claim yet. |
 | 8 — Content depth | Derived 23-unit coverage/provenance, historical-total caveats, sourced practical/internship task pages, shared print styles | Cited formula/definition sheets, answer-verification batches, exam-total/source mapping reconciliation. No invented pedagogical sign-off. Physical print acceptance moves to Phase 10. |
@@ -129,15 +134,19 @@ These cannot be solved by declaring a feature complete:
 These are local results from the latest implementation checkpoint, not a claim
 that documentation-only edits reran all browser suites:
 
-- Python unittest discovery: **16 PASS** (including 5 discovery tests verifying
+- Python unittest discovery: **22 PASS** (including 6 Phase 5 card-eligibility
+  tests — source-verbatim copies, citation hygiene, skip accounting, per-unit
+  counts, byte-identical regeneration, compact payload — and 5 discovery tests verifying
   shard determinism, ≤ 40% byte budgets, 68-page scope partition, 2,410-entry
   file/anchor resolution, 1 exact + 15 unverified candidate repeat clusters, and
   SW discovery cache registration).
-- Seven deterministic Node suites: attempt state + 28-paper rule/quota/section-timer/explanation-split verification, quiz DOM/export/label contracts, scheduler/trends (including generic-topic collapse), storage, interruption/quota recovery, Phase 2 derived-pipeline consumers, and Phase 4 discovery DOM/XSS/keyboard/repeat/deep-link/share-fallback/unit/SW offline simulation (`tests/discovery-dom.cjs`) — **PASS**.
+- Nine deterministic Node suites: attempt state + 28-paper rule/quota/section-timer/explanation-split verification, quiz DOM/export/label contracts, scheduler/trends/clock/day-rollover/streak/goal helpers, storage, interruption/quota recovery, Phase 2 derived-pipeline consumers, Phase 4 discovery DOM/XSS/keyboard/repeat/deep-link/share-fallback/unit/SW offline simulation (`tests/discovery-dom.cjs`), Phase 5 study DOM/UI/keyboard/popstate/empty states (`tests/study-dom.cjs`) and the study worker precache/`WARM_STUDY`/offline navigation (`tests/study-offline.cjs`) — **PASS**.
 - Seven focused Chromium suites: Practice/data, quiz engine, discovery/study,
   storage/notes, cached-paper offline, feedback, cached 20-card offline keyboard
-  review — PASS. No broad device compatibility is inferred.
-- Full parse sweep: **48 JS/CJS files and all JSON passed**.
+  review — PASS at the Phase 4 checkpoint. They were updated for the Phase 5
+  markup but **not re-run** in the 2026-11-17 environment (no Chromium there); no
+  broad device compatibility is inferred.
+- Full parse sweep: **55 JS/CJS files and all 79 JSON files passed**.
 - Site strict: **0 errors / 28 warnings**; platform check: **0 errors**.
 - PYQ integrity: **0 changed/added/missing original files**.
 - Exact data baseline matches; **full strict data/syllabus validation still
