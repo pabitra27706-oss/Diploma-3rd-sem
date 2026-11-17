@@ -17,3 +17,17 @@
    const first=focusable[0],last=focusable.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
  });
 })();
+/* Print action (Phase 8.3): one labelled control on every page. Pages that
+   already own a print flow (the PYQ answer overlay) are skipped, and the
+   button never prints itself. Additive and keyboard-operable. */
+(() => {
+  const main = document.querySelector('main') || document.getElementById('study-main-content');
+  if (!main || document.querySelector('.print-page-btn, #printAllBtn')) return;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'print-page-btn';
+  button.textContent = 'Print this page';
+  button.style.cssText = 'margin:1rem 0;padding:.55rem .9rem;min-height:24px;min-width:24px;font:inherit';
+  button.addEventListener('click', () => window.print());
+  main.append(button);
+})();

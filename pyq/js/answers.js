@@ -1567,6 +1567,13 @@ document.getElementById('printCloseBtn').addEventListener('click', () => {
 
 document.getElementById('printNowBtn').addEventListener('click', () => window.print());
 
+const printAnswersBox = document.getElementById('printIncludeAnswers');
+if (printAnswersBox) {
+  printAnswersBox.addEventListener('change', () => {
+    if (!document.getElementById('printOverlay').classList.contains('hidden')) buildPrintContent();
+  });
+}
+
 document.querySelectorAll('.print-size-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.print-size-btn').forEach(b => b.classList.remove('active'));
@@ -1575,9 +1582,86 @@ document.querySelectorAll('.print-size-btn').forEach(btn => {
   });
 });
 
+function printIncludeAnswers() {
+  const box = document.getElementById('printIncludeAnswers');
+  return !box || box.checked;
+}
+
+// One answer's markup, without its wrapper, so a question sheet and an answer
+// key can be built from the same source text.
+function printAnswerBody(q) {
+  if (!q.answer) return '';
+  const answerText = q.answer.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+  let html = '';
+  const hasExplicitCode = answerText.includes('```');
+
+  if (hasExplicitCode) {
+    html += `<div class="print-answer-label">Answer</div>`;
+    const parts = answerText.split(/```\w*\n?/);
+    parts.forEach((part, pi) => {
+      if (pi % 2 === 0) {
+        if (part.trim()) html += `<div class="print-answer-text">${escapeHtml(part)}</div>`;
+      } else {
+        html += `<div class="print-code-block">${escapeHtmlForCode(part)}</div>`;
+      }
+    });
+    return html;
+  }
+
+  const ansLines = answerText.split('\n');
+  let hasAutoCode = false;
+  let consecutiveCode = 0;
+  for (const al of ansLines) {
+    if (isCodeLine(al.trim())) {
+      consecutiveCode++;
+      if (consecutiveCode >= 2) { hasAutoCode = true; break; }
+    } else {
+      consecutiveCode = 0;
+    }
+  }
+
+  if (!hasAutoCode) {
+    return `<div class="print-answer-label">Answer</div>
+      <div class="print-answer-text">${escapeHtml(answerText)}</div>`;
+  }
+
+  html += `<div class="print-answer-label">Answer</div>`;
+  let inCode = false;
+  const codeBuffer = [];
+  let textBuffer = [];
+  const flushText = () => {
+    if (textBuffer.length > 0) {
+      html += `<div class="print-answer-text">${escapeHtml(textBuffer.join('\n'))}</div>`;
+      textBuffer = [];
+    }
+  };
+  const flushCode = () => {
+    if (codeBuffer.length > 0) {
+      html += `<div class="print-code-block">${escapeHtmlForCode(codeBuffer.join('\n'))}</div>`;
+      codeBuffer.length = 0;
+    }
+  };
+  for (const al of ansLines) {
+    if (isCodeLine(al.trim()) || al.trim() === '{' || al.trim() === '}' || al.trim() === '};') {
+      if (!inCode) { flushText(); inCode = true; }
+      codeBuffer.push(al);
+    } else {
+      if (inCode) { flushCode(); inCode = false; }
+      textBuffer.push(al);
+    }
+  }
+  flushText();
+  flushCode();
+  return html;
+}
+
+// Questions always print first. Answers, when included, start on a new page so
+// a question sheet can be handed out on its own. Nothing here is an official
+// marking scheme: the answers are the stored model answers.
 function buildPrintContent() {
   const c = document.getElementById('printContent');
   const subName = SUBJECT_NAMES[subjectCode] || shortSubject(subjectCode);
+  const includeAnswers = printIncludeAnswers();
 
   let html = `
     <div class="print-header">
@@ -1585,8 +1669,11 @@ function buildPrintContent() {
       <p>Previous Year Questions with Answers</p>
       <p>${paperMeta.month} ${paperMeta.year} · Paper: ${paperMeta.sourcePaperCode || paperMeta.paperCode}</p>
       <p>Total: ${questions.length} Questions</p>
+      <p>${includeAnswers ? 'Answers are stored model answers, not an official marking scheme.' : 'Question sheet only — answers left out.'}</p>
     </div>
   `;
+
+  let answersHtml = '';
 
   questions.forEach((q, i) => {
     const options = getOptions(q);
@@ -1600,96 +1687,29 @@ function buildPrintContent() {
     if (isMCQ) {
       html += '<div class="print-q-options">';
       options.forEach((opt, oi) => {
-        const isC = oi === correctIndex;
-        html += `<div class="print-q-option ${isC ? 'correct-option' : ''}">
-          ${opt.key || OPTION_LETTERS[oi]}) ${escapeHtml(opt.text)}${isC ? ' [Correct]' : ''}
+        html += `<div class="print-q-option">
+          ${opt.key || OPTION_LETTERS[oi]}) ${escapeHtml(opt.text)}
         </div>`;
       });
       html += '</div>';
     }
-
-    if (q.answer) {
-      // Handle code in print answer
-      const answerText = q.answer.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
-      const hasExplicitCode = answerText.includes('```');
-
-      if (hasExplicitCode) {
-        html += `<div class="print-answer-block"><div class="print-answer-label">Answer</div>`;
-        const parts = answerText.split(/```\w*\n?/);
-        parts.forEach((part, pi) => {
-          if (pi % 2 === 0) {
-            if (part.trim()) {
-              html += `<div class="print-answer-text">${escapeHtml(part)}</div>`;
-            }
-          } else {
-            html += `<div class="print-code-block">${escapeHtmlForCode(part)}</div>`;
-          }
-        });
-        html += `</div>`;
-      } else {
-        // Check for auto-detected code
-        const ansLines = answerText.split('\n');
-        let hasAutoCode = false;
-        let consecutiveCode = 0;
-
-        for (const al of ansLines) {
-          if (isCodeLine(al.trim())) {
-            consecutiveCode++;
-            if (consecutiveCode >= 2) { hasAutoCode = true; break; }
-          } else {
-            consecutiveCode = 0;
-          }
-        }
-
-        if (hasAutoCode) {
-          html += `<div class="print-answer-block"><div class="print-answer-label">Answer</div>`;
-          let inCode = false;
-          let codeBuffer = [];
-          let textBuffer = [];
-
-          const flushText = () => {
-            if (textBuffer.length > 0) {
-              html += `<div class="print-answer-text">${escapeHtml(textBuffer.join('\n'))}</div>`;
-              textBuffer = [];
-            }
-          };
-
-          const flushCode = () => {
-            if (codeBuffer.length > 0) {
-              html += `<div class="print-code-block">${escapeHtmlForCode(codeBuffer.join('\n'))}</div>`;
-              codeBuffer = [];
-            }
-          };
-
-          for (const al of ansLines) {
-            if (isCodeLine(al.trim()) || al.trim() === '{' || al.trim() === '}' || al.trim() === '};') {
-              if (!inCode) {
-                flushText();
-                inCode = true;
-              }
-              codeBuffer.push(al);
-            } else {
-              if (inCode) {
-                flushCode();
-                inCode = false;
-              }
-              textBuffer.push(al);
-            }
-          }
-          flushText();
-          flushCode();
-          html += `</div>`;
-        } else {
-          html += `<div class="print-answer-block">
-            <div class="print-answer-label">Answer</div>
-            <div class="print-answer-text">${escapeHtml(answerText)}</div>
-          </div>`;
-        }
-      }
-    }
-
     html += '</div>';
+
+    if (includeAnswers && (q.answer || isMCQ)) {
+      answersHtml += `<div class="print-q-block print-answer-item">`;
+      answersHtml += `<div class="print-q-num">Q${i + 1}.</div>`;
+      if (isMCQ && correctIndex >= 0) {
+        const correct = options[correctIndex];
+        answersHtml += `<div class="print-correct-line">Correct option: ${escapeHtml(correct.key || OPTION_LETTERS[correctIndex])}) ${escapeHtml(correct.text)}</div>`;
+      }
+      answersHtml += printAnswerBody(q);
+      answersHtml += '</div>';
+    }
   });
+
+  if (includeAnswers) {
+    html += `<section class="print-answers-section"><h2>Answers</h2>${answersHtml}</section>`;
+  }
 
   html += `<div style="text-align:center;padding:1rem;color:#888;border-top:1px solid #ddd;margin-top:2rem;">
     Diploma 3rd Sem PYQ App · ${new Date().toLocaleDateString()}
@@ -1855,9 +1875,22 @@ function decorateQuestionLinks() {
 
     controls.append(copy, share, status);
 
-    const provenance = document.createElement('p');
-    provenance.textContent =
-      `Answer status: ${q.answerStatus || 'unverified'} · Source status: ${q.sourceStatus || 'unverified'} · Citation: ${q.sourcePage || 'not recorded'}${q.verifiedOn ? ' · Verification date: ' + q.verifiedOn : ''}`;
+    // Provenance stays one small line until a reader asks for it (Phase 8.6).
+    // The summary keeps the citation and the certification state visible even
+    // when the details element is closed, so print and screen readers see it.
+    const provenance = document.createElement('details');
+    provenance.className = 'question-provenance';
+    const provenanceSummary = document.createElement('summary');
+    provenanceSummary.textContent =
+      `Source: ${q.sourcePage || 'not recorded'} · ${q.verifiedOn ? 'verified ' + q.verifiedOn : 'not certified'}`;
+    const provenanceBody = document.createElement('p');
+    provenanceBody.textContent =
+      `Question wording: ${q.sourceStatus || 'unverified'}. Answer: ${q.answerStatus || 'unverified'} (stored model answer, not an official key). `
+      + `Citation: ${q.sourcePage || 'not recorded'}. `
+      + (q.verifiedOn
+        ? `Owner-verified on ${q.verifiedOn}.`
+        : 'No owner sign-off date is recorded, so this answer is not certified.');
+    provenance.append(provenanceSummary, provenanceBody);
     controls.append(provenance);
     card.append(controls);
 

@@ -32,7 +32,9 @@ class AccessibilityAuditTests(unittest.TestCase):
 
     def test_page_count_matches_baseline(self):
         self.assertEqual(self.data['pages'], self.baseline['pages'])
-        self.assertEqual(self.data['pages'], 68)
+        # Phase 7 measured 68 pages; Phase 8 added six revision-sheet pages
+        # (revision/index.html + one sheet per theory course), so the lock is 74.
+        self.assertEqual(self.data['pages'], 74)
 
     def test_every_page_has_one_main_and_one_h1_and_a_skip_link(self):
         self.assertEqual(self.data['no_main'], [])

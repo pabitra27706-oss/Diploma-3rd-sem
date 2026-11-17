@@ -1561,7 +1561,24 @@ body {
 @media (max-width: 640px) {
   .nav-btn span { display: none; }
   .nav-btn { padding: 0.45rem 0.65rem; }
-  .print-action-btn span { display: none; }
+  /* Phase 8.3 — print with or without answers, answers on their own page. */
+.print-include-answers {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 24px;
+  font-size: 0.85rem;
+  color: inherit;
+}
+.print-include-answers input { width: 1rem; height: 1rem; }
+.print-answers-section { break-before: page; page-break-before: always; }
+.print-correct-line { font-weight: 600; margin: 0.2rem 0 0.4rem; }
+
+@media print {
+  .print-answers-section h2 { font-size: 14pt; margin-bottom: 0.5rem; }
+  .print-q-block { margin-bottom: 0.8rem; }
+}
+.print-action-btn span { display: none; }
   .print-title { font-size: 0.82rem; }
   .mode-btn span { font-size: 0.78rem; }
   .q-header { padding: 0.7rem 0.85rem; }

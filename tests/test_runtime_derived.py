@@ -31,7 +31,12 @@ class RuntimeDerivedTests(unittest.TestCase):
             self.assertEqual((ROOT/output).read_text(),text,output)
     def test_coverage_counts_equal_raw_inventory(self):
         papers,banks=stores();data=json.loads((ROOT/'assets/data/coverage.json').read_text())
+        # Quiz items carry no unit of their own: the unit lives on the bank file.
+        # Recounting per question object would compare against zero, which is what
+        # this assertion silently did before Phase 8 corrected the generator.
         for row in data['units']:
             self.assertEqual(row['pyqCount'],sum(p['subject']==row['subject'] and q.get('unit')==row['unit'] for _,p in papers for q in p['questions']))
-            self.assertEqual(row['quizCount'],sum(p['subject']==row['subject'] and q.get('unit')==row['unit'] for _,p in banks for q in p['questions']))
+            self.assertEqual(row['quizCount'],sum(len(p['questions']) for _,p in banks if p['subject']==row['subject'] and p.get('unit')==row['unit']))
+            cards=json.loads((ROOT/f"assets/cards/{row['subject']}.json").read_text())
+            self.assertEqual(row['cardCount'],sum(c.get('unit')==row['unit'] for c in cards))
 if __name__=='__main__':unittest.main()

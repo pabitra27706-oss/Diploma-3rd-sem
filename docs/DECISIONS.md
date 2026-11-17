@@ -500,3 +500,83 @@ separate source-verification gate and needs the owner's explicit approval.
   attempts under background throttling.
 - **No merge authorization** was given in that message, so nothing was merged, no
   PR was opened, and no Pages, tag or release action was taken.
+
+## Phase 8 content-depth decisions — 2026-11-17
+
+Agent decisions (reversible — object if wrong). None of them certifies content.
+
+- **Paper totals: the data is right, the old comparison was wrong.** For all 28
+  frozen papers the marks obtainable under the paper's own printed quotas
+  (answer-any per group or per choice set) equal the printed `fullMarks`
+  exactly; the marks summed over *all set* questions are necessarily larger
+  because only a subset is answered. Consequence: the "unverified overall total"
+  wording on paper practice now *explains* that arithmetic instead of claiming
+  the total is unknown. What remains undecided — and stays recorded as
+  unverified on `exam-pattern.html` — is **which pattern applies to a given
+  session**: the syllabus ESE table (1/2/6 mix, 30+12+18) matches the June-2022
+  papers only; the 2024–2026 papers print 20+40, and March 2021 printed 70
+  marks. The site shows all three and tells the student to ask their
+  institution. It does not pick one, and this is not a waiver of the
+  marks-reconciliation gate.
+- **Coverage is published as counts and flags, never a percentage.** A unit with
+  one thin note must not read as "covered". `coverage.html` states the method on
+  the page.
+- **Stored out-of-syllabus tags and the reversed CST201 bank units stay as they
+  are.** Frozen bytes are not re-tagged; the coverage map shows both the stored
+  unit count and the syllabus-implied count side by side and flags the row. The
+  ledger finding remains open.
+- **Print sheet: one stylesheet, injected by the presence generator, on every
+  page.** Page `<header>` elements are deliberately not hidden because the unit
+  `<h1>` lives inside one. No fake running header is drawn: browser `@page`
+  margin boxes are unsupported in Chrome/Safari/Firefox, so the page's own
+  `<h1>` plus printed link URLs carry the identity. Consequence: "a header/footer
+  with subject/unit" in `tasks.md` 8.3 step 1 is met only in that weaker form,
+  and the record says so.
+- **Revision sheets are authored as sourced drafts, generated, and gated.**
+  `docs/revision-sheets/<course>.json` is the authored source; the builder
+  refuses any entry whose `citationQuote` is not a verbatim syllabus topic for
+  the stated unit, and refuses a formula without a symbol legend. Sheets are
+  **not** linked from navigation until the owner signs them off. Only 3 formulas
+  ship because the syllabus prints almost no arithmetic, and **no textbook page
+  numbers are cited** — no edition is verified in this repository, so inventing
+  a chapter reference was rejected in favour of the visible gap.
+- **The answer-verification register fails closed.** One batch without a
+  citation, without an ISO date, with a future date, with an unknown question
+  id, with a duplicate target, or with more than 40 items rejects the entire
+  register and certifies nothing. A scan check of question wording never counts
+  as answer certification.
+- **Six new pages (68 → 74) and their ripples are accepted deliberately:** the
+  Phase 7 audit baseline (page counts only), the search-scope literal
+  (50/68 → 56/74), the worker-version literal, and a corrected quiz recount in
+  `tests/test_runtime_derived.py` that previously compared against zero and
+  therefore agreed with a broken generator. No assertion was loosened.
+- **Regeneration order is load-bearing and now tested.** A freshly generated
+  page needs the documented **second** `generate_presence.py` pass before its
+  bytes settle (the first pass re-inserts the head block with a different
+  newline layout). `tests/test_content_depth.py` therefore runs builders →
+  presence ×2 and asserts the tree ends byte-identical; a new test also asserts
+  that running the whole suite leaves no file changed.
+
+## Phase 8 accepted by the owner — 2026-11-17
+
+- **Owner message:** "Everything is pass on a smoke use test nothing breaks" plus
+  "You can merge and write the next prompt".
+- **Treated as:** an owner acceptance of the phase (`🚧` → **`✅*`**) and an
+  explicit merge authorization for this branch only. Not as a per-criterion
+  verification pass, and not as content certification.
+- **The asterisk means:** 8.1, 8.3, 8.4 and 8.5 are implemented and
+  gate-verified; 8.2 and 8.6 are **built and still uncertified** — 0 of 44
+  revision-sheet entries and 0 of 924 archived answers have a source sign-off.
+  The owner's smoke pass says nothing does not break under use; it does not say
+  a single syllabus citation or answer is correct, because a smoke pass cannot.
+- **What the acceptance does not change:** the nine strict-data findings, the
+  three grouped strict-syllabus errors (CST205 U5 ×4, CST209 U5 ×2, CST207 with
+  no quiz bank), 456 unkeyed quiz items, the reversed CST201 quiz-bank units and
+  the six out-of-syllabus unit tags. None of these were waived; all stay visible
+  and keep failing their validators.
+- **Unmeasured and moved to Phase 10, not to "passed":** any real phone
+  print/PDF export, rendered contrast in both themes, 200 % zoom / 320 CSS px
+  reflow, Bengali conjunct rendering, keyboard/skip-link traversal, focus after
+  dialogs, tap accuracy against the 24 px floor, screen-reader output.
+- **Merge:** authorized for `arena/e0da0bec-diploma-3rd-sem` → `main` only. No
+  deploy, no Pages change, no domain, no tag, no release.

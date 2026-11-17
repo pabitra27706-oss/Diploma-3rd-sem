@@ -4,7 +4,8 @@ A first-party, zero-build static study site for West Bengal diploma CST students
 HTML, CSS, JavaScript and checked-in JSON can be served directly; no package
 installation or build is required to run the site.
 
-**Implementation is in progress, not all phases complete.** See
+**Phases 1–8 are implemented, owner-accepted (`✅*`) and merged; Phase 9
+(performance/launch) and Phase 10 (device acceptance) remain.** See
 [Current status and remaining work](docs/STATUS.md) for the handoff,
 [Roadmap](docs/ROADMAP.md) for phase status, and
 [Decisions](docs/DECISIONS.md) for owner instructions and gates.
@@ -37,10 +38,10 @@ installation or build is required to run the site.
   normalized-text candidate clusters / 32 records), canonical question deep
   links with Web Share / clipboard / input fallbacks across PYQ Answers,
   Practice, and Quiz Review, authored unit `#section` anchors, breadcrumbs, and
-  filtered-PYQ URL handoffs. Search indexes 2,410 items across 50 of 68 shipped
+  filtered-PYQ URL handoffs. Search indexes 2,410 items across 56 of 74 shipped
   HTML pages (question stems/topics, unit headings, subject/lab/internship hubs,
-  coverage, exam-pattern, study, and info pages, plus this device's local
-  section notes); the 18 excluded app/placeholder/fallback shells are listed in
+  coverage, exam-pattern, revision sheets, study, and info pages, plus this
+  device's local section notes); the 18 excluded app/placeholder/fallback shells are listed in
   [`assets/search/manifest.json`](assets/search/manifest.json).
 - **1,339 revision cards** generated from existing model answers (923) and keyed
   MCQ explanations (416), a documented fixed Leitner scheduler, and a
@@ -56,9 +57,29 @@ installation or build is required to run the site.
   **IndexedDB is a recovery mirror, not the primary store**: it rebuilds an
   evicted origin behind the same synchronous API. No async render pipeline means
   the primary path is still local storage.
-- [Syllabus coverage](coverage.html), [exam-pattern caveats](exam-pattern.html),
-  and [practical-course/internship task pages](courses.html). These do not claim
-  completed lab solutions or reconciled historical paper totals.
+- [Syllabus coverage](coverage.html) — every declared unit with its note depth,
+  PYQ/quiz/card counts, both out-of-syllabus stored-unit rows listed rather than
+  hidden, and the Unit-1 skew (496 of 924 records) with its June-2022 tagging
+  explanation. [Exam pattern](exam-pattern.html) reproduces the p.14 ESE table
+  (summing to 60) and reconciles **all 28** printed paper maxima against each
+  paper's own answer-any quotas; which pattern applies to a given session stays
+  unverified and the page says so. [Practical courses](courses.html) and their
+  task pages carry credits, hours, assessment fields and syllabus page anchors —
+  no completed lab solution is claimed.
+- **Printable** unit pages, papers, answer keys and revision sheets: one
+  stylesheet on all 74 pages, answers on their own page, and a labelled
+  "Include answers" toggle on a paper. No running header is drawn — browsers do
+  not support `@page` margin boxes here.
+- **Revision sheets are drafts, not facts.** 44 entries exist across the five
+  subjects (41 definitions, 3 formulas with symbol legends); each cites a
+  verbatim syllabus topic, but **0 are owner-verified**, so they are not linked
+  from navigation. No textbook page numbers are cited because no edition is
+  verified in this repository.
+- **Answer verification is a workflow, not a claim**: a sign-off register
+  (`docs/data/answer-verification.json`) that fails closed on a missing citation,
+  a bad date, an unknown question or a batch over 40 items, and a derived ledger.
+  **0 of 924 archived answers are certified**; each answer shows an expandable
+  "Source … not certified" line.
 - Shared reading/focus/reduced-motion safeguards, per-page landmarks and skip
   links, and a small English/Bengali **interface** catalog (settings, navigation
   and shared actions; question content is never translated). Accessibility is
@@ -95,12 +116,12 @@ For a fresh clone with the repository's default directory name:
 ```sh
 git clone --single-branch --branch main \
   https://github.com/pabitra27706-oss/Diploma-3rd-sem.git
-python3 -m http.server 8000 --bind 127.0.0.1
+python3 -m http.server 8010 --bind 127.0.0.1
 ```
 
 Run the server from the directory **containing** `Diploma-3rd-sem`, then open:
 
-**http://127.0.0.1:8000/Diploma-3rd-sem/**
+**http://127.0.0.1:8010/Diploma-3rd-sem/**
 
 Stop with Ctrl+C. If already cloned, update that checkout using `git pull
 --ff-only` rather than cloning again. Unpushed Arena changes are not available
@@ -118,6 +139,8 @@ python3 scripts/check_platform.py
 python3 scripts/check_site.py --strict --quiet
 python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
+python3 scripts/audit_accessibility.py --fail
+python3 scripts/check_readme_paths.py
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
 node tests/quiz-engine-dom.cjs
@@ -149,11 +172,20 @@ python3 scripts/build_practice_days.py
 python3 scripts/build_cards.py
 python3 scripts/build_runtime_data.py
 python3 scripts/build_coverage.py
+python3 scripts/build_revision_sheets.py
+python3 scripts/build_verification.py
 python3 scripts/build_runtime_bundles.py
+python3 scripts/generate_presence.py
 python3 scripts/generate_presence.py
 python3 scripts/build_search_index.py
 python3 scripts/check_pyq_integrity.py
 ```
+
+Run `generate_presence.py` **twice**: the first pass re-inserts the shared head
+block with a different newline layout, the second settles it. Regenerating in
+this order ends byte-identical to the committed tree, and
+`tests/test_content_depth.py` asserts that. A checked-in page is therefore
+generator output *plus* that head block — never hand-edit a generated page.
 
 Do not edit generated bundles directly. Source scripts remain under `quiz/js/`;
 concatenation has no runtime dependency. `build_cards.py` rewrites

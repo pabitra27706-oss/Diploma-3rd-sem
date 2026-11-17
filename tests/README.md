@@ -13,6 +13,7 @@ python3 scripts/check_platform.py
 python3 scripts/check_site.py --strict --quiet
 python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
+python3 scripts/audit_accessibility.py --fail
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
 node tests/quiz-engine-dom.cjs
@@ -29,14 +30,24 @@ node tests/data-pipeline-consumers.cjs
 node tests/discovery-dom.cjs
 ```
 
-Python currently covers 22 tests: source-preserving/idempotent
+Python currently covers **63** tests: source-preserving/idempotent
 pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
 integrity guard changes/additions/removals, compact discovery (≤ 40% shard budget,
-68-page scope partition, 2,410-entry file/anchor validation, 1 exact alias + 15
+74-page scope partition, 2,410-entry file/anchor validation, 1 exact alias + 15
 unverified candidate repeat clusters, and SW cache registration), Phase 5 card
 eligibility (source-verbatim copies, citation hygiene, explicit skip accounting,
 per-unit counts, byte-identical regeneration, compact payload), bundle/source
-consistency, runtime pools and coverage joins. Paper comparisons pin to the owner-approved
+consistency, runtime pools and coverage joins, and (Phase 8) the coverage map's
+declared-unit/out-of-syllabus arithmetic, the exam-pattern reconciliation of all
+28 papers against their own answer-any quotas, print-sheet reach on every shipped
+page, the verbatim-citation rule for revision sheets, and the fail-closed
+answer-verification register (missing citation, bad/future date, unknown id,
+duplicate target, >40 items — each must reject the whole register).
+
+`tests/test_content_depth.py` also owns the **regeneration contract**: it rebuilds
+`coverage.html` and the revision sheets in the documented order (builders →
+`generate_presence.py` **twice**) and asserts the files end byte-identical. A
+single presence pass does not settle a fresh page; that is expected, not a bug. Paper comparisons pin to the owner-approved
 sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons use the same
 revision (the 2026-11-17 explanation revision, where both pins now point). Both
 values must be in Git history; do not use a shallow clone

@@ -362,10 +362,19 @@ function initQuizUI() {
     summary.textContent = `${quizState.questions.length} set questions · ${cfg.paper.setMarks} marks across all set questions · printed maximum ${cfg.paper.fullMarks} · ${cfg.paper.duration}. ${cfg.paper.notice}`;
     notice.append(heading,summary);
     const warning = document.createElement('p'); warning.setAttribute('role','status');
-    const eseDiff = Number(cfg.paper.fullMarks) !== 60 ? ` Printed maximum (${cfg.paper.fullMarks}) differs from the current 60-mark ESE syllabus pattern.` : '';
+    const eseDiff = Number(cfg.paper.fullMarks) !== 60 ? ` Printed maximum (${cfg.paper.fullMarks}) differs from the 60-mark ESE pattern printed on syllabus p.14.` : '';
+    // Phase 8.5: the printed maximum is reconciled against the paper's own
+    // answer-any quotas, so the notice explains the difference instead of
+    // calling the total unknown. Whether the syllabus pattern applies to this
+    // session is still not decided here.
+    const obtainable = (cfg.paper.groups || []).reduce((sum, group) => sum + Number(group.maxMarks || 0), 0);
+    const quotasReconcile = obtainable > 0 && obtainable === Number(cfg.paper.fullMarks);
+    const quotaNote = obtainable > 0
+      ? ` The paper's own answer-any quotas allow ${obtainable} marks${quotasReconcile ? `, which equals the printed maximum of ${cfg.paper.fullMarks}` : ''}; the extra marks above are on questions the paper does not require you to answer.`
+      : '';
     warning.textContent = cfg.paper.setMarks !== cfg.paper.fullMarks
-      ? `Unverified overall total: set-question marks (${cfg.paper.setMarks}) differ from the printed maximum (${cfg.paper.fullMarks}); source choice/group quotas are enforced below.${eseDiff} This is not an official scored mock examination.`
-      : `Paper maximum is historical; current syllabus reconciliation is still pending.${eseDiff}`;
+      ? `Unverified overall total: all set questions carry ${cfg.paper.setMarks} marks while the printed maximum is ${cfg.paper.fullMarks}.${quotaNote}${eseDiff} Whether the current syllabus pattern applies to this session is not decided here. This is not an official scored mock examination.`
+      : `Paper maximum is ${cfg.paper.fullMarks} marks and matches the marks on its set questions.${eseDiff} Whether the current syllabus pattern applies to this session is not decided here.`;
     notice.append(warning);
     for (const text of cfg.paper.instructions) notice.appendChild(createElement('p','',text));
     for (const group of cfg.paper.groups) notice.appendChild(createElement('p','',group.instruction || group.title || group.id));

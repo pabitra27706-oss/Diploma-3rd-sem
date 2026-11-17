@@ -1,6 +1,10 @@
 # Phase 8 — Content depth and syllabus coverage
 
-**Status:** 🚧 implementation in progress · **Parts:** 6 · **Depends on:** 2, 7 · **Owner gates:** content verification (8.1, 8.6)
+**Status:** **`✅*`** — 8.1, 8.3, 8.4, 8.5 implemented and gate-verified; 8.2 and 8.6 built but **uncertified**; owner-accepted on a smoke use pass 2026-11-17 (see [`record.md`](record.md) and `docs/DECISIONS.md`) · **Parts:** 6 · **Depends on:** 2, 7 · **Owner gates:** content verification (8.2, 8.6) — still open
+
+> The asterisk: acceptance covers the implementation, not the content. 0 of 44
+> revision entries and 0 of 924 answers are source-verified, and no real
+> print/PDF export has been observed. Those are Phase 10 / owner-sign-off items.
 
 ## Goal
 
@@ -8,19 +12,25 @@ Use the syllabus now in the repo to answer the questions students actually ask:
 what is in the syllabus, what is covered, what is missing, what is likely to be
 asked, what should I memorise, and what can I print.
 
-## Why now — the measured evidence
+## Why now — the measured evidence (re-measured 2026-11-17, see `record.md`)
 
-- The syllabus declares 5 theory courses, 3 labs and an internship; the site
-  covers theory only — no lab pages, no internship page.
-- CST205 and CST209 each have **four** units; CST201's unit order is
-  Arrays (U3) then Functions (U4) — content disagrees in both places.
-- The ESE pattern is published (1/2/6-mark mix, 60 marks), but no page explains
-  it; the data's paper totals differ, which silently undermines any mock paper.
-- PYQ distribution is heavily skewed to Unit 1 (CST203 140/204, CST201 112/198),
-  consistent with the June-2022 papers tagging almost everything Unit 1 — a
-  coverage map makes that visible instead of invisible.
-- "formula" appears in 25 files but there is no per-subject revision sheet; no
-  glossary exists; print styles exist in only 4 CSS files.
+- The syllabus declares 5 theory courses, 3 labs and an internship. Lab and
+  internship pages **do** exist (CST211/CST213/CST215/SI201) but were four thin
+  lines each with no hours, credits or assessment fields. **Corrected:** an
+  earlier draft of this file said they did not exist.
+- CST205 and CST209 each declare **four** units. CST205 ships 4 unit pages;
+  CST209 ships **5** (one out-of-syllabus page) and has 35 quiz items in a Unit-5
+  bank. CST201's unit *pages* already follow the syllabus order (U3 Arrays,
+  U4 Functions); its **quiz bank** is reversed. **Corrected:** the pages were
+  never the problem.
+- The ESE pattern is published (1/2/6-mark mix, 60 marks). The paper totals
+  **do** reconcile with each paper's own printed quotas (28/28) — the earlier
+  "totals differ" was a comparison error.
+- PYQ distribution is skewed to Unit 1: 496 of 924 (53.7%). CST201 112/198,
+  CST203 **117/170** (not 140/204), CST205 100/194, CST207 86/195, CST209 81/167.
+- "formula" appears in **64** files; there is no per-subject revision sheet and
+  no glossary. Print rules live in 4 of 6 first-party `assets/css` sheets, but
+  only **33 of 68 pages loaded `print.css`** — that was the real defect.
 
 ## Scope
 
