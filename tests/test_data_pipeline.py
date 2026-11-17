@@ -17,7 +17,7 @@ class PipelineTests(unittest.TestCase):
         first,meta=schedule(papers)
         second,again=schedule(list(reversed(papers)))
         self.assertEqual((first,meta),(second,again))
-        self.assertEqual(len(first),992)
+        self.assertEqual(len(first),958)
         self.assertEqual(meta['uniqueCount'],923)
         sizes=[d['count'] for d in meta['days']]
         self.assertLessEqual(max(sizes)-min(sizes),1)

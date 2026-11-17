@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate PYQ paper data.
 
-All 30 registry papers now use ``schemaVersion: pilot-v1``. Legacy fallback
+Every registry paper uses ``schemaVersion: pilot-v1``. Legacy fallback
 compatibility is still checked and reports warnings only.
 
 Usage:
@@ -334,10 +334,6 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
             "sourcePaperCode": "337(S)", "scanSetNumber": None,
             "sourceFile": "cst-3-sem-computer-organisation-and-architecture-337-s-mar-2021.pdf",
         },
-        "CST203-P002-2023-03.json": {
-            "sourcePaperCode": "307/2(N)", "scanSetNumber": None,
-            "sourceFile": "cst-3-sem-scripting-languages-python-307-2-n-mar-2023.pdf",
-        },
         "CST209-P002-2023-03.json": {
             "sourcePaperCode": "307/5(N)", "scanSetNumber": None,
             "sourceFile": "cst-3-sem-algorithms-307-5-n-mar-2023.pdf",
@@ -666,8 +662,12 @@ def main() -> int:
     metas = validate_registries(report)
 
     paper_paths = sorted(DATA.glob("CST*/CST*-P*.json"))
-    if len(paper_paths) != 30:
-        report.warn(f"_data: expected 30 paper JSONs, found {len(paper_paths)}")
+    expected_papers = sum(
+        len(load_json(reg).get("papers", []))
+        for reg in sorted(DATA.glob("CST*/registry.json"))
+    )
+    if len(paper_paths) != expected_papers:
+        report.warn(f"_data: registries declare {expected_papers} papers, found {len(paper_paths)} paper JSONs")
 
     pilot_count = 0
     legacy_count = 0
@@ -709,7 +709,7 @@ def main() -> int:
     if legacy_count:
         print("RESULT: PASS — rebuilt papers valid; legacy fallback warnings are non-fatal compatibility notes")
     else:
-        print("RESULT: PASS — all 30 registry papers are rebuilt and schema-valid")
+        print(f"RESULT: PASS — all {len(paper_paths)} registry papers are rebuilt and schema-valid")
     return 0
 
 

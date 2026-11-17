@@ -25,7 +25,7 @@
         "D": "python manage.py makemigrations"
       },
       "correct": "D",
-      "explanation": "makemigrations is for database migrations, not for static file management.",
+      "explanation": "collectstatic gathers static files into one folder, findstatic locates a file, and runserver --nostatic turns off static serving - all are static-file related. makemigrations writes database migration files, so D is the unrelated command.",
       "topicQuality": "specific"
     },
     {
@@ -180,7 +180,7 @@
         "D": "Complex"
       },
       "correct": "A",
-      "explanation": "DRY (Don't Repeat Yourself) is a principle used in Django that promotes code reusability.",
+      "explanation": "Django encourages DRY by letting models, views and templates be defined once and reused, so a change is made in a single place. That makes code reusable rather than repetitive, looping or complex.",
       "topicQuality": "specific"
     },
     {
@@ -507,7 +507,7 @@
         "D": "Desktop application framework"
       },
       "correct": "B",
-      "explanation": "Django is a high-level Python web development framework that encourages rapid development.",
+      "explanation": "Django is a high-level Python web framework that supplies URL routing, ORM models, templates and an admin site. It is not a machine-learning, game or desktop framework, so B is correct.",
       "topicQuality": "specific"
     },
     {
@@ -531,7 +531,7 @@
         "D": "python django startproject projectname"
       },
       "correct": "A",
-      "explanation": "django-admin startproject projectname is the correct command to create a new Django project.",
+      "explanation": "django-admin startproject projectname scaffolds a new project with settings, urls and manage.py. The command is startproject rather than createproject, and manage.py is not available until a project exists.",
       "topicQuality": "specific"
     },
     {
@@ -555,7 +555,7 @@
         "D": "python manage.py startserver"
       },
       "correct": "B",
-      "explanation": "python manage.py runserver starts the Django development server on default port 8000.",
+      "explanation": "python manage.py runserver starts Django's built-in development server, by default at http://127.0.0.1:8000/. It is meant for development only, since it is not hardened for production traffic.",
       "topicQuality": "specific"
     },
     {
@@ -580,7 +580,7 @@
         "D": "{% variable %}"
       },
       "correct": "B",
-      "explanation": "{{ variable }} is used to display variables. {% %} is for template tags and {# #} for comments.",
+      "explanation": "The double-brace tag outputs a value in the rendered HTML, so {{ variable }} displays the variable. Template tags such as {% ... %} are used for logic and {# ... #} is a comment that prints nothing.",
       "topicQuality": "specific"
     },
     {
@@ -605,7 +605,7 @@
         "D": "{% post_token %}"
       },
       "correct": "B",
-      "explanation": "{% csrf_token %} is required inside forms using POST to prevent Cross-Site Request Forgery attacks.",
+      "explanation": "Django requires the csrf_token tag inside every POST form; it inserts a hidden token that the server checks to block Cross-Site Request Forgery. csrf, token and post_token are not real template tags, so B is correct.",
       "topicQuality": "specific"
     }
   ]

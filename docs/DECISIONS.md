@@ -187,3 +187,44 @@ search metadata, coverage and Practice runtime pool from the adopted sources.
 Twelve Python tests, four Node suites, seven focused Chromium suites, site
 (0 errors/28 warnings), platform and integrity checks pass locally. Hosted CI
 and merge result are recorded on PR #7. No deployment/domain settings changed.
+
+
+## Longer Python MCQ explanations and duplicate-paper removal — 2026-11-17
+
+Owner instruction (chat): make the MCQ explanations "a little detailed but it's
+1 mark", start with Python (PYQ papers and the quiz bank), and remove the
+duplicated 2023 paper so Python shows five papers.
+
+Authorized scope, executed on `arena/858a50c7-diploma-3rd-sem`:
+
+- `_quiz-data/CST203/unit-1..5.json`: all **79 keyed Python MCQs** got a fuller
+  two-sentence explanation (why the key holds, why the distractors do not).
+  Only the `explanation` prose changed; `correct`, `options`, `question`,
+  `marks`, `topic` and `unit` are untouched.
+- `_data/CST203/CST203-P001-2022-06.json` and `CST203-P003-2023-03.json`: the
+  **40 one-line MCQ model answers** now carry a short reason (and why the other
+  options fail). Only the `answer` prose changed; no key, option, stem or mark
+  was edited. P004–P006 already had multi-sentence answers and were left alone.
+- `_data/CST203/CST203-P002-2023-03.json` (the March-2023 text reprint that
+  duplicated `P003`) was **deleted** and `_data/CST203/registry.json` now
+  declares five papers (P001, P003, P004, P005, P006). The surviving P003 is
+  the scan-verified copy carrying printed set number `3013`, so no source
+  evidence was discarded. CST203 now has 5 of the repository's 29 papers; raw
+  PYQ records fall 992 → 958 while unique practice questions stay 923 because
+  the deleted file was the canonical member of an exact-alias pair.
+- Derived data was regenerated (catalog, practice days, search, repeat index,
+  cards, runtime pools/bundles, coverage, exam-pattern, presence), and the
+  tests that hard-coded 992 records / 30 papers / 69 aliases were updated to
+  958 / 29 / 35.
+
+`_data/pyq-integrity.json` is re-anchored to this content revision because the
+owner explicitly authorized the prose edits and the deletion. This is recorded
+so the change is visible, not a silent baseline refresh: keys and question
+accounts are unchanged, no answer certification is claimed, and the ten
+source-review findings stay open.
+
+**Still open (keys NOT changed, flagged only in the new explanation text):**
+`CST203-U1-Q014`, `CST203-U1-Q024`, `CST203-U1-Q035`, `CST203-U3-Q002`,
+`CST203-U3-Q005` and `CST203-U4-Q030` have option lists or stored keys that
+disagree with real Python behaviour (corrupted reprints). Fixing a key is a
+separate source-verification gate and needs the owner's explicit approval.

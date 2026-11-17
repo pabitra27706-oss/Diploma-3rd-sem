@@ -25,7 +25,7 @@
         "D": "infile = open(file=\"c:\\temp.txt\",\"r+\")"
       },
       "correct": "A",
-      "explanation": "open() with 'r' mode opens a file in read-only mode. 'r+' opens in both read and write mode.",
+      "explanation": "open() takes the file name and a mode string, and \"r\" means read-only (it is also the default). \"r+\" would allow writing as well, so the plain r call (option A) is the read-only one.",
       "topicQuality": "specific"
     },
     {
@@ -182,7 +182,7 @@
         "D": "It converts a string to lowercase"
       },
       "correct": "C",
-      "explanation": "join() concatenates elements of an iterable with a specified separator string.",
+      "explanation": "separator.join(iterable) glues the strings of the iterable together and inserts separator between them, so \"-\".join([\"a\",\"b\"]) gives a-b. It does not split (that is split()) or compare strings, so C is correct.",
       "topicQuality": "specific"
     },
     {
@@ -302,7 +302,7 @@
         "D": "wb"
       },
       "correct": "A",
-      "explanation": "The default mode for open() is 'r' (read mode) if no mode is specified.",
+      "explanation": "When no mode is passed, open() uses \"r\" for reading text, and the file must already exist. \"w\" truncates or creates a file, while \"rb\" and \"wb\" are binary modes that must be requested explicitly.",
       "topicQuality": "specific"
     },
     {
@@ -512,7 +512,7 @@
         "D": "None of these"
       },
       "correct": "A",
-      "explanation": "capitalize() only converts the first character to uppercase, not the whole string. upper() does the whole string.",
+      "explanation": "capitalize() uppercases only the first character and lowercases the rest, so it never converts the whole string to uppercase - upper() does that. lower() works as described and strings are immutable, so A is false.",
       "topicQuality": "specific"
     },
     {
@@ -592,7 +592,7 @@
         "D": "b"
       },
       "correct": "A",
-      "explanation": "s[1::2] starts from index 1 and takes every 2nd character. s = 'a,b,c,d,' so indices 1,3,5,7 give ',',',' , ',' , ',' = ',b,d,'.",
+      "explanation": "s = 'a,b,c,d,' has commas at indices 1, 3, 5 and 7, and s[1::2] takes every second character from index 1, so the output is ,b,d,. No option matches that; the stored key A is a reprint error.",
       "topicQuality": "specific"
     },
     {
@@ -616,7 +616,7 @@
         "D": "iplom"
       },
       "correct": "A",
-      "explanation": "d(0)i(1)p(2)l(3)o(4)m(5)a(6). [2:-1] gives indices 2 to 5: 'plom'.",
+      "explanation": "\"diploma\" indexes as d0 i1 p2 l3 o4 m5 a6; the slice starts at index 2 and the stop -1 means before the last character, so p, l, o and m are returned. The negative stop is why the final a is dropped.",
       "topicQuality": "specific"
     },
     {

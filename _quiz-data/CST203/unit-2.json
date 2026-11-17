@@ -26,7 +26,7 @@
         "D": "8,6,4,2"
       },
       "correct": "C",
-      "explanation": "range(1,10,2) gives [1,3,5,7,9]. reversed() reverses it to give 9,7,5,3,1.",
+      "explanation": "range(1, 10, 2) produces the odd numbers 1, 3, 5, 7 and 9 because the stop value 10 is excluded, and reversed() then walks that sequence backwards. Each value is printed on its own line, so the output is 9, 7, 5, 3, 1.",
       "topicQuality": "specific"
     },
     {
@@ -51,7 +51,7 @@
         "D": "1 3 5 7 9 11 ..."
       },
       "correct": "D",
-      "explanation": "i starts at 1 and increments by 2, always staying odd. i%2 is never 0 so break never executes and odd numbers print indefinitely.",
+      "explanation": "i starts at 1 and is increased by 2 each pass, so it is always odd and i % 2 == 0 is never true. The break never runs and 1, 3, 5, 7, 9, 11 ... prints forever, so D is the expected output.",
       "topicQuality": "specific"
     },
     {
@@ -76,7 +76,7 @@
         "D": "IF and WHILE"
       },
       "correct": "C",
-      "explanation": "FOR and WHILE are the two looping statements used to implement iteration in Python.",
+      "explanation": "Iteration means repeating a block of code, which Python does with for (over a sequence or range) and while (while a condition stays true). if and else only choose a branch once, so C is correct.",
       "topicQuality": "specific"
     },
     {
@@ -101,7 +101,7 @@
         "D": "None of the mentioned"
       },
       "correct": "D",
-      "explanation": "The loop appends to x while iterating over it, causing an infinite loop. The program never reaches print(x).",
+      "explanation": "The for loop walks the same list object that its body keeps appending to, so it never reaches the end and print(x) is never executed. The loop is effectively infinite, so none of the listed lists appears.",
       "topicQuality": "specific"
     },
     {
@@ -181,7 +181,7 @@
         "D": "It raises an exception"
       },
       "correct": "C",
-      "explanation": "The else block executes when the if condition evaluates to False.",
+      "explanation": "The if block runs when the condition is True, and the else block is the fallback that runs only when it is False. It does not add another condition (that is elif) and does not loop, so C is correct.",
       "topicQuality": "specific"
     },
     {
@@ -205,7 +205,7 @@
         "D": "do-while loop"
       },
       "correct": "A",
-      "explanation": "for loop is specifically designed to iterate over sequences like lists, strings, tuples, etc.",
+      "explanation": "A for loop takes an iterable such as a list, string, tuple or range and visits each element in turn. while is condition-controlled and Python has no until or do-while loop, so A is correct.",
       "topicQuality": "specific"
     },
     {
@@ -229,7 +229,7 @@
         "D": "[2, 5]"
       },
       "correct": "A",
-      "explanation": "range(2,6) generates numbers from 2 to 5 (6 is excluded), so the list is [2, 3, 4, 5].",
+      "explanation": "range(2, 6) starts at 2 and stops before the upper bound, producing 2, 3, 4 and 5, and list() stores those values. The 6 in the call is excluded, so B is wrong and A is correct.",
       "topicQuality": "specific"
     },
     {
@@ -383,7 +383,7 @@
         "D": "+"
       },
       "correct": "A",
-      "explanation": "'or' is a logical operator and has the lowest precedence among the options listed.",
+      "explanation": "Precedence decides which operator is evaluated first. Here * binds tighter than &, and & binds tighter than the logical or, so or is evaluated last and has the lowest priority of the four.",
       "topicQuality": "specific"
     },
     {
@@ -408,7 +408,7 @@
         "D": "print(list1[0:7:2])"
       },
       "correct": "C",
-      "explanation": "list1[1:8:2] starts at index 1 (13) and picks every 2nd element: 13, 24, 91, 751.",
+      "explanation": "list1 is [6, 13, 3, 24, 0, 91, 8, 751]; a step of 2 from index 1 picks indices 1, 3, 5 and 7, giving 13, 24, 91 and 751. Stopping at 7 instead of 8 would drop 751, so C is correct.",
       "topicQuality": "specific"
     },
     {
@@ -433,7 +433,7 @@
         "D": "None of them"
       },
       "correct": "C",
-      "explanation": "Lists in Python are mutable, dynamic, and can hold elements of different data types.",
+      "explanation": "Lists are mutable, need no size declaration before use, and may hold mixed types such as ints, strings and other objects in one list. Since A and B are false, C is the true statement.",
       "topicQuality": "specific"
     },
     {
@@ -458,7 +458,7 @@
         "D": "C,D"
       },
       "correct": "C",
-      "explanation": "max([10,3,5,1,7,8]) returns 10. list_name[-1] returns 8 (last element). Both B and D give correct outputs.",
+      "explanation": "max() returns the largest value 10, and list_name[-1] returns the last element 8, so statements B and D each return a correct value. sort() and reverse() rearrange the list rather than returning a value, so C (B, D) is keyed.",
       "topicQuality": "specific"
     },
     {
@@ -539,7 +539,7 @@
         "D": "jump"
       },
       "correct": "B",
-      "explanation": "break terminates the loop immediately and transfers control to the statement after the loop.",
+      "explanation": "break leaves the nearest enclosing loop immediately and control continues after the loop. continue only skips the rest of the current pass, pass does nothing, and jump is not a Python keyword.",
       "topicQuality": "specific"
     },
     {
@@ -563,7 +563,7 @@
         "D": "8"
       },
       "correct": "A",
-      "explanation": "Left shift by 2 multiplies by 2^2 = 4. So 1 << 2 = 4.",
+      "explanation": "Left shift moves the bits two places left, which multiplies the value by 2 raised to 2, that is by 4, so 1 << 2 gives 4. The right shift operator >> would divide instead, so A is correct.",
       "topicQuality": "specific"
     },
     {
@@ -588,7 +588,7 @@
         "D": "1 1 1 1"
       },
       "correct": "A",
-      "explanation": "range(1,5) generates numbers 1 to 4 (5 excluded), printing each on a new line: 1 2 3 4.",
+      "explanation": "range(1, 5) yields 1, 2, 3 and 4 because the stop value 5 is excluded, and print writes each value on its own line. There is no indentation problem, so the output is 1 2 3 4.",
       "topicQuality": "specific"
     },
     {
