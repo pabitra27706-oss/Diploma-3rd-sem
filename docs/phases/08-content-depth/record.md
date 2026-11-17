@@ -211,3 +211,28 @@ Chromium suites (`*-browser.cjs`, `paper-offline.cjs`, `cards-offline.cjs`) were
    200 % zoom / 320 px reflow, screen-reader output, real tap accuracy, Bengali
    conjunct rendering, keyboard-only core-flow completion, offline cold/warm on
    hardware, backup/restore on a phone.
+
+### Hosted CI
+
+`Web CI` run [44046215114](https://github.com/pabitra27706-oss/Diploma-3rd-sem/actions/runs/44046215114)
+on commit `87eba6e` (branch `arena/e0da0bec-diploma-3rd-sem`): **success**, all
+steps green — PYQ data validation, syllabus validation, site checks, platform
+integrity + deterministic generated files, the measured accessibility gate,
+documentation paths, and the data regression gate, with the downloadable site
+preview artifact uploaded.
+
+Two honest caveats about that run. The syllabus step is **advisory** in the
+workflow, so its three grouped errors (CST205 U5 ×4, CST209 U5 ×2, CST207 with no
+quiz bank) do not fail the job — they are still open, not green. And the data
+step runs the **exact-baseline** comparison, not `--strict`, so the nine recorded
+ledger findings likewise neither block nor disappear.
+
+### One unexplained test failure (recorded, not hidden)
+
+During this branch's gate runs the Python suite reported `FAILED (failures=1)`
+once. The failing test's name was lost — the output was piped through `tail`, and
+seventeen subsequent runs (including one from a cold checkout with `__pycache__`
+removed, i.e. the condition CI starts from) were all `OK`, so it could not be
+reproduced. No time-dependent test exists in `tests/*.py`. Treated as an open
+reliability question rather than as a pass: if CI ever shows it, capture the test
+name with `python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | grep -A20 FAIL`.
