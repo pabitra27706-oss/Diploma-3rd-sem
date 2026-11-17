@@ -258,6 +258,7 @@ re-verified.
 | `python3 scripts/validate_data.py --check-baseline` | matches the ledger (not a strict pass) |
 | `python3 -m unittest discover -s tests -p 'test_*.py'` | **33 tests OK** (22 before; 11 new accessibility locks) |
 | Node suites | attempt-store, data-pipeline-consumers, discovery-dom, preferences, quiz-engine-dom, section-notes, storage, storage-mirror, storage-recovery, study-dom, study-offline, study-store, theme-skew — **PASS** |
+| Hosted Web CI on the branch | **run `44038689193` — success** (31 s), after the workflow gained an `audit_accessibility.py --fail` step and `check_readme_paths.py` |
 
 Not run here: `tests/paper-offline.cjs`, `tests/cards-offline.cjs` and the
 `tests/*-browser.cjs` suites, which need Playwright/Chromium that this

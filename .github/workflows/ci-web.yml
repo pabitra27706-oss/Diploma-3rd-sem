@@ -94,6 +94,26 @@ jobs:
       - name: Platform integrity and deterministic generated files
         run: python3 scripts/check_platform.py
 
+      - name: Measured accessibility gate (Phase 7)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Fails when a page loses its landmark/skip link/heading order, a
+          # control loses its label, a token pair drops below its required
+          # contrast, an animating sheet loses its reduced-motion rule, or a
+          # control box is pinned below 24x24 CSS px. Not a WCAG conformance
+          # test: rendered contrast and device behaviour are Phase 10.
+          python3 scripts/audit_accessibility.py --fail | tee accessibility-check.txt
+          {
+            echo "### Measured accessibility"
+            echo '```'
+            cat accessibility-check.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Documentation paths resolve (Phase 7)
+        run: python3 scripts/check_readme_paths.py
+
       - name: Data regression gate (source-verification exceptions pending)
         run: |
           # Full --strict remains blocked; accept only the exact fingerprinted
