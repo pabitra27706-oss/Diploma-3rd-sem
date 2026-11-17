@@ -26,9 +26,9 @@ Python discovery currently covers 13 tests: source-preserving/idempotent
 pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
 integrity guard changes/additions/removals, compact discovery, card-source
 resolution, bundle/source consistency, runtime pools and coverage joins. Paper comparisons pin to the owner-approved
-sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons retain
-`646dea2aa44c3de207e8a46cfcf2c45c5d822310`. Both commits must be in Git history;
-do not use a shallow clone
+sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons use the same
+revision (the 2026-11-17 explanation revision, where both pins now point). Both
+values must be in Git history; do not use a shallow clone
 for these checks. CI checks out full history.
 
 Node suites cover attempt persistence/migration/retries/mistakes, fixed Leitner
