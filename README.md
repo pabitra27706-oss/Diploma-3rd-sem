@@ -12,8 +12,9 @@ installation or build is required to run the site.
 ## What exists in the working tree
 
 - Five theory subjects, unit notes and source-linked previous-year papers.
-- **30 papers / 992 archived questions**; exact-content aliases retain their
+- **29 papers / 958 archived questions**; exact-content aliases retain their
   source IDs. Practice uses **923 unique questions** across ten derived days.
+  (One duplicated Python March-2023 reprint was removed on 2026-11-17.)
 - **872 quiz-bank questions**: 416 keyed MCQs and 456 non-MCQ items without
   automatic grading. CST207 currently has no quiz bank.
 - Timed quiz snapshots, autosave/resume, marked flags, history, exact retry,

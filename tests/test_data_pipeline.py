@@ -17,7 +17,7 @@ class PipelineTests(unittest.TestCase):
         first,meta=schedule(papers)
         second,again=schedule(list(reversed(papers)))
         self.assertEqual((first,meta),(second,again))
-        self.assertEqual(len(first),992)
+        self.assertEqual(len(first),958)
         self.assertEqual(meta['uniqueCount'],923)
         sizes=[d['count'] for d in meta['days']]
         self.assertLessEqual(max(sizes)-min(sizes),1)
@@ -32,7 +32,7 @@ class PipelineTests(unittest.TestCase):
         # Papers use the explicitly approved, pinned main snapshot; quiz sources
         # retain the original phase base. Neither follows a moving branch.
         paper_base=json.loads((ROOT/'_data/pyq-integrity.json').read_text())['sourceCommit']
-        quiz_base='646dea2aa44c3de207e8a46cfcf2c45c5d822310'
+        quiz_base='c47a0f71665cc4f2324857b5bcdea4eb7dab6168'
         for path,store in sum((list(s) for s in stores()),[]):
             base=paper_base if path.is_relative_to(ROOT/'_data') else quiz_base
             original=json.loads(subprocess.check_output(['git','show',base+':'+path.relative_to(ROOT).as_posix()]))

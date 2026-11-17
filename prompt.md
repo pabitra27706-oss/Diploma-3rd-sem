@@ -54,8 +54,8 @@ Phase 1 platform implementation is complete with deferred final hardware
 acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the complete
 per-phase remainder table and the source/rights gates.
 
-- Data: 992 raw PYQs, 923 exact-unique Practice questions, 69 aliases across
-  30 papers; ten derived Practice days; enriched `_data/catalog.json` and
+- Data: 958 raw PYQs, 923 exact-unique Practice questions, 35 aliases across
+  29 papers; ten derived Practice days; enriched `_data/catalog.json` and
   `assets/data/practice-pool.json` (`aliases`, `alsoAppearedIn`, `topicQuality`);
   all 5 subject hubs and 24 unit HTML pages aligned to `docs/syllabus/syllabus.json`
   and enforced by `validate_data.py`; alias `?q=` deep-link resolution in Practice
@@ -68,7 +68,7 @@ per-phase remainder table and the source/rights gates.
   flags, score boundaries, history/export/exact retries/edits, mistake queue,
   one-sentence MD/TXT/JSON/Print-PDF export guidance, and full mock paper
   practice enforcing explicit `paperFormat` `answerAny` section/choiceSet quotas
-  across all 30 frozen PYQ papers, compulsory 30-minute Group A loose-script
+  across all 29 frozen PYQ papers, compulsory 30-minute Group A loose-script
   windows on the seven `2023-03` papers, and `1m option + 1m written explanation`
   splits on the fifteen `2024–2026` papers without fabricating an overall grade.
 - Discovery/study: compact search/repeat sidecars, source deep links, related

@@ -97,11 +97,11 @@ const QP = paperSandbox.QuizPaper;
       }
     }
   }
-  assert.equal(paperCount, 30);
+  assert.equal(paperCount, 29);
   assert.equal(seventyMarkCount, 3);
-  assert.equal(timedPaperCount, 7);
+  assert.equal(timedPaperCount, 6);
   assert.equal(splitPaperCount, 15);
-  console.log('PASS all 30 frozen PYQ papers derive exact section/choice rules, durations, 7 timed 30m windows, and 15 1+1 explanation splits');
+  console.log('PASS all 29 frozen PYQ papers derive exact section/choice rules, durations, 6 timed 30m windows, and 15 1+1 explanation splits');
 
   // Test 7: CST205-P006-2026-01 (10/15 x 2m Answer+Explanation MCQs + 5/9 x 8m Group B) + CST201-P002 choiceSets
   const p205 = await QP.load('CST205', 'CST205-P006-2026-01.json');

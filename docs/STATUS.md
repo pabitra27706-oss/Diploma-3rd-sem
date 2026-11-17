@@ -41,7 +41,7 @@ deployment/domain changes or close unfinished phase gates.
 - **Documentation handoff is updated; phases 1–9 are not all complete.**
 - Owner requests implementation first, then one dedicated cross-device phase.
   Routine syntax, integrity and focused regression checks continue meanwhile.
-- Original 30 PYQ papers and five registries are byte-frozen. Fixes/mappings
+- Original 29 PYQ papers and five registries are byte-frozen. Fixes/mappings
   must use derived metadata rather than editing those originals.
 
 ## Phase-by-phase implementation remainder

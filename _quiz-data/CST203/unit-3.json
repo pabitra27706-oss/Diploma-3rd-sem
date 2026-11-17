@@ -25,7 +25,7 @@
         "D": "reduce"
       },
       "correct": "A",
-      "explanation": "Lambda functions are anonymous functions defined without a name using the lambda keyword.",
+      "explanation": "A lambda expression builds a function object without giving it a name, for example square = lambda x: x * x, which is why it is called anonymous. map, filter and reduce are ordinary functions that act on iterables, not anonymous ones.",
       "topicQuality": "specific"
     },
     {
@@ -49,7 +49,7 @@
         "D": "String"
       },
       "correct": "A",
-      "explanation": "Curly braces with values but no key:value pairs define a set. But since none of the options say set, and the syntax with mixed types uses {}, this is actually a set — closest answer considering options is none. However since the question presents these as only options, it would be none. Note: This question has an error in options as the correct type is 'set'.",
+      "explanation": "Curly braces holding only values, as in {'a', 93, 99, 'time'}, build a set, not a tuple, dictionary, list or string. The correct type set is missing from the printed options, so the stored key A is a reprint error.",
       "topicQuality": "specific"
     },
     {
@@ -73,7 +73,7 @@
         "D": "None of the above"
       },
       "correct": "B",
-      "explanation": "pass is a Python-only statement used as a placeholder. break and continue exist in C as well.",
+      "explanation": "pass is Python's null statement: it does nothing and is used where syntax demands a statement. break and continue also exist in C, so pass is the one statement not found there.",
       "topicQuality": "specific"
     },
     {
@@ -97,7 +97,7 @@
         "D": "None of the above"
       },
       "correct": "D",
-      "explanation": "x|y gives union of both sets: {'a','b','c','d','r','l','z','m'}. None of the listed options exactly match this set.",
+      "explanation": "set(\"abracadabra\") is {a, b, r, c, d} and set(\"alacazam\") is {a, l, c, z, m}, and the | operator returns their union of all eight letters. No option lists exactly that set, so none of the above (D) is keyed.",
       "topicQuality": "specific"
     },
     {
@@ -121,7 +121,7 @@
         "D": "2"
       },
       "correct": "D",
-      "explanation": "Sets are unordered and do not support indexing or slicing. This will raise a TypeError.",
+      "explanation": "A = {1,2,3,4,5,6} is a set, and sets are unordered with no index positions, so A[1:] raises TypeError instead of returning a slice. The stored key D (2) does not match that behaviour and is a reprint error.",
       "topicQuality": "specific"
     },
     {
@@ -277,7 +277,7 @@
         "D": "To perform arithmetic operations"
       },
       "correct": "B",
-      "explanation": "Functions organize code into reusable blocks, promoting modularity and code reuse.",
+      "explanation": "Functions wrap a task under one name so it can be called many times with different inputs, giving modular, reusable and easier-to-test code. They do not create loops or variables, so B is correct.",
       "topicQuality": "specific"
     },
     {
@@ -301,7 +301,7 @@
         "D": "It defines a new function"
       },
       "correct": "B",
-      "explanation": "The import statement brings a module or package into the current script for use.",
+      "explanation": "import loads a module or package and binds its name in the current namespace so its functions and classes become usable. It neither exports the current module nor defines a new function, so B is correct.",
       "topicQuality": "specific"
     },
     {
@@ -383,7 +383,7 @@
         "D": "None of them"
       },
       "correct": "C",
-      "explanation": "sin() is from math module and randint() is from random module.",
+      "explanation": "sin() belongs to the math module and randint() belongs to the random module, so both imports are needed, for example from math import sin and from random import randint. One module alone cannot supply both functions.",
       "topicQuality": "specific"
     },
     {
@@ -407,7 +407,7 @@
         "D": "None"
       },
       "correct": "A",
-      "explanation": "When argument is provided (10), it overrides the default value (30), so output is Neha 10.",
+      "explanation": "Default arguments are used only when the caller omits that argument. Here 10 is passed for Stdage, so it overrides the default 30 and the call prints Neha 10, which is option A.",
       "topicQuality": "specific"
     },
     {
@@ -431,7 +431,7 @@
         "D": "both a and b"
       },
       "correct": "C",
-      "explanation": "Return value is optional and is not a mandatory part of function definition.",
+      "explanation": "A function definition needs a name, a parameter list and an indented body, while returning a value is optional - a function without return simply gives None. So the return value is the element not required in the definition.",
       "topicQuality": "specific"
     },
     {
@@ -455,7 +455,7 @@
         "D": "None of them"
       },
       "correct": "A",
-      "explanation": "Dictionaries use curly braces {} with key:value pairs. Lists use [] and tuples use ().",
+      "explanation": "A dictionary is written inside curly braces as key: value pairs, so Day = {1:'monday', 2:'tuesday', 3:'wednesday'} is valid. Square brackets make a list and parentheses make a tuple, where a colon is invalid syntax.",
       "topicQuality": "specific"
     },
     {
@@ -479,7 +479,7 @@
         "D": "list"
       },
       "correct": "D",
-      "explanation": "Square brackets [] define a list in Python. Lists can contain mixed data types.",
+      "explanation": "Square brackets with comma-separated values create a list, and a list can mix types such as ints and the string 'hi'. Tuples use parentheses, dictionaries use key:value pairs, and there is no separate array literal, so D is correct.",
       "topicQuality": "specific"
     },
     {
@@ -503,7 +503,7 @@
         "D": "Error"
       },
       "correct": "D",
-      "explanation": "Dictionaries are accessed by key, not index. dict[0] raises KeyError since 0 is not a key.",
+      "explanation": "Dictionary items are reached through their keys, not through numeric positions, and the keys here are 'abc', 'def' and 'ghi'. dict[0] therefore raises KeyError, which is why the output is an error rather than a value.",
       "topicQuality": "specific"
     },
     {
@@ -527,7 +527,7 @@
         "D": "empty_dict = set()"
       },
       "correct": "A",
-      "explanation": "Empty curly braces {} create an empty dictionary. [] creates list, () creates tuple.",
+      "explanation": "{} creates an empty dictionary; [] is an empty list, () an empty tuple and set() an empty set. An empty dictionary may also be written dict(), so A is correct.",
       "topicQuality": "specific"
     },
     {
@@ -551,7 +551,7 @@
         "D": "list.size()"
       },
       "correct": "B",
-      "explanation": "len() is the built-in function to check the length of a list or any sequence.",
+      "explanation": "len(list) is the built-in that returns the number of items in a list, and it works for strings, tuples, dicts and sets too. Lists have no .length() or .size() method, and .count() needs a value to count.",
       "topicQuality": "specific"
     },
     {
@@ -575,7 +575,7 @@
         "D": "Shallow copies cannot be created in Python"
       },
       "correct": "C",
-      "explanation": "list.copy() creates a shallow copy. copy.copy() also works but list.copy() is most direct.",
+      "explanation": "list.copy() returns a new list whose elements are shared with the original - a shallow copy. copy.copy() does the same job, but the list method is the direct answer here; deepcopy (option B) would copy nested objects as well.",
       "topicQuality": "specific"
     },
     {
@@ -599,7 +599,7 @@
         "D": "list = range(1,6)"
       },
       "correct": "A",
-      "explanation": "Square brackets [] create a list. (1,2,3,4,5) is a tuple and {1,2,3,4,5} is a set.",
+      "explanation": "[1, 2, 3, 4, 5] with square brackets is a list literal. (1,2,3,4,5) is a tuple, {1,2,3,4,5} is a set, and range(1,6) is a range object that must be wrapped in list() to become a list.",
       "topicQuality": "specific"
     },
     {
@@ -623,7 +623,7 @@
         "D": "Using the discard() method"
       },
       "correct": "B",
-      "explanation": "remove() removes the first occurrence of a value. pop() removes by index.",
+      "explanation": "list.remove(value) deletes the first element equal to that value. pop() removes by index, delete() does not exist for lists, and discard() belongs to sets, so B is correct.",
       "topicQuality": "specific"
     },
     {
@@ -811,7 +811,7 @@
         "D": "Reduce"
       },
       "correct": "A",
-      "explanation": "Lambda functions are anonymous (unnamed) functions defined using the lambda keyword.",
+      "explanation": "A lambda is an unnamed function written in a single expression, for example f = lambda x: x * x. map, filter and reduce are functions that take an iterable, and often a lambda, but are not themselves anonymous.",
       "topicQuality": "specific"
     },
     {
@@ -835,7 +835,7 @@
         "D": "None"
       },
       "correct": "C",
-      "explanation": "Tuples use parentheses (). {} is set/dict and [] is list.",
+      "explanation": "(1, 2, 3) with round brackets is a tuple, which is immutable once created. {1,2,3} is a set and [1,2,3] is a list, so C is correct.",
       "topicQuality": "specific"
     },
     {
@@ -860,7 +860,7 @@
         "D": "Complex"
       },
       "correct": "A",
-      "explanation": "DRY (Don't Repeat Yourself) principle promotes reusable code by avoiding code duplication.",
+      "explanation": "DRY means Don't Repeat Yourself: each piece of knowledge should live in one place and be reused instead of copied. That makes code reusable and easy to maintain, not repetitive, endless or complex.",
       "topicQuality": "specific"
     },
     {
@@ -884,7 +884,7 @@
         "D": "Error"
       },
       "correct": "B",
-      "explanation": "Sets remove duplicates. set([1,1,2,3]) gives {1, 2, 3}.",
+      "explanation": "A set keeps only unique elements, so the repeated 1 is dropped and the result is {1, 2, 3} in curly braces. The input list has four items but the set holds three, so B is correct.",
       "topicQuality": "specific"
     },
     {
@@ -1075,7 +1075,7 @@
         "D": "elsif"
       },
       "correct": "B",
-      "explanation": "In Python, elif is used as a combination of else and if for multiple conditions.",
+      "explanation": "elif combines else and if: it is tested only when the earlier conditions were false, allowing an if/elif/else chain. else if, elseif and elsif are not Python syntax, so B is correct.",
       "topicQuality": "specific"
     },
     {
