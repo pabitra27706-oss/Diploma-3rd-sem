@@ -28,8 +28,8 @@
 - License: **MIT** (chosen 2026-11-16; see `LICENSE`). Covers the project's own code, documentation and authored content. Third-party examination-source material keeps unresolved, separate rights per `docs/DECISIONS.md`; this license does not relicense it.
 - Money: none — no ads, payments, donations, affiliates, or analytics
 - Scanned: 177 tracked files, 55 HTML pages, 20 standalone JS files, 55 JSON
-  files, 958 PYQ records, 872 quiz records (baseline 2026-11-06, re-scanned
-  2026-11-17 after one duplicate Python paper was removed; rules
+  files, 924 PYQ records, 872 quiz records (baseline 2026-11-06, re-scanned
+  2026-11-17 after two duplicate reprint papers were removed; rules
   reconciled 2026-11-16 — see `docs/AUDIT-2026-11-16.md`)
 - Time budget: 4 weeks from 2026-11-06, unless a waiver is recorded
 

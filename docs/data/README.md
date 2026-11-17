@@ -15,7 +15,7 @@ commands without source changes yields identical bytes.
 
 - `_data/catalog.json`: computed subject counts, syllabus authority metadata
   (`contactHours`, `ltp`, `prerequisites`, `units`), raw/unique generic topic
-  counts, real quiz-bank files/years/sources, exact aliases, canonical
+  counts, real quiz-bank files/years/sources, exact alias, canonical
   `alsoAppearedIn` lists, normalized-text candidates.
 - `assets/data/practice-pool.json`: 923 canonical practice items with derived
   `practiceDay`, `topicQuality` (`generic` vs `specific`), `alsoAppearedIn`, and
@@ -37,7 +37,7 @@ commands without source changes yields identical bytes.
 
 ## Unfinished gates
 
-`validate_data.py --strict` currently reports 10 findings: seven invalid PYQ units,
+`validate_data.py --strict` currently reports 9 findings: six invalid PYQ units,
 one invalid CST209 quiz bank (35 questions), and two reversed CST201 unit banks.
 `validate_syllabus.py --strict` reports three grouped coverage errors. No retags,
 source labels, question wording/options, or answers were altered. A preservation

@@ -334,10 +334,6 @@ def validate_pilot_root(paper: dict, path: Path, report: Report) -> None:
             "sourcePaperCode": "337(S)", "scanSetNumber": None,
             "sourceFile": "cst-3-sem-computer-organisation-and-architecture-337-s-mar-2021.pdf",
         },
-        "CST209-P002-2023-03.json": {
-            "sourcePaperCode": "307/5(N)", "scanSetNumber": None,
-            "sourceFile": "cst-3-sem-algorithms-307-5-n-mar-2023.pdf",
-        },
     }
     exact = exact_by_file.get(path.name)
     if exact:

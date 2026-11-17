@@ -26,7 +26,7 @@
         "D": "O(1)"
       },
       "correct": "B",
-      "explanation": "Binary Search repeatedly halves the search space, giving O(log n) worst-case time complexity.",
+      "explanation": "Binary search halves the interval at each step, so the worst case needs about log₂ n comparisons: O(log n). That is possible only on a sorted array.",
       "topicQuality": "specific"
     },
     {
@@ -50,7 +50,7 @@
         "D": "Dynamic programming"
       },
       "correct": "B",
-      "explanation": "Binary Search divides the sorted array into halves and searches the relevant half — a classic Divide and Conquer approach.",
+      "explanation": "Binary search discards one half of the sorted range each time and continues on the other, which is divide and conquer. It is not greedy, dynamic programming or a graph algorithm.",
       "topicQuality": "specific"
     },
     {
@@ -75,7 +75,7 @@
         "D": "O(n²)"
       },
       "correct": "B",
-      "explanation": "Iterative Binary Search halves the search range each step, giving O(log n) time complexity.",
+      "explanation": "The iterative version keeps low and high indices and halves the range per pass, giving O(log n) time with O(1) extra space. Recursion would add stack space.",
       "topicQuality": "specific"
     },
     {
@@ -100,7 +100,7 @@
         "D": "O(n²)"
       },
       "correct": "C",
-      "explanation": "In the worst case, Linear Search scans every element — the target is either the last element or not present — giving O(n).",
+      "explanation": "Linear search may compare against every element when the target is last or absent, so the worst case is O(n). Its best case is O(1).",
       "topicQuality": "specific"
     },
     {
@@ -124,7 +124,7 @@
         "D": "Linked-List"
       },
       "correct": "C",
-      "explanation": "Hash Tables provide O(1) average-case search time using a hash function to directly compute the storage location.",
+      "explanation": "A hash table computes the slot directly from the key, giving O(1) average search. Trees and heaps average O(log n) and linked lists O(n).",
       "topicQuality": "specific"
     },
     {
@@ -149,7 +149,7 @@
         "D": "Duplication"
       },
       "correct": "C",
-      "explanation": "When multiple keys map to the same hash table slot/bucket, it is called a collision — resolved using techniques like chaining or probing.",
+      "explanation": "When two different keys hash to the same slot they collide, and the table must resolve it by chaining or probing. Replication and diffusion are not the terms for it.",
       "topicQuality": "specific"
     },
     {
@@ -174,7 +174,7 @@
         "D": "Chaining"
       },
       "correct": "D",
-      "explanation": "Chaining maintains a linked list at each hash table slot — all elements that hash to the same index are stored in that list.",
+      "explanation": "Chaining keeps a linked list of all keys that hash to a slot, so colliding entries are simply appended. Probing techniques instead search for another free slot.",
       "topicQuality": "specific"
     },
     {
@@ -199,7 +199,7 @@
         "D": "A structure used to implement stack and queue"
       },
       "correct": "B",
-      "explanation": "A hash table maps keys to values using a hash function to compute an index — enabling fast O(1) average lookup.",
+      "explanation": "A hash table stores key-value pairs and uses a hash function to locate the slot for a key, so it maps keys to values, not values to keys.",
       "topicQuality": "specific"
     },
     {
@@ -224,7 +224,7 @@
         "D": "6"
       },
       "correct": "A",
-      "explanation": "After inserting 10,1,3,5,15,12,16 into BST: leaf nodes are 5, 12, and 16 — giving 3 leaf nodes.",
+      "explanation": "Inserting 10, 1, 3, 5, 15, 12, 16 gives leaves 5 (under 3), 12 and 16 (under 15), so there are three leaves. Nodes 10, 1, 3 and 15 all have children.",
       "topicQuality": "specific"
     },
     {
@@ -249,7 +249,7 @@
         "D": "3"
       },
       "correct": "B",
-      "explanation": "An AVL tree (height-balanced BST) maintains the balance factor — the height difference between left and right subtrees — to at most 1.",
+      "explanation": "A height-balanced tree allows the two subtree heights to differ by at most 1, so every balance factor is -1, 0 or +1. Larger differences trigger rotations.",
       "topicQuality": "specific"
     },
     {
@@ -274,7 +274,7 @@
         "D": "Splay Tree"
       },
       "correct": "B",
-      "explanation": "AVL Tree (Adelson-Velsky and Landis Tree) is the classic height-balanced BST where balance factor at every node is -1, 0, or +1.",
+      "explanation": "AVL trees, named after Adelson-Velsky and Landis, were the first height-balanced binary search trees. Red-black trees are balanced too but carry a different name.",
       "topicQuality": "specific"
     },
     {
@@ -298,7 +298,7 @@
         "D": "height(left subtree) × height(right subtree)"
       },
       "correct": "A",
-      "explanation": "Balance Factor = height(left subtree) - height(right subtree). For AVL tree this value must be -1, 0, or +1 at every node.",
+      "explanation": "Balance factor = height(left subtree) - height(right subtree), and an AVL tree keeps it within -1, 0 and +1. The reverse subtraction is an alternative convention.",
       "topicQuality": "specific"
     },
     {
@@ -323,7 +323,7 @@
         "D": "AVL rotation"
       },
       "correct": "B",
-      "explanation": "Double rotation (Left-Right or Right-Left) is needed when a single rotation is insufficient to restore the AVL balance property.",
+      "explanation": "When the imbalance lies in the inner subtree (left-right or right-left), one rotation is not enough and a double rotation restores balance. A single rotation handles the outer cases.",
       "topicQuality": "specific"
     },
     {
@@ -348,7 +348,7 @@
         "D": "89 and 94"
       },
       "correct": "A",
-      "explanation": "First mid = index 3 → 90 (key 99 > 90, search right). Second mid = index 5 → 99 (found). Mid values are 90 and 99.",
+      "explanation": "With seven elements the first mid is index 3, value 90; since 99 > 90 the search moves right, where the next mid is index 5, value 99. The key is found there.",
       "topicQuality": "specific"
     },
     {
@@ -372,7 +372,7 @@
         "D": "O(n²)"
       },
       "correct": "C",
-      "explanation": "Linear Search worst case is O(n) — the element is either the last one or not present, requiring a full scan.",
+      "explanation": "Linear search compares elements one after another, so an absent or last element costs n comparisons: O(n). Only a hit at the first position is O(1).",
       "topicQuality": "specific"
     },
     {
@@ -648,7 +648,7 @@
         "D": "O(n log n)"
       },
       "correct": "C",
-      "explanation": "In the worst case (skewed BST), all nodes form a linear chain — search degrades to O(n), same as linear search.",
+      "explanation": "An unbalanced BST can degenerate into a chain of n nodes, so a search may visit every node: O(n). A balanced tree keeps it at O(log n).",
       "topicQuality": "specific"
     },
     {
@@ -673,7 +673,7 @@
         "D": "Array"
       },
       "correct": "B",
-      "explanation": "AVL Tree maintains height balance at all times, guaranteeing O(log n) for search, insert, and delete operations.",
+      "explanation": "AVL trees rebalance by rotation after every insert or delete, so the height stays O(log n) and all three operations cost O(log n).",
       "topicQuality": "specific"
     },
     {
@@ -698,7 +698,7 @@
         "D": "(h(k) × i) mod m"
       },
       "correct": "B",
-      "explanation": "Linear Probing uses (h(k) + i) mod m — probing consecutive slots linearly until an empty slot is found.",
+      "explanation": "Linear probing tries successive slots with (h(k) + i) mod m for i = 0, 1, 2, and so on, so it scans forward until a free slot appears. Quadratic probing squares i instead.",
       "topicQuality": "specific"
     },
     {
@@ -723,7 +723,7 @@
         "D": "Stack"
       },
       "correct": "C",
-      "explanation": "Hash Tables are used in compilers for symbol tables — they provide O(1) average-case lookup for variable and function name resolution.",
+      "explanation": "Compilers keep variable and function names in a symbol table, and a hash table gives O(1) average lookup for that. Arrays and lists would need linear search.",
       "topicQuality": "specific"
     },
     {
@@ -850,7 +850,7 @@
         "D": "Chaining"
       },
       "correct": "C",
-      "explanation": "Double Hashing uses two hash functions: probe sequence is (h1(k) + i × h2(k)) mod m — reducing clustering better than linear probing.",
+      "explanation": "Double hashing uses a second hash function to set the step: (h1(k) + i·h2(k)) mod m. A good h2 spreads keys better and avoids the clustering of linear probing.",
       "topicQuality": "specific"
     },
     {

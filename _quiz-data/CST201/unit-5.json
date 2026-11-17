@@ -25,7 +25,7 @@
         "D": "none"
       },
       "correct": "B",
-      "explanation": "The correct syntax for pointer declaration is: datatype *pointer_name; So int *ptr; declares a pointer to an integer.",
+      "explanation": "The asterisk binds to the name, so int *ptr; declares ptr as a pointer to int. int_ptr x and *int ptr are not valid declarations in C.",
       "topicQuality": "specific"
     },
     {
@@ -49,7 +49,7 @@
         "D": "1010"
       },
       "correct": "D",
-      "explanation": "For a 2-byte int: p+5 = 1000 + 5×2 = 1010. Pointer arithmetic adds (n × size_of_datatype) to the address. For 4-byte int the answer would be 1020.",
+      "explanation": "Pointer arithmetic scales by the size of the pointed type: p + 5 adds 5 × 2 = 10 bytes for a 2-byte int, giving 1010. With 4-byte ints the answer would be 1020.",
       "topicQuality": "specific"
     },
     {
@@ -74,7 +74,7 @@
         "D": "none of these"
       },
       "correct": "C",
-      "explanation": "&num gives the address of num. * (dereference) on that address gives back the value stored at that address, which is num itself. So *(&num) = num.",
+      "explanation": "&num yields the address of num, and * dereferences that address straight back, so *(&num) is simply num. The two operators cancel each other.",
       "topicQuality": "specific"
     },
     {
@@ -99,7 +99,7 @@
         "D": "Character"
       },
       "correct": "A",
-      "explanation": "Addresses in memory are represented as unsigned integers. Pointer variables store memory addresses, which are essentially integer values.",
+      "explanation": "A pointer holds a memory address, which is an unsigned integral value internally; that is why pointer arithmetic and casts to integer types are possible.",
       "topicQuality": "specific"
     },
     {
@@ -124,7 +124,7 @@
         "D": "5 7 5"
       },
       "correct": "D",
-      "explanation": "Arguments evaluated right-to-left: (*ptr)-- → value is 5 (post-decrement, num becomes 4); x+2 → x was set to 5 initially, so 5+2=7; ++num → num is now 4, pre-increment gives 5. Output: 5 7 5.",
+      "explanation": "Evaluating right to left: (*ptr)-- yields 5 and makes num 4, x+2 yields 7, and ++num makes num 5 and yields 5. Printed left to right the output is 5 7 5.",
       "topicQuality": "specific"
     },
     {
@@ -149,7 +149,7 @@
         "D": "*arr[i]"
       },
       "correct": "C",
-      "explanation": "arr[i] is equivalent to *(arr + i) in pointer notation. The array name acts as a pointer to the first element, and adding i gives the address of the ith element.",
+      "explanation": "arr[i] is defined as *(arr + i): the array name decays to a pointer to arr[0] and the offset selects the element. The two notations are interchangeable.",
       "topicQuality": "specific"
     },
     {
@@ -173,7 +173,7 @@
         "D": "*P = P + 10"
       },
       "correct": "D",
-      "explanation": "*P is an integer value but P+10 is an address (pointer). Assigning an address to an integer location (*P) without casting is invalid. A, B are valid integer operations. C adds 10 to pointer which is valid pointer arithmetic.",
+      "explanation": "*P is an int lvalue while P + 10 is an address, so *P = P + 10 assigns a pointer to an int without a cast and is invalid. The other three are legal expressions.",
       "topicQuality": "specific"
     },
     {
@@ -198,7 +198,7 @@
         "D": "4 bytes"
       },
       "correct": "D",
-      "explanation": "Union size equals the size of its largest member. The largest member is float z (4 bytes). All members share the same memory space in a union.",
+      "explanation": "A union shares one storage area among all members, so its size equals the largest member. Here float needs 4 bytes, more than int (2) and char (1).",
       "topicQuality": "specific"
     },
     {
@@ -223,7 +223,7 @@
         "D": "The initial value of the variable."
       },
       "correct": "C",
-      "explanation": "Storage class determines memory location, scope, lifetime, and initial value. The range of values is determined by the data type (int, float, char), not the storage class.",
+      "explanation": "A storage class fixes where the object lives, its scope, lifetime and default initial value. The range of values depends on the data type, not on the storage class.",
       "topicQuality": "specific"
     },
     {
@@ -248,7 +248,7 @@
         "D": "5 3 1 0 0"
       },
       "correct": "A",
-      "explanation": "ptr points to arr[4] (value 5). *(ptr-0)=5, *(ptr-1)=4, *(ptr-2)=3, *(ptr-3)=2, *(ptr-4)=1. Output: 5 4 3 2 1 (array printed in reverse).",
+      "explanation": "ptr points at arr[4] and ptr - i steps backwards, so the loop prints 5, 4, 3, 2, 1. It never reads arr[-1] because i stops at 4.",
       "topicQuality": "specific"
     },
     {
@@ -273,7 +273,7 @@
         "D": "A variable refers to a location in memory."
       },
       "correct": "C",
-      "explanation": "Variables can be declared and defined separately. For example, extern int x; declares but doesn't define. Definition happens elsewhere. Declaration and definition don't have to happen simultaneously.",
+      "explanation": "Declaration and definition can be separate: extern int x; declares x while the definition lives in another file. So it is false that both must happen together.",
       "topicQuality": "specific"
     },
     {
@@ -297,7 +297,7 @@
         "D": "pointer to structure"
       },
       "correct": "A",
-      "explanation": "When a structure is defined inside another structure, it is called a nested structure. A self-referential structure contains a pointer to itself.",
+      "explanation": "A structure that has another structure type as a member is called nested. A self-referential structure instead contains a pointer to its own type.",
       "topicQuality": "specific"
     },
     {
@@ -659,7 +659,7 @@
         "D": "A pointer that points to itself"
       },
       "correct": "B",
-      "explanation": "A NULL pointer is a pointer that does not point to any valid memory location. It is initialized with NULL or 0 and is used to indicate an empty or uninitialized pointer.",
+      "explanation": "A NULL pointer holds the address 0 and deliberately points to no object, which is handy for signalling 'nothing yet'. Dereferencing it is undefined behaviour.",
       "topicQuality": "specific"
     },
     {
@@ -683,7 +683,7 @@
         "D": "A pointer that always has NULL value"
       },
       "correct": "B",
-      "explanation": "void pointer (void *) is a generic pointer that can point to any data type. It must be cast to the appropriate type before dereferencing.",
+      "explanation": "void * is a generic pointer that can hold any object address, but it must be cast back to a real type before dereferencing because its target size is unknown.",
       "topicQuality": "specific"
     },
     {
@@ -707,7 +707,7 @@
         "D": "ptr cannot be used at all"
       },
       "correct": "B",
-      "explanation": "const int *ptr means pointer to a constant integer. The value pointed to by ptr cannot be changed using *ptr, but ptr itself can point to a different address.",
+      "explanation": "const int *ptr makes the pointed-to int read-only through ptr, while ptr itself may be reassigned. int * const ptr would be the opposite arrangement.",
       "topicQuality": "specific"
     },
     {
@@ -731,7 +731,7 @@
         "D": "int ptr**;"
       },
       "correct": "C",
-      "explanation": "int **ptr declares a pointer to a pointer. It stores the address of another pointer variable. Also called double pointer or double indirection.",
+      "explanation": "int **ptr declares a pointer whose target is itself an int pointer, giving two levels of indirection. C has no reference operator, so int &ptr is invalid.",
       "topicQuality": "specific"
     },
     {
@@ -756,7 +756,7 @@
         "D": "There is no difference between them"
       },
       "correct": "C",
-      "explanation": "calloc() allocates memory and initializes all bytes to zero. malloc() allocates memory but does NOT initialize it — memory contains garbage values.",
+      "explanation": "calloc multiplies count by size and zero-fills the block, whereas malloc returns uninitialised memory holding garbage. Both allocate on the heap.",
       "topicQuality": "specific"
     },
     {
@@ -780,7 +780,7 @@
         "D": "Allocates memory for arrays only"
       },
       "correct": "C",
-      "explanation": "realloc() changes the size of previously allocated memory block. If the new size is larger, additional memory is allocated. If smaller, excess memory is freed.",
+      "explanation": "realloc grows or shrinks an existing heap block, copying the contents if it must move them, and returns the new address. free is still needed afterwards.",
       "topicQuality": "specific"
     },
     {
@@ -804,7 +804,7 @@
         "D": "The memory is freed when the function returns"
       },
       "correct": "B",
-      "explanation": "If dynamically allocated memory is not freed, it remains occupied until the program terminates. This is called a memory leak and can consume available memory over time.",
+      "explanation": "Heap memory is never reclaimed automatically, so an unfreed block stays reserved for the life of the process. Repeated leaks can exhaust available memory.",
       "topicQuality": "specific"
     },
     {
@@ -828,7 +828,7 @@
         "D": "A NULL pointer"
       },
       "correct": "B",
-      "explanation": "char *str = \"Hello\"; creates a pointer to a string literal. String literals are stored in read-only memory, so modifying them causes undefined behaviour.",
+      "explanation": "The literal sits in read-only storage and str is only a pointer to it, so writing through str is undefined behaviour. char str[] = \"Hello\"; would make a modifiable copy.",
       "topicQuality": "specific"
     },
     {
@@ -852,7 +852,7 @@
         "D": "int *arr(5);"
       },
       "correct": "A",
-      "explanation": "int *arr[5]; declares an array of 5 pointers to int. Option B declares a pointer to an array of 5 integers, which is different.",
+      "explanation": "int *arr[5]; is an array of five int pointers because the subscript binds tighter than the star. int (*arr)[5] would be one pointer to an array of five ints.",
       "topicQuality": "specific"
     },
     {
@@ -876,7 +876,7 @@
         "D": "Undefined behaviour"
       },
       "correct": "B",
-      "explanation": "Subtracting two pointers of the same array gives the number of elements between them, not the byte difference. It is calculated as (address difference) / sizeof(element).",
+      "explanation": "Subtracting two pointers into the same array gives the number of elements between them, not the byte difference, because the compiler divides by sizeof(element).",
       "topicQuality": "specific"
     },
     {
@@ -900,7 +900,7 @@
         "D": "alloc.h"
       },
       "correct": "C",
-      "explanation": "All dynamic memory allocation functions (malloc, calloc, realloc, free) are declared in stdlib.h (Standard Library header).",
+      "explanation": "malloc, calloc, realloc and free are all declared in stdlib.h, so that header must be included. Without it the compiler lacks their prototypes.",
       "topicQuality": "specific"
     },
     {
@@ -925,7 +925,7 @@
         "D": "Array name stores the last element's address"
       },
       "correct": "B",
-      "explanation": "An array name acts as a constant pointer to the first element (arr = &arr[0]). Unlike a pointer variable, the array name cannot be reassigned to point elsewhere.",
+      "explanation": "An array name converts to a constant pointer to its first element, which is why arr[i] works, but arr = other; is illegal because the name cannot be reassigned.",
       "topicQuality": "specific"
     }
   ]

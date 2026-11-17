@@ -25,7 +25,7 @@
         "D": "Insertion Sort"
       },
       "correct": "B",
-      "explanation": "Quick Sort has average-case time complexity O(n log n) and performs best in practice for large datasets due to cache efficiency.",
+      "explanation": "Quick sort runs in O(n log n) on average with small constant factors and good cache locality, so it is usually fastest in practice on large arrays, although its worst case is O(n²).",
       "topicQuality": "specific"
     },
     {
@@ -49,7 +49,7 @@
         "D": "O(n³)"
       },
       "correct": "A",
-      "explanation": "Radix Sort runs in O(nk) where n is the number of elements and k is the number of digits (passes).",
+      "explanation": "Radix sort performs one counting pass per digit position, so the cost is O(nk) for k digits. It is not a comparison-based sort, which is why it can beat O(n log n).",
       "topicQuality": "specific"
     },
     {
@@ -74,7 +74,7 @@
         "D": "O(log n)"
       },
       "correct": "B",
-      "explanation": "QuickSort worst case is O(n²) — occurs when the pivot is always the smallest or largest element (e.g., sorted array with first element as pivot).",
+      "explanation": "Quick sort degrades to O(n²) when the pivot is always the smallest or largest element, for example a sorted array with a first-element pivot. A random pivot avoids that in practice.",
       "topicQuality": "specific"
     },
     {
@@ -99,7 +99,7 @@
         "D": "O(log n)"
       },
       "correct": "C",
-      "explanation": "Building a Max-Heap from an unsorted array takes O(n) time using the heapify-down approach starting from the last internal node.",
+      "explanation": "Building a max-heap bottom-up, starting from the last internal node and sifting down, costs O(n) because most nodes are near the leaves. Inserting elements one by one would cost O(n log n).",
       "topicQuality": "specific"
     },
     {
@@ -124,7 +124,7 @@
         "D": "Insertion sort"
       },
       "correct": "B",
-      "explanation": "Merge Sort guarantees O(n log n) in all cases — best, average and worst — making it the most consistent comparison-based sort.",
+      "explanation": "Merge sort splits and merges identically whatever the input order, so it stays O(n log n) in the best, average and worst cases. Bubble, selection and insertion sort reach O(n²).",
       "topicQuality": "specific"
     },
     {
@@ -148,7 +148,7 @@
         "D": "0"
       },
       "correct": "B",
-      "explanation": "Only elements 4 and 3 are out of order. Bubble sort needs 2 passes — first pass swaps 4 and 3, second pass confirms sorted order.",
+      "explanation": "Only the pair 4, 3 is out of order, so the first pass swaps them and the second pass finds no swaps and stops. Two passes therefore sort this nearly ordered array.",
       "topicQuality": "specific"
     },
     {
@@ -174,7 +174,7 @@
         "D": "it is a stable algorithm"
       },
       "correct": "B",
-      "explanation": "Merge Sort is NOT adaptive — its time complexity remains O(n log n) regardless of whether the input is already sorted or not.",
+      "explanation": "Merge sort does the same work whatever the input order, so it is not adaptive; its O(n log n) never improves on sorted data. It is comparison based, stable and not in place.",
       "topicQuality": "specific"
     },
     {
@@ -199,7 +199,7 @@
         "D": "A random number is generated which is used as the pivot"
       },
       "correct": "D",
-      "explanation": "Randomized QuickSort selects a random element as pivot, reducing the likelihood of worst-case O(n²) behavior.",
+      "explanation": "Randomized quick sort picks the pivot uniformly at random, which makes the O(n²) case very unlikely whatever the input order. A fixed end-element pivot does not have that guarantee.",
       "topicQuality": "specific"
     },
     {
@@ -224,7 +224,7 @@
         "D": "Radix sort"
       },
       "correct": "A",
-      "explanation": "Binary heap (Heap Sort) is similar to insertion sort in that it also maintains a sorted portion and inserts elements one at a time using a heap structure.",
+      "explanation": "Heap sort builds a heap and repeatedly extracts the maximum into a growing sorted region, which resembles inserting items into a sorted part one at a time. Its structure is nearest to insertion sort.",
       "topicQuality": "specific"
     },
     {
@@ -248,7 +248,7 @@
         "D": "n-2"
       },
       "correct": "A",
-      "explanation": "Selection Sort performs at most n-1 swaps — one swap per pass to place the minimum element in its correct position.",
+      "explanation": "Selection sort swaps once per pass and there are n-1 passes, so at most n-1 swaps are made. That low swap count is its main advantage over bubble sort.",
       "topicQuality": "specific"
     },
     {
@@ -273,7 +273,7 @@
         "D": "Heap Sort"
       },
       "correct": "B",
-      "explanation": "Insertion Sort has O(n) best-case complexity on already-sorted arrays — it simply scans and makes no swaps.",
+      "explanation": "Insertion sort scans an already sorted array once, shifting nothing, so its best case is O(n). Quick and heap sort still do O(n log n) work.",
       "topicQuality": "specific"
     },
     {
@@ -297,7 +297,7 @@
         "D": "n*(n-1)/2"
       },
       "correct": "D",
-      "explanation": "Bubble Sort in the worst case (reverse sorted array) performs n*(n-1)/2 swaps — one for every pair of adjacent elements.",
+      "explanation": "In the worst case, a reverse-sorted array, bubble sort swaps once for every pair of positions, giving n(n-1)/2 swaps. That equals the number of inversions in the array.",
       "topicQuality": "specific"
     },
     {
@@ -321,7 +321,7 @@
         "D": "Greedy algorithm"
       },
       "correct": "C",
-      "explanation": "Quick Sort uses Divide & Conquer — it partitions the array around a pivot and recursively sorts subarrays.",
+      "explanation": "Quick sort partitions around a pivot and recurses on the two parts, which is divide and conquer. Dynamic programming and greedy methods are different strategies.",
       "topicQuality": "specific"
     },
     {
@@ -345,7 +345,7 @@
         "D": "O(log n)"
       },
       "correct": "C",
-      "explanation": "Heap Sort has O(n log n) time complexity in all cases — building the heap is O(n) and each of n extractions takes O(log n).",
+      "explanation": "Heap sort builds the heap in O(n) and performs n extractions at O(log n) each, giving O(n log n) in every case with only O(1) extra space.",
       "topicQuality": "specific"
     },
     {
@@ -369,7 +369,7 @@
         "D": "O(log n)"
       },
       "correct": "C",
-      "explanation": "Insertion Sort has O(n²) worst-case time complexity due to nested comparisons and shifts in a reverse-sorted array.",
+      "explanation": "Insertion sort compares and shifts elements for every new item, so a reverse-sorted array costs about n²/2 operations: O(n²) worst case and O(n) when already sorted.",
       "topicQuality": "specific"
     },
     {
@@ -393,7 +393,7 @@
         "D": "The median element of the array"
       },
       "correct": "C",
-      "explanation": "A pivot is the reference element chosen in Quick Sort around which the array is partitioned into two subarrays.",
+      "explanation": "The pivot is the reference value used to partition the array: smaller elements go left and larger ones right. It need not be the first, last or median element.",
       "topicQuality": "specific"
     },
     {
@@ -417,7 +417,7 @@
         "D": "Shell sort"
       },
       "correct": "B",
-      "explanation": "Quick Sort is generally the fastest in practice due to good cache performance and low constant factors despite O(n²) worst case.",
+      "explanation": "Quick sort is usually fastest in practice because of low overhead and sequential memory access, even though merge sort has the better worst-case bound.",
       "topicQuality": "specific"
     },
     {
@@ -670,7 +670,7 @@
         "D": "Bubble Sort"
       },
       "correct": "C",
-      "explanation": "Shell Sort is a generalization of Insertion Sort — it sorts elements far apart first using a gap sequence, reducing shifts.",
+      "explanation": "Shell sort generalises insertion sort by first sorting elements a gap apart, which reduces the shifting needed later. The gap shrinks until it reaches 1.",
       "topicQuality": "specific"
     },
     {
@@ -694,7 +694,7 @@
         "D": "O(n²)"
       },
       "correct": "B",
-      "explanation": "Count Sort runs in O(n + k) time — O(k) to initialize the count array and O(n) to count and reconstruct the sorted array.",
+      "explanation": "Counting sort builds a frequency array of size k and scans the n items, so the time is O(n + k). It works only for integer keys in a known range.",
       "topicQuality": "specific"
     },
     {
@@ -719,7 +719,7 @@
         "D": "It requires O(n) extra space"
       },
       "correct": "C",
-      "explanation": "Heap Sort is in-place (O(1) extra space) and guarantees O(n log n) time complexity in all cases.",
+      "explanation": "Heap sort rearranges the array itself, needing only O(1) auxiliary space, and guarantees O(n log n) in all cases. Merge sort, by contrast, needs O(n) extra space.",
       "topicQuality": "specific"
     },
     {
@@ -844,7 +844,7 @@
         "D": "O(n log n)"
       },
       "correct": "C",
-      "explanation": "Merge Sort requires O(n) auxiliary space for the temporary arrays used during the merge step.",
+      "explanation": "Merging needs a temporary buffer holding up to n elements, so merge sort uses O(n) auxiliary space. The recursion stack adds only O(log n).",
       "topicQuality": "specific"
     },
     {
@@ -869,7 +869,7 @@
         "D": "O(1)"
       },
       "correct": "C",
-      "explanation": "With the early-exit optimization (flag for no swaps), Bubble Sort achieves O(n) best case on an already-sorted array.",
+      "explanation": "Optimised bubble sort stops as soon as a pass makes no swaps, so a sorted array finishes after one pass: O(n). Without that flag it stays O(n²).",
       "topicQuality": "specific"
     },
     {
@@ -914,7 +914,7 @@
         "D": "Bubble Sort"
       },
       "correct": "C",
-      "explanation": "Heap Sort is NOT stable — it can change the relative order of equal elements during the heap restructuring process.",
+      "explanation": "Heap sort is not stable, because sifting elements around the heap can reverse the relative order of equal keys. Merge, insertion and bubble sort are stable.",
       "topicQuality": "specific"
     },
     {

@@ -26,7 +26,7 @@
         "D": "search for substrings by calculating hash values"
       },
       "correct": "D",
-      "explanation": "Rabin-Karp uses hash values of substrings for fast comparison — only when hash values match does it verify character-by-character.",
+      "explanation": "Rabin-Karp hashes every window of length m and compares hash values first, verifying characters only when the hashes agree. That makes the search fast on average.",
       "topicQuality": "specific"
     },
     {
@@ -51,7 +51,7 @@
         "D": "directly match the substring"
       },
       "correct": "A",
-      "explanation": "KMP preprocesses the pattern to build the LPS (Longest Proper Prefix which is also Suffix) array, avoiding re-comparisons of already matched characters.",
+      "explanation": "KMP preprocesses the pattern into an LPS (failure) array, so after a mismatch it knows how far to shift without re-checking characters that already matched.",
       "topicQuality": "specific"
     },
     {
@@ -76,7 +76,7 @@
         "D": "Approximation Algorithm"
       },
       "correct": "A",
-      "explanation": "Rabin-Karp is a string matching algorithm that uses rolling hash functions to find pattern occurrences in text efficiently.",
+      "explanation": "Rabin-Karp is a string matching algorithm that uses a rolling hash to locate a pattern inside a text in average O(n+m) time.",
       "topicQuality": "specific"
     },
     {
@@ -101,7 +101,7 @@
         "D": "Approximation Algorithm"
       },
       "correct": "A",
-      "explanation": "Rabin-Karp is a string matching algorithm that uses hashing to find any one of a set of pattern strings in a text.",
+      "explanation": "Rabin-Karp belongs to string matching: it hashes the pattern and each text window to find occurrences, and can search for several patterns at once.",
       "topicQuality": "specific"
     },
     {
@@ -205,7 +205,7 @@
         "D": "O(n + m)"
       },
       "correct": "C",
-      "explanation": "Naive String Matching compares the pattern (length m) at every position in the text (length n), giving O(n × m) worst case.",
+      "explanation": "The naive algorithm tries the pattern at each of about n starting positions and may compare m characters at each, so the worst case is O(n × m).",
       "topicQuality": "specific"
     },
     {
@@ -230,7 +230,7 @@
         "D": "O(m²)"
       },
       "correct": "B",
-      "explanation": "KMP runs in O(n + m) — O(m) for building the LPS array and O(n) for scanning the text, never re-comparing matched characters.",
+      "explanation": "KMP builds the LPS array in O(m) and then scans the text once in O(n), giving O(n + m) overall with no backtracking in the text.",
       "topicQuality": "specific"
     },
     {
@@ -255,7 +255,7 @@
         "D": "O(m²)"
       },
       "correct": "B",
-      "explanation": "Rabin-Karp worst case is O(n × m) — occurs when all hash values match (spurious hits), requiring character-by-character verification each time.",
+      "explanation": "Rabin-Karp averages O(n + m), but if many windows share the pattern's hash each is verified character by character, giving O(n × m) worst case.",
       "topicQuality": "specific"
     },
     {
@@ -280,7 +280,7 @@
         "D": "Random order"
       },
       "correct": "B",
-      "explanation": "Horspool's algorithm compares characters from right to left (starting from the last character of the pattern), using a bad character shift table.",
+      "explanation": "Horspool compares the window from right to left, starting at its last character, and shifts using a bad-character table. That right-to-left scan is its signature.",
       "topicQuality": "specific"
     },
     {
@@ -306,7 +306,7 @@
         "D": "Rolling hash function"
       },
       "correct": "C",
-      "explanation": "Boyer-Moore uses both Bad Character and Good Suffix heuristics together, choosing the larger shift to skip maximum characters.",
+      "explanation": "Boyer-Moore combines the bad-character and good-suffix heuristics and shifts by the larger of the two, which skips many alignments at once.",
       "topicQuality": "specific"
     },
     {
@@ -331,7 +331,7 @@
         "D": "O(log n)"
       },
       "correct": "B",
-      "explanation": "Trie search follows one node per character — a word of length L requires exactly L node traversals, giving O(L) time complexity.",
+      "explanation": "A trie consumes one character per level, so finding a word of length L costs O(L) regardless of how many words are stored.",
       "topicQuality": "specific"
     },
     {
@@ -356,7 +356,7 @@
         "D": "Bubble Sort"
       },
       "correct": "C",
-      "explanation": "MSD (Most Significant Digit) Radix Sort is commonly used for string sorting — it sorts character by character from the first position.",
+      "explanation": "MSD radix sort partitions strings by their first character and then recursively by later characters, which suits variable-length strings. It is the standard choice here.",
       "topicQuality": "specific"
     },
     {
@@ -381,7 +381,7 @@
         "D": "Optional occurrence of the preceding element"
       },
       "correct": "B",
-      "explanation": "Kleene star (*) matches zero or more occurrences of the preceding element — it is the most fundamental repetition operator in regex.",
+      "explanation": "In regular expressions * means zero or more repetitions of the preceding element, while + means one or more and ? means at most one.",
       "topicQuality": "specific"
     },
     {
@@ -406,7 +406,7 @@
         "D": "Video streaming compression"
       },
       "correct": "C",
-      "explanation": "Huffman Coding is a lossless compression technique — it uses variable-length codes based on character frequency, preserving all original data.",
+      "explanation": "Huffman coding gives short bit codes to frequent characters and longer codes to rare ones without losing information, so it is a lossless method.",
       "topicQuality": "specific"
     },
     {
@@ -576,7 +576,7 @@
         "D": "Universal hashing"
       },
       "correct": "B",
-      "explanation": "Rabin-Karp uses a rolling hash to update the hash value in O(1) by removing the old leading character and adding the new trailing character.",
+      "explanation": "A rolling hash updates the window hash in O(1) by removing the outgoing character and adding the incoming one, so each shift costs constant time.",
       "topicQuality": "specific"
     },
     {
@@ -601,7 +601,7 @@
         "D": "[0, 1, 0, 1, 2, 3]"
       },
       "correct": "B",
-      "explanation": "For P = \"AABAAC\": A→0, AA→1, AAB→0, AABA→1, AABAA→2, AABAAC→0. The LPS array is [0, 1, 0, 1, 2, 0].",
+      "explanation": "For AABAAC the LPS values are 0, 1, 0, 1, 2, 0: at position 4 the prefix AA matches the suffix AA, and the final C extends nothing. That is option B.",
       "topicQuality": "specific"
     },
     {
@@ -665,7 +665,7 @@
         "D": "O(n)"
       },
       "correct": "C",
-      "explanation": "Boyer-Moore's best case is O(n/m) — by using the bad character and good suffix heuristics, it can skip large portions of the text.",
+      "explanation": "The best case is O(n/m), because a mismatch on the last character lets the algorithm jump a whole pattern length. The worst case remains O(n × m).",
       "topicQuality": "specific"
     },
     {
@@ -690,7 +690,7 @@
         "D": "Naive String Matching"
       },
       "correct": "C",
-      "explanation": "Horspool's algorithm is a simplified Boyer-Moore — it uses only the bad character heuristic (on the rightmost text character in the window) for shifting.",
+      "explanation": "Horspool simplifies Boyer-Moore by keeping only the bad-character shift rule applied to the window's last character, which is easier to implement.",
       "topicQuality": "specific"
     },
     {
@@ -755,7 +755,7 @@
         "D": "Short strings only"
       },
       "correct": "C",
-      "explanation": "RLE replaces consecutive repeated characters with a count and the character — it is most effective when data contains long runs of the same character.",
+      "explanation": "RLE stores a repeated character once with a count, so it shrinks data containing long runs, such as flat image regions. Random data can even grow.",
       "topicQuality": "specific"
     },
     {

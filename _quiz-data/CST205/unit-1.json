@@ -26,7 +26,7 @@
         "D": "bottom"
       },
       "correct": "C",
-      "explanation": "Stack follows LIFO — insertion (PUSH) always happens at the TOP of the stack.",
+      "explanation": "A stack is LIFO, so both insertion (push) and deletion (pop) happen at the top end. Front and rear belong to a queue, and a stack offers no access at the bottom.",
       "topicQuality": "specific"
     },
     {
@@ -51,7 +51,7 @@
         "D": "3,2,4,1"
       },
       "correct": "C",
-      "explanation": "Stack is LIFO — the last element pushed (4) is the first to be popped, giving 4,3,2,1.",
+      "explanation": "LIFO means the last value pushed leaves first: 4, then 3, 2 and finally 1. The output is 4,3,2,1, not the insertion order.",
       "topicQuality": "specific"
     },
     {
@@ -76,7 +76,7 @@
         "D": "0"
       },
       "correct": "C",
-      "explanation": "Only the TOP element can be removed at any given time — stack allows access to one element at a time.",
+      "explanation": "Only the top element is reachable at any moment, so a single pop removes exactly one element. Any deeper element needs the ones above it removed first.",
       "topicQuality": "specific"
     },
     {
@@ -101,7 +101,7 @@
         "D": "none of these"
       },
       "correct": "A",
-      "explanation": "When TOP equals MAX-1, no more elements can be pushed — the stack is full (overflow condition).",
+      "explanation": "With top sitting at MAX-1 the array has no free slot, so another push would overflow. That state is called a full stack.",
       "topicQuality": "specific"
     },
     {
@@ -126,7 +126,7 @@
         "D": "User flow"
       },
       "correct": "A",
-      "explanation": "Pushing onto a full stack causes Overflow — there is no more space to store the new element.",
+      "explanation": "Five elements in a stack of size 5 means top = MAX-1, so pushing once more overflows. Nothing is stored and the operation must be rejected.",
       "topicQuality": "specific"
     },
     {
@@ -150,7 +150,7 @@
         "D": "isEmpty"
       },
       "correct": "B",
-      "explanation": "PUSH is the operation used to insert/place an element onto the top of the stack.",
+      "explanation": "push inserts an element on top and advances the top index. pop removes, peek only reads, and isEmpty tests the state without changing it.",
       "topicQuality": "specific"
     },
     {
@@ -174,7 +174,7 @@
         "D": "-18"
       },
       "correct": "D",
-      "explanation": "Evaluate: 2+4=6, 3-6=-3, 6*(-3)=-18. Result is -18.",
+      "explanation": "Scanning 6 3 2 4 + - *: 2 + 4 = 6, then 3 - 6 = -3, then 6 × (-3) = -18. Each operator consumes the two most recent operands, so -18 is correct.",
       "topicQuality": "specific"
     },
     {
@@ -198,7 +198,7 @@
         "D": "algebraic expression"
       },
       "correct": "C",
-      "explanation": "Reverse Polish Notation (RPN) is another name for postfix expression, where the operator follows its operands.",
+      "explanation": "Reverse Polish Notation writes the operator after its operands, which is the postfix form. Prefix puts the operator first and infix keeps it between operands.",
       "topicQuality": "specific"
     },
     {
@@ -222,7 +222,7 @@
         "D": "Linked Lists"
       },
       "correct": "C",
-      "explanation": "Stack follows LIFO (Last In First Out) — the most recently added element is the first to be removed.",
+      "explanation": "A stack removes the most recently added item first, which is LIFO. Queues are FIFO, while graphs and linked lists are not defined by that order rule.",
       "topicQuality": "specific"
     },
     {
@@ -246,7 +246,7 @@
         "D": "Graph"
       },
       "correct": "A",
-      "explanation": "An array is a collection of similar (homogeneous) data elements stored in contiguous memory locations.",
+      "explanation": "An array holds a fixed number of elements of the same type in contiguous memory. Trees and graphs store nodes joined by links, not a homogeneous block.",
       "topicQuality": "specific"
     },
     {
@@ -271,7 +271,7 @@
         "D": "all of the above"
       },
       "correct": "B",
-      "explanation": "A stack is used to evaluate postfix expressions — operands are pushed and operators pop and process them.",
+      "explanation": "A postfix expression is evaluated by pushing operands and, for each operator, popping two values and pushing the result — exactly a stack's behaviour.",
       "topicQuality": "specific"
     },
     {
@@ -296,7 +296,7 @@
         "D": "All of the above"
       },
       "correct": "D",
-      "explanation": "Stacks are used in function calls (call stack), arithmetic expression evaluation, and large number operations.",
+      "explanation": "The run-time call stack handles function calls and recursion, and stacks also evaluate expressions and support large-number arithmetic, so all three apply.",
       "topicQuality": "specific"
     },
     {
@@ -320,7 +320,7 @@
         "D": "memory full"
       },
       "correct": "A",
-      "explanation": "Overflow occurs when you try to insert into a full data structure with no available space.",
+      "explanation": "Overflow means there is no room left to insert because the structure is already at capacity. Underflow is the opposite: removing from an empty structure.",
       "topicQuality": "specific"
     },
     {
@@ -345,7 +345,7 @@
         "D": "None of the above"
       },
       "correct": "C",
-      "explanation": "Linear arrays are indexed structures — each element is accessed using its index number.",
+      "explanation": "A linear array gives direct access through an index, arr[i], in constant time. Stacks and linked lists must be walked sequentially to reach an element.",
       "topicQuality": "specific"
     },
     {
@@ -369,7 +369,7 @@
         "D": "All of the above"
       },
       "correct": "A",
-      "explanation": "Linear arrays store elements in a single row/column and are called one-dimensional arrays.",
+      "explanation": "A linear array is one list of elements, so it is the same thing as a one-dimensional array. Vertical and horizontal array are not standard terms.",
       "topicQuality": "specific"
     },
     {
@@ -393,7 +393,7 @@
         "D": "upper bound"
       },
       "correct": "C",
-      "explanation": "The smallest index value of an array is called the lower bound (typically 0 in C).",
+      "explanation": "The smallest legal index is the lower bound (0 in C, 1 in some notations) and the largest is the upper bound. Their difference sizes the array.",
       "topicQuality": "specific"
     },
     {
@@ -417,7 +417,7 @@
         "D": "None of the above"
       },
       "correct": "A",
-      "explanation": "The way a data structure is stored/represented in memory is called storage structure.",
+      "explanation": "How a structure is laid out in memory — contiguous or linked — is its storage structure. An abstract data type instead describes behaviour, not layout.",
       "topicQuality": "specific"
     },
     {
@@ -442,7 +442,7 @@
         "D": "Array"
       },
       "correct": "A",
-      "explanation": "Disks piled up represent a stack — you can only add or remove from the top, following LIFO.",
+      "explanation": "Piled disks can only be added or taken from the top, which is LIFO behaviour. A queue would need access at both ends.",
       "topicQuality": "specific"
     },
     {
@@ -467,7 +467,7 @@
         "D": "None of these"
       },
       "correct": "B",
-      "explanation": "TOP = MAX-1 means the stack has reached its maximum capacity — the stack is full.",
+      "explanation": "top = MAX-1 is the last array slot, so no further push is possible and the stack is full. An empty stack has top = -1.",
       "topicQuality": "specific"
     },
     {
@@ -492,7 +492,7 @@
         "D": "A*BC+/D"
       },
       "correct": "B",
-      "explanation": "AB + C/D → division first: CD/, then addition: AB CD/ + gives ABCD/+.",
+      "explanation": "In AB + C/D the division is a subexpression, so it becomes CD/; the addition then joins AB with that result, giving ABCD/+. Postfix writes each operator after its operands.",
       "topicQuality": "specific"
     },
     {
@@ -1048,7 +1048,7 @@
         "D": "Deletion"
       },
       "correct": "C",
-      "explanation": "Compilation is not a data structure operation. Basic operations include Traversal, Insertion, Deletion, Searching, and Sorting.",
+      "explanation": "Traversal, insertion, deletion, searching and sorting are the standard operations on data structures. Compilation is a translation step, not an operation on stored data.",
       "topicQuality": "specific"
     },
     {
@@ -1072,7 +1072,7 @@
         "D": "B + ((i+j)) * S"
       },
       "correct": "B",
-      "explanation": "In column-major order, columns are stored sequentially: address = B + ((j-1)*m + (i-1)) * S.",
+      "explanation": "In column-major order a whole column is stored before the next, so the offset is (j-1)*m + (i-1) elements past the base. Multiplying by S bytes per element gives the address.",
       "topicQuality": "specific"
     },
     {

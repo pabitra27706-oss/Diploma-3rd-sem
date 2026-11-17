@@ -45,7 +45,7 @@ Owner authorizes preserving main's newer sources and merging the code. The
 fixed PYQ/registry baseline is now main commit
 `cfe3a63decb270826da40ea50b9392efc58b2f1d`; all 35 originals match it exactly.
 Main's icon/manifest fix is preserved. Derived artifacts have been regenerated;
-the same ten source-review findings remain open. Consult PR #7 for CI/merge
+the same nine source-review findings remain open. Consult PR #7 for CI/merge
 result; do not treat earlier unpushed/blocked checkpoint notes as current state.
 
 ## Current implementation
@@ -54,8 +54,8 @@ Phase 1 platform implementation is complete with deferred final hardware
 acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the complete
 per-phase remainder table and the source/rights gates.
 
-- Data: 958 raw PYQs, 923 exact-unique Practice questions, 35 aliases across
-  29 papers; ten derived Practice days; enriched `_data/catalog.json` and
+- Data: 924 raw PYQs, 923 exact-unique Practice questions, 1 exact alias across
+  28 papers; ten derived Practice days; enriched `_data/catalog.json` and
   `assets/data/practice-pool.json` (`aliases`, `alsoAppearedIn`, `topicQuality`);
   all 5 subject hubs and 24 unit HTML pages aligned to `docs/syllabus/syllabus.json`
   and enforced by `validate_data.py`; alias `?q=` deep-link resolution in Practice

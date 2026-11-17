@@ -25,7 +25,7 @@
         "D": "Array"
       },
       "correct": "B",
-      "explanation": "Queue follows FIFO — items are added at the rear and removed from the front.",
+      "explanation": "A queue adds at the rear and removes at the front, so the two ends differ. A stack adds and removes at the same end.",
       "topicQuality": "specific"
     },
     {
@@ -49,7 +49,7 @@
         "D": "DCBA"
       },
       "correct": "D",
-      "explanation": "Queue is FIFO — the first element inserted (D) is the first removed, giving order DCBA.",
+      "explanation": "FIFO means the first character enqueued, D, leaves first, followed by C, B and A. So the removal order DCBA matches the insertion order exactly.",
       "topicQuality": "specific"
     },
     {
@@ -73,7 +73,7 @@
         "D": "O(n²)"
       },
       "correct": "A",
-      "explanation": "Enqueue and dequeue operations on a queue take constant O(1) time as they always operate at fixed ends.",
+      "explanation": "Enqueue and dequeue only move the rear and front pointers, so each costs constant O(1) time. No element has to be shifted.",
       "topicQuality": "specific"
     },
     {
@@ -97,7 +97,7 @@
         "D": "LILO"
       },
       "correct": "B",
-      "explanation": "Queue follows FIFO (First In First Out) — the first element added is the first to be removed.",
+      "explanation": "A queue serves the earliest arrival first, which is FIFO (First In First Out). LIFO and FILO describe a stack instead.",
       "topicQuality": "specific"
     },
     {
@@ -121,7 +121,7 @@
         "D": "None of the above"
       },
       "correct": "A",
-      "explanation": "Queue is a linear data structure where elements are arranged sequentially and accessed at two ends.",
+      "explanation": "A queue arranges its elements in one sequence with two ends, so it is linear. Non-linear structures are trees and graphs.",
       "topicQuality": "specific"
     },
     {
@@ -146,7 +146,7 @@
         "D": "front = 0 and rear = 0"
       },
       "correct": "B",
-      "explanation": "In a circular queue, full condition is when front = 0 and rear = max - 1, meaning no empty slots remain.",
+      "explanation": "In a circular queue of size max the queue is full when front = 0 and rear = max-1, leaving no gap; front = rear means empty. Comparing the two pointers alone cannot tell full from empty.",
       "topicQuality": "specific"
     },
     {
@@ -171,7 +171,7 @@
         "D": "Rear = front"
       },
       "correct": "A",
-      "explanation": "A linear queue implemented using array is full when Rear reaches MAX_SIZE - 1 (last index).",
+      "explanation": "In a linear array queue the rear index only moves forward, so the queue reports full at rear = MAX_SIZE-1 even if slots at the front were freed by dequeues.",
       "topicQuality": "specific"
     },
     {
@@ -195,7 +195,7 @@
         "D": "linked lists"
       },
       "correct": "C",
-      "explanation": "A DeQueue (Double Ended Queue) allows insertion and deletion at both front and rear ends.",
+      "explanation": "A dequeue (double-ended queue) allows insertion and deletion at both the front and the rear but not in the middle. A stack or ordinary queue exposes only one end.",
       "topicQuality": "specific"
     },
     {
@@ -220,7 +220,7 @@
         "D": "Single ended queue"
       },
       "correct": "D",
-      "explanation": "Single ended queue is not a standard queue type. Valid types include priority queue, circular queue, dequeue, and ordinary queue.",
+      "explanation": "Priority, circular, ordinary and double-ended queues are recognised types; 'single ended queue' is not a standard name, it just means an ordinary queue.",
       "topicQuality": "specific"
     },
     {
@@ -244,7 +244,7 @@
         "D": "Polynomial addition"
       },
       "correct": "C",
-      "explanation": "Binary search requires random access using index, which is not possible in linked lists — sequential access only.",
+      "explanation": "Binary search needs random access to the middle element, which an array gives in O(1) but a linked list cannot without walking the nodes. So linked lists are unsuitable.",
       "topicQuality": "specific"
     },
     {
@@ -269,7 +269,7 @@
         "D": "None of these"
       },
       "correct": "A",
-      "explanation": "A linked list is a linear collection of nodes where each node contains data and a pointer to the next node.",
+      "explanation": "Each node carries data plus a pointer to the next node and the chain is followed from the head — that is a linked list. Node list and primitive list are not standard terms.",
       "topicQuality": "specific"
     },
     {
@@ -293,7 +293,7 @@
         "D": "None of these"
       },
       "correct": "C",
-      "explanation": "To delete the last node p, set p->prev->next = NULL so the second-last node no longer points to p.",
+      "explanation": "Removing the last node makes the second-last node's next pointer NULL, i.e. p->prev->next = NULL. Setting p = NULL would only throw away the local pointer.",
       "topicQuality": "specific"
     },
     {
@@ -317,7 +317,7 @@
         "D": "no pointer exchanges"
       },
       "correct": "A",
-      "explanation": "Inserting between two nodes in a doubly linked list requires 4 pointer updates: new node's prev and next, plus updates to the adjacent nodes' pointers.",
+      "explanation": "A doubly linked node has prev and next, so insertion between two nodes needs four updates: new->prev, new->next, left->next and right->prev. A singly linked list needs only two.",
       "topicQuality": "specific"
     },
     {
@@ -341,7 +341,7 @@
         "D": "all of these"
       },
       "correct": "B",
-      "explanation": "In a circular linked list, the last node points back to the first node instead of NULL.",
+      "explanation": "In a circular linked list the last node's next points back to the first node instead of NULL, so the chain forms a ring. Singly and doubly lists end with NULL.",
       "topicQuality": "specific"
     },
     {
@@ -366,7 +366,7 @@
         "D": "all of these"
       },
       "correct": "D",
-      "explanation": "Linked lists can be used to implement stacks, queues, trees, and many other data structures dynamically.",
+      "explanation": "A linked list can back a stack (insert at head), a queue (head and tail) and a tree (child pointers), so all of these are possible.",
       "topicQuality": "specific"
     },
     {
@@ -390,7 +390,7 @@
         "D": "doubly linked list"
       },
       "correct": "B",
-      "explanation": "A multi-linked list node can have multiple pointers, potentially four or more, pointing in different directions.",
+      "explanation": "A multi-linked list gives each node several link fields, which may be four or more, threading the same record through different orders. A standard doubly list has exactly two.",
       "topicQuality": "specific"
     },
     {
@@ -414,7 +414,7 @@
         "D": "None of these"
       },
       "correct": "B",
-      "explanation": "Linked list supports only sequential access — you must traverse from the head to reach any node.",
+      "explanation": "Reaching the k-th node means following k links from the head, so access is sequential. Arrays give random access by index instead.",
       "topicQuality": "specific"
     },
     {
@@ -438,7 +438,7 @@
         "D": "All of these"
       },
       "correct": "B",
-      "explanation": "Circular linked list's last node points back to the first node, so it stores no NULL in the next field.",
+      "explanation": "A circular list avoids a NULL next field by pointing the last node back at the first. Singly and doubly lists terminate with NULL.",
       "topicQuality": "specific"
     },
     {
@@ -462,7 +462,7 @@
         "D": "Retrieval"
       },
       "correct": "A",
-      "explanation": "Traversal is not a standard queue operation. Queue supports Insertion (enqueue), Deletion (dequeue), and Retrieval (peek).",
+      "explanation": "Queues support enqueue (insert), dequeue (delete) and peek (retrieve). Traversal of every element is not part of the queue ADT because only the ends are accessible.",
       "topicQuality": "specific"
     },
     {
@@ -1266,7 +1266,7 @@
         "D": "Add"
       },
       "correct": "B",
-      "explanation": "Inserting an element into a queue is called Enqueue (or Insert) — this happens at the rear end.",
+      "explanation": "Inserting at the rear of a queue is the enqueue operation; removing from the front is dequeue. push is the stack term for insertion.",
       "topicQuality": "specific"
     },
     {

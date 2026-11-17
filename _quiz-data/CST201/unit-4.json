@@ -26,7 +26,7 @@
         "D": "10"
       },
       "correct": "B",
-      "explanation": "Total elements = 5×5 = 25. Each int = 2 bytes. Total = 25 × 2 = 50 bytes.",
+      "explanation": "int arr[5][5] holds 5 × 5 = 25 elements, and with 2 bytes per int the whole array needs 25 × 2 = 50 bytes of contiguous memory.",
       "topicQuality": "specific"
     },
     {
@@ -51,7 +51,7 @@
         "D": "int a(3) = {1, 2, 3};"
       },
       "correct": "A",
-      "explanation": "In C, arrays are initialized using: datatype name[size] = {values}; Option B lacks brackets, C uses 'new' which is C++ syntax, D uses parentheses instead of brackets.",
+      "explanation": "An array is initialised with a size in square brackets and a brace-enclosed list: int a[3] = {1, 2, 3};. new is C++ syntax and parentheses are not valid here.",
       "topicQuality": "specific"
     },
     {
@@ -76,7 +76,7 @@
         "D": "10"
       },
       "correct": "D",
-      "explanation": "Sum = 1+2+3+4 = 10. The loop adds all 4 elements of the array.",
+      "explanation": "The loop adds every element of {1, 2, 3, 4}, giving 1 + 2 + 3 + 4 = 10. Option 20 would require each value to be counted twice.",
       "topicQuality": "specific"
     },
     {
@@ -101,7 +101,7 @@
         "D": "8"
       },
       "correct": "B",
-      "explanation": "arr[3] is a single int element. sizeof(int) = 2 bytes (in 16-bit compiler). The question asks size of one element, not the value at index 3.",
+      "explanation": "sizeof(arr[3]) reports the size of one int element, not its value 7, and with 2-byte ints that is 2 bytes. sizeof(arr) would instead give the whole array.",
       "topicQuality": "specific"
     },
     {
@@ -126,7 +126,7 @@
         "D": "strcpy(s1, strcpy(s2, s3))"
       },
       "correct": "B",
-      "explanation": "strcat() takes only two arguments. To concatenate three strings, we nest calls: first strcat(s2,s3) appends s3 to s2, then strcat(s1, result) appends to s1.",
+      "explanation": "strcat takes exactly two arguments, so three strings are joined by nesting: strcat(s2, s3) appends s3 to s2, then strcat(s1, ...) appends the result to s1.",
       "topicQuality": "specific"
     },
     {
@@ -150,7 +150,7 @@
         "D": "\\"
       },
       "correct": "A",
-      "explanation": "Every string in C is terminated by the null character '\\0' (ASCII value 0). This marks the end of the string.",
+      "explanation": "A string literal is stored with a '\\0' (null) byte after the last character, and the library functions stop there. So '\\0' marks the end of every C string.",
       "topicQuality": "specific"
     },
     {
@@ -175,7 +175,7 @@
         "D": "none of the above"
       },
       "correct": "C",
-      "explanation": "In the ASCII table, lowercase letters 'a' to 'z' have values 97 to 122. Note: 123 is not technically correct but it's the closest option; 'a'=97, 'z'=122.",
+      "explanation": "In ASCII, 'a' is 97 and 'z' is 122, so the range is 97–122 and option C (97–123) is the closest printed choice. Uppercase 'A'–'Z' is 65–90.",
       "topicQuality": "specific"
     },
     {
@@ -199,7 +199,7 @@
         "D": "replace s1 with s2"
       },
       "correct": "B",
-      "explanation": "strcpy(destination, source) copies the source string (s2) into the destination string (s1). The second argument is always the source.",
+      "explanation": "strcpy(destination, source) copies the source into the destination, so strcpy(s1, s2) copies s2 into s1. It neither appends nor swaps the two strings.",
       "topicQuality": "specific"
     },
     {
@@ -223,7 +223,7 @@
         "D": "None of these"
       },
       "correct": "B",
-      "explanation": "strcpy(s1, s2) copies s2 (source) into s1 (destination). Syntax: strcpy(destination, source).",
+      "explanation": "The first argument of strcpy is the destination and the second the source, so s2 is copied into s1. Appending would be strcat, not strcpy.",
       "topicQuality": "specific"
     },
     {
@@ -609,7 +609,7 @@
         "D": "int[10] arr;"
       },
       "correct": "B",
-      "explanation": "In C, arrays are declared as: datatype name[size]; So int arr[10]; is the correct syntax to declare an array of 10 integers.",
+      "explanation": "An array declaration needs the type, the name and the size in square brackets: int arr[10];. The other forms use parentheses or put the brackets in the wrong place.",
       "topicQuality": "specific"
     },
     {
@@ -634,7 +634,7 @@
         "D": "40"
       },
       "correct": "C",
-      "explanation": "Array indexing starts from 0 in C. arr[0]=10, arr[1]=20, arr[2]=30. So arr[2] is 30.",
+      "explanation": "Indexing starts at 0, so arr[0] = 10, arr[1] = 20 and arr[2] = 30. Off-by-one errors usually come from assuming the first element has index 1.",
       "topicQuality": "specific"
     },
     {
@@ -658,7 +658,7 @@
         "D": "The memory address of the string"
       },
       "correct": "B",
-      "explanation": "strlen() returns the number of characters in a string excluding the terminating null character '\\0'. For \"HELLO\", strlen returns 5.",
+      "explanation": "strlen counts the characters before the terminating '\\0', so strlen(\"HELLO\") is 5. The null byte is not counted, although it must still be stored.",
       "topicQuality": "specific"
     },
     {
@@ -682,7 +682,7 @@
         "D": "The length of the string"
       },
       "correct": "C",
-      "explanation": "strcmp() returns 0 if both strings are equal, a negative value if s1 < s2, and a positive value if s1 > s2 (lexicographically).",
+      "explanation": "strcmp returns 0 when both strings are identical, a negative value when the first is lexicographically smaller and a positive value when it is larger.",
       "topicQuality": "specific"
     },
     {
@@ -707,7 +707,7 @@
         "D": "12"
       },
       "correct": "D",
-      "explanation": "A 2D array a[3][4] has 3 rows and 4 columns. Total elements = 3 × 4 = 12.",
+      "explanation": "int a[3][4] has 3 rows of 4 columns, so it stores 3 × 4 = 12 ints laid out row by row. The two numbers are multiplied, not added.",
       "topicQuality": "specific"
     },
     {
@@ -732,7 +732,7 @@
         "D": "7"
       },
       "correct": "C",
-      "explanation": "\"HELLO\" has 5 characters plus 1 null terminator '\\0'. So minimum size = 5 + 1 = 6.",
+      "explanation": "\"HELLO\" has five characters plus the terminating null byte, so the array must hold at least 6 characters. A size of 5 leaves no room for '\\0'.",
       "topicQuality": "specific"
     },
     {
@@ -756,7 +756,7 @@
         "D": "ctype.h"
       },
       "correct": "C",
-      "explanation": "All standard string handling functions are declared in the string.h header file.",
+      "explanation": "strlen, strcpy, strcat, strcmp and strncpy are all declared in string.h. stdio.h handles I/O, stdlib.h utilities and ctype.h character tests.",
       "topicQuality": "specific"
     },
     {
@@ -780,7 +780,7 @@
         "D": "int arr{2}{3}{4};"
       },
       "correct": "A",
-      "explanation": "In C, multidimensional arrays are declared using separate brackets for each dimension: int arr[2][3][4]; declares a 3D array with 2×3×4 = 24 elements.",
+      "explanation": "Each dimension needs its own pair of brackets: int arr[2][3][4]; holds 2 × 3 × 4 = 24 elements. Commas, parentheses and braces are invalid in a declaration.",
       "topicQuality": "specific"
     },
     {
@@ -805,7 +805,7 @@
         "D": "There is no direct standard function for substring extraction"
       },
       "correct": "D",
-      "explanation": "C does not have a built-in substr() function. Substring extraction must be done manually using loops, pointer arithmetic, or strncpy(). strstr() finds a substring but does not extract it.",
+      "explanation": "Standard C has no substr() function, so a range is copied with strncpy or a loop over pointers. strstr only locates a substring; it does not extract it.",
       "topicQuality": "specific"
     },
     {
@@ -830,7 +830,7 @@
         "D": "The last element of the array"
       },
       "correct": "B",
-      "explanation": "In C, when an array is passed to a function, only the base address (pointer to arr[0]) is passed. This is why changes to array elements inside a function affect the original array.",
+      "explanation": "The array name decays to a pointer to its first element, so only that address is passed and the function can modify the caller's elements. The size is not passed along.",
       "topicQuality": "specific"
     }
   ]
