@@ -64,10 +64,10 @@
     if (typeof navigator !== 'undefined' && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
       try {
         await navigator.clipboard.writeText(url);
-        // Icon-only buttons must keep their glyph: report through the live
-        // region first, and only rewrite a button that has no SVG inside.
+        // Text buttons still swap their label, as before. Icon-only buttons
+        // keep their glyph and report through the live region instead.
+        if (button && !button.querySelector('svg')) button.textContent = copiedText;
         if (statusEl) statusEl.textContent = 'Link copied to clipboard.';
-        else if (button && !button.querySelector('svg')) button.textContent = copiedText;
         var old = container && container.querySelector ? container.querySelector('.share-fallback-input') : null;
         if (old && typeof old.remove === 'function') old.remove();
         return { method: 'clipboard', url: url };
@@ -87,10 +87,10 @@
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
         await navigator.share(data);
-        if (options.statusEl) options.statusEl.textContent = 'Link shared.';
-        else if (options.button && !options.button.querySelector('svg')) {
+        if (options.button && !options.button.querySelector('svg')) {
           options.button.textContent = options.sharedText || 'Link shared';
         }
+        if (options.statusEl) options.statusEl.textContent = 'Link shared.';
         return { method: 'share', url: url };
       } catch (err) {
         if (err && err.name === 'AbortError') {
