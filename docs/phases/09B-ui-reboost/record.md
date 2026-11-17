@@ -1,6 +1,6 @@
 # Phase 9B record — 2026-11-17
 
-Status: **colour-preparation batch confirmed to continue; home-header batch implemented, awaiting owner screenshots and approval**. Branch `arena/48a2ab20-diploma-3rd-sem`, base `816ef84`. Reuse: existing `variables.css`, `base.css`, quiz/practice controls and shared JS widgets are studied for adaptation; no runtime dependency or feature added.
+Status: **home-header batch approved by owner; four utility-page concerns awaiting clarification and before screenshots**. Branch `arena/48a2ab20-diploma-3rd-sem`, base `816ef84`. Reuse: existing `variables.css`, `base.css`, quiz/practice controls and shared JS widgets are studied for adaptation; no runtime dependency or feature added.
 
 ## Evidence received
 
@@ -62,3 +62,10 @@ Five source-level header contracts pass (first four were written before implemen
 Gates: strict site 0 errors/warnings; platform 0 errors; strict tokens 0 findings with 392 legacy RGBA occurrences still ledgered; icon subset/data version current; weight budget and root rewrite pass; static accessibility 47 pairs and 0 findings; all 14 deterministic Node suites pass. Python: **108 tests, one error**, the known missing Git object `664674b` in `test_data_pipeline.test_no_semantic_or_answer_changes`; not a full pass. No browser or Lighthouse available to the agent. No rendered contrast, keyboard/focus, zoom, safe-area, print, dark or desktop-device pass is claimed.
 
 Owner review required before the next batch: compare phone and desktop-width before/after screenshots of home in light and dark modes, including the open menu and a narrow/large-text view if possible; confirm links, theme toggle, menu close and scrolling work. A wide view on a phone is useful but not a physical-desktop pass. Do not merge/deploy without explicit authorization.
+
+
+## Owner header approval and utility-page feedback — 2026-11-17
+
+After pulling the branch into Termux, the owner wrote “the hader is good”, approving the home-header batch. No header after screenshots or separate confirmation of the menu links, scrolling, zoom, light/dark or desktop were supplied; these remain evidence/verification gaps, not a visual pass claimed by the agent. The owner says Search, Today, Coverage and Settings look like plain pages with only some options, and asks that they match the real app's theme and colours; whether any specific controls fail or whether “no real work” describes appearance remains to be clarified. Do not invent features or silently change the existing functions.
+
+Source inspection: Search has its search/filter form and dynamic results; Today has local study summary, goal, streak and question controls; Settings has reading preferences and backup/restore/reset controls; Coverage is a generated, disclosure-heavy inventory/table page (`scripts/build_coverage.py`). All four load `discovery.css`, also loaded by 14 other pages, so broad shared CSS changes need impact review and screenshots. Settings and Coverage use `storage.js`, whose `applyPreferences` sets `data-theme`; Search and Today also load `theme.js`. This is source evidence only, not proof of live behavior or a diagnosis of the reported appearance. Ask which page to address first, which actions actually fail if any, and phone/wide before screenshots (including relevant states; no private backup contents). Plan small reviewable batches with preserved functionality and full per-batch checks/approval. Do not start a utility-page CSS batch before the needed baseline screenshots and agreement on scope.
