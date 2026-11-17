@@ -26,7 +26,7 @@
         "D": "Level order"
       },
       "correct": "B",
-      "explanation": "Inorder traversal of a BST always gives elements in ascending sorted order.",
+      "explanation": "Inorder visits left subtree, node and right subtree; because of the BST ordering that sequence comes out ascending. Preorder, postorder and level order are not sorted.",
       "topicQuality": "specific"
     },
     {
@@ -51,7 +51,7 @@
         "D": "O(nlog nlog n)"
       },
       "correct": "B",
-      "explanation": "Building a heap from n elements takes O(n log n) time using the top-down approach; bottom-up is O(n).",
+      "explanation": "Building a heap by repeated insertion costs O(n log n), while the bottom-up heapify method reaches O(n); the keyed answer is the O(n log n) bound and the printed options are garbled.",
       "topicQuality": "specific"
     },
     {
@@ -75,7 +75,7 @@
         "D": "O(log n)"
       },
       "correct": "D",
-      "explanation": "Binary search divides the search space in half each time, giving O(log n) time complexity.",
+      "explanation": "Each comparison halves the remaining search range, so at most log₂ n comparisons are needed: O(log n). Linear search would cost O(n).",
       "topicQuality": "specific"
     },
     {
@@ -99,7 +99,7 @@
         "D": "Linked Lists"
       },
       "correct": "A",
-      "explanation": "Graphs represent complex, non-hierarchical relationships between nodes using vertices and edges.",
+      "explanation": "Graphs model arbitrary many-to-many connections, which is richer than a tree's hierarchy and cannot be captured by arrays or lists alone.",
       "topicQuality": "specific"
     },
     {
@@ -124,7 +124,7 @@
         "D": "2, 3"
       },
       "correct": "D",
-      "explanation": "Radius is the minimum eccentricity and diameter is the maximum eccentricity of the graph. rad(G)=2, diam(G)=3.",
+      "explanation": "A vertex's eccentricity is its distance to the farthest vertex; the smallest eccentricity is the radius (2) and the largest is the diameter (3), so option D fits.",
       "topicQuality": "specific"
     },
     {
@@ -149,7 +149,7 @@
         "D": "O(n³)"
       },
       "correct": "D",
-      "explanation": "The highest degree term is 5n³, so f(n) = O(n³) — Big-O is determined by the dominant term.",
+      "explanation": "Big-O keeps only the fastest-growing term and drops constants, so 5n³ + 4n² - 8n + 100 is O(n³). The lower-order terms fade as n grows.",
       "topicQuality": "specific"
     },
     {
@@ -283,7 +283,7 @@
         "D": "n²"
       },
       "correct": "A",
-      "explanation": "Selection sort makes at most n-1 swaps — one swap per pass, and there are n-1 passes.",
+      "explanation": "Selection sort swaps the found minimum into place once per pass, and there are n-1 passes, so at most n-1 swaps occur — fewer than most other sorts.",
       "topicQuality": "specific"
     },
     {
@@ -307,7 +307,7 @@
         "D": "int arr(3) = (1,2,3);"
       },
       "correct": "C",
-      "explanation": "In C, arrays are initialized with curly braces: int arr[3] = {1,2,3}; is the correct syntax.",
+      "explanation": "C arrays use square brackets for the size and braces for the values: int arr[3] = {1,2,3};. Parentheses are invalid in an array declaration.",
       "topicQuality": "specific"
     },
     {
@@ -448,7 +448,7 @@
         "D": "Nodes with random keys"
       },
       "correct": "B",
-      "explanation": "In a BST, the left subtree of any node contains only nodes with keys less than the node's key.",
+      "explanation": "BST ordering puts every smaller key in the left subtree and every larger key in the right, so the left side always holds the smaller values.",
       "topicQuality": "specific"
     },
     {
@@ -473,7 +473,7 @@
         "D": "O(n²)"
       },
       "correct": "C",
-      "explanation": "In the worst case (skewed tree), BST search degenerates to O(n) as every node must be checked.",
+      "explanation": "In the worst case the tree degenerates into a chain of n nodes and each search may follow n-1 links, giving O(n). A balanced tree would give O(log n).",
       "topicQuality": "specific"
     },
     {
@@ -615,7 +615,7 @@
         "D": "Binary Tree"
       },
       "correct": "C",
-      "explanation": "A hash table uses a hash function to compute an index for storing and retrieving key-value pairs.",
+      "explanation": "A hash table applies a hash function to a key to compute a slot index, which gives average O(1) lookup of the associated value.",
       "topicQuality": "specific"
     },
     {
@@ -640,7 +640,7 @@
         "D": "All of the above"
       },
       "correct": "D",
-      "explanation": "Linear probing, chaining, and quadratic probing are all valid collision resolution techniques in hashing.",
+      "explanation": "Linear probing, quadratic probing, double hashing and chaining all resolve collisions, so 'all of the above' is the answer.",
       "topicQuality": "specific"
     },
     {
@@ -743,7 +743,7 @@
         "D": "Maximum flow in a network"
       },
       "correct": "B",
-      "explanation": "Dijkstra's algorithm finds the shortest path from a single source vertex to all other vertices in a weighted graph.",
+      "explanation": "Dijkstra's algorithm grows a set of vertices whose distance from one source is final, relaxing outgoing edges. It is a single-source shortest-path method.",
       "topicQuality": "specific"
     },
     {
@@ -768,7 +768,7 @@
         "D": "Prim's algorithm"
       },
       "correct": "B",
-      "explanation": "Bellman-Ford can handle negative edge weights, unlike Dijkstra's which fails with negative weights.",
+      "explanation": "Bellman-Ford relaxes every edge V-1 times, so it tolerates negative weights and can detect a negative cycle. Dijkstra's greedy choice breaks with negative edges.",
       "topicQuality": "specific"
     },
     {
@@ -793,7 +793,7 @@
         "D": "Topological sorting"
       },
       "correct": "B",
-      "explanation": "Floyd-Warshall finds shortest paths between ALL pairs of vertices using dynamic programming.",
+      "explanation": "Floyd-Warshall builds shortest paths between every pair of vertices by dynamic programming over intermediate vertices, in O(V³) time.",
       "topicQuality": "specific"
     },
     {
@@ -895,7 +895,7 @@
         "D": "Floyd-Warshall algorithm"
       },
       "correct": "B",
-      "explanation": "Prim's algorithm builds MST by starting from a single vertex and greedily adding the minimum weight edge.",
+      "explanation": "Prim's algorithm starts from one vertex and repeatedly adds the cheapest edge that brings in a new vertex. Kruskal's instead sorts all edges globally.",
       "topicQuality": "specific"
     },
     {
@@ -920,7 +920,7 @@
         "D": "Using dynamic programming"
       },
       "correct": "B",
-      "explanation": "Kruskal's sorts all edges by weight, then adds them one by one to the MST if they don't form a cycle.",
+      "explanation": "Kruskal's sorts all edges by weight and adds each edge that does not create a cycle, testing connectivity with union-find. It never starts from a single vertex.",
       "topicQuality": "specific"
     },
     {
@@ -983,7 +983,7 @@
         "D": "Complete graphs"
       },
       "correct": "B",
-      "explanation": "Topological sorting is only possible for Directed Acyclic Graphs (DAGs) — graphs with no directed cycles.",
+      "explanation": "A topological order needs direction and no cycles, so it exists only for directed acyclic graphs (DAGs). A cycle would make the ordering contradictory.",
       "topicQuality": "specific"
     },
     {
@@ -1026,7 +1026,7 @@
         "D": "h(k) = k / m"
       },
       "correct": "B",
-      "explanation": "In the division method, h(k) = k mod m, where m is the table size. It maps key k to a slot.",
+      "explanation": "The division method computes h(k) = k mod m, mapping a key onto one of m slots. Multiplication and mid-square are different hash functions.",
       "topicQuality": "specific"
     },
     {
@@ -1051,7 +1051,7 @@
         "D": "2n edges"
       },
       "correct": "B",
-      "explanation": "A spanning tree of a graph with n vertices always contains exactly n - 1 edges.",
+      "explanation": "A spanning tree joins all n vertices without cycles, which needs exactly n-1 edges. Any extra edge would create a cycle.",
       "topicQuality": "specific"
     },
     {
@@ -1075,7 +1075,7 @@
         "D": "O(V³)"
       },
       "correct": "B",
-      "explanation": "Using an adjacency matrix, Dijkstra's algorithm runs in O(V²) time where V is the number of vertices.",
+      "explanation": "With an adjacency matrix, finding the unvisited vertex of minimum distance costs O(V) per step and there are V steps, giving O(V²).",
       "topicQuality": "specific"
     },
     {
@@ -1157,7 +1157,7 @@
         "D": "O(E log V)"
       },
       "correct": "B",
-      "explanation": "Bellman-Ford relaxes all E edges for V-1 iterations, giving time complexity O(VE).",
+      "explanation": "Bellman-Ford performs V-1 rounds and each round relaxes all E edges, so the total work is O(VE).",
       "topicQuality": "specific"
     },
     {
@@ -1181,7 +1181,7 @@
         "D": "O(V log V)"
       },
       "correct": "C",
-      "explanation": "Floyd-Warshall uses three nested loops over V vertices, giving time complexity O(V³).",
+      "explanation": "Floyd-Warshall uses three nested loops over the V vertices, giving O(V³) time and O(V²) space for the distance table.",
       "topicQuality": "specific"
     }
   ]

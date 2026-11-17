@@ -26,7 +26,7 @@
         "D": "None of these"
       },
       "correct": "C",
-      "explanation": "Functions in C can have zero or more parameters (input) and may return a value or be void (no return). Both characteristics are optional.",
+      "explanation": "A C function may take no arguments or several, and may return a value or be void, so neither input nor output is compulsory. Both statements hold, making C correct.",
       "topicQuality": "specific"
     },
     {
@@ -50,7 +50,7 @@
         "D": "Void function"
       },
       "correct": "D",
-      "explanation": "A function declared with void return type does not return any value. Example: void display() { }",
+      "explanation": "A function declared with void return type sends nothing back to the caller; you either omit return or write a bare return;. Example: void display(void).",
       "topicQuality": "specific"
     },
     {
@@ -74,7 +74,7 @@
         "D": "No Limit"
       },
       "correct": "D",
-      "explanation": "There is no limit to the number of functions that can be defined in a C program. You can create as many functions as needed.",
+      "explanation": "The C standard sets no limit on the number of functions a program may define, only practical limits of memory and linker capacity. Hence 'no limit'.",
       "topicQuality": "specific"
     },
     {
@@ -98,7 +98,7 @@
         "D": "static"
       },
       "correct": "C",
-      "explanation": "The four storage classes in C are: auto, extern, static, and register. 'dynamic' is not a storage class in C.",
+      "explanation": "The four storage classes are auto, register, static and extern. dynamic is not a C storage class at all, so it is the odd one out.",
       "topicQuality": "specific"
     },
     {
@@ -122,7 +122,7 @@
         "D": "static"
       },
       "correct": "C",
-      "explanation": "typedef is NOT a storage class; it creates type aliases. The storage classes are: auto, extern, static, register. volatile is a type qualifier.",
+      "explanation": "typedef defines a new type name; it is not a storage class. The storage class specifiers are auto, register, static and extern, while volatile is a type qualifier.",
       "topicQuality": "specific"
     },
     {
@@ -147,7 +147,7 @@
         "D": "static variables"
       },
       "correct": "C",
-      "explanation": "Machine registers (like CPU registers) are often called accumulators. The register storage class suggests storing variables in CPU registers for faster access.",
+      "explanation": "CPU registers that hold arithmetic operands are traditionally called accumulators. The register storage class asks the compiler to keep a variable in such a register for speed.",
       "topicQuality": "specific"
     },
     {
@@ -172,7 +172,7 @@
         "D": "extern"
       },
       "correct": "A",
-      "explanation": "Local variables declared inside a function have auto storage class by default. auto variables are created when the function is called and destroyed when it exits.",
+      "explanation": "A local variable with no storage class specifier is auto by default: it is created on block entry, destroyed on exit and never initialised automatically.",
       "topicQuality": "specific"
     },
     {
@@ -197,7 +197,7 @@
         "D": "5 5 5"
       },
       "correct": "A",
-      "explanation": "counter is a local auto variable (re-initialized to 5 each time func() is called). Each call: counter=5, then counter++→6, return 6. Output: 6 6 6.",
+      "explanation": "counter is automatic, so each call starts again from 5 and returns 6 after the increment. The three calls print 6 6 6: 6 7 8 would need a static local.",
       "topicQuality": "specific"
     },
     {
@@ -222,7 +222,7 @@
         "D": "32"
       },
       "correct": "C",
-      "explanation": "f1(2,4) calls f2(2*4) = f2(8). f2(8) returns 8*8 = 64. So x = 64.",
+      "explanation": "f1(2, 4) multiplies its arguments and passes 8 to f2, which squares it. So f2(8) returns 64, which is option C.",
       "topicQuality": "specific"
     },
     {
@@ -634,7 +634,7 @@
         "D": "To execute the function"
       },
       "correct": "B",
-      "explanation": "Function prototype declares the function signature (return type, name, parameters) to the compiler before the actual definition. This enables type checking and allows calling the function before its definition.",
+      "explanation": "A prototype gives the compiler the return type, name and parameter types before the definition, so calls can be type-checked and can appear earlier. It allocates no memory.",
       "topicQuality": "specific"
     },
     {
@@ -658,7 +658,7 @@
         "D": "Linked List"
       },
       "correct": "B",
-      "explanation": "The call stack (or runtime stack) is used to manage function calls. Each recursive call pushes a new activation record onto the stack, storing local variables and return addresses.",
+      "explanation": "Each call pushes an activation record (parameters, locals, return address) onto the run-time stack, and recursion simply pushes more. A queue would give the wrong order.",
       "topicQuality": "specific"
     },
     {
@@ -683,7 +683,7 @@
         "D": "Scope: Function; Lifetime: Function execution"
       },
       "correct": "A",
-      "explanation": "static local variables have function scope (visible only within the function) but lifetime is the entire program execution (value persists between function calls).",
+      "explanation": "static gives a local variable function scope but static storage duration: it is invisible outside the function yet keeps its value between calls for the whole program run.",
       "topicQuality": "specific"
     },
     {
@@ -707,7 +707,7 @@
         "D": "Pointer to the variable"
       },
       "correct": "B",
-      "explanation": "In call by value, a copy of the actual parameter's value is passed to the function. Changes made to the parameter inside the function do not affect the original variable.",
+      "explanation": "Call by value copies the argument into the parameter, so the function works on its own copy and the caller's variable is unchanged. Pointers are needed to modify the original.",
       "topicQuality": "specific"
     },
     {
@@ -731,7 +731,7 @@
         "D": "Unlimited"
       },
       "correct": "B",
-      "explanation": "A function can return only one value using the return statement. To return multiple values, we use pointers or structures.",
+      "explanation": "The return statement carries exactly one value back, converted to the declared return type. Several results require pointers, a structure or a global variable.",
       "topicQuality": "specific"
     },
     {
@@ -755,7 +755,7 @@
         "D": "A static variable"
       },
       "correct": "B",
-      "explanation": "Every recursive function must have a base case (termination condition) that stops further recursive calls, preventing infinite recursion and stack overflow.",
+      "explanation": "Every recursion must move toward a base case that stops further calls; without it the stack fills and the program crashes. A loop or a global does not provide that stopping test.",
       "topicQuality": "specific"
     },
     {
@@ -779,7 +779,7 @@
         "D": "To limit variable scope to a function"
       },
       "correct": "B",
-      "explanation": "extern is used to declare a global variable or function that is defined in another source file. It tells the compiler the variable exists elsewhere.",
+      "explanation": "extern declares an object or function that is defined in another translation unit and asks the linker to resolve it. It creates no new storage of its own.",
       "topicQuality": "specific"
     },
     {
@@ -803,7 +803,7 @@
         "D": "Memory is saved"
       },
       "correct": "B",
-      "explanation": "register suggests storing the variable in CPU registers for faster access. However, it's only a suggestion; the compiler may ignore it. We cannot use & operator on register variables.",
+      "explanation": "register asks the compiler to keep the variable in a CPU register to avoid memory access, but it is only a hint that may be ignored, and you cannot take its address.",
       "topicQuality": "specific"
     },
     {
@@ -827,7 +827,7 @@
         "D": "Yes, but only in C99 standard"
       },
       "correct": "C",
-      "explanation": "C does NOT support function overloading. Each function must have a unique name. Function overloading is a feature of C++.",
+      "explanation": "C has no name mangling, so two functions cannot share a name even with different parameters. Overloading is a C++ feature, not standard C.",
       "topicQuality": "specific"
     },
     {
@@ -852,7 +852,7 @@
         "D": "Slower compilation time"
       },
       "correct": "B",
-      "explanation": "Recursion uses more memory because each recursive call consumes stack space for local variables and return addresses. Iteration uses less memory as it reuses the same variables.",
+      "explanation": "Each recursive call keeps its own frame on the stack, so recursion needs more memory than an equivalent loop and can overflow on deep input. Iteration reuses one frame.",
       "topicQuality": "specific"
     },
     {
@@ -877,7 +877,7 @@
         "D": "-1"
       },
       "correct": "C",
-      "explanation": "auto (local) variables are not automatically initialized and contain garbage (unpredictable) values until explicitly assigned. Only global and static variables are initialized to 0.",
+      "explanation": "Automatic variables are not initialised; they hold whatever bytes were left in that stack slot, so the value is garbage. Only static and global objects start at zero.",
       "topicQuality": "specific"
     },
     {
@@ -901,7 +901,7 @@
         "D": "string.h"
       },
       "correct": "B",
-      "explanation": "printf() and scanf() are declared in stdio.h (Standard Input/Output header file). stdio.h must be included to use these functions.",
+      "explanation": "printf() and scanf() are declared in stdio.h, which must be included to use them. stdlib.h, conio.h and string.h declare other families of functions.",
       "topicQuality": "specific"
     }
   ]

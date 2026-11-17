@@ -613,7 +613,7 @@ async function init() {
     const setLabel = paperMeta.scanSetNumber ? ` · Set ${paperMeta.scanSetNumber}` : '';
 
     document.getElementById('headerTitle').textContent =
-      `${subjectCode} · ${paperMeta.paperCode}`;
+      `${SUBJECT_NAMES[subjectCode] || ''} · ${paperMeta.paperCode}`;
     document.getElementById('headerSub').textContent =
       `${SUBJECT_NAMES[subjectCode] || ''} · ${sessionLabel}${setLabel}`;
     document.getElementById('sidebarTitle').textContent = sessionLabel;
@@ -1758,7 +1758,7 @@ function decorateQuestionLinks() {
       dup.className = 'question-duplicates';
       const prefix = info.canonical.id === q.id
         ? 'Exact duplicate also appeared in: '
-        : `Canonical entry ${info.canonical.id} · Also appeared identically in: `;
+        : 'Also appeared identically in: ';
       dup.append(document.createTextNode(prefix));
       info.others.forEach((other, idx) => {
         if (idx > 0) dup.append(document.createTextNode(' · '));
@@ -1766,7 +1766,7 @@ function decorateQuestionLinks() {
         const otherUrl = new URL('answers.html', location.href);
         otherUrl.search = new URLSearchParams({ subject: other.subject, paper: other.paper, q: other.id }).toString();
         link.href = otherUrl.href;
-        link.textContent = `${other.month || ''} ${other.year || ''} (${other.paper} · ${other.id})`.trim();
+        link.textContent = `${other.month || ''} ${other.year || ''} (${other.paper})`.trim();
         dup.append(link);
       });
       controls.append(dup);

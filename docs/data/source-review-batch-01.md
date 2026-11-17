@@ -55,16 +55,6 @@ Draw and explain the colpitt oscillator. Write down Barkhausen criterion for osc
 
 Owner action needed: supply confirmed unit, or confirm out-of-syllabus/misfiled disposition. Do not guess.
 
-### CST209-P002-Q34
-- Record: `_data/CST209/CST209-P002-2023-03.json`; stored unit: 5
-- Source: cst-3-sem-algorithms-307-5-n-mar-2023.pdf, p.4, Q10
-- Authority: syllabus PDF p.12 onwards; Algorithms has 4 units.
-
-a) Write down Rabin-Karp algorithm for string matching.
-b) Compare Rabin Karp and KMP algorithm.
-
-Owner action needed: supply confirmed unit, or confirm out-of-syllabus/misfiled disposition. Do not guess.
-
 ### CST209-P003-Q34
 - Record: `_data/CST209/CST209-P003-2023-03.json`; stored unit: 5
 - Source: Algorithms, March 2023.pdf, p.4, Q10

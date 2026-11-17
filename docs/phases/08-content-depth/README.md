@@ -42,6 +42,12 @@ asked, what should I memorise, and what can I print.
 
 Details: [`tasks.md`](tasks.md).
 
+**Sub-phase [8A — Answer prose and subject labels](sub-phase-8A-answer-prose-and-ui-labels/README.md)**
+(2026-11-17) records owner-requested work that 8.6 gates but does not sequence:
+the explanation prose on every MCQ/PYQ answer, two duplicate-reprint removals,
+and the display-only switch from course codes to subject names. It adds no part
+to this phase and leaves the 8.6 verification gate open.
+
 ## Done means
 
 - `python3 scripts/build_coverage.py` regenerates the coverage data; the page

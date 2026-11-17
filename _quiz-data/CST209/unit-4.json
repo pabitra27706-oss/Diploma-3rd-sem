@@ -26,7 +26,7 @@
         "D": "No tree is a graph"
       },
       "correct": "B",
-      "explanation": "Every tree is a connected acyclic graph — trees are a special case of graphs, but not all graphs are trees.",
+      "explanation": "Every tree is a connected acyclic graph, so it is a special case of a graph, but graphs may contain cycles or be disconnected. Hence all trees are graphs, not the reverse.",
       "topicQuality": "specific"
     },
     {
@@ -51,7 +51,7 @@
         "D": "It can be either cyclic or acyclic"
       },
       "correct": "D",
-      "explanation": "A spanning tree is always acyclic by definition — it is a tree (acyclic connected subgraph) that spans all vertices of G.",
+      "explanation": "A spanning tree must be connected, acyclic and include every vertex, so it can never contain a cycle. That makes statement D false.",
       "topicQuality": "specific"
     },
     {
@@ -75,7 +75,7 @@
         "D": "Minimum Sub Tree"
       },
       "correct": "C",
-      "explanation": "MST stands for Minimum Spanning Tree — a spanning tree of a weighted graph with the minimum total edge weight.",
+      "explanation": "MST stands for Minimum Spanning Tree, the spanning tree with the smallest total edge weight. A maximum spanning tree is a different problem.",
       "topicQuality": "specific"
     },
     {
@@ -100,7 +100,7 @@
         "D": "Directed Acyclic Graphs"
       },
       "correct": "D",
-      "explanation": "Topological Sort is only applicable to Directed Acyclic Graphs (DAGs) — cyclic graphs cannot have a valid topological ordering.",
+      "explanation": "A topological order must respect every directed edge, which becomes impossible once a directed cycle exists, so it applies only to directed acyclic graphs (DAGs).",
       "topicQuality": "specific"
     },
     {
@@ -125,7 +125,7 @@
         "D": "directed graph"
       },
       "correct": "A",
-      "explanation": "A cycle (simple circuit) is a closed path that does not repeat any vertex except the starting/ending vertex.",
+      "explanation": "A cycle is a closed walk that returns to its starting vertex without repeating intermediate ones. A path is open and does not close on itself.",
       "topicQuality": "specific"
     },
     {
@@ -150,7 +150,7 @@
         "D": "Backtracking"
       },
       "correct": "C",
-      "explanation": "Prim's algorithm uses a Greedy approach — at each step it picks the minimum weight edge that connects the growing MST to a new vertex.",
+      "explanation": "Prim's algorithm is greedy: it repeatedly adds the cheapest edge that connects a new vertex to the tree grown so far. It uses neither DP nor backtracking.",
       "topicQuality": "specific"
     },
     {
@@ -176,7 +176,7 @@
         "D": "Prim's algorithm initializes with a forest"
       },
       "correct": "A",
-      "explanation": "Prim's algorithm starts from any arbitrary vertex and grows the MST by repeatedly adding the minimum weight edge to an unvisited vertex.",
+      "explanation": "Prim's algorithm may begin at any vertex and grows one tree from it, choosing edges only afterwards. Kruskal's instead starts from the global edge list.",
       "topicQuality": "specific"
     },
     {
@@ -201,7 +201,7 @@
         "D": "O(V log E)"
       },
       "correct": "B",
-      "explanation": "Kruskal's algorithm sorts all edges in O(E log E) and uses Union-Find for cycle detection, giving overall O(E log V) complexity.",
+      "explanation": "Kruskal's sorts the E edges, costing O(E log E), and each union-find check is nearly constant, so the total is O(E log V) since E ≤ V².",
       "topicQuality": "specific"
     },
     {
@@ -226,7 +226,7 @@
         "D": "Kruskal's Algorithm"
       },
       "correct": "C",
-      "explanation": "Bellman-Ford handles negative edge weights and detects negative cycles — Dijkstra's fails with negative weights.",
+      "explanation": "Bellman-Ford relaxes all edges repeatedly, which tolerates negative weights and even reports a negative cycle. Dijkstra's algorithm fails in that situation.",
       "topicQuality": "specific"
     },
     {
@@ -251,7 +251,7 @@
         "D": "sorted sequence"
       },
       "correct": "B",
-      "explanation": "Dijkstra's algorithm finds the shortest path from a single source vertex to all other vertices in a weighted graph with non-negative edges.",
+      "explanation": "Dijkstra's algorithm finds the least-cost route from one source to every other vertex in a weighted graph. MST algorithms solve a different problem.",
       "topicQuality": "specific"
     },
     {
@@ -276,7 +276,7 @@
         "D": "Single Source shortest path"
       },
       "correct": "D",
-      "explanation": "Dijkstra's algorithm computes shortest paths from one source vertex to all other vertices — it is a Single Source Shortest Path algorithm.",
+      "explanation": "It is a single-source shortest-path algorithm: distances from one chosen source to all vertices. All-pairs versions are Floyd-Warshall or repeated Dijkstra.",
       "topicQuality": "specific"
     },
     {
@@ -302,7 +302,7 @@
         "D": "Kruskal's Algorithm"
       },
       "correct": "B",
-      "explanation": "Dijkstra's Algorithm finds shortest paths from a single source in a weighted graph. BFS works for unweighted graphs only.",
+      "explanation": "Dijkstra's algorithm handles weighted graphs, while BFS works only when every edge costs the same. Prim and Kruskal build spanning trees, not shortest paths.",
       "topicQuality": "specific"
     },
     {
@@ -327,7 +327,7 @@
         "D": "O(E*E)"
       },
       "correct": "B",
-      "explanation": "Floyd-Warshall uses three nested loops over all vertices, giving O(V³) time complexity for all-pairs shortest path.",
+      "explanation": "Floyd-Warshall runs three nested loops over the vertices, so its time is O(V³) and its space O(V²). That is why the printed option reads VVV.",
       "topicQuality": "specific"
     },
     {
@@ -352,7 +352,7 @@
         "D": "O(V log E)"
       },
       "correct": "B",
-      "explanation": "With an adjacency matrix, Prim's algorithm takes O(V²) — finding the minimum edge each iteration requires scanning all V vertices.",
+      "explanation": "With an adjacency matrix, finding the minimum-distance unvisited vertex needs a scan of V per step, giving O(V²) in total. Adjacency lists with a heap improve this.",
       "topicQuality": "specific"
     },
     {
@@ -378,7 +378,7 @@
         "D": "forest"
       },
       "correct": "C",
-      "explanation": "A connected acyclic graph is called a tree — it has exactly n-1 edges for n vertices and no cycles.",
+      "explanation": "A connected acyclic graph is a tree, with n-1 edges for n vertices. A forest is acyclic as well, but it need not be connected.",
       "topicQuality": "specific"
     },
     {
@@ -404,7 +404,7 @@
         "D": "2n-1"
       },
       "correct": "B",
-      "explanation": "A tree with n nodes always has exactly n-1 edges — adding any edge creates a cycle, removing any edge disconnects the tree.",
+      "explanation": "A tree with n vertices has exactly n-1 edges: n-1 edges connect them all, and any extra edge would close a cycle.",
       "topicQuality": "specific"
     },
     {
@@ -428,7 +428,7 @@
         "D": "Defined Acyclic Graph"
       },
       "correct": "B",
-      "explanation": "DAG stands for Directed Acyclic Graph — a directed graph with no directed cycles, used in scheduling, dependency resolution, etc.",
+      "explanation": "DAG means Directed Acyclic Graph — a directed graph with no directed cycle, used for dependency and scheduling orders.",
       "topicQuality": "specific"
     },
     {
@@ -453,7 +453,7 @@
         "D": "A vertex connecting two components"
       },
       "correct": "B",
-      "explanation": "A sink vertex in a directed graph has no outgoing edges — its out-degree is zero.",
+      "explanation": "A sink has out-degree zero, so no edge leaves it and every path ends there. A source, by contrast, has in-degree zero.",
       "topicQuality": "specific"
     },
     {
@@ -478,7 +478,7 @@
         "D": "Number of vertices adjacent to a vertex"
       },
       "correct": "B",
-      "explanation": "In-degree of a vertex is the number of directed edges incoming to that vertex in a directed graph.",
+      "explanation": "In-degree counts the directed edges that arrive at a vertex, while out-degree counts those that leave. In an undirected graph the two combine into the degree.",
       "topicQuality": "specific"
     },
     {
@@ -503,7 +503,7 @@
         "D": "A vertex with no adjacent vertices"
       },
       "correct": "A",
-      "explanation": "A cut vertex (articulation point) is a vertex whose removal disconnects the graph — increasing the number of connected components.",
+      "explanation": "A cut vertex, or articulation point, is one whose removal increases the number of connected components. Such vertices mark weak points in a network.",
       "topicQuality": "specific"
     },
     {
@@ -528,7 +528,7 @@
         "D": "Neither path nor cycle can repeat vertices"
       },
       "correct": "B",
-      "explanation": "A cycle is a closed walk that starts and ends at the same vertex; a path is an open walk from one vertex to another without repeating vertices.",
+      "explanation": "A cycle begins and ends at the same vertex, which a path does not. Both may avoid repeating intermediate vertices.",
       "topicQuality": "specific"
     },
     {
@@ -773,7 +773,7 @@
         "D": "Dijkstra's algorithm"
       },
       "correct": "C",
-      "explanation": "Topological Sort can be implemented using DFS (post-order reversal) or BFS (Kahn's algorithm using in-degree counts).",
+      "explanation": "Kahn's algorithm uses BFS with in-degree counts, while the DFS method emits vertices in reverse finish order, so both approaches work.",
       "topicQuality": "specific"
     },
     {
@@ -798,7 +798,7 @@
         "D": "Backtracking"
       },
       "correct": "C",
-      "explanation": "Floyd-Warshall uses Dynamic Programming — it builds up shortest path solutions using intermediate vertices incrementally.",
+      "explanation": "Floyd-Warshall improves the estimate for each pair by trying every vertex as an intermediate hop, which is bottom-up dynamic programming.",
       "topicQuality": "specific"
     },
     {
@@ -823,7 +823,7 @@
         "D": "Direction only if it is a cycle"
       },
       "correct": "B",
-      "explanation": "In a directed graph (digraph), each edge has an orientation — it goes from a source vertex to a destination vertex, not both ways.",
+      "explanation": "In a digraph each edge is an ordered pair, drawn as an arrow from source to destination. Undirected edges have no orientation at all.",
       "topicQuality": "specific"
     },
     {
@@ -848,7 +848,7 @@
         "D": "Applies Dijkstra's algorithm instead"
       },
       "correct": "B",
-      "explanation": "Bellman-Ford detects negative weight cycles and reports that no shortest path solution exists, since the path cost can decrease infinitely.",
+      "explanation": "A negative cycle lets the path cost fall without limit, so no shortest path exists and Bellman-Ford reports that after V-1 relaxation rounds.",
       "topicQuality": "specific"
     },
     {
@@ -958,7 +958,7 @@
         "D": "Priority Queue"
       },
       "correct": "C",
-      "explanation": "Kruskal's algorithm uses Union-Find (Disjoint Set Union) data structure to efficiently detect and avoid cycles when adding edges.",
+      "explanation": "Kruskal's uses a disjoint-set (union-find) structure to test whether two endpoints are already connected, which makes cycle detection almost constant time.",
       "topicQuality": "specific"
     },
     {
@@ -983,7 +983,7 @@
         "D": "It only works on undirected graphs"
       },
       "correct": "B",
-      "explanation": "Dijkstra's greedy assumption — that once a vertex is visited its shortest path is finalized — breaks when negative edges can reduce path costs later.",
+      "explanation": "Dijkstra's algorithm finalises a vertex once its distance is the smallest, assuming no later path can be cheaper — an assumption that negative edges break.",
       "topicQuality": "specific"
     },
     {
@@ -1049,7 +1049,7 @@
         "D": "A graph where every vertex has degree 2"
       },
       "correct": "B",
-      "explanation": "A forest is a collection of disjoint trees — it is an acyclic undirected graph that may not be connected (each connected component is a tree).",
+      "explanation": "A forest is an acyclic graph that may be disconnected, so it is a collection of trees. A single connected acyclic graph is one tree.",
       "topicQuality": "specific"
     }
   ]

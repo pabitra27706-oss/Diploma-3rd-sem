@@ -294,7 +294,7 @@ function renderSubjectOptions(container, presetKey) {
     btn.className = 'subject-option-btn';
     btn.setAttribute('aria-label', `Select ${sub.name}`);
     btn.innerHTML = `
-      <span class="subject-option-code">${sub.code}</span>
+      <span class="subject-option-code">${sub.shortName || sub.name}</span>
       <span class="subject-option-info">
         <span class="subject-option-name">${sub.name}</span>
         <span class="subject-option-meta">${sub.units} units · ${sub.credits} credits</span>
@@ -406,7 +406,7 @@ function renderSubjectCards() {
     card.setAttribute('role', 'listitem');
 
     card.innerHTML = `
-      <span class="subject-card-code">${sub.code}</span>
+      <span class="subject-card-code">${sub.shortName || sub.name}</span>
       <span class="subject-card-name">${sub.name}</span>
       <div class="subject-card-meta">
         <span class="tag">${sub.units} Units</span>

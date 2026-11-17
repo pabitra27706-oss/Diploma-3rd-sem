@@ -25,7 +25,7 @@
         "D": "goto"
       },
       "correct": "D",
-      "explanation": "goto violates structured programming by creating uncontrolled jumps, making programs difficult to read, debug, and maintain.",
+      "explanation": "goto jumps to a label anywhere in the function, breaking the single-entry, single-exit rule of structured programming. break, continue and switch all fit structured constructs, so goto is the exception.",
       "topicQuality": "specific"
     },
     {
@@ -49,7 +49,7 @@
         "D": "1"
       },
       "correct": "A",
-      "explanation": "j starts at 1, condition j<=10 is always true, but j=j-1 keeps decrementing j (making it negative forever). This is an infinite loop.",
+      "explanation": "j starts at 1 and j = j - 1 moves it further from the limit, so j <= 10 stays true and the loop never ends. A loop whose counter moves away from the test is infinite.",
       "topicQuality": "specific"
     },
     {
@@ -73,7 +73,7 @@
         "D": "none of the above"
       },
       "correct": "B",
-      "explanation": "do-while is an exit-controlled loop. The body executes first, then condition is checked, so the body runs at least once even if condition is false.",
+      "explanation": "do-while tests its condition after the body, so the body runs before the first test and therefore executes at least once even when the condition starts out false.",
       "topicQuality": "specific"
     },
     {
@@ -97,7 +97,7 @@
         "D": "the main() function"
       },
       "correct": "B",
-      "explanation": "break exits from the nearest enclosing loop (for, while, do-while) or switch statement. It does not exit from if blocks or the entire program.",
+      "explanation": "break leaves the nearest enclosing loop or switch at once. An if block is not a loop, so break cannot be used to leave it, and it does not end the program by itself.",
       "topicQuality": "specific"
     },
     {
@@ -121,7 +121,7 @@
         "D": "None of the above"
       },
       "correct": "C",
-      "explanation": "do-while is the only exit-controlled loop in C. The condition is checked after the loop body executes, unlike while and for where condition is checked first.",
+      "explanation": "do-while is the only exit-controlled loop in C because its test sits at the bottom. while and for are entry-controlled: they test first and may run zero times.",
       "topicQuality": "specific"
     },
     {
@@ -146,7 +146,7 @@
         "D": "all of these"
       },
       "correct": "B",
-      "explanation": "continue can only be used inside loops (for, while, do-while). It cannot be used with switch because switch is not a loop construct.",
+      "explanation": "continue belongs to loops: it jumps to the next iteration of for, while or do-while. switch is a selection construct, so continue has no meaning inside it.",
       "topicQuality": "specific"
     },
     {
@@ -171,7 +171,7 @@
         "D": "for (i = 10; i < 20; --i) { i = i - 2; }"
       },
       "correct": "C",
-      "explanation": "Option C has a malformed for loop — the initialization is missing, making it invalid/not compiling rather than infinite. Options A, B, D are all truly infinite loops.",
+      "explanation": "A, B and D never terminate: A decrements while still testing i < 500, B tests a constant 1, and D also subtracts 2 each pass. C is malformed because its for header has only two parts, so it does not run as an infinite loop.",
       "topicQuality": "specific"
     },
     {
@@ -196,7 +196,7 @@
         "D": "Infinite loop"
       },
       "correct": "B",
-      "explanation": "i starts at 1. printf prints i then increments. When i becomes 11 after printing 10, break executes. So 1 through 10 are printed.",
+      "explanation": "i is printed and then incremented, so the values 1 to 10 appear; when i becomes 11 the test i > 10 breaks the loop. Nothing after 10 is printed.",
       "topicQuality": "specific"
     },
     {
@@ -574,7 +574,7 @@
         "D": "A compile error occurs"
       },
       "correct": "C",
-      "explanation": "Without break, execution 'falls through' to the next case and continues until a break is found or the switch ends. This is called fall-through behaviour.",
+      "explanation": "Without a break, control falls through into the following case bodies and keeps running until a break or the end of the switch. This fall-through is a well-known source of bugs.",
       "topicQuality": "specific"
     },
     {
@@ -598,7 +598,7 @@
         "D": "Infinite"
       },
       "correct": "B",
-      "explanation": "i goes from 0 to 4 (i < 5), so the body executes 5 times (i = 0, 1, 2, 3, 4).",
+      "explanation": "i takes the values 0, 1, 2, 3 and 4; once i becomes 5 the test i < 5 fails. That is five executions of the body in total.",
       "topicQuality": "specific"
     },
     {
@@ -624,7 +624,7 @@
         "D": "Depends on condition"
       },
       "correct": "B",
-      "explanation": "do-while is exit-controlled — the body always executes at least once before the condition is tested, even if the condition is false from the start.",
+      "explanation": "The body runs before the condition is tested, so the minimum is one execution even when the condition is false from the very start. That is the difference from a while loop.",
       "topicQuality": "specific"
     },
     {
@@ -648,7 +648,7 @@
         "D": "The outermost if"
       },
       "correct": "B",
-      "explanation": "In C, an else always pairs with the nearest preceding unmatched if. This is known as the 'dangling else' rule.",
+      "explanation": "An else always binds to the nearest unmatched if above it, whatever the indentation suggests. Braces are needed when it should belong to an outer if.",
       "topicQuality": "specific"
     },
     {
@@ -673,7 +673,7 @@
         "D": "All three sections are optional"
       },
       "correct": "D",
-      "explanation": "In C, all three parts of the for loop — initialization, condition, and increment — are optional. for(;;) is a valid infinite loop.",
+      "explanation": "Initialisation, condition and update are all optional, and for(;;) is a legal infinite loop. Only the two semicolons are compulsory.",
       "topicQuality": "specific"
     },
     {
@@ -717,7 +717,7 @@
         "D": "Causes an infinite loop"
       },
       "correct": "B",
-      "explanation": "continue skips the remaining statements in the current iteration and transfers control to the loop's update expression (increment/decrement), then checks the condition.",
+      "explanation": "continue skips the rest of the current pass and jumps to the update part of a for loop (or the test of while/do-while). The loop itself keeps running.",
       "topicQuality": "specific"
     },
     {
@@ -741,7 +741,7 @@
         "D": "short"
       },
       "correct": "C",
-      "explanation": "switch in C only works with integer types (int, char, short, long, enum). float and double are not allowed because they cannot be exactly compared.",
+      "explanation": "switch needs an integer-compatible controlling expression such as int, char, short, long or enum. float and double are rejected because exact comparison of fractions is unreliable.",
       "topicQuality": "specific"
     },
     {
@@ -765,7 +765,7 @@
         "D": "4"
       },
       "correct": "B",
-      "explanation": "Outer loop runs 3 times. Inner loop runs 4 times for each outer iteration. Total = 3 × 4 = 12 times.",
+      "explanation": "The outer loop runs 3 times and, for each of those passes, the inner loop runs 4 times, so printf executes 3 × 4 = 12 times. Nested loops multiply their repetition counts.",
       "topicQuality": "specific"
     }
   ]

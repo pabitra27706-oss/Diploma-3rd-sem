@@ -25,7 +25,7 @@
         "D": "None of these"
       },
       "correct": "C",
-      "explanation": "Left-to-right: 4*8=32, 32%10=2, 2/2=1. All operators have same precedence and are left-associative.",
+      "explanation": "All three operators share the same precedence, so evaluation runs left to right: 4*8 = 32, 32%10 = 2, then 2/2 = 1. Integer division keeps the quotient, so the printed value is 1.",
       "topicQuality": "specific"
     },
     {
@@ -50,7 +50,7 @@
         "D": "10"
       },
       "correct": "B",
-      "explanation": "Macro expands to 2+3*2+3 = 2+6+3 = 11. Macros do textual substitution without parentheses, so precedence applies as-is.",
+      "explanation": "A macro substitutes text, not values: SQR(2 + 3) expands to 2 + 3 * 2 + 3. Multiplication binds first, so 3*2 = 6 and 2 + 6 + 3 = 11; wrapping the macro parameter in brackets would give 25.",
       "topicQuality": "specific"
     },
     {
@@ -74,7 +74,7 @@
         "D": "-2"
       },
       "correct": "C",
-      "explanation": "In C, the result of a%b has the sign of the dividend (a). 14 = (-4)*(-3) + 2, so 14 % -4 = 2.",
+      "explanation": "In C the sign of a % b follows the dividend, not the divisor. Since 14 = (-4)(-3) + 2, the remainder is +2 even though b is negative, so option C is correct.",
       "topicQuality": "specific"
     },
     {
@@ -99,7 +99,7 @@
         "D": "0 50 1"
       },
       "correct": "A",
-      "explanation": "Arguments are evaluated right-to-left: x>=50 → x is 50 so 1; x=50 → assigns 50; x==50 → 1. Output: 1 50 1. Note: behaviour is implementation-defined; most WB diploma answer keys accept A.",
+      "explanation": "Arguments are normally evaluated right to left: x>=50 uses the old 35 and gives 0, then x=50 stores 50, then x==50 gives 1, printed as 1 50 0. The standard leaves the order unspecified, which is why this question is ambiguous.",
       "topicQuality": "specific"
     },
     {
@@ -123,7 +123,7 @@
         "D": "goto"
       },
       "correct": "D",
-      "explanation": "The goto statement violates structured programming principles by creating uncontrolled jumps, making code harder to read and maintain.",
+      "explanation": "goto jumps to a label anywhere in the function, creating uncontrolled flow that structured programming avoids by using only sequence, selection and loops. break, continue and switch all fit structured constructs.",
       "topicQuality": "specific"
     },
     {
@@ -147,7 +147,7 @@
         "D": "All of these"
       },
       "correct": "C",
-      "explanation": "union is a reserved keyword in C. printf and main are library function names, not reserved keywords — they can technically be redefined.",
+      "explanation": "union is one of C's 32 reserved keywords and cannot be used as a name. printf is only a library function and main is the entry function, so both may legally be redefined, leaving union as the reserved word.",
       "topicQuality": "specific"
     },
     {
@@ -172,7 +172,7 @@
         "D": "depends on compiler"
       },
       "correct": "A",
-      "explanation": "Global variables in C are automatically initialized to 0 (zero) by the compiler if not explicitly initialized.",
+      "explanation": "Objects with static storage duration are zero-initialised before main() runs, and a global int belongs to that class, so it starts at 0. Only uninitialised automatic (local) variables hold garbage.",
       "topicQuality": "specific"
     },
     {
@@ -196,7 +196,7 @@
         "D": "int $main;"
       },
       "correct": "D",
-      "explanation": "Variable names in C cannot contain the $ symbol. Valid names use letters, digits, and underscores only, starting with a letter or underscore.",
+      "explanation": "An identifier may use letters, digits and underscores and must not start with a digit. The dollar sign is not part of C's identifier character set, so int $main; is invalid while number, _rate and variable_count are fine.",
       "topicQuality": "specific"
     },
     {
@@ -220,7 +220,7 @@
         "D": "volatile"
       },
       "correct": "C",
-      "explanation": "The const keyword makes a variable read-only after initialization. immutable and mutable are not C keywords.",
+      "explanation": "const makes an object read-only after initialisation, so any later assignment is a compile-time diagnostic. immutable and mutable are not C keywords, and volatile only stops the compiler from caching a value.",
       "topicQuality": "specific"
     },
     {
@@ -244,7 +244,7 @@
         "D": "2 Bytes"
       },
       "correct": "C",
-      "explanation": "sizeof(char) is always 1 byte in C, regardless of the compiler or platform. This is guaranteed by the C standard.",
+      "explanation": "The C standard defines a char as exactly one byte, and sizeof reports sizes in bytes, so sizeof(char) is 1 on every 32-bit or 64-bit compiler. One byte still holds one character.",
       "topicQuality": "specific"
     },
     {
@@ -268,7 +268,7 @@
         "D": "compiler error"
       },
       "correct": "C",
-      "explanation": "3 % -2 = 1 in C. The result sign follows the dividend (3), which is positive, so result is 1.",
+      "explanation": "3 % -2 is 1: the quotient truncates toward zero (3/-2 = -1) and the remainder is 3 - (-2)(-1) = 1. As always in C, the sign of the remainder follows the positive dividend.",
       "topicQuality": "specific"
     },
     {
@@ -293,7 +293,7 @@
         "D": "compiler error"
       },
       "correct": "D",
-      "explanation": "The % (modulo) operator cannot be used with float variables in C. This causes a compile-time error.",
+      "explanation": "The % operator is defined only for integer operands, but here y is a float. The compiler therefore rejects y % x with a type error and no executable is produced.",
       "topicQuality": "specific"
     },
     {
@@ -318,7 +318,7 @@
         "D": "Hi! followed by a garbage value"
       },
       "correct": "A",
-      "explanation": "Redeclaring a variable in the same scope causes a compile-time error in C. Variable y cannot be declared twice in the same block.",
+      "explanation": "Two definitions of y in the same block clash without linkage, so the compiler reports a redeclaration error and stops; the printf line is never reached. Option B would need the second line to be a plain assignment.",
       "topicQuality": "specific"
     },
     {
@@ -342,7 +342,7 @@
         "D": "3.75"
       },
       "correct": "B",
-      "explanation": "Left-to-right: 5*9=45, 45/3=15, 15+9=24. * and / have same precedence and associate left-to-right.",
+      "explanation": "Multiplication and division bind tighter than addition and associate left to right: 5*9 = 45, 45/3 = 15, then 15 + 9 = 24. The division is exact, so no remainder is lost.",
       "topicQuality": "specific"
     },
     {
@@ -367,7 +367,7 @@
         "D": "Compile time error"
       },
       "correct": "D",
-      "explanation": "return is a statement, not an expression. The ternary operator requires expressions as operands, so using return inside it causes a compile-time error.",
+      "explanation": "The conditional operator takes three expressions, but return is a statement, not an expression, so it cannot be an operand. The line is a compile-time error rather than a choice between 1 and 2.",
       "topicQuality": "specific"
     },
     {
@@ -391,7 +391,7 @@
         "D": "x = 7, y = 7"
       },
       "correct": "B",
-      "explanation": "Post-increment (x++) assigns current value of x (6) to y first, then increments x to 7. So x=7, y=6.",
+      "explanation": "x++ hands over the old value first and increments afterwards, so y gets 6 while x becomes 7. That matches option B (x = 7, y = 6).",
       "topicQuality": "specific"
     },
     {
@@ -415,7 +415,7 @@
         "D": "x = 7, y = 7"
       },
       "correct": "D",
-      "explanation": "Pre-increment (++x) increments x to 7 first, then assigns the incremented value (7) to y. So x=7, y=7.",
+      "explanation": "++x increments before the value is used, so x becomes 7 and y is also assigned 7. That is the difference from post-increment and gives option D.",
       "topicQuality": "specific"
     },
     {
@@ -439,7 +439,7 @@
         "D": "none"
       },
       "correct": "B",
-      "explanation": "-17 % -5 = -2 in C. The result sign follows the dividend (-17), which is negative. -17 = (-5)*3 + (-2).",
+      "explanation": "-17 % -5 is -2 because -17 = (-5)(3) + (-2), and the remainder takes the sign of the dividend. Neither 2 nor -3 satisfies that identity, so B is correct.",
       "topicQuality": "specific"
     },
     {
@@ -463,7 +463,7 @@
         "D": "int $main;"
       },
       "correct": "D",
-      "explanation": "$ is not a valid character in C identifiers. Variable names can only contain letters, digits, and underscores.",
+      "explanation": "Identifiers may contain only letters, digits and underscores. The $ character is illegal in C, so int $main; is the invalid declaration while number, rate and variable_count are all valid.",
       "topicQuality": "specific"
     },
     {
@@ -487,7 +487,7 @@
         "D": "None of the mentioned"
       },
       "correct": "A",
-      "explanation": "All 32 keywords in C (like int, float, if, while, return, etc.) are written in lowercase letters. C is case-sensitive.",
+      "explanation": "C is case-sensitive and every keyword is spelled in lowercase, for example int, while, return and sizeof. Writing Int or WHILE creates a different identifier, not a keyword.",
       "topicQuality": "specific"
     },
     {
@@ -511,7 +511,7 @@
         "D": "export"
       },
       "correct": "A",
-      "explanation": "volatile is a reserved keyword in C and cannot be used as a variable name. true, friend, and export are not standard C keywords.",
+      "explanation": "volatile is a type qualifier keyword and can never name a variable. true is not a standard C keyword (C99 supplies it as a macro in stdbool.h), and friend and export are not C keywords either.",
       "topicQuality": "specific"
     },
     {
@@ -535,7 +535,7 @@
         "D": "&"
       },
       "correct": "A",
-      "explanation": "All preprocessor directives in C begin with the # (hash) symbol. Examples: #include, #define, #ifdef.",
+      "explanation": "Every preprocessor directive begins with #, as in #include, #define and #ifdef. The dollar, double-quote and ampersand symbols have no preprocessor meaning at the start of a line.",
       "topicQuality": "specific"
     },
     {
@@ -559,7 +559,7 @@
         "D": "37 keywords"
       },
       "correct": "B",
-      "explanation": "The standard C language (ANSI C / C89) has exactly 32 reserved keywords.",
+      "explanation": "ANSI C (C89) defines exactly 32 keywords, including int, if, else, while, struct, union and sizeof. Later standards add a few more, but 32 is the classical answer for this paper.",
       "topicQuality": "specific"
     },
     {
@@ -583,7 +583,7 @@
         "D": "Bitwise AND"
       },
       "correct": "B",
-      "explanation": "&& is the logical AND operator in C. It evaluates to 1 if both operands are non-zero. Note: & (single ampersand) is the bitwise AND operator.",
+      "explanation": "&& is the logical AND: it yields 1 only when both operands are non-zero and short-circuits otherwise. A single & would be the bitwise AND, so neither arithmetic nor unary fits.",
       "topicQuality": "specific"
     },
     {
@@ -608,7 +608,7 @@
         "D": "5 6"
       },
       "correct": "A",
-      "explanation": "Post-increment: b gets current value of a (5), then a becomes 6. So a=6, b=5. Output: 6 5.",
+      "explanation": "a++ returns the current value and then increments, so b becomes 5 while a becomes 6. printf lists a first, so the output is 6 5 (option A).",
       "topicQuality": "specific"
     },
     {
@@ -632,7 +632,7 @@
         "D": "None of these"
       },
       "correct": "A",
-      "explanation": "-5 % 3 = -2 in C. The result sign follows the dividend (-5). -5 = 3*(-1) + (-2).",
+      "explanation": "The remainder takes the sign of the dividend: -5 = 3(-1) + (-2), so -5 % 3 is -2. Option 2 would be the answer only if the remainder followed the divisor.",
       "topicQuality": "specific"
     },
     {
@@ -656,7 +656,7 @@
         "D": "Rasmus Lerdorf"
       },
       "correct": "C",
-      "explanation": "Dennis Ritchie developed C at Bell Labs in 1972. James Gosling created Java; Rasmus Lerdorf created PHP.",
+      "explanation": "Dennis Ritchie developed C at Bell Laboratories around 1972 to build UNIX. James Gosling created Java and Rasmus Lerdorf created PHP, so option C is the father of C.",
       "topicQuality": "specific"
     },
     {
@@ -680,7 +680,7 @@
         "D": "18"
       },
       "correct": "C",
-      "explanation": "Division and multiplication first: 4/2=2, 6*2=12. Then addition: 2+2+12=16.",
+      "explanation": "Multiplication and division are evaluated before addition: 4/2 = 2 and 6*2 = 12, so 2 + 2 + 12 = 16. Strict left-to-right reading would wrongly give 15.",
       "topicQuality": "specific"
     },
     {
@@ -704,7 +704,7 @@
         "D": "Machine level language"
       },
       "correct": "B",
-      "explanation": "C is classified as a high-level (or middle-level) language. It combines features of both high-level and low-level languages.",
+      "explanation": "C is a high-level language because its statements are written for humans and translated by a compiler. It also offers low-level facilities such as pointers, which is why it is sometimes called middle-level.",
       "topicQuality": "specific"
     },
     {
@@ -728,7 +728,7 @@
         "D": "||"
       },
       "correct": "D",
-      "explanation": "|| (logical OR) has the lowest precedence among the given options. ++ has the highest, followed by %, then +, then ||.",
+      "explanation": "Logical OR (||) has the lowest precedence of the four: ++ binds tightest, then %, then +, and || is evaluated last. So the overall value is decided by ||.",
       "topicQuality": "specific"
     },
     {
@@ -752,7 +752,7 @@
         "D": "\\n"
       },
       "correct": "D",
-      "explanation": "\\n is the newline escape character in C. \\a is alert/bell, \\b is backspace, \\m is not a valid escape sequence.",
+      "explanation": "\\n is the newline escape that moves the cursor to the start of the next line. \\a rings the bell, \\b moves back one character, and \\m is not a defined escape sequence.",
       "topicQuality": "specific"
     },
     {
@@ -776,7 +776,7 @@
         "D": "None"
       },
       "correct": "D",
-      "explanation": "-17 % -5 = -2 in C (result sign follows dividend). None of A, B, C is correct, so the answer is D (None). -17 = (-5)*3 + (-2).",
+      "explanation": "-17 % -5 leaves -2, because -17 = (-5)(3) + (-2) and the sign follows the dividend. Since -2 is not among 3.4, 3 or -3, the answer is none of these.",
       "topicQuality": "specific"
     },
     {
@@ -800,7 +800,7 @@
         "D": "x = 6, y = 6"
       },
       "correct": "B",
-      "explanation": "Post-increment: y gets current value of x (5), then x increments to 6. So y=5, x=6.",
+      "explanation": "Post-increment supplies the old value and then increments, so y = 5 and x becomes 6, which is option B (y = 5, x = 6). Option A would need ++x instead.",
       "topicQuality": "specific"
     },
     {
@@ -824,7 +824,7 @@
         "D": "int $my_num = 10000"
       },
       "correct": "B",
-      "explanation": "100000 is a valid integer literal in C. Commas cannot appear inside integer literals (option A), and $ is not valid in identifiers (option D).",
+      "explanation": "A single integer literal cannot contain a comma, so 100,000 becomes three tokens, and $ is not allowed in identifiers. Only int my_num = 100000; is a valid C declaration.",
       "topicQuality": "specific"
     },
     {
@@ -849,7 +849,7 @@
         "D": "j = 16"
       },
       "correct": "B",
-      "explanation": "Macro expands to 64 / 4 * 4 = 16 * 4 = 64. Left-to-right evaluation: division before multiplication is overridden by order. Wait — 64/4=16, 16*4=64. So j=64.",
+      "explanation": "SQUARE(n) expands to n*n without brackets, so 64 / 4 * 4 is evaluated left to right: 64/4 = 16 and 16*4 = 64. Bracketing the macro expansion would give 4 instead.",
       "topicQuality": "specific"
     },
     {
@@ -874,7 +874,7 @@
         "D": "x=10 y=10 z=1"
       },
       "correct": "A",
-      "explanation": "y = x = 10: assigns 10 to x then to y. z = x < 10: 10<10 is false (0). Output: x=10 y=10 z=0.",
+      "explanation": "Assignment associates right to left, so y = x = 10 stores 10 in x and then in y. z = x < 10 tests whether 10 < 10, which is false (0), giving x=10 y=10 z=0.",
       "topicQuality": "specific"
     },
     {
@@ -899,7 +899,7 @@
         "D": "0"
       },
       "correct": "C",
-      "explanation": "num=30 > 5 is true → evaluate inner: 30 <= 10 is false → result is 200. So k=200.",
+      "explanation": "num is 30, so num > 5 is true and the inner conditional runs. 30 <= 10 is false, so the inner expression yields 200 and the outer 500 branch is never taken.",
       "topicQuality": "specific"
     },
     {
@@ -924,7 +924,7 @@
         "D": "float"
       },
       "correct": "C",
-      "explanation": "The function return type is declared as int, so regardless of internal casts, the returned value is converted to int. Return type is determined by function declaration.",
+      "explanation": "The declared return type is int, so the computed value is converted to int before being returned; the (double) and (char) casts only affect intermediate values. Hence the function returns int.",
       "topicQuality": "specific"
     },
     {
@@ -1039,7 +1039,7 @@
         "D": "roll-no"
       },
       "correct": "A",
-      "explanation": "roll_no uses only letters and underscore, which is valid. & is address-of operator, spaces are not allowed, and - is subtraction operator.",
+      "explanation": "roll_no mixes letters with an underscore, which is a legal identifier. & is the address-of operator, a space splits the name into two tokens, and the hyphen would be read as subtraction.",
       "topicQuality": "specific"
     },
     {
@@ -1063,7 +1063,7 @@
         "D": "< > is for C++ only; \" \" is for C"
       },
       "correct": "B",
-      "explanation": "< > tells the compiler to search in standard system directories. \" \" searches the current/project directory first, then system directories.",
+      "explanation": "Angle brackets send the compiler to the implementation's standard include directories, while double quotes search the source file's own directory first and then fall back to those standard paths.",
       "topicQuality": "specific"
     },
     {
@@ -1087,7 +1087,7 @@
         "D": "C allows direct memory manipulation using pointers"
       },
       "correct": "C",
-      "explanation": "C does NOT natively support object-oriented programming (OOP). OOP is a feature of C++, Java, etc. C is a procedural, structured language.",
+      "explanation": "C is procedural and structured; classes, inheritance and polymorphism came with C++. Portability, structured constructs and direct memory access through pointers are all real C features.",
       "topicQuality": "specific"
     },
     {
@@ -1112,7 +1112,7 @@
         "D": "string.h"
       },
       "correct": "C",
-      "explanation": "scanf() and printf() are both declared in stdio.h (Standard Input/Output header file).",
+      "explanation": "scanf() and printf() are both declared in stdio.h, the standard input/output header. conio.h is a non-standard compiler header, stdlib.h holds utilities and string.h holds string functions.",
       "topicQuality": "specific"
     },
     {
@@ -1137,7 +1137,7 @@
         "D": "6 bytes"
       },
       "correct": "B",
-      "explanation": "In a 32-bit C compiler, long int occupies 4 bytes (32 bits). In a 64-bit system it may be 8 bytes, but standard 32-bit compilers use 4 bytes.",
+      "explanation": "On a 32-bit compiler a long int is 4 bytes (32 bits), the same width as int there. The standard only guarantees at least 4 bytes, which is why 8 bytes appears on some 64-bit systems.",
       "topicQuality": "specific"
     },
     {
@@ -1161,7 +1161,7 @@
         "D": "It uses goto statements extensively"
       },
       "correct": "B",
-      "explanation": "Structured programming promotes code modularity, reusability, and maintainability by using functions, loops, and conditionals instead of unstructured jumps.",
+      "explanation": "Structured programmes are built from functions with single entry and exit points, which makes code reusable, testable and easier to maintain. They avoid goto and are not automatically slower.",
       "topicQuality": "specific"
     },
     {
@@ -1185,7 +1185,7 @@
         "D": "15"
       },
       "correct": "C",
-      "explanation": "5 in binary = 0101, 3 = 0011. Bitwise AND: 0101 & 0011 = 0001 = 1.",
+      "explanation": "5 is 0101 and 3 is 0011 in binary; bitwise AND keeps only bits set in both, giving 0001 = 1. OR (|) would give 7 and XOR (^) would give 6.",
       "topicQuality": "specific"
     },
     {
@@ -1209,7 +1209,7 @@
         "D": "The number of elements in an array"
       },
       "correct": "C",
-      "explanation": "sizeof is a compile-time unary operator that returns the size in bytes of a data type or variable. E.g., sizeof(int) returns 2 or 4 depending on compiler.",
+      "explanation": "sizeof is a compile-time unary operator that reports the storage size of a type or expression in bytes, so sizeof(int) is 2 or 4 depending on the compiler. It does not read the stored value.",
       "topicQuality": "specific"
     },
     {
@@ -1233,7 +1233,7 @@
         "D": "String constant"
       },
       "correct": "C",
-      "explanation": "C does not have a native Boolean constant type (true/false were added in C99 via stdbool.h). Traditional C constants are: integer, float, character, and string.",
+      "explanation": "Classical C has integer, floating-point, character and string constants but no boolean constant type; true and false arrive only as stdbool.h macros in C99. So 'boolean constant' is not a C constant type.",
       "topicQuality": "specific"
     },
     {

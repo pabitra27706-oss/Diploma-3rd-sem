@@ -74,9 +74,9 @@ results; do not treat their earlier checkpoints as passes on later changes.
 
 *Phase 1 platform implementation complete (2026-11-09). Full syllabus-strict subtask remains blocked by seven source-verification-gated PYQs; coverage stays advisory per the recorded Phase 2 decision. See `phases/01-platform/record.md`. Phone install/unfurl are still launch checks.
 
-*Phase 2 engineering passed owner Termux verification (`2026-11-16`, commit `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green). Full data/syllabus `--strict` remains gated separately on owner source verification (`10` fingerprinted data findings in `docs/data/validation-exceptions.json` + `3` grouped syllabus findings; see `phases/02-data-pipeline/record.md` and `data/source-review-batch-01.md`).
+*Phase 2 engineering passed owner Termux verification (`2026-11-16`, commit `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green). Full data/syllabus `--strict` remains gated separately on owner source verification (`9` fingerprinted data findings in `docs/data/validation-exceptions.json` + `3` grouped syllabus findings; see `phases/02-data-pipeline/record.md` and `data/source-review-batch-01.md`).
 
-Phase 3 (updated 2026-11-16 on `arena/47d8bf99-diploma-3rd-sem`): all engineering parts 3.1–3.6 are implemented, including mock-paper `answerAny` section/choiceSet quota enforcement across all 30 frozen PYQ papers, compulsory 30-minute Group A loose-script timer/lock on the seven `2023-03` papers, honest `1 mark option + 1 mark written explanation` handling on the fifteen `2024–2026` papers without fabricating overall paper grades, and one-sentence MD/TXT/JSON/Print-PDF guidance on `quiz/export.html`. Awaiting owner Termux/browser verification.
+Phase 3 (updated 2026-11-17 on `arena/637a5a31-diploma-3rd-sem`): all engineering parts 3.1–3.6 are implemented, including mock-paper `answerAny` section/choiceSet quota enforcement across all 28 frozen PYQ papers, compulsory 30-minute Group A loose-script timer/lock on the five `2023-03` papers, honest `1 mark option + 1 mark written explanation` handling on the fifteen `2024–2026` papers without fabricating overall paper grades, and one-sentence MD/TXT/JSON/Print-PDF guidance on `quiz/export.html`. Awaiting owner Termux/browser verification.
 
 ### Phase 3 engineering update — 2026-11-09
 

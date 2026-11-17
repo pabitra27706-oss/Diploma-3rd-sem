@@ -1,19 +1,21 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-16 (branch/license audit). Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`,
+Updated 2026-11-17 (sub-phase 8A shipped; README/rule counts refreshed). Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`,
 `docs/ROADMAP.md` and the relevant phase record before continuing. Source files
 and actual Git status take precedence over older narrative.
 
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- Active branch: `arena/47d8bf99-diploma-3rd-sem` (branched from `main` at
-  `8405b15`). Do not create/switch/rename branches or push another branch.
-  Prior `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
-  `arena/26856d99-diploma-3rd-sem` (`8405b15`) branches were merged into `main`
-  and are retired.
-- Base `main` commit: `8405b15`; Phase 2 mechanical/UI completion is committed
-  on `arena/47d8bf99-diploma-3rd-sem`. Inspect actual Git/PR state rather than
+- Active branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, open), branched from
+  `main` at `365b8f7bc4769691c032ae93b969f9db931ce091`. Do not
+  create/switch/rename branches or push another branch.
+  `arena/858a50c7-diploma-3rd-sem` (PR #9) was merged into `main` as `365b8f7`;
+  older `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
+  `arena/26856d99-diploma-3rd-sem` (`8405b15`) branches are retired.
+- Base `main` commit: `365b8f7`. Sub-phase 8A is committed on the active branch
+  as `664674b` (content) → `49758b6` (pin) → `1dcc57a` (presence) → `9b66c31`
+  (test pins) → `4e906e2` (UI labels). Inspect actual Git/PR state rather than
   assuming an older checkpoint is current.
 - Zero-build static HTML/CSS/JS/JSON; publication base `/Diploma-3rd-sem/`.
   Canonical configured URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
@@ -38,6 +40,17 @@ and actual Git status take precedence over older narrative.
    incomplete work, supply copyable Termux commands and the exact local URL.
 6. Do not claim all phases done while implementation or factual gates are open.
    Focused safety/regression tests continue before final device acceptance.
+7. **All-subject MCQ explanations (2026-11-17).** The Python pilot pattern now
+   applies to every bank: 2–3 sentences, ~30–40 words, sized for a 1-mark item.
+   Only `explanation` / `answer` prose may change.
+8. **Duplicate-paper rule (2026-11-17).** A duplicate reprint may be deleted
+   **only** where that subject has no 2021 paper; never delete a paper whose
+   session/year is otherwise missing. CST203 and CST209 qualified; CST201,
+   CST205 and CST207 keep every paper.
+9. **Subject names in the UI only (2026-11-17).** Subjects read C · Python · DS ·
+   CSO · Algorithms; raw paper/question IDs are not printed. No path, file,
+   question ID, URL parameter, `data-*` value, storage key or JSON payload may
+   change to achieve that.
 
 ## Approved source reconciliation for PR #7
 
@@ -45,7 +58,7 @@ Owner authorizes preserving main's newer sources and merging the code. The
 fixed PYQ/registry baseline is now main commit
 `cfe3a63decb270826da40ea50b9392efc58b2f1d`; all 35 originals match it exactly.
 Main's icon/manifest fix is preserved. Derived artifacts have been regenerated;
-the same ten source-review findings remain open. Consult PR #7 for CI/merge
+the same nine source-review findings remain open. Consult PR #7 for CI/merge
 result; do not treat earlier unpushed/blocked checkpoint notes as current state.
 
 ## Current implementation
@@ -54,22 +67,27 @@ Phase 1 platform implementation is complete with deferred final hardware
 acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the complete
 per-phase remainder table and the source/rights gates.
 
-- Data: 958 raw PYQs, 923 exact-unique Practice questions, 35 aliases across
-  29 papers; ten derived Practice days; enriched `_data/catalog.json` and
+- Sub-phase 8A — answer prose and subject labels — shipped 2026-11-17
+  ([record](docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/record.md)):
+  337 quiz-bank explanations and 226 PYQ answers rewritten in prose only, two
+  duplicate reprints removed, subject names replacing course codes in the UI.
+- Data: 924 raw PYQs, 923 exact-unique Practice questions, 1 exact alias across
+  28 papers; ten derived Practice days; enriched `_data/catalog.json` and
   `assets/data/practice-pool.json` (`aliases`, `alsoAppearedIn`, `topicQuality`);
   all 5 subject hubs and 24 unit HTML pages aligned to `docs/syllabus/syllabus.json`
   and enforced by `validate_data.py`; alias `?q=` deep-link resolution in Practice
   and duplicate cross-reference links in PYQ Answers; generic placeholder topics
   excluded from Practice topic dropdown, unit topic summaries and named weak-topic
   analytics. 872 quiz-bank items (416 keyed MCQs, 456 non-MCQ ungraded). CST207
-  has no quiz bank. Originals remain unchanged; 10 source-review data findings
-  remain open.
+  has no quiz bank. Originals remain unchanged; **9** source-review data findings
+  remain open (the CST209-P002-Q34 finding closed when its duplicate paper was
+  deleted).
 - Quiz: versioned attempt snapshots, deadline-based timers, autosave/resume,
   flags, score boundaries, history/export/exact retries/edits, mistake queue,
   one-sentence MD/TXT/JSON/Print-PDF export guidance, and full mock paper
   practice enforcing explicit `paperFormat` `answerAny` section/choiceSet quotas
-  across all 29 frozen PYQ papers, compulsory 30-minute Group A loose-script
-  windows on the seven `2023-03` papers, and `1m option + 1m written explanation`
+  across all 28 frozen PYQ papers, compulsory 30-minute Group A loose-script
+  windows on the five timed `2023-03` papers, and `1m option + 1m written explanation`
   splits on the fifteen `2024–2026` papers without fabricating an overall grade.
 - Discovery/study: compact search/repeat sidecars, source deep links, related
   unit material, 1,339 model/keyed-source cards, fixed Leitner scheduling,
@@ -91,8 +109,9 @@ per-phase remainder table and the source/rights gates.
 Latest implementation checkpoint: 13 Python tests, six deterministic Node suites
 and seven focused Chromium suites PASS; full JS/CJS + JSON parse PASS. Site strict
 0 errors / 28 warnings, platform 0 errors, immutable-PYQ guard 0 changes.
-Full data strict still has 10 ledger findings; syllabus strict has 3 grouped
-errors. An exact-baseline pass is not a full strict pass.
+Full data strict still has 9 ledger findings; syllabus strict has 3 grouped
+errors. `check_site.py --strict` reports the same 17 pre-existing accessibility
+labels it reports on `main`. An exact-baseline pass is not a full strict pass.
 
 ## How to continue safely
 
@@ -120,13 +139,13 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git pull --ff-only origin arena/47d8bf99-diploma-3rd-sem
+git pull --ff-only origin arena/637a5a31-diploma-3rd-sem
 cd ..
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
 Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
-directory: `git clone --branch arena/47d8bf99-diploma-3rd-sem
+directory: `git clone --branch arena/637a5a31-diploma-3rd-sem
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling

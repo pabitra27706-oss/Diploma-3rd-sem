@@ -45,11 +45,11 @@ if (themeToggle) {
 
 // ─── Subject Data ────────────────────────────────────────
 const SUBJECTS_META = [
-  { code: 'CST201', name: 'Computer Programming in C' },
-  { code: 'CST203', name: 'Scripting Languages (Python)' },
-  { code: 'CST205', name: 'Data Structures' },
-  { code: 'CST207', name: 'Computer System Organization' },
-  { code: 'CST209', name: 'Algorithms' }
+  { code: 'CST201', name: 'Computer Programming in C', short: 'C' },
+  { code: 'CST203', name: 'Scripting Languages (Python)', short: 'Python' },
+  { code: 'CST205', name: 'Data Structures', short: 'DS' },
+  { code: 'CST207', name: 'Computer System Organization', short: 'CSO' },
+  { code: 'CST209', name: 'Algorithms', short: 'Algorithms' }
 ];
 
 let allSubjectData = [];
@@ -157,13 +157,13 @@ function renderSubjects(subjects) {
       `
           <div class="empty-paper-list">
             <p>No papers added yet.</p>
-            <small>Missing or empty registry.json for ${subject.code}</small>
+            <small>No papers are registered for ${subject.name} yet.</small>
           </div>
         `;
     
     card.innerHTML = `
       <div class="subject-header">
-        <span class="subject-code">${subject.code}</span>
+        <span class="subject-code">${subject.short || subject.name}</span>
         <span class="subject-name">${subject.name}</span>
         <span class="subject-count">${subject.papers.length} papers</span>
         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

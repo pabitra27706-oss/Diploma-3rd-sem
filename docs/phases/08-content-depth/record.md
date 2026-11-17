@@ -29,3 +29,13 @@ result is asserted. `lastUpdated` is null where unknown, not the generator date.
 Pending: cited formula/definition sheets and owner review before navigation,
 physical/phone print acceptance (Phase 10), answer sign-off batches, source
 mapping and exam-total reconciliation. Data verification gates remain open.
+
+## Sub-phase 8A — answer prose and subject labels (2026-11-17)
+
+Owner-requested work that this phase gates but does not sequence is recorded in
+[`sub-phase-8A-answer-prose-and-ui-labels/record.md`](sub-phase-8A-answer-prose-and-ui-labels/record.md):
+337 quiz-bank explanations and 226 PYQ answers rewritten in prose only, two
+duplicate-reprint papers deleted (CST203, CST209 — both subjects without a 2021
+sitting), and a display-only switch from course codes to subject names. Counts
+after the deletion: 28 papers / 924 raw / 923 unique / 1 alias. The 8.6 answer
+verification gate is untouched and still open; no key was changed.

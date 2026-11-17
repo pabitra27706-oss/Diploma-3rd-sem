@@ -10,30 +10,35 @@
 const SUBJECTS = {
   CST201: {
     code: 'CST201',
+    shortName: 'C',
     name: 'Computer Programming in C',
     credits: 2,
     units: 5
   },
   CST203: {
     code: 'CST203',
+    shortName: 'Python',
     name: 'Scripting Languages (Python)',
     credits: 2,
     units: 5
   },
   CST205: {
     code: 'CST205',
+    shortName: 'DS',
     name: 'Data Structures',
     credits: 3,
     units: 4
   },
   CST207: {
     code: 'CST207',
+    shortName: 'CSO',
     name: 'Computer System Organization',
     credits: 4,
     units: 5
   },
   CST209: {
     code: 'CST209',
+    shortName: 'Algorithms',
     name: 'Algorithms',
     credits: 4,
     units: 4

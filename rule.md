@@ -6,11 +6,12 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
-> **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`): branch and
-> license references corrected to the current session branch
-> `arena/47d8bf99-diploma-3rd-sem` (branched from `main` at `8405b15`); prior
-> `arena/be3d9178-...` and `arena/26856d99-...` branches were merged into `main`
-> and are retired. **If this manual and Git disagree on the branch name, Git
+> **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
+> (sub-phase 8A): branch and license references corrected to the current session
+> branch `arena/637a5a31-diploma-3rd-sem` (PR #10, branched from `main` at
+> `365b8f7`); `arena/858a50c7-...` (PR #9) is merged, and prior
+> `arena/47d8bf99-...`, `arena/be3d9178-...` and `arena/26856d99-...` branches
+> were merged into `main` and are retired. **If this manual and Git disagree on the branch name, Git
 > is right — update this file.**
 >
 > **New-session reading order:** `rule.md` (this file) → `prompt.md` →
@@ -21,15 +22,15 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/47d8bf99-diploma-3rd-sem` (current session branch, branched from `main` `8405b15`; prior `arena/be3d9178-...` and `arena/26856d99-...` branches were merged into `main` and are retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/637a5a31-diploma-3rd-sem` (current session branch, PR #10, branched from `main` `365b8f7`; `arena/858a50c7-...` (PR #9) and the older `arena/47d8bf99-...`, `arena/be3d9178-...`, `arena/26856d99-...` branches were merged into `main` and are retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
 - License: **MIT** (chosen 2026-11-16; see `LICENSE`). Covers the project's own code, documentation and authored content. Third-party examination-source material keeps unresolved, separate rights per `docs/DECISIONS.md`; this license does not relicense it.
 - Money: none — no ads, payments, donations, affiliates, or analytics
 - Scanned: 177 tracked files, 55 HTML pages, 20 standalone JS files, 55 JSON
-  files, 958 PYQ records, 872 quiz records (baseline 2026-11-06, re-scanned
-  2026-11-17 after one duplicate Python paper was removed; rules
+  files, 924 PYQ records, 872 quiz records (baseline 2026-11-06, re-scanned
+  2026-11-17 after two duplicate reprint papers were removed; rules
   reconciled 2026-11-16 — see `docs/AUDIT-2026-11-16.md`)
 - Time budget: 4 weeks from 2026-11-06, unless a waiver is recorded
 

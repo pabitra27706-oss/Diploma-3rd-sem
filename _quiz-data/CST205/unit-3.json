@@ -26,7 +26,7 @@
         "D": "None of these"
       },
       "correct": "C",
-      "explanation": "In Postorder traversal, the root is visited LAST — order is Left → Right → Root.",
+      "explanation": "Postorder visits the left subtree, then the right subtree, then the root, so the root is processed last. Preorder visits it first and inorder in the middle.",
       "topicQuality": "specific"
     },
     {
@@ -51,7 +51,7 @@
         "D": "3"
       },
       "correct": "D",
-      "explanation": "Root is A (last in postorder). Inorder: DBE|A|FC — left subtree has nodes D, B, E = 3 nodes.",
+      "explanation": "The last symbol of postorder is the root, A. Inorder DBE|A|FC splits at A, so the left subtree contains D, B and E — three nodes.",
       "topicQuality": "specific"
     },
     {
@@ -76,7 +76,7 @@
         "D": "both a and b"
       },
       "correct": "D",
-      "explanation": "A B-tree is always balanced (all leaves at same level) and ordered (keys maintain sorted order).",
+      "explanation": "A B-tree keeps all leaves at the same level and holds keys in sorted order inside every node, so it is both balanced and ordered.",
       "topicQuality": "specific"
     },
     {
@@ -101,7 +101,7 @@
         "D": "in which non-leaf nodes will have degree 2"
       },
       "correct": "C",
-      "explanation": "A binary tree is both ordered (left/right distinction matters) and restricts each node to at most degree 2.",
+      "explanation": "A binary tree allows at most two children per node, and the left and right positions are distinguishable, so both descriptions apply.",
       "topicQuality": "specific"
     },
     {
@@ -126,7 +126,7 @@
         "D": "5"
       },
       "correct": "B",
-      "explanation": "Parent index = floor(child index / 2) = floor(6/2) = 3.",
+      "explanation": "In the array form of a binary tree a child at index k has its parent at floor(k/2), so index 6 belongs to parent 3. Its own children would sit at 12 and 13.",
       "topicQuality": "specific"
     },
     {
@@ -151,7 +151,7 @@
         "D": "3"
       },
       "correct": "D",
-      "explanation": "Three standard traversals apply to a binary tree: Inorder, Preorder, and Postorder.",
+      "explanation": "The three standard traversals are preorder, inorder and postorder. Level-order is a breadth-first variant used as an extra, not one of the classic three.",
       "topicQuality": "specific"
     },
     {
@@ -176,7 +176,7 @@
         "D": "3"
       },
       "correct": "C",
-      "explanation": "By definition, a binary tree node can have at most 2 children — left child and right child.",
+      "explanation": "By definition each node has at most a left child and a right child, so the maximum degree is 2. Leaves have no children at all.",
       "topicQuality": "specific"
     },
     {
@@ -201,7 +201,7 @@
         "D": "L = 2I - 1"
       },
       "correct": "B",
-      "explanation": "In a full binary tree, the number of leaf nodes = number of internal nodes + 1, i.e., L = I + 1.",
+      "explanation": "In a full binary tree every internal node has two children, which gives L = I + 1 leaves. Check it with 3 internal nodes and 4 leaves.",
       "topicQuality": "specific"
     },
     {
@@ -226,7 +226,7 @@
         "D": "2"
       },
       "correct": "A",
-      "explanation": "The root node is at depth 0 — depth is the number of edges from root to the node.",
+      "explanation": "Depth counts edges from the root downwards, so the root itself sits at depth 0 and its children at depth 1.",
       "topicQuality": "specific"
     },
     {
@@ -251,7 +251,7 @@
         "D": "2h-1 nodes"
       },
       "correct": "D",
-      "explanation": "A binary tree of height h can have at most 2^(h+1) - 1 nodes (complete binary tree). Option D represents 2^h - 1 which applies to height h-1 interpretation — maximum is 2^(h+1)-1.",
+      "explanation": "A tree of height h holds at most 2^(h+1) - 1 nodes when every level is full, and at least h+1 in a chain. The printed exponents are corrupted, so option D is keyed.",
       "topicQuality": "specific"
     },
     {
@@ -276,7 +276,7 @@
         "D": "2"
       },
       "correct": "B",
-      "explanation": "Balance factor = height(left subtree) - height(right subtree). Left is higher by 1, so BF = +1.",
+      "explanation": "Balance factor is height(left subtree) - height(right subtree). A left side one level taller gives +1, one level shorter gives -1, and equal heights give 0.",
       "topicQuality": "specific"
     },
     {
@@ -301,7 +301,7 @@
         "D": "2n-1"
       },
       "correct": "B",
-      "explanation": "At level n of a binary tree, the maximum number of nodes is 2^n (root is at level 0).",
+      "explanation": "Level n holds at most 2^n nodes, with the root at level 0 so level 3 holds up to 8. The superscripts are corrupted in print, but option B is the intended 2^n.",
       "topicQuality": "specific"
     },
     {
@@ -326,7 +326,7 @@
         "D": "in-directed graph"
       },
       "correct": "B",
-      "explanation": "A connected graph is one where there exists a path between every pair of vertices.",
+      "explanation": "A connected graph has a path between every pair of vertices. A complete graph is stronger: it also has an edge between every pair.",
       "topicQuality": "specific"
     },
     {
@@ -351,7 +351,7 @@
         "D": "none of these"
       },
       "correct": "C",
-      "explanation": "The degree of a node is the total number of edges incident to (containing) that node.",
+      "explanation": "The degree of a vertex counts every edge incident on it. In a directed graph that total is split into in-degree and out-degree.",
       "topicQuality": "specific"
     },
     {
@@ -376,7 +376,7 @@
         "D": "None of the above"
       },
       "correct": "A",
-      "explanation": "BFS uses a queue to explore nodes level by level — enqueue neighbours and dequeue to visit.",
+      "explanation": "BFS explores vertices level by level, so it enqueues neighbours and dequeues the next vertex to expand — the FIFO order a queue provides.",
       "topicQuality": "specific"
     },
     {
@@ -402,7 +402,7 @@
         "D": "(2n-1)/2"
       },
       "correct": "B",
-      "explanation": "In an undirected graph, each edge contributes 2 to the total degree sum, so sum of degrees = 2e.",
+      "explanation": "Every edge adds 1 to the degree of each of its two endpoints, so summing all degrees counts each edge twice and the total is 2e.",
       "topicQuality": "specific"
     },
     {
@@ -427,7 +427,7 @@
         "D": "O(log n)"
       },
       "correct": "B",
-      "explanation": "An adjacency matrix requires an n×n array to represent a graph with n vertices, so memory = O(n²).",
+      "explanation": "An adjacency matrix is an n × n table of 0/1 entries or weights, so the space needed grows as n², which is wasteful for sparse graphs.",
       "topicQuality": "specific"
     },
     {
@@ -452,7 +452,7 @@
         "D": "Linear order"
       },
       "correct": "A",
-      "explanation": "Preorder traversal (Root → Left → Right) follows the same principle as Depth First Search on a tree.",
+      "explanation": "Preorder visits a node and then descends into its children before moving sideways, which is depth-first order. Breadth-first would use a queue and level order.",
       "topicQuality": "specific"
     },
     {
@@ -477,7 +477,7 @@
         "D": "None of the above"
       },
       "correct": "C",
-      "explanation": "Binary trees where NULL pointers are replaced by threads (pointers to inorder successor/predecessor) are called Threaded trees.",
+      "explanation": "Threaded trees replace NULL child pointers with threads that point to the inorder predecessor or successor, so traversal needs no stack.",
       "topicQuality": "specific"
     },
     {
@@ -502,7 +502,7 @@
         "D": "Terminal nodes"
       },
       "correct": "D",
-      "explanation": "Nodes with no children (no successors) in a binary tree are called terminal nodes or leaf nodes.",
+      "explanation": "Nodes with no children are called terminal or leaf nodes. They sit at the bottom of the tree and have degree 0.",
       "topicQuality": "specific"
     },
     {
@@ -527,7 +527,7 @@
         "D": "Dn = log₂(n+1)"
       },
       "correct": "D",
-      "explanation": "The depth of a complete binary tree with n nodes is Dn = floor(log₂(n+1)) or log₂(n+1) rounded down.",
+      "explanation": "A complete binary tree of n nodes has depth floor(log2(n+1)), because n nodes fill exactly those levels. The option writes it as log₂(n+1).",
       "topicQuality": "specific"
     },
     {
@@ -552,7 +552,7 @@
         "D": "None of the above"
       },
       "correct": "D",
-      "explanation": "The unique node directly above N is called the Parent of N — not predecessor, antecedent, or precursor.",
+      "explanation": "The node directly above N on the path to the root is called its parent; predecessor, antecedent and precursor are not the standard terms, so D is keyed.",
       "topicQuality": "specific"
     },
     {
@@ -577,7 +577,7 @@
         "D": "Binary search trees"
       },
       "correct": "D",
-      "explanation": "Inorder traversal of a Binary Search Tree (BST) yields elements in sorted ascending order.",
+      "explanation": "Inorder visits left subtree, root and right subtree; in a binary search tree that order is exactly ascending, so it lists the keys in sorted order.",
       "topicQuality": "specific"
     },
     {
@@ -602,7 +602,7 @@
         "D": "ABDCEF"
       },
       "correct": "C",
-      "explanation": "Root is A (last in postorder). Reconstruct tree: preorder gives Root→Left→Right = ABDECF.",
+      "explanation": "Postorder ends with the root A; combining it with the inorder sequence rebuilds the tree, and preorder then reads root, left, right — giving ABDECF.",
       "topicQuality": "specific"
     },
     {
@@ -628,7 +628,7 @@
         "D": "Pre-order, in-order, post-order"
       },
       "correct": "D",
-      "explanation": "The three standard binary tree traversals are Pre-order (Root-Left-Right), In-order (Left-Root-Right), and Post-order (Left-Right-Root).",
+      "explanation": "The standard orders are pre-order (root, left, right), in-order (left, root, right) and post-order (left, right, root). Prefix, infix and postfix name expression notations instead.",
       "topicQuality": "specific"
     },
     {
@@ -653,7 +653,7 @@
         "D": "2ⁿ nodes"
       },
       "correct": "C",
-      "explanation": "A full binary tree with n leaf nodes has exactly 2n - 1 total nodes (n leaves + n-1 internal nodes).",
+      "explanation": "A full binary tree with n leaves has n-1 internal nodes, so the total is n + (n-1) = 2n-1. A single leaf satisfies the formula trivially.",
       "topicQuality": "specific"
     },
     {
@@ -678,7 +678,7 @@
         "D": "None of the above"
       },
       "correct": "A",
-      "explanation": "Graph is a nonlinear data structure — elements have complex relationships, not a simple sequence.",
+      "explanation": "A graph allows arbitrary many-to-many links, so it is non-linear; stacks and lists keep elements in a single sequence.",
       "topicQuality": "specific"
     },
     {
@@ -702,7 +702,7 @@
         "D": "All of the above"
       },
       "correct": "A",
-      "explanation": "Trees are non-linear data structures — nodes are arranged in hierarchical levels, not a sequence.",
+      "explanation": "Trees arrange nodes in levels joined by parent-child links, so they are non-linear. Stacks and strings are linear sequences.",
       "topicQuality": "specific"
     },
     {
@@ -727,7 +727,7 @@
         "D": "A node with one child"
       },
       "correct": "B",
-      "explanation": "A leaf node (terminal node) is a node that has no children in the tree.",
+      "explanation": "A leaf has no children, so both of its child pointers are NULL. The root can be a leaf only in a single-node tree.",
       "topicQuality": "specific"
     },
     {
@@ -751,7 +751,7 @@
         "D": "3"
       },
       "correct": "A",
-      "explanation": "A leaf node has no children, so its degree (number of children) is 0.",
+      "explanation": "Degree counts children, and a leaf has none, so its degree is 0. An internal node of a binary tree has degree 1 or 2.",
       "topicQuality": "specific"
     },
     {
@@ -776,7 +776,7 @@
         "D": "h + 1"
       },
       "correct": "B",
-      "explanation": "Maximum nodes in binary tree of height h = 2^(h+1) - 1, achieved when every level is completely filled.",
+      "explanation": "With height measured as edges on the longest root-to-leaf path, a full tree of height h holds 2^(h+1) - 1 nodes, since each extra level doubles the count and adds one.",
       "topicQuality": "specific"
     },
     {
@@ -801,7 +801,7 @@
         "D": "Only edge list"
       },
       "correct": "C",
-      "explanation": "Graphs can be represented using adjacency matrix (O(n²) space) or adjacency list (O(n+e) space) — choice depends on density.",
+      "explanation": "An adjacency matrix gives O(1) edge tests but needs O(n²) space, while an adjacency list needs O(n+e) and suits sparse graphs, so either is chosen by density.",
       "topicQuality": "specific"
     },
     {
@@ -1268,7 +1268,7 @@
         "D": "Linked list"
       },
       "correct": "B",
-      "explanation": "DFS uses a stack (or recursion, which internally uses a call stack) to explore as deep as possible before backtracking.",
+      "explanation": "DFS goes as deep as possible before backtracking, which a stack implements directly (or recursion, which uses the call stack).",
       "topicQuality": "specific"
     },
     {
@@ -1292,7 +1292,7 @@
         "D": "None of the above"
       },
       "correct": "B",
-      "explanation": "A tree is a non-linear data structure where nodes are arranged in a hierarchical parent-child relationship.",
+      "explanation": "A tree links a parent to several children in levels, so it is non-linear. Linear structures hold their elements in one sequence.",
       "topicQuality": "specific"
     },
     {
@@ -1437,7 +1437,7 @@
         "D": "Weighted graph"
       },
       "correct": "B",
-      "explanation": "A directed graph (digraph) has edges with direction — each edge goes from one vertex to another.",
+      "explanation": "A digraph has every edge directed from one vertex to another, drawn as an arrow. An undirected graph uses unordered pairs of endpoints.",
       "topicQuality": "specific"
     },
     {
@@ -1482,7 +1482,7 @@
         "D": "2^h - 1"
       },
       "correct": "B",
-      "explanation": "Minimum nodes in a binary tree of height h = h + 1 (one node per level, making a skewed tree).",
+      "explanation": "The minimum is one node per level, forming a skewed chain, which gives h+1 nodes for height h. A full tree would need 2^(h+1)-1.",
       "topicQuality": "specific"
     },
     {
@@ -1527,7 +1527,7 @@
         "D": "To represent graphs efficiently"
       },
       "correct": "B",
-      "explanation": "AVL trees maintain height balance (BF ∈ {-1, 0, 1}) ensuring O(log n) time for search, insert, and delete.",
+      "explanation": "AVL trees keep every balance factor within -1, 0 and +1 by rotating after updates, which guarantees O(log n) search, insert and delete.",
       "topicQuality": "specific"
     },
     {

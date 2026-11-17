@@ -1413,7 +1413,7 @@ function renderSubjects() {
       '<div class="subject-icon" aria-hidden="true">' +
       '<svg class="icon" style="width:24px;height:24px;stroke:white;" aria-hidden="true">' +
       '<use href="assets/icons/sprite.svg#book"></use></svg></div>' +
-      '<div class="subject-code">' + subject.code + '</div></div>' +
+      '<div class="subject-code">' + (subject.shortName || subject.name) + '</div></div>' +
 
       '<h3 class="subject-name">' + subject.name + '</h3>' +
 

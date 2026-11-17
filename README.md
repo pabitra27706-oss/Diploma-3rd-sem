@@ -12,11 +12,18 @@ installation or build is required to run the site.
 ## What exists in the working tree
 
 - Five theory subjects, unit notes and source-linked previous-year papers.
-- **29 papers / 958 archived questions**; exact-content aliases retain their
+- **28 papers / 924 archived questions**; exact-content aliases retain their
   source IDs. Practice uses **923 unique questions** across ten derived days.
-  (One duplicated Python March-2023 reprint was removed on 2026-11-17.)
+  (A duplicated Python March-2023 reprint was removed on 2026-11-17, and the
+  duplicated CST209 March-2023 reprint was removed the same day because CST209
+  has no 2021 paper.)
 - **872 quiz-bank questions**: 416 keyed MCQs and 456 non-MCQ items without
-  automatic grading. CST207 currently has no quiz bank.
+  automatic grading. CST207 currently has no quiz bank. Every keyed MCQ and
+  every archived PYQ answer carries a 2–3 sentence explanation sized for a
+  1-mark item (2026-11-17 pass).
+- **Subject names in the UI**: pages read C · Python · DS · CSO · Algorithms
+  instead of course codes; the codes stay in file paths, IDs, URL parameters
+  and storage keys, so saved progress and deep links are unaffected.
 - Timed quiz snapshots, autosave/resume, marked flags, history, exact retry,
   selected-attempt export, answer edits and a local mistake queue.
 - Paper practice with original instructions and registry duration. **Answer-any
@@ -64,7 +71,7 @@ An exact-baseline regression pass is **not** a full strict-data pass.
 For a fresh clone with the repository's default directory name:
 
 ```sh
-git clone --single-branch --branch arena/47d8bf99-diploma-3rd-sem \
+git clone --single-branch --branch main \
   https://github.com/pabitra27706-oss/Diploma-3rd-sem.git
 python3 -m http.server 8000 --bind 127.0.0.1
 ```

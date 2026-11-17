@@ -25,7 +25,7 @@
         "D": "Input"
       },
       "correct": "C",
-      "explanation": "Ambiguity is NOT a valid characteristic. Every step of an algorithm must be clearly and unambiguously defined.",
+      "explanation": "An algorithm must be finite, definite, effective and produce output from valid input. Ambiguity is the opposite of definiteness, because a step whose meaning is unclear cannot be executed reliably.",
       "topicQuality": "specific"
     },
     {
@@ -49,7 +49,7 @@
         "D": "Total number of multisets that can be formed from a given set"
       },
       "correct": "C",
-      "explanation": "Multiplicity refers to how many times a particular element appears in a multiset, unlike a set where each element appears only once.",
+      "explanation": "Multiplicity counts how many copies of a value a multiset holds, so {a, a, b} has multiplicity 2 for a. An ordinary set allows only one copy of each element.",
       "topicQuality": "specific"
     },
     {
@@ -74,7 +74,7 @@
         "D": "Neither"
       },
       "correct": "B",
-      "explanation": "Dynamic Programming is specifically designed for problems with overlapping subproblems and optimal substructure, storing results to avoid recomputation.",
+      "explanation": "Dynamic programming suits problems whose subproblems repeat and whose global optimum is built from optimal sub-solutions, because each result is stored and reused. Divide and conquer assumes the subproblems are independent.",
       "topicQuality": "specific"
     },
     {
@@ -98,7 +98,7 @@
         "D": "Heap Sort"
       },
       "correct": "B",
-      "explanation": "Merge Sort divides the array into halves, recursively sorts them, and merges — a classic Divide and Conquer algorithm.",
+      "explanation": "Merge sort splits the array into halves, sorts each recursively and merges the results — the classic divide-and-conquer pattern. Bubble, selection and heap sort work on the array as a whole.",
       "topicQuality": "specific"
     },
     {
@@ -122,7 +122,7 @@
         "D": "tree"
       },
       "correct": "A",
-      "explanation": "Stack follows LIFO (Last In First Out) — the last element pushed is the first to be popped.",
+      "explanation": "A stack pushes and pops at the same end, so the last item in is the first out (LIFO). A queue removes the oldest item first instead.",
       "topicQuality": "specific"
     },
     {
@@ -146,7 +146,7 @@
         "D": "tight bound"
       },
       "correct": "A",
-      "explanation": "Big-O notation gives the asymptotic upper bound — it describes the worst-case growth rate of an algorithm.",
+      "explanation": "Big-O bounds a function from above, describing how the running time grows in the worst case. Omega gives a lower bound and Theta a tight bound on both sides.",
       "topicQuality": "specific"
     },
     {
@@ -170,7 +170,7 @@
         "D": "Absolute Data Transaction"
       },
       "correct": "C",
-      "explanation": "ADT stands for Abstract Data Type — a mathematical model for data types defined by behavior (operations) rather than implementation.",
+      "explanation": "ADT stands for Abstract Data Type: a type defined by the operations it supports and their behaviour, hiding the implementation. Stack and queue are standard examples.",
       "topicQuality": "specific"
     },
     {
@@ -194,7 +194,7 @@
         "D": "All of the above"
       },
       "correct": "D",
-      "explanation": "In a multiset, an element can appear zero, one, or more than one time — all multiplicities are valid.",
+      "explanation": "A multiset allows repeated members, so an element may occur zero, once or many times; any multiplicity is valid. A set restricts each element to a single occurrence.",
       "topicQuality": "specific"
     },
     {
@@ -218,7 +218,7 @@
         "D": "Both optimal substructure and overlapping sub-problems"
       },
       "correct": "D",
-      "explanation": "Dynamic Programming requires both optimal substructure (global optimum from local optima) and overlapping subproblems (subproblems repeat).",
+      "explanation": "DP needs optimal substructure, so the best overall answer comes from best sub-answers, and overlapping subproblems, so the same subproblem recurs. Greedy is a different strategy.",
       "topicQuality": "specific"
     },
     {
@@ -242,7 +242,7 @@
         "D": "None of these"
       },
       "correct": "B",
-      "explanation": "Time complexity measures the run time of an algorithm as a function of input size — compile time is not considered.",
+      "explanation": "Time complexity counts basic operations as a function of input size when the algorithm executes, so it is a run-time measure. Compile time belongs to the translator, not the algorithm.",
       "topicQuality": "specific"
     },
     {
@@ -266,7 +266,7 @@
         "D": "Complexity and capacity"
       },
       "correct": "A",
-      "explanation": "The two primary measures of algorithm efficiency are time complexity (how fast) and space complexity (how much memory).",
+      "explanation": "Efficiency is judged on two axes: time complexity, how the operation count grows, and space complexity, how memory use grows. Processor and data are not measures of the algorithm itself.",
       "topicQuality": "specific"
     },
     {
@@ -290,7 +290,7 @@
         "D": "12"
       },
       "correct": "B",
-      "explanation": "Power set of a set with n elements has 2ⁿ elements. Here n=3, so 2³ = 8.",
+      "explanation": "A power set holds every subset, and each of the n elements is either included or not, giving 2^n subsets. For three elements that is 2³ = 8.",
       "topicQuality": "specific"
     },
     {
@@ -314,7 +314,7 @@
         "D": "X = {5,6} and Y = {5,6,3}"
       },
       "correct": "B",
-      "explanation": "Two sets are equal if they contain exactly the same elements. {5,6,8,9} and {6,8,5,9} have the same four elements regardless of order.",
+      "explanation": "Sets are equal when they contain exactly the same members, because order and repetition do not matter. {5,6,8,9} and {6,8,5,9} contain the same four numbers.",
       "topicQuality": "specific"
     },
     {
@@ -338,7 +338,7 @@
         "D": "2n"
       },
       "correct": "B",
-      "explanation": "log n grows slowest among the options — O(log n) < O(n) < O(n log n) < O(2ⁿ) for large n.",
+      "explanation": "log n grows more slowly than n, n log n or 2n, so it is asymptotically the smallest here. That is why binary search beats a linear scan on large inputs.",
       "topicQuality": "specific"
     },
     {
@@ -362,7 +362,7 @@
         "D": "Linked list"
       },
       "correct": "A",
-      "explanation": "Recursion uses the call stack — each function call is pushed onto the stack and popped when it returns.",
+      "explanation": "Each recursive call saves its parameters and return address on the run-time stack, and each return pops them. That LIFO behaviour is why recursion is said to use a stack.",
       "topicQuality": "specific"
     },
     {
@@ -386,7 +386,7 @@
         "D": "All cases"
       },
       "correct": "C",
-      "explanation": "Big-O notation represents the worst-case (upper bound) time complexity of an algorithm.",
+      "explanation": "Big-O gives an upper bound, so it describes the worst case: the maximum time the algorithm can take for an input of size n. Best case is expressed with Omega.",
       "topicQuality": "specific"
     },
     {
@@ -410,7 +410,7 @@
         "D": "None"
       },
       "correct": "C",
-      "explanation": "Omega (Ω) notation gives the asymptotic lower bound — it describes the best-case growth rate of an algorithm.",
+      "explanation": "Omega (Ω) bounds the function from below, so it captures the minimum work or best case. Big-O is the upper bound and Theta the tight two-sided bound.",
       "topicQuality": "specific"
     },
     {
@@ -657,7 +657,7 @@
         "D": "No bound"
       },
       "correct": "C",
-      "explanation": "Theta notation gives a tight bound — the algorithm's running time is both upper and lower bounded by the same function.",
+      "explanation": "Theta (Θ) means the growth rate is bounded both above and below by the same function, so it is a tight bound. Big-O alone gives only the upper side.",
       "topicQuality": "specific"
     },
     {
@@ -681,7 +681,7 @@
         "D": "Size of the input data"
       },
       "correct": "B",
-      "explanation": "Space complexity measures the total memory (including auxiliary space) an algorithm needs relative to input size.",
+      "explanation": "Space complexity is the total memory an algorithm needs, including auxiliary arrays and the run-time stack, as a function of input size. The size of the input alone is not the measure.",
       "topicQuality": "specific"
     },
     {

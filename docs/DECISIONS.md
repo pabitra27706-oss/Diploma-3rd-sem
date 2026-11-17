@@ -215,7 +215,8 @@ Authorized scope, executed on `arena/858a50c7-diploma-3rd-sem`:
 - Derived data was regenerated (catalog, practice days, search, repeat index,
   cards, runtime pools/bundles, coverage, exam-pattern, presence), and the
   tests that hard-coded 992 records / 30 papers / 69 aliases were updated to
-  958 / 29 / 35.
+  958 / 29 / 35. Recorded as sub-phase 8A:
+  `docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`.
 
 `_data/pyq-integrity.json` is re-anchored to this content revision because the
 owner explicitly authorized the prose edits and the deletion. This is recorded
@@ -228,3 +229,76 @@ source-review findings stay open.
 `CST203-U3-Q005` and `CST203-U4-Q030` have option lists or stored keys that
 disagree with real Python behaviour (corrupted reprints). Fixing a key is a
 separate source-verification gate and needs the owner's explicit approval.
+
+## All-subject MCQ explanations and CST209 dedupe — 2026-11-17
+
+- **Owner instructions (same day, after the Python pass merged as PR #9):**
+  "update all the mcqs of all subjects" with the same detailed-but-short
+  explanations, and remove a duplicate paper **only** when that subject has no
+  2021 paper; no other paper may be deleted.
+- Quiz banks **CST201** (127), **CST205** (102) and **CST209** (108) were
+  rewritten to the same shape used for Python: one-sentence key statement plus
+  2–3 sentences of why the key holds and why the distractors fail (~30–40
+  words, sized for a 1-mark item). Only the `explanation` prose changed;
+  `correct`, `options`, `question`, `marks`, `topic` and `unit` are untouched.
+  Items with corrupted printed options (`CST205-U3-Q010`, `CST205-U3-Q012`,
+  `CST205-U4-Q002`, `CST209-U4-Q013`) are explained around the stored key
+  rather than retyped.
+- PYQ `answer` prose was brought up to the same standard in every subject:
+  CST201 P001–P003, CST205 P001–P003, CST207 P001–P003, CST209 P001/P003 got
+  full rewrites, and the ~36 shortest answers in the 2024/2026 papers were
+  expanded. No stored key, option, stem or mark changed.
+- `_data/CST209/CST209-P002-2023-03.json` was a reprint of `P003` (March 2023,
+  25 MCQs plus short-answer duplicates). CST209 has no 2021 paper, so it met
+  the owner's deletion rule; the file was deleted, its identity block removed
+  from `scripts/validate_pyq.py`, and `_data/CST209/registry.json` now declares
+  P001, P003, P004, P005, P006. CST203 was **not** touched again: its duplicate
+  reprint was already removed and P001 (2022) is its earliest sitting.
+- Deleted alongside it: the open `unit` finding for `CST209-P002-Q34`, so the
+  source-review ledger now carries **nine** findings instead of ten. The
+  fingerprint for `CST205-P001-Q3` was re-anchored because its prose changed;
+  every other finding code, target and message stays open.
+- Derived data regenerated (catalog, practice days, search/repeat index, cards,
+  coverage, runtime pools, presence, duplicates report). Raw PYQ records
+  958 → 924 and exact aliases 35 → 1, because the removed file had been the
+  canonical member of the alias set; unique practice questions stay 923.
+  `tests/test_data_pipeline.py` was updated from 958 to 924 records.
+- `_data/pyq-integrity.json` is re-anchored to this content revision for the
+  same reason as above: the owner authorized the prose pass and the deletion.
+  This is recorded so the change is visible, not a silent baseline refresh; no
+  answer certification is claimed.
+
+## Subject names instead of course codes in the UI — 2026-11-17
+
+- **Owner instruction:** "everywhere the subjects are in their code like cst20x it's hard
+  to find the real subjects, replace it with subject names … only in the UI", with no
+  change to inner paths or code. Follow-up answers chose **short names**
+  (C · Python · DS · CSO · Algorithms) and **hide raw IDs** from what a learner reads.
+- Scope kept strictly to presentation. Unchanged: directory layout
+  (`subjects/CST209/…`), every `_data`/`_quiz-data` file and question/paper ID,
+  `registry.json`, `data-subject`/`data-value` attributes, `?subject=` URL parameters,
+  localStorage keys (`unit_progress_CST201`, `pyq_<code>_<paper>_…`), DOM ids and the
+  `CST20x` keys inside `catalog.json`, `assets/search/*`, `assets/cards/*`.
+- Labels: compact chrome (nav brand, filter buttons, badges, chips, card corner) uses the
+  short name; places that already had room for a title (page titles, drawer headers,
+  subject-hub subtitle, quiz subject `<option>`, coverage headings) keep the full
+  syllabus name. The redundant "Code:" meta row was removed from the five subject hubs.
+- Raw identifiers are no longer printed: PYQ archive cards show `month year` with the
+  paper's `P00n` and printed set number, the viewer/answers toolbars show
+  `subject name · session · paper`, and duplicate-appearance notes list session + paper
+  only. Deep links still carry the real IDs.
+- New `assets/js/subject-labels.js` exposes `subjectLabel(code)` for the search, repeated,
+  cards, today and practice-session pages; quiz/home/PYQ pages use the name maps they
+  already had (`shortName` added to `quiz/js/common.js`).
+- `scripts/build_coverage.py` now writes display labels for the pages it authors
+  (coverage, exam-pattern, courses, lab pages). That is a label change only: it emits no
+  new IDs and writes the same JSON payload as before.
+- Derived output regenerated (coverage, courses, lab pages, search index, cards, bundles,
+  presence). Gates after the change: `validate_pyq` PASS, `check_pyq_integrity` clean,
+  `validate_data --check-baseline` matches the ledger, `check_platform` 0 errors,
+  Python `unittest` 13 PASS, Node `attempt-store`, `storage`, `storage-recovery`,
+  `study-store`, `data-pipeline-consumers`, `quiz-engine-dom` PASS.
+  `check_site.py --strict` reports exactly the findings it already reported on `main`.
+- Recorded as sub-phase 8A:
+  `docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`, with
+  `README.md`, `tasks.md` and `record.md`.
