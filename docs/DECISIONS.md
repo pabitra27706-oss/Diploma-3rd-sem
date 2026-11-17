@@ -368,10 +368,28 @@ separate source-verification gate and needs the owner's explicit approval.
 - **Study offline coverage:** `cards.html`, `today.html`, the study scripts, the
   attempt store and `assets/cards/manifest.json` join the worker precache, and a
   `WARM_STUDY` message caches all five subject shards under the versioned key
-  (mirroring Phase 4's `WARM_SEARCH`). The worker `VERSION` moves to
-  `study-2026-11-17` so old caches drop on activation. Coverage means "cached
+  (mirroring Phase 4's `WARM_SEARCH`). The worker `VERSION` moved to
+  `study-2026-11-17` so old caches drop on activation (Phase 6 later bumps it to
+  `study-2026-11-17b` for the storage-boundary changes). Coverage means "cached
   after one study page load", not first-visit offline, and not survival under
   browser eviction.
+- **Phase 6 — storage boundary:** `assets/js/storage.js` stays the only file that
+  touches `localStorage`; `d3s:` prefix, one `d3s:prefs` record, one schema marker,
+  journal-guarded restore, registry-driven reset groups. Legacy theme scalars are
+  adopted once and deleted, so one theme key exists. The pre-paint hook is the
+  module itself (synchronous `<head>` load before any stylesheet on all 68 pages),
+  not a second inline snippet.
+- **Phase 6 — notes:** one shared `assets/js/section-notes.js` widget on the 24
+  unit pages, the practice session and quiz review; keys stay
+  `section-note:<subject>/units/unit-N.html#section-K` on unit pages and
+  `section-note:practice|quiz-review/<questionId>` elsewhere. Text is plain and
+  verbatim; markup typed by a student is never rendered.
+- **Phase 6 — IndexedDB is a mirror, not a primary store:** writes and deletions
+  are copied to `d3s-store`, `hydrate()` rebuilds only an origin with no records
+  (so a reset cannot be resurrected), and `idbStatus()` reports
+  `primary:'localStorage'` plus the 1.5 MiB threshold mode. The synchronous render
+  contract is the reason the primary path was not swapped; acceptance item 6.6-3
+  is recorded as partially met in `phases/06-state-portability/record.md`.
 - **Honest framing kept in the UI:** percentages require ≥ 5 observations in that
   area, weak rows always print `correct / attempted` and the number of
   contributing attempts, the streak counts only recorded local days and names its

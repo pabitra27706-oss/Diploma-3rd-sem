@@ -5,8 +5,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 // ─── Theme ───────────────────────────────────────────────
-const savedTheme = StudyStorage.legacy.getItem('theme') ||
-  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+const savedTheme = (() => { try { return StudyStorage.theme(); } catch { return document.documentElement.getAttribute('data-theme') || 'light'; } })();
 document.documentElement.setAttribute('data-theme', savedTheme);
 
 const themeIcon = document.getElementById('themeIcon');
@@ -24,7 +23,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   const cur = document.documentElement.getAttribute('data-theme');
   const next = cur === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  StudyStorage.legacy.setItem('theme', next);
+  try { StudyStorage.setTheme(next); } catch (e) { console.warn('[theme] save failed:', e.message); }
   updateThemeIcon(next);
 });
 

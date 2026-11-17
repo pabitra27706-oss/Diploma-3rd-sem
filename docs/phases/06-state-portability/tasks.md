@@ -105,3 +105,21 @@ python3 scripts/check_site.py --strict
 
 **Not verifiable here:** Safari storage eviction behaviour and real-device
 download of the backup file. Record what was observed on the phone pass.
+
+## Implementation status — 2026-11-17
+
+Gate-verified on `arena/be90e07e-diploma-3rd-sem`; full evidence and caveats in
+[`record.md`](record.md).
+
+| Part | Acceptance | State |
+|---|---|---|
+| 6.1 | grep returns only `storage.js` (legacy fixture migrates, old keys removed, double migration no-op) | met — no `localStorage` calls outside the module (only comments, one status string, one privacy-policy sentence); `tests/storage.cjs` |
+| 6.2 | system flips on OS change, no flash, one theme key | met — `tests/preferences.cjs` (pre-paint attribute set at script evaluation, listener, single `d3s:prefs`) |
+| 6.3 | each option clears its group, counts match `estimate()` | met — dialog labels carry live counts; `tests/preferences.cjs` |
+| 6.4 | notes persist on three unit pages, clearing works, in backup, survive theme change | met on 24 unit pages **plus** practice and quiz review; `tests/section-notes.cjs`. Real reload checked in a DOM harness, not on a phone |
+| 6.5 | round trip identical, malformed rejected, re-import idempotent | met — `tests/storage.cjs`, `tests/storage-recovery.cjs` |
+| 6.6 | threshold 0 works on IndexedDB, fallback in private window, no data loss | **partially met** — IndexedDB is a recovery mirror behind the same API, `hydrate()` restores an evicted origin, threshold branch tested at 0, no-IndexedDB fallback tested. A primary-store swap was not done: the synchronous render contract is the blocker, recorded in `record.md` |
+
+Still open: owner device pass (notes on three units + practice, theme switch,
+export → clear → import), real private-window and eviction observation, and the
+merge instruction.

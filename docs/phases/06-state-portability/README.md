@@ -1,6 +1,9 @@
 # Phase 6 — One state, notes and portability
 
-**Status:** 🚧 implementation in progress · **Parts:** 6 · **Depends on:** 1, 3 · **Owner gates:** none
+**Status:** ✅* implemented and gate-verified on `arena/be90e07e-diploma-3rd-sem`
+(2026-11-17) — **not merged; owner device pass pending** · **Parts:** 6 ·
+**Depends on:** 1, 3 · **Owner gates:** device pass + merge instruction (see
+[`record.md`](record.md))
 
 ## Goal
 

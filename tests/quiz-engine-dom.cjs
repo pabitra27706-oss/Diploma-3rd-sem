@@ -59,9 +59,15 @@ const localStorage = new Proxy({
 
 const sandbox = {
   window: {},
-  document: { addEventListener: () => {}, querySelector: () => null, querySelectorAll: () => [], getElementById: () => null },
+  document: {
+    addEventListener: () => {},
+    querySelector: () => null,
+    querySelectorAll: () => [],
+    getElementById: () => null,
+    documentElement: { setAttribute: () => {}, dataset: {}, style: { setProperty: () => {} } }
+  },
   localStorage,
-  StudyStorage: { legacy: localStorage },
+  StudyStorage: { legacy: localStorage, theme: () => 'light', setTheme: () => {} },
   location: { search: '', pathname: '/Diploma-3rd-sem/quiz/export.html' },
   URL,
   URLSearchParams,

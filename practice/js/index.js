@@ -51,13 +51,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initTheme() {
   const html = document.documentElement;
   const btn  = document.getElementById('theme-toggle');
-  const saved = StudyStorage.legacy.getItem('theme') || 'light';
+  const saved = (() => { try { return StudyStorage.theme(); } catch { return 'light'; } })();
   html.setAttribute('data-theme', saved);
   syncThemeIcon(btn, saved);
   btn.addEventListener('click', () => {
     const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', next);
-    StudyStorage.legacy.setItem('theme', next);
+    try { StudyStorage.setTheme(next); } catch (e) { console.warn('[theme] save failed:', e.message); }
     syncThemeIcon(btn, next);
   });
 }

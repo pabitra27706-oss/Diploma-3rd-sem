@@ -76,7 +76,14 @@ phase gate.
   owner-verified on device/Termux on 2026-11-17, merged to `main` on owner
   instruction; see
   [`phases/05-study-system/record.md`](phases/05-study-system/record.md). The
-  offline worker version is `study-2026-11-17`.
+  The offline worker version is `study-2026-11-17b`.
+- Phase 6 (`06-state-portability`) is **implemented and gate-verified on
+  `arena/be90e07e-diploma-3rd-sem` (2026-11-17), not merged**: one storage
+  boundary, one preference record with a pre-paint theme, registry-counted reset
+  groups, notes on unit pages plus practice and quiz review, backup with
+  `appVersion`, and an IndexedDB **recovery mirror** (6.6-3 partially met). Owner
+  device pass and merge are still pending; see
+  [`phases/06-state-portability/record.md`](phases/06-state-portability/record.md).
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
   `arena/be3d9178-diploma-3rd-sem` as the branch that work was performed on. That

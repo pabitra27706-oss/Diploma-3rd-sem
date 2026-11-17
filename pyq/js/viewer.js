@@ -1,6 +1,5 @@
 // ─── Theme ───────────────────────────────────────────────
-const savedTheme = StudyStorage.legacy.getItem('theme') ||
-  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+const savedTheme = (() => { try { return StudyStorage.theme(); } catch { return document.documentElement.getAttribute('data-theme') || 'light'; } })();
 document.documentElement.setAttribute('data-theme', savedTheme);
 
 // ─── URL Params ──────────────────────────────────────────

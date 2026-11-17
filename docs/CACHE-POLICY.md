@@ -2,7 +2,7 @@
 
 - Scope-relative URLs; no browser-facing localhost endpoints.
 - Shell dependencies are pre-cached in the versioned service-worker cache
-  (`VERSION = 'study-2026-11-17'`), including core discovery shells and compact
+  (`VERSION = 'study-2026-11-17b'`), including core discovery shells and compact
   metadata (`search.html`, `repeated.html`, `coverage.html`, `exam-pattern.html`,
   `assets/css/discovery.css`, `assets/js/subject-labels.js`,
   `assets/js/discovery.js`, `assets/js/unit-discovery.js`,

@@ -1,13 +1,29 @@
-/* Sole browser storage boundary. String-compatible adapter preserves old callers.
- * Sync local storage remains primary; IndexedDB cutover is NOT claimed here.
+/* Sole browser storage boundary for the whole site (Phase 6).
+ *
+ * One namespace (`d3s:`), one preference record (`d3s:prefs`), one schema marker
+ * (`d3s:schema`), one reset registry and one backup envelope. Every page reads
+ * and writes through this module — no other file touches localStorage directly.
+ *
+ * IndexedDB (Phase 6.6): a same-origin mirror in `d3s-store` keeps a copy of each
+ * record so an evicted/cleared localStorage can be rebuilt with `hydrate()`.
+ * The synchronous API stays localStorage-first on purpose: ~20 legacy call sites
+ * read synchronously during render, and swapping them to an async store would be
+ * a larger, riskier change than this phase covers. `idbStatus()` therefore
+ * reports "mirror mode", never "IndexedDB is the primary store". When
+ * localStorage is unavailable or full the mirror is still the recovery path.
  */
 (() => {
  'use strict';const PREFIX='d3s:',PREFS='d3s:prefs',SCHEMA='d3s:schema',JOURNAL='d3s:restore-journal';
+ const IDB_NAME='d3s-store',IDB_STORE='records',BACKUP_VERSION=1;
+ // Test-only override (`__d3sTestThreshold`) lets the suite exercise the
+ // threshold branch; production always uses 1.5 MiB.
+ const IDB_THRESHOLD=Number.isFinite(globalThis.__d3sTestThreshold)?globalThis.__d3sTestThreshold:1.5*1024*1024;
+ function appVersion(){try{return globalThis.document?.querySelector?.('meta[name="app-build"]')?.content||'unknown';}catch{return 'unknown';}}
  const themes=new Set(['theme','quiz-theme','diploma-3rd-sem-theme']);
  const known=k=>k.startsWith(PREFIX)||/^(?:quiz|practice|pyq_|diploma-3rd-sem-|study-|bookmarks$|disclaimerAccepted$|theme$|user|unit_progress_|progress|settings|notes)/.test(k);
  const physical=k=>k.startsWith(PREFIX)?k:PREFIX+k;
  function error(e){const message=e?.name==='QuotaExceededError'?'Device storage is full. Export a backup and free space; this change was not saved.':'Local storage failed: '+e.message;globalThis.dispatchEvent?.(new CustomEvent('study-storage-error',{detail:message}));return Error(message);}
- function rawSet(k,value){try{localStorage.setItem(k,String(value));if(localStorage.getItem(k)!==String(value))throw Error('Write verification failed');}catch(e){throw error(e);}}
+ function rawSet(k,value){try{localStorage.setItem(k,String(value));if(localStorage.getItem(k)!==String(value))throw Error('Write verification failed');}catch(e){throw error(e);}if(!restoring)mirror(k,String(value));}
  function prefs(){const raw=localStorage.getItem(PREFS);return raw?JSON.parse(raw):{theme:'system',fontScale:100,lineHeight:'normal',contrast:'normal',lang:'en',reduceMotion:'system'};}
  function assertReady(){if(localStorage.getItem(JOURNAL)!==null)throw Error('An interrupted import needs recovery. Open Settings and choose Retry recovery or export the pre-import backup.');}
  function getRaw(key){
@@ -18,17 +34,34 @@
    return null;
  }
  function setRaw(key,value){assertReady();if(themes.has(key)){const p=prefs();if(key==='quiz-theme'){try{value=JSON.parse(value);}catch{}}if(!['dark','light','system'].includes(value))throw Error('Invalid theme');p.theme=value;rawSet(PREFS,JSON.stringify(p));return;}rawSet(physical(key),value);}
- function removeRaw(key){assertReady();localStorage.removeItem(physical(key));if(!key.startsWith(PREFIX))localStorage.removeItem(key);}
+ function removeRaw(key){assertReady();const target=physical(key);localStorage.removeItem(target);if(!key.startsWith(PREFIX))localStorage.removeItem(key);mirror(target,null);}
  function keys(prefix=''){return [...new Set(Object.keys(localStorage).filter(k=>known(k)&&k!==JOURNAL).map(k=>k.startsWith(PREFIX)?k.slice(PREFIX.length):k))].filter(k=>k.startsWith(prefix)).sort();}
  function group(key){return /(?:note|highlight)/i.test(key)?'notes':/prefs|theme|settings|disclaimer|schema|migratedTo|feedback-usefulness/i.test(key)?'preferences':'progress';}
  function estimate(){const groups={notes:{records:0,bytes:0},progress:{records:0,bytes:0},preferences:{records:0,bytes:0}};for(const key of keys()){const raw=getRaw(key);if(raw===null)continue;const g=groups[group(key)];g.records++;g.bytes+=(physical(key).length+raw.length)*2;}return groups;}
- function clearGroup(which){assertReady();if(!['everything','notes','progress','preferences'].includes(which))throw Error('Unknown reset group');for(const key of keys())if(which==='everything'||group(key)===which)removeRaw(key);if(which==='everything'){try{for(const key of Object.keys(sessionStorage))if(key.startsWith(PREFIX+'session:'))sessionStorage.removeItem(key);}catch{}}}
+ function clearGroup(which){
+   assertReady();
+   if(!['everything','notes','progress','preferences'].includes(which))throw Error('Unknown reset group');
+   for(const key of keys())if(which==='everything'||group(key)===which)removeRaw(key);
+   if(which==='everything'){try{for(const key of Object.keys(sessionStorage))if(key.startsWith(PREFIX+'session:'))sessionStorage.removeItem(key);}catch{}clearMirror();}
+   // A reset must be visible immediately: cleared preferences fall back to the
+   // system theme instead of leaving the page in the previous look.
+   if(which==='everything'||which==='preferences'){try{applyPreferences();}catch{}}
+   try{globalThis.dispatchEvent?.(new CustomEvent('study-storage-cleared',{detail:{group:which}}));}catch{}
+ }
  function sessionOnce(name){try{const key=PREFIX+'session:'+name;if(sessionStorage.getItem(key)!==null)return false;sessionStorage.setItem(key,'1');return true;}catch{return false;}}
- function migrate(){assertReady();for(const key of Object.keys(localStorage).filter(known))if(!key.startsWith(PREFIX))getRaw(key);rawSet(SCHEMA,JSON.stringify({version:1,migratedTo:PREFIX}));return true;}
+ function migrate(){
+   assertReady();
+   const before=keys().length;
+   // Lazy reads below move and delete each legacy key exactly once; a second run
+   // finds nothing to move and rewrites the same marker (no-op, no duplicates).
+   for(const key of Object.keys(localStorage).filter(known))if(!key.startsWith(PREFIX))getRaw(key);
+   rawSet(SCHEMA,JSON.stringify({version:1,migratedTo:PREFIX}));
+   return {version:1,migratedTo:PREFIX,migratedKeys:keys().length-before};
+ }
  function get(key,fallback=null){const raw=getRaw(key);if(raw===null)return fallback;try{return JSON.parse(raw);}catch{throw Error(`Saved ${key} is unreadable; retained unchanged.`);}}
  function set(key,value){setRaw(key,JSON.stringify(value));return value;}
  function backup(){
-   const journal=readJournal();if(journal)return {app:'diploma-3rd-sem',schemaVersion:1,exportedAt:new Date().toISOString(),stores:journal.previous};
+   const journal=readJournal();if(journal)return {app:'diploma-3rd-sem',schemaVersion:BACKUP_VERSION,appVersion:appVersion(),exportedAt:new Date().toISOString(),stores:journal.previous};
    // Export must still work at full quota: normalize names without writing.
    const stores={};for(const key of Object.keys(localStorage).filter(k=>k.startsWith(PREFIX)&&k!==JOURNAL).sort())stores[key]=localStorage.getItem(key);
    for(const key of Object.keys(localStorage).filter(k=>known(k)&&!k.startsWith(PREFIX)).sort()){
@@ -36,7 +69,7 @@
      if(themes.has(key)){if(!Object.hasOwn(stores,PREFS)){let theme=raw;try{if(key==='quiz-theme')theme=JSON.parse(raw);}catch{}if(['dark','light','system'].includes(theme))stores[PREFS]=JSON.stringify({...prefs(),theme});}}
      else if(!Object.hasOwn(stores,physical(key)))stores[physical(key)]=raw;
    }
-   return {app:'diploma-3rd-sem',schemaVersion:1,exportedAt:new Date().toISOString(),stores};
+   return {app:'diploma-3rd-sem',schemaVersion:BACKUP_VERSION,appVersion:appVersion(),exportedAt:new Date().toISOString(),stores};
  }
  function plain(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
  function requireValue(ok,message){if(!ok)throw Error('Invalid backup: '+message);}
@@ -91,7 +124,9 @@
    }
  }
  function validate(value){
-   requireValue(plain(value)&&value.app==='diploma-3rd-sem'&&value.schemaVersion===1&&plain(value.stores),'not a supported Study Hub version-1 backup');
+   requireValue(plain(value)&&value.app==='diploma-3rd-sem'&&value.schemaVersion===BACKUP_VERSION&&plain(value.stores),'not a supported Study Hub version-1 backup');
+   if(value.appVersion!==undefined)requireValue(typeof value.appVersion==='string'&&value.appVersion.length>0&&value.appVersion.length<=80,'app version must be a short string');
+   if(value.exportedAt!==undefined)requireValue(typeof value.exportedAt==='string'&&value.exportedAt.length<=40,'exportedAt must be a timestamp string');
    const rows=Object.entries(value.stores);requireValue(rows.length<=10000&&JSON.stringify(value).length<=5*1024*1024,'backup exceeds 5 MiB / 10,000 record limit');
    for(const [key,raw]of rows){
      requireValue(key.startsWith(PREFIX)&&key!==JOURNAL&&!['__proto__','constructor','prototype'].some(x=>key===PREFIX+x)&&typeof raw==='string','invalid key or value');
@@ -149,8 +184,109 @@
      throw Error('Import failed; original records were restored. '+e.message);
    }
  }
+
+ // ── Phase 6.6 — IndexedDB mirror (recovery path, not the primary store) ──────
+ // Every successful localStorage write/deletion is copied to `d3s-store` in the
+ // background. `hydrate()` rebuilds an evicted/cleared origin only when no
+ // recognized record survives locally, so a deliberate reset can never resurrect
+ // data. When IndexedDB is missing (private mode, old browser) everything still
+ // works through localStorage and `idbStatus()` says `unavailable`.
+ let idbHandle=null,idbState='idle',mirrorChain=Promise.resolve(),restoring=false;
+ const idbFactory=()=>globalThis.indexedDB||null;
+ function idbAvailable(){try{return Boolean(idbFactory());}catch{return false;}}
+ function openIdb(){
+   if(!idbAvailable())return Promise.reject(Error('IndexedDB is unavailable in this browser'));
+   if(idbHandle)return Promise.resolve(idbHandle);
+   return new Promise((resolve,reject)=>{
+     let request;
+     try{request=idbFactory().open(IDB_NAME,1);}catch(e){reject(e);return;}
+     request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains(IDB_STORE))db.createObjectStore(IDB_STORE);};
+     request.onsuccess=()=>{const db=request.result;db.onversionchange=()=>{try{db.close();}catch{}idbHandle=null;idbState='stale';};resolve(db);};
+     request.onerror=()=>reject(request.error||Error('IndexedDB could not be opened'));
+     request.onblocked=()=>reject(Error('IndexedDB is blocked by another tab'));
+   }).then(db=>{idbHandle=db;idbState='open';return db;},e=>{idbState='unavailable';throw e;});
+ }
+ function idbRequest(kind){
+   return openIdb().then(db=>new Promise((resolve,reject)=>{
+     let transaction,result;
+     try{transaction=db.transaction(IDB_STORE,kind.mode);result=kind.run(transaction.objectStore(IDB_STORE));}
+     catch(e){reject(e);return;}
+     transaction.onerror=()=>reject(transaction.error||Error('IndexedDB transaction failed'));
+     transaction.onabort=()=>reject(transaction.error||Error('IndexedDB transaction aborted'));
+     transaction.oncomplete=()=>resolve(result?.result!==undefined?result.result:result);
+   }));
+ }
+ function mirror(key,raw){
+   if(restoring||!idbAvailable())return Promise.resolve(false);
+   const target=String(key),value=raw===null?null:String(raw);
+   mirrorChain=mirrorChain
+     .then(()=>value===null
+       ? idbRequest({mode:'readwrite',run:store=>store.delete(target)})
+       : idbRequest({mode:'readwrite',run:store=>store.put(value,target)}))
+     .then(()=>{idbState='open';return true;})
+     .catch(()=>{idbState='error';return false;});
+   return mirrorChain;
+ }
+ function clearMirror(){
+   if(!idbAvailable())return Promise.resolve(false);
+   mirrorChain=mirrorChain
+     .then(()=>idbRequest({mode:'readwrite',run:store=>store.clear()}))
+     .then(()=>{idbState='open';return true;})
+     .catch(()=>{idbState='error';return false;});
+   return mirrorChain;
+ }
+ function hydrate(){
+   if(!idbAvailable())return Promise.resolve({restored:0,reason:'IndexedDB is unavailable in this browser'});
+   // Never resurrect a deliberate reset: only rebuild an origin with no records.
+   if(keys().length>0)return Promise.resolve({restored:0,reason:'local records already exist'});
+   return openIdb()
+     .then(()=>idbRequest({mode:'readonly',run:store=>store.getAllKeys()}))
+     .then(names=>{
+       const targets=[...new Set((names||[]).filter(name=>typeof name==='string'&&name.startsWith(PREFIX)&&name!==JOURNAL))];
+       restoring=true;
+       return targets.reduce((chain,name)=>chain
+         .then(()=>idbRequest({mode:'readonly',run:store=>store.get(name)}))
+         .then(raw=>{if(raw!==null&&raw!==undefined)rawSet(name,raw);}),Promise.resolve())
+         .then(()=>targets.length);
+     })
+     .then(count=>{restoring=false;return {restored:count,reason:count?'rebuilt from the device mirror':'nothing to rebuild'};})
+     .catch(e=>{restoring=false;return {restored:0,reason:e.message};});
+ }
+ function idbStatus(){
+   const local=estimate(),bytes=Object.values(local).reduce((sum,group)=>sum+group.bytes,0),records=Object.values(local).reduce((sum,group)=>sum+group.records,0);
+   const base={available:idbAvailable(),state:idbState,threshold:IDB_THRESHOLD,bytes,records,largeMode:bytes>=IDB_THRESHOLD,primary:'localStorage',mode:bytes>=IDB_THRESHOLD?'mirror:large':'mirror:standard'};
+   const persisted=globalThis.navigator?.storage?.persisted;
+   if(typeof persisted!=='function')return Promise.resolve({...base,persisted:null});
+   return persisted.call(globalThis.navigator.storage).then(value=>{base.persisted=Boolean(value);return base;},()=>{base.persisted=null;return base;});
+ }
+ // Adopt a legacy theme scalar once, then delete it: one theme key survives.
+ function adoptLegacyTheme(){
+  if(localStorage.getItem(PREFS)!==null)return;
+  for(const key of themes){
+   const raw=localStorage.getItem(key);if(raw===null)continue;
+   let value=raw;if(key==='quiz-theme'){try{value=JSON.parse(raw);}catch{}}
+   if(!['dark','light','system'].includes(value)&&!['dark','light','system'].includes(raw))continue;
+   rawSet(PREFS,JSON.stringify({...prefs(),theme:['dark','light','system'].includes(value)?value:raw}));
+   for(const legacyKey of themes)localStorage.removeItem(legacyKey);
+   return;
+  }
+ }
+ function theme(){adoptLegacyTheme();const p=prefs();if(p.theme!=='system')return p.theme;return globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light';}
+ function setTheme(value){if(!['dark','light','system'].includes(value))throw Error('Invalid theme');const next={...prefs(),theme:value};validateRecord(PREFS,next);rawSet(PREFS,JSON.stringify(next));applyPreferences();globalThis.dispatchEvent?.(new CustomEvent('study-preferences-change'));return theme();}
+ // Mirror seeding + eviction recovery run after load so first paint stays cheap.
+ function bootMirror(){
+   if(!idbAvailable())return;
+   const seed=()=>{const entries=Object.keys(localStorage).filter(key=>key.startsWith(PREFIX)&&key!==JOURNAL);
+     return entries.reduce((chain,key)=>chain.then(()=>mirror(key,localStorage.getItem(key))),Promise.resolve());};
+   const start=keys().length?seed():hydrate().then(result=>{
+     if(result.restored)globalThis.dispatchEvent?.(new CustomEvent('study-storage-hydrated',{detail:result}));
+     return seed();
+   });
+   start.catch(()=>{});
+ }
+ globalThis.addEventListener?.('load',bootMirror,{once:true});
  const legacy=new Proxy({getItem:getRaw,setItem:setRaw,removeItem:removeRaw,clear:()=>clearGroup('everything'),key:i=>keys()[i]??null}, {get:(target,key)=>key==='length'?keys().length:target[key],ownKeys:()=>keys(),getOwnPropertyDescriptor:()=>({enumerable:true,configurable:true})});
- globalThis.StudyStorage={get,set,remove:removeRaw,keys,clearAll:()=>clearGroup('everything'),clearGroup,estimate,migrate,prefs,setPrefs:value=>{assertReady();const next={...prefs(),...value};validateRecord(PREFS,next);rawSet(PREFS,JSON.stringify(next));applyPreferences();globalThis.dispatchEvent?.(new CustomEvent('study-preferences-change'));},backup,validate,restore,recover,sessionOnce,legacy};
+ globalThis.StudyStorage={get,set,remove:removeRaw,keys,clearAll:()=>clearGroup('everything'),clearGroup,estimate,migrate,prefs,theme,setTheme,appVersion,idbStatus,hydrate,clearMirror,setPrefs:value=>{assertReady();const next={...prefs(),...value};validateRecord(PREFS,next);rawSet(PREFS,JSON.stringify(next));applyPreferences();globalThis.dispatchEvent?.(new CustomEvent('study-preferences-change'));},backup,validate,restore,recover,sessionOnce,legacy};
  function applyPreferences(){const p=prefs(),root=globalThis.document?.documentElement;if(root){root.style.fontSize=p.fontScale+'%';root.style.setProperty('--reading-line-height',p.lineHeight==='relaxed'?'1.9':'1.6');root.dataset.contrast=p.contrast;root.dataset.motion=p.reduceMotion;root.dataset.language=p.lang;}const theme=p.theme==='system'?(globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light'):p.theme;globalThis.document?.documentElement.setAttribute('data-theme',theme);}
- try{recover();applyPreferences();globalThis.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(prefs().theme==='system')applyPreferences();});}catch{ /* preference read failure must not blank the page */ }
+ try{recover();adoptLegacyTheme();applyPreferences();globalThis.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(prefs().theme==='system')applyPreferences();});}catch{ /* preference read failure must not blank the page */ }
 })();

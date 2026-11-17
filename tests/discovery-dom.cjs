@@ -430,7 +430,7 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     // Filtered-PYQ URL handoff on pyq/index.html?subject=CST209&unit=4 (+ XSS topic safety)
     const pyq = createMiniDom(BASE + 'pyq/index.html?subject=CST209&unit=4');
     pyq.win.fetch = createRepoFetch('/Diploma-3rd-sem/', null, () => pyq.win.location.href);
-    pyq.win.StudyStorage = { legacy: { getItem: () => 'light', setItem: () => {} } };
+    pyq.win.StudyStorage = { legacy: { getItem: () => 'light', setItem: () => {} }, theme: () => 'light', setTheme: () => {} };
     const filterBar = pyq.doc.createElement('div');
     ['ALL', 'CST201', 'CST203', 'CST205', 'CST207', 'CST209'].forEach(code => {
       const b = pyq.doc.createElement('button');
