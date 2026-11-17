@@ -123,3 +123,8 @@ python3 -m unittest discover -s tests -p 'test_*.py'   # 33 tests, locks the num
 **Not verifiable here:** real screen-reader output (NVDA/TalkBack/VoiceOver),
 actual tap accuracy, and Bengali font rendering. Record them in the phone pass;
 do not claim them from static inspection.
+
+**Owner smoke pass, 2026-11-17:** one Android phone in Chrome, general
+click-through, no failures reported. Useful as "it runs on hardware", and
+recorded in `phases/10-device-acceptance/matrix.md` as a partial row. It did
+**not** walk the items above one by one, so none of them are marked passed here.

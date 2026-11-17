@@ -1,7 +1,10 @@
 # Phase 7 — Engineering record
 
 - Status: **🚧 parts 7.1, 7.2, 7.3, 7.4 and 7.5 implemented and gate-verified**
-  on `arena/c56bb630-diploma-3rd-sem` (2026-11-17). Not merged. ·
+  on `arena/c56bb630-diploma-3rd-sem` (2026-11-17). **Not merged.** An owner
+  smoke pass on one Android phone in Chrome reported no failures on 2026-11-17;
+  that pass was explicitly **not** a per-criterion audit, so it does not close
+  the items below and does not upgrade this phase to `✅*`. ·
   Updated: 2026-11-17
 - Branch base: `main` @ `5b7eb663799614a826231f668920f8d597793943` (PR #14, Phase 6)
 - Reuse: ADAPT `assets/js/storage.js` (the single preference record),
@@ -274,11 +277,34 @@ sections; all shards stay inside their byte budget (largest 37.0% of source
 bytes). Worker `VERSION` moved to `study-2026-11-17c`
 because runtime files and the shared head block changed.
 
+## Owner smoke pass — 2026-11-17
+
+Owner report: **"All devices test passed"**, clarified as a **smoke pass on one
+Android phone in Chrome**: clicking through the app end to end, with nothing
+reported as failing or visually wrong.
+
+What that does and does not mean here:
+
+- **Does**: the shipped branch loads and runs on real Android hardware in Chrome
+  without a functional break or an obvious visual regression. That is the first
+  hardware evidence for this branch and it is recorded in
+  [`phases/10-device-acceptance/matrix.md`](../10-device-acceptance/matrix.md)
+  as one partial row, not as a cleared matrix.
+- **Does not**: it was not a criterion-by-criterion pass, so it does not verify
+  the specific Phase 7 claims that need measurement — rendered contrast in both
+  themes, 200 % zoom / 320 CSS px reflow, the Bengali catalog and conjunct
+  rendering, keyboard and skip-link traversal, focus after dialogs, tap accuracy
+  against the 24 px floor, or screen-reader output. Those stay open below and in
+  Phase 10.
+- **Not inferred**: no merge was authorized in that message, so the branch stays
+  unmerged and no PR was opened. No Pages, tag or release action was taken.
+
 ## Left open (not closed by this phase)
 
 - **No WCAG conformance claim.** Measured source-level criteria are listed above;
   every criterion that needs rendering, assistive technology or a device is
-  untouched.
+  untouched. The 2026-11-17 Android/Chrome smoke pass showed the branch runs on
+  hardware but did not measure any of them.
 - **Rendered contrast** after compositing (gradients, glass blur, hero overlays)
   is not measured. The token pairs pass; a component sitting on a gradient was
   not sampled.

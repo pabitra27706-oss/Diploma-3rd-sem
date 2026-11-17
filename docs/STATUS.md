@@ -99,8 +99,10 @@ unfinished phase gate.
   and about claims that the build could not support are corrected. **No WCAG
   conformance claim** — rendered contrast, 200 % zoom/reflow, screen-reader
   output, real tap accuracy, Bengali glyph rendering and keyboard-only core-flow
-  completion remain unverified and move to Phase 10. Worker version is
-  `study-2026-11-17c`. See
+  completion remain unverified and move to Phase 10. An owner **smoke pass** on
+  one Android phone in Chrome (2026-11-17, no failures reported) shows the branch
+  runs on real hardware; it was not a per-criterion pass and closes none of those
+  items. Worker version is `study-2026-11-17c`. See
   [`phases/07-inclusion-trust/record.md`](phases/07-inclusion-trust/record.md).
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name

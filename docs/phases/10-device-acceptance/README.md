@@ -1,6 +1,7 @@
 # Phase 10 — Dedicated cross-device acceptance
 
-**Status:** planned, not started · **Parts:** 5 · **Depends on:** implementation phases 1–9
+**Status:** planned, not started — one owner smoke pass exists, no acceptance
+sweep · **Parts:** 5 · **Depends on:** implementation phases 1–9
 
 Owner-directed sequencing: finish implementation work first, then run the full
 cross-device acceptance sweep here. Focused automated regression checks continue
@@ -29,4 +30,6 @@ permission and never changes authoritative PYQs.
 ## Execution documents
 
 - [Tasks](tasks.md) — five acceptance areas and exit requirements.
-- [Device matrix](matrix.md) — unexecuted evidence template; all rows untested.
+- [Device matrix](matrix.md) — evidence template; one owner Android/Chrome
+  **smoke pass** (2026-11-17) is recorded as a partial row, every unmeasured cell
+  still `Untested`.
