@@ -1,8 +1,9 @@
 # Phase 5 — Study system
 
-**Status:** 🚧 implemented and gate-verified (2026-11-17), awaiting owner
-Termux/browser verification · **Parts:** 5 · **Depends on:** 2 (keys), 3
-(mistakes), 6 (storage) · **Owner gates:** content verification for card backs
+**Status:** ✅* implemented, gate-verified and owner-verified (device/Termux pass
+2026-11-17) with the caveats in [`record.md`](record.md) · **Parts:** 5 ·
+**Depends on:** 2 (keys), 3 (mistakes), 6 (storage) · **Owner gates:** content
+verification for card backs
 
 ## Goal
 

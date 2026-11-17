@@ -1,8 +1,9 @@
 # Phase 5 — Engineering record
 
-Status: **implemented and gate-verified on `arena/4d3997da-diploma-3rd-sem`
-(2026-11-17); `🚧` pending owner Termux/browser verification.** Nothing here is
-a new answer certification, and no recall-improvement claim is made.
+Status: **✅* — implemented and gate-verified on
+`arena/4d3997da-diploma-3rd-sem` (2026-11-17), then owner-verified in a
+device/Termux pass and merged to `main` on owner instruction.** Nothing here is a
+new answer certification, and no recall-improvement claim is made.
 
 Reuse: ADAPT source model answers/keyed MCQ explanations and Phase 3
 history/mistakes; BUILD a small fixed-interval scheduler and Today/review UI. No
@@ -151,6 +152,21 @@ reviewable.
 - Browser suites (`tests/cards-offline.cjs`, `tests/discovery-study-browser.cjs`)
   were updated to the new markup and assertions but were **not run here** (no
   Chromium in this environment); they run in the owner's local/CI browser step.
+
+## Owner verification — 2026-11-17
+
+Owner report: **"Device test pass"** for this phase, followed by an explicit
+**"Merge to main"** instruction in the same chat.
+
+- Accepted as `✅*`: parts 5.1–5.5 are verified as engineered; the acceptance
+  covers the card session, scheduler persistence, Today screen, goal/streak
+  controls, weak-area denominators and the offline card cache on the owner's
+  device/Termux checkout.
+- The caveats below remain open and are **not** covered by this acceptance: no
+  physical-device matrix, screen-reader or low-end-phone measurement (Phase 10),
+  no answer certification, and no recall-improvement claim.
+- Merged through a pull request against `main` on the owner's explicit command;
+  no Pages/domain setting, tag or release was changed.
 
 ### What is still not proven
 

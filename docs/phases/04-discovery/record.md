@@ -1,6 +1,8 @@
 # Phase 4 — Discovery and sharing (engineering record)
 
-- Status: 🚧 in progress (all engineering parts 4.1–4.5 implemented and gate-verified; awaiting owner local/Termux verification) · Updated: 2026-11-17
+- Status: **✅*** — all engineering parts 4.1–4.5 implemented, gate-verified and
+  owner-verified on device/Termux (2026-11-17) with the caveats below ·
+  Updated: 2026-11-17
 - Active branch: `arena/80b11bcf-diploma-3rd-sem` (branched from `main` @ `9d47c7c76b2384c72944a0880df058a2518394ec`, PR #11 merge)
 - Reuse: ADAPT Phase 2 `data_pipeline.py` (`stores`, `duplicates`, `generic_topic`), existing `subject-labels.js`, `sw.js`, `pyq/js/{index,answers}.js`, `practice/js/session.js`, `quiz/js/{review,result}.js`, and `build_coverage.py`; BUILD extended `index-pages.json` shard, unverified-candidate repeat export, shared `StudyShare` helper, and zero-dependency `tests/discovery-dom.cjs`. Zero npm runtime dependencies, zero network calls, zero edits to frozen `_data/<subject>/*.json`.
 
@@ -62,6 +64,23 @@
 
 ## Remaining caveats / gates
 
-- Owner local/Termux review of `search.html`, `repeated.html`, deep links/share sheet, unit breadcrumbs/anchors, and filtered-PYQ handoffs is required before flipping Phase 4 from `🚧` to `✅*`.
+- **Closed 2026-11-17:** the owner ran the local/Termux pass over `search.html`,
+  `repeated.html`, deep links/share sheet, unit breadcrumbs/anchors and the
+  filtered-PYQ handoffs and reported "device test pass", so Phase 4 moves from
+  `🚧` to `✅*` with the caveats on this page still open.
 - The 15 normalized-text candidate clusters (32 records) remain unverified candidates pending manual source comparison under Phase 2.5 / Phase 8.6; they are intentionally not merged or counted as confirmed duplicates.
 - Physical phone latency on low-end Android, native OS share-sheet UX, screen-reader announcements, and real browser offline/update flows are consolidated in Phase 10 (`10-device-acceptance`).
+
+## Owner verification — 2026-11-17
+
+Owner report: **"Device test pass"** for this phase on their own device/Termux
+checkout of the session branch.
+
+- Accepted as `✅*`: the engineered scope (4.1–4.5) is verified; this is **not** a
+  claim of full cross-device, screen-reader or low-end-phone acceptance, which the
+  owner deferred to [Phase 10](../10-device-acceptance/README.md).
+- Still open and unchanged: the 15 normalized-text candidate clusters remain
+  unverified candidates (never merged or counted as confirmed duplicates); source
+  certification of keys/mappings stays with the Phase 2.5/8.6 gate.
+- Merge to `main` was explicitly authorized in the same chat message and performed
+  through a pull request; no Pages/domain setting, tag or release was changed.

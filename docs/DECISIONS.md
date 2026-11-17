@@ -376,3 +376,22 @@ separate source-verification gate and needs the owner's explicit approval.
   area, weak rows always print `correct / attempted` and the number of
   contributing attempts, the streak counts only recorded local days and names its
   reset start, and no screen claims that cards improve recall.
+## Phase 4 and Phase 5 sign-off, and merge-to-main authorization — 2026-11-17
+
+- **Owner verification:** the owner ran the local/Termux (device) pass over the
+  Phase 4 discovery surfaces and the Phase 5 study surfaces and reported
+  **"Device test pass"**. Both phases therefore move `🚧` → `✅*`:
+  `docs/ROADMAP.md`, `docs/STATUS.md`, `docs/phases/04-discovery/record.md` and
+  `docs/phases/05-study-system/record.md` record the acceptance and repeat their
+  caveats (unverified candidate-repeat clusters, no answer certification, 456
+  keyless quiz items, no CST207 quiz bank, Phase 10 device matrix).
+- **Merge authorization:** the same message said **"Merge to main"**. That is an
+  explicit command to merge the active session branch
+  (`arena/4d3997da-diploma-3rd-sem`) into `main` through a pull request. It is
+  **not** authorization to deploy, enable Pages, change the domain, tag a release
+  or announce anything; no such action was taken. Merging updates `main` only —
+  whatever the already-configured Pages pipeline does with `main` afterwards is
+  not a setting this chat changed.
+- The merge does not close any content or source-verification gate: the 9 data
+  findings, 3 grouped syllabus errors, 456 keyless quiz items, missing CST207 quiz
+  bank and answer certification all remain open.

@@ -1,8 +1,8 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-17 (Phase 3 reconciled to `✅*`; Phase 4 discovery parts 4.1–4.5
-merged via PR #12; Phase 5 study-system parts 5.1–5.5 implemented and
-gate-verified on `arena/4d3997da-diploma-3rd-sem`). Read `rule.md`,
+Updated 2026-11-17 (Phase 3 reconciled to `✅*`; Phase 4 discovery merged via
+PR #12 and owner-verified; Phase 5 study-system implemented, gate-verified and
+owner-verified — both `✅*` — and merged to `main` on owner instruction). Read `rule.md`,
 `docs/STATUS.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md` and the relevant phase
 record before continuing. Source files and actual Git status take precedence over
 older narrative.
@@ -10,9 +10,10 @@ older narrative.
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- `main` = `7c20a5500118588419081362b7af869dc8c7806f` — the merge of PR #12
-  (Phase 4 discovery) — carrying Phase 1 (`✅*`), Phase 2 (`✅*`), Phase 3 (`✅*`),
-  Phase 4 (`🚧`, merged), and sub-phase 8A.
+- `main` carries Phase 1 (`✅*`), Phase 2 (`✅*`), Phase 3 (`✅*`), Phase 4
+  (`✅*`, PR #12 `7c20a55` plus the owner's device-test pass), Phase 5 (`✅*`,
+  merged from `arena/4d3997da-diploma-3rd-sem`) and sub-phase 8A. Check `git log`
+  for the exact tip; the Phase 5 merge commit is the newest `main` merge.
 - Session branch: `arena/4d3997da-diploma-3rd-sem` (active), branched from
   `main` at `7c20a5500118588419081362b7af869dc8c7806f`. Do not
   create/switch/rename branches or push another branch.
@@ -136,14 +137,12 @@ labels it reports on `main`. An exact-baseline pass is not a full strict pass.
 
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
-2. Use `docs/STATUS.md`'s remaining order. Phases 1, 2 and 3 are `✅*`
-   (owner-approved with recorded caveats); Phase 4 (`04-discovery`) is merged via
-   PR #12 and still `🚧` pending owner local verification; Phase 5
-   (`05-study-system`) parts 5.1–5.5 are implemented and gate-verified on
-   `arena/4d3997da-diploma-3rd-sem` (`🚧` awaiting owner verification). Next
-   sequential phase is Phase 6 (`06-state-portability` — one storage module,
-   notes on unit pages, truthful reset, backup round-trip, IndexedDB path),
-   followed by Phases 7–9 and Phase 10 device acceptance.
+2. Use `docs/STATUS.md`'s remaining order. Phases 1–5 are `✅*`
+   (owner-verified with recorded caveats); Phase 4 and Phase 5 were accepted on
+   the owner's 2026-11-17 device-test pass and merged to `main` on owner
+   instruction. Next sequential phase is Phase 6 (`06-state-portability` — one
+   storage module, notes on unit pages, truthful reset, backup round-trip,
+   IndexedDB path), followed by Phases 7–9 and Phase 10 device acceptance.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
    visible; record new evidence/dispositions in derived metadata and decisions.
 4. Edit source scripts, not generated bundles. Regeneration order and check
