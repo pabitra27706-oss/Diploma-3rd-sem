@@ -44,22 +44,21 @@ use PR #7/Git for the current CI and merge result.
 
 ## Delivery state
 
-**Merge authorization update:** on 2026-11-09 the owner requested merging this
-branch into main. The checkpoint below describes the pre-merge state; consult
-the PR/Git history for the operation result. This permission does not authorize
-deployment/domain changes or close unfinished phase gates.
+**Merge authorization update:** the owner authorized merging on 2026-11-09
+(PR #7), 2026-11-17 (PR #9, merged as `365b8f7`) and again on 2026-11-17 for
+PR #10. No such permission authorizes deployment, Pages or domain changes, and
+none closes an unfinished phase gate.
 
-
-- Branch: `arena/47d8bf99-diploma-3rd-sem` (active, branched from `main` at
-  `8405b15`). Prior `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
-  `arena/26856d99-diploma-3rd-sem` (`8405b15`) branches were merged into `main`
-  and are retired.
+- Branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, branched from `main` at
+  `365b8f7`). `arena/858a50c7-diploma-3rd-sem` (PR #9) was merged into `main` as
+  `365b8f7`; older `arena/47d8bf99-...`, `arena/be3d9178-...` (PR #7,
+  `125eb94`) and `arena/26856d99-...` (`8405b15`) branches are retired.
 - Phase 2 engineering passed owner Termux verification (`✅*` at commit
   `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green);
-  strict source-verification items (`10` data findings + `3` grouped syllabus
+  strict source-verification items (`9` data findings + `3` grouped syllabus
   findings) remain tracked under the separate content-verification gate.
-- Phase 3 (`03-quiz-engine`) engineering parts 3.1–3.6 are complete on
-  `arena/47d8bf99-diploma-3rd-sem` and awaiting owner local verification.
+- Phase 3 (`03-quiz-engine`) engineering parts 3.1–3.6 are complete and awaiting
+  owner local verification.
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
   `arena/be3d9178-diploma-3rd-sem` as the branch that work was performed on. That
@@ -70,7 +69,7 @@ deployment/domain changes or close unfinished phase gates.
 - **Documentation handoff is updated; phases 1–9 are not all complete.**
 - Owner requests implementation first, then one dedicated cross-device phase.
   Routine syntax, integrity and focused regression checks continue meanwhile.
-- Original 29 PYQ papers and five registries are byte-frozen. Fixes/mappings
+- The 28 remaining PYQ papers and five registries are byte-frozen. Fixes/mappings
   must use derived metadata rather than editing those originals.
 
 ## Phase-by-phase implementation remainder

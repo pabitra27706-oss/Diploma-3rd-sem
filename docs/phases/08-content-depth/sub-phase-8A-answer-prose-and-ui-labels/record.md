@@ -130,8 +130,8 @@ git show --stat 4e906e2 | grep -E "_data/|_quiz-data/|rename"   → (no output)
 
 ## Next-chat prompt
 
-- [ ] Printed IN CHAT at sub-phase end; `prompt.md` updated in this commit as
-      backup.
+- [x] Printed IN CHAT at sub-phase end (2026-11-17); `prompt.md` updated in
+      this commit as backup.
 
 ## Follow-ups
 
