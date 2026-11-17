@@ -83,7 +83,8 @@ body {
 }
 
 .toolbar-center {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0; /* allows the ellipsis to engage inside a flex row */
   text-align: center;
   font-size: 0.9rem;
   font-weight: 600;
@@ -323,6 +324,19 @@ body {
   .question-text { font-size: 0.88rem; }
   .tool-btn span { display: none; }
   .tool-btn { padding: 0.4rem 0.5rem; }
+  /* The one long control in the bar: keep the icon, drop to a square target,
+     so the paper title keeps readable width on a phone. The label stays as
+     the button's accessible name. */
+  #attempt-paper-link { padding: 0.4rem 0.6rem; }
+  #attempt-paper-link .btn-label { display: none; }
+  #attempt-paper-link svg { width: 18px; height: 18px; }
+}
+
+/* The paper's own print styling is unchanged; on screen the header is the
+   reader's only orientation, so it must never be clipped mid-word. */
+@media (max-width: 640px) {
+  .toolbar { gap: 0.4rem; padding: 0 0.6rem; }
+  .toolbar-center { font-size: 0.82rem; }
 }
 /* ─── Pilot schema: structured exam paper ─── */
 .paper-source-note {
@@ -333,6 +347,32 @@ body {
   color: var(--paper-muted, var(--c-grey-600));
   font-size: 0.78rem;
   line-height: 1.5;
+}
+
+/* Provenance: citation stays visible, the long OCR note folds away.
+   (Base .paper-source-note styling already exists above.) */
+.paper-source-note .source-note-lead {
+  margin: 0;
+  font-weight: 600;
+}
+
+.paper-source-note .source-note-more {
+  margin-top: 0.35rem;
+}
+
+.paper-source-note .source-note-more summary {
+  cursor: pointer;
+  color: var(--paper-text, var(--c-grey-900));
+  font-weight: 600;
+  padding: 0.2rem 0;
+}
+
+.paper-source-note .source-note-more summary:hover {
+  text-decoration: underline;
+}
+
+.paper-source-note .source-note-more p {
+  margin: 0.35rem 0 0;
 }
 
 .paper-instructions {

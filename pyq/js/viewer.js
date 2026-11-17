@@ -74,7 +74,12 @@ function renderPaper(data, meta) {
   let attempt = document.getElementById('attempt-paper-link');
   if (!attempt) {
     attempt = document.createElement('a'); attempt.id='attempt-paper-link'; attempt.className='tool-btn';
-    attempt.textContent='Attempt this paper';
+    // Icon plus a label span: the label is hidden on narrow phones (CSS) while
+    // the accessible name stays intact for screen readers and print.
+    attempt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">'
+      + '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>'
+      + '<span class="btn-label">Attempt this paper</span>';
+    attempt.setAttribute('aria-label', 'Attempt this paper');
     document.getElementById('practiceLink')?.parentElement.append(attempt);
   }
   attempt.href='../quiz/play.html?'+new URLSearchParams({subject:subjectCode,paperFile:meta.fileName});
@@ -98,12 +103,34 @@ function renderPaper(data, meta) {
 
   const sourceNote = document.getElementById('paperSourceNote');
   if (sourceNote) {
-    const noteParts = [];
-    if (data.sourceFile) noteParts.push(`Source: ${data.sourceFile}`);
-    if (data.sourceStatus) noteParts.push(data.sourceStatus);
-    if (data.answerKeyStatus) noteParts.push(data.answerKeyStatus);
-    if (data.sourceNote) noteParts.push(data.sourceNote);
-    sourceNote.textContent = noteParts.join(' · ');
+    // The provenance blob can run to several hundred words. Keep the citation
+    // visible and fold the rest into a <details>, so the printed header of the
+    // paper is reachable without scrolling past OCR notes on a phone.
+    const headline = [
+      data.sourceFile && `Source: ${data.sourceFile}`,
+      data.sourceStatus,
+      data.answerKeyStatus
+    ].filter(Boolean).join(' · ');
+
+    sourceNote.textContent = '';
+    if (headline) {
+      const lead = document.createElement('p');
+      lead.className = 'source-note-lead';
+      lead.textContent = headline;
+      sourceNote.append(lead);
+    }
+    if (data.sourceNote) {
+      const details = document.createElement('details');
+      details.className = 'source-note-more';
+      const summary = document.createElement('summary');
+      summary.textContent = 'Full source and verification notes';
+      const body = document.createElement('p');
+      body.textContent = data.sourceNote;
+      details.append(summary, body);
+      sourceNote.append(details);
+    }
+    // Print and screen readers still get the whole note.
+    if (!headline && !data.sourceNote) sourceNote.hidden = true;
   }
 
   // Render full exam paper for print / Save as PDF

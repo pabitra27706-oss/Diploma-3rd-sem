@@ -495,7 +495,7 @@
 }
 
 .mode-card:has(input:checked) .mode-card-icon {
-  background-color: var(--accent);
+  background-color: var(--hub-accent-solid);
   color: var(--c-white);
   transform: scale(1.05);
 }
@@ -616,8 +616,10 @@
 }
 
 .count-btn.active {
-  background-color: var(--accent);
-  border-color: var(--accent);
+  /* --accent is a pale tint in dark mode; a solid fill carrying white text
+     must use the solid accent so the pair stays above 4.5:1. */
+  background-color: var(--hub-accent-solid);
+  border-color: var(--hub-accent-solid);
   color: var(--c-white);
   box-shadow: 0 2px 8px rgba(79, 110, 247, 0.3);
 }
@@ -694,8 +696,8 @@
 }
 
 .chip-label input:checked + .chip {
-  background-color: var(--accent);
-  border-color: var(--accent);
+  background-color: var(--hub-accent-solid);
+  border-color: var(--hub-accent-solid);
   color: var(--c-white);
   box-shadow: 0 2px 6px rgba(79, 110, 247, 0.25);
 }
