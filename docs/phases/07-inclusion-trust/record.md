@@ -1,11 +1,16 @@
 # Phase 7 — Engineering record
 
-- Status: **🚧 parts 7.1, 7.2, 7.3, 7.4 and 7.5 implemented and gate-verified**
-  on `arena/c56bb630-diploma-3rd-sem` (2026-11-17). **Not merged.** An owner
-  smoke pass on one Android phone in Chrome reported no failures on 2026-11-17;
-  that pass was explicitly **not** a per-criterion audit, so it does not close
-  the items below and does not upgrade this phase to `✅*`. ·
+- Status: **✅*** — parts 7.1, 7.2, 7.3, 7.4 and 7.5 implemented, gate-verified
+  on `arena/c56bb630-diploma-3rd-sem` (2026-11-17) and **accepted by the owner on
+  2026-11-17** ("You can mark as passed") after a smoke pass on one Android phone
+  in Chrome reported no failures. **Not merged.** ·
   Updated: 2026-11-17
+
+> **What `✅*` means here.** The engineered scope (7.1–7.5) is accepted. The
+> asterisk is load-bearing: the acceptance rests on static measurement plus a
+> general device click-through, **not** on a per-criterion device audit. Every
+> item in *Left open* below is still open, and none of them is upgraded into a
+> claim by this status. This is not a WCAG conformance assertion.
 - Branch base: `main` @ `5b7eb663799614a826231f668920f8d597793943` (PR #14, Phase 6)
 - Reuse: ADAPT `assets/js/storage.js` (the single preference record),
   `assets/js/accessibility.js`, `assets/css/accessibility.css`,
@@ -296,8 +301,13 @@ What that does and does not mean here:
   rendering, keyboard and skip-link traversal, focus after dialogs, tap accuracy
   against the 24 px floor, or screen-reader output. Those stay open below and in
   Phase 10.
-- **Not inferred**: no merge was authorized in that message, so the branch stays
-  unmerged and no PR was opened. No Pages, tag or release action was taken.
+- **Owner decision, same day**: after this was put to them plainly — that a
+  click-through is not a per-criterion audit — the owner directed **"You can mark
+  as passed"**. Phase 7 is therefore recorded as **`✅*`**: accepted, with the
+  caveats in *Left open* intact and unupgraded. The owner is the acceptance
+  authority; this record states the evidence they accepted, not more.
+- **Not inferred**: no merge was authorized, so the branch stays unmerged and no
+  PR was opened. No Pages, tag or release action was taken.
 
 ## Left open (not closed by this phase)
 

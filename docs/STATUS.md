@@ -88,21 +88,25 @@ unfinished phase gate.
   private-mode IndexedDB on hardware and real-phone backup download remain
   **unverified** and move to Phase 10; see
   [`phases/06-state-portability/record.md`](phases/06-state-portability/record.md).
-- Phase 7 (`07-inclusion-trust`) is **`🚧` implemented and gate-verified on
-  `arena/c56bb630-diploma-3rd-sem` (2026-11-17), not merged**: all 68 pages have
+- Phase 7 (`07-inclusion-trust`) is **`✅*`**: parts 7.1–7.5 implemented and
+  gate-verified on `arena/c56bb630-diploma-3rd-sem` (2026-11-17) and
+  **accepted by the owner on 2026-11-17** after an Android/Chrome smoke pass
+  reported no failures; **not merged**. The acceptance rests on static
+  measurement plus a general click-through, not a per-criterion device audit —
+  the items named below stay open and unupgraded. Delivered: all 68 pages have
   one `<main>`, one `<h1>` and a skip link (0 of 68 missing, from 11); 134
   heading-order jumps across 32 pages are 0; the one unlabelled control is
-  labelled; **all 47 measured contrast pairs pass; 27 failed before** (187 total findings → 0); 21 of 22
-  first-party CSS files declare a reduced-motion rule (from 7) and all 68 pages
+  labelled; **all 47 measured contrast pairs pass, 27 failed before** (187
+  total findings → 0); 21 of 22 first-party CSS files declare a reduced-motion
+  rule (from 7) and all 68 pages
   load the global override; no control box is pinned below 24×24 CSS px; a
   38-key English/Bengali UI catalog loads on every page; and the privacy, offline
   and about claims that the build could not support are corrected. **No WCAG
   conformance claim** — rendered contrast, 200 % zoom/reflow, screen-reader
   output, real tap accuracy, Bengali glyph rendering and keyboard-only core-flow
-  completion remain unverified and move to Phase 10. An owner **smoke pass** on
-  one Android phone in Chrome (2026-11-17, no failures reported) shows the branch
-  runs on real hardware; it was not a per-criterion pass and closes none of those
-  items. Worker version is `study-2026-11-17c`. See
+  completion remain unverified and move to Phase 10 — the owner's Android/Chrome
+  smoke pass showed the branch runs on real hardware but measured none of them.
+  Worker version is `study-2026-11-17c`. See
   [`phases/07-inclusion-trust/record.md`](phases/07-inclusion-trust/record.md).
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
@@ -197,12 +201,13 @@ Unavailable device access is **untested**, never silently passed.
 
 ## Recommended remaining order
 
-1. Phase 7 is implemented and gate-verified but **not merged**; the next step is
-   the owner's review and merge decision. Nothing in this branch authorizes it.
-2. Phase 7 left-overs that need a real browser are Phase 10 items: rendered
-   contrast after compositing, 200 % zoom/reflow on the longest unit page, dialog
-   and tab focus behaviour, screen-reader output (NVDA/TalkBack/VoiceOver), tap
-   accuracy, Bengali conjunct rendering and keyboard-only core-flow completion.
+1. Phase 7 is `✅*` (owner-accepted) but **not merged**; the next step is the
+   owner's merge decision. Nothing in this branch authorizes it.
+2. Phase 7's acceptance left these unmeasured, and they are Phase 10 items:
+   rendered contrast after compositing, 200 % zoom/reflow on the longest unit
+   page, dialog and tab focus behaviour, screen-reader output
+   (NVDA/TalkBack/VoiceOver), tap accuracy, Bengali conjunct rendering and
+   keyboard-only core-flow completion.
 3. Finish the remaining content-depth work (cited formula/definition sheets,
    lab/internship pages).
 3. Complete cited content/reference work and performance/cache/root-path work;

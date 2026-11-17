@@ -1,7 +1,8 @@
 # Phase 10 — Dedicated cross-device acceptance
 
-**Status:** planned, not started — one owner smoke pass exists, no acceptance
-sweep · **Parts:** 5 · **Depends on:** implementation phases 1–9
+**Status:** planned, not started — one owner smoke pass exists (used to accept
+Phase 7), no acceptance sweep · **Parts:** 5 · **Depends on:** implementation
+phases 1–9
 
 Owner-directed sequencing: finish implementation work first, then run the full
 cross-device acceptance sweep here. Focused automated regression checks continue

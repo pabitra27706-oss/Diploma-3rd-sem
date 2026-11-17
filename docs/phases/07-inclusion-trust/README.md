@@ -1,10 +1,12 @@
 # Phase 7 — Inclusion and trust
 
-**Status:** 🚧 parts 7.1–7.5 implemented and gate-verified on
-`arena/c56bb630-diploma-3rd-sem` (2026-11-17), **not merged**; open caveats in
+**Status:** **✅*** — parts 7.1–7.5 implemented, gate-verified on
+`arena/c56bb630-diploma-3rd-sem` and **accepted by the owner on 2026-11-17** after
+an Android/Chrome smoke pass; **not merged**; open caveats in
 [`record.md`](record.md) · **Parts:** 5 · **Depends on:** 1 (and 6 for the
 preference record) · **Owner gates:** none left for 7.5 (MIT chosen 2026-11-16);
-device/screen-reader acceptance moves to Phase 10
+the per-criterion device and screen-reader audit moves to Phase 10 and is **not**
+covered by this acceptance
 
 ## Goal
 

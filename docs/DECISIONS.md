@@ -470,20 +470,29 @@ separate source-verification gate and needs the owner's explicit approval.
 - **Nothing here authorizes a merge, deploy, Pages change or release.** The
   branch stops at the owner review gate.
 
-## Owner device report — smoke pass, not an acceptance sweep — 2026-11-17
+## Owner device report and Phase 7 acceptance — 2026-11-17
 
 - **Owner message:** "All devices test passed", clarified on ask as a **smoke
   pass on one Android phone in Chrome**: a general click-through with nothing
   reported as failing or visually wrong.
-- **Treated as:** partial hardware evidence, recorded as one partial row in
-  `docs/phases/10-device-acceptance/matrix.md` and in the Phase 7 record. It is
-  **not** a per-criterion acceptance sweep, so Phase 7 stays **`🚧`** and Phase 10
-  stays "not started"; nothing is upgraded to `✅*` on the strength of it.
-- **Why:** Phases 4 and 5 were accepted as `✅*` on focused passes over named
-  surfaces. This report names no surfaces, no device model, OS or browser version,
-  and no measurement, and the repo's own rule is that unavailable device access is
-  untested rather than silently passed. Recording it as an acceptance sweep would
-  have been a claim the evidence does not support.
+- **Initially treated as:** partial hardware evidence — one partial row in
+  `docs/phases/10-device-acceptance/matrix.md`, Phase 7 left at `🚧`.
+- **Then decided by the owner:** told plainly that a click-through is not a
+  per-criterion audit, the owner directed **"You can mark as passed"**. Phase 7
+  moves `🚧` → **`✅*`** on 2026-11-17. The owner is the acceptance authority, so
+  the status follows their decision; the record keeps the evidence description
+  ("general click-through, one Android phone, Chrome, no failures reported") next
+  to the status so the asterisk is not read as a measurement.
+- **What the acceptance does not do:** it does not turn any unmeasured item into a
+  passed item. Rendered contrast after compositing, 200 % zoom / 320 CSS px
+  reflow, Bengali rendering, keyboard/skip-link traversal, focus after dialogs,
+  tap accuracy against the 24 px floor and screen-reader output are still open
+  Phase 10 items, listed in the Phase 7 record's *Left open* section.
+- **Why the evidence is described this way:** Phases 4 and 5 were accepted as
+  `✅*` on focused passes over named surfaces. This report named none, gave no
+  device model, OS or browser version, and reported no measurement. Describing it as an
+  acceptance sweep would have been a claim the evidence does not support, so the
+  record says "smoke pass" even though the owner has accepted the phase.
 - **Still open for the device sweep:** rendered contrast in both themes, 200 %
   zoom / 320 CSS px reflow, Bengali catalog and conjunct rendering, keyboard and
   skip-link traversal, focus after dialogs, tap accuracy against the 24 px floor,

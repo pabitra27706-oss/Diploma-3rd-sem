@@ -3,7 +3,9 @@
 Status: **not started** as a full acceptance sweep. One owner **smoke pass** on
 an Android phone in Chrome is recorded below (2026-11-17) — a click-through with
 nothing reported as failing, not a per-criterion pass. Every cell it did not
-measure stays `Untested`.
+measure stays `Untested`. The owner accepted **Phase 7** on the strength of it
+(see `../07-inclusion-trust/record.md`); that decision does not populate this
+matrix and does not close Phase 10.
 Replace each placeholder only with an observed result. Add rows for actual
 browser versions; do not collapse hardware and emulation into one result.
 
@@ -29,6 +31,8 @@ browser versions; do not collapse hardware and emulation into one result.
 - Journey and expected behavior: general click-through of the app (the owner's
   description: "all devices test passed", clarified as a single-device smoke pass).
 - Observed result: **partial — no failures reported**; not a per-criterion pass.
+  Accepted by the owner as sufficient for Phase 7 on 2026-11-17; **not**
+  sufficient for this phase's exit gate, which needs the matrix filled in.
 - Screenshot/log/PDF reference: none.
 - Defect, fix reference and retest: none reported.
 

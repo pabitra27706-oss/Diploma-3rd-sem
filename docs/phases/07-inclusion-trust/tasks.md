@@ -125,6 +125,8 @@ actual tap accuracy, and Bengali font rendering. Record them in the phone pass;
 do not claim them from static inspection.
 
 **Owner smoke pass, 2026-11-17:** one Android phone in Chrome, general
-click-through, no failures reported. Useful as "it runs on hardware", and
-recorded in `phases/10-device-acceptance/matrix.md` as a partial row. It did
-**not** walk the items above one by one, so none of them are marked passed here.
+click-through, no failures reported. It did **not** walk the items above one by
+one, so none of them is marked passed here on measurement grounds. The owner
+then accepted the phase as `✅*` ("You can mark as passed"); the acceptance is
+recorded in `record.md` and `docs/DECISIONS.md`, and the unmeasured items stay
+listed as open and move to Phase 10.
