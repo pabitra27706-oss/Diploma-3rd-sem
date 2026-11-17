@@ -4,8 +4,11 @@ A first-party, zero-build static study site for West Bengal diploma CST students
 HTML, CSS, JavaScript and checked-in JSON can be served directly; no package
 installation or build is required to run the site.
 
-**Phases 1–8 are implemented, owner-accepted (`✅*`) and merged; Phase 9
-(performance/launch) and Phase 10 (device acceptance) remain.** See
+**Phases 1–8 are implemented, owner-accepted (`✅*`) and merged. Phase 9
+(performance/launch) implementation is complete on the session branch except its
+two owner/hardware gates (the dated measurement decision and the launch
+Lighthouse/phone pass); Phase 10 (device acceptance) remains.** Nothing was
+deployed. See
 [Current status and remaining work](docs/STATUS.md) for the handoff,
 [Roadmap](docs/ROADMAP.md) for phase status, and
 [Decisions](docs/DECISIONS.md) for owner instructions and gates.
@@ -66,6 +69,18 @@ installation or build is required to run the site.
   unverified and the page says so. [Practical courses](courses.html) and their
   task pages carry credits, hours, assessment fields and syllabus page anchors —
   no completed lab solution is claimed.
+- **Performance (Phase 9, 2026-11-17):** one 302-entry colour palette in
+  `assets/css/variables.css` and no colour literal anywhere else
+  (`scripts/check_tokens.py`); the three global sheets (accessibility, print and
+  the install panel) are merged into one `assets/css/base.css`, and the
+  accessibility/i18n/install scripts into one `assets/js/shell.bundle.js`; the Font Awesome CSS shipped to
+  pages is a 25,890 B subset of the 102,641 B vendored file; data has its own
+  cache version (`assets/data/data-version.json`) so a corrected answer reaches a
+  returning device without a shell update. Measured from disk: **592 static
+  requests for 74 pages** (was 817) and **6,817,906 CSS bytes** (was 8,638,771);
+  Practice needs **9** requests to render, quiz setup **10**, a unit page **10**.
+  No browser exists in the build environment, so no Lighthouse number and no
+  screenshot claim is made.
 - **Printable** unit pages, papers, answer keys and revision sheets: one
   stylesheet on all 74 pages, answers on their own page, and a labelled
   "Include answers" toggle on a paper. No running header is drawn — browsers do
@@ -140,6 +155,11 @@ python3 scripts/check_site.py --strict --quiet
 python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
 python3 scripts/audit_accessibility.py --fail
+python3 scripts/check_tokens.py --strict
+python3 scripts/build_icon_subset.py --check
+python3 scripts/build_data_version.py --check
+python3 scripts/audit_page_weight.py --budget
+python3 scripts/check_root_rewrite.py
 python3 scripts/check_readme_paths.py
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
@@ -155,6 +175,7 @@ node tests/section-notes.cjs
 node tests/theme-skew.cjs
 node tests/data-pipeline-consumers.cjs
 node tests/discovery-dom.cjs
+node tests/data-version.cjs
 ```
 
 `validate_data.py --strict` and `validate_syllabus.py --strict` still report
@@ -174,10 +195,12 @@ python3 scripts/build_runtime_data.py
 python3 scripts/build_coverage.py
 python3 scripts/build_revision_sheets.py
 python3 scripts/build_verification.py
-python3 scripts/build_runtime_bundles.py
+python3 scripts/build_runtime_bundles.py   # includes assets/js/shell.bundle.js
+python3 scripts/build_icon_subset.py       # assets/vendor/fontawesome/css/used.min.css
 python3 scripts/generate_presence.py
 python3 scripts/generate_presence.py
 python3 scripts/build_search_index.py
+python3 scripts/build_data_version.py      # must be last: it hashes the data
 python3 scripts/check_pyq_integrity.py
 ```
 

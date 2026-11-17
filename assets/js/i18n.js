@@ -2,6 +2,8 @@
  *
  * Phase 7.3: a tiny first-party loader, no build step and no third party.
  * - The catalog for the active language is fetched from assets/i18n/<lang>.json.
+ *   English is never fetched: the markup is authored in English and is the
+ *   fallback, so the default path costs no request.
  * - Elements carry data-i18n="key"; their English markup is the fallback, so a
  *   missing key shows the authored English text, never a raw key.
  * - <html lang> follows the active UI language; the choice is persisted in the
@@ -36,10 +38,16 @@
     const language = activeLanguage();
     document.documentElement.lang = language;
     let catalog = {};
-    try {
-      catalog = await catalogFor(language);
-    } catch {
-      /* English markup remains the fallback. */
+    if (language !== 'en') {
+      /* Phase 9.2: English is the authored markup, so the default language needs
+         no catalog request at all (one fewer request on every page). The English
+         catalog stays in assets/i18n/en.json as the reference used by the
+         key-parity test, never fetched at runtime. */
+      try {
+        catalog = await catalogFor(language);
+      } catch {
+        /* English markup remains the fallback. */
+      }
     }
     for (const element of document.querySelectorAll('[data-i18n]')) {
       const value = catalog[element.dataset.i18n];

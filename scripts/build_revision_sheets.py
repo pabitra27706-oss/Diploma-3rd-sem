@@ -154,9 +154,9 @@ def page(title, body, prefix=''):
             f'<title>{e(title)} — Study Hub</title>'
             f'<link rel="stylesheet" href="{prefix}assets/css/variables.css">'
             f'<link rel="stylesheet" href="{prefix}assets/css/discovery.css">'
-            f'<link rel="stylesheet" href="{prefix}assets/css/print.css">'
+            
             f'<script defer src="{prefix}assets/js/pwa.js"></script>'
-            f'<link rel="stylesheet" href="{prefix}assets/css/accessibility.css"></head><body>'
+            f'<link rel="stylesheet" href="{prefix}assets/css/base.css"></head><body>'
             f'<a class="skip-study-content" href="#study-main-content">Skip to study content</a>'
             f'<main class="discovery" id="study-main-content"><nav><a href="{prefix}index.html">Study Hub</a>'
             f'<a href="{prefix}coverage.html">Coverage</a>'

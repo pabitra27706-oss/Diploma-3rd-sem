@@ -507,7 +507,7 @@ function renderPaperRuleBanner(q) {
     banner = document.createElement('div');
     banner.id = 'paper-rule-banner';
     banner.className = 'paper-rule-banner';
-    banner.style.cssText = 'margin:0.5rem 0 0.85rem;padding:0.65rem 0.9rem;border-radius:8px;border:1px solid var(--border,#cbd5e1);font-size:0.9rem;';
+    banner.style.cssText = 'margin:0.5rem 0 0.85rem;padding:0.65rem 0.9rem;border-radius:8px;border:1px solid var(--border,var(--c-slate-300));font-size:0.9rem;';
     dom.questionText?.parentNode?.insertBefore(banner, dom.questionText);
   }
   banner.replaceChildren();
@@ -551,7 +551,7 @@ function renderPaperRuleBanner(q) {
   if (access.locked && access.reason) {
     const lockMsg = createElement('p', '', access.reason);
     lockMsg.setAttribute('role', 'status');
-    lockMsg.style.cssText = 'margin:0.4rem 0 0;color:var(--danger,#dc2626);font-weight:500;';
+    lockMsg.style.cssText = 'margin:0.4rem 0 0;color:var(--danger,var(--c-red-600));font-weight:500;';
     banner.appendChild(lockMsg);
   }
 }

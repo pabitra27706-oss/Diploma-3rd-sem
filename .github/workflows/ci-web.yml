@@ -114,6 +114,33 @@ jobs:
       - name: Documentation paths resolve (Phase 7)
         run: python3 scripts/check_readme_paths.py
 
+      - name: One token file, generated icon CSS and generated data version (Phase 9)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Phase 9.2/9.3 gates: no colour literal outside the palette, the icon
+          # CSS subset is current, and the data cache version matches the data.
+          python3 scripts/check_tokens.py --strict | tee token-check.txt
+          python3 scripts/build_icon_subset.py --check
+          python3 scripts/build_data_version.py --check
+          {
+            echo "### Colour tokens and generated assets"
+            echo '```'
+            cat token-check.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Page weight and base-path readiness (Phase 9)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Budget fence (250 KB CSS / 350 KB JS per page) and the /-rooted copy
+          # proof. These are byte and link checks, not Lighthouse scores.
+          python3 scripts/audit_page_weight.py --budget > budgets-pages.txt
+          cat budgets-pages.txt >> "$GITHUB_STEP_SUMMARY"
+          python3 scripts/check_root_rewrite.py | tee root-rewrite.txt
+          cat root-rewrite.txt >> "$GITHUB_STEP_SUMMARY"
+
       - name: Data regression gate (source-verification exceptions pending)
         run: |
           # Full --strict remains blocked; accept only the exact fingerprinted
@@ -128,6 +155,7 @@ jobs:
           node tests/study-offline.cjs
           node tests/data-pipeline-consumers.cjs
           node tests/discovery-dom.cjs
+          node tests/data-version.cjs
           python3 scripts/validate_data.py --check-baseline
           python3 -m unittest discover -s tests -p 'test_*.py' -v
 

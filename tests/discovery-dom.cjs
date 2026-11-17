@@ -496,6 +496,7 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
             }
           },
           async put(k, res) { bucket.set(k, res); },
+          async keys() { return [...bucket.keys()].map(url => ({ url })); },
           async match(k) { return bucket.get(k); }
         };
       },

@@ -1,12 +1,15 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-17 (**Phases 1–8 are `✅*` and merged to `main`; Phase 8 content
-depth was accepted by the owner on a smoke use pass and merged as PR #16**; the
-next phase is **Phase 9 — performance and launch**, see the kickoff block at the
-end of this file). Read `rule.md`,
-`docs/STATUS.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md` and the relevant phase
-record before continuing. Source files and actual Git status take precedence over
-older narrative.
+Updated 2026-11-17 (**Phases 1–8 are `✅*` and merged to `main`. Phase 9 —
+performance and launch — is implemented on the session branch
+`arena/908b6b19-diploma-3rd-sem`: 9.1 re-verified, 9.2 token/CSS/JS
+consolidation done, 9.3 shell-vs-data caching done, 9.5 base-path proof done;
+9.4 waits on the owner's dated measurement answer and 9.6 is evidenced only where
+this environment can prove an item. Nothing was deployed and no PR was opened.**)
+Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md` and
+[`docs/phases/09-performance-launch/record.md`](docs/phases/09-performance-launch/record.md)
+before continuing. Source files and actual Git status take precedence over older
+narrative.
 
 ## Fixed context
 
@@ -14,9 +17,10 @@ older narrative.
 - `main` carries Phases 1–8 (`✅*`): Phase 6 (PR #14 `5b7eb66`), Phase 7
   (PR #15 `84e99aa`), Phase 8 (PR #16). Check `git log`; the PR #16 merge is the
   newest `main` merge and the base for the next phase.
-- Session branch: whatever Arena names for the current session, cut from that
-  merge. The Phase 8 branch `arena/e0da0bec-diploma-3rd-sem` is merged and
-  retired. Do not create/switch/rename branches or push another branch.
+- Session branch: whatever Arena names for the current session. The Phase 9
+  branch is `arena/908b6b19-diploma-3rd-sem`, cut from `main` at `0e53a4a`
+  (the PR #16 merge). The Phase 8 branch `arena/e0da0bec-diploma-3rd-sem` is
+  merged and retired. Do not create/switch/rename branches or push another branch.
   Prior branches `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...`
   (PR #14 `5b7eb66`), `arena/4d3997da-...` (PR #13 `a92a1ff`),
   `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
@@ -137,15 +141,32 @@ per-phase remainder table and the source/rights gates.
   truthful email feedback, coverage/provenance, practical-task/internship pages,
   exam-pattern caveats and print rules. Full accessibility/translation/reference
   sheet work remains. License remains a gate.
-- Performance: compact derived pools and checked-in script bundles; measured
-  Practice/setup cold loads are 12 requests each. CSS/cache/root-path/launch
-  work remains. Current worker VERSION: `study-2026-11-17d` (Phase 8 added the print sheet and its precache entry; Phase 5 added the study shell and
-  `WARM_STUDY` card shards).
+- Performance (Phase 9, 2026-11-17): one 302-entry colour palette in
+  `assets/css/variables.css` with **0 colour literals elsewhere**
+  (`scripts/check_tokens.py --strict`); `accessibility.css` + `print.css` +
+  `pwa.css` merged into `assets/css/base.css` and the accessibility/i18n/install
+  scripts into a generated `assets/js/shell.bundle.js`; pages load a 25,890 B
+  Font Awesome CSS subset instead of 102,641 B; data has its own generated cache
+  version (`assets/data/data-version.json` = `data-6b1621c45599` over 81 files).
+  Measured from disk over 74 pages: **592** static requests (was 817) and
+  **6,817,906** CSS bytes (was 8,638,771), 7–10 static requests per page. Per view
+  including its data fetch: Practice **9**, quiz setup **10**, unit page **10**,
+  PYQ answers **8**, home **9**, study pages **12**, quiz play **11**. Shell
+  worker VERSION: `study-2026-11-17e` (bumped for the 9.2 shell change); the data
+  version is independent of it. No Lighthouse score exists — there is no browser
+  in this environment.
 
 ## Evidence and limits
 
-Latest implementation checkpoint (`2026-11-17`, Phase 8): **63 Python tests** and
-sixteen deterministic Node suites PASS; hosted **Web CI green** on the phase tip
+Latest implementation checkpoint (`2026-11-17`, Phase 9): **92 Python tests**
+(91 pass; `test_data_pipeline.test_no_semantic_or_answer_changes` errors because
+the commit it reads is absent from this branch — it fails identically on
+unmodified `main`) and **14 deterministic Node suites PASS**, including the new
+`tests/data-version.cjs`. Phase 9 also added `check_tokens --strict`,
+`build_icon_subset --check`, `build_data_version --check`, `audit_page_weight
+--budget` and `check_root_rewrite` to the CI workflow. Hosted CI has **not run on
+this branch** (nothing was pushed). Earlier: **63 Python tests** and sixteen
+deterministic Node suites PASS; hosted **Web CI green** on the phase tip
 (runs `44046215114`, `44046331697`); 55 JS/CJS files and 79 JSON files parse;
 site strict **0 errors / 0 warnings**, platform 0 errors, immutable-PYQ guard
 0 changes; accessibility audit 74 pages with 0 findings (47 contrast pairs);
@@ -161,8 +182,10 @@ no content: 0 revision entries and 0 answers are owner-verified.
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
 2. Use `docs/STATUS.md`'s remaining order. Phases 1–8 are `✅*` with recorded
-   caveats and are merged. **Phase 9 (performance and launch) is next and is the
-   last engineering phase**; Phase 10 is one device-acceptance phase. Phase 8's
+   caveats and are merged. **Phase 9 is implemented on the session branch**, with
+   three things left: the owner's dated 9.4 measurement answer, a real-browser
+   launch pass (Lighthouse + phone, 9.6) and the deploy decision — none of which
+   this environment can do. Phase 10 is one device-acceptance phase. Phase 8's
    two content gates (8.2 revision sheets, 8.6 answer certification) stay open
    in parallel and are **owner** work — acceptance never certified content.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
@@ -182,15 +205,15 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git fetch origin arena/e0da0bec-diploma-3rd-sem
-git checkout arena/e0da0bec-diploma-3rd-sem
-git pull --ff-only origin arena/e0da0bec-diploma-3rd-sem
+git fetch origin arena/908b6b19-diploma-3rd-sem
+git checkout arena/908b6b19-diploma-3rd-sem
+git pull --ff-only origin arena/908b6b19-diploma-3rd-sem
 cd ..
 python3 -m http.server 8010 --bind 127.0.0.1
 ```
 
 Open `http://127.0.0.1:8010/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
-directory: `git clone --branch arena/e0da0bec-diploma-3rd-sem
+directory: `git clone --branch arena/908b6b19-diploma-3rd-sem
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling
@@ -257,3 +280,31 @@ the session should still read `rule.md` → this file → `docs/STATUS.md` first
 > cache version independent of the shell, an update regression that runs without
 > a browser, the 9.4 decision dated, the `/`-root rewrite proven, the launch
 > checklist ticked with dates — and **still nothing deployed**.
+
+---
+
+## Phase 9 kickoff — executed 2026-11-17 (result block)
+
+The instructions above were carried out on `arena/908b6b19-diploma-3rd-sem`. Do
+not re-run them; read
+[`docs/phases/09-performance-launch/record.md`](docs/phases/09-performance-launch/record.md)
+for evidence and
+[`docs/LAUNCH-CHECKLIST.md`](docs/LAUNCH-CHECKLIST.md) for what is proved and
+what is not.
+
+- 9.1 ✅ re-verified (data side unchanged; static side measured for the first time).
+- 9.2 ✅ done — 302-entry palette, 0 literals outside it, 71 dead rules,
+  icon CSS 102,641 → 25,890 B, `base.css` and `shell.bundle.js` merges,
+  English catalog no longer fetched.
+- 9.3 ✅ done — `data-6b1621c45599` over 81 files, separate data cache namespace,
+  `tests/data-version.cjs` proves both update directions offline-safe.
+- 9.4 ⛔ **owner gate** — local-only default documented; the dated answer is the
+  only missing piece.
+- 9.5 ✅ done — one `scripts/site_config.py` constant; `/`-rooted copy passes
+  `check_site.py --strict`.
+- 9.6 🚧 — checklist dated and ticked only where provable; **Lighthouse, phone
+  pass and deploy are not run**; no PR, no merge, no domain.
+
+Static budget, 74 pages, from disk: 817 → **592** requests; CSS 8,638,771 →
+**6,817,906 B**; 7–10 static requests per page. Per view incl. data: Practice 9,
+quiz setup 10, unit 10, answers 8, home 9, study 12, play 11.

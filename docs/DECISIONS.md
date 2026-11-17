@@ -580,3 +580,62 @@ Agent decisions (reversible — object if wrong). None of them certifies content
   dialogs, tap accuracy against the 24 px floor, screen-reader output.
 - **Merge:** authorized for `arena/e0da0bec-diploma-3rd-sem` → `main` only. No
   deploy, no Pages change, no domain, no tag, no release.
+
+## Phase 9 performance and launch — engineering decisions — 2026-11-17
+
+These are delegated implementation decisions (owner delegation of 2026-11-09),
+recorded because they change how the tree is built. None of them is a rights,
+content, publication or domain decision.
+
+1. **One palette file, per-area aliases kept.** Every colour literal now lives in
+   `assets/css/variables.css` (302 entries). The per-area semantic namespaces
+   (`--bg-primary` in quiz vs pyq vs units) stay in their own stylesheets as
+   aliases, because those names already mean *different* colours per area and
+   merging them would change rendered output. `scripts/check_tokens.py` enforces
+   "no literal outside the token file" and "every page loads the token file first".
+   Colour equivalence is proven statically (1,205 literals re-pointed, 0 value
+   differences; 47 contrast pairs unchanged). No browser exists here, so layout
+   was not re-screenshotted.
+2. **Global sheets merged for requests, not for bytes.** `accessibility.css`,
+   `print.css` and `pwa.css` became `assets/css/base.css`; `accessibility.js`,
+   `i18n.js` and `pwa.js` became the generated `assets/js/shell.bundle.js`
+   (sources stay in place, as with the existing JS bundles). Two fewer CSS and two
+   fewer script requests on every page.
+3. **The English UI catalog is never fetched.** English is the authored markup and
+   already the fallback, so only Bengali costs a request. `assets/i18n/en.json`
+   stays as the reference catalog for the key-parity test.
+4. **Icon CSS is subset; icon fonts are NOT.** `scripts/build_icon_subset.py`
+   emits `used.min.css` (25,890 B from 102,641 B) for the 226 icons the tree names,
+   keeping the MIT/CC-BY/OFL banner and the unmodified webfonts. Font subsetting is
+   deliberately not done: SIL OFL reserved-font-name rules mean a modified font
+   would have to be renamed, which is a **rights** decision, not an engineering
+   one. The 156 KB solid and 117 KB brands webfonts therefore remain the largest
+   single payloads on icon pages and are recorded as such.
+5. **Data has its own cache version.** `assets/data/data-version.json`
+   (`data-6b1621c45599` over 81 files) is generated from the data bytes and names a
+   separate cache namespace, so a corrected answer reaches a returning device
+   without a shell update, a banner or a storage reset — and a shell update no
+   longer throws the pools away. Proved by `tests/data-version.cjs` with no browser.
+6. **The published URL is one constant.** `scripts/site_config.py`; everything
+   absolute is generated from it and `scripts/check_root_rewrite.py` proves a `/`
+   root works by running the site checker on a rewritten copy. No domain action.
+7. **Dead CSS/JS removal is name-based and conservative.** A rule is removed only
+   when none of its class/id names appear as a full token anywhere in shipped
+   HTML, JS or JSON; dynamically composed families (`pill-CST20x`, `dot-CST20x`,
+   `q-badge-difficulty-*`) are explicitly excluded. 71 rules (8,485 B) removed.
+   Six inline `var(--primary-color)` references that resolved to nothing now use
+   the defined `--primary`, which changes rendering on those diagrams (the borders
+   and fills were previously dropped) — recorded here because it is a visible fix.
+8. **Shell version bumped** to `study-2026-11-17e` because the shell bytes changed;
+   the data version is independent of it.
+
+## Open owner decisions from Phase 9
+
+- **9.4 measurement (dated answer still missing).** The default stays: no
+  third-party analytics, no tracker, local-only usefulness prompt, honest
+  "we cannot measure usage" reporting (`docs/MEASUREMENT.md`). The owner should
+  record a dated confirmation — or name a tool (which would also require a
+  privacy-page update and a page-weight budget) before Phase 9.4 can close.
+- **Deploy (9.6).** Not authorized and not performed. `docs/LAUNCH-CHECKLIST.md`
+  is ticked only where this environment can prove an item; Lighthouse and the
+  real-phone pass are recorded as **not run**.

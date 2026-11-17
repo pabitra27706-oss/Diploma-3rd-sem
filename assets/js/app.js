@@ -29,9 +29,9 @@ var APP_STATE = {
       shortName: 'C Programming',
       credits: 2,
       units: 5,
-      color: '#3b82f6',
-      colorLight: '#60a5fa',
-      colorRgb: '59, 130, 246',
+      color: 'var(--subject-cst201)',
+      colorLight: 'var(--subject-cst201-light)',
+      colorRgb: 'var(--subject-cst201-rgb)',
       path: 'subjects/CST201/index.html'
     },
     {
@@ -40,9 +40,9 @@ var APP_STATE = {
       shortName: 'Python',
       credits: 2,
       units: 5,
-      color: '#10b981',
-      colorLight: '#34d399',
-      colorRgb: '16, 185, 129',
+      color: 'var(--subject-cst203)',
+      colorLight: 'var(--subject-cst203-light)',
+      colorRgb: 'var(--subject-cst203-rgb)',
       path: 'subjects/CST203/index.html'
     },
     {
@@ -51,9 +51,9 @@ var APP_STATE = {
       shortName: 'Data Structures',
       credits: 3,
       units: 4,
-      color: '#8b5cf6',
-      colorLight: '#a78bfa',
-      colorRgb: '139, 92, 246',
+      color: 'var(--subject-cst205)',
+      colorLight: 'var(--subject-cst205-light)',
+      colorRgb: 'var(--subject-cst205-rgb)',
       path: 'subjects/CST205/index.html'
     },
     {
@@ -62,9 +62,9 @@ var APP_STATE = {
       shortName: 'CSO',
       credits: 4,
       units: 5,
-      color: '#f59e0b',
-      colorLight: '#fbbf24',
-      colorRgb: '245, 158, 11',
+      color: 'var(--subject-cst207)',
+      colorLight: 'var(--subject-cst207-light)',
+      colorRgb: 'var(--subject-cst207-rgb)',
       path: 'subjects/CST207/index.html'
     },
     {
@@ -73,9 +73,9 @@ var APP_STATE = {
       shortName: 'Algorithms',
       credits: 4,
       units: 4,
-      color: '#ec4899',
-      colorLight: '#f472b6',
-      colorRgb: '236, 72, 153',
+      color: 'var(--subject-cst209)',
+      colorLight: 'var(--subject-cst209-light)',
+      colorRgb: 'var(--subject-cst209-rgb)',
       path: 'subjects/CST209/index.html'
     }
   ],
@@ -1205,17 +1205,17 @@ function calculateExamCountdown() {
     examCountdown.innerHTML =
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#clock"></use></svg> ' +
       diffDays + 'd left!';
-    examCountdown.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+    examCountdown.style.background = 'linear-gradient(135deg, var(--c-red-500), var(--c-red-600))';
   } else if (diffDays === 0) {
     examCountdown.innerHTML =
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#target"></use></svg> ' +
       'Exam today!';
-    examCountdown.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+    examCountdown.style.background = 'linear-gradient(135deg, var(--c-red-500), var(--c-red-600))';
   } else {
     examCountdown.innerHTML =
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#check"></use></svg> ' +
       'Exams done!';
-    examCountdown.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    examCountdown.style.background = 'linear-gradient(135deg, var(--c-emerald-500), var(--c-emerald-600))';
   }
 }
 
@@ -1697,11 +1697,6 @@ window.addEventListener('offline', function() {
 document.addEventListener('DOMContentLoaded', function() {
   new WelcomeScreen();
 
-  console.log('%cDiploma 3rd Sem - Study Hub', 'color:#6366f1;font-size:18px;font-weight:bold;');
-  console.log('%cv' + APP_CONFIG.version, 'color:#94a3b8;font-size:11px;');
-  console.log('%cMade for WB Polytechnic Students', 'color:#94a3b8;font-size:11px;');
-  if (isPWA())    console.log('%cRunning as PWA', 'color:#10b981;font-size:11px;');
-  if (isMobile()) console.log('%cMobile detected', 'color:#3b82f6;font-size:11px;');
 });
 
 // ================================

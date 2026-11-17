@@ -1,46 +1,57 @@
 # Current cache policy
 
-- Scope-relative URLs; no browser-facing localhost endpoints.
-- Shell dependencies are pre-cached in the versioned service-worker cache
-  (`VERSION = 'study-2026-11-17d'`), including core discovery shells and compact
-  metadata (`search.html`, `repeated.html`, `coverage.html`, `exam-pattern.html`,
-  `assets/css/discovery.css`, `assets/js/subject-labels.js`,
-  `assets/js/discovery.js`, `assets/js/unit-discovery.js`,
-  `assets/search/manifest.json`, `assets/search/index-pages.json`, and
-  `assets/search/repeated.json`) plus the Phase 7 UI language layer
-  (`assets/js/i18n.js`, `assets/i18n/en.json`, `assets/i18n/bn.json`) plus the one
-  print sheet every page loads (`assets/css/print.css`, Phase 8.3) plus the Phase 5 study shell (`cards.html`,
-  `today.html`, `assets/js/study-store.js`, `assets/js/study-ui.js`,
-  `quiz/js/attempt-store.js`, and `assets/cards/manifest.json`).
-- Pages: network-first; on failure, returns the cached response, the pre-cached
-  pathname shell (so deep links such as `search.html?q=...` and
-  `repeated.html?subject=...` work offline), or `offline.html`.
-- Other successful same-origin GET resources: cached response when present,
-  refreshed in background. Uncached resources need a successful first load.
-- Search shards (`assets/search/index-CST20x.json`, `index-pages.json`,
-  `repeated.json`) keep their explicit manifest `?v=<sha256>` cache key instead
-  of being overwritten by the worker version. Visiting `search.html` sends a
-  one-shot `WARM_SEARCH` message so the service worker caches all remaining
-  subject shards in the background for offline cross-subject queries.
-- Card shards (`assets/cards/CST20x.json`) are cached per subject at
-  `?v=<VERSION>`. Loading `cards.html` or `today.html` sends a one-shot
-  `WARM_STUDY` message, so the worker caches the five subject shards plus the
-  card manifest in the background; a device can then review cards offline after
-  that first study-page load. A cold first visit and an installed-but-never-opened
-  study page are not covered.
-- Generated pools/cards without explicit content hashes add `?v=<VERSION>` and
-  are refreshed in the background at their stable URLs; a cached response may be
-  from the previous version until the next request. This limitation is visible
-  here; no instantaneous data freshness guarantee is made.
-- Worker activation remains user-triggered via the existing update banner;
-  student storage uses a different namespace (`d3s:`) and is not cleared by
-  cache cleanup.
-- Data changes to manifest-hashed search shards invalidate automatically via
-  their SHA-256 query parameter; shell dependency changes require a worker
-  version bump. Current shared cache is not an independently versioned
-  shell/data adapter; that refinement remains pending for Phase 9.
+Scope-relative URLs; no browser-facing localhost endpoints. Two cache namespaces
+and two independent versions (Phase 9.3, 2026-11-17):
 
-Real-device installation, cache-eviction and update acceptance belongs to the
-owner-requested final device phase (Phase 10). Offline service-worker and
-warmed-cache tests are focused engineering checks, not proof of all offline
-journeys.
+| Class | Cache | Version | Behaviour |
+|---|---|---|---|
+| shell (HTML, CSS, JS, icons, manifest) | `diploma-3rd-sem-<shell>` | `sw.js` `VERSION = 'study-2026-11-17e'` | precached on install; a new shell waits and `pwa.js` asks before reloading |
+| data (pools, papers, search shards, card shards, catalog) | `diploma-3rd-sem-data-<dataVersion>` | generated `assets/data/data-version.json` (`data-6b1621c45599`) | stale-while-revalidate, keyed by the data version; refreshed silently |
+
+## What each class does
+
+- **Shell.** `PRECACHE_ASSETS` covers the shared head assets (`assets/css/variables.css`,
+  `assets/css/main.css`, `assets/css/base.css`, `assets/css/discovery.css`), the
+  generated `assets/js/shell.bundle.js` (accessibility + i18n + pwa), the storage
+  boundary, the discovery/study shells and the study scripts plus
+  `assets/cards/manifest.json`. Installs into a fresh cache name; `activate`
+  deletes superseded shell caches. A shell change therefore never forces a reload:
+  the student is asked once.
+- **Pages.** Network-first. On failure the worker returns the cached response, the
+  pre-cached pathname shell (so `search.html?q=…` and `repeated.html?subject=…`
+  work offline) or `offline.html`.
+- **Data.** Any same-origin GET under `_data/`, `_quiz-data/`, `assets/data/`,
+  `assets/search/`, `assets/cards/` is served from the data cache when present and
+  refreshed in the background (stale-while-revalidate). The cache key carries
+  `?v=<dataVersion>`; a data-only change therefore misses, fetches and stores new
+  bytes **without touching the shell**. Search shards keep their own manifest
+  `?v=<sha256>` keys, which are stricter than the data version and stay valid.
+- **Offline.** If `data-version.json` cannot be read (or the version changed while
+  offline) the worker still answers from any cached copy of the same pathname, so
+  a version bump can never turn a saved page into a 503.
+- **Warmers.** `WARM_SEARCH` (from `search.html`) and `WARM_STUDY` (from
+  `cards.html`/`today.html`) cache the remaining shards in the background. A cold
+  first visit, or an install that never opens a study page, is still not covered.
+- **Student storage** lives under the `d3s:` prefix in `localStorage` (plus the
+  IndexedDB recovery mirror) and is never touched by cache cleanup.
+
+## Update flow (proved without a browser)
+
+`tests/data-version.cjs` asserts all three cases against the real `sw.js`:
+
+1. data-only bump → returning device reads the corrected file from the network,
+   stores it under the new key, the shell cache is byte-identical and no update
+   banner can appear (the worker script itself did not change);
+2. shell-only bump → new shell cache installed, old shell cache deleted, data
+   cache kept (no re-download of ~1.4 MB of pools);
+3. offline after either bump → the previously cached copy is still served.
+
+## Regenerating
+
+Order matters; the data version must be last because it hashes the data it ships.
+See the root README's "Regenerating checked-in outputs" block. `tests/test_data_version.py`
+fails when `assets/data/data-version.json` is stale, and a stale shell version
+fails `check_platform.py`'s idempotence check.
+
+Real-device installation, cache eviction and update acceptance belong to Phase 10.
+These are focused engineering checks, not proof of every offline journey.

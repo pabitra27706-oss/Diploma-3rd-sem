@@ -326,7 +326,7 @@ function renderPaperSummaryNote() {
     note = document.createElement('section');
     note.id = 'paper-review-summary';
     note.setAttribute('role', 'status');
-    note.style.cssText = 'margin:0 0 1rem;padding:0.85rem 1rem;border-radius:10px;border:1px solid var(--border,#cbd5e1);';
+    note.style.cssText = 'margin:0 0 1rem;padding:0.85rem 1rem;border-radius:10px;border:1px solid var(--border,var(--c-slate-300));';
     dom.reviewMain.prepend(note);
   }
   note.replaceChildren();

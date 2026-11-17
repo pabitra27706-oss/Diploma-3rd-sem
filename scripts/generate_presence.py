@@ -7,9 +7,9 @@ from html import escape, unescape
 import os
 import re
 
-ROOT = Path(__file__).resolve().parent.parent
-SITE = 'https://pabitra27706-oss.github.io/Diploma-3rd-sem/'
-IMAGE = SITE + 'docs/phases/01-platform/screenshots/after-home.png'
+from site_config import ROOT, SITE, SOCIAL_IMAGE
+
+IMAGE = SITE + SOCIAL_IMAGE
 
 def main():
     pages = sorted(p for p in ROOT.rglob('*.html') if not set(p.relative_to(ROOT).parts) & {'webflow', '.git', 'node_modules', 'assets'})
@@ -46,13 +46,17 @@ def main():
         # deferred, first-party script with an English fallback, so it is safe to
         # load everywhere and it works without a build step.
         s = re.sub(r'<script defer src="[^"]*assets/js/i18n\.js"></script>\n?', '', s)
+        s = re.sub(r'<script defer src="[^"]*assets/js/pwa\.js"></script>\n?', '', s)
+        s = re.sub(r'<script defer src="[^"]*assets/js/shell\.bundle\.js"></script>\n?', '', s)
         # Shared additive safeguards load on every shipped page.
         s = re.sub(r'<script defer src="[^"]*assets/js/accessibility\.js"></script>\n?', '', s)
         s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/accessibility\.css">\n?', '', s)
+        s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/base\.css">\n?', '', s)
+        s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/pwa\.css">\n?', '', s)
         # One print sheet on every shipped page (Phase 8.3): the printed unit,
         # paper, answer key and revision sheet must all come out black on white.
         s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/print\.css">\n?', '', s)
-        s = s.replace('</head>', f'<link rel="stylesheet" href="{assets}assets/css/print.css">\n<link rel="stylesheet" href="{assets}assets/css/accessibility.css">\n<script defer src="{assets}assets/js/accessibility.js"></script>\n<script defer src="{assets}assets/js/i18n.js"></script>\n</head>')
+        s = s.replace('</head>', f'<link rel="stylesheet" href="{assets}assets/css/base.css">\n<script defer src="{assets}assets/js/shell.bundle.js"></script>\n</head>')
         if re.search(r'<main\b', s, re.I):
             match = re.search(r'<main\b[^>]*>', s, re.I)
             ident = re.search(r'\bid=["\']([^"\']+)', match[0])
