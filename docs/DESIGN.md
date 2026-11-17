@@ -9,12 +9,12 @@
 >
 > Method: `webflow/knowledge/design-system.md`. Playbook: `webflow/`.
 
-## Direction (proposed, needs owner approval)
+## Direction (owner-selected, not yet implemented)
 
 One line: *"A quiet revision desk: dense readable text, one accent colour, no
 decoration, everything reachable with one thumb and a keyboard."*
 
-- Chosen: **not yet** — recorded here only as a proposal.
+- 2026-11-17: owner selected [illustration option 1](phases/09B-ui-reboost/selected-direction.png) and approved the [plan](phases/09B-ui-reboost/plan.md) conditional on required before screenshots. Preferred: dark navy/lavender, balanced density, serif-style brand title without the leaf. This illustration is not a site screenshot; its example wording and decoration are not approved content. No Phase 9B component or scale has yet been implemented or visually verified.
 
 ## Current token inventory (20 first-party CSS files)
 

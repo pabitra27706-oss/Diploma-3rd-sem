@@ -709,3 +709,8 @@ report stated that nothing was deployed and no PR existed.
 ## Phase 9B — preferred illustration (2026-11-17)
 
 - Owner selected **option 1 of 2** generated illustrations: `docs/phases/09B-ui-reboost/selected-direction.png`. Its dark, restrained surfaces and lavender accent are a design reference, not a screenshot or permission to add its invented illustration/copy/features. The owner did not give a reason for not selecting option 2. Exact details and the proposed plan remain subject to owner confirmation; no CSS work is authorized until the plan is explicitly approved.
+
+## Phase 9B — plan and visual preferences (2026-11-17)
+
+- Owner approved the proposed plan and batch sequence **conditional on required before screenshots being available**. Continue to wait for matching desktop and other applicable baseline screenshots before the first batch; after each batch obtain after screenshots and written confirmation before proceeding.
+- Follow selected illustration's dark navy/lavender palette closely, subject to contrast checks. Aim for balanced density. Use a serif-style title as a reference but no botanical decoration. Use locally available fonts; no CDN or new runtime font request. These preferences do not authorize the illustration's invented wording, new content, or features.
