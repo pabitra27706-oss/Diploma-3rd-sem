@@ -714,3 +714,7 @@ report stated that nothing was deployed and no PR existed.
 
 - Owner approved the proposed plan and batch sequence **conditional on required before screenshots being available**. Continue to wait for matching desktop and other applicable baseline screenshots before the first batch; after each batch obtain after screenshots and written confirmation before proceeding.
 - Follow selected illustration's dark navy/lavender palette closely, subject to contrast checks. Aim for balanced density. Use a serif-style title as a reference but no botanical decoration. Use locally available fonts; no CDN or new runtime font request. These preferences do not authorize the illustration's invented wording, new content, or features.
+
+## Phase 9B — page-specific references and priorities (2026-11-17)
+
+- Owner clarified that separate design references are wanted for practice, quiz and PYQ before implementation. They specifically asked for a better site-wide print action, a usable phone home header, improved practice top/bottom copy, a full quiz-flow redesign and PYQ copy/share/source controls near the bookmark above questions with SVGs. Retain current functionality, source/certification meaning and URLs. Exact source-note treatment needs clarification because the PYQ code distinguishes paper source notes from provenance.

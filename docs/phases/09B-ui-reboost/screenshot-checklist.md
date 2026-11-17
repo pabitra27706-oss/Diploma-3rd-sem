@@ -1,6 +1,6 @@
 # Screenshot checklist — owner-provided before and after evidence
 
-We cannot render the site here. Existing ten phone images already show home, subject, unit overview, bottom of practice hub, one practice question, quiz landing/subject list and collapsed PYQ list. We do **not** need duplicates unless a batch needs a different state. The list below covers the full redesign; send **the first group now**, and the rest when convenient or before their relevant batch. Please redact names, private notes, backups or answers you do not want to share. Use the actual page, not the AI illustration. Include top/header and enough surrounding content; long pages can be two shots. Capture the same state/theme/viewport after each batch.
+We cannot render the site here. Fourteen supplied phone images show home, subject, unit overview, practice hub, one practice question, quiz landing/subject list and PYQ list (including an expanded subject); four of these show light mode. We do **not** need duplicates unless a batch needs a different state. The list below covers the full redesign; send **the first group now**, and the rest when convenient or before their relevant batch. Please redact names, private notes, backups or answers you do not want to share. Use the actual page, not the AI illustration. Include top/header and enough surrounding content; long pages can be two shots. Capture the same state/theme/viewport after each batch.
 
 Base: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
 
@@ -15,13 +15,13 @@ If no desktop is available, tell us; we can prepare other research, but will not
 
 ## Phone before evidence — missing key screens
 
-5. **Practice hub top and filters:** `practice/index.html`; optionally show Save Preset dialog. The supplied screenshot already shows its empty presets/queue lower down.
+5. **Practice hub:** the new full-page light screenshot includes top, filters and empty presets/queue. Optionally provide a normal-scale screenshot of the Save Preset dialog when that batch is due.
 6. **Practice question answer shown:** from practice hub choose Start Practice, show a question with answer revealed and bottom controls; optional long code and completed state. The supplied unanswered example is already recorded.
 7. **Quiz setup:** `quiz/setup.html`, show mode/subject/count; a second view with filters/timer expanded.
 8. **Quiz in progress:** start a short quiz from setup; show question/options and question palette or navigation. Do not start one you cannot finish or save.
 9. **Quiz result and review:** finish a short quiz, capture the result and one review question; optionally history/export with a saved result. Do not change any personal data just for a screenshot.
-10. **PYQ expanded list and mode:** `pyq/index.html`, open a subject and choose a paper; capture its Question Paper / Practice with Answers choices.
-11. **PYQ paper and answers:** open the selected Question Paper, then Practice with Answers; capture one question and sidebar/filter controls.
+10. **PYQ mode:** the new light screenshot already shows an expanded subject; choose a paper and capture its Question Paper / Practice with Answers choices.
+11. **PYQ paper and answers:** open the selected Question Paper, then Practice with Answers; capture one question including its bookmark, copy/share controls, source and provenance notes, plus sidebar/filter controls; also capture review mode if available.
 12. **Discovery and settings:** `search.html` with a result and `settings.html` top (hide any sensitive information). If useful also `today.html`, `cards.html` and `roadmap/index.html`.
 
 ## Before the relevant later batch
