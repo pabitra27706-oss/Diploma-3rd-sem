@@ -68,3 +68,8 @@ On this checkout `python3 scripts/audit_accessibility.py --fail` reports 74 page
 12. Practice question screenshot has many competing high-contrast badges and action groups (`practice/session.html:199–202`): use calmer secondary treatments while preserving meaning.
 13. Discovery has a different native form/table vocabulary (`assets/css/discovery.css:5–14`): adopt shared controls and empty/error hierarchy.
 14. Colour references span 302 palette entries and 197 alpha expressions: introduce semantic alpha tokens safely, prove exact equivalence and contrast before reducing palette choices.
+
+
+## Batch 1A update
+
+The strict token checker now uses a conservative per-file `rgba()` legacy ledger: 397 existing occurrences outside token definitions (369 CSS, 25 HTML, 3 JS). It rejects changed/added/removal-count mismatches until the ledger is intentionally ratcheted and allows alpha definitions in `variables.css`. Zero findings means **the legacy inventory matches**, not that alpha colours are tokenised. This scanner does not parse all JS-generated/escaped colours or modern `rgb()` alpha syntax; see the batch record. No rendered colours changed.

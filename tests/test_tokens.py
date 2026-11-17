@@ -30,6 +30,7 @@ class TokenTreeTests(unittest.TestCase):
     def test_tree_has_no_findings(self) -> None:
         findings = self.checker.Findings()
         self.checker.check_literals(findings)
+        self.checker.check_rgba(findings)
         self.checker.check_palette(findings)
         self.checker.check_definitions(findings)
         self.checker.check_page_order(findings)

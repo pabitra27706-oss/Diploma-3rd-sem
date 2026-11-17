@@ -726,3 +726,7 @@ report stated that nothing was deployed and no PR existed.
 - PYQ: move **both** the paper's source note (when present) and the verification/provenance disclosure above the question near the bookmark and copy/share controls. Keep both truthful, accessible and intact in practice and review; never imply an unverified answer is certified.
 - Print: place the existing action in an existing actions menu where available; retain clear access on pages without one. Preserve real print output and current capabilities; do not make a new functionality change or hide the action entirely.
 - Typography: owner explicitly revised the earlier brand-title-only serif preference: use **serif headings**, with **sans-serif body text and controls**, keeping a locally available stack and checking legibility/contrast.
+
+## Phase 9B — checker-only alpha ratchet (2026-11-17)
+
+- Added a strict, exact per-file legacy `rgba()` ledger and regression tests before alpha migration. Baseline 397 occurrences (369 CSS, 25 HTML, 3 JS); zero findings means the ledger matches, not that the site is alpha-tokenised. Only `variables.css` custom-property definitions are exempt from the legacy ledger. Conservative text scan limitations are documented in the phase record. UI and alpha migration await the owner’s batch confirmation and before/after visual evidence.

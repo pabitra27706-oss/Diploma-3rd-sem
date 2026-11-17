@@ -1,6 +1,6 @@
 # Phase 9B record — 2026-11-17
 
-Status: **illustration option 1 selected; plan approved conditional on required before screenshots; no UI batch implemented or accepted**. Branch `arena/48a2ab20-diploma-3rd-sem`, base `816ef84`. Reuse: existing `variables.css`, `base.css`, quiz/practice controls and shared JS widgets are studied for adaptation; no runtime dependency or feature added.
+Status: **checker-only batch implemented, awaiting owner confirmation; no visual batch implemented or accepted**. Branch `arena/48a2ab20-diploma-3rd-sem`, base `816ef84`. Reuse: existing `variables.css`, `base.css`, quiz/practice controls and shared JS widgets are studied for adaptation; no runtime dependency or feature added.
 
 ## Evidence received
 
@@ -25,3 +25,13 @@ Owner supplied four additional **phone light-mode** screenshots: full home, prac
 ## Clarifications received — 2026-11-17
 
 Owner selected both PYQ source-note types for placement above questions, print in an existing actions menu where available with clear access elsewhere, and serif headings / sans-serif body and controls. Missing before screenshots still block implementation. No batch or deployment has been approved by these clarifications.
+
+## Additional owner before evidence — 2026-11-17
+
+Thirteen more Via browser screenshots supplied: home (`153653`), C subject (`153704`, `153718`), practice hub (`153754`) and session (`153818`), PYQ practice/review including source notes (`153838`, `153843`), quiz landing/setup/play (`153855`, `153905`, `153916`, `153930`, `153937`, `153945`); full filenames are `Screenshot_20261117_<time>_Via.jpg`. That brings the total to 27 owner-supplied site screenshots. Several show a wide-layout view scaled into a phone; CSS viewport width and true physical-desktop behavior were not reported. They are useful baseline evidence, not a desktop device pass. No after, actual print, or rendered local screenshots. Screenshot `153905` appears to show empty warning/error boxes and a custom count box with 10 selected; source has `hidden` attributes (`quiz/setup.html:349,852–875`) while `.alert` declares `display:flex` (`quiz/css/common.css:1024–1034`). This is a plausible cause, not a confirmed diagnosis across browsers; include it in the quiz batch and test actual hidden/visible states.
+
+## Batch 1A — alpha checker only, awaiting owner review
+
+Added `tests/test_rgba_tokens.py` before `scripts/check_tokens.py` implementation: the initial run failed as expected before the checker existed. The checker scans first-party CSS, HTML and JS text, including inline styles and generated JS; allows rgba in custom-property definitions in `variables.css`; and compares all other balanced `rgba()` expressions against exact per-file counts in `rgba-baseline.json`. Legacy counts: **397** (369 CSS, 25 HTML, 3 JS) over 32 files. This is a conservative text scanner: CSS/HTML comments are ignored, JS comments/strings are included, dynamic construction/escaping and modern `rgb()` syntax are not comprehensively parsed. The ledger is a ratchet, **not alpha-tokenisation**; removal requires the reviewed ledger to shrink in the same change. The earlier 384 figure counted parsed CSS declarations, including token definitions, so it is a different scope and cannot be compared arithmetically. No CSS, HTML or runtime JS changed; generated outputs were regenerated in the requested order and remained byte-identical. No owner after-screenshot is needed for this non-visual checker-only batch; screenshots of actual UI batches remain mandatory.
+
+Checks: `check_site --strict` 0 errors/warnings; platform 0 errors; strict tokens 0 findings **with 397 known legacy exceptions**; icon subset/data version current; weight budget pass; root rewrite pass; accessibility 47 token pairs and 0 findings; 14 deterministic Node suites pass. Python suite: 102 tests, 1 pre-existing error in `test_data_pipeline.test_no_semantic_or_answer_changes` because git object `664674b` is absent (do not count as a pass). No visual pass, runtime request count or desktop hardware test was performed. Wait for owner confirmation before alpha migration or any visual batch.

@@ -4,8 +4,10 @@
 > Every **hex** colour literal in the tree is defined exactly once, in the palette
 > block of `assets/css/variables.css`, and enforced by `scripts/check_tokens.py`.
 > A new page may not hard-code a hex colour: add or reuse a palette token.
-> `rgba()` values (373 occurrences, 188 distinct — mostly alpha shadows and
-> overlays) are **not** yet tokenised; that is a recorded open item.
+> `rgba()` values are **not** yet tokenised; a Phase 9B strict checker now
+> locks 397 existing occurrences outside token definitions in a reviewed legacy
+> ledger. Zero findings means no drift, not completed alpha tokenisation; the
+> earlier 373/188 CSS-only count used a different undocumented method.
 >
 > Method: `webflow/knowledge/design-system.md`. Playbook: `webflow/`.
 
