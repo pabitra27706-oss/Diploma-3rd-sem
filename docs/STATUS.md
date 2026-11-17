@@ -17,8 +17,9 @@ has been recorded. Full evidence: [`phases/09-performance-launch/record.md`](pha
 - **9.1 ✅** Data fan-out unchanged from 2026-11-09 (Practice 36 → 1 JSON, quiz
   setup 20 → 2); the static side is now measured too (table below).
 - **9.2 ✅** One token file: 302 palette entries in `assets/css/variables.css`,
-  1,205 literals re-pointed, **0 literals outside the token file** and 0 value
-  differences (47 contrast pairs unchanged). 71 dead rules removed. Icon CSS
+  1,205 literals re-pointed, **0 hex literals outside the token file** and 0 value
+  differences (47 contrast pairs unchanged); `rgba()` values (373 occurrences,
+  188 distinct) stay outside that gate and are recorded as an open item. 71 dead rules removed. Icon CSS
   subset 102,641 → **25,890 B** (−74.8 %). Three global sheets → `base.css` and
   three global scripts → `shell.bundle.js`; the English catalog is no longer
   fetched. **No browser here: colour equivalence is static, layout was not

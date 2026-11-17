@@ -34,7 +34,8 @@ parallel, not sequential; offline still works; before/after table in the record.
 
 ## 9.2 — CSS/JS consolidation
 
-**✅ Done 2026-11-17.** 302-entry palette, 1,205 literals re-pointed, 71 dead rules removed, icon CSS −74.8 %, four requests removed per default view. No browser: colour equivalence proven statically, layout not.
+**✅ Done 2026-11-17** for the hex gate (302-entry palette, 1,205 literals
+re-pointed; `rgba()` values remain out of scope and are recorded as open), 71 dead rules removed, icon CSS −74.8 %, four requests removed per default view. No browser: colour equivalence proven statically, layout not.
 
 **Steps**
 1. Inventory the 19 CSS files: selectors used, literals duplicated, dead rules
