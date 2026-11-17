@@ -210,6 +210,18 @@ CONTRAST_PAIRS = [
     ('focus ring on light (3:1 non-text)', VARIABLES, False, '--focus-ring-solid', '--bg-primary-light', 3.0, '1.4.11'),
     ('focus ring on dark (3:1 non-text)', VARIABLES, True, '--focus-ring-solid', '--bg-primary-dark', 3.0, '1.4.11'),
     ('skip link text', ROOT / 'assets/css/base.css', False, '--skip-fg', '--skip-bg', 4.5, '1.4.3'),
+    # Phase 9C navy/lavender system (docs/DESIGN.md). Measured from the tokens
+    # the pages actually resolve, not from screenshots.
+    ('hub accent as text (light)', VARIABLES, False, '--hub-accent-solid', '--bg-primary-light', 4.5, '1.4.3'),
+    ('hub white on accent (light)', VARIABLES, False, '--bg-primary-light', '--hub-accent-solid', 4.5, '1.4.3'),
+    ('hub accent on card (light)', VARIABLES, False, '--hub-accent-solid', '--bg-card-light', 4.5, '1.4.3'),
+    ('hub accent as text (dark)', VARIABLES, True, '--hub-accent-text-dark', '--bg-primary-dark', 4.5, '1.4.3'),
+    ('hub accent on card (dark)', VARIABLES, True, '--hub-accent-text-dark', '--bg-card-dark', 4.5, '1.4.3'),
+    ('hub secondary on tint (light)', VARIABLES, False, '--text-secondary-light', '--bg-tertiary-light', 4.5, '1.4.3'),
+    ('hub secondary on tint (dark)', VARIABLES, True, '--text-secondary-dark', '--bg-tertiary-dark', 4.5, '1.4.3'),
+    ('hub tertiary on card (light)', VARIABLES, False, '--text-tertiary-light', '--bg-card-light', 4.5, '1.4.3'),
+    ('hub focus ring (light)', VARIABLES, False, '--focus-ring-solid', '--bg-primary-light', 3.0, '1.4.11'),
+    ('hub focus ring (dark)', VARIABLES, True, '--focus-ring-solid', '--bg-primary-dark', 3.0, '1.4.11'),
 ]
 
 

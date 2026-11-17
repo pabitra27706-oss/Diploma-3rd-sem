@@ -754,6 +754,8 @@ function renderPracticeView() {
 
   const typeLabel = TYPE_LABELS[q.type] || q.type || 'Question';
   const diffClass = q.difficulty ? `q-badge-difficulty-${q.difficulty}` : '';
+  // Owner decision (Phase 9C): the paper's source note belongs ABOVE the
+  // question, next to the action icons, not buried under the answer body.
   const sourceNoteHTML = q.sourceNote
     ? `<div class="source-note"><strong>Source note:</strong> ${escapeHtml(q.sourceNote)}</div>`
     : '';
@@ -900,7 +902,8 @@ function renderPracticeView() {
           </svg>
         </button>
       </div>
-      <div class="q-body">${bodyHTML}${sourceNoteHTML}${syllabusNoteHTML}</div>
+      <div class="q-notices-host">${sourceNoteHTML}${syllabusNoteHTML}</div>
+      <div class="q-body">${bodyHTML}</div>
       ${feedbackHTML}
       ${theoryAnswerHTML}
     </div>
@@ -1035,11 +1038,10 @@ function renderReviewView() {
             </svg>
           </button>
         </div>
+        <div class="q-notices-host">${sourceNoteHTML}${syllabusNoteHTML}</div>
         <div class="q-body">
           <div class="q-text rich-content">${renderRichContent(q.question)}</div>
           ${mcqHtml}
-          ${sourceNoteHTML}
-          ${syllabusNoteHTML}
         </div>
         <div class="review-card-answer">
           <div class="review-answer-label">
@@ -1836,15 +1838,30 @@ function decorateQuestionLinks() {
     const controls = document.createElement('div');
     controls.className = 'question-share';
 
+    // Icons are inline SVG: no new request, they inherit currentColor, and the
+    // visible text label stays next to each one for screen readers and print.
+    // Compact glyphs for the header action row. Each is icon-only on screen;
+    // the accessible name and the tooltip carry the wording, and the label is
+    // still exposed to assistive tech via aria-label on the control.
+    const ICONS = {
+      copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+      share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+      info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+    };
+
     const copy = document.createElement('button');
     copy.type = 'button';
-    copy.className = 'copy-question-link';
-    copy.textContent = 'Copy question link';
+    copy.className = 'copy-question-link q-action';
+    copy.innerHTML = ICONS.copy;
+    copy.setAttribute('aria-label', 'Copy link to this question');
+    copy.title = 'Copy link';
 
     const share = document.createElement('button');
     share.type = 'button';
-    share.className = 'share-question-link';
-    share.textContent = 'Share question';
+    share.className = 'share-question-link q-action';
+    share.innerHTML = ICONS.share;
+    share.setAttribute('aria-label', 'Share this question');
+    share.title = 'Share';
 
     const status = document.createElement('span');
     status.className = 'share-status';
@@ -1873,16 +1890,16 @@ function decorateQuestionLinks() {
       );
     });
 
-    controls.append(copy, share, status);
-
-    // Provenance stays one small line until a reader asks for it (Phase 8.6).
-    // The summary keeps the citation and the certification state visible even
-    // when the details element is closed, so print and screen readers see it.
+    // Provenance is a <details> panel in the header action group so the
+    // citation, copy and share all sit as one icon cluster next to the
+    // bookmark (owner request), instead of a full-width row that pushed the
+    // question text off a phone screen.
     const provenance = document.createElement('details');
-    provenance.className = 'question-provenance';
+    provenance.className = 'question-provenance q-action';
     const provenanceSummary = document.createElement('summary');
-    provenanceSummary.textContent =
-      `Source: ${q.sourcePage || 'not recorded'} · ${q.verifiedOn ? 'verified ' + q.verifiedOn : 'not certified'}`;
+    provenanceSummary.innerHTML = ICONS.info;
+    provenanceSummary.setAttribute('aria-label', 'Source and verification details');
+    provenanceSummary.title = 'Source and verification details';
     const provenanceBody = document.createElement('p');
     provenanceBody.textContent =
       `Question wording: ${q.sourceStatus || 'unverified'}. Answer: ${q.answerStatus || 'unverified'} (stored model answer, not an official key). `
@@ -1891,8 +1908,22 @@ function decorateQuestionLinks() {
         ? `Owner-verified on ${q.verifiedOn}.`
         : 'No owner sign-off date is recorded, so this answer is not certified.');
     provenance.append(provenanceSummary, provenanceBody);
-    controls.append(provenance);
-    card.append(controls);
+    // Keep `question-share` as the semantic hook existing tests and the
+    // print sheet rely on; `q-actions` adds the compact icon-cluster layout.
+    controls.className = 'question-share q-actions';
+    controls.append(copy, share, provenance, status);
+
+    // Sit the icon cluster inside the question header, immediately before the
+    // bookmark, so the row reads [copy][share][info][bookmark].
+    const header = card.querySelector('.q-header');
+    const bookmark = header && header.querySelector('.q-bookmark-btn');
+    if (bookmark && bookmark.parentNode === header) {
+      bookmark.insertAdjacentElement('beforebegin', controls);
+    } else if (header && header.parentNode === card) {
+      header.append(controls);
+    } else {
+      card.prepend(controls);
+    }
 
     loadRepeatIndex().then(repeatMap => {
       const info = repeatMap.get(q.id);

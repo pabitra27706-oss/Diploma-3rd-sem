@@ -252,7 +252,13 @@ class DiscoveryTests(unittest.TestCase):
 
     def test_service_worker_caches_discovery_offline(self):
         sw = (ROOT / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn("const VERSION = 'study-2026-11-17e'", sw)
+        versions = re.findall(r"const VERSION = '([^']+)'", sw)
+        self.assertEqual(len(versions), 1, 'worker must have one shell version')
+        self.assertRegex(versions[0], r'^study-[a-z0-9-]+$')
+        for name in ('index.html', 'search.html', 'today.html'):
+            page = (ROOT / name).read_text(encoding='utf-8')
+            self.assertIn(f'<meta name="app-build" content="{versions[0]}">', page,
+                          f'{name} must report the worker shell version')
         for asset in (
             'search.html',
             'repeated.html',

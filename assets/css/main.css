@@ -1,6 +1,4 @@
-/* ================================
-   Base Styles & Reset
-   ================================ */
+/* Base Styles & Reset */
 
 * {
   margin: 0;
@@ -47,9 +45,7 @@ input {
   border-radius: var(--radius-md);
 }
 
-/* ================================
-   Welcome Screen
-   ================================ */
+/* Welcome Screen */
 
 .welcome-screen {
   position: fixed;
@@ -139,7 +135,7 @@ input {
 .welcome-badge {
   display: inline-block;
   padding: var(--spacing-sm) var(--spacing-lg);
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--alpha-white-15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-full);
   color: white;
@@ -195,7 +191,7 @@ input {
   background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-xl);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--alpha-white-15);
   animation: welcomeFadeUp 0.6s 0.3s ease both;
 }
 
@@ -238,7 +234,7 @@ input {
 .name-input-wrapper input {
   width: 100%;
   padding: var(--spacing-md) var(--spacing-lg);
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--alpha-white-15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-lg);
   color: white;
@@ -256,7 +252,7 @@ input {
   outline: none;
   border-color: rgba(255, 255, 255, 0.6);
   background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px var(--alpha-white-15);
 }
 
 .cta-btn {
@@ -297,13 +293,11 @@ input {
   animation: welcomeFadeUp 0.6s 0.45s ease both;
 }
 
-/* ================================
-   App Container
-   ================================ */
+/* App Container */
 
 .app-container {
   min-height: 100vh;
-  padding-top: var(--header-height);
+  padding-top: 0;
   padding-bottom: var(--bottom-nav-height);
   background: var(--bg-primary);
 }
@@ -328,18 +322,15 @@ input {
   }
 }
 
-/* ================================
-   Header
-   ================================ */
+/* Header */
 
 .app-header {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  height: var(--header-height);
+  min-height: var(--header-height);
   border-bottom: 1px solid var(--border);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--spacing-lg);
@@ -355,9 +346,13 @@ input {
   align-items: center;
   gap: var(--spacing-md);
   flex: 1;
+  min-width: min-content;
 }
 
+.header-title { min-width: 0; }
+
 .header-title h1 {
+  font-family: var(--font-heading);
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--text-primary);
@@ -374,7 +369,18 @@ input {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  flex-shrink: 0;
 }
+
+.header-link {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+}
+.header-link:hover { background: var(--bg-tertiary); color: var(--text-primary); }
 
 /* ── Icon Buttons ── */
 .icon-btn {
@@ -407,6 +413,8 @@ input {
   flex-shrink: 0;
 }
 
+.header-search { display: none; }
+
 /* ── Theme Toggle ── */
 #themeToggle {
   position: relative;
@@ -438,9 +446,7 @@ input {
   transform: rotate(-90deg) scale(0);
 }
 
-/* ================================
-   Main Content
-   ================================ */
+/* Main Content */
 
 .main-content {
   max-width: var(--max-width);
@@ -448,9 +454,7 @@ input {
   padding: var(--spacing-lg);
 }
 
-/* ================================
-   Greeting Section
-   ================================ */
+/* Greeting Section */
 
 .greeting-section {
   display: flex;
@@ -507,9 +511,7 @@ input {
   display: none;
 }
 
-/* ================================
-   Stats Bar (NEW)
-   ================================ */
+/* Stats Bar (NEW) */
 
 .stats-bar {
   display: grid;
@@ -592,9 +594,7 @@ input {
   color: var(--streak-cold);
 }
 
-/* ================================
-   Today's Focus Card (NEW)
-   ================================ */
+/* Today's Focus Card (NEW) */
 
 .focus-card {
   background: var(--focus-card-bg);
@@ -679,7 +679,7 @@ input {
 
 .focus-subject-tag {
   padding: var(--spacing-xs) var(--spacing-md);
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--alpha-white-15);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
@@ -697,9 +697,7 @@ input {
   z-index: 1;
 }
 
-/* ================================
-   Continue Card
-   ================================ */
+/* Continue Card */
 
 .continue-card {
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
@@ -758,9 +756,7 @@ input {
   font-weight: var(--font-semibold);
 }
 
-/* ================================
-   Content Sections
-   ================================ */
+/* Content Sections */
 
 .content-section {
   margin-bottom: var(--spacing-2xl);
@@ -787,9 +783,7 @@ input {
   color: var(--text-tertiary);
 }
 
-/* ================================
-   Subject Grid
-   ================================ */
+/* Subject Grid */
 
 .subject-grid {
   display: grid;
@@ -946,9 +940,7 @@ input {
   min-width: 0%;
 }
 
-/* ================================
-   Quick Access Grid
-   ================================ */
+/* Quick Access Grid */
 
 .quick-grid {
   display: grid;
@@ -1010,9 +1002,7 @@ input {
   text-align: center;
 }
 
-/* ================================
-   Skeleton Loading (NEW)
-   ================================ */
+/* Skeleton Loading (NEW) */
 
 .skeleton {
   background: var(--skeleton-base);
@@ -1066,9 +1056,7 @@ input {
   flex-shrink: 0;
 }
 
-/* ================================
-   Toast Notifications (NEW)
-   ================================ */
+/* Toast Notifications (NEW) */
 
 .toast-container {
   position: fixed;
@@ -1181,9 +1169,7 @@ input {
   opacity: 1;
 }
 
-/* ================================
-   Bottom Navigation
-   ================================ */
+/* Bottom Navigation */
 
 .bottom-nav {
   position: fixed;
@@ -1241,9 +1227,7 @@ input {
   font-weight: var(--font-medium);
 }
 
-/* ================================
-   Side Menu
-   ================================ */
+/* Side Menu */
 
 .menu-overlay {
   position: fixed;
@@ -1271,6 +1255,7 @@ input {
   border-left: 1px solid var(--border);
   z-index: calc(var(--z-overlay) + 1);
   transform: translateX(100%);
+  visibility: hidden;
   transition: transform var(--transition-base);
   display: flex;
   flex-direction: column;
@@ -1278,6 +1263,7 @@ input {
 }
 
 .side-menu.active {
+  visibility: visible;
   transform: translateX(0);
 }
 
@@ -1358,9 +1344,20 @@ input {
   line-height: 1.6;
 }
 
-/* ================================
-   Responsive Design
-   ================================ */
+/* Responsive Design */
+
+@media (max-width: 1024px) {
+  .app-header { padding-inline: var(--spacing-md); }
+  .header-link { display: none; }
+  .header-search { display: flex; }
+  .header-title h1 { font-size: var(--text-lg); }
+  .header-title p { font-size: var(--text-xs); }
+}
+
+@media (max-width: 320px) {
+  .header-search { display: none; }
+  .header-right { gap: var(--spacing-xs); }
+}
 
 @media (max-width: 640px) {
   .welcome-title {
@@ -1432,18 +1429,16 @@ input {
   }
 }
 
-/* ================================
-   Safe Area — iOS Notch Support
-   ================================ */
+/* Safe Area — iOS Notch Support */
 
 @supports (padding: env(safe-area-inset-top)) {
   .app-header {
     padding-top: env(safe-area-inset-top);
-    height: calc(var(--header-height) + env(safe-area-inset-top));
+    min-height: calc(var(--header-height) + env(safe-area-inset-top));
   }
 
   .app-container {
-    padding-top: calc(var(--header-height) + env(safe-area-inset-top));
+    padding-top: 0;
     padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
   }
 

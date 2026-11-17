@@ -55,14 +55,15 @@ class AccessibilityAuditTests(unittest.TestCase):
         self.assertEqual(failing, [])
         # The measurement must stay honest about how many pairs it covers.
         self.assertEqual(len(self.data['contrast']), self.baseline['contrast_measured'])
-        self.assertEqual(self.baseline['contrast_measured'], 47)
+        # Phase 9C added the navy/lavender pair set (47 -> 57 measured pairs).
+        self.assertEqual(self.baseline['contrast_measured'], 57)
 
     def test_contrast_measurement_reads_real_tokens(self):
         rows = {row['label']: row for row in self.data['contrast']}
         # Spot-check that aliases resolved to hex rather than being skipped.
         self.assertEqual(rows['body text (dark)']['fg'], '#f8fafc')
         self.assertEqual(rows['white on success']['bg'], '#047857')
-        self.assertEqual(rows['tertiary text (light)']['fg'], '#5f6f85')
+        self.assertEqual(rows['tertiary text (light)']['fg'], '#5a5e78')
 
     def test_every_animating_sheet_is_reduced_motion_guarded(self):
         motion = self.data['motion']

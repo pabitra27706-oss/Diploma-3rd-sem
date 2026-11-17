@@ -33,7 +33,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/908b6b19-diploma-3rd-sem` (Phase 9 branch, merged as PR #17 `c898a95` on the owner's 2026-11-17 command; `main` now carries Phases 1–9 — prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · active branch: `main` (Phases 1–9B merged; Phase 9B merged 2026-11-17 by explicit owner command). Phase 10 — device acceptance — is next and is not started. No deploy without explicit owner command.
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -205,9 +205,9 @@ A **public launch** additionally needs every item in
 
   ```sh
   cd ~/Diploma-3rd-sem
-  git fetch origin arena/908b6b19-diploma-3rd-sem
-  git checkout arena/908b6b19-diploma-3rd-sem
-  git pull --ff-only origin arena/908b6b19-diploma-3rd-sem
+  git fetch origin main
+  git checkout main
+  git pull --ff-only origin main
   cd ..
   python3 -m http.server 8010 --bind 127.0.0.1
   ```

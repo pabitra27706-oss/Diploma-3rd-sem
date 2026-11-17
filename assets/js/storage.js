@@ -24,7 +24,7 @@
  const physical=k=>k.startsWith(PREFIX)?k:PREFIX+k;
  function error(e){const message=e?.name==='QuotaExceededError'?'Device storage is full. Export a backup and free space; this change was not saved.':'Local storage failed: '+e.message;globalThis.dispatchEvent?.(new CustomEvent('study-storage-error',{detail:message}));return Error(message);}
  function rawSet(k,value){try{localStorage.setItem(k,String(value));if(localStorage.getItem(k)!==String(value))throw Error('Write verification failed');}catch(e){throw error(e);}if(!restoring)mirror(k,String(value));}
- function prefs(){const raw=localStorage.getItem(PREFS);return raw?JSON.parse(raw):{theme:'system',fontScale:100,lineHeight:'normal',contrast:'normal',lang:'en',reduceMotion:'system'};}
+ function prefs(){const raw=localStorage.getItem(PREFS);return raw?JSON.parse(raw):{theme:'dark',fontScale:100,lineHeight:'normal',contrast:'normal',lang:'en',reduceMotion:'system'};}
  function assertReady(){if(localStorage.getItem(JOURNAL)!==null)throw Error('An interrupted import needs recovery. Open Settings and choose Retry recovery or export the pre-import backup.');}
  function getRaw(key){
    assertReady();

@@ -45,7 +45,8 @@
     } catch (_) {
       execOk = false;
     }
-    if (execOk && button) button.textContent = copiedText;
+    // Never overwrite an icon-only button; the status region reports the state.
+    if (execOk && button && !button.querySelector('svg')) button.textContent = copiedText;
     if (statusEl) {
       statusEl.textContent = execOk
         ? 'Link copied to clipboard.'
@@ -63,7 +64,9 @@
     if (typeof navigator !== 'undefined' && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
       try {
         await navigator.clipboard.writeText(url);
-        if (button) button.textContent = copiedText;
+        // Text buttons still swap their label, as before. Icon-only buttons
+        // keep their glyph and report through the live region instead.
+        if (button && !button.querySelector('svg')) button.textContent = copiedText;
         if (statusEl) statusEl.textContent = 'Link copied to clipboard.';
         var old = container && container.querySelector ? container.querySelector('.share-fallback-input') : null;
         if (old && typeof old.remove === 'function') old.remove();
@@ -84,7 +87,9 @@
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
         await navigator.share(data);
-        if (options.button) options.button.textContent = options.sharedText || 'Link shared';
+        if (options.button && !options.button.querySelector('svg')) {
+          options.button.textContent = options.sharedText || 'Link shared';
+        }
         if (options.statusEl) options.statusEl.textContent = 'Link shared.';
         return { method: 'share', url: url };
       } catch (err) {

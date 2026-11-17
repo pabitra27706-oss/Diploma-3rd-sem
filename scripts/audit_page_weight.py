@@ -18,8 +18,18 @@ Usage:
     python3 scripts/audit_page_weight.py --compare old.json   # before/after delta
     python3 scripts/audit_page_weight.py --budget            # exit 1 over budget
 
-Budgets (uncompressed, first-party): 250 KB CSS, 350 KB JS per page. They are a
+Budgets (uncompressed, first-party): 300 KB CSS, 350 KB JS per page. They are a
 regression fence, not a Core Web Vitals claim.
+
+The CSS fence moved from 250 KB to 300 KB with the Phase 9C design layer
+(assets/css/hub.css). That layer is a single shared sheet carrying the site-wide
+type scale, colour system and every component state; it added ~118 KB to the
+heaviest pages, whose own area sheets (subjects/units-com/common.css is 108 KB)
+already sat near the old ceiling. Splitting the layer per page-family was tried
+and rejected: hub.css relies on [data-page] qualifiers for specificity over the
+area sheets, so any split changes the cascade and regresses rendered colours.
+The single-file ceiling in check_site.py is already 300 KB, so this keeps the
+two fences consistent rather than introducing a new one.
 """
 
 from __future__ import annotations
@@ -35,7 +45,7 @@ from site_config import SITE
 
 ROOT = Path(__file__).resolve().parent.parent
 SKIP_DIRS = {".git", "node_modules", "webflow", ".github", "tests"}
-CSS_BUDGET = 250 * 1024
+CSS_BUDGET = 300 * 1024
 JS_BUDGET = 350 * 1024
 
 LINK = re.compile(r'<link\b[^>]*>', re.I)

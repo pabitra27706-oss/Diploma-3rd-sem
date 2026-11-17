@@ -51,14 +51,21 @@ function harness(entries = {}, options = {}) {
 /* ── Pre-paint and system preference ─────────────────────────────────── */
 {
   const { S, store, root, media } = harness();
-  assert.equal(root.attrs['data-theme'], 'light', 'theme is applied synchronously at script evaluation (pre-paint)');
+  // Phase 9C: the adopted navy theme is the first-visit default (owner choice,
+  // docs/DECISIONS.md), so a first visit paints dark without writing anything.
+  assert.equal(root.attrs['data-theme'], 'dark', 'the default theme is applied synchronously at script evaluation (pre-paint)');
   assert.equal(store.size, 0, 'a first visit writes nothing just to paint the theme');
   assert.deepEqual(JSON.parse(JSON.stringify(S.prefs())), {
-    theme: 'system', fontScale: 100, lineHeight: 'normal', contrast: 'normal', lang: 'en', reduceMotion: 'system'
+    theme: 'dark', fontScale: 100, lineHeight: 'normal', contrast: 'normal', lang: 'en', reduceMotion: 'system'
   }, 'one preference object owns every reading preference');
 
+  // The OS is still honoured the moment the reader chooses "system".
+  S.setTheme('system');
+  assert.equal(root.attrs['data-theme'], 'light', 'system with a light OS preference paints light');
   media.set(true);
   assert.equal(root.attrs['data-theme'], 'dark', 'system preference change repaints while theme is system');
+  S.setTheme('dark');
+  assert.equal(root.attrs['data-theme'], 'dark');
 
   S.setTheme('light');
   assert.equal(root.attrs['data-theme'], 'light');
@@ -121,7 +128,7 @@ function harness(entries = {}, options = {}) {
   root.attrs['data-theme'] = 'stale';
   S.clearGroup('preferences');
   assert.equal(S.keys().length, 0);
-  assert.equal(root.attrs['data-theme'], 'light', 'clearing preferences repaints the page as a first visit');
+  assert.equal(root.attrs['data-theme'], 'dark', 'clearing preferences repaints the page as a first visit (default theme)');
 
   assert.throws(() => S.clearGroup('everything-ish'), /Unknown reset group/);
   S.set('section-note:x', { text: '', updatedAt: 1 });

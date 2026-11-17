@@ -36,7 +36,8 @@
 
 ## Law waivers (owner-approved exceptions to `rule.md`)
 
-- None. Time budget remains four weeks from 2026-11-06.
+- 2026-11-17 — **Phase 9B only:** owner suspends the four-question cap in `rule.md` §3; ask as many design clarification questions as needed, in batches. This exception expires with Phase 9B and does not waive any other gate.
+- Time budget remains four weeks from 2026-11-06.
 
 ## Agent decisions (reversible — object if wrong)
 
@@ -700,3 +701,69 @@ report stated that nothing was deployed and no PR existed.
 - Visitor effect: the shell version changed, so a returning visitor's installed
   worker fetches the new shell as *waiting* and `pwa.js` asks before reloading;
   the data cache is kept (its version namespace is separate).
+
+## Phase 9B — alpha-colour policy (2026-11-17)
+
+- Tokenise `rgba()` in this phase using the existing `assets/css/variables.css` token file. Extend the strict checker and tests before migration; preserve colour equivalence and rerun contrast checks. The current checker enforces hex only; the alpha gate is not yet implemented or green. Owner direction and plan approval remain pending.
+
+## Phase 9B — preferred illustration (2026-11-17)
+
+- Owner selected **option 1 of 2** generated illustrations: `docs/phases/09B-ui-reboost/selected-direction.jpg`. Its dark, restrained surfaces and lavender accent are a design reference, not a screenshot or permission to add its invented illustration/copy/features. The owner did not give a reason for not selecting option 2. Exact details and the proposed plan remain subject to owner confirmation; no CSS work is authorized until the plan is explicitly approved.
+
+## Phase 9B — plan and visual preferences (2026-11-17)
+
+- Owner approved the proposed plan and batch sequence **conditional on required before screenshots being available**. Continue to wait for matching desktop and other applicable baseline screenshots before the first batch; after each batch obtain after screenshots and written confirmation before proceeding.
+- Follow selected illustration's dark navy/lavender palette closely, subject to contrast checks. Aim for balanced density. Use a serif-style title as a reference but no botanical decoration. Use locally available fonts; no CDN or new runtime font request. These preferences do not authorize the illustration's invented wording, new content, or features.
+
+## Phase 9B — page-specific references and priorities (2026-11-17)
+
+- Owner clarified that separate design references are wanted for practice, quiz and PYQ before implementation. They specifically asked for a better site-wide print action, a usable phone home header, improved practice top/bottom copy, a full quiz-flow redesign and PYQ copy/share/source controls near the bookmark above questions with SVGs. Retain current functionality, source/certification meaning and URLs. Exact source-note treatment needs clarification because the PYQ code distinguishes paper source notes from provenance.
+
+- Later on 2026-11-17, owner selected **option 2 of 2** for each generated page reference: [Practice](phases/09B-ui-reboost/practice-reference.jpg), [Quiz](phases/09B-ui-reboost/quiz-reference.jpg), [PYQ](phases/09B-ui-reboost/pyq-reference.jpg). These are compositional references, not screenshots or approval to add their invented words, subjects, numbers, controls or content. In particular the practice illustration mistakenly depicts nursing subjects and invented metrics: none belong to this site and none may be implemented. The chosen quiz illustration uses serif type more broadly than the previous brand-only preference; resolve that discrepancy with the owner. No real-page redesign or batch acceptance is implied.
+
+## Phase 9B — specific visual choices (2026-11-17)
+
+- PYQ: move **both** the paper's source note (when present) and the verification/provenance disclosure above the question near the bookmark and copy/share controls. Keep both truthful, accessible and intact in practice and review; never imply an unverified answer is certified.
+- Print: place the existing action in an existing actions menu where available; retain clear access on pages without one. Preserve real print output and current capabilities; do not make a new functionality change or hide the action entirely.
+- Typography: owner explicitly revised the earlier brand-title-only serif preference: use **serif headings**, with **sans-serif body text and controls**, keeping a locally available stack and checking legibility/contrast.
+
+## Phase 9B — checker-only alpha ratchet (2026-11-17)
+
+- Added a strict, exact per-file legacy `rgba()` ledger and regression tests before alpha migration. Baseline 397 occurrences (369 CSS, 25 HTML, 3 JS); zero findings means the ledger matches, not that the site is alpha-tokenised. Only `variables.css` custom-property definitions are exempt from the legacy ledger. Conservative text scan limitations are documented in the phase record. UI and alpha migration await the owner’s batch confirmation and before/after visual evidence.
+
+## Phase 9B — owner confirmed checker and first alpha migration (2026-11-17)
+
+- Owner said “Yes continue” after the checker-only batch explanation; this confirms that batch, not future batches or deployment. Five identical white-overlay occurrences were moved to `--alpha-white-15` without changing their value. Await before/after owner screenshots and confirmation for this migration before moving on. Remaining alpha ledger: 392 occurrences. Branch shell `study-2026-11-17f` is not live; the live site remains `study-2026-11-17e` until an explicit merge/deploy command.
+
+
+## Phase 9B — screenshot cadence revised (2026-11-17)
+
+The owner asked for broader app-styled, phone-friendly CSS improvements and said screenshots are not required for every work item. Earlier per-batch screenshot instructions are therefore revised for Phase 9B: use supplied screenshots as evidence, do not block every iteration on new screenshots, and report which views remain unverified. This does not constitute visual approval of the completed site or permission to merge/deploy; final owner review, dark/print verification, safety gates and explicit publication authorization remain required.
+
+
+## Phase 9B — merged, and the diverging branch retired (2026-11-17)
+
+Owner command: complete the docs and merge. `arena/7e77489f-diploma-3rd-sem`
+merged to `main` by fast-forward.
+
+Two decisions are recorded because they were expensive and both remain tempting:
+
+1. **`hub.css` stays a single sheet.** Splitting into `assets/css/families/*`
+   was tried twice: per-family duplication gave 92 fingerprint differences,
+   per-family emission 146. Rejected. Do not recreate that directory.
+2. **Unit/subject rules stay in `hub.css`, not `subjects/units-com/common.css`.**
+   `common.css` loads before `hub.css`, so a rule moved there loses the
+   `[data-page]` specificity level: 1,496 anchors reverted to legacy colour.
+   Rejected.
+
+The per-page CSS fence moved 250 KB → 300 KB in the same pass (owner, Option A),
+matching the `CSS_BUDGET_SINGLE` ceiling that `scripts/check_site.py` already
+enforced. Heaviest page 171.5 KB.
+
+**`arena/48a2ab20-diploma-3rd-sem` (draft PR #20) is superseded and must be
+closed, not merged.** It shares base `816ef84` and overlaps 104 files with the
+merged work; a second merge would be a 104-file conflict resolution rather than
+an integration.
+
+Merging is not a claim of device verification. Phase 10 owns physical-device,
+screen-reader, zoom, print and offline evidence, and none of it exists yet.

@@ -568,9 +568,10 @@ body {
 }
 
 .filter-chip.active {
-  background: var(--accent);
+  /* Solid fill behind white text: --accent is a pale tint in dark mode. */
+  background: var(--hub-accent-solid);
   color: var(--c-white);
-  border-color: var(--accent);
+  border-color: var(--hub-accent-solid);
 }
 
 .filter-chip:hover:not(.active) { background: var(--bg-hover); }
@@ -901,8 +902,8 @@ body {
 }
 
 .mcq-card.selected .mcq-letter {
-  border-color: var(--accent);
-  background: var(--accent);
+  border-color: var(--hub-accent-solid);
+  background: var(--hub-accent-solid);
   color: var(--c-white);
 }
 
@@ -957,7 +958,7 @@ body {
 }
 
 .show-answer-btn:hover {
-  background: var(--accent);
+  background: var(--hub-accent-solid);
   color: var(--c-white);
 }
 
@@ -1102,7 +1103,11 @@ body {
   overflow: hidden;
 }
 
+/* The visible dot stays 9px, but the control itself is a full touch target:
+   a 9px hit area is unusable with a thumb, and there are 60+ of them. The dot
+   is drawn with a pseudo-element so the padding enlarges the tap zone only. */
 .nav-dot {
+  position: relative;
   width: 9px; height: 9px;
   border-radius: 50%;
   border: none;
@@ -1110,6 +1115,15 @@ body {
   cursor: pointer;
   transition: all var(--transition);
   padding: 0;
+}
+
+.nav-dot::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 24px; height: 24px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
 }
 
 .nav-dot:hover { transform: scale(1.4); }
@@ -1176,7 +1190,7 @@ body {
 }
 
 .go-top-btn:hover {
-  background: var(--accent);
+  background: var(--hub-accent-solid);
   color: var(--c-white);
   transform: translateY(-2px);
 }
@@ -1387,9 +1401,9 @@ body {
 .print-size-btn[data-size="large"] { font-size: 0.95rem; }
 
 .print-size-btn.active {
-  background: var(--accent);
+  background: var(--hub-accent-solid);
   color: var(--c-white);
-  border-color: var(--accent);
+  border-color: var(--hub-accent-solid);
 }
 
 .print-action-btn {
@@ -1397,7 +1411,7 @@ body {
   align-items: center;
   gap: 0.3rem;
   padding: 0.35rem 0.75rem;
-  background: var(--accent);
+  background: var(--hub-accent-solid);
   color: var(--c-white);
   border: none;
   border-radius: var(--radius-sm);

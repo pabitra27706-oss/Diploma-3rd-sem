@@ -26,6 +26,12 @@
 (() => {
   const main = document.querySelector('main') || document.getElementById('study-main-content');
   if (!main || document.querySelector('.print-page-btn, #printAllBtn')) return;
+  // Pages that already expose a print control must not get a second one, and
+  // the control never goes inside a layout container that would make it a
+  // flex/grid sibling of the content (the PYQ paper viewer is a flex row, so
+  // the injected button used to steal width and squeeze the paper).
+  if (document.querySelector('#printBtn, #printPaperBtn, [data-print-control]')) return;
+  if (getComputedStyle(main).display.includes('flex') || getComputedStyle(main).display.includes('grid')) return;
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'print-page-btn';

@@ -1,9 +1,55 @@
-# Current status and remaining work
-
-Documentation checkpoint: **2026-11-17 (Phase 9)**. Earlier reconciliations:
+Documentation checkpoint: **2026-11-17 (Phase 9B merged)**. Earlier reconciliations:
 2026-11-16 (branch/license audit — `docs/AUDIT-2026-11-16.md`), 2026-11-17
-(sub-phase 8A, Phase 7 merge, Phase 8 content depth). This is the current handoff;
-older phase evidence remains historical unless explicitly superseded here.
+(sub-phase 8A, Phase 7 merge, Phase 8 content depth, Phase 9B). This is the
+current handoff; older phase evidence remains historical unless explicitly
+superseded here.
+
+## Phase 9B — UI reboost (2026-11-17) — `✅*`, merged
+
+Implemented on `arena/7e77489f-diploma-3rd-sem` (from `main` at `816ef84`) and
+**merged to `main` by explicit owner command on 2026-11-17**. The asterisk is
+the same honest asterisk as Phases 1–8: the CSS layer, tokens, gates and the
+rendered headless sweep are complete, but **no physical-device pass exists**.
+Phase 10 owns that.
+
+What shipped:
+
+- **One shared design layer.** `assets/css/hub.css` (~118 KB) is injected before
+  `</head>` by `scripts/generate_presence.py` on all 74 pages, alongside
+  `base.css`. Splitting it into per-family sheets was attempted twice and
+  rejected on evidence (92 then 146 fingerprint regressions); moving rules into
+  `subjects/units-com/common.css` was also rejected (load order costs a
+  specificity level — 1,496 anchor colours reverted). Both dead ends are
+  recorded so they are not retried.
+- **`data-page` stamping.** `mark_body()` was defined but never *called* in the
+  generator, so 7 pages silently kept legacy navigation colours at 2.51:1. The
+  call is restored and the helper is idempotent across repeat runs.
+- **Retheme.** Light `#f7f7fd` / accent `#5a4bc4`; dark `#101120` / accent text
+  `#a99bf7`. 57 measured contrast pairs, all passing.
+- **Per-page CSS fence raised 250 KB → 300 KB** by owner decision (Option A),
+  matching the per-file ceiling already enforced by `scripts/check_site.py`.
+  Heaviest page uses 171.5 KB. Rationale recorded in the
+  `scripts/audit_page_weight.py` docstring and `docs/LAUNCH-CHECKLIST.md`.
+- **PYQ phone fixes** (owner-reported, reproduced before changing): the paper
+  viewer was 275 px wide because `accessibility.js` appended a print button
+  into a `display:flex` `<main>`; copy/share/source moved into the question
+  header as a 40 px icon cluster beside the bookmark; white-on-pale-lavender
+  fills (2.37:1) repointed to `--hub-accent-solid` (6.48:1); `.nav-dot` got a
+  24 px hit area behind its unchanged 9 px visual.
+
+Verification actually obtained: 6/6 static gates, 113/113 unit tests on a full
+clone (the one error reported in the Arena sandbox is a missing git object in
+that shallow clone, not a defect), and a headless Chromium sweep at 412 px in
+both themes.
+
+Not obtained, and not claimed: any physical-device screenshot, TalkBack or
+VoiceOver observation, 200 % zoom, real print-to-PDF, or a warmed-cache offline
+launch. The Phase 9B docs record these as outstanding.
+
+Related but **not** merged: the older diverging Phase 9B branch
+`arena/48a2ab20-diploma-3rd-sem` (draft PR #20, 14 commits) shares a base but
+overlaps 104 files with the work above. It is superseded by this merge and
+should be closed rather than merged.
 
 ## Phase 9 — performance and launch (2026-11-17) — `✅*`, merged and live
 
