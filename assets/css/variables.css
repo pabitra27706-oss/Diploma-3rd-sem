@@ -5,17 +5,9 @@
 /* ================================
    Palette — the single source of every colour literal in this tree.
    ================================
-   Phase 9.2 (2026-11-17): every `#rrggbb`/`#rgb` value that used to be repeated
-   across 22 first-party stylesheets and 74 pages is defined exactly once, here.
-   Nothing outside this block — no stylesheet, no inline `style`, no `<style>`
-   block — may contain a colour literal; `scripts/check_tokens.py` fails CI when
-   one appears. Per-area semantic tokens (`--bg-primary` in quiz, practice, pyq
-   and units each mean a different colour) stay in their own files as aliases of
-   these palette entries, because merging colliding semantic names would change
-   rendered output.
-
-   Names are read from the value's role, not from a theme: `--c-white` is white
-   in both themes, and the themed tokens are the ones that flip.
+   Phase 9.2: hex values live here; area-specific semantic aliases remain local.
+   The token checker enforces this palette and the Phase 9B alpha ledger.
+   Theme-independent palette names stay constant; themed aliases can change.
    ================================ */
 :root {
   /* Neutrals */
@@ -332,6 +324,9 @@
 }
 
 :root {
+  /* White overlay, used in the home welcome and focus surfaces. */
+  --alpha-white-15: rgba(255, 255, 255, 0.15);
+
   /* ── Accent Colors ── */
   --accent-primary: var(--c-indigo-550); /* 4.5:1+ as text and behind white (was #6366f1, 4.47:1) */
   --accent-secondary: var(--c-violet-600); /* white on it: 5.70:1 (was #8b5cf6, 4.23:1) */

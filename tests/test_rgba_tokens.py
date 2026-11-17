@@ -1,6 +1,7 @@
 """Guard the Phase 9B rgba ratchet using isolated source trees."""
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -99,6 +100,13 @@ class RgbaGateTests(unittest.TestCase):
         self.assertTrue(self.check())
         self.baseline.write_text(json.dumps({'version': 1, 'occurrences': {'../escape.css': {'rgba(1,2,3,.4)': -1}}}))
         self.assertTrue(self.check())
+
+
+class HomeOverlayTokenTests(unittest.TestCase):
+    def test_white_overlay_remains_exactly_fifteen_percent_white(self):
+        variables = (ROOT / 'assets/css/variables.css').read_text()
+        self.assertEqual(re.findall(r'--alpha-white-15\s*:\s*([^;]+);', variables),
+                         ['rgba(255, 255, 255, 0.15)'])
 
 
 if __name__ == '__main__':

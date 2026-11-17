@@ -730,3 +730,7 @@ report stated that nothing was deployed and no PR existed.
 ## Phase 9B — checker-only alpha ratchet (2026-11-17)
 
 - Added a strict, exact per-file legacy `rgba()` ledger and regression tests before alpha migration. Baseline 397 occurrences (369 CSS, 25 HTML, 3 JS); zero findings means the ledger matches, not that the site is alpha-tokenised. Only `variables.css` custom-property definitions are exempt from the legacy ledger. Conservative text scan limitations are documented in the phase record. UI and alpha migration await the owner’s batch confirmation and before/after visual evidence.
+
+## Phase 9B — owner confirmed checker and first alpha migration (2026-11-17)
+
+- Owner said “Yes continue” after the checker-only batch explanation; this confirms that batch, not future batches or deployment. Five identical white-overlay occurrences were moved to `--alpha-white-15` without changing their value. Await before/after owner screenshots and confirmation for this migration before moving on. Remaining alpha ledger: 392 occurrences. Branch shell `study-2026-11-17f` is not live; the live site remains `study-2026-11-17e` until an explicit merge/deploy command.
