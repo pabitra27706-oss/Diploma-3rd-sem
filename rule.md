@@ -8,10 +8,14 @@
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
-> merged as PR #15, Phase 8 content depth): active session branch is
-> `arena/e0da0bec-diploma-3rd-sem` (branched from `main` at
-> `84e99aad91d1baf9b4e1110b0767a0ea0b4cd6c2`, the PR #15 merge). Earlier branches
-> `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`),
+> merged as PR #15, Phase 8 `✅*` accepted and merged as **PR #16**):
+> `arena/e0da0bec-diploma-3rd-sem` was the Phase 8 session branch, branched from
+> `main` at `84e99aad91d1baf9b4e1110b0767a0ea0b4cd6c2` (the PR #15 merge) and now
+> merged back. **The next session starts from a fresh Arena branch cut from the
+> PR #16 merge on `main`; read the branch name from Git, not from this file.**
+> If you are reading this while a new phase has begun, §7's Termux block must be
+> updated to that new branch before any run instructions are given. Earlier branches
+> `arena/e0da0bec-...` (PR #16 `Phase 8`), `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`),
 > `arena/4d3997da-...` (PR #13 `a92a1ff`), `arena/80b11bcf-...` (PR #12 `7c20a55`), `arena/637a5a31-...` (PR #10
 > `8f6eb97`, PR #11 `9d47c7c7`), `arena/858a50c7-...` (PR #9 `365b8f7`),
 > `arena/47d8bf99-...` (PR #8 `3e3cb2e1`), `arena/be3d9178-...` (PR #7

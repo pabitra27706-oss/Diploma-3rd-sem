@@ -14,6 +14,10 @@ without a citation is not ready to ship — say so in the record instead.
 | 8.5 Exam pattern + marks | ✅ implemented | ESE table sums to 60; 28/28 paper maxima reconciled from each paper's own quotas; decision recorded |
 | 8.6 Verification workflow | ⛔ owner gate (structure built) | Register + fail-closed validator + derived ledger + expandable per-answer source line; **0 of 924 certified** |
 
+**Accepted `✅*` by the owner on 2026-11-17** after a smoke use pass ("nothing
+breaks"), and merged to `main` as PR #16. The two ⛔ rows stay ⛔: acceptance did
+not certify a single sheet entry or answer, and the owner did not claim it did.
+
 Steps below are kept as written; where the tree already satisfied a step the
 record says so instead of the step being quietly dropped.
 

@@ -236,3 +236,50 @@ removed, i.e. the condition CI starts from) were all `OK`, so it could not be
 reproduced. No time-dependent test exists in `tests/*.py`. Treated as an open
 reliability question rather than as a pass: if CI ever shows it, capture the test
 name with `python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | grep -A20 FAIL`.
+
+## Owner acceptance — 2026-11-17
+
+- **Reported:** "Everything is pass on a smoke use test nothing breaks", with
+  "You can merge and write the next prompt".
+- **Status:** `🚧` → **`✅*`**. Authorized merge of
+  `arena/e0da0bec-diploma-3rd-sem` → `main` as PR #16.
+- **Evidence description, kept next to the status so the asterisk is not read as
+  a measurement:** a smoke *use* pass — the owner clicked through the site and
+  nothing broke. No named surfaces, no device model, no measurements, no print
+  output. That is acceptance (the owner is the acceptance authority), not
+  verification.
+- **What acceptance did not do, restated because it is the whole point of the
+  asterisk:**
+  - 8.2: **0 of 44** revision-sheet entries verified; still not linked from
+    navigation.
+  - 8.6: **0 of 924** archived answers certified; the ledger still says so on
+    every answer.
+  - 456 quiz items still have no stored key; CST201's quiz-bank units are still
+    reversed; the six out-of-syllabus unit tags are unchanged (source gate).
+  - `validate_data --strict` (9 findings) and `validate_syllabus --strict`
+    (CST205 U5 ×4, CST209 U5 ×2, CST207 no quiz bank) still fail. Nothing was
+    retagged, suppressed or added to a baseline to make them pass.
+  - No real phone print/PDF export was observed; the print sheet is verified
+    structurally (74/74 pages, one link each) and by the audit, not by paper.
+   → Phase 10 device matrix.
+- **Merge:** PR #16, `--merge` (no squash), so the phase's three commits keep
+  their individual messages.
+
+## Handoff to Phase 9
+
+Phase 9 (`09-performance-launch`) already has a partial implementation from
+2026-11-09: 9.1 data loading is measured and shipped (Practice 43 → 12 requests,
+Quiz setup 28 → 12), and `docs/MEASUREMENT.md`, `docs/CACHE-POLICY.md`,
+`docs/DOMAIN.md` exist. What is still open, and what the next session should
+start with, is in `docs/phases/09-performance-launch/tasks.md` §9.2–9.6 — see the
+kickoff block in `prompt.md`.
+
+Phase 8 changed two of Phase 9's inputs and the next session must not re-measure
+from stale numbers: the tree is **74 pages** (not 68) and the worker is
+**`study-2026-11-17d`**; `assets/css/` holds **six** first-party sheets
+(`main`, `variables`, `pwa`, `discovery`, `accessibility`, `print`). Two are
+now on every page — `accessibility.css` 74/74 and `print.css` 74/74 — while
+`pwa.css` loads on 55 pages, `variables.css` on 22, `discovery.css` on 18 and
+`main.css` on 4. That 74 vs 55 vs 22/18/4 split, and the hex literals still
+sitting in five of the six sheets, are Phase 9's 9.2 problem, not a Phase 8
+regression.

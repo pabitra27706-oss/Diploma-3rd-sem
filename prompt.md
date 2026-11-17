@@ -1,9 +1,9 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-17 (Phase 3 reconciled to `✅*`; Phase 4 discovery merged via
-PR #12 and owner-verified; Phase 5 study-system `✅*`; Phase 6 merged as PR #14;
-Phase 7 `✅*` and merged as PR #15; **Phase 8 content depth implemented on
-`arena/e0da0bec-diploma-3rd-sem`, with 8.2 and 8.6 waiting on owner sign-off**). Read `rule.md`,
+Updated 2026-11-17 (**Phases 1–8 are `✅*` and merged to `main`; Phase 8 content
+depth was accepted by the owner on a smoke use pass and merged as PR #16**; the
+next phase is **Phase 9 — performance and launch**, see the kickoff block at the
+end of this file). Read `rule.md`,
 `docs/STATUS.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md` and the relevant phase
 record before continuing. Source files and actual Git status take precedence over
 older narrative.
@@ -11,12 +11,12 @@ older narrative.
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- `main` carries Phases 1–5 (`✅*`), Phase 6 (`✅*`, PR #14 `5b7eb66`), Phase 7
-  (`✅*`, PR #15 `84e99aa`) and sub-phase 8A. Check `git log` for the exact tip;
-  the PR #15 merge is the newest `main` merge.
-- Session branch: `arena/e0da0bec-diploma-3rd-sem` (active), branched from
-  `main` at `84e99aad91d1baf9b4e1110b0767a0ea0b4cd6c2`. Do not
-  create/switch/rename branches or push another branch.
+- `main` carries Phases 1–8 (`✅*`): Phase 6 (PR #14 `5b7eb66`), Phase 7
+  (PR #15 `84e99aa`), Phase 8 (PR #16). Check `git log`; the PR #16 merge is the
+  newest `main` merge and the base for the next phase.
+- Session branch: whatever Arena names for the current session, cut from that
+  merge. The Phase 8 branch `arena/e0da0bec-diploma-3rd-sem` is merged and
+  retired. Do not create/switch/rename branches or push another branch.
   Prior branches `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...`
   (PR #14 `5b7eb66`), `arena/4d3997da-...` (PR #13 `a92a1ff`),
   `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
@@ -74,8 +74,8 @@ Phase 1 platform implementation is complete with deferred final hardware
 acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the complete
 per-phase remainder table and the source/rights gates.
 
-- Phase 8 — content depth and syllabus coverage (2026-11-17,
-  `arena/e0da0bec-diploma-3rd-sem`): measured first, and three of the phase
+- Phase 8 — content depth and syllabus coverage (`✅*`, 2026-11-17, merged as
+  PR #16 after the owner's smoke use pass "nothing breaks"): measured first, and three of the phase
   README's own claims were already false for this tree (the lab/internship pages
   existed; CST201's *pages* were in syllabus order while its *quiz bank* is
   reversed; the CST203 Unit-1 skew is 117/170, not 140/204). The old coverage
@@ -145,7 +145,8 @@ per-phase remainder table and the source/rights gates.
 ## Evidence and limits
 
 Latest implementation checkpoint (`2026-11-17`, Phase 8): **63 Python tests** and
-sixteen deterministic Node suites PASS; 55 JS/CJS files and 79 JSON files parse;
+sixteen deterministic Node suites PASS; hosted **Web CI green** on the phase tip
+(runs `44046215114`, `44046331697`); 55 JS/CJS files and 79 JSON files parse;
 site strict **0 errors / 0 warnings**, platform 0 errors, immutable-PYQ guard
 0 changes; accessibility audit 74 pages with 0 findings (47 contrast pairs);
 `check_readme_paths` 0 missing. Chromium suites were **not run** (no browser). The seven focused Chromium
@@ -159,11 +160,11 @@ no content: 0 revision entries and 0 answers are owner-verified.
 
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
-2. Use `docs/STATUS.md`'s remaining order. Phases 1–7 are `✅*` with recorded
-   caveats and are merged to `main`. Phase 8 is 🚧: 8.1/8.3/8.4/8.5 are
-   implemented and gate-verified; **8.2 and 8.6 are owner gates** — sign off
-   revision entries, then answer batches of ≤40 with a citation and a date.
-   Phase 9 (performance/launch) and Phase 10 (device acceptance) remain.
+2. Use `docs/STATUS.md`'s remaining order. Phases 1–8 are `✅*` with recorded
+   caveats and are merged. **Phase 9 (performance and launch) is next and is the
+   last engineering phase**; Phase 10 is one device-acceptance phase. Phase 8's
+   two content gates (8.2 revision sheets, 8.6 answer certification) stay open
+   in parallel and are **owner** work — acceptance never certified content.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
    visible; record new evidence/dispositions in derived metadata and decisions.
 4. Edit source scripts, not generated bundles. Regeneration order and check
@@ -194,3 +195,65 @@ https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling
 anyone to pull.
+
+## Next session kickoff — Phase 9, performance and launch
+
+Paste this as the opening instruction of the next session. It is self-contained;
+the session should still read `rule.md` → this file → `docs/STATUS.md` first.
+
+> **Task: finish Phase 9 (`docs/phases/09-performance-launch/`).** No new
+> features — every change either removes bytes, removes requests, improves a
+> measured number, or records a decision. Phase 9 is the last engineering phase;
+> Phase 10 is device acceptance.
+>
+> **Start from the measured tree, not from the 2026-11-09 record.** Phases 6–8
+> changed the inputs: **74 pages** (not 68), worker **`study-2026-11-17d`**,
+> **63 Python tests** + 16 deterministic Node suites, `assets/css/` holding
+> **six** first-party sheets with `accessibility.css` and `print.css` on all 74
+> pages (`pwa.css` 55, `variables.css` 22, `discovery.css` 18, `main.css` 4),
+> and **22 first-party CSS files / ~490 KB total**, of which **768 hex literals**
+> remain (`variables.css` holds 67 of them and 156 custom properties; the other
+> 701 sit outside it). Re-measure anything you intend to quote; do not carry the
+> old numbers forward.
+>
+> **Already done (verify, do not redo):** 9.1 data loading — Practice 43 → 12
+> requests and 36 → 1 JSON, quiz setup 28 → 12 requests and 20 → 2 JSON, pools
+> 858,467 B / 420,756 B, measured in cold local Chromium with service workers
+> blocked (`request-measurements.json`). `docs/MEASUREMENT.md`,
+> `docs/CACHE-POLICY.md` and `docs/DOMAIN.md` exist.
+>
+> **Remaining, in this order:**
+> 1. **9.2 CSS/JS consolidation** — one token file as the single source; replace
+>    literals outside it (allowlist the sprite/logo); delete dead rules and dead
+>    JS after grepping real HTML usage; measure per-page CSS/JS bytes before and
+>    after. Accept: zero hex literals outside the token file, every page within
+>    budget, no visual regression. There is **no browser here** — say so instead
+>    of claiming screenshots.
+> 2. **9.3 caching and update policy** — give data its own version, independent
+>    of the shell; add the update-flow regression (bump → banner → reload → new
+>    shell) to the deterministic Node suite so it runs without Chromium; prove a
+>    data-only update reaches a returning user without clearing storage.
+> 3. **9.4 measurement gate (owner)** — implement/verify the local-only
+>    "was this useful" prompt (no network call, one per session, dismissible) and
+>    the copy template; `docs/MEASUREMENT.md` must list what is unknowable. Ask
+>    the owner for the dated decision; do not add analytics.
+> 4. **9.5 base-path readiness** — centralise the base path in one constant used
+>    by manifest, worker, canonical and sitemap; prove a `/`-rooted copy passes
+>    `check_site.py` (rewrite a temp copy and run the checker). No domain is
+>    bought, registered or configured.
+> 5. **9.6 launch gate** — `site-checklist.md` fully ticked with dates, a
+>    real-phone pass recorded, Lighthouse numbers attributed to the machine they
+>    came from (or recorded as **not run** — a green budget check is not a
+>    Lighthouse score), rollback documented. **Deploy does not happen.**
+>
+> **Constraints that still bind:** PYQs stay byte-frozen (`_data/pyq-integrity.json`);
+> never retag a raw PYQ or a syllabus unit to make a strict check green — CST205
+> U5 ×4, CST209 U5 ×2, CST207's missing quiz bank, the reversed CST201 quiz-bank
+> units and the nine strict-data findings are **open findings, not noise**; no
+> PR, merge, deploy, Pages, domain, tag or release without an explicit command
+> from the owner; report measured numbers or say they were not measured.
+>
+> **Done means:** ≤ 12 requests per view (from code), one token file, a data
+> cache version independent of the shell, an update regression that runs without
+> a browser, the 9.4 decision dated, the `/`-root rewrite proven, the launch
+> checklist ticked with dates — and **still nothing deployed**.

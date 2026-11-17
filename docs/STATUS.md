@@ -6,7 +6,7 @@ Phase 7 merge, and **Phase 8 content depth**
 — see `docs/phases/08-content-depth/record.md`). This is the current handoff;
 older phase evidence remains historical unless explicitly superseded here.
 
-## Phase 8 — content depth and syllabus coverage (2026-11-17)
+## Phase 8 — content depth and syllabus coverage (2026-11-17) — `✅*`, merged
 
 Implemented on `arena/e0da0bec-diploma-3rd-sem` (from `main` at `84e99aa`, the
 PR #15 merge). Full evidence: [`phases/08-content-depth/record.md`](phases/08-content-depth/record.md).
@@ -41,6 +41,11 @@ PR #15 merge). Full evidence: [`phases/08-content-depth/record.md`](phases/08-co
   fail-closed validator and a derived ledger: **924 records, 924 with a source
   page, 0 with a verification date, 0 certified**. Per-answer provenance is now an
   expandable "Source … not certified" line.
+- **Accepted `✅*` by the owner on 2026-11-17** — reported "everything is pass on
+  a smoke use test, nothing breaks" — and **merged to `main` as PR #16**. The
+  asterisk is the whole story: acceptance covers the implementation, not the
+  content. **0 of 44** revision entries and **0 of 924** answers are
+  source-verified, and no real print/PDF export was observed.
 - **Still open:** 8.2/8.6 sign-off; 456 unkeyed quiz items; the reversed CST201
   bank units and the six Unit-5 tags (source gate, never re-tagged); a real print
   export on hardware (Phase 10).
@@ -174,7 +179,7 @@ unfinished phase gate.
 | 5 — Study system (`✅*`) | Source-linked cards with per-unit eligibility reporting, documented Leitner scheduling (clock/day-rollover/new-card-cap edges tested), review UI with URL+`popstate` filters and empty-queue fallbacks, Today dashboard with one primary action, weak-area denominators/attempt counts/trends, offline card caching (`WARM_STUDY`) | Owner-verified 2026-11-17 ("device test pass") and merged to `main` on owner instruction. Cards use existing model/keyed material, not new certification; answer certification stays a separate source gate. Device/screen-reader acceptance is Phase 10. |
 | 6 — Storage/portability (`✅*`) | Central namespaced boundary, verified legacy copy migration, notes on 24 unit pages + practice + quiz review, one preference record, group reset with live counts, previewed backup/merge/replace, recovery journal, IndexedDB recovery mirror with `hydrate()` | Merged via PR #14 (`5b7eb66`). Still needed if IndexedDB is to become a *primary* store: an async render contract, threshold/cutover evidence, concurrent-tab transaction isolation/state sync, and typed validation of further legacy variants. Current primary API remains synchronous local storage, and 6.6-3 stays a partial meet. |
 | 7 — Inclusion/trust | Static landmarks/skip links on many legacy pages, shared focus/motion/reading controls, settings en/bn labels, truthful feedback/privacy | Remaining structure/heading/form warnings, full dialog/tab keyboard behavior, measured contrast/target/zoom evidence, wider Bengali UI catalog, credits/README maintenance and license/content-rights decision. No WCAG compliance claim yet. |
-| 8 — Content depth | Measured coverage map with out-of-syllabus rows and Unit-1 skew, reconciled paper maxima, print sheet on 74/74 pages, sourced practical/internship pages, 44 cited draft sheet entries, fail-closed answer-verification register | **Owner/source GATE only:** sign off the revision sheets (0 of 44) and the answer batches (0 of 924, ≤40 per batch with citation + date); resolve the reversed CST201 bank units and the six Unit-5 tags; observe a real print/PDF export (Phase 10). |
+| 8 — Content depth `✅*` | Measured coverage map with out-of-syllabus rows and Unit-1 skew, reconciled paper maxima, print sheet on 74/74 pages, sourced practical/internship pages, 44 cited draft sheet entries, fail-closed answer-verification register | **Owner/source GATE only:** sign off the revision sheets (0 of 44) and the answer batches (0 of 924, ≤40 per batch with citation + date); resolve the reversed CST201 bank units and the six Unit-5 tags; observe a real print/PDF export (Phase 10). |
 | 9 — Performance/launch | Derived pools and checked-in bundles, measured request reduction, cache/measurement/domain docs, local-only usefulness prompt | CSS tokens/dead-code/payload consolidation, finer data loading, independent data/shell cache versioning and update regression, root-path rewritten-copy test, Lighthouse measurement and completed launch checklist. Publication remains separately authorized. |
 
 Detailed evidence and qualifications live in each phase's `record.md` under
@@ -253,17 +258,25 @@ Unavailable device access is **untested**, never silently passed.
 
 ## Recommended remaining order
 
-1. Phase 8 is `🚧`: 8.1/8.3/8.4/8.5 are implemented and gate-verified; **8.2 and
-   8.6 wait on owner sign-off** (revision-sheet entries, then answer batches of
-   ≤40 with a citation and a date). Nothing in this branch certifies content.
-2. Phase 7 is `✅*` and merged as PR #15; its acceptance left these unmeasured,
-   and they remain Phase 10 items:
+1. **Phase 9 — performance and launch** is next and is the last engineering
+   phase. It is already partially done (9.1 data loading shipped and measured:
+   Practice 43 → 12 requests, 36 → 1 JSON; quiz setup 28 → 12). Remaining:
+   9.2 CSS/JS consolidation with one token file, 9.3 independent data-cache
+   versioning plus an update-flow regression, 9.4 the measurement gate (owner
+   answer recorded), 9.5 base-path rewrite proof, 9.6 launch checklist and
+   Lighthouse/deep-metrics measurement. Re-measure from the **74-page**,
+   worker-`study-2026-11-17d` tree, not the 68-page numbers in the 11-09 record.
+2. Phase 8's two content gates stay open in parallel and are **owner work**:
+   sign off revision entries, then answer batches of ≤40 with a citation and a
+   date. Nothing in this branch certified content.
+3. Phase 7 is `✅*` and merged as PR #15; its acceptance left these unmeasured,
+   and they remain Phase 10 items together with Phase 8's print export:
    rendered contrast after compositing, 200 % zoom/reflow on the longest unit
    page, dialog and tab focus behaviour, screen-reader output
    (NVDA/TalkBack/VoiceOver), tap accuracy, Bengali conjunct rendering and
    keyboard-only core-flow completion.
-3. Complete Phase 8's two owner gates, then the remaining performance/cache/
-   root-path work;
+4. Finish Phase 9, then Phase 10 (one device-acceptance phase) — the last
+   phase;
    retain source and rights gates explicitly if evidence is unavailable.
 4. Run final implementation gates and hosted CI when the branch is pushed;
    update records with real results, not forecasts.

@@ -556,3 +556,27 @@ Agent decisions (reversible — object if wrong). None of them certifies content
   newline layout). `tests/test_content_depth.py` therefore runs builders →
   presence ×2 and asserts the tree ends byte-identical; a new test also asserts
   that running the whole suite leaves no file changed.
+
+## Phase 8 accepted by the owner — 2026-11-17
+
+- **Owner message:** "Everything is pass on a smoke use test nothing breaks" plus
+  "You can merge and write the next prompt".
+- **Treated as:** an owner acceptance of the phase (`🚧` → **`✅*`**) and an
+  explicit merge authorization for this branch only. Not as a per-criterion
+  verification pass, and not as content certification.
+- **The asterisk means:** 8.1, 8.3, 8.4 and 8.5 are implemented and
+  gate-verified; 8.2 and 8.6 are **built and still uncertified** — 0 of 44
+  revision-sheet entries and 0 of 924 archived answers have a source sign-off.
+  The owner's smoke pass says nothing does not break under use; it does not say
+  a single syllabus citation or answer is correct, because a smoke pass cannot.
+- **What the acceptance does not change:** the nine strict-data findings, the
+  three grouped strict-syllabus errors (CST205 U5 ×4, CST209 U5 ×2, CST207 with
+  no quiz bank), 456 unkeyed quiz items, the reversed CST201 quiz-bank units and
+  the six out-of-syllabus unit tags. None of these were waived; all stay visible
+  and keep failing their validators.
+- **Unmeasured and moved to Phase 10, not to "passed":** any real phone
+  print/PDF export, rendered contrast in both themes, 200 % zoom / 320 CSS px
+  reflow, Bengali conjunct rendering, keyboard/skip-link traversal, focus after
+  dialogs, tap accuracy against the 24 px floor, screen-reader output.
+- **Merge:** authorized for `arena/e0da0bec-diploma-3rd-sem` → `main` only. No
+  deploy, no Pages change, no domain, no tag, no release.

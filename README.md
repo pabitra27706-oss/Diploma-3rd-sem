@@ -4,7 +4,8 @@ A first-party, zero-build static study site for West Bengal diploma CST students
 HTML, CSS, JavaScript and checked-in JSON can be served directly; no package
 installation or build is required to run the site.
 
-**Implementation is in progress, not all phases complete.** See
+**Phases 1–8 are implemented, owner-accepted (`✅*`) and merged; Phase 9
+(performance/launch) and Phase 10 (device acceptance) remain.** See
 [Current status and remaining work](docs/STATUS.md) for the handoff,
 [Roadmap](docs/ROADMAP.md) for phase status, and
 [Decisions](docs/DECISIONS.md) for owner instructions and gates.

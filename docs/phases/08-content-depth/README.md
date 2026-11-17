@@ -1,6 +1,10 @@
 # Phase 8 — Content depth and syllabus coverage
 
-**Status:** 🚧 — 8.1, 8.3, 8.4, 8.5 implemented and gate-verified; 8.2 and 8.6 built and waiting on owner sign-off (2026-11-17, see [`record.md`](record.md)) · **Parts:** 6 · **Depends on:** 2, 7 · **Owner gates:** content verification (8.2, 8.6)
+**Status:** **`✅*`** — 8.1, 8.3, 8.4, 8.5 implemented and gate-verified; 8.2 and 8.6 built but **uncertified**; owner-accepted on a smoke use pass 2026-11-17 (see [`record.md`](record.md) and `docs/DECISIONS.md`) · **Parts:** 6 · **Depends on:** 2, 7 · **Owner gates:** content verification (8.2, 8.6) — still open
+
+> The asterisk: acceptance covers the implementation, not the content. 0 of 44
+> revision entries and 0 of 924 answers are source-verified, and no real
+> print/PDF export has been observed. Those are Phase 10 / owner-sign-off items.
 
 ## Goal
 
