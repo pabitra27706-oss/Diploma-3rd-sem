@@ -8,7 +8,8 @@ older phase evidence remains historical unless explicitly superseded here.
 ## Sub-phase 8A — answer prose and subject labels (2026-11-17)
 
 Owner-requested work delivered on `arena/637a5a31-diploma-3rd-sem` (PR #10,
-open) after the Python pilot merged as PR #9 (`main` at `365b8f7`). Recorded in
+**merged 2026-11-17 as `8f6eb97`**) after the Python pilot merged as PR #9
+(`365b8f7`). `main` now carries this sub-phase. Recorded in
 [`phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`](phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/README.md).
 
 - **Prose:** 337 quiz-bank explanations (CST201/CST205/CST209) and 226 PYQ
@@ -49,8 +50,9 @@ use PR #7/Git for the current CI and merge result.
 PR #10. No such permission authorizes deployment, Pages or domain changes, and
 none closes an unfinished phase gate.
 
-- Branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, branched from `main` at
-  `365b8f7`). `arena/858a50c7-diploma-3rd-sem` (PR #9) was merged into `main` as
+- Branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, merged into `main` as
+  `8f6eb97`; base it was branched from: `365b8f7`).
+  `arena/858a50c7-diploma-3rd-sem` (PR #9) was merged into `main` as
   `365b8f7`; older `arena/47d8bf99-...`, `arena/be3d9178-...` (PR #7,
   `125eb94`) and `arena/26856d99-...` (`8405b15`) branches are retired.
 - Phase 2 engineering passed owner Termux verification (`✅*` at commit

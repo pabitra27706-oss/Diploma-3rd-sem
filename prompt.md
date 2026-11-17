@@ -7,8 +7,10 @@ and actual Git status take precedence over older narrative.
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- Active branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, open), branched from
-  `main` at `365b8f7bc4769691c032ae93b969f9db931ce091`. Do not
+- `main` = `8f6eb976be19aa31bcd26a07a6b1d1da263059eb` — the merge of PR #10 —
+  and carries sub-phase 8A and the UI label pass.
+- Session branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, merged), branched
+  from `main` at `365b8f7bc4769691c032ae93b969f9db931ce091`. Do not
   create/switch/rename branches or push another branch.
   `arena/858a50c7-diploma-3rd-sem` (PR #9) was merged into `main` as `365b8f7`;
   older `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
