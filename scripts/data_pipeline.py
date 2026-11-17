@@ -83,5 +83,36 @@ def inventory(papers, banks, root=ROOT):
         unique = [q for q in raw if q['id'] not in aliases]
         bs = [(p,b) for p,b in banks if b['subject']==code]
         qs = [q for _,b in bs for q in b['questions']]
-        subjects[code] = {'title':s['title'], 'credits':s['credits'], 'syllabusUnits':len(s['units']), 'rawPyqCount':len(raw), 'uniquePyqCount':len(unique), 'quizCount':len(qs), 'quizMcqCount':sum(q['type']=='mcq' for q in qs), 'missingKeyCount':sum(q.get('answerStatus')=='missing' for q in qs), 'years':sorted({q['year'] for q in qs if q.get('year')}), 'sources':sorted({q['source'] for q in qs}), 'banks':[{'unit':b['unit'], 'title':b.get('unitTitle',''), 'file':p.relative_to(root).as_posix(), 'count':len(b['questions'])} for p,b in bs]}
-    return {'schemaVersion':1, 'subjects':subjects, 'rawPyqCount':sum(s['rawPyqCount'] for s in subjects.values()), 'uniquePyqCount':sum(s['uniquePyqCount'] for s in subjects.values()), 'quizCount':sum(s['quizCount'] for s in subjects.values()), 'aliases':dict(sorted(aliases.items())), 'canonical':[{'id':qid, 'alsoAppearedIn':other} for qid,other in sorted(canonical.items()) if other], 'normalizedCandidateClusters':clusters}
+        subjects[code] = {
+            'title':s['title'],
+            'credits':s['credits'],
+            'contactHours':s['contactHours'],
+            'ltp':s['ltp'],
+            'prerequisites':s['prerequisites'],
+            'syllabusUnits':len(s['units']),
+            'units':[{'unit':u['unit'], 'title':u['title'], 'hours':u['hours'], 'module':u['module']} for u in s['units']],
+            'rawPyqCount':len(raw),
+            'uniquePyqCount':len(unique),
+            'genericPyqTopicCount':sum(generic_topic(q) for q in raw),
+            'uniqueGenericPyqTopicCount':sum(generic_topic(q) for q in unique),
+            'quizCount':len(qs),
+            'quizMcqCount':sum(q['type']=='mcq' for q in qs),
+            'genericQuizTopicCount':sum(generic_topic(q) for q in qs),
+            'missingKeyCount':sum(q.get('answerStatus')=='missing' for q in qs),
+            'years':sorted({q['year'] for q in qs if q.get('year')}),
+            'sources':sorted({q['source'] for q in qs}),
+            'banks':[{'unit':b['unit'], 'title':b.get('unitTitle',''), 'file':p.relative_to(root).as_posix(), 'count':len(b['questions'])} for p,b in bs]
+        }
+    return {
+        'schemaVersion':1,
+        'subjects':subjects,
+        'rawPyqCount':sum(s['rawPyqCount'] for s in subjects.values()),
+        'uniquePyqCount':sum(s['uniquePyqCount'] for s in subjects.values()),
+        'genericPyqTopicCount':sum(s['genericPyqTopicCount'] for s in subjects.values()),
+        'uniqueGenericPyqTopicCount':sum(s['uniqueGenericPyqTopicCount'] for s in subjects.values()),
+        'quizCount':sum(s['quizCount'] for s in subjects.values()),
+        'genericQuizTopicCount':sum(s['genericQuizTopicCount'] for s in subjects.values()),
+        'aliases':dict(sorted(aliases.items())),
+        'canonical':[{'id':qid, 'alsoAppearedIn':other} for qid,other in sorted(canonical.items()) if other],
+        'normalizedCandidateClusters':clusters
+    }

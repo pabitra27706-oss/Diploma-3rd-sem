@@ -16,9 +16,17 @@ const assert = require('node:assert/strict');
     await page.goto(base + 'practice/index.html');
     await page.waitForFunction(() => S.all.length === 923);
     assert.deepEqual(await page.evaluate(() => Array.from({length:10}, (_,i) => S.all.filter(q => q.practiceDay === i+1).length)), [93,93,93,92,92,92,92,92,92,92]);
+    await page.locator('#topic-trigger').click();
+    const topicOptions = await page.locator('#topic-listbox [role="option"]').evaluateAll(els => els.map(e => e.dataset.value || e.textContent.trim()));
+    for (const genericLabel of ['Short Answer', 'Long Answer', 'Objective', 'Group A / Objective', 'Group C / Long Answer']) {
+      assert(!topicOptions.includes(genericLabel), `Generic placeholder leaked into topic dropdown: ${genericLabel}`);
+    }
     await page.goto(base + 'practice/session.html?days=10');
     await page.waitForFunction(() => S.questions.length === 92);
-    console.log('PASS unique Practice pool, balanced days, nested day-10 session');
+    await page.goto(base + 'practice/session.html?q=CST203-P001-Q44');
+    await page.waitForFunction(() => S.questions.length > 0 && S.questions[S.index]?.id === 'CST203-P001-Q43');
+    assert((await page.locator('#q-from').textContent()).includes('Also in: CST203-P001-Q44'));
+    console.log('PASS unique Practice pool, non-generic topics, balanced days, alias deep-link + Also in badge');
     await page.goto(base + 'quiz/setup.html?subject=CST201&mode=all');
     await page.waitForFunction(() => setupQuestions.length === 872);
     const choices = await page.evaluate(() => ({ subjects: [...document.querySelector('#subject-select').options].map(o => o.value), years: [...document.querySelector('#year-filter').options].map(o => o.value), sources: [...document.querySelectorAll('[name=source]')].map(o => o.value) }));
@@ -62,9 +70,15 @@ const assert = require('node:assert/strict');
 
     await page.goto(base + 'index.html');
     await page.waitForFunction(() => document.querySelector('[data-live-count=questions]').textContent === '923');
+    assert.equal(await page.locator('.section-count[data-live-count="subjects"]').textContent(), '5 subjects');
+    await page.goto(base + 'pyq/answers.html?subject=CST203&paper=P001&q=CST203-P001-Q44');
+    await page.locator('.question-duplicates a').first().waitFor();
+    await page.goto(base + 'subjects/CST209/index.html');
+    assert((await page.locator('#progressSummary').textContent()).includes('0 / 4 units visited'));
+    assert((await page.locator('.unit-card[data-supplementary="true"]').textContent()).includes('Supplementary'));
     await page.goto(base + 'roadmap/index.html');
     await page.getByText('5 subjects · 93 mixed-revision questions', {exact:true}).first().waitFor();
-    console.log('PASS home and roadmap inventory counts');
+    console.log('PASS home, PYQ duplicate cross-ref, CST209 4-unit syllabus alignment, and roadmap inventory counts');
     assert.deepEqual(errors, []);
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

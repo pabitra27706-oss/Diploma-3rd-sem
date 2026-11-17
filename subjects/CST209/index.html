@@ -348,9 +348,9 @@
           <i class="fas fa-award"></i>
           <span class="count-value">4</span> Credits
         </span>
-        <span class="info-item" data-count="5" data-suffix="">
+        <span class="info-item" data-count="4" data-suffix="">
           <i class="fas fa-layer-group"></i>
-          <span class="count-value">5</span> Units
+          <span class="count-value">4</span> Units
         </span>
         <span class="info-item" data-count="60" data-suffix="">
           <i class="fas fa-clock"></i>
@@ -395,17 +395,13 @@
           <div class="progress-dot-circle">3</div>
           <span class="progress-dot-label">Searching</span>
         </div>
-        <div class="progress-unit-dot" data-unit="4" title="Unit 4: Graphs">
+        <div class="progress-unit-dot" data-unit="4" title="Unit 4: Graphs and Graph Algorithms">
           <div class="progress-dot-circle">4</div>
           <span class="progress-dot-label">Graphs</span>
         </div>
-        <div class="progress-unit-dot" data-unit="5" title="Unit 5: Strings">
-          <div class="progress-dot-circle">5</div>
-          <span class="progress-dot-label">Strings</span>
-        </div>
       </div>
       <div class="progress-summary" id="progressSummary">
-        <span><i class="fas fa-circle-check"></i> 0 / 5 units visited</span>
+        <span><i class="fas fa-circle-check"></i> 0 / 4 units visited</span>
         <span><i class="fas fa-clock"></i> Last visited: Never</span>
       </div>
     </div>
@@ -532,7 +528,7 @@
                   <span class="unit-badge"><i class="fas fa-star"></i> Unit 3</span>
                   <span class="difficulty-badge difficulty-medium">🟡 Medium</span>
                 </div>
-                <div class="unit-hours"><i class="fas fa-clock"></i> 12 Hours</div>
+                <div class="unit-hours"><i class="fas fa-clock"></i> 18 Hours</div>
               </div>
               <h3>Searching</h3>
               <ul>
@@ -560,9 +556,9 @@
                   <span class="unit-badge"><i class="fas fa-star"></i> Unit 4</span>
                   <span class="difficulty-badge difficulty-hard">🔴 Hard</span>
                 </div>
-                <div class="unit-hours"><i class="fas fa-clock"></i> 14 Hours</div>
+                <div class="unit-hours"><i class="fas fa-clock"></i> 20 Hours</div>
               </div>
-              <h3>Graph Algorithms</h3>
+              <h3>Graphs and Graph Algorithms</h3>
               <ul>
                 <li>Directed &amp; Undirected Graphs</li>
                 <li>Paths, Cycles &amp; Spanning Trees</li>
@@ -578,19 +574,20 @@
             </div>
           </div>
 
-          <!-- ── Unit 5 ── -->
+          <!-- ── Supplementary Outcome Notes ── -->
           <div class="roadmap-node animate-in stagger-5">
-            <div class="roadmap-circle">5</div>
+            <div class="roadmap-circle">+</div>
             <div class="roadmap-connector"></div>
-            <div class="unit-card card-glass">
+            <div class="unit-card card-glass" data-supplementary="true">
               <div class="unit-card-header">
                 <div class="unit-card-badges">
-                  <span class="unit-badge"><i class="fas fa-star"></i> Unit 5</span>
-                  <span class="difficulty-badge difficulty-medium">🟡 Medium</span>
+                  <span class="unit-badge"><i class="fas fa-book-open"></i> Supplementary</span>
+                  <span class="difficulty-badge difficulty-medium">Outcome Topic</span>
                 </div>
-                <div class="unit-hours"><i class="fas fa-clock"></i> 12 Hours</div>
+                <div class="unit-note"><i class="fas fa-info-circle"></i> Outside 4-unit syllabus</div>
               </div>
-              <h3>String Algorithms</h3>
+              <h4>String Algorithms (Supplementary — Outcome Topic)</h4>
+              <p style="font-size:0.86rem;margin:0.35rem 0 0.6rem;">Revised-2022 syllabus declares 4 units (60 hours total) and lists string sort and substring search under course outcomes. Archived Unit-5 tags remain under source review.</p>
               <ul>
                 <li>String Sort: LSD/MSD Radix Sort</li>
                 <li>Tries: Prefix Tree Data Structure</li>
@@ -600,7 +597,7 @@
                 <li>Huffman Coding &amp; Run-Length Encoding</li>
               </ul>
               <a href="units/unit-5.html" class="unit-link-btn">
-                <i class="fas fa-arrow-right"></i> Go to Unit 5
+                <i class="fas fa-arrow-right"></i> Open Supplementary Notes
               </a>
             </div>
           </div>
@@ -750,11 +747,11 @@
         <div class="important-note card-neon animate-in stagger-2" style="margin-top: 1.25rem;">
           <div class="box-title"><i class="fas fa-exclamation-circle"></i> Important Exam Tips</div>
           <ul style="margin:0; padding-left:1.2rem; font-size:0.88rem;">
-            <li>Unit 2 (Sorting — 16 hrs) and Unit 4 (Graph Algorithms — 14 hrs) carry the highest weightage.</li>
+            <li>Unit 3 (Searching — 18 hrs) and Unit 4 (Graphs and Graph Algorithms — 20 hrs) carry the highest contact-hour weightage.</li>
             <li>Trace tables for sorting algorithms (Bubble, Merge, Quick, Heap) are frequently asked.</li>
             <li>Dijkstra's, Prim's, and Kruskal's step-by-step traces are common 6-mark questions.</li>
             <li>Complexity analysis (Big-O derivations) must be shown with proper working.</li>
-            <li>KMP failure function and Huffman code tree construction are important for Unit 5.</li>
+            <li>KMP failure function and Huffman code tree construction appear in archived questions as supplementary string-algorithm topics (outside the 4 declared syllabus units).</li>
           </ul>
         </div>
 
@@ -966,7 +963,7 @@
           }
 
           summary.innerHTML =
-            '<span><i class="fas fa-circle-check"></i> ' + visitedCount + ' / 5 units visited</span>' +
+            '<span><i class="fas fa-circle-check"></i> ' + visitedCount + ' / ' + dots.length + ' units visited</span>' +
             '<span><i class="fas fa-clock"></i> Last visited: ' + lastText + '</span>';
         }
       }
@@ -978,7 +975,7 @@
         btn.addEventListener("click", function () {
           var href = btn.getAttribute("href") || "";
           var match = href.match(/unit-(\d+)/);
-          if (match) {
+          if (match && parseInt(match[1], 10) <= 4) {
             var unitKey = "unit-" + match[1];
             if (!unitProgress[unitKey]) {
               unitProgress[unitKey] = {};

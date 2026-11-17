@@ -5,12 +5,86 @@ No arbitrary new error can be hidden by baseline mode.
 """
 import argparse
 import hashlib
+import html
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
-from data_pipeline import ROOT, stores, load, fingerprint, inventory, schedule
+from data_pipeline import ROOT, stores, load, fingerprint, inventory, schedule, duplicates
+from build_runtime_data import derived_practice_question
 from validate_pyq import option_entries, correct_index
+
+
+def _clean_html(value):
+    return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', value))).strip()
+
+
+def validate_syllabus_html(root, syllabus, error):
+    subjects_dir = root / 'subjects'
+    if not subjects_dir.is_dir():
+        return
+    for code, meta in sorted(syllabus.items()):
+        idx_path = subjects_dir / code / 'index.html'
+        if not idx_path.is_file():
+            continue
+        target = idx_path.relative_to(root).as_posix()
+        idx = idx_path.read_text(encoding='utf-8')
+        ci_match = re.search(r'<div class="course-info">(.*?)</div>', idx, re.S)
+        if not ci_match:
+            error('syllabus-html', target, 'missing header course-info block')
+        else:
+            raw_items = [_clean_html('<span ' + part) for part in ci_match.group(1).split('<span class="info-item')[1:]]
+            ltp = meta['ltp']
+            expected_ltp = f"L:{ltp[0]} T:{ltp[1]} P:{ltp[2]}" if isinstance(ltp, list) else str(ltp)
+            expected_items = [
+                f"{meta['credits']} Credits",
+                f"{len(meta['units'])} Units",
+                f"{meta['contactHours']} Hours",
+                expected_ltp,
+            ]
+            if raw_items != expected_items:
+                error('syllabus-html', target, f"header metadata {raw_items} != syllabus {expected_items}")
+        dots = re.findall(r'class="progress-unit-dot"', idx)
+        if len(dots) != len(meta['units']):
+            error('syllabus-html', target, f"progress dots ({len(dots)}) != syllabus unit count ({len(meta['units'])})")
+        prereq_match = re.search(r'Prerequisites:</strong>(.*?)</div>', idx, re.S)
+        if not prereq_match or _clean_html(prereq_match.group(1)) != meta['prerequisites']:
+            error('syllabus-html', target, 'prerequisites mismatch syllabus')
+        card_titles = [_clean_html(x) for x in re.findall(r'<div class="unit-card card-glass">\s*<div class="unit-card-header">.*?</div>\s*<h3>(.*?)</h3>', idx, re.S)]
+        expected_titles = [u['title'] for u in meta['units']]
+        if card_titles != expected_titles:
+            error('syllabus-html', target, f"unit card titles {card_titles} != syllabus {expected_titles}")
+        card_hours = [_clean_html(x) for x in re.findall(r'<div class="unit-hours">(.*?)</div>', idx, re.S)]
+        expected_hours = [f"{u['hours']} Hours" for u in meta['units']]
+        if card_hours != expected_hours:
+            error('syllabus-html', target, f"unit card hours {card_hours} != syllabus {expected_hours}")
+
+        units_dir = subjects_dir / code / 'units'
+        if not units_dir.is_dir():
+            continue
+        declared = {u['unit']: u for u in meta['units']}
+        for unit_path in sorted(units_dir.glob('unit-*.html')):
+            utarget = unit_path.relative_to(root).as_posix()
+            unum = int(re.search(r'unit-(\d+)', unit_path.name).group(1))
+            utext = unit_path.read_text(encoding='utf-8')
+            head_slice = utext[:12000]
+            h1_match = re.search(r'<h1[^>]*>(.*?)</h1>', utext, re.S)
+            h1_text = _clean_html(h1_match.group(1)) if h1_match else ''
+            of_matches = re.findall(r'Unit\s+(\d+)\s+of\s+(\d+)', head_slice)
+            hours_matches = re.findall(r'(\d+)\s*Hours', head_slice)
+            if unum in declared:
+                umeta = declared[unum]
+                if umeta['title'].lower() not in h1_text.lower():
+                    error('syllabus-html', utarget, f"unit h1 '{h1_text}' missing syllabus title '{umeta['title']}'")
+                if str(umeta['hours']) not in hours_matches:
+                    error('syllabus-html', utarget, f"unit header missing syllabus hours ({umeta['hours']} Hours)")
+                for cur_u, total_u in of_matches:
+                    if int(cur_u) != unum or int(total_u) != len(declared):
+                        error('syllabus-html', utarget, f"stale 'Unit {cur_u} of {total_u}' (expected of {len(declared)})")
+            else:
+                if 'supplementary' not in h1_text.lower() or of_matches or hours_matches:
+                    error('syllabus-html', utarget, 'extra unit page must be relabelled Supplementary without syllabus unit-of-N or contact hours')
 
 
 def validate(root=ROOT):
@@ -90,6 +164,31 @@ def validate(root=ROOT):
         if not mean or any(abs(n-mean)>.15*mean for n in sizes):error('balance','_data/practice-days.json','day balance exceeds ±15%')
         warnings.append(f"{len(expected['normalizedCandidateClusters'])} normalized duplicate candidate clusters; {len(expected['aliases'])} exact aliases retained")
     else:error('catalog','_data/catalog.json','missing generated catalog')
+    if (root/'assets/data/practice-pool.json').exists() or (root/'assets/data/quiz-pool.json').exists():
+        aliases,canonical,_=duplicates(papers)
+        assignment,_=schedule(papers)
+        expected_practice=[
+            derived_practice_question(p['subject'],q,assignment,canonical)
+            for _,p in papers for q in p['questions'] if q['id'] not in aliases
+        ]
+        expected_practice.sort(key=lambda r:r['id'])
+        practice_path=root/'assets/data/practice-pool.json'
+        if not practice_path.is_file():
+            error('runtime-pool','assets/data/practice-pool.json','missing derived practice pool')
+        else:
+            practice_data=load(practice_path)
+            if practice_data.get('aliases')!=aliases or practice_data.get('questions')!=expected_practice:
+                error('runtime-pool','assets/data/practice-pool.json','stale or inconsistent derived practice pool')
+        expected_quiz=[dict(q,subject=b['subject'],unit=b['unit']) for _,b in banks for q in b['questions']]
+        expected_quiz.sort(key=lambda r:r['id'])
+        quiz_path=root/'assets/data/quiz-pool.json'
+        if not quiz_path.is_file():
+            error('runtime-pool','assets/data/quiz-pool.json','missing derived quiz pool')
+        else:
+            quiz_data=load(quiz_path)
+            if quiz_data.get('questions')!=expected_quiz:
+                error('runtime-pool','assets/data/quiz-pool.json','stale or inconsistent derived quiz pool')
+    validate_syllabus_html(root, syllabus, error)
     return errors,warnings
 
 

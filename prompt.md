@@ -7,13 +7,14 @@ and actual Git status take precedence over older narrative.
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- Active branch: `arena/26856d99-diploma-3rd-sem`. Do not create/switch/rename
-  branches or push another branch. The prior `arena/be3d9178-diploma-3rd-sem`
-  branch was merged into main via PR #7 (commit `125eb94`) and is retired.
-- Current branch tip: `125eb94` (the merge commit of PR #7, which brought the
-  prior `arena/be3d9178-diploma-3rd-sem` work into main). This branch is built
-  on that merge. Inspect actual Git/PR state rather than assuming an older
-  checkpoint is current.
+- Active branch: `arena/47d8bf99-diploma-3rd-sem` (branched from `main` at
+  `8405b15`). Do not create/switch/rename branches or push another branch.
+  Prior `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
+  `arena/26856d99-diploma-3rd-sem` (`8405b15`) branches were merged into `main`
+  and are retired.
+- Base `main` commit: `8405b15`; Phase 2 mechanical/UI completion is committed
+  on `arena/47d8bf99-diploma-3rd-sem`. Inspect actual Git/PR state rather than
+  assuming an older checkpoint is current.
 - Zero-build static HTML/CSS/JS/JSON; publication base `/Diploma-3rd-sem/`.
   Canonical configured URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
   This is not confirmation that the live site has current changes.
@@ -54,12 +55,22 @@ acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the comple
 per-phase remainder table and the source/rights gates.
 
 - Data: 992 raw PYQs, 923 exact-unique Practice questions, 69 aliases across
-  30 papers; ten derived Practice days. 872 quiz-bank items (416 keyed MCQs,
-  456 non-MCQ ungraded). CST207 has no quiz bank. Originals remain unchanged.
+  30 papers; ten derived Practice days; enriched `_data/catalog.json` and
+  `assets/data/practice-pool.json` (`aliases`, `alsoAppearedIn`, `topicQuality`);
+  all 5 subject hubs and 24 unit HTML pages aligned to `docs/syllabus/syllabus.json`
+  and enforced by `validate_data.py`; alias `?q=` deep-link resolution in Practice
+  and duplicate cross-reference links in PYQ Answers; generic placeholder topics
+  excluded from Practice topic dropdown, unit topic summaries and named weak-topic
+  analytics. 872 quiz-bank items (416 keyed MCQs, 456 non-MCQ ungraded). CST207
+  has no quiz bank. Originals remain unchanged; 10 source-review data findings
+  remain open.
 - Quiz: versioned attempt snapshots, deadline-based timers, autosave/resume,
-  flags, score boundaries, history/export/exact retries/edits and mistake queue.
-  Paper practice preserves sources and duration but does not enforce choices,
-  section timing or explanation-mark rules; no official overall paper grade.
+  flags, score boundaries, history/export/exact retries/edits, mistake queue,
+  one-sentence MD/TXT/JSON/Print-PDF export guidance, and full mock paper
+  practice enforcing explicit `paperFormat` `answerAny` section/choiceSet quotas
+  across all 30 frozen PYQ papers, compulsory 30-minute Group A loose-script
+  windows on the seven `2023-03` papers, and `1m option + 1m written explanation`
+  splits on the fifteen `2024–2026` papers without fabricating an overall grade.
 - Discovery/study: compact search/repeat sidecars, source deep links, related
   unit material, 1,339 model/keyed-source cards, fixed Leitner scheduling,
   Today/goals/streaks, sample-qualified weak-area trends. Not newly certified facts.
@@ -77,20 +88,21 @@ per-phase remainder table and the source/rights gates.
 
 ## Evidence and limits
 
-Latest implementation checkpoint: 12 Python tests, four Node suites and seven
-focused Chromium suites PASS; full 48 JS/CJS + JSON parse PASS. Site strict
+Latest implementation checkpoint: 13 Python tests, six deterministic Node suites
+and seven focused Chromium suites PASS; full JS/CJS + JSON parse PASS. Site strict
 0 errors / 28 warnings, platform 0 errors, immutable-PYQ guard 0 changes.
 Full data strict still has 10 ledger findings; syllabus strict has 3 grouped
-errors. An exact-baseline pass is not a full strict pass. Hosted CI has not run
-on the unpushed implementation. Historical Phase 2 CI is recorded in its record.
+errors. An exact-baseline pass is not a full strict pass.
 
 ## How to continue safely
 
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
-2. Use `docs/STATUS.md`'s remaining order. Next major gaps are paper rules and
-   the asynchronous IndexedDB storage path, then remaining discovery/study,
-   accessibility/language, cited content and performance/cache work.
+2. Use `docs/STATUS.md`'s remaining order. Phase 2 is `✅*` (owner-verified on
+   Termux; source gates tracked separately) and Phase 3 (`03-quiz-engine`)
+   engineering is complete; next sequential phase is Phase 4 (`04-discovery` —
+   remaining informational-page indexing, authored heading anchors, offline
+   search/back-button/share-fallback/keyboard acceptance), followed by Phases 5–9.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
    visible; record new evidence/dispositions in derived metadata and decisions.
 4. Edit source scripts, not generated bundles. Regeneration order and check
@@ -108,16 +120,13 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git push origin arena/26856d99-diploma-3rd-sem   # ensure branch is current (agent already pushed)
-git pull --ff-only                               # get latest on the branch
+git pull --ff-only origin arena/47d8bf99-diploma-3rd-sem
 cd ..
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. The `git push`
-guarantees the branch is current before the pull; it is a no-op when the agent
-has already pushed. For a first-time setup, clone instead from the parent
-directory: `git clone --single-branch --branch arena/26856d99-diploma-3rd-sem
+Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
+directory: `git clone --branch arena/47d8bf99-diploma-3rd-sem
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling

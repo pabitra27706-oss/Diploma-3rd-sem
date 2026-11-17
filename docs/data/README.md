@@ -13,8 +13,14 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 `build_practice_days.py --dry-run` writes nothing. Repeating the maintenance
 commands without source changes yields identical bytes.
 
-- `_data/catalog.json`: computed subject counts, real quiz-bank files/years/sources,
-  exact aliases, canonical `alsoAppearedIn` lists, normalized-text candidates.
+- `_data/catalog.json`: computed subject counts, syllabus authority metadata
+  (`contactHours`, `ltp`, `prerequisites`, `units`), raw/unique generic topic
+  counts, real quiz-bank files/years/sources, exact aliases, canonical
+  `alsoAppearedIn` lists, normalized-text candidates.
+- `assets/data/practice-pool.json`: 923 canonical practice items with derived
+  `practiceDay`, `topicQuality` (`generic` vs `specific`), `alsoAppearedIn`, and
+  top-level `aliases` map so alias `?q=` deep links and saved completion IDs
+  resolve deterministically without duplicating sessions.
 - `_data/practice-days.json`: one seeded mixed-revision schedule and generated
   day metadata. Raw records keep their IDs; exact aliases inherit their canonical
   day but are omitted from Practice counts/sessions, not deleted from papers.

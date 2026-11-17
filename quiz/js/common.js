@@ -23,7 +23,7 @@ const SUBJECTS = {
   CST205: {
     code: 'CST205',
     name: 'Data Structures',
-    credits: 2,
+    credits: 3,
     units: 4
   },
   CST207: {
@@ -36,44 +36,44 @@ const SUBJECTS = {
     code: 'CST209',
     name: 'Algorithms',
     credits: 4,
-    units: 5
+    units: 4
   }
 };
 
 const UNIT_TITLES = {
   CST201: {
     1: 'Basics of C',
-    2: 'Decision Control & Looping',
-    3: 'User Defined Functions',
-    4: 'Arrays & Strings',
+    2: 'Decision Control and Looping Statements',
+    3: 'User Defined Functions — mapping under review',
+    4: 'Arrays & Strings — mapping under review',
     5: 'Pointers in C'
   },
   CST203: {
-    1: 'Variables & Data Types',
+    1: 'Introduction, Variables and Data Types',
     2: 'Control Structures',
-    3: 'Functions, Modules & Packages',
-    4: 'File I/O & Regular Expressions',
-    5: 'Frameworks (Django)'
+    3: 'Functions, Modules and Packages',
+    4: 'File I/O, Text Processing, Regular Expressions',
+    5: 'Frameworks'
   },
   CST205: {
-    1: 'Introduction and Stacks',
-    2: 'Queues, Recursion and Linked Lists',
-    3: 'Trees and Graphs',
-    4: 'BST, Hashing and Shortest Path'
+    1: 'Introduction to Data Structures',
+    2: 'Linear Data Structures',
+    3: 'Linked Lists',
+    4: 'Non-Linear Data Structures'
   },
   CST207: {
-    1: 'Structure of Computers + Data Representation',
-    2: 'Control Unit + Pipelines',
-    3: 'Microprocessor Architecture (8086)',
+    1: 'Structure of Computers; Register Transfer and Micro Operations',
+    2: 'Micro Programmed Control; Computer Arithmetic; Pipelining',
+    3: 'Introduction to Microprocessor Architecture',
     4: 'Assembly Language Programming',
-    5: 'Memory & Digital Interfacing'
+    5: 'Memory and Digital Interfacing'
   },
   CST209: {
-    1: 'Fundamentals + Complexity',
-    2: 'Sorting Algorithms',
-    3: 'Searching + BST + Hashing',
-    4: 'Graph Algorithms',
-    5: 'String Algorithms'
+    1: 'Fundamentals of Algorithms',
+    2: 'Sorting',
+    3: 'Searching',
+    4: 'Graphs and Graph Algorithms',
+    5: 'String Algorithms — mapping under review'
   }
 };
 
@@ -692,11 +692,15 @@ function generateAllTypesMarkdown(data) {
 
   questions.forEach((q, i) => {
     const userAnswer = answers[q.id] || '_(No answer provided)_';
-    const modelAnswer = q.modelAnswer || '_(No model answer available)_';
+    const userExpl = data.explanations?.[q.id];
+    const modelAnswer = q.modelAnswer || (q.correct ? `Correct option: ${q.correct}${q.explanation ? ' — ' + q.explanation : ''}` : '_(No model answer available)_');
 
     md += `## Question ${i + 1} (${q.marks} marks)\n`;
     md += `**Question:** ${q.question}\n\n`;
     md += `**User Answer:**\n${userAnswer}\n\n`;
+    if (userExpl) {
+      md += `**User Explanation (1 mark — manual review):**\n${userExpl}\n\n`;
+    }
     md += `**Model Answer:**\n${modelAnswer}\n\n`;
     md += `---\n\n`;
   });
@@ -772,7 +776,8 @@ function generateJSONExport(data) {
       mode: data.mode,
       attemptId: data.metadata?.attemptId || null,
       score: data.score ?? null,
-      totalQuestions: data.questions.length
+      totalQuestions: data.questions.length,
+      paperSummary: data.paperSummary || null
     },
     questions: data.questions.map((q, i) => ({
       number: i + 1,
@@ -781,6 +786,7 @@ function generateJSONExport(data) {
       question: q.question,
       marks: q.marks,
       userAnswer: data.answers[q.id] || null,
+      userExplanation: data.explanations?.[q.id] || null,
       correctAnswer: q.correct || null,
       isCorrect: q.type === 'mcq' && QuizAttempts.hasAnswer(data.answers[q.id])
         ? (data.answers[q.id] === q.correct)
@@ -826,6 +832,9 @@ function generateTXTExport(data) {
     }
 
     txt += `\n   Your Answer  : ${userAnswer}\n`;
+    if (data.explanations?.[q.id]) {
+      txt += `   Your Expl.   : ${data.explanations[q.id]}\n`;
+    }
 
     if (q.correct) {
       const isRight = userAnswer === q.correct;

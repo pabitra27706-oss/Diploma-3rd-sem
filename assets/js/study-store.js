@@ -20,8 +20,11 @@
    const fresh=cards.filter(c=>!state.cards[c.id]).sort((a,b)=>a.id.localeCompare(b.id)).slice(0,Math.max(0,state.newLimit-studied.filter(e=>state.cards[e.cardId]?.reps===1).length));return [...due,...fresh];
  }
  const answered=value=>value!==null&&value!==undefined&&String(value).trim()!=='';
- const areaKey=(h,q)=>(q.subject||h.config?.subject||h.subject)+'|'+(q.unit||'?')+'|'+(q.topic||'Unspecified');
- function weak(history){const groups=new Map();for(const h of history){if(h.outcome==='abandoned')continue;for(const q of h.questions||[]){if(q.type!=='mcq'||!q.options||!Object.hasOwn(q.options,q.correct))continue;const key=areaKey(h,q),a=groups.get(key)||{subject:q.subject||h.config?.subject||h.subject,unit:q.unit,topic:q.topic||'Unspecified',attempted:0,correct:0,skipped:0,lastSeen:0};a.attempted++;if(!answered(h.answers?.[q.id]))a.skipped++;else if(h.answers[q.id]===q.correct)a.correct++;a.lastSeen=Math.max(a.lastSeen,h.completedAt||0);groups.set(key,a);}}
+ const GENERIC_TOPIC=/^(general|misc(ellaneous)?|mcq|short(\s+answer)?|long(\s+answer)?|objective|group\s+[a-z]\s*\/\s*(objective|short\s+answer|long\s+answer)|fill|true[-\s]?false|unit\s*\d+|module\s*[a-z0-9]+|chapter\s*\d+|all|n\/?a|unknown|none|question\s*\d+|unspecified)$/i;
+ const isGenericTopic=q=>!q?.topic||q.topicQuality==='generic'||GENERIC_TOPIC.test(String(q.topic).trim());
+ const topicLabel=q=>isGenericTopic(q)?'Unspecified':String(q.topic).trim();
+ const areaKey=(h,q)=>(q.subject||h.config?.subject||h.subject)+'|'+(q.unit||'?')+'|'+topicLabel(q);
+ function weak(history){const groups=new Map();for(const h of history){if(h.outcome==='abandoned')continue;for(const q of h.questions||[]){if(q.type!=='mcq'||!q.options||!Object.hasOwn(q.options,q.correct))continue;const topic=topicLabel(q),key=areaKey(h,q),a=groups.get(key)||{subject:q.subject||h.config?.subject||h.subject,unit:q.unit,topic,genericTopic:topic==='Unspecified',attempted:0,correct:0,skipped:0,lastSeen:0};a.attempted++;if(!answered(h.answers?.[q.id]))a.skipped++;else if(h.answers[q.id]===q.correct)a.correct++;a.lastSeen=Math.max(a.lastSeen,h.completedAt||0);groups.set(key,a);}}
  return [...groups.values()].sort((a,b)=>(a.attempted<5)-(b.attempted<5)||(a.correct/a.attempted-b.correct/b.attempted)||b.attempted-a.attempted);}
  function trends(history,now=Date.now(),minimum=5){
    // Calendar-day boundaries use local time, including daylight-saving changes.
@@ -38,5 +41,5 @@
    for(const row of groups.values())row.delta=row.recent.attempted>=minimum&&row.previous.attempted>=minimum?Math.round(row.recent.correct/row.recent.attempted*100)-Math.round(row.previous.correct/row.previous.attempted*100):null;
    return groups;
  }
- globalThis.StudyStore={KEY,day,next,read,write,rate,queue,weak,trends,areaKey,intervals};
+ globalThis.StudyStore={KEY,day,next,read,write,rate,queue,weak,trends,areaKey,isGenericTopic,topicLabel,intervals};
 })();

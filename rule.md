@@ -8,8 +8,9 @@
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`): branch and
 > license references corrected to the current session branch
-> `arena/26856d99-diploma-3rd-sem`; the prior `arena/be3d9178-...` branch is
-> merged and retired. **If this manual and Git disagree on the branch name, Git
+> `arena/47d8bf99-diploma-3rd-sem` (branched from `main` at `8405b15`); prior
+> `arena/be3d9178-...` and `arena/26856d99-...` branches were merged into `main`
+> and are retired. **If this manual and Git disagree on the branch name, Git
 > is right — update this file.**
 >
 > **New-session reading order:** `rule.md` (this file) → `prompt.md` →
@@ -20,7 +21,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/26856d99-diploma-3rd-sem` (current session branch; the prior `arena/be3d9178-diploma-3rd-sem` was merged into main via PR #7 and is retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/47d8bf99-diploma-3rd-sem` (current session branch, branched from `main` `8405b15`; prior `arena/be3d9178-...` and `arena/26856d99-...` branches were merged into `main` and are retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler

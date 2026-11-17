@@ -39,7 +39,7 @@
           const section=node('section',undefined,results);node('h2',`${type.toUpperCase()} (${hits.filter(row=>row.type===type).length})`,section);
           for(const row of group){const article=node('article',undefined,section),a=node('a',row.title,article);a.href=link(row);node('small',`${row.subject} · stored unit ${row.unit??'unknown'} · ${row.year||'notes'} · ${row.marks??'—'} marks`,article);}
         }
-        if(!hits.length){const topics=[...new Set(rows.filter(r=>r.topic).map(r=>r.topic))].slice(0,8);node('p','Try a shorter term or remove the unit/subject filter. Example topics: '+topics.join(', '),results);}
+        if(!hits.length){const topics=[...new Set(rows.filter(r=>r.topic&&!r.genericTopic).map(r=>r.topic))].slice(0,8);node('p','Try a shorter term or remove the unit/subject filter. Example topics: '+topics.join(', '),results);}
         status.textContent=`${hits.length} matches; showing ${shown.length}. Local filtering and rendering: ${Math.round(performance.now()-start)} ms.`;
       }catch(error){if(ticket===run){results.replaceChildren();status.textContent=error.message;const retry=node('button','Retry',results);retry.onclick=()=>render();}}
     }

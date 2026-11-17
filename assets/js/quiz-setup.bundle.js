@@ -2,42 +2,194 @@
 
 ;/* Source: quiz/js/paper-attempt.js */
 /* Read-only paper adapter. Raw records, option wording and keys are unchanged;
- * only runtime option representation is adapted for the quiz renderer.
+ * explicit group/section/choice-set rules, timed loose-script windows, and
+ * option+explanation mark splits are derived directly from paperFormat.
  */
 (() => {
+  'use strict';
   const base = new URL('../../_data/', document.currentScript.src);
+  const EXPLANATION_SPLIT_RE = /1\s*mark[^+;\n]*(?:right|correct)?\s*answer[^+;\n]*\+\s*1\s*mark[^+;\n]*explanation|out of 2 marks for each mcq,\s*1 mark is allotted for the right answer and 1 mark is allotted for the correct explanation/i;
+  const TIMED_FIRST_SECTION_RE = /(?:within|maximum time allowed is)\s+(\d+)\s+minutes/i;
+
   async function read(url) {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Paper resource unavailable (${response.status}). Open it online before attempting offline.`);
     return response.json();
   }
+
   async function registry(subject) {
     if (!/^CST20[13579]$/.test(subject)) throw new Error('Unknown paper subject');
-    return read(new URL(subject+'/registry.json',base));
+    return read(new URL(subject + '/registry.json', base));
   }
+
   function minutes(duration) {
     const match = /^\s*(\d+(?:\.\d+)?)\s*Hours?\s*$/i.exec(duration || '');
     if (!match) throw new Error('Paper duration could not be read; no invented timer was applied.');
-    return Number(match[1])*60;
+    return Number(match[1]) * 60;
   }
-  async function load(subject,fileName) {
-    const index=await registry(subject);
-    const meta=index.papers.find(p=>p.fileName===fileName);
-    if(!meta) throw new Error('Paper not in the subject registry');
-    const paper=await read(new URL(subject+'/'+meta.fileName,base));
-    const questions=paper.questions.map(q=>{
-      let options=q.options;
-      if(Array.isArray(options)) options=Object.fromEntries(options.map((opt,i)=>[typeof opt==='string' ? String.fromCharCode(65+i) : opt.key || opt.label || String.fromCharCode(65+i),typeof opt==='string' ? opt : opt.text || opt.value || '']));
-      const correct=typeof q.correct==='number' ? Object.keys(options || {})[q.correct] : q.correct;
-      return {...q,subject,source:'PYQ',autoMarking:false,options,correct,explanation:q.explanation || q.answer,modelAnswer:q.type!=='mcq' ? q.answer : undefined};
+
+  function hasExplanationSplit(...texts) {
+    return texts.some(t => typeof t === 'string' && EXPLANATION_SPLIT_RE.test(t));
+  }
+
+  function derivePaperRules(paper) {
+    const pf = paper.paperFormat || {};
+    const general = pf.generalInstructions || [];
+    const groups = pf.groups || [];
+    const rules = [];
+    const qRuleMeta = new Map();
+    let timedSection = null;
+
+    for (const g of groups) {
+      const groupId = String(g.id || '');
+      const groupLabel = g.groupLabel || (groupId ? `Group ${groupId}` : 'Section');
+      const explSplit = hasExplanationSplit(g.markSplit, g.instruction, g.additionalInstruction, ...general);
+      const timeMatch = groupId === 'A'
+        ? TIMED_FIRST_SECTION_RE.exec([g.additionalInstruction || '', ...general].join(' '))
+        : null;
+      if (timeMatch && !timedSection) {
+        timedSection = {
+          groupId: 'A',
+          minutes: Number(timeMatch[1]),
+          compulsoryFirst: /compulsory/i.test([g.instruction || '', g.additionalInstruction || '', ...general].join(' ')),
+          description: g.additionalInstruction || `Group A must be answered first within ${timeMatch[1]} minutes.`
+        };
+      }
+
+      if (Array.isArray(g.sections) && g.sections.length) {
+        for (const sec of g.sections) {
+          const secSplit = hasExplanationSplit(sec.markSplit, g.markSplit);
+          const rule = {
+            id: `${groupId}:${sec.id}`,
+            groupId,
+            kind: 'section',
+            label: `${groupLabel} · ${sec.title || sec.id}`,
+            instruction: sec.instruction || g.instruction || '',
+            questionIds: [...(sec.questionIds || [])],
+            totalSet: Number(sec.totalSet || (sec.questionIds || []).length),
+            answerAny: Number(sec.answerAny ?? (sec.questionIds || []).length),
+            marksEach: Number(sec.marksEach || 0),
+            maxMarks: Number(sec.maxMarks || 0),
+            markSplit: sec.markSplit || g.markSplit || '',
+            explanationSplit: secSplit
+          };
+          rules.push(rule);
+          for (const qid of rule.questionIds) qRuleMeta.set(qid, rule);
+        }
+      } else if (Array.isArray(g.choiceSets) && g.choiceSets.length) {
+        for (const cs of g.choiceSets) {
+          const qNumLabel = cs.sourceQuestion ? `Q${cs.sourceQuestion}` : cs.id;
+          const rule = {
+            id: `${groupId}:${cs.id}`,
+            groupId,
+            kind: 'choiceSet',
+            label: `${groupLabel} · ${qNumLabel} (answer any ${cs.answerAny ?? 1} of ${cs.totalSet || (cs.questionIds || []).length})`,
+            instruction: cs.instruction || g.instruction || '',
+            questionIds: [...(cs.questionIds || [])],
+            totalSet: Number(cs.totalSet || (cs.questionIds || []).length),
+            answerAny: Number(cs.answerAny ?? 1),
+            marksEach: Number(cs.marksEach || g.marksEach || 0),
+            maxMarks: Number(cs.maxMarks || 0),
+            markSplit: g.markSplit || '',
+            explanationSplit: false
+          };
+          rules.push(rule);
+          for (const qid of rule.questionIds) qRuleMeta.set(qid, rule);
+        }
+      } else {
+        const cleanTitle = (g.title || '').replace(/^Group\s+[A-Z0-9]+\s*[—–-]\s*/i, '');
+        const rule = {
+          id: groupId || String(rules.length + 1),
+          groupId,
+          kind: 'group',
+          label: cleanTitle && cleanTitle.toLowerCase() !== groupLabel.toLowerCase()
+            ? `${groupLabel} — ${cleanTitle}`
+            : groupLabel,
+          instruction: g.instruction || '',
+          questionIds: [...(g.questionIds || [])],
+          totalSet: Number(g.totalSet || (g.questionIds || []).length),
+          answerAny: Number(g.answerAny ?? (g.questionIds || []).length),
+          marksEach: Number(g.marksEach || 0),
+          maxMarks: Number(g.maxMarks || 0),
+          markSplit: g.markSplit || '',
+          explanationSplit: explSplit
+        };
+        rules.push(rule);
+        for (const qid of rule.questionIds) qRuleMeta.set(qid, rule);
+      }
+    }
+
+    return { rules, qRuleMeta, timedSection };
+  }
+
+  async function load(subject, fileName) {
+    const index = await registry(subject);
+    const meta = index.papers.find(p => p.fileName === fileName);
+    if (!meta) throw new Error('Paper not in the subject registry');
+    const paper = await read(new URL(subject + '/' + meta.fileName, base));
+    const { rules, qRuleMeta, timedSection } = derivePaperRules(paper);
+
+    const questions = paper.questions.map(q => {
+      let options = q.options;
+      if (Array.isArray(options)) {
+        options = Object.fromEntries(options.map((opt, i) => [
+          typeof opt === 'string' ? String.fromCharCode(65 + i) : opt.key || opt.label || String.fromCharCode(65 + i),
+          typeof opt === 'string' ? opt : opt.text || opt.value || ''
+        ]));
+      }
+      const correct = typeof q.correct === 'number' ? Object.keys(options || {})[q.correct] : q.correct;
+      const rule = qRuleMeta.get(q.id);
+      const isMcq = q.type === 'mcq';
+      const hasExplSplit = Boolean(isMcq && rule?.explanationSplit && Number(q.marks) === 2);
+      const optionMarks = isMcq ? (hasExplSplit ? 1 : Number(q.marks || 0)) : 0;
+      const explanationMarks = hasExplSplit ? 1 : 0;
+      return {
+        ...q,
+        subject,
+        source: 'PYQ',
+        autoMarking: false,
+        paperRuleId: rule?.id || null,
+        paperRuleLabel: rule?.label || null,
+        optionMarks,
+        explanationMarks,
+        options,
+        correct,
+        explanation: q.explanation || q.answer,
+        modelAnswer: q.type !== 'mcq' ? q.answer : undefined
+      };
     });
-    const setMarks=questions.reduce((sum,q)=>sum+Number(q.marks||0),0);
-    return {questions,config:{subject,unit:'all',mode:'all',count:questions.length,timer:true,timerMins:minutes(meta.duration),source:'PYQ',
-      paper:{fileName:meta.fileName,examSession:meta.examSession,duration:meta.duration,fullMarks:meta.fullMarks,setMarks,
-        instructions:paper.paperFormat?.generalInstructions || [],groups:paper.paperFormat?.groups || [],
-        notice:'Paper practice uses supplied model answers, not official marking. All set questions are shown; answer-any/group rules are not automatically enforced. MCQ correctness can be checked; automatic paper marks are not awarded because explanation splits and answer-any rules require review.'}}};
+
+    const setMarks = questions.reduce((sum, q) => sum + Number(q.marks || 0), 0);
+    const fullMarks = Number(meta.fullMarks || paper.fullMarks || 0);
+    return {
+      questions,
+      config: {
+        subject,
+        unit: 'all',
+        mode: 'all',
+        count: questions.length,
+        timer: true,
+        timerMins: minutes(meta.duration),
+        source: 'PYQ',
+        paper: {
+          fileName: meta.fileName,
+          examSession: meta.examSession,
+          duration: meta.duration,
+          fullMarks,
+          esePatternMarks: 60,
+          hasPatternMismatch: fullMarks !== 60 || setMarks !== fullMarks,
+          setMarks,
+          instructions: paper.paperFormat?.generalInstructions || [],
+          groups: paper.paperFormat?.groups || [],
+          rules,
+          timedSection,
+          notice: 'Paper practice uses supplied model answers, not official marking. Source answer-any quotas (and any timed loose-script section window) are enforced from paperFormat. Keyed MCQ option choices are checked automatically; written 1-mark MCQ explanations and subjective answers require manual self-review, so no automatic overall paper grade is awarded.'
+        }
+      }
+    };
   }
-  globalThis.QuizPaper={registry,load,minutes};
+
+  globalThis.QuizPaper = { registry, load, minutes, derivePaperRules };
 })();
 
 ;
@@ -76,10 +228,15 @@
     const legacy = input.schemaVersion !== 1;
     const id = input.id || uid();
     const endsAt = timed ? (Number(input.endsAt) || (legacy ? startedAt + Number(config.timerMins)*60000 : now + Number(input.remainingMs ?? Number(config.timerMins)*60000))) : null;
+    const timedSectionMins = Number(config.paper?.timedSection?.minutes || 0);
+    const sectionEndsAt = timed && timedSectionMins > 0 ? (Number(input.sectionEndsAt) || (startedAt + timedSectionMins * 60000)) : null;
+    const lockedGroups = Array.isArray(input.lockedGroups) ? [...new Set(input.lockedGroups.map(String))] : [];
     const status = input.status || 'active';
     return { ...copy(input), schemaVersion: 1, id, config, startedAt, startTime: startedAt,
-      endsAt, remainingMs: timed ? Math.max(0, status === 'active' ? endsAt-now : Number(input.remainingMs || 0)) : null,
+      endsAt, sectionEndsAt, lockedGroups,
+      remainingMs: timed ? Math.max(0, status === 'active' ? endsAt-now : Number(input.remainingMs || 0)) : null,
       questionIds: ids, questions, answers: cleanAnswers(input.answers, ids),
+      explanations: cleanAnswers(input.explanations, ids),
       flags: input.flags || {}, skipped: (input.skipped || []).filter(id => ids.includes(id)), visited: input.visited || [],
       currentIndex: Math.max(0, Math.min(Number(input.currentIndex)||0, ids.length-1)),
       status, autosaveKey: PREFIX+id, savedAt: input.savedAt || now,
@@ -131,6 +288,126 @@
     return {score:correct, correct, incorrect, unanswered, total:mcqs.length, percentage:mcqs.length ? Math.round(correct/mcqs.length*100) : null,
       ungraded:questions.length-mcqs.length, marksObtained, gradableMarks:mcqs.reduce((sum,q)=>sum+(q.autoMarking===false ? 0 : Number(q.marks)||0),0)};
   }
+  function isQuestionAnswered(attempt, qid) {
+    return hasAnswer(attempt?.answers?.[qid]) || hasAnswer(attempt?.explanations?.[qid]);
+  }
+  function findPaperRule(attempt, questionId) {
+    const rules = attempt?.config?.paper?.rules;
+    if (!Array.isArray(rules) || !rules.length) return null;
+    return rules.find(r => Array.isArray(r.questionIds) && r.questionIds.includes(questionId)) || null;
+  }
+  function questionAccess(attempt, questionId, now = Date.now()) {
+    const rule = findPaperRule(attempt, questionId);
+    if (!rule) return { locked: false, code: null, reason: null, rule: null, answeredInRule: 0, answeredIds: [] };
+    const answeredIds = rule.questionIds.filter(id => isQuestionAnswered(attempt, id));
+    const ts = attempt?.config?.paper?.timedSection;
+    if (ts && ts.groupId) {
+      const tsExpired = Boolean(attempt.sectionEndsAt && now >= attempt.sectionEndsAt);
+      const tsLockedEarly = (attempt.lockedGroups || []).includes(String(ts.groupId));
+      const firstClosed = tsExpired || tsLockedEarly;
+      if (String(rule.groupId) === String(ts.groupId) && firstClosed) {
+        return {
+          locked: true,
+          code: 'section-time-closed',
+          reason: `Group ${ts.groupId} loose-script window has closed; saved Group ${ts.groupId} answers are locked.`,
+          rule,
+          answeredInRule: answeredIds.length,
+          answeredIds
+        };
+      }
+      if (String(rule.groupId) !== String(ts.groupId) && ts.compulsoryFirst && !firstClosed) {
+        return {
+          locked: true,
+          code: 'awaiting-first-section',
+          reason: `Group ${ts.groupId} is compulsory first (${ts.minutes}-minute loose-script window). Lock Group ${ts.groupId} or wait for its timer before answering Group ${rule.groupId}.`,
+          rule,
+          answeredInRule: answeredIds.length,
+          answeredIds
+        };
+      }
+    }
+    if (!answeredIds.includes(questionId) && answeredIds.length >= Number(rule.answerAny)) {
+      return {
+        locked: true,
+        code: 'quota-reached',
+        reason: `Choice limit reached (${answeredIds.length} / ${rule.answerAny} answered in ${rule.label}). Clear an answered choice in this section to switch alternatives.`,
+        rule,
+        answeredInRule: answeredIds.length,
+        answeredIds
+      };
+    }
+    return { locked: false, code: null, reason: null, rule, answeredInRule: answeredIds.length, answeredIds };
+  }
+  function paperSummary(attempt) {
+    const paper = attempt?.config?.paper;
+    if (!paper) return null;
+    const qMap = new Map((attempt.questions || []).map(q => [q.id, q]));
+    const rules = Array.isArray(paper.rules) ? paper.rules : [];
+    const ruleRows = [];
+    let optionMarksEarned = 0, optionMarksMax = 0, explanationMarksPending = 0, explanationWrittenCount = 0, manualMarksMax = 0, excessAnswerCount = 0;
+
+    for (const rule of rules) {
+      const qsInRule = (rule.questionIds || []).map(id => qMap.get(id)).filter(Boolean);
+      const answeredIds = (rule.questionIds || []).filter(id => isQuestionAnswered(attempt, id));
+      const limit = Number(rule.answerAny ?? qsInRule.length);
+      const countedIds = answeredIds.slice(0, limit);
+      const excessIds = answeredIds.slice(limit);
+      excessAnswerCount += excessIds.length;
+
+      let ruleOptionEarned = 0, ruleOptionMax = 0, ruleExplMax = 0, ruleExplWritten = 0;
+      const sampleMcqs = qsInRule.filter(q => q.type === 'mcq' && q.options && Object.prototype.hasOwnProperty.call(q.options, q.correct));
+      if (sampleMcqs.length) {
+        const perOpt = Number(sampleMcqs[0].optionMarks ?? (rule.explanationSplit ? 1 : sampleMcqs[0].marks || 0));
+        const perExpl = Number(sampleMcqs[0].explanationMarks ?? (rule.explanationSplit ? 1 : 0));
+        const mcqCap = Math.min(limit, sampleMcqs.length);
+        ruleOptionMax = mcqCap * perOpt;
+        ruleExplMax = mcqCap * perExpl;
+        for (const id of countedIds) {
+          const q = qMap.get(id);
+          if (!q || q.type !== 'mcq') continue;
+          if (attempt.answers?.[id] === q.correct) ruleOptionEarned += Number(q.optionMarks ?? perOpt);
+          if (perExpl > 0 && hasAnswer(attempt.explanations?.[id])) ruleExplWritten++;
+        }
+      }
+      const ruleManualMax = Math.max(0, Number(rule.maxMarks || 0) - ruleOptionMax);
+      optionMarksEarned += ruleOptionEarned;
+      optionMarksMax += ruleOptionMax;
+      explanationMarksPending += ruleExplMax;
+      explanationWrittenCount += ruleExplWritten;
+      manualMarksMax += ruleManualMax;
+
+      ruleRows.push({
+        id: rule.id,
+        groupId: rule.groupId,
+        label: rule.label,
+        totalSet: rule.totalSet,
+        answerAny: limit,
+        maxMarks: Number(rule.maxMarks || 0),
+        answeredCount: answeredIds.length,
+        countedIds,
+        excessIds,
+        optionMarksEarned: ruleOptionEarned,
+        optionMarksMax: ruleOptionMax,
+        explanationMarksMax: ruleExplMax,
+        explanationWrittenCount: ruleExplWritten,
+        manualMarksMax: ruleManualMax
+      });
+    }
+
+    return {
+      printedMax: Number(paper.fullMarks || 0),
+      setMarks: Number(paper.setMarks || 0),
+      esePatternMarks: Number(paper.esePatternMarks || 60),
+      hasPatternMismatch: Boolean(paper.hasPatternMismatch ?? (Number(paper.fullMarks || 0) !== 60 || Number(paper.setMarks || 0) !== Number(paper.fullMarks || 0))),
+      optionMarksEarned,
+      optionMarksMax,
+      explanationMarksPending,
+      explanationWrittenCount,
+      manualMarksMax,
+      excessAnswerCount,
+      rules: ruleRows
+    };
+  }
   function updateMistakes(attempt) {
     const queue=read(MISTAKES) || {schemaVersion:1, resolvedCount:0, items:{}};
     if ((queue.processedIds || []).includes(attempt.id)) return;
@@ -152,10 +429,11 @@
   function finish(input) {
     const attempt=normalize({...input,status:'submitted'});
     const assessment=score(attempt.questions,attempt.answers);
+    const pSummary=paperSummary(attempt);
     const scored=attempt.config.mode==='mcq' && assessment.total>0;
     const result={...attempt, historyId:attempt.historyId || 'hist-'+attempt.id, completedAt:Date.now(),
       subject:attempt.config.subject,unit:attempt.config.unit,mode:attempt.config.mode,
-      elapsed:Math.round((Date.now()-attempt.startedAt)/1000),assessment,
+      elapsed:Math.round((Date.now()-attempt.startedAt)/1000),assessment,paperSummary:pSummary,
       outcome:scored ? 'scored' : 'not scored',score:scored ? assessment.score : null,total:scored ? assessment.total : attempt.questions.length,
       correct:assessment.correct,incorrect:assessment.incorrect,unanswered:assessment.unanswered,percentage:scored ? assessment.percentage : null};
     // Save exportable result/history before removing the resume entry.
@@ -174,18 +452,22 @@
     if (!entry?.questions?.length) throw new Error('This legacy history entry has no question snapshot. Exact retry is unavailable; choose a new quiz in setup.');
     let questions=copy(entry.questions);
     if (shuffled) for(let i=questions.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [questions[i],questions[j]]=[questions[j],questions[i]]; }
-    return save({config:entry.config || {subject:entry.subject,unit:entry.unit,mode:entry.mode,timer:false},questions,answers:{},flags:entry.flags || {},skipped:[],visited:[],currentIndex:0,status:'active'});
+    return save({config:entry.config || {subject:entry.subject,unit:entry.unit,mode:entry.mode,timer:false},questions,answers:{},explanations:{},lockedGroups:[],flags:entry.flags || {},skipped:[],visited:[],currentIndex:0,status:'active'});
   }
-  function edit(id, answers) {
+  function edit(id, answers, explanations = undefined) {
     const entry=historyEntry(id);
     if (!entry?.questions?.length) throw new Error('This history entry has no editable snapshot.');
-    entry.answers=cleanAnswers(answers,entry.questions.map(q=>q.id));entry.editedAt=Date.now();entry.assessment=score(entry.questions,entry.answers);
+    const validIds = entry.questions.map(q=>q.id);
+    entry.answers=cleanAnswers(answers,validIds);
+    if (explanations !== undefined) entry.explanations=cleanAnswers(explanations,validIds);
+    entry.editedAt=Date.now();entry.assessment=score(entry.questions,entry.answers);
+    if(entry.config?.paper) entry.paperSummary=paperSummary(entry);
     if(entry.mode==='mcq') Object.assign(entry,entry.assessment);
     setHistory(entry);
     const current=read(RESULT); if(current?.historyId===id) write(RESULT,entry);
     return entry;
   }
-  globalThis.QuizAttempts={PREFIX,LEGACY,RESULT,HISTORY,MISTAKES,hasAnswer,cleanAnswers,normalize,save,get,latest,all,finish,abandon,history,historyEntry,setHistory,retry,edit,score,
+  globalThis.QuizAttempts={PREFIX,LEGACY,RESULT,HISTORY,MISTAKES,hasAnswer,cleanAnswers,normalize,save,get,latest,all,finish,abandon,history,historyEntry,setHistory,retry,edit,score,questionAccess,paperSummary,
     current:()=>read(RESULT), setCurrent:value=>write(RESULT,value),setPendingConfig:value=>write('quiz-pending-config',value),
     clearHistory:()=>StudyStorage.legacy.removeItem(HISTORY),deleteHistory:id=>write(HISTORY,history().filter(h=>h.historyId!==id)),
     mistakes:()=>read(MISTAKES) || {schemaVersion:1,resolvedCount:0,items:{}},clearMistakes:()=>StudyStorage.legacy.removeItem(MISTAKES),
@@ -220,7 +502,7 @@ const SUBJECTS = {
   CST205: {
     code: 'CST205',
     name: 'Data Structures',
-    credits: 2,
+    credits: 3,
     units: 4
   },
   CST207: {
@@ -233,44 +515,44 @@ const SUBJECTS = {
     code: 'CST209',
     name: 'Algorithms',
     credits: 4,
-    units: 5
+    units: 4
   }
 };
 
 const UNIT_TITLES = {
   CST201: {
     1: 'Basics of C',
-    2: 'Decision Control & Looping',
-    3: 'User Defined Functions',
-    4: 'Arrays & Strings',
+    2: 'Decision Control and Looping Statements',
+    3: 'User Defined Functions — mapping under review',
+    4: 'Arrays & Strings — mapping under review',
     5: 'Pointers in C'
   },
   CST203: {
-    1: 'Variables & Data Types',
+    1: 'Introduction, Variables and Data Types',
     2: 'Control Structures',
-    3: 'Functions, Modules & Packages',
-    4: 'File I/O & Regular Expressions',
-    5: 'Frameworks (Django)'
+    3: 'Functions, Modules and Packages',
+    4: 'File I/O, Text Processing, Regular Expressions',
+    5: 'Frameworks'
   },
   CST205: {
-    1: 'Introduction and Stacks',
-    2: 'Queues, Recursion and Linked Lists',
-    3: 'Trees and Graphs',
-    4: 'BST, Hashing and Shortest Path'
+    1: 'Introduction to Data Structures',
+    2: 'Linear Data Structures',
+    3: 'Linked Lists',
+    4: 'Non-Linear Data Structures'
   },
   CST207: {
-    1: 'Structure of Computers + Data Representation',
-    2: 'Control Unit + Pipelines',
-    3: 'Microprocessor Architecture (8086)',
+    1: 'Structure of Computers; Register Transfer and Micro Operations',
+    2: 'Micro Programmed Control; Computer Arithmetic; Pipelining',
+    3: 'Introduction to Microprocessor Architecture',
     4: 'Assembly Language Programming',
-    5: 'Memory & Digital Interfacing'
+    5: 'Memory and Digital Interfacing'
   },
   CST209: {
-    1: 'Fundamentals + Complexity',
-    2: 'Sorting Algorithms',
-    3: 'Searching + BST + Hashing',
-    4: 'Graph Algorithms',
-    5: 'String Algorithms'
+    1: 'Fundamentals of Algorithms',
+    2: 'Sorting',
+    3: 'Searching',
+    4: 'Graphs and Graph Algorithms',
+    5: 'String Algorithms — mapping under review'
   }
 };
 
@@ -889,11 +1171,15 @@ function generateAllTypesMarkdown(data) {
 
   questions.forEach((q, i) => {
     const userAnswer = answers[q.id] || '_(No answer provided)_';
-    const modelAnswer = q.modelAnswer || '_(No model answer available)_';
+    const userExpl = data.explanations?.[q.id];
+    const modelAnswer = q.modelAnswer || (q.correct ? `Correct option: ${q.correct}${q.explanation ? ' — ' + q.explanation : ''}` : '_(No model answer available)_');
 
     md += `## Question ${i + 1} (${q.marks} marks)\n`;
     md += `**Question:** ${q.question}\n\n`;
     md += `**User Answer:**\n${userAnswer}\n\n`;
+    if (userExpl) {
+      md += `**User Explanation (1 mark — manual review):**\n${userExpl}\n\n`;
+    }
     md += `**Model Answer:**\n${modelAnswer}\n\n`;
     md += `---\n\n`;
   });
@@ -969,7 +1255,8 @@ function generateJSONExport(data) {
       mode: data.mode,
       attemptId: data.metadata?.attemptId || null,
       score: data.score ?? null,
-      totalQuestions: data.questions.length
+      totalQuestions: data.questions.length,
+      paperSummary: data.paperSummary || null
     },
     questions: data.questions.map((q, i) => ({
       number: i + 1,
@@ -978,6 +1265,7 @@ function generateJSONExport(data) {
       question: q.question,
       marks: q.marks,
       userAnswer: data.answers[q.id] || null,
+      userExplanation: data.explanations?.[q.id] || null,
       correctAnswer: q.correct || null,
       isCorrect: q.type === 'mcq' && QuizAttempts.hasAnswer(data.answers[q.id])
         ? (data.answers[q.id] === q.correct)
@@ -1023,6 +1311,9 @@ function generateTXTExport(data) {
     }
 
     txt += `\n   Your Answer  : ${userAnswer}\n`;
+    if (data.explanations?.[q.id]) {
+      txt += `   Your Expl.   : ${data.explanations[q.id]}\n`;
+    }
 
     if (q.correct) {
       const isRight = userAnswer === q.correct;

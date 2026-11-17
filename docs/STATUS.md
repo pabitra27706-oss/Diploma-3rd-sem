@@ -21,12 +21,16 @@ the PR/Git history for the operation result. This permission does not authorize
 deployment/domain changes or close unfinished phase gates.
 
 
-- Branch: `arena/26856d99-diploma-3rd-sem` (active). The prior
-  `arena/be3d9178-diploma-3rd-sem` branch was merged into main via PR #7
-  (commit `125eb94`) and is retired.
-- Branch tip: `125eb94` (main merge of PR #7). Working tree is clean and matches
-  that tip; the previously-described "uncommitted working tree" state is obsolete
-  — PR #7 committed and merged that work.
+- Branch: `arena/47d8bf99-diploma-3rd-sem` (active, branched from `main` at
+  `8405b15`). Prior `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
+  `arena/26856d99-diploma-3rd-sem` (`8405b15`) branches were merged into `main`
+  and are retired.
+- Phase 2 engineering passed owner Termux verification (`✅*` at commit
+  `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green);
+  strict source-verification items (`10` data findings + `3` grouped syllabus
+  findings) remain tracked under the separate content-verification gate.
+- Phase 3 (`03-quiz-engine`) engineering parts 3.1–3.6 are complete on
+  `arena/47d8bf99-diploma-3rd-sem` and awaiting owner local verification.
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
   `arena/be3d9178-diploma-3rd-sem` as the branch that work was performed on. That
@@ -45,8 +49,8 @@ deployment/domain changes or close unfinished phase gates.
 | Phase | Present implementation | Still needed before closing implementation |
 |---|---|---|
 | 1 — Platform | Subpath-safe PWA, local assets, presence metadata, install/update controller | Preserve regressions as later modules change. Original platform implementation is complete; final hardware/install acceptance moves to Phase 10. Full source/syllabus gates remain separate. |
-| 2 — Data | Deterministic inventory/scheduling, aliases, no-key labels, source-review ledger, immutable-PYQ guard | Resolve 10 source-backed data findings and 3 grouped syllabus errors; verify reprint relationships/key candidates and bank currency. No guessed keys or raw retags. |
-| 3 — Quiz | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes, read-only paper practice | Enforce answer-any/group/section choices and any timed paper-section constraints from explicit source rules. Handle explanation-mark allocation honestly. No official overall paper grade until rules and totals are reconciled. |
+| 2 — Data | Deterministic inventory/scheduling, enriched catalog & derived pools, all 5 subject + 24 unit HTML pages syllabus-aligned & validator-checked, alias deep links & PYQ repeat cross-refs, generic topics filtered, no-key labels, source-review ledger, immutable-PYQ guard | Owner/source GATE only: resolve 10 source-backed data findings and 3 grouped syllabus errors; verify reprint relationships/key candidates and CST207/Jan-2026 bank additions. No guessed keys or raw retags. |
+| 3 — Quiz | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes, full paper practice enforcing `paperFormat` `answerAny` section/choiceSet quotas, 30m `2023-03` Group A loose-script window, `1m option + 1m written explanation` split, ESE pattern warnings, Print/PDF export | Owner local/phone verification (`🚧`) + Phase 10 cross-device acceptance. Subjective and written-explanation marks intentionally remain manual self-review (no fabricated overall paper grade). |
 | 4 — Discovery | Compact search shards, safe search UI, exact-repeat explorer, question links, subject/unit related material | Finish remaining informational-page indexing and authored heading anchors; focused offline-search, back-button, share-fallback and keyboard acceptance. Do not describe current search as indexing every page. |
 | 5 — Study system | Source-linked cards, fixed Leitner reviews, Today/goals/streaks, weak-area denominators, local seven-day trends | Broader clock/day-rollover/new-card-cap edge cases and clearer card-level source-eligibility reporting. Cards use existing model/keyed material, not new certification. |
 | 6 — Storage/portability | Central namespaced boundary, verified legacy copy migration, notes, preferences, group reset, previewed backup/merge/replace, recovery journal | Implement IndexedDB threshold/async cutover/fallback and migration evidence; concurrent-tab transaction isolation/state sync; typed validation of further legacy variants. Current primary API remains synchronous local storage. |
@@ -85,9 +89,8 @@ These cannot be solved by declaring a feature complete:
 These are local results from the latest implementation checkpoint, not a claim
 that documentation-only edits reran all browser suites:
 
-- Python unittest discovery: **12 PASS**.
-- Four deterministic Node suites: attempt state, scheduler/trends, storage and
-  interruption/quota recovery — PASS.
+- Python unittest discovery: **13 PASS**.
+- Six deterministic Node suites: attempt state + 30-paper rule/quota/section-timer/explanation-split verification, quiz DOM/export/label contracts, scheduler/trends (including generic-topic collapse), storage, interruption/quota recovery, and Phase 2 derived-pipeline consumers — PASS.
 - Seven focused Chromium suites: Practice/data, quiz engine, discovery/study,
   storage/notes, cached-paper offline, feedback, cached 20-card offline keyboard
   review — PASS. No broad device compatibility is inferred.

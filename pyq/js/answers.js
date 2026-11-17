@@ -1711,12 +1711,37 @@ document.querySelectorAll('.modal-overlay').forEach(o => {
 //  INIT
 // ═══════════════════════════════════════════════════════════
 
+let repeatIndexPromise = null;
+function loadRepeatIndex() {
+  if (!repeatIndexPromise) {
+    repeatIndexPromise = fetch('../assets/search/repeated.json')
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        const map = new Map();
+        for (const group of data?.groups || []) {
+          const canonical = group.canonical;
+          const all = group.appearances || [];
+          for (const item of all) {
+            map.set(item.id, {
+              canonical,
+              others: all.filter(other => other.id !== item.id)
+            });
+          }
+        }
+        return map;
+      })
+      .catch(() => new Map());
+  }
+  return repeatIndexPromise;
+}
+
 init();
 
 // Canonical links contain source identity, never local answers or student data.
 function decorateQuestionLinks() {
   document.querySelectorAll('#questionContainer .question-card').forEach((card,index)=>{
     const q=questions[currentMode==='practice'?currentIndex:index];if(!q)return;
+    card.querySelector('.question-share')?.remove();
     card.tabIndex=-1;
     const url=new URL('answers.html',location.href);url.search=new URLSearchParams({subject:subjectCode,paper:paperCode,q:q.id}).toString();
     const controls=document.createElement('div');controls.className='question-share';
@@ -1726,6 +1751,26 @@ function decorateQuestionLinks() {
     if(navigator.share){const share=document.createElement('button');share.type='button';share.textContent='Share question';share.onclick=()=>navigator.share({title:q.question.slice(0,80),url:url.href}).catch(()=>{});controls.append(share);}
     const provenance=document.createElement('p');provenance.textContent=`Answer status: ${q.answerStatus||'unverified'} · Source status: ${q.sourceStatus||'unverified'} · Citation: ${q.sourcePage||'not recorded'}${q.verifiedOn?' · Verification date: '+q.verifiedOn:''}`;controls.append(provenance);
     card.append(controls);
+    loadRepeatIndex().then(repeatMap => {
+      const info = repeatMap.get(q.id);
+      if (!info || !controls.isConnected) return;
+      const dup = document.createElement('p');
+      dup.className = 'question-duplicates';
+      const prefix = info.canonical.id === q.id
+        ? 'Exact duplicate also appeared in: '
+        : `Canonical entry ${info.canonical.id} · Also appeared identically in: `;
+      dup.append(document.createTextNode(prefix));
+      info.others.forEach((other, idx) => {
+        if (idx > 0) dup.append(document.createTextNode(' · '));
+        const link = document.createElement('a');
+        const otherUrl = new URL('answers.html', location.href);
+        otherUrl.search = new URLSearchParams({ subject: other.subject, paper: other.paper, q: other.id }).toString();
+        link.href = otherUrl.href;
+        link.textContent = `${other.month || ''} ${other.year || ''} (${other.paper} · ${other.id})`.trim();
+        dup.append(link);
+      });
+      controls.append(dup);
+    });
     if(params.get('q')===q.id){card.style.outline='3px solid var(--accent, #5268d9)';document.title=q.id+' — '+q.question.slice(0,60);}
   });
 }

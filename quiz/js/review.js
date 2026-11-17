@@ -14,9 +14,11 @@ const reviewState = {
   result:          null,   // Loaded from StudyStorage.legacy quiz-result
   questions:       [],
   answers:         {},
+  explanations:    {},
   config:          null,
   currentFilter:   'all',  // 'all' | 'answered' | 'unanswered'
-  editingQuestionId: null  // ID of question being edited in modal
+  editingQuestionId: null, // ID of question being edited in modal
+  editingField:    'answer'// 'answer' | 'explanation'
 };
 
 /* ══════════════════════════════════════════════════════════════
@@ -88,21 +90,17 @@ function loadReviewData() {
     return;
   }
 
-  reviewState.result    = result;
-  reviewState.questions = result.questions || [];
-  reviewState.answers   = result.answers   || {};
-  reviewState.config    = result.config    || {};
+  reviewState.result       = result;
+  reviewState.questions    = result.questions || [];
+  reviewState.answers      = result.answers   || {};
+  reviewState.explanations = result.explanations || {};
+  reviewState.config       = result.config    || {};
 
   hideEl(dom.loadingState);
   showEl(dom.reviewMain);
 
   renderPageHeader();
-  if (reviewState.config.paper) {
-    const a=QuizAttempts.score(reviewState.questions,reviewState.answers);
-    const note=document.createElement('p'); note.setAttribute('role','status');
-    note.textContent=`Keyed MCQs: ${a.correct} correct, ${a.incorrect} wrong, ${a.unanswered} unanswered; Paper marks are not automatically awarded (explanation splits and choice rules need review). Printed paper maximum ${reviewState.config.paper.fullMarks}; no automatic overall grade or answer-any enforcement.`;
-    dom.reviewMain.prepend(note);
-  }
+  renderPaperSummaryNote();
   renderInfoBanner();
   renderQuestionList();
   const targetId=getParam('q');
@@ -140,7 +138,7 @@ function renderPageHeader() {
 
   // Stats
   if (dom.reviewHeaderStats) {
-    const answeredCount = Object.keys(answers).filter(id => answers[id]).length;
+    const answeredCount = questions.filter(q => QuizAttempts.hasAnswer(answers[q.id]) || QuizAttempts.hasAnswer(reviewState.explanations[q.id])).length;
     const unanswered    = questions.length - answeredCount;
     const totalMarks    = questions.reduce((s, q) => s + (q.marks || 0), 0);
 
@@ -162,6 +160,53 @@ function renderPageHeader() {
         <span class="review-stat-label">Total Marks</span>
       </div>
     `;
+  }
+}
+
+function renderPaperSummaryNote() {
+  if (!reviewState.config?.paper) return;
+  let note = document.getElementById('paper-review-summary');
+  if (!note) {
+    note = document.createElement('section');
+    note.id = 'paper-review-summary';
+    note.setAttribute('role', 'status');
+    note.style.cssText = 'margin:0 0 1rem;padding:0.85rem 1rem;border-radius:10px;border:1px solid var(--border,#cbd5e1);';
+    dom.reviewMain.prepend(note);
+  }
+  note.replaceChildren();
+  const a = QuizAttempts.score(reviewState.questions, reviewState.answers);
+  const ps = QuizAttempts.paperSummary({
+    ...reviewState.result,
+    config: reviewState.config,
+    questions: reviewState.questions,
+    answers: reviewState.answers,
+    explanations: reviewState.explanations
+  });
+  const lead = document.createElement('p');
+  lead.style.margin = '0 0 0.35rem';
+  const optPart = ps && ps.optionMarksMax > 0
+    ? ` · Verified MCQ option marks (within section quotas): ${ps.optionMarksEarned} / ${ps.optionMarksMax}`
+    : '';
+  const explPart = ps && ps.explanationMarksPending > 0
+    ? ` · Written 1-mark MCQ explanations: ${ps.explanationWrittenCount} written (${ps.explanationMarksPending} marks pending manual self-review)`
+    : '';
+  lead.textContent = `Keyed MCQs: ${a.correct} correct, ${a.incorrect} wrong, ${a.unanswered} unanswered${optPart}${explPart}. Printed paper maximum ${reviewState.config.paper.fullMarks}; subjective and explanation components require manual review, so there is no automatic overall grade.`;
+  note.appendChild(lead);
+
+  if (ps && ps.rules.length) {
+    const quotaText = ps.rules.map(r => `${r.label}: ${r.answeredCount}/${r.answerAny}`).join(' · ');
+    const quotas = document.createElement('p');
+    quotas.style.cssText = 'margin:0.25rem 0 0;font-size:0.88rem;';
+    quotas.textContent = `Section quotas: ${quotaText}.`;
+    note.appendChild(quotas);
+  }
+  if (ps && ps.hasPatternMismatch) {
+    const mismatch = document.createElement('p');
+    mismatch.style.cssText = 'margin:0.25rem 0 0;font-size:0.86rem;';
+    mismatch.textContent = Number(ps.printedMax) !== 60
+      ? `Historical paper pattern notice: printed maximum (${ps.printedMax}) differs from the current 60-mark ESE syllabus pattern.`
+      : `Choice-paper total notice: all set questions sum to ${ps.setMarks} marks while printed maximum after answer-any choices is ${ps.printedMax} marks.`;
+    note.appendChild(mismatch);
   }
 }
 
@@ -206,15 +251,12 @@ function renderQuestionList() {
  * Get questions filtered by current filter state
  */
 function getFilteredQuestions() {
+  const hasAny = id => QuizAttempts.hasAnswer(reviewState.answers[id]) || QuizAttempts.hasAnswer(reviewState.explanations[id]);
   switch (reviewState.currentFilter) {
     case 'answered':
-      return reviewState.questions.filter(q =>
-        reviewState.answers[q.id] && reviewState.answers[q.id].trim()
-      );
+      return reviewState.questions.filter(q => hasAny(q.id));
     case 'unanswered':
-      return reviewState.questions.filter(q =>
-        !reviewState.answers[q.id] || !reviewState.answers[q.id].trim()
-      );
+      return reviewState.questions.filter(q => !hasAny(q.id));
     default:
       return reviewState.questions;
   }
@@ -223,7 +265,8 @@ function getFilteredQuestions() {
 /* ── Build Single Question Card ─────────────────────────────── */
 function buildQuestionCard(q, displayNum) {
   const userAnswer  = reviewState.answers[q.id] || '';
-  const hasAnswer   = userAnswer.trim().length > 0;
+  const userExpl    = reviewState.explanations[q.id] || '';
+  const hasAnswer   = userAnswer.trim().length > 0 || userExpl.trim().length > 0;
   const isMCQ       = q.type === 'mcq';
 
   const card = createElement('div', `review-question-card ${hasAnswer ? '' : 'unanswered'}`);
@@ -256,6 +299,14 @@ function buildQuestionCard(q, displayNum) {
   if (isMCQ) {
     const optionsEl = buildMCQOptionsReview(q, userAnswer);
     body.appendChild(optionsEl);
+    if (q.explanationMarks > 0) {
+      const explBox = buildTextAnswerBox(q, userExpl, userExpl.trim().length > 0, 'explanation', 'Your 1-mark Explanation (manual self-review)');
+      body.appendChild(explBox);
+    }
+    if (q.explanation) {
+      const modelBox = buildModelAnswerBox({ id: `${q.id}-expl`, modelAnswer: q.explanation }, '📖 Supplied Answer Explanation');
+      body.appendChild(modelBox);
+    }
   } else {
     const answerBox = buildTextAnswerBox(q, userAnswer, hasAnswer);
     body.appendChild(answerBox);
@@ -350,8 +401,9 @@ function buildMCQOptionsReview(q, selectedKey) {
 
   Object.entries(q.options || {}).forEach(([key, text]) => {
     const isSelected = key === selectedKey;
+    const isCorrect = Boolean(q.correct && key === q.correct);
     const option = createElement('div',
-      `review-option${isSelected ? ' selected' : ''}`
+      `review-option${isSelected ? ' selected' : ''}${isCorrect ? ' correct' : ''}`
     );
 
     const label = createElement('span', 'review-option-label', key);
@@ -360,9 +412,12 @@ function buildMCQOptionsReview(q, selectedKey) {
     option.appendChild(label);
     option.appendChild(textEl);
 
-    if (isSelected) {
-      const check = createElement('span', 'review-option-check', '✓');
-      option.appendChild(check);
+    if (isSelected && isCorrect) {
+      option.appendChild(createElement('span', 'review-option-check', '✓ Correct'));
+    } else if (isSelected) {
+      option.appendChild(createElement('span', 'review-option-check', '✗ Your choice'));
+    } else if (isCorrect) {
+      option.appendChild(createElement('span', 'review-option-check', '✓ Key'));
     }
 
     container.appendChild(option);
@@ -372,18 +427,18 @@ function buildMCQOptionsReview(q, selectedKey) {
 }
 
 /* ── Text Answer Box ─────────────────────────────────────────── */
-function buildTextAnswerBox(q, userAnswer, hasAnswer) {
+function buildTextAnswerBox(q, userAnswer, hasAnswer, field = 'answer', titleLabel = 'Your Answer') {
   const box = createElement('div', 'review-answer-box');
 
   // Header
   const boxHeader = createElement('div', 'review-answer-box-header');
-  const boxTitle  = createElement('span', 'review-answer-box-title', 'Your Answer');
+  const boxTitle  = createElement('span', 'review-answer-box-title', titleLabel);
 
   // Edit button
   const editBtn = createElement('button', 'btn-edit-answer');
   editBtn.innerHTML = '<span aria-hidden="true">✏️</span> Edit';
-  editBtn.setAttribute('aria-label', `Edit answer for question ${q.id}`);
-  editBtn.addEventListener('click', () => openEditModal(q));
+  editBtn.setAttribute('aria-label', `Edit ${field} for question ${q.id}`);
+  editBtn.addEventListener('click', () => openEditModal(q, field));
 
   boxHeader.appendChild(boxTitle);
   boxHeader.appendChild(editBtn);
@@ -391,7 +446,7 @@ function buildTextAnswerBox(q, userAnswer, hasAnswer) {
 
   // Answer content
   if (hasAnswer) {
-    const isMono = q.type === 'program';
+    const isMono = q.type === 'program' && field === 'answer';
     const answerEl = createElement('div',
       `review-answer-text${isMono ? ' mono' : ''}`,
       userAnswer
@@ -399,7 +454,7 @@ function buildTextAnswerBox(q, userAnswer, hasAnswer) {
     box.appendChild(answerEl);
   } else {
     const emptyEl = createElement('p', 'review-answer-empty',
-      'No answer provided. Click Edit to add one.'
+      `No ${field} provided. Click Edit to add one.`
     );
     box.appendChild(emptyEl);
   }
@@ -408,11 +463,11 @@ function buildTextAnswerBox(q, userAnswer, hasAnswer) {
 }
 
 /* ── Model Answer Box (collapsible) ─────────────────────────── */
-function buildModelAnswerBox(q) {
+function buildModelAnswerBox(q, headingText = '📖 Model Answer') {
   const box = createElement('div', 'review-model-answer');
 
   const modelHeader = createElement('div', 'review-model-header');
-  const modelTitle  = createElement('span', 'review-model-title', '📖 Model Answer');
+  const modelTitle  = createElement('span', 'review-model-title', headingText);
 
   const toggleBtn = createElement('button', 'review-model-toggle', 'Show');
   toggleBtn.setAttribute('aria-expanded', 'false');
@@ -531,19 +586,22 @@ function scrollToQuestion(questionId) {
    EDIT MODAL
 ══════════════════════════════════════════════════════════════ */
 
-function openEditModal(q) {
+function openEditModal(q, field = 'answer') {
   reviewState.editingQuestionId = q.id;
+  reviewState.editingField = field;
 
   if (dom.editModalQuestion) {
     dom.editModalQuestion.textContent = q.question;
   }
 
   if (dom.editAnswerTextarea) {
-    const current = reviewState.answers[q.id] || '';
+    const current = field === 'explanation'
+      ? (reviewState.explanations[q.id] || '')
+      : (reviewState.answers[q.id] || '');
     dom.editAnswerTextarea.value = current;
 
     // Monospace for program
-    if (q.type === 'program') {
+    if (q.type === 'program' && field === 'answer') {
       dom.editAnswerTextarea.classList.add('mono');
     } else {
       dom.editAnswerTextarea.classList.remove('mono');
@@ -563,21 +621,34 @@ function openEditModal(q) {
 function closeEditModal() {
   dom.editModalOverlay?.classList.remove('open');
   reviewState.editingQuestionId = null;
+  reviewState.editingField = 'answer';
 }
 
 function saveEditedAnswer() {
   const qId    = reviewState.editingQuestionId;
+  const field  = reviewState.editingField || 'answer';
   const newVal = dom.editAnswerTextarea?.value || '';
 
   if (!qId) return;
 
   // Update state
-  reviewState.answers[qId] = newVal;
+  if (field === 'explanation') {
+    if (newVal.trim()) reviewState.explanations[qId] = newVal;
+    else delete reviewState.explanations[qId];
+  } else {
+    if (newVal.trim()) reviewState.answers[qId] = newVal;
+    else delete reviewState.answers[qId];
+  }
 
   try {
     const id = reviewState.result.historyId;
-    if (id) reviewState.result = QuizAttempts.edit(id, reviewState.answers);
-    else { reviewState.result.answers = QuizAttempts.cleanAnswers(reviewState.answers, reviewState.questions.map(q=>q.id)); QuizAttempts.setCurrent(reviewState.result); }
+    if (id) reviewState.result = QuizAttempts.edit(id, reviewState.answers, reviewState.explanations);
+    else {
+      const validIds = reviewState.questions.map(q=>q.id);
+      reviewState.result.answers = QuizAttempts.cleanAnswers(reviewState.answers, validIds);
+      reviewState.result.explanations = QuizAttempts.cleanAnswers(reviewState.explanations, validIds);
+      QuizAttempts.setCurrent(reviewState.result);
+    }
   } catch (error) { alert('Edit could not be saved: '+error.message); return; }
 
   closeEditModal();
@@ -588,8 +659,9 @@ function saveEditedAnswer() {
   // Update palette panel
   buildPalettePanel();
 
-  // Update header stats
+  // Update header stats & paper summary
   renderPageHeader();
+  renderPaperSummaryNote();
 }
 
 /**

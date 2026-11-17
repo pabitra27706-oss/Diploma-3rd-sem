@@ -34,10 +34,15 @@
     const legacy = input.schemaVersion !== 1;
     const id = input.id || uid();
     const endsAt = timed ? (Number(input.endsAt) || (legacy ? startedAt + Number(config.timerMins)*60000 : now + Number(input.remainingMs ?? Number(config.timerMins)*60000))) : null;
+    const timedSectionMins = Number(config.paper?.timedSection?.minutes || 0);
+    const sectionEndsAt = timed && timedSectionMins > 0 ? (Number(input.sectionEndsAt) || (startedAt + timedSectionMins * 60000)) : null;
+    const lockedGroups = Array.isArray(input.lockedGroups) ? [...new Set(input.lockedGroups.map(String))] : [];
     const status = input.status || 'active';
     return { ...copy(input), schemaVersion: 1, id, config, startedAt, startTime: startedAt,
-      endsAt, remainingMs: timed ? Math.max(0, status === 'active' ? endsAt-now : Number(input.remainingMs || 0)) : null,
+      endsAt, sectionEndsAt, lockedGroups,
+      remainingMs: timed ? Math.max(0, status === 'active' ? endsAt-now : Number(input.remainingMs || 0)) : null,
       questionIds: ids, questions, answers: cleanAnswers(input.answers, ids),
+      explanations: cleanAnswers(input.explanations, ids),
       flags: input.flags || {}, skipped: (input.skipped || []).filter(id => ids.includes(id)), visited: input.visited || [],
       currentIndex: Math.max(0, Math.min(Number(input.currentIndex)||0, ids.length-1)),
       status, autosaveKey: PREFIX+id, savedAt: input.savedAt || now,
@@ -89,6 +94,126 @@
     return {score:correct, correct, incorrect, unanswered, total:mcqs.length, percentage:mcqs.length ? Math.round(correct/mcqs.length*100) : null,
       ungraded:questions.length-mcqs.length, marksObtained, gradableMarks:mcqs.reduce((sum,q)=>sum+(q.autoMarking===false ? 0 : Number(q.marks)||0),0)};
   }
+  function isQuestionAnswered(attempt, qid) {
+    return hasAnswer(attempt?.answers?.[qid]) || hasAnswer(attempt?.explanations?.[qid]);
+  }
+  function findPaperRule(attempt, questionId) {
+    const rules = attempt?.config?.paper?.rules;
+    if (!Array.isArray(rules) || !rules.length) return null;
+    return rules.find(r => Array.isArray(r.questionIds) && r.questionIds.includes(questionId)) || null;
+  }
+  function questionAccess(attempt, questionId, now = Date.now()) {
+    const rule = findPaperRule(attempt, questionId);
+    if (!rule) return { locked: false, code: null, reason: null, rule: null, answeredInRule: 0, answeredIds: [] };
+    const answeredIds = rule.questionIds.filter(id => isQuestionAnswered(attempt, id));
+    const ts = attempt?.config?.paper?.timedSection;
+    if (ts && ts.groupId) {
+      const tsExpired = Boolean(attempt.sectionEndsAt && now >= attempt.sectionEndsAt);
+      const tsLockedEarly = (attempt.lockedGroups || []).includes(String(ts.groupId));
+      const firstClosed = tsExpired || tsLockedEarly;
+      if (String(rule.groupId) === String(ts.groupId) && firstClosed) {
+        return {
+          locked: true,
+          code: 'section-time-closed',
+          reason: `Group ${ts.groupId} loose-script window has closed; saved Group ${ts.groupId} answers are locked.`,
+          rule,
+          answeredInRule: answeredIds.length,
+          answeredIds
+        };
+      }
+      if (String(rule.groupId) !== String(ts.groupId) && ts.compulsoryFirst && !firstClosed) {
+        return {
+          locked: true,
+          code: 'awaiting-first-section',
+          reason: `Group ${ts.groupId} is compulsory first (${ts.minutes}-minute loose-script window). Lock Group ${ts.groupId} or wait for its timer before answering Group ${rule.groupId}.`,
+          rule,
+          answeredInRule: answeredIds.length,
+          answeredIds
+        };
+      }
+    }
+    if (!answeredIds.includes(questionId) && answeredIds.length >= Number(rule.answerAny)) {
+      return {
+        locked: true,
+        code: 'quota-reached',
+        reason: `Choice limit reached (${answeredIds.length} / ${rule.answerAny} answered in ${rule.label}). Clear an answered choice in this section to switch alternatives.`,
+        rule,
+        answeredInRule: answeredIds.length,
+        answeredIds
+      };
+    }
+    return { locked: false, code: null, reason: null, rule, answeredInRule: answeredIds.length, answeredIds };
+  }
+  function paperSummary(attempt) {
+    const paper = attempt?.config?.paper;
+    if (!paper) return null;
+    const qMap = new Map((attempt.questions || []).map(q => [q.id, q]));
+    const rules = Array.isArray(paper.rules) ? paper.rules : [];
+    const ruleRows = [];
+    let optionMarksEarned = 0, optionMarksMax = 0, explanationMarksPending = 0, explanationWrittenCount = 0, manualMarksMax = 0, excessAnswerCount = 0;
+
+    for (const rule of rules) {
+      const qsInRule = (rule.questionIds || []).map(id => qMap.get(id)).filter(Boolean);
+      const answeredIds = (rule.questionIds || []).filter(id => isQuestionAnswered(attempt, id));
+      const limit = Number(rule.answerAny ?? qsInRule.length);
+      const countedIds = answeredIds.slice(0, limit);
+      const excessIds = answeredIds.slice(limit);
+      excessAnswerCount += excessIds.length;
+
+      let ruleOptionEarned = 0, ruleOptionMax = 0, ruleExplMax = 0, ruleExplWritten = 0;
+      const sampleMcqs = qsInRule.filter(q => q.type === 'mcq' && q.options && Object.prototype.hasOwnProperty.call(q.options, q.correct));
+      if (sampleMcqs.length) {
+        const perOpt = Number(sampleMcqs[0].optionMarks ?? (rule.explanationSplit ? 1 : sampleMcqs[0].marks || 0));
+        const perExpl = Number(sampleMcqs[0].explanationMarks ?? (rule.explanationSplit ? 1 : 0));
+        const mcqCap = Math.min(limit, sampleMcqs.length);
+        ruleOptionMax = mcqCap * perOpt;
+        ruleExplMax = mcqCap * perExpl;
+        for (const id of countedIds) {
+          const q = qMap.get(id);
+          if (!q || q.type !== 'mcq') continue;
+          if (attempt.answers?.[id] === q.correct) ruleOptionEarned += Number(q.optionMarks ?? perOpt);
+          if (perExpl > 0 && hasAnswer(attempt.explanations?.[id])) ruleExplWritten++;
+        }
+      }
+      const ruleManualMax = Math.max(0, Number(rule.maxMarks || 0) - ruleOptionMax);
+      optionMarksEarned += ruleOptionEarned;
+      optionMarksMax += ruleOptionMax;
+      explanationMarksPending += ruleExplMax;
+      explanationWrittenCount += ruleExplWritten;
+      manualMarksMax += ruleManualMax;
+
+      ruleRows.push({
+        id: rule.id,
+        groupId: rule.groupId,
+        label: rule.label,
+        totalSet: rule.totalSet,
+        answerAny: limit,
+        maxMarks: Number(rule.maxMarks || 0),
+        answeredCount: answeredIds.length,
+        countedIds,
+        excessIds,
+        optionMarksEarned: ruleOptionEarned,
+        optionMarksMax: ruleOptionMax,
+        explanationMarksMax: ruleExplMax,
+        explanationWrittenCount: ruleExplWritten,
+        manualMarksMax: ruleManualMax
+      });
+    }
+
+    return {
+      printedMax: Number(paper.fullMarks || 0),
+      setMarks: Number(paper.setMarks || 0),
+      esePatternMarks: Number(paper.esePatternMarks || 60),
+      hasPatternMismatch: Boolean(paper.hasPatternMismatch ?? (Number(paper.fullMarks || 0) !== 60 || Number(paper.setMarks || 0) !== Number(paper.fullMarks || 0))),
+      optionMarksEarned,
+      optionMarksMax,
+      explanationMarksPending,
+      explanationWrittenCount,
+      manualMarksMax,
+      excessAnswerCount,
+      rules: ruleRows
+    };
+  }
   function updateMistakes(attempt) {
     const queue=read(MISTAKES) || {schemaVersion:1, resolvedCount:0, items:{}};
     if ((queue.processedIds || []).includes(attempt.id)) return;
@@ -110,10 +235,11 @@
   function finish(input) {
     const attempt=normalize({...input,status:'submitted'});
     const assessment=score(attempt.questions,attempt.answers);
+    const pSummary=paperSummary(attempt);
     const scored=attempt.config.mode==='mcq' && assessment.total>0;
     const result={...attempt, historyId:attempt.historyId || 'hist-'+attempt.id, completedAt:Date.now(),
       subject:attempt.config.subject,unit:attempt.config.unit,mode:attempt.config.mode,
-      elapsed:Math.round((Date.now()-attempt.startedAt)/1000),assessment,
+      elapsed:Math.round((Date.now()-attempt.startedAt)/1000),assessment,paperSummary:pSummary,
       outcome:scored ? 'scored' : 'not scored',score:scored ? assessment.score : null,total:scored ? assessment.total : attempt.questions.length,
       correct:assessment.correct,incorrect:assessment.incorrect,unanswered:assessment.unanswered,percentage:scored ? assessment.percentage : null};
     // Save exportable result/history before removing the resume entry.
@@ -132,18 +258,22 @@
     if (!entry?.questions?.length) throw new Error('This legacy history entry has no question snapshot. Exact retry is unavailable; choose a new quiz in setup.');
     let questions=copy(entry.questions);
     if (shuffled) for(let i=questions.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [questions[i],questions[j]]=[questions[j],questions[i]]; }
-    return save({config:entry.config || {subject:entry.subject,unit:entry.unit,mode:entry.mode,timer:false},questions,answers:{},flags:entry.flags || {},skipped:[],visited:[],currentIndex:0,status:'active'});
+    return save({config:entry.config || {subject:entry.subject,unit:entry.unit,mode:entry.mode,timer:false},questions,answers:{},explanations:{},lockedGroups:[],flags:entry.flags || {},skipped:[],visited:[],currentIndex:0,status:'active'});
   }
-  function edit(id, answers) {
+  function edit(id, answers, explanations = undefined) {
     const entry=historyEntry(id);
     if (!entry?.questions?.length) throw new Error('This history entry has no editable snapshot.');
-    entry.answers=cleanAnswers(answers,entry.questions.map(q=>q.id));entry.editedAt=Date.now();entry.assessment=score(entry.questions,entry.answers);
+    const validIds = entry.questions.map(q=>q.id);
+    entry.answers=cleanAnswers(answers,validIds);
+    if (explanations !== undefined) entry.explanations=cleanAnswers(explanations,validIds);
+    entry.editedAt=Date.now();entry.assessment=score(entry.questions,entry.answers);
+    if(entry.config?.paper) entry.paperSummary=paperSummary(entry);
     if(entry.mode==='mcq') Object.assign(entry,entry.assessment);
     setHistory(entry);
     const current=read(RESULT); if(current?.historyId===id) write(RESULT,entry);
     return entry;
   }
-  globalThis.QuizAttempts={PREFIX,LEGACY,RESULT,HISTORY,MISTAKES,hasAnswer,cleanAnswers,normalize,save,get,latest,all,finish,abandon,history,historyEntry,setHistory,retry,edit,score,
+  globalThis.QuizAttempts={PREFIX,LEGACY,RESULT,HISTORY,MISTAKES,hasAnswer,cleanAnswers,normalize,save,get,latest,all,finish,abandon,history,historyEntry,setHistory,retry,edit,score,questionAccess,paperSummary,
     current:()=>read(RESULT), setCurrent:value=>write(RESULT,value),setPendingConfig:value=>write('quiz-pending-config',value),
     clearHistory:()=>StudyStorage.legacy.removeItem(HISTORY),deleteHistory:id=>write(HISTORY,history().filter(h=>h.historyId!==id)),
     mistakes:()=>read(MISTAKES) || {schemaVersion:1,resolvedCount:0,items:{}},clearMistakes:()=>StudyStorage.legacy.removeItem(MISTAKES),

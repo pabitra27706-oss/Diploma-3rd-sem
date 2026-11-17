@@ -19,7 +19,7 @@ Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 |---|---|---|---|---|---|
 | 0 | Foundation | [`00-foundation`](phases/00-foundation/README.md) | 4 | Rules, playbook, gate, baseline, syllabus in the repo; CI green; nothing deployed | ✅ |
 | 1 | Platform and deploy integrity | [`01-platform`](phases/01-platform/README.md) | 6 | Zero root-relative paths; working install + update; real icons; zero dead links; 404/robots/sitemap/canonical; CI strict | ✅* |
-| 2 | Truthful data pipeline | [`02-data-pipeline`](phases/02-data-pipeline/README.md) | 6 | `validate_data.py` in CI; 10 real practice days; computed counts; syllabus-valid units; duplicates mapped; keys or "no key" | 🚧 |
+| 2 | Truthful data pipeline | [`02-data-pipeline`](phases/02-data-pipeline/README.md) | 6 | `validate_data.py` in CI; 10 real practice days; computed counts; syllabus-valid units; duplicates mapped; keys or "no key" | ✅* |
 | 3 | Quiz and exam engine | [`03-quiz-engine`](phases/03-quiz-engine/README.md) | 6 | Reload-proof attempts; no empty quiz options; real-paper mock mode; honest history/export; mistake queue; no "AI" fiction | 🚧 |
 | 4 | Discovery and sharing | [`04-discovery`](phases/04-discovery/README.md) | 5 | Site-wide search offline; repeated-question explorer; deep links + share; unit↔PYQ cross-links | 🚧 |
 | 5 | Study system | [`05-study-system`](phases/05-study-system/README.md) | 5 | Cards from verified content; deterministic scheduler; weak areas with denominators; daily goal + Today screen | 🚧 |
@@ -74,7 +74,9 @@ results; do not treat their earlier checkpoints as passes on later changes.
 
 *Phase 1 platform implementation complete (2026-11-09). Full syllabus-strict subtask remains blocked by seven source-verification-gated PYQs; coverage stays advisory per the recorded Phase 2 decision. See `phases/01-platform/record.md`. Phone install/unfurl are still launch checks.
 
-Phase 2 (2026-11-09): mechanical pipeline and safe UI implemented; full data/syllabus strict gates remain blocked by source verification. See `phases/02-data-pipeline/record.md` and `data/source-review-batch-01.md`. Owner delegation now permits implementation of later phases while these source gates remain open; do not mark Phase 2 complete without evidence.
+*Phase 2 engineering passed owner Termux verification (`2026-11-16`, commit `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green). Full data/syllabus `--strict` remains gated separately on owner source verification (`10` fingerprinted data findings in `docs/data/validation-exceptions.json` + `3` grouped syllabus findings; see `phases/02-data-pipeline/record.md` and `data/source-review-batch-01.md`).
+
+Phase 3 (updated 2026-11-16 on `arena/47d8bf99-diploma-3rd-sem`): all engineering parts 3.1–3.6 are implemented, including mock-paper `answerAny` section/choiceSet quota enforcement across all 30 frozen PYQ papers, compulsory 30-minute Group A loose-script timer/lock on the seven `2023-03` papers, honest `1 mark option + 1 mark written explanation` handling on the fifteen `2024–2026` papers without fabricating overall paper grades, and one-sentence MD/TXT/JSON/Print-PDF guidance on `quiz/export.html`. Awaiting owner Termux/browser verification.
 
 ### Phase 3 engineering update — 2026-11-09
 

@@ -1,7 +1,7 @@
 # Phase 3 — Quiz and exam engine
 
-- Status: 🚧 in progress · Date: 2026-11-09
-- Branch: arena/be3d9178-diploma-3rd-sem **(retired — merged to main via PR #7; current session branch is `arena/26856d99-diploma-3rd-sem`)** · starting tip ac428d1
+- Status: 🚧 in progress (all engineering parts 3.1–3.6 implemented and verified; awaiting owner local/phone verification) · Updated: 2026-11-16
+- Branch: arena/be3d9178-diploma-3rd-sem **(retired — merged to main via PR #7; completed on active session branch `arena/47d8bf99-diploma-3rd-sem`)** · starting tip ac428d1
 - Owner delegation permits independent engine work; Phase 2 source gates remain.
 - Owner confirms immutable authoritative PYQs; hash guard added before coding.
 
@@ -39,21 +39,36 @@
   exact snapshot preview and start (questions/marks/time), persisted config.
   Browser regression caught a seconds/minutes conversion bug; corrected and
   exact-start assertion added. Existing Phase 2 availability tests also pass.
-- **3.3 PARTIAL:** paper entry from viewer/setup, original questions/options,
-  registry duration and displayed instructions, 10m/1m warnings, expiry path,
-  cached-paper offline flow. Answer-any/group constraints are NOT enforced.
-  Explanation splits are NOT inferred; paper MCQ correctness can be checked,
-  but automatic paper marks and overall grades are explicitly withheld.
+- **3.3 implemented:** paper entry from PYQ viewer (`pyq/js/viewer.js`) and quiz
+  setup (`quiz/setup.html`), original questions/options, registry duration (`2.5 Hours`
+  = 150m / `3 Hours` = 180m) and displayed instructions, 10m/1m warnings, expiry
+  auto-submit path, cached-paper offline flow. `QuizPaper.derivePaperRules()` and
+  `QuizAttempts.questionAccess()` now enforce explicit `answerAny` quotas across all
+  30 frozen PYQ papers (`group`, `group.sections[]`, and Group C `group.choiceSets[]`
+  on `2022-06` papers), allow clearing/switching answered MCQ choices under section
+  quotas, and enforce the compulsory 30-minute Group A loose-script window (plus
+  early `"Lock Group A & unlock Group B"` hand-in) across reloads on all seven
+  `2023-03` papers. On the 15 `2024-01`/`2024-12`/`2026-01` papers with `2`-mark
+  Answer+Explanation MCQs, `optionMarks: 1` is auto-checked while `explanationMarks: 1`
+  provides a saved/editable written explanation field for manual self-review without
+  guessing explanation marks or inventing an official overall paper grade; ESE
+  `60`-mark pattern differences (`70`-mark `2021-03` papers and choice-set totals)
+  surface explicit banners in play and review.
 - **3.4 implemented:** scored/not-scored/abandoned history, wrong vs unanswered,
-  explicit historyId export, own answers and filenames, exact retry/order/flags,
-  separately labelled shuffled retry, linked review edits. Snapshot-less legacy
+  explicit historyId export, own answers/written MCQ explanations and filenames,
+  exact retry/order/flags, separately labelled shuffled retry, linked review edits
+  (both answers and 1-mark written MCQ explanations). Snapshot-less legacy
   history refuses exact retry/export rather than substituting another attempt.
 - **3.5 implemented:** local newest-first queue capped at 200 question snapshots,
   newest 40 practice entry, wrong/skipped/unanswered metadata, resolution count,
-  idempotent completion handling, confirmed clear on quiz and Practice home.
-- **3.6 implemented:** manual-review language, format guidance and attempt
-  identity; no model/API/evaluation fiction. Privacy names actual storage/reset
-  boundaries; homepage reset is not falsely presented as clearing all quiz data.
+  idempotent completion handling, confirmed clear on quiz and Practice home,
+  `attempt-store.js` loaded before `mistakes.js` on `quiz/index.html`, and
+  `diploma-3rd-sem-quiz-mistakes` governed in `assets/js/storage.js`.
+- **3.6 implemented:** manual-review language, one-sentence explanations for MD,
+  TXT, JSON, and Print / Save as PDF (`#btn-print-export` wired to `window.print()`
+  on `quiz/export.html`), and attempt identity; zero `"AI"` fiction across `quiz/`.
+  Privacy names actual storage/reset boundaries; homepage reset is not falsely
+  presented as clearing all quiz data.
 
 ## Immutable originals / derived metadata
 
@@ -89,12 +104,20 @@ answers remain ungraded; Phase 2 mapping/reprint/key gates remain unresolved.
 
 ## Remaining gates / limits
 
-Phase 3 is NOT complete: official choice-rule and explanation-mark enforcement
-(3.3) is deferred rather than fabricated. Real-device background throttling,
+All engineering parts 3.1–3.6 are implemented and verified on
+`arena/47d8bf99-diploma-3rd-sem` (`node tests/attempt-store.cjs` 8 PASS groups
+including all 30 PYQ papers' rule partitions, `answerAny` section/choiceSet
+quotas, 30m `2023-03` loose-script Group A lock/unlock across reloads, and `1+1`
+explanation mark split; `node tests/quiz-engine-dom.cjs` 5 PASS groups; Python
+`unittest` 13 PASS; `check_site.py --strict` 0 errors; `check_platform.py`
+0 errors; `check_pyq_integrity.py` 0 changes). Official overall paper grades
+remain intentionally withheld where subjective answers and 1-mark written MCQ
+explanations require manual self-review. Real-device background throttling,
 screen-reader acceptance, complete keyboard audit, and broad device coverage
-are not verified by headless tests. Phase 2 authoritative mapping/answer-key
-issues and the repository license gate remain open. Phases 4–9 are not claimed
-complete. No PR, merge or deployment was performed for this work.
+are deferred to Phase 10 / owner phone check. Phase 2 source-verification
+items remain tracked under the content gate; MIT license covers authored code
+while third-party exam-source rights remain separate. No PR, merge or deployment
+was performed for this work.
 
 ### Storage integration follow-up
 

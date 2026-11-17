@@ -13,4 +13,7 @@ let trend=S.trends(history,clock).get('CST201|1|Arrays');assert.equal(trend.rece
 assert.equal(S.trends(history.slice(0,4),clock).get('CST201|1|Arrays').delta,null);
 assert.equal(S.weak([entry(0,'   ')])[0].skipped,1);
 const midnight=new Date(2026,10,9,0,0,0).getTime();assert.equal(S.trends([entry(-6,'A')],midnight).get('CST201|1|Arrays').recent.attempted,1);
-console.log('PASS local 7-day windows, minimum samples, skipped whitespace, future/abandoned exclusion');
+const genericAttempt={completedAt:clock,questions:[{id:'g1',subject:'CST201',unit:1,topic:'General',type:'mcq',correct:'A',options:{A:'yes',B:'no'}},{id:'g2',subject:'CST201',unit:1,topic:'Unit 1',type:'mcq',correct:'A',options:{A:'yes',B:'no'}}],answers:{g1:'B',g2:'B'}};
+const genericWeak=S.weak([genericAttempt]);
+assert.equal(genericWeak.length,1);assert.equal(genericWeak[0].topic,'Unspecified');assert.equal(genericWeak[0].genericTopic,true);assert.equal(genericWeak[0].attempted,2);
+console.log('PASS local 7-day windows, minimum samples, skipped whitespace, future/abandoned exclusion, generic topic collapse');

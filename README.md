@@ -63,7 +63,7 @@ An exact-baseline regression pass is **not** a full strict-data pass.
 For a fresh clone with the repository's default directory name:
 
 ```sh
-git clone --single-branch --branch arena/26856d99-diploma-3rd-sem \
+git clone --single-branch --branch arena/47d8bf99-diploma-3rd-sem \
   https://github.com/pabitra27706-oss/Diploma-3rd-sem.git
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
@@ -93,6 +93,7 @@ node tests/attempt-store.cjs
 node tests/study-store.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs
+node tests/data-pipeline-consumers.cjs
 ```
 
 `validate_data.py --strict` and `validate_syllabus.py --strict` still report

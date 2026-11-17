@@ -193,7 +193,7 @@
                     <div class="format-card-body">
                       <span class="format-card-title">Markdown (.md)</span>
                       <span class="format-card-desc">
-                        Best for manual review. Structured with headings and rubric.
+                        Structured headings, questions, your answers, and model answers for readable notes or self-review.
                       </span>
                     </div>
                     <span class="format-card-check" aria-hidden="true">
@@ -217,7 +217,7 @@
                     <div class="format-card-body">
                       <span class="format-card-title">Plain Text (.txt)</span>
                       <span class="format-card-desc">
-                        Simple text format. Readable anywhere.
+                        Unformatted plain text that opens cleanly in any phone viewer or basic editor.
                       </span>
                     </div>
                     <span class="format-card-check" aria-hidden="true">
@@ -241,7 +241,7 @@
                     <div class="format-card-body">
                       <span class="format-card-title">JSON (.json)</span>
                       <span class="format-card-desc">
-                        Machine-readable structured data. Best for programmatic use.
+                        Machine-readable record of questions, answers, keys, and attempt metadata for scripts or backups.
                       </span>
                     </div>
                     <span class="format-card-check" aria-hidden="true">
@@ -250,6 +250,9 @@
                   </div>
                 </label>
               </div>
+              <p class="text-sm text-secondary" style="margin-top:0.75rem;">
+                <strong>Print / Save as PDF:</strong> Print / save as PDF uses your browser print dialog to produce a clean offline sheet of this attempt.
+              </p>
             </div>
           </div>
         </section>
@@ -304,15 +307,25 @@
           Copied to clipboard!
         </div>
 
-        <!-- ── Download Button ─────────────────────────────────── -->
-        <div class="export-download-row">
+        <!-- ── Download & Print / PDF Buttons ──────────────────── -->
+        <div class="export-download-row" style="display:flex;gap:0.75rem;flex-wrap:wrap;">
           <button
-            class="btn btn-primary btn-lg btn-full"
+            class="btn btn-primary btn-lg"
+            style="flex:1 1 220px;"
             id="btn-download-export"
             aria-label="Download export file"
           >
             <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download File
+          </button>
+          <button
+            class="btn btn-outline btn-lg"
+            style="flex:1 1 220px;"
+            id="btn-print-export"
+            type="button"
+            aria-label="Print or save attempt as PDF"
+          >
+            Print / Save as PDF
           </button>
         </div>
 

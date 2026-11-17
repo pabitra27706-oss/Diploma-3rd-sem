@@ -8,9 +8,11 @@
 /* ═══════════════════════════════ STATE */
 const S = {
   all:       [],
+  aliases:   {},
   filtered:  [],
   questions: [],
   filters:   {},
+  targetId:  '',
   index:     0,
   done:      new Set(),
   sort:      'default',
@@ -33,6 +35,8 @@ const SUBJECTS = ['CST201','CST203','CST205','CST207','CST209'];
 /* ═══════════════════════════════ BOOT */
 document.addEventListener('DOMContentLoaded', async () => {
   initTheme();
+  const urlParams = new URLSearchParams(location.search);
+  S.targetId  = urlParams.get('q') || urlParams.get('id') || urlParams.get('qid') || '';
   S.filters   = parseURL();
   S.key       = makeKey(S.filters);
   S.startTime = Date.now();
@@ -78,6 +82,7 @@ async function loadAll() {
   const data=await response.json();
   if(data.schemaVersion!==1||!Array.isArray(data.questions)||!data.questions.length)throw Error('Invalid practice pool');
   S.all=data.questions;
+  S.aliases=data.aliases||{};
   const ls = document.getElementById('loading-screen');
   ls.style.opacity    = '0';
   ls.style.transition = 'opacity 0.3s';
@@ -142,10 +147,29 @@ function makeKey(f) {
 }
 
 /* ═══════════════════════════════ RESUME */
+function resolveTargetIndex() {
+  if (!S.targetId) return -1;
+  const canonical = S.aliases[S.targetId] || S.targetId;
+  return S.questions.findIndex(q => q.id === canonical);
+}
+
+function normalizeCompleted(list) {
+  const valid = new Set(S.questions.map(q => q.id));
+  return [...new Set((list || []).map(id => S.aliases[id] || id).filter(id => valid.has(id)))];
+}
+
 function checkResume() {
   let saved;
   try { saved = JSON.parse(StudyStorage.legacy.getItem(S.key)); } catch {}
-  if (!saved || !saved.completed?.length) { startFresh(); return; }
+  const completed = normalizeCompleted(saved?.completed);
+  const targetIdx = resolveTargetIndex();
+  if (targetIdx >= 0) {
+    S.done  = new Set(completed);
+    S.index = targetIdx;
+    begin();
+    return;
+  }
+  if (!saved || !completed.length) { startFresh(); return; }
 
   const modal = document.getElementById('resume-modal');
   const idx   = Math.min(saved.currentIndex || 0, S.questions.length - 1);
@@ -156,18 +180,18 @@ function checkResume() {
   document.getElementById('resume-desc').textContent = `Session from ${dt}`;
   document.getElementById('resume-stats').innerHTML = `
     <div class="resume-stat">
-      <span class="resume-stat-num">${saved.completed.length}</span>
+      <span class="resume-stat-num">${completed.length}</span>
       <span class="resume-stat-label">Done</span>
     </div>
     <div class="resume-stat">
-      <span class="resume-stat-num">${S.questions.length - saved.completed.length}</span>
+      <span class="resume-stat-num">${S.questions.length - completed.length}</span>
       <span class="resume-stat-label">Left</span>
     </div>`;
   modal.hidden = false;
 
   document.getElementById('resume-btn').addEventListener('click', () => {
     modal.hidden = true;
-    S.done  = new Set(saved.completed);
+    S.done  = new Set(completed);
     S.index = idx;
     begin();
   }, { once: true });
@@ -541,9 +565,13 @@ function renderQ(direction) {
   df.setAttribute('data-level', q.difficulty || '');
 
   /* ── Source row ── */
-  document.getElementById('q-topic').textContent = q.topic || 'General';
-  document.getElementById('q-from').textContent  =
-    [q.year, q.month, q.paperCode].filter(Boolean).join(' · ') || '-';
+  document.getElementById('q-topic').textContent =
+    q.topicQuality === 'generic' || !q.topic ? 'Unspecified topic' : q.topic;
+  const baseFrom = [q.year, q.month, q.paperCode].filter(Boolean).join(' · ') || '-';
+  document.getElementById('q-from').textContent =
+    Array.isArray(q.alsoAppearedIn) && q.alsoAppearedIn.length
+      ? `${baseFrom} · Also in: ${q.alsoAppearedIn.join(', ')}`
+      : baseFrom;
 
   /* ── Tags ── */
   const tr = document.getElementById('q-tags-row');

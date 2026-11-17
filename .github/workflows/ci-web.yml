@@ -100,9 +100,11 @@ jobs:
           # findings in docs/data/validation-exceptions.json, never new errors.
           python3 scripts/check_pyq_integrity.py
           node tests/attempt-store.cjs
+          node tests/quiz-engine-dom.cjs
           node tests/storage.cjs
           node tests/storage-recovery.cjs
           node tests/study-store.cjs
+          node tests/data-pipeline-consumers.cjs
           python3 scripts/validate_data.py --check-baseline
           python3 -m unittest discover -s tests -p 'test_*.py' -v
 
