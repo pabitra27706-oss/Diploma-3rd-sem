@@ -81,7 +81,7 @@ function renderPaper(data, meta) {
 
   // Fill paper header
   document.getElementById('paperSubjectName').textContent =
-    `${subjectName} (${data.subject})`;
+    subjectName;
   document.getElementById('paperSourceCode').textContent =
     `Paper Code: ${sourceCode}${setNumber ? ` · Set ${setNumber}` : ''}`;
   document.getElementById('paperMonthYear').textContent = session;

@@ -16,3 +16,11 @@
 @media print{.discovery nav,.discovery button,.discovery .filters{display:none}.discovery article{break-inside:avoid}}
 
 html[data-contrast="high"] body{background:#fff;color:#111}html[data-contrast="high"] a{color:#003078}html[data-contrast="high"] .discovery .candidate-badge{background:#fff;color:#111;border-color:#111}html[data-motion="reduced"] *,html[data-motion="reduced"] *::before,html[data-motion="reduced"] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}body{line-height:var(--reading-line-height,1.6)}
+
+/* Reduced motion (Phase 7.1 item 6): the global rule lives in
+   assets/css/accessibility.css; this file carries its own guard so a page
+   cannot animate just because that sheet loaded later. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+}

@@ -349,6 +349,18 @@ h4 {
   margin-bottom: 0.4rem;
 }
 
+/* Phase 7.1: card and sub-item titles are labels, not document sections.
+   They keep their <h4> typography through one shared class instead of the
+   heading outline, so screen-reader heading navigation no longer walks ~780
+   decorative labels. Declared after `p` so the generic paragraph margin does
+   not leak into them. */
+p.card-title {
+  font-size:     1.1rem;
+  font-weight:   600;
+  line-height:   1.4;
+  margin-bottom: 0.4rem;
+}
+
 h5 {
   font-size:     0.95rem;
   font-weight:   600;
@@ -1166,7 +1178,8 @@ hr {
 
 /* ── Nav Brand ── */
 .nav-brand,
-.nav-brand h3 {
+.nav-brand h3,
+.nav-brand .brand-title {
   display:     flex;
   align-items: center;
   gap:         0.5rem;
@@ -1356,11 +1369,12 @@ hr {
   flex-shrink:   0;
 }
 
-.drawer-header h3 {
+.drawer-header h3,
+.drawer-header .drawer-title {
+  margin:      0;
   font-size:   1rem;
   font-weight: 700;
   color:       var(--subject-color);
-  margin:      0;
 }
 
 .drawer-close {
@@ -2463,7 +2477,7 @@ hr {
   transform:    translateY(-2px);
 }
 
-.mcq-item h4 {
+.mcq-item :is(h4, .card-title) {
   color:         var(--subject-color);
   font-size:     0.85rem;
   font-weight:   700;
@@ -2473,7 +2487,7 @@ hr {
   gap:          0.4rem;
 }
 
-.mcq-item h4::before {
+.mcq-item :is(h4, .card-title)::before {
   content:     "Q";
   background:  var(--subject-color-light);
   color:       var(--subject-color);
@@ -4253,7 +4267,7 @@ hr {
   flex-shrink: 0;
 }
 
-.export-option-info h4 {
+.export-option-info :is(h4, .card-title) {
   font-size:   0.88rem;
   font-weight: 600;
   margin:      0 0 0.15rem 0;
@@ -4283,7 +4297,7 @@ hr {
   transition:    var(--transition);
 }
 
-.about-card h4 {
+.about-card :is(h4, .card-title) {
   font-size:     0.9rem;
   font-weight:   700;
   color:         var(--subject-color);
@@ -4577,7 +4591,7 @@ hr {
     text-shadow: none !important;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h6, .card-title {
     color:       #000000 !important;
     page-break-after: avoid;
   }
@@ -4930,7 +4944,7 @@ hr {
   h1 { font-size: 1.6rem; }
   h2 { font-size: 1.3rem; }
   h3 { font-size: 1.1rem; }
-  h4 { font-size: 1rem;   }
+  h4, .card-title { font-size: 1rem; }
 }
 
 /* ── Small Phones (≤ 360px) ── */

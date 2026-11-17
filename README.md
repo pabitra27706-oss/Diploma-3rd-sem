@@ -53,13 +53,21 @@ installation or build is required to run the site.
   newly certified answers, and no recall-improvement claim is made.
 - Plain-text section notes and [settings/backup](settings.html), with namespaced
   storage, import preview, group resets and interrupted-import recovery.
-  **IndexedDB migration is not implemented.**
+  **IndexedDB is a recovery mirror, not the primary store**: it rebuilds an
+  evicted origin behind the same synchronous API. No async render pipeline means
+  the primary path is still local storage.
 - [Syllabus coverage](coverage.html), [exam-pattern caveats](exam-pattern.html),
   and [practical-course/internship task pages](courses.html). These do not claim
   completed lab solutions or reconciled historical paper totals.
-- Shared reading/focus/reduced-motion safeguards and a small English/Bengali
-  settings-label catalog. This is not full bilingual coverage or audited WCAG
-  conformance.
+- Shared reading/focus/reduced-motion safeguards, per-page landmarks and skip
+  links, and a small English/Bengali **interface** catalog (settings, navigation
+  and shared actions; question content is never translated). Accessibility is
+  measured, not assumed: `python3 scripts/audit_accessibility.py` checks
+  structure, labels, contrast computed from the shipped tokens, motion and
+  target size, and its numbers are locked by
+  `tests/test_accessibility_audit.py`. **No WCAG conformance claim is made** —
+  rendered contrast, zoom/reflow, screen-reader output and tap accuracy are
+  Phase 10 device work.
 - Scope-relative PWA support. Previously loaded resources can work offline;
   uncached first visits still need a connection. Full device/install/update
   acceptance is deferred to a dedicated final phase.

@@ -5,3 +5,11 @@
 .pwa-panel [hidden] { display: none; }
 .pwa-panel p { margin: .5rem; }
 @media print { .pwa-panel { display: none; } }
+
+/* Reduced motion (Phase 7.1 item 6): the global rule lives in
+   assets/css/accessibility.css; this file carries its own guard so a page
+   cannot animate just because that sheet loaded later. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+}

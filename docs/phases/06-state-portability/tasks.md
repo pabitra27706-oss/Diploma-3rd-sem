@@ -106,10 +106,11 @@ python3 scripts/check_site.py --strict
 **Not verifiable here:** Safari storage eviction behaviour and real-device
 download of the backup file. Record what was observed on the phone pass.
 
-## Implementation status — 2026-11-17
+## Implementation status — merged 2026-11-17
 
-Gate-verified on `arena/be90e07e-diploma-3rd-sem`; full evidence and caveats in
-[`record.md`](record.md).
+Gate-verified on `arena/be90e07e-diploma-3rd-sem` and **merged to `main` as
+`5b7eb66` (PR #14, Web CI `44034450353` green, Pages `44034449241` green)**;
+full evidence and caveats in [`record.md`](record.md).
 
 | Part | Acceptance | State |
 |---|---|---|
@@ -120,6 +121,8 @@ Gate-verified on `arena/be90e07e-diploma-3rd-sem`; full evidence and caveats in
 | 6.5 | round trip identical, malformed rejected, re-import idempotent | met — `tests/storage.cjs`, `tests/storage-recovery.cjs` |
 | 6.6 | threshold 0 works on IndexedDB, fallback in private window, no data loss | **partially met** — IndexedDB is a recovery mirror behind the same API, `hydrate()` restores an evicted origin, threshold branch tested at 0, no-IndexedDB fallback tested. A primary-store swap was not done: the synchronous render contract is the blocker, recorded in `record.md` |
 
-Still open: owner device pass (notes on three units + practice, theme switch,
-export → clear → import), real private-window and eviction observation, and the
-merge instruction.
+Still open (carried past the merge, not waived by it): owner device pass (notes
+on three units + practice, theme switch, export → clear → import), real
+private-window and eviction observation, and real-phone backup download. These
+are Phase 10 device-acceptance items now; `6.6-3` remains a **partial meet**
+because IndexedDB is a recovery mirror, not a primary store.

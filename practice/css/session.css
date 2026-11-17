@@ -10,18 +10,18 @@
   --bg-sunken:     #e8edf3;
   --text-primary:  #0f172a;
   --text-secondary:#475569;
-  --text-muted:    #94a3b8;
+  --text-muted:    #5f6f85;
   --text-inverse:  #ffffff;
 
-  --blue:         #3b82f6;
+  --blue:         #2563eb;
   --blue-dark:    #2563eb;
   --blue-light:   #eff6ff;
   --blue-border:  #bfdbfe;
-  --green:        #22c55e;
+  --green:        #0f7a37;
   --green-dark:   #16a34a;
   --green-light:  #f0fdf4;
   --green-border: #bbf7d0;
-  --red:          #ef4444;
+  --red:          #dc2626;
   --red-light:    #fef2f2;
   --red-border:   #fecaca;
   --orange:       #f97316;
@@ -1027,3 +1027,11 @@ pre.code-pre {
 }
 
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* Reduced motion (Phase 7.1 item 6): the global rule lives in
+   assets/css/accessibility.css; this file carries its own guard so a page
+   cannot animate just because that sheet loaded later. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+}

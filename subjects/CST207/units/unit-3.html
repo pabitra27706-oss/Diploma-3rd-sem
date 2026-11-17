@@ -191,7 +191,7 @@
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST207/units/unit-3.html">
-<meta name="app-build" content="study-2026-11-17b">
+<meta name="app-build" content="study-2026-11-17c">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unit 3 – Introduction to Microprocessor Architecture | CSO">
@@ -210,6 +210,7 @@
 <!-- /presence -->
 <link rel="stylesheet" href="../../../assets/css/accessibility.css">
 <script defer src="../../../assets/js/accessibility.js"></script>
+<script defer src="../../../assets/js/i18n.js"></script>
 </head>
 <body>
 <a class="skip-study-content" href="#study-main-content">Skip to study content</a>
@@ -315,32 +316,32 @@
       <div class="topic-grid" style="margin-top:1rem;">
         <div class="topic-card">
           <i class="fas fa-th-large"></i>
-          <h4>Block Diagram</h4>
+          <p class="card-title">Block Diagram</p>
           <p>BIU and EU units, internal architecture overview</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-server"></i>
-          <h4>Register Structure</h4>
+          <p class="card-title">Register Structure</p>
           <p>General purpose, segment, pointer, index, flag registers</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-map-marked-alt"></i>
-          <h4>Segmentation</h4>
+          <p class="card-title">Segmentation</p>
           <p>CS, DS, SS, ES segments, physical address calculation</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-bell"></i>
-          <h4>Interrupts</h4>
+          <p class="card-title">Interrupts</p>
           <p>Maskable (INTR), Non-maskable (NMI), software interrupts</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-crosshairs"></i>
-          <h4>Addressing Modes</h4>
+          <p class="card-title">Addressing Modes</p>
           <p>Immediate, register, direct, indirect, relative, indexed</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-code"></i>
-          <h4>Instruction Set</h4>
+          <p class="card-title">Instruction Set</p>
           <p>Data transfer, arithmetic, logical, branch, call instructions</p>
         </div>
       </div>
@@ -537,7 +538,7 @@
 
         <!-- General Purpose -->
         <div class="reg-group">
-          <h4><i class="fas fa-cube"></i> General Purpose Registers (GPR)</h4>
+          <p class="card-title"><i class="fas fa-cube"></i> General Purpose Registers (GPR)</p>
           <div class="reg-row">
             <span class="reg-name">AX</span>
             <span class="reg-desc">Accumulator — arithmetic, I/O operations. AH (high byte) + AL (low byte)</span>
@@ -558,7 +559,7 @@
 
         <!-- Segment Registers -->
         <div class="reg-group">
-          <h4><i class="fas fa-map-marked-alt"></i> Segment Registers</h4>
+          <p class="card-title"><i class="fas fa-map-marked-alt"></i> Segment Registers</p>
           <div class="reg-row">
             <span class="reg-name">CS</span>
             <span class="reg-desc">Code Segment — base address of program instructions</span>
@@ -579,7 +580,7 @@
 
         <!-- Pointer & Index -->
         <div class="reg-group">
-          <h4><i class="fas fa-arrows-alt"></i> Pointer &amp; Index Registers</h4>
+          <p class="card-title"><i class="fas fa-arrows-alt"></i> Pointer &amp; Index Registers</p>
           <div class="reg-row">
             <span class="reg-name">SP</span>
             <span class="reg-desc">Stack Pointer — points to top of stack in SS</span>
@@ -600,7 +601,7 @@
 
         <!-- Control Registers -->
         <div class="reg-group">
-          <h4><i class="fas fa-sliders-h"></i> Control Registers</h4>
+          <p class="card-title"><i class="fas fa-sliders-h"></i> Control Registers</p>
           <div class="reg-row">
             <span class="reg-name">IP</span>
             <span class="reg-desc">Instruction Pointer — offset of next instruction in CS</span>
@@ -978,32 +979,32 @@
         <div class="box-title"><i class="fas fa-exchange-alt"></i> Data Transfer Instructions</div>
         <div class="instr-grid">
           <div class="instr-card">
-            <h4>MOV</h4>
+            <p class="card-title">MOV</p>
             <code>MOV dst, src</code>
             <p>Move data from source to destination. Most used instruction.</p>
           </div>
           <div class="instr-card">
-            <h4>PUSH / POP</h4>
+            <p class="card-title">PUSH / POP</p>
             <code>PUSH AX &nbsp; POP BX</code>
             <p>Push register onto stack (SP−2), Pop from stack into register (SP+2).</p>
           </div>
           <div class="instr-card">
-            <h4>XCHG</h4>
+            <p class="card-title">XCHG</p>
             <code>XCHG AX, BX</code>
             <p>Exchange contents of two registers or register and memory.</p>
           </div>
           <div class="instr-card">
-            <h4>IN / OUT</h4>
+            <p class="card-title">IN / OUT</p>
             <code>IN AL, DX &nbsp; OUT DX, AL</code>
             <p>Transfer data between accumulator and I/O port.</p>
           </div>
           <div class="instr-card">
-            <h4>LEA</h4>
+            <p class="card-title">LEA</p>
             <code>LEA BX, [2000H]</code>
             <p>Load Effective Address — loads offset address into register (not the data).</p>
           </div>
           <div class="instr-card">
-            <h4>LDS / LES</h4>
+            <p class="card-title">LDS / LES</p>
             <code>LDS SI, [BX]</code>
             <p>Load DS:SI or ES:DI from memory (loads both segment and offset).</p>
           </div>
@@ -1015,47 +1016,47 @@
         <div class="box-title"><i class="fas fa-plus-minus"></i> Arithmetic Instructions</div>
         <div class="instr-grid">
           <div class="instr-card">
-            <h4>ADD</h4>
+            <p class="card-title">ADD</p>
             <code>ADD AX, BX</code>
             <p>Add source to destination. Affects CF, ZF, SF, OF, PF, AF.</p>
           </div>
           <div class="instr-card">
-            <h4>SUB</h4>
+            <p class="card-title">SUB</p>
             <code>SUB AX, BX</code>
             <p>Subtract source from destination. Uses 2's complement internally.</p>
           </div>
           <div class="instr-card">
-            <h4>ADC</h4>
+            <p class="card-title">ADC</p>
             <code>ADC AX, BX</code>
             <p>Add with Carry — AX ← AX + BX + CF. For multi-precision addition.</p>
           </div>
           <div class="instr-card">
-            <h4>SBB</h4>
+            <p class="card-title">SBB</p>
             <code>SBB AX, BX</code>
             <p>Subtract with Borrow — AX ← AX − BX − CF. Multi-precision subtraction.</p>
           </div>
           <div class="instr-card">
-            <h4>INC / DEC</h4>
+            <p class="card-title">INC / DEC</p>
             <code>INC CX &nbsp; DEC BX</code>
             <p>Increment/decrement by 1. Does NOT affect CF flag.</p>
           </div>
           <div class="instr-card">
-            <h4>MUL / IMUL</h4>
+            <p class="card-title">MUL / IMUL</p>
             <code>MUL BX</code>
             <p>Unsigned/Signed multiply. 8-bit: AX=AL×src. 16-bit: DX:AX=AX×src.</p>
           </div>
           <div class="instr-card">
-            <h4>DIV / IDIV</h4>
+            <p class="card-title">DIV / IDIV</p>
             <code>DIV BX</code>
             <p>Unsigned/Signed divide. 16-bit: AX=DX:AX÷src, DX=remainder.</p>
           </div>
           <div class="instr-card">
-            <h4>NEG</h4>
+            <p class="card-title">NEG</p>
             <code>NEG AX</code>
             <p>Negate — forms 2's complement of operand. AX ← 0 − AX.</p>
           </div>
           <div class="instr-card">
-            <h4>CMP</h4>
+            <p class="card-title">CMP</p>
             <code>CMP AX, BX</code>
             <p>Compare — performs AX−BX but only sets flags, does not store result.</p>
           </div>
@@ -1067,37 +1068,37 @@
         <div class="box-title"><i class="fas fa-project-diagram"></i> Logical Instructions</div>
         <div class="instr-grid">
           <div class="instr-card">
-            <h4>AND</h4>
+            <p class="card-title">AND</p>
             <code>AND AX, BX</code>
             <p>Bitwise AND. Used for masking (clearing) bits. Clears CF and OF.</p>
           </div>
           <div class="instr-card">
-            <h4>OR</h4>
+            <p class="card-title">OR</p>
             <code>OR AX, BX</code>
             <p>Bitwise OR. Used for setting specific bits. Clears CF and OF.</p>
           </div>
           <div class="instr-card">
-            <h4>XOR</h4>
+            <p class="card-title">XOR</p>
             <code>XOR AX, AX</code>
             <p>Bitwise XOR. XOR reg,reg clears a register to 0 efficiently.</p>
           </div>
           <div class="instr-card">
-            <h4>NOT</h4>
+            <p class="card-title">NOT</p>
             <code>NOT AX</code>
             <p>Bitwise NOT (1's complement). Does not affect any flags.</p>
           </div>
           <div class="instr-card">
-            <h4>TEST</h4>
+            <p class="card-title">TEST</p>
             <code>TEST AX, 0001H</code>
             <p>Bitwise AND but only sets flags (like CMP for AND). Checks specific bits.</p>
           </div>
           <div class="instr-card">
-            <h4>SHL/SAL, SHR, SAR</h4>
+            <p class="card-title">SHL/SAL, SHR, SAR</p>
             <code>SHL AX, 1</code>
             <p>Shift left/right logical/arithmetic. CL holds shift count for counts &gt;1.</p>
           </div>
           <div class="instr-card">
-            <h4>ROL, ROR, RCL, RCR</h4>
+            <p class="card-title">ROL, ROR, RCL, RCR</p>
             <code>ROL AX, 1</code>
             <p>Rotate left/right, rotate through carry left/right.</p>
           </div>
@@ -1338,7 +1339,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>The 8086 microprocessor has how many address lines and what is its maximum addressable memory?</p>
           <ul class="options">
             <li>a. 16 address lines, 64 KB</li>
@@ -1354,7 +1355,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>Which unit of the 8086 is responsible for prefetching instructions from memory?</p>
           <ul class="options">
             <li>a. Execution Unit (EU)</li>
@@ -1370,7 +1371,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>If CS = 2000H and IP = 0300H, what is the physical address of the next instruction?</p>
           <ul class="options">
             <li>a. 2300H</li>
@@ -1386,7 +1387,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>Which register is used as a loop counter in 8086 assembly language?</p>
           <ul class="options">
             <li>a. AX</li>
@@ -1402,7 +1403,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>The instruction <code>MOV AX, 1234H</code> uses which addressing mode?</p>
           <ul class="options">
             <li>a. Register addressing</li>
@@ -1418,7 +1419,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 6</h4>
+          <p class="card-title">Q 6</p>
           <p>Which flag is used to enable or disable the maskable hardware interrupt (INTR)?</p>
           <ul class="options">
             <li>a. TF (Trap Flag)</li>
@@ -1434,7 +1435,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 7</h4>
+          <p class="card-title">Q 7</p>
           <p>The Interrupt Vector Table (IVT) in 8086 occupies:</p>
           <ul class="options">
             <li>a. First 256 bytes of memory</li>
@@ -1450,7 +1451,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 8</h4>
+          <p class="card-title">Q 8</p>
           <p>Which segment register is used by default for stack operations (PUSH/POP)?</p>
           <ul class="options">
             <li>a. CS</li>
@@ -1466,7 +1467,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 9</h4>
+          <p class="card-title">Q 9</p>
           <p>What does the ALE (Address Latch Enable) pin signal indicate?</p>
           <ul class="options">
             <li>a. Data is valid on the bus</li>
@@ -1482,7 +1483,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 10</h4>
+          <p class="card-title">Q 10</p>
           <p>The instruction <code>LEA BX, [SI+100H]</code> loads into BX:</p>
           <ul class="options">
             <li>a. The data at address SI+100H</li>
@@ -1498,7 +1499,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 11</h4>
+          <p class="card-title">Q 11</p>
           <p>After execution of <code>XOR AX, AX</code>, what is the value of AX?</p>
           <ul class="options">
             <li>a. FFFFH</li>
@@ -1514,7 +1515,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 12</h4>
+          <p class="card-title">Q 12</p>
           <p>Which instruction returns from an interrupt service routine?</p>
           <ul class="options">
             <li>a. RET</li>
@@ -1530,7 +1531,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 13</h4>
+          <p class="card-title">Q 13</p>
           <p>In the 8086, which register pair is used to hold the result of a 16-bit multiplication?</p>
           <ul class="options">
             <li>a. AX and BX</li>
@@ -1546,7 +1547,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 14</h4>
+          <p class="card-title">Q 14</p>
           <p>The LOOP instruction in 8086 automatically:</p>
           <ul class="options">
             <li>a. Increments CX and jumps if CX ≠ 0</li>
@@ -1562,7 +1563,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 15</h4>
+          <p class="card-title">Q 15</p>
           <p>What is the size of the instruction prefetch queue in the 8086?</p>
           <ul class="options">
             <li>a. 4 bytes</li>
@@ -1593,7 +1594,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>What are the two functional units of the 8086 and what does each do?</p>
           <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq1">
@@ -1606,7 +1607,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>Calculate the physical address when DS = 3000H and offset = 0250H.</p>
           <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq2">
@@ -1618,7 +1619,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>What is the purpose of the ALE pin in the 8086?</p>
           <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq3">
@@ -1627,7 +1628,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>Differentiate between NMI and INTR interrupts.</p>
           <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq4">
@@ -1637,7 +1638,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>What is the function of the flag register? Name any four flags.</p>
           <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq5">
@@ -1652,7 +1653,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 6</h4>
+          <p class="card-title">Q 6</p>
           <p>What is the difference between MOV AX, [BX] and MOV AX, BX?</p>
           <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq6">
@@ -1662,7 +1663,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 7</h4>
+          <p class="card-title">Q 7</p>
           <p>What happens during an IRET instruction?</p>
           <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq7">
@@ -1671,7 +1672,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 8</h4>
+          <p class="card-title">Q 8</p>
           <p>What is the purpose of the CMP instruction? Does it modify any registers?</p>
           <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq8">
@@ -1695,7 +1696,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>Draw and explain the internal block diagram of the Intel 8086 microprocessor. Describe the function of BIU and EU in detail.</p>
           <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq1">
@@ -1732,7 +1733,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>Explain the memory segmentation in 8086. How is the physical address calculated? Give three numerical examples.</p>
           <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq2">
@@ -1766,7 +1767,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>Explain the interrupt mechanism of the 8086. Describe the steps that occur when an INTR interrupt is accepted. What is the role of the IVT?</p>
           <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq3">
@@ -1796,7 +1797,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>Explain any five addressing modes of the 8086 with examples and effective address calculation for each.</p>
           <button class="toggle-btn" data-target="lq4"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq4">
@@ -1847,7 +1848,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>Describe the register structure of the 8086. Explain the role of each register group with examples.</p>
           <button class="toggle-btn" data-target="lq5"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq5">
@@ -1893,7 +1894,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>Calculate the physical addresses for the following segment:offset pairs:<br>
           (a) CS = 1500H, IP = 0200H<br>
           (b) DS = 3800H, BX = 0050H<br>
@@ -1910,7 +1911,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>Identify the addressing mode used in each of the following 8086 instructions:</p>
           <p>(a) <code>MOV AX, 0FFH</code><br>
           (b) <code>MOV AX, [BX+SI]</code><br>
@@ -1930,7 +1931,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>Find the IVT address for the following interrupt types and state what is stored at that address:<br>
           (a) INT 0 (Divide Error)<br>
           (b) INT 21H (DOS Services)<br>
@@ -1953,7 +1954,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>Trace what happens step by step when the 8086 executes <code>INT 21H</code>. Assume stack is at SS=5000H, SP=0100H.</p>
           <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp4">
@@ -1979,7 +1980,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>For the instruction <code>MOV AX, [BX+SI+0100H]</code>, if BX=1000H, SI=0200H, DS=4000H, calculate the Effective Address and Physical Address.</p>
           <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp5">

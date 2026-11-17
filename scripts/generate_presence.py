@@ -42,10 +42,14 @@ def main():
         # Storage boundary is blocking and precedes all legacy inline/theme scripts.
         s = re.sub(r'<script src="[^"]*assets/js/storage\.js"></script>\n?', '', s)
         s = re.sub(r'(<head(?:\s[^>]*)?>)', lambda m: m[0]+'\n<script src="'+assets+'assets/js/storage.js"></script>', s, count=1, flags=re.I)
+        # The UI language layer (Phase 7.3) is shared like the safeguards: it is a
+        # deferred, first-party script with an English fallback, so it is safe to
+        # load everywhere and it works without a build step.
+        s = re.sub(r'<script defer src="[^"]*assets/js/i18n\.js"></script>\n?', '', s)
         # Shared additive safeguards load on every shipped page.
         s = re.sub(r'<script defer src="[^"]*assets/js/accessibility\.js"></script>\n?', '', s)
         s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/accessibility\.css">\n?', '', s)
-        s = s.replace('</head>', f'<link rel="stylesheet" href="{assets}assets/css/accessibility.css">\n<script defer src="{assets}assets/js/accessibility.js"></script>\n</head>')
+        s = s.replace('</head>', f'<link rel="stylesheet" href="{assets}assets/css/accessibility.css">\n<script defer src="{assets}assets/js/accessibility.js"></script>\n<script defer src="{assets}assets/js/i18n.js"></script>\n</head>')
         if re.search(r'<main\b', s, re.I):
             match = re.search(r'<main\b[^>]*>', s, re.I)
             ident = re.search(r'\bid=["\']([^"\']+)', match[0])

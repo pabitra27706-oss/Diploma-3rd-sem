@@ -1,9 +1,9 @@
 # Phase 6 — One state, notes and portability
 
-**Status:** ✅* implemented and gate-verified on `arena/be90e07e-diploma-3rd-sem`
-(2026-11-17) — **not merged; owner device pass pending** · **Parts:** 6 ·
-**Depends on:** 1, 3 · **Owner gates:** device pass + merge instruction (see
-[`record.md`](record.md))
+**Status:** ✅* implemented, gate-verified and merged — **merge commit `5b7eb66`**
+(PR #14, 2026-11-17; Web CI `44034450353` and Pages `44034449241` green) with
+the caveats in [`record.md`](record.md) · **Parts:** 6 · **Depends on:** 1, 3 ·
+**Owner gates:** device acceptance moved to Phase 10 (see [`record.md`](record.md))
 
 ## Goal
 

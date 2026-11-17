@@ -1,7 +1,11 @@
-/* Shared implementation safeguards; not a claim of audited WCAG conformance. */
-.skip-study-content{position:fixed;top:-12rem;left:1rem;z-index:100000;background:#fff;color:#111;padding:.8rem;border:3px solid #111}.skip-study-content:focus{top:1rem}
+/* Shared implementation safeguards; not a claim of audited WCAG conformance.
+   Colours are declared as tokens so scripts/audit_accessibility.py can measure
+   them instead of hoping a literal is right. */
+:root{--skip-fg:#111111;--skip-bg:#ffffff;--focus-ring-solid:#4a4fd0}
+[data-theme="dark"]{--focus-ring-solid:#a5a6ff}
+.skip-study-content{position:fixed;top:-12rem;left:1rem;z-index:100000;background:var(--skip-bg);color:var(--skip-fg);padding:.8rem;border:3px solid var(--skip-fg)}.skip-study-content:focus{top:1rem}
 html{scroll-padding-top:6rem}body{line-height:var(--reading-line-height,1.6)}
-:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+:focus-visible{outline:3px solid var(--focus-ring-solid,currentColor);outline-offset:3px}
 .is-deeplink-target{outline:3px solid var(--accent,var(--primary,#254cba));outline-offset:3px;border-radius:.5rem}
 .is-deeplink-flash{box-shadow:0 0 0 6px rgba(37,76,186,.18);transition:box-shadow .4s ease}
 .question-share{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--border-color,var(--border,rgba(120,130,150,.3)));font-size:.86rem}
