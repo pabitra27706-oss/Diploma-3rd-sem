@@ -32,7 +32,7 @@ class PipelineTests(unittest.TestCase):
         # Papers use the explicitly approved, pinned main snapshot; quiz sources
         # retain the original phase base. Neither follows a moving branch.
         paper_base=json.loads((ROOT/'_data/pyq-integrity.json').read_text())['sourceCommit']
-        quiz_base='c47a0f71665cc4f2324857b5bcdea4eb7dab6168'
+        quiz_base='664674b490c437739c001295754b3dc2653a2edc'
         for path,store in sum((list(s) for s in stores()),[]):
             base=paper_base if path.is_relative_to(ROOT/'_data') else quiz_base
             original=json.loads(subprocess.check_output(['git','show',base+':'+path.relative_to(ROOT).as_posix()]))
