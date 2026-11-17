@@ -629,13 +629,49 @@ content, publication or domain decision.
 8. **Shell version bumped** to `study-2026-11-17e` because the shell bytes changed;
    the data version is independent of it.
 
+## 9.4 measurement — owner opened a first-party counter gate — 2026-11-17
+
+Asked: "what should the dated measurement decision say?" Answered by the owner on
+2026-11-17: **open a first-party counter gate** rather than confirm the
+local-only default outright.
+
+What this decides, and what it does not:
+
+- **Decided:** the owner does want aggregate usage counts later, so the question
+  is no longer "analytics or nothing". Phase 9.4 therefore stays **open** — this is
+  a gate, not an implementation approval, and nothing was built in response.
+- **Not decided yet (a second, later owner answer is required before any code):**
+  1. **Which number** — e.g. daily page views, daily "site opened", or distinct
+     browsers; anything per-student, per-question or per-answer is out of scope
+     unless explicitly asked for.
+  2. **Where it is stored** — a first-party endpoint/worker the owner controls, or
+     GitHub Pages/HTTP logs. No third-party analytics service, no pixel, no
+     tag manager, no cookie for tracking.
+  3. **Retention** — how long counts are kept and who can read them.
+  4. **Disclosure text** — the privacy page must name the counter, the fields sent,
+     the purpose and the retention **before** it ships.
+- **Non-negotiable constraints inherited from Phases 1–9** (these are binding on
+  any future implementation, whoever writes it):
+  - one request, same origin, **never blocking render**; it must fit the page
+    budget (`scripts/audit_page_weight.py --budget`) and must not break offline
+    (`sw.js` must treat it as network-optional, never as a precache entry);
+  - no query string, note, name, answer, bookmark or search text may be sent —
+    pathname + a coarse bucket at most, and no persistent identifier;
+  - no third-party script, no resale of data, no ad/affiliate coupling (money
+    model stays "none");
+  - the local-only usefulness prompt stays as it is and is **not** replaced by a
+    counter;
+  - a counter is never presented as proof of learning, retention or "students
+    helped" — `docs/MEASUREMENT.md`'s unknowables stay unknowable.
+- **Status:** 9.4 open, blocked on the second answer above. Re-asking the *first*
+  question ("do you want any measurement at all?") is now a defect — it is
+  answered here.
+
 ## Open owner decisions from Phase 9
 
-- **9.4 measurement (dated answer still missing).** The default stays: no
-  third-party analytics, no tracker, local-only usefulness prompt, honest
-  "we cannot measure usage" reporting (`docs/MEASUREMENT.md`). The owner should
-  record a dated confirmation — or name a tool (which would also require a
-  privacy-page update and a page-weight budget) before Phase 9.4 can close.
 - **Deploy (9.6).** Not authorized and not performed. `docs/LAUNCH-CHECKLIST.md`
   is ticked only where this environment can prove an item; Lighthouse and the
   real-phone pass are recorded as **not run**.
+- **9.4 counter gate (see above).** Open by the owner's choice of 2026-11-17; the
+  follow-up questions (metric, storage location, retention, disclosure) are the
+  remaining gate.

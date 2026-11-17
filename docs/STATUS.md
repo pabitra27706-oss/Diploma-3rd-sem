@@ -27,9 +27,12 @@ Implemented on `arena/908b6b19-diploma-3rd-sem` (from `main` at `0e53a4a`).
 - **9.5 ✅** `scripts/site_config.py` is the only place the published URL exists;
   `scripts/check_root_rewrite.py` rewrites a temp copy to `/` and runs
   `check_site.py --strict` inside it → 0 errors, 0 warnings. No domain action.
-- **9.4 ⛔ owner gate** — local-only measurement is documented in
-  `docs/MEASUREMENT.md` and the prompt makes no network call; the **dated owner
-  confirmation is still missing**.
+- **9.4 ⛔ gate opened by the owner 2026-11-17** — the local-only prompt still
+  ships and makes no network call, but the owner chose a **first-party aggregate
+  counter** route rather than confirming the no-measurement default. So the part
+  stays open until the metric, storage location, retention and privacy-page text
+  are answered; **no counter code was written**. Constraints and the recorded
+  decision: `docs/DECISIONS.md` + `docs/MEASUREMENT.md`.
 - **9.6 🚧** `docs/LAUNCH-CHECKLIST.md` ticked with dates wherever this
   environment can prove an item. **Lighthouse, the real-phone pass and the deploy
   are explicitly not run** (no browser, no device), and no PR was opened.
@@ -296,9 +299,10 @@ Unavailable device access is **untested**, never silently passed.
 1. **Phase 9 is implemented** on the session branch: 9.1 ✅, 9.2 ✅, 9.3 ✅,
    9.5 ✅, with numbers in the Phase 9 section above and in
    `phases/09-performance-launch/record.md`. Three things remain and none of them
-   can be done in the agent environment: the owner's **dated 9.4 measurement
-   decision**, a **real-browser launch pass** (Lighthouse, print export, phone),
-   and the **deploy decision** — which is not authorized and did not happen.
+   can be done in the agent environment: the **9.4 counter gate's four answers**
+   (metric, storage, retention, disclosure — the owner opened the gate on
+   2026-11-17 and no code exists yet), a **real-browser launch pass** (Lighthouse,
+   print export, phone), and the **deploy decision** — not authorized, not done.
 2. Phase 8's two content gates stay open in parallel and are **owner work**:
    sign off revision entries, then answer batches of ≤40 with a citation and a
    date. Nothing in this branch certified content.

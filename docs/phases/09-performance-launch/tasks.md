@@ -5,8 +5,10 @@ improves a measured number, or records a decision.
 
 **Status 2026-11-17:** 9.1 ✅ re-verified from disk (data fan-out unchanged, static
 side measured); 9.2 ✅ done, browser-free equivalence proof; 9.3 ✅ done with a
-browser-free update regression; 9.4 ⛔ owner decision still open (the local-only
-prompt itself ships and is verified by reading the code); 9.5 ✅ done, `/`-rooted
+browser-free update regression; 9.4 ⛔ **gate opened by the owner on 2026-11-17** —
+a first-party aggregate counter is wanted later, so the part stays open until the
+metric, storage, retention and disclosure answers exist (no counter code was
+written); 9.5 ✅ done, `/`-rooted
 copy passes the checker; 9.6 🚧 checklist ticked wherever this environment can
 prove an item — Lighthouse, real phone and deploy remain **not run**. Evidence and
 numbers: [`record.md`](record.md).
@@ -67,7 +69,11 @@ without a visible "updated" note.
 
 ## 9.4 — Measurement without surveillance (owner gate)
 
-**⛔ Owner gate.** The local-only prompt and `docs/MEASUREMENT.md` are in place; the dated owner answer is still missing, so the part stays open.
+**⛔ Gate opened 2026-11-17 — still open.** The local-only prompt and
+`docs/MEASUREMENT.md` are in place and verified by reading the code; the owner
+chose a **first-party counter** route rather than confirming the default, so the
+four follow-up answers (metric, storage, retention, disclosure) must be recorded
+before any code exists. Nothing was implemented in response to the gate.
 
 **Steps**
 1. Record the default decision: no third-party analytics; local-only usefulness

@@ -1,7 +1,12 @@
 # Measurement without surveillance
 
-> **Phase 9.4 status (2026-11-17): the default holds, the dated owner answer does
-> not exist yet.** No analytics, tracker or third-party script was added. What
+> **Phase 9.4 status (2026-11-17): the owner opened a first-party counter GATE.**
+> That is a decision to *want* aggregate counts later, not an approval to add one
+> today — nothing was built, and the site still sends no analytics, tracker or
+> third-party script. The gate's four open questions (which number, where it is
+> stored, retention, disclosure text) are in `docs/DECISIONS.md` under
+> "9.4 measurement — owner opened a first-party counter gate — 2026-11-17", with
+> the binding constraints any future counter must satisfy. What
 > ships is the local-only usefulness prompt described below; reading its code
 > (`assets/js/accessibility.js`, bundled into `assets/js/shell.bundle.js`) confirms
 > it makes **no network call** — no `fetch`, no `sendBeacon`, no image ping — and
@@ -44,9 +49,21 @@ scores, real-device timings, install rates, retention, number of students, which
 questions are actually difficult, whether anyone found the site useful. There is
 no browser in the build environment and no analytics by design.
 
-**If the owner ever wants usage numbers**, the honest options are (a) server-side
-counts from GitHub Pages traffic (aggregate pageviews, no per-student detail, not
-available for a private repo), or (b) a first-party, non-tracking counter with its
-own privacy-page entry and page-weight budget. Either is a **GATE**: it changes the
-privacy page, the budget and this document, and it needs a dated decision first.
-Nothing here pre-approves it.
+**The owner has opened that gate (2026-11-17).** The honest option chosen for
+further work is a **first-party, non-tracking aggregate counter** — not a
+third-party analytics service. Before it can ship, the owner must answer what is
+counted, where it is stored, how long it is kept and what the privacy page says;
+and the implementation must keep these non-negotiables:
+
+- one same-origin request, non-blocking, inside the existing page budget, and
+  never a precache entry (offline must not depend on it);
+- pathname plus a coarse bucket at most — **never** query strings, names, notes,
+  answers, bookmarks or search text, and no persistent identifier;
+- no third-party script, no cookie for tracking, no resale, no coupling to ads or
+  affiliate links (the money model stays "none");
+- the local usefulness prompt is not replaced by the counter;
+- counts are reported as what they are (sessions/views), never as learning gains,
+  retention or "students helped". Repository traffic is still not student usage.
+
+Until those answers exist, Phase 9.4 stays **open** and this document stays the
+record of what cannot be known.

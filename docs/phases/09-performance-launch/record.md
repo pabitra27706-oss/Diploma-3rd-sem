@@ -159,10 +159,19 @@ version. Reading the code confirms **no network call**: the prompt handler has n
 `docs/MEASUREMENT.md` lists what is knowable and what is not, including that
 repository traffic is not student usage.
 
-**Owner decision still open:** `docs/MEASUREMENT.md`'s default (local-only, no
-third-party analytics) must be dated in `docs/DECISIONS.md` by the owner. No
-analytics, tracker or privacy-page change is added here, and the phase is not
-closed until that answer is recorded.
+**Owner answered 2026-11-17 — by opening a gate, not by closing the part.** Asked
+whether the local-only default stands, the owner chose to open a **first-party
+aggregate counter gate** (`docs/DECISIONS.md` → "9.4 measurement — owner opened a
+first-party counter gate — 2026-11-17"). Nothing was implemented in response: the
+gate is not an implementation approval, and the site still sends nothing.
+
+Still open, and required before any counter code exists: **which number** is
+counted, **where** it is stored, **how long** it is kept, and the **privacy-page
+disclosure text**. The inherited constraints are binding: one same-origin
+non-blocking request inside the page budget, never a precache entry, no query
+strings/notes/answers/no persistent identifier, no third-party script, and counts
+are reported as views — never as learning, retention or "students helped". 9.4
+therefore remains **open**.
 
 ## 9.6 — Launch gate (blocked on hardware and on the deploy gate)
 
@@ -198,7 +207,9 @@ never been exercised because nothing was ever deployed from this branch.
 
 ## Pending / open
 
-1. Owner decision for 9.4 (dated) — nothing else blocks that part.
+1. 9.4 counter gate: the owner must answer metric, storage location, retention
+   and disclosure text before any counter is written (the decision *to* want
+   counts is recorded and must not be re-asked).
 2. Lighthouse and any Core Web Vitals number: needs a real browser run; a green
    byte/request budget is not a Lighthouse score.
 3. Real-phone launch pass, install, offline reload, print export → Phase 10.

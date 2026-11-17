@@ -4,8 +4,11 @@ Updated 2026-11-17 (**Phases 1–8 are `✅*` and merged to `main`. Phase 9 —
 performance and launch — is implemented on the session branch
 `arena/908b6b19-diploma-3rd-sem`: 9.1 re-verified, 9.2 token/CSS/JS
 consolidation done, 9.3 shell-vs-data caching done, 9.5 base-path proof done;
-9.4 waits on the owner's dated measurement answer and 9.6 is evidenced only where
-this environment can prove an item. Nothing was deployed and no PR was opened.**)
+9.4 stays open by the owner's deliberate choice — on 2026-11-17 the owner **opened
+a first-party aggregate-counter gate** instead of confirming the no-measurement
+default, so no counter exists yet and four answers (metric, storage, retention,
+disclosure) are still required — and 9.6 is evidenced only where this
+environment can prove an item. Nothing was deployed and no PR was opened.**)
 Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md` and
 [`docs/phases/09-performance-launch/record.md`](docs/phases/09-performance-launch/record.md)
 before continuing. Source files and actual Git status take precedence over older
@@ -183,8 +186,8 @@ no content: 0 revision entries and 0 answers are owner-verified.
    redo completed engineering merely because older phase tasks say planned.
 2. Use `docs/STATUS.md`'s remaining order. Phases 1–8 are `✅*` with recorded
    caveats and are merged. **Phase 9 is implemented on the session branch**, with
-   three things left: the owner's dated 9.4 measurement answer, a real-browser
-   launch pass (Lighthouse + phone, 9.6) and the deploy decision — none of which
+   three things left: the four answers behind the owner's 9.4 counter gate, a
+   real-browser launch pass (Lighthouse + phone, 9.6) and the deploy decision — none of which
    this environment can do. Phase 10 is one device-acceptance phase. Phase 8's
    two content gates (8.2 revision sheets, 8.6 answer certification) stay open
    in parallel and are **owner** work — acceptance never certified content.
@@ -298,8 +301,9 @@ what is not.
   English catalog no longer fetched.
 - 9.3 ✅ done — `data-6b1621c45599` over 81 files, separate data cache namespace,
   `tests/data-version.cjs` proves both update directions offline-safe.
-- 9.4 ⛔ **owner gate** — local-only default documented; the dated answer is the
-  only missing piece.
+- 9.4 ⛔ **gate opened 2026-11-17** — the owner wants a first-party aggregate
+  counter later; nothing was built. Blocked on: which number, where it is stored,
+  retention, and the privacy-page text (`docs/DECISIONS.md`, `docs/MEASUREMENT.md`).
 - 9.5 ✅ done — one `scripts/site_config.py` constant; `/`-rooted copy passes
   `check_site.py --strict`.
 - 9.6 🚧 — checklist dated and ticked only where provable; **Lighthouse, phone
