@@ -734,3 +734,8 @@ report stated that nothing was deployed and no PR existed.
 ## Phase 9B — owner confirmed checker and first alpha migration (2026-11-17)
 
 - Owner said “Yes continue” after the checker-only batch explanation; this confirms that batch, not future batches or deployment. Five identical white-overlay occurrences were moved to `--alpha-white-15` without changing their value. Await before/after owner screenshots and confirmation for this migration before moving on. Remaining alpha ledger: 392 occurrences. Branch shell `study-2026-11-17f` is not live; the live site remains `study-2026-11-17e` until an explicit merge/deploy command.
+
+
+## Phase 9B — screenshot cadence revised (2026-11-17)
+
+The owner asked for broader app-styled, phone-friendly CSS improvements and said screenshots are not required for every work item. Earlier per-batch screenshot instructions are therefore revised for Phase 9B: use supplied screenshots as evidence, do not block every iteration on new screenshots, and report which views remain unverified. This does not constitute visual approval of the completed site or permission to merge/deploy; final owner review, dark/print verification, safety gates and explicit publication authorization remain required.

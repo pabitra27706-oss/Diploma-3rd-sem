@@ -43,7 +43,11 @@ def label(code, title):
 
 
 def page(title, body, prefix=''):
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(title)} — Study Hub</title><link rel="stylesheet" href="{prefix}assets/css/variables.css"><link rel="stylesheet" href="{prefix}assets/css/discovery.css"><script defer src="{prefix}assets/js/pwa.js"></script><link rel="stylesheet" href="{prefix}assets/css/base.css"></head><body><a class="skip-study-content" href="#study-main-content">Skip to study content</a><main class="discovery" id="study-main-content"><nav><a href="{prefix}index.html">Study Hub</a><a href="{prefix}search.html">Search</a><a href="{prefix}coverage.html">Coverage</a><a href="{prefix}exam-pattern.html">Exam pattern</a><a href="{prefix}courses.html">Practical courses</a></nav><h1>{e(title)}</h1>{body}<p><button type="button" class="print-page-btn" onclick="window.print()">Print this page</button></p></main></body></html>\n'''
+    is_coverage = title == 'Syllabus coverage and verification' and not prefix
+    body_class = ' class="utility-body"' if is_coverage else ''
+    main_class = 'discovery utility-page utility-coverage' if is_coverage else 'discovery'
+    heading_icon = '<svg class="utility-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons/sprite.svg#target"></use></svg>' if is_coverage else ''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(title)} — Study Hub</title><link rel="stylesheet" href="{prefix}assets/css/variables.css"><link rel="stylesheet" href="{prefix}assets/css/discovery.css"><script defer src="{prefix}assets/js/pwa.js"></script><link rel="stylesheet" href="{prefix}assets/css/base.css"></head><body{body_class}><a class="skip-study-content" href="#study-main-content">Skip to study content</a><main class="{main_class}" id="study-main-content"><nav><a href="{prefix}index.html">Study Hub</a><a href="{prefix}search.html">Search</a><a href="{prefix}coverage.html">Coverage</a><a href="{prefix}exam-pattern.html">Exam pattern</a><a href="{prefix}courses.html">Practical courses</a></nav><h1>{heading_icon}{e(title)}</h1>{body}<p><button type="button" class="print-page-btn" onclick="window.print()">Print this page</button></p></main></body></html>\n'''
 
 
 TEXT_NOISE = re.compile(r'<(script|style)\b.*?</\1>', re.S | re.I)

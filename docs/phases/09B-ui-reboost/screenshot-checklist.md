@@ -1,3 +1,5 @@
+> **Cadence update (2026-11-17):** The owner said screenshots are not required for every work item. This list now tracks useful evidence and outstanding visual checks, not a per-work blocker. Owner review and explicit deployment authorization remain required.
+
 # Screenshot checklist — owner-provided before and after evidence
 
 We cannot render the site here. Fourteen supplied phone images show home, subject, unit overview, practice hub, one practice question, quiz landing/subject list and PYQ list (including an expanded subject); four of these show light mode. We do **not** need duplicates unless a batch needs a different state. The list below covers the full redesign; send **the first group now**, and the rest when convenient or before their relevant batch. Please redact names, private notes, backups or answers you do not want to share. Use the actual page, not the AI illustration. Include top/header and enough surrounding content; long pages can be two shots. Capture the same state/theme/viewport after each batch.
@@ -31,4 +33,4 @@ If no desktop is available, tell us; we can prepare other research, but will not
 15. A real **print preview or PDF screenshot** for a unit and a paper after the print batch, plus a before if available. Browser print controls and output vary; this is not a substitute for Phase 10 device acceptance.
 16. After each batch, repeat its before views at the same width and theme, including its shared impacted contexts. Check no clipped text/actions, readable contrast, the right selected/disabled state, visible keyboard focus where available, and unchanged navigation/content.
 
-The owner retains the right to request changes. Never proceed to the next batch without written confirmation. Desktop, light/dark, actual print and every state remain unverified until their evidence is supplied.
+The owner retains the right to request changes. The owner has waived screenshots for every work item; owner review remains required. Desktop, light/dark, actual print and every state remain unverified until their evidence is supplied.

@@ -1,6 +1,6 @@
 # Phase 9B — proposed design system and review plan
 
-**Owner approved this plan and selected illustration option 1, conditional on the required before screenshots being available.** No implementation until that condition is met. Owner may request changes. No generated illustration is a screenshot or proof of the real site. Phone screenshots already supplied are the baseline for the shown states only; desktop and additional states still needed.
+**Owner approved this plan and selected illustration option 1.** On 2026-11-17 the owner revised the screenshot cadence: screenshots are not needed for every work item; record missing visual evidence and retain owner review and deployment gates. Owner may request changes. No generated illustration is a screenshot or proof of the real site. Phone screenshots already supplied are the baseline for the shown states only; desktop and additional states still needed.
 
 ## Proposed scales (subject to owner approval)
 
@@ -33,7 +33,7 @@
 8. **PYQ/discovery**: one paper list, then one discovery/table screen, separately if needed.
 9. **Print/dark/final integration**: owner supplies phone and desktop, dark/light and real print preview/PDF screenshots for affected representative pages. `docs/DESIGN.md` is updated to describe only adopted components; record unseen states, before/after metrics and decisions. Phase 10 still owns real-device acceptance.
 
-Each numbered screen is a separate gate if needed: change only its agreed surface, run all requested gates, report exact change and screenshot checklist, and wait for written owner confirmation before the next. Shared styles may affect multiple screens: obtain before/after evidence for all impacted contexts and split further when necessary. Every batch maintains URLs/base-path safety, no new runtime requests or build steps; compare per-view requests against ≤12 and first-party CSS/JS budget against baseline. Keep one token file, regenerate generated outputs in the specified order with data version last, and run strict site/platform/token/icon/data/weight/root-rewrite/accessibility, 14 deterministic Node suites and Python suite. Report the known absent-history Python error honestly, and any new failures separately. Do not conflate static contrast checks with rendered contrast or owner device verification.
+Each screen can be reviewed separately if needed: change the agreed surface, run all requested gates, report exact changes and unverified views, and seek owner confirmation; per-work screenshots are no longer mandatory under the owner’s 2026-11-17 instruction. Shared styles may affect multiple screens: obtain before/after evidence for all impacted contexts and split further when necessary. Every batch maintains URLs/base-path safety, no new runtime requests or build steps; compare per-view requests against ≤12 and first-party CSS/JS budget against baseline. Keep one token file, regenerate generated outputs in the specified order with data version last, and run strict site/platform/token/icon/data/weight/root-rewrite/accessibility, 14 deterministic Node suites and Python suite. Report the known absent-history Python error honestly, and any new failures separately. Do not conflate static contrast checks with rendered contrast or owner device verification.
 
 ## Decisions still needed
 
