@@ -10,7 +10,9 @@ the tree. This check is what keeps it that way:
      block of `variables.css`, and every palette entry is actually referenced;
   3. every `var(--name)` used by first-party CSS or an inline style resolves to
      a definition somewhere in the tree (a typo is a silent broken colour);
-  4. every page loads `variables.css` before any other first-party stylesheet,
+  4. existing rgba() expressions outside token definitions match a locked
+     per-file inventory; new/changed occurrences fail strict mode;
+  5. every page loads `variables.css` before any other first-party stylesheet,
      so an area sheet that aliases a palette entry can always resolve it.
 
 Allowlist (each entry is a browser requirement, not styling):
@@ -30,6 +32,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+from collections import Counter
+import json
 import re
 import sys
 from pathlib import Path
@@ -212,6 +216,119 @@ def check_definitions(f: Findings) -> None:
             f.add(where, f"var({name}) is never defined in the tree")
 
 
+# The Phase 9B transition is an exact, reviewable legacy inventory, not a
+# claim that existing alpha colours are tokenised. Removing/migrating an entry
+# requires shrinking the baseline in the same change; new/changed occurrences
+# fail closed. Scan source text conservatively (including JS comments/strings),
+# so this also catches CSS constructed in JavaScript or HTML templates.
+RGBA_START = re.compile(r"(?<![\w-])rgba\s*\(", re.I)
+CUSTOM_PROPERTY_START = re.compile(r"(?:(?<=\{)|(?<=;))\s*--[\w-]+\s*:")
+RGBA_BASELINE = Path("docs/phases/09B-ui-reboost/rgba-baseline.json")
+
+
+def rgba_expressions(text: str):
+    """Yield (start, end, expression, balanced), tracking nested functions."""
+    offset = 0
+    while match := RGBA_START.search(text, offset):
+        depth, i = 1, match.end()
+        while i < len(text) and depth:
+            if text[i] == "(":
+                depth += 1
+            elif text[i] == ")":
+                depth -= 1
+            i += 1
+        if depth:
+            yield match.start(), match.end(), match.group(), False
+            offset = match.end()
+        else:
+            yield match.start(), i, text[match.start():i], True
+            offset = i
+
+
+def token_value_ranges(text: str):
+    """Find custom-property value ranges in the token sheet, excluding comments."""
+    for match in CUSTOM_PROPERTY_START.finditer(text):
+        depth, i = 0, match.end()
+        while i < len(text):
+            if text[i] == "(":
+                depth += 1
+            elif text[i] == ")":
+                depth -= 1
+            elif depth == 0 and text[i] in ";}":
+                break
+            i += 1
+        yield match.end(), i
+
+
+def rgba_inventory():
+    """Legacy rgba source occurrences by file and exact expression.
+
+    CSS, HTML and JS are all scanned, including inline HTML/JS templates and
+    generated JS. Vendor and non-shipped test/playbook directories are excluded.
+    CSS/HTML comments are ignored. JS is intentionally conservative, including
+    comments, so no JavaScript parser is needed in the zero-build toolchain.
+    """
+    paths = shipped_css() + shipped_pages()
+    for path in ROOT.rglob("*.js"):
+        rel = path.relative_to(ROOT)
+        if set(rel.parts) & SKIP_DIRS or rel.as_posix().startswith(SKIP_PREFIXES):
+            continue
+        paths.append(path)
+    result = {}
+    malformed = []
+    for path in sorted(set(paths)):
+        rel = path.relative_to(ROOT).as_posix()
+        text = path.read_text(encoding="utf-8", errors="replace")
+        if path.suffix == ".css":
+            text = CSS_COMMENT.sub(lambda m: " " * len(m.group()), text)
+        elif path.suffix == ".html":
+            text = HTML_COMMENT.sub(lambda m: " " * len(m.group()), text)
+        allowed = list(token_value_ranges(text)) if path == VARIABLES else []
+        counts = Counter()
+        for start, end, expression, balanced in rgba_expressions(text):
+            if not balanced:
+                malformed.append(f"{rel}:{text[:start].count(chr(10)) + 1}")
+            elif not any(a <= start and end <= b for a, b in allowed):
+                counts[expression] += 1
+        if counts:
+            result[rel] = dict(sorted(counts.items()))
+    return result, malformed
+
+
+def check_rgba(f: Findings) -> None:
+    """Enforce the exact legacy ledger while permitting alpha token definitions."""
+    try:
+        data = json.loads((ROOT / RGBA_BASELINE).read_text(encoding="utf-8"))
+        if not isinstance(data, dict) or set(data) != {"version", "occurrences"} or data["version"] != 1:
+            raise ValueError("invalid baseline version or fields")
+        expected = data["occurrences"]
+        if not isinstance(expected, dict):
+            raise ValueError("occurrences must be an object")
+        for path, entries in expected.items():
+            parts = Path(path).parts
+            if not path or Path(path).is_absolute() or ".." in parts or not isinstance(entries, dict) or not entries:
+                raise ValueError("invalid path or occurrence map")
+            for expression, count in entries.items():
+                parsed = list(rgba_expressions(expression))
+                if (not isinstance(count, int) or isinstance(count, bool) or count < 1 or
+                    len(parsed) != 1 or parsed[0][:2] != (0, len(expression)) or not parsed[0][3]):
+                    raise ValueError("invalid expression or occurrence count")
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as error:
+        f.add(str(RGBA_BASELINE), f"invalid or missing rgba baseline: {error}")
+        return
+
+    actual, malformed = rgba_inventory()
+    for where in malformed:
+        f.add(where, "unbalanced rgba expression")
+    for path in sorted(set(expected) | set(actual)):
+        for expression in sorted(set(expected.get(path, {})) | set(actual.get(path, {}))):
+            before = expected.get(path, {}).get(expression, 0)
+            now = actual.get(path, {}).get(expression, 0)
+            if before != now:
+                f.add(path, f"rgba literal {expression}: baseline {before}, found {now}; "
+                      "tokenise in variables.css and ratchet the reviewed baseline")
+
+
 def check_page_order(f: Findings) -> None:
     base = ("variables.css",)
     for page in shipped_pages():
@@ -239,6 +356,7 @@ def main() -> int:
 
     f = Findings()
     check_literals(f)
+    check_rgba(f)
     check_palette(f)
     check_definitions(f)
     check_page_order(f)
@@ -248,6 +366,8 @@ def main() -> int:
         print(f"palette entries in assets/css/variables.css: {len(entries)}")
         print(f"first-party stylesheets inspected: {len(shipped_css())}; pages: {len(shipped_pages())}")
         print(f"colour literals outside the token file: {sum(1 for item in f.items if 'literal' in item)}")
+        actual, _ = rgba_inventory()
+        print(f"legacy rgba occurrences outside token definitions: {sum(sum(v.values()) for v in actual.values())} (ratcheted baseline)")
         print(f"findings: {len(f)}")
         for item in f.items:
             print("  " + item)

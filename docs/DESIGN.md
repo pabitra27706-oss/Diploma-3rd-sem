@@ -4,17 +4,19 @@
 > Every **hex** colour literal in the tree is defined exactly once, in the palette
 > block of `assets/css/variables.css`, and enforced by `scripts/check_tokens.py`.
 > A new page may not hard-code a hex colour: add or reuse a palette token.
-> `rgba()` values (373 occurrences, 188 distinct — mostly alpha shadows and
-> overlays) are **not** yet tokenised; that is a recorded open item.
+> `rgba()` migration has begun, but is **not** complete; a Phase 9B strict
+> checker locks 392 remaining occurrences outside token definitions in a
+> reviewed legacy ledger. Zero findings means no drift, not completion; the
+> earlier 373/188 CSS-only count used a different undocumented method.
 >
 > Method: `webflow/knowledge/design-system.md`. Playbook: `webflow/`.
 
-## Direction (proposed, needs owner approval)
+## Direction (owner-selected, not yet implemented)
 
 One line: *"A quiet revision desk: dense readable text, one accent colour, no
 decoration, everything reachable with one thumb and a keyboard."*
 
-- Chosen: **not yet** — recorded here only as a proposal.
+- 2026-11-17: owner selected [illustration option 1](phases/09B-ui-reboost/selected-direction.jpg) and approved the [plan](phases/09B-ui-reboost/plan.md) conditional on required before screenshots. Preferred: dark navy/lavender, balanced density, serif headings with sans-serif body and controls (an explicit revision of the earlier brand-title-only preference), without the leaf. This illustration is not a site screenshot; its example wording and decoration are not approved content. No Phase 9B component or scale has yet been implemented or visually verified.
 
 ## Current token inventory (20 first-party CSS files)
 

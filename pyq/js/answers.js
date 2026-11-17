@@ -754,6 +754,8 @@ function renderPracticeView() {
 
   const typeLabel = TYPE_LABELS[q.type] || q.type || 'Question';
   const diffClass = q.difficulty ? `q-badge-difficulty-${q.difficulty}` : '';
+  // Owner decision (Phase 9C): the paper's source note belongs ABOVE the
+  // question, next to the action icons, not buried under the answer body.
   const sourceNoteHTML = q.sourceNote
     ? `<div class="source-note"><strong>Source note:</strong> ${escapeHtml(q.sourceNote)}</div>`
     : '';
@@ -900,7 +902,8 @@ function renderPracticeView() {
           </svg>
         </button>
       </div>
-      <div class="q-body">${bodyHTML}${sourceNoteHTML}${syllabusNoteHTML}</div>
+      <div class="q-notices-host">${sourceNoteHTML}${syllabusNoteHTML}</div>
+      <div class="q-body">${bodyHTML}</div>
       ${feedbackHTML}
       ${theoryAnswerHTML}
     </div>
@@ -1035,11 +1038,10 @@ function renderReviewView() {
             </svg>
           </button>
         </div>
+        <div class="q-notices-host">${sourceNoteHTML}${syllabusNoteHTML}</div>
         <div class="q-body">
           <div class="q-text rich-content">${renderRichContent(q.question)}</div>
           ${mcqHtml}
-          ${sourceNoteHTML}
-          ${syllabusNoteHTML}
         </div>
         <div class="review-card-answer">
           <div class="review-answer-label">
@@ -1836,15 +1838,23 @@ function decorateQuestionLinks() {
     const controls = document.createElement('div');
     controls.className = 'question-share';
 
+    // Icons are inline SVG: no new request, they inherit currentColor, and the
+    // visible text label stays next to each one for screen readers and print.
+    const ICONS = {
+      copy: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+      share: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+      source: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>'
+    };
+
     const copy = document.createElement('button');
     copy.type = 'button';
     copy.className = 'copy-question-link';
-    copy.textContent = 'Copy question link';
+    copy.innerHTML = ICONS.copy + '<span>Copy link</span>';
 
     const share = document.createElement('button');
     share.type = 'button';
     share.className = 'share-question-link';
-    share.textContent = 'Share question';
+    share.innerHTML = ICONS.share + '<span>Share</span>';
 
     const status = document.createElement('span');
     status.className = 'share-status';
@@ -1881,8 +1891,9 @@ function decorateQuestionLinks() {
     const provenance = document.createElement('details');
     provenance.className = 'question-provenance';
     const provenanceSummary = document.createElement('summary');
-    provenanceSummary.textContent =
-      `Source: ${q.sourcePage || 'not recorded'} · ${q.verifiedOn ? 'verified ' + q.verifiedOn : 'not certified'}`;
+    provenanceSummary.innerHTML = ICONS.source + '<span>'
+      + escapeHtml(`Source: ${q.sourcePage || 'not recorded'} · ${q.verifiedOn ? 'verified ' + q.verifiedOn : 'not certified'}`)
+      + '</span>';
     const provenanceBody = document.createElement('p');
     provenanceBody.textContent =
       `Question wording: ${q.sourceStatus || 'unverified'}. Answer: ${q.answerStatus || 'unverified'} (stored model answer, not an official key). `
@@ -1892,7 +1903,16 @@ function decorateQuestionLinks() {
         : 'No owner sign-off date is recorded, so this answer is not certified.');
     provenance.append(provenanceSummary, provenanceBody);
     controls.append(provenance);
-    card.append(controls);
+
+    // Place the action row immediately after the question header so it sits
+    // above the question text (owner request), falling back to the top of the
+    // card when a view has no header.
+    const header = card.querySelector('.q-header');
+    if (header && header.parentNode === card) {
+      header.insertAdjacentElement('afterend', controls);
+    } else {
+      card.prepend(controls);
+    }
 
     loadRepeatIndex().then(repeatMap => {
       const info = repeatMap.get(q.id);

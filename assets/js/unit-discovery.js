@@ -333,7 +333,7 @@
       make('a', { href: practiceUrl }, `Practice Unit ${unit}`)
     );
     if (QUIZ_BANK_SUBJECTS.has(subject) && (!isSupplementary || quizzes.length > 0)) {
-      const quizUrl = `../../../quiz/quiz.html?subject=${encodeURIComponent(subject)}&unit=${encodeURIComponent(unit)}&mode=all`;
+      const quizUrl = `../../../quiz/setup.html?subject=${encodeURIComponent(subject)}&unit=${encodeURIComponent(unit)}&mode=all`;
       actions.append(
         make(
           'a',

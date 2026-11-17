@@ -156,7 +156,9 @@ def page(title, body, prefix=''):
             f'<link rel="stylesheet" href="{prefix}assets/css/discovery.css">'
             
             f'<script defer src="{prefix}assets/js/pwa.js"></script>'
-            f'<link rel="stylesheet" href="{prefix}assets/css/base.css"></head><body>'
+            f'<link rel="stylesheet" href="{prefix}assets/css/base.css">'
+            f'<link rel="stylesheet" href="{prefix}assets/css/hub.css"></head>'
+            f'<body data-page="revision" data-page-family="revision">'
             f'<a class="skip-study-content" href="#study-main-content">Skip to study content</a>'
             f'<main class="discovery" id="study-main-content"><nav><a href="{prefix}index.html">Study Hub</a>'
             f'<a href="{prefix}coverage.html">Coverage</a>'
