@@ -62,9 +62,10 @@ function renderPaper(data, meta) {
   const setNumber = data.scanSetNumber || meta.scanSetNumber || '';
 
   // Update toolbar
+  const subjectLabel = SUBJECT_NAMES[subjectCode] || data.subject;
   document.getElementById('toolbarTitle').textContent =
-    `${data.subject} · ${session} · ${data.paperCode}`;
-  document.title = `${data.subject} ${session} | PYQ`;
+    `${subjectLabel} · ${session} · ${data.paperCode}`;
+  document.title = `${subjectLabel} ${session} | PYQ`;
 
   const practiceLink = document.getElementById('practiceLink');
   if (practiceLink) {

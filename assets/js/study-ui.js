@@ -7,7 +7,7 @@
  async function init(){try{
  const {manifest,cards}=await load();const state=StudyStore.read();
  if($('#card-subject')){
-   const select=$('#card-subject');Object.keys(manifest.subjects).forEach(s=>select.add(new Option(s,s)));select.value=new URLSearchParams(location.search).get('subject')||'';
+   const select=$('#card-subject');Object.keys(manifest.subjects).forEach(s=>select.add(new Option(window.subjectLabel?subjectLabel(s):s,s)));select.value=new URLSearchParams(location.search).get('subject')||'';
    let queue=[],index=0,revealed=false,session=globalThis.crypto?.randomUUID?.()||String(Date.now());
    function start(){const params=new URLSearchParams(location.search);queue=StudyStore.queue(cards.filter(c=>(!select.value||c.subject===select.value)&&(!params.get('unit')||String(c.unit)===params.get('unit'))));index=0;render();}
    function render(){revealed=false;$('#card-answer').hidden=true;$('#reveal-card').hidden=false;const card=queue[index];$('#card-session').hidden=!card;status.textContent=card?'Space reveals; keys 1–4 rate; Esc exits. Ratings save immediately.':'No more due or new cards in this session. Progress is saved locally.';if(!card)return;$('#card-progress').textContent=`${index+1} / ${queue.length}`;$('#card-front').textContent=card.front;$('#card-back').textContent=card.back;$('#card-citation').textContent=card.verification+' · '+card.citation;$('#card-source').href=source(card);$('#reveal-card').focus();}
@@ -29,7 +29,7 @@
    const weak=StudyStore.weak(history);const out=$('#weak-areas');if(!weak.length)node('p','No keyed MCQ history yet. Try a quiz first.',out);
    const trends=StudyStore.trends(history);
    for(const row of weak.slice(0,10)){
-     const article=node('article',`${row.subject} · unit ${row.unit||'?'} · ${row.topic}: ${row.correct}/${row.attempted} correct, ${row.skipped} skipped. ${row.attempted>=5?Math.round(100*row.correct/row.attempted)+'%':'Not enough data for a percentage.'}`,out);
+     const article=node('article',`${window.subjectLabel?subjectLabel(row.subject):row.subject} · unit ${row.unit||'?'} · ${row.topic}: ${row.correct}/${row.attempted} correct, ${row.skipped} skipped. ${row.attempted>=5?Math.round(100*row.correct/row.attempted)+'%':'Not enough data for a percentage.'}`,out);
      const trend=trends.get(row.subject+'|'+(row.unit||'?')+'|'+row.topic);
      if(trend){const samples=`Last 7 local days: ${trend.recent.correct}/${trend.recent.attempted}; previous 7: ${trend.previous.correct}/${trend.previous.attempted}. `;node('p',samples+(trend.delta===null?'Not enough data in both windows for a trend (minimum 5 each).':`Change: ${trend.delta>0?'+':''}${trend.delta} percentage points; descriptive, not a learning-gain claim.`),article);}
      else node('p','No observations in the last two 7-day windows.',article);

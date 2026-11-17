@@ -266,3 +266,35 @@ separate source-verification gate and needs the owner's explicit approval.
   same reason as above: the owner authorized the prose pass and the deletion.
   This is recorded so the change is visible, not a silent baseline refresh; no
   answer certification is claimed.
+
+## Subject names instead of course codes in the UI — 2026-11-17
+
+- **Owner instruction:** "everywhere the subjects are in their code like cst20x it's hard
+  to find the real subjects, replace it with subject names … only in the UI", with no
+  change to inner paths or code. Follow-up answers chose **short names**
+  (C · Python · DS · CSO · Algorithms) and **hide raw IDs** from what a learner reads.
+- Scope kept strictly to presentation. Unchanged: directory layout
+  (`subjects/CST209/…`), every `_data`/`_quiz-data` file and question/paper ID,
+  `registry.json`, `data-subject`/`data-value` attributes, `?subject=` URL parameters,
+  localStorage keys (`unit_progress_CST201`, `pyq_<code>_<paper>_…`), DOM ids and the
+  `CST20x` keys inside `catalog.json`, `assets/search/*`, `assets/cards/*`.
+- Labels: compact chrome (nav brand, filter buttons, badges, chips, card corner) uses the
+  short name; places that already had room for a title (page titles, drawer headers,
+  subject-hub subtitle, quiz subject `<option>`, coverage headings) keep the full
+  syllabus name. The redundant "Code:" meta row was removed from the five subject hubs.
+- Raw identifiers are no longer printed: PYQ archive cards show `month year` with the
+  paper's `P00n` and printed set number, the viewer/answers toolbars show
+  `subject name · session · paper`, and duplicate-appearance notes list session + paper
+  only. Deep links still carry the real IDs.
+- New `assets/js/subject-labels.js` exposes `subjectLabel(code)` for the search, repeated,
+  cards, today and practice-session pages; quiz/home/PYQ pages use the name maps they
+  already had (`shortName` added to `quiz/js/common.js`).
+- `scripts/build_coverage.py` now writes display labels for the pages it authors
+  (coverage, exam-pattern, courses, lab pages). That is a label change only: it emits no
+  new IDs and writes the same JSON payload as before.
+- Derived output regenerated (coverage, courses, lab pages, search index, cards, bundles,
+  presence). Gates after the change: `validate_pyq` PASS, `check_pyq_integrity` clean,
+  `validate_data --check-baseline` matches the ledger, `check_platform` 0 errors,
+  Python `unittest` 13 PASS, Node `attempt-store`, `storage`, `storage-recovery`,
+  `study-store`, `data-pipeline-consumers`, `quiz-engine-dom` PASS.
+  `check_site.py --strict` reports exactly the findings it already reported on `main`.

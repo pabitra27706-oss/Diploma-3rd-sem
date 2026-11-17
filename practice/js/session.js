@@ -555,7 +555,7 @@ function renderQ(direction) {
   }
 
   /* ── Badges ── */
-  document.getElementById('q-subject').textContent = q.subjectCode || '';
+  document.getElementById('q-subject').textContent = (window.subjectLabel && q.subjectCode) ? subjectLabel(q.subjectCode) : (q.subjectCode || '');
   document.getElementById('q-unit').textContent    = q.unit ? `Unit ${q.unit}` : '';
   document.getElementById('q-marks').textContent   = q.marks ? `${q.marks}M` : '';
   document.getElementById('q-type').textContent    = q.type ? cap(q.type) : '';

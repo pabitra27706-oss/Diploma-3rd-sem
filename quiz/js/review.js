@@ -437,7 +437,7 @@ function buildTextAnswerBox(q, userAnswer, hasAnswer, field = 'answer', titleLab
   // Edit button
   const editBtn = createElement('button', 'btn-edit-answer');
   editBtn.innerHTML = '<span aria-hidden="true">✏️</span> Edit';
-  editBtn.setAttribute('aria-label', `Edit ${field} for question ${q.id}`);
+  editBtn.setAttribute('aria-label', `Edit ${field} for this question`);
   editBtn.addEventListener('click', () => openEditModal(q, field));
 
   boxHeader.appendChild(boxTitle);
@@ -523,7 +523,7 @@ function buildCardFooter(q, hasAnswer, isMCQ) {
   if (!isMCQ) {
     const editBtn = createElement('button', 'btn-edit-answer');
     editBtn.innerHTML = '<span aria-hidden="true">✏️</span> Edit Answer';
-    editBtn.setAttribute('aria-label', `Edit answer for question ${q.id}`);
+    editBtn.setAttribute('aria-label', 'Edit answer for this question');
     editBtn.addEventListener('click', () => openEditModal(q));
     right.appendChild(editBtn);
   }

@@ -21,7 +21,7 @@
       status.textContent='Loading search index…';
       try{
         manifest ||= await json('assets/search/manifest.json');
-        if(subject.options.length===1)Object.keys(manifest.subjects).forEach(code=>subject.add(new Option(code,code)));
+        if(subject.options.length===1)Object.keys(manifest.subjects).forEach(code=>subject.add(new Option(window.subjectLabel?subjectLabel(code):code,code)));
         subject.value=sub;
         const codes=sub?[sub]:Object.keys(manifest.subjects);
         if(codes.some(code=>!manifest.subjects[code]))throw Error('Unknown subject. Choose a listed subject.');
@@ -37,13 +37,13 @@
         for(const type of ['pyq','quiz','unit','note']){
           const group=shown.filter(row=>row.type===type);if(!group.length)continue;
           const section=node('section',undefined,results);node('h2',`${type.toUpperCase()} (${hits.filter(row=>row.type===type).length})`,section);
-          for(const row of group){const article=node('article',undefined,section),a=node('a',row.title,article);a.href=link(row);node('small',`${row.subject} · stored unit ${row.unit??'unknown'} · ${row.year||'notes'} · ${row.marks??'—'} marks`,article);}
+          for(const row of group){const article=node('article',undefined,section),a=node('a',row.title,article);a.href=link(row);node('small',`${window.subjectLabel?subjectLabel(row.subject):row.subject} · stored unit ${row.unit??'unknown'} · ${row.year||'notes'} · ${row.marks??'—'} marks`,article);}
         }
         if(!hits.length){const topics=[...new Set(rows.filter(r=>r.topic&&!r.genericTopic).map(r=>r.topic))].slice(0,8);node('p','Try a shorter term or remove the unit/subject filter. Example topics: '+topics.join(', '),results);}
         status.textContent=`${hits.length} matches; showing ${shown.length}. Local filtering and rendering: ${Math.round(performance.now()-start)} ms.`;
       }catch(error){if(ticket===run){results.replaceChildren();status.textContent=error.message;const retry=node('button','Retry',results);retry.onclick=()=>render();}}
     }
-    function restore(){const p=new URLSearchParams(location.search);input.value=p.get('q')||'';const s=p.get('subject')||'';if(s&&![...subject.options].some(o=>o.value===s))subject.add(new Option(s,s));subject.value=s;unit.value=p.get('unit')||'';render();}
+    function restore(){const p=new URLSearchParams(location.search);input.value=p.get('q')||'';const s=p.get('subject')||'';if(s&&![...subject.options].some(o=>o.value===s))subject.add(new Option(window.subjectLabel?subjectLabel(s):s,s));subject.value=s;unit.value=p.get('unit')||'';render();}
     document.querySelector('#search-form').onsubmit=e=>{e.preventDefault();render(true);};
     input.oninput=()=>{clearTimeout(timer);timer=setTimeout(()=>render(true),120);};subject.onchange=unit.onchange=()=>render(true);
     window.addEventListener('popstate',restore);
