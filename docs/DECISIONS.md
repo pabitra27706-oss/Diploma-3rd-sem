@@ -705,3 +705,7 @@ report stated that nothing was deployed and no PR existed.
 ## Phase 9B — alpha-colour policy (2026-11-17)
 
 - Tokenise `rgba()` in this phase using the existing `assets/css/variables.css` token file. Extend the strict checker and tests before migration; preserve colour equivalence and rerun contrast checks. The current checker enforces hex only; the alpha gate is not yet implemented or green. Owner direction and plan approval remain pending.
+
+## Phase 9B — preferred illustration (2026-11-17)
+
+- Owner selected **option 1 of 2** generated illustrations: `docs/phases/09B-ui-reboost/selected-direction.png`. Its dark, restrained surfaces and lavender accent are a design reference, not a screenshot or permission to add its invented illustration/copy/features. The owner did not give a reason for not selecting option 2. Exact details and the proposed plan remain subject to owner confirmation; no CSS work is authorized until the plan is explicitly approved.

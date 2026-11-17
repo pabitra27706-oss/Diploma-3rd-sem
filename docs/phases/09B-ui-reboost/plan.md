@@ -1,6 +1,6 @@
 # Phase 9B — proposed design system and review plan
 
-**Proposal only; owner direction and explicit plan approval are required before any CSS/markup implementation.** Owner may request changes. No generated illustration is a screenshot or proof of the real site. Phone screenshots already supplied are the baseline for the shown states only; desktop and additional states still needed.
+**Proposal only; owner selected generated illustration option 1, but explicit plan approval is required before any CSS/markup implementation.** Owner may request changes. No generated illustration is a screenshot or proof of the real site. Phone screenshots already supplied are the baseline for the shown states only; desktop and additional states still needed.
 
 ## Proposed scales (subject to owner approval)
 
@@ -22,7 +22,7 @@
 
 ## Reviewable batches (one representative screen/state at a time)
 
-0. Owner selects mockup and approves/amends this plan; send missing phone/desktop baseline screenshots. No implementation until both are explicit.
+0. Owner selected mockup option 1; owner approves/amends this plan; send missing phone/desktop baseline screenshots. No implementation until both are explicit.
 1. **Alpha gate only:** extend checker and negative tests first, baseline exact alpha migration strategy; then tokenize without changing rendered colours. Verify scripts and owner compares one representative before/after view. If a purely checker-only change is split out, no visual claim is made.
 2. **Home header/chrome**: one phone home screenshot and matching desktop, including menu and update panel where possible. Keep warning and bottom navigation.
 3. **Common utility controls**: notes, print and mistake queue on one practice question or unit screenshot; subsequent screenshots for other affected contexts, including empty and disabled.
@@ -37,4 +37,4 @@ Each numbered screen is a separate gate if needed: change only its agreed surfac
 
 ## Decisions still needed
 
-Direction and plan approval; preferred accent/theme; whether the existing home bottom nav should remain visually prominent; acceptable density; which screenshot viewport(s) are the owner's priority. No merge/deploy without an explicit command. Local review cannot substitute for the owner's rendered screenshots.
+Plan approval; confirmation of accent/theme and any exceptions to the selected illustration; whether the existing home bottom nav should remain visually prominent; acceptable density; which screenshot viewport(s) are the owner's priority. No merge/deploy without an explicit command. Local review cannot substitute for the owner's rendered screenshots.

@@ -7,7 +7,7 @@ older phase evidence remains historical unless explicitly superseded here.
 
 ## Phase 9B — UI research and reboost (2026-11-17) — 🚧 awaiting owner
 
-Active branch `arena/48a2ab20-diploma-3rd-sem`, based on `816ef84`. [Audit](phases/09B-ui-reboost/audit.md), [inventory](phases/09B-ui-reboost/inventory.md) and [proposed plan](phases/09B-ui-reboost/plan.md) are research only. Ten owner phone screenshots supplied; desktop, print and real before/after views remain outstanding. No browser, rendered comparison, CSS changes or device acceptance. Owner direction and plan approval required before implementation. The four-question cap is suspended for this phase only; alpha-token checker/migration is planned, not implemented. No merge or deploy without explicit command. Phase 10 follows only after this UI work and its owner review.
+Active branch `arena/48a2ab20-diploma-3rd-sem`, based on `816ef84`. [Audit](phases/09B-ui-reboost/audit.md), [inventory](phases/09B-ui-reboost/inventory.md) and [proposed plan](phases/09B-ui-reboost/plan.md) are research only. Ten owner phone screenshots supplied; desktop, print and real before/after views remain outstanding. No browser, rendered comparison, CSS changes or device acceptance. Owner selected generated illustration option 1; explicit plan approval is still required before implementation. The four-question cap is suspended for this phase only; alpha-token checker/migration is planned, not implemented. No merge or deploy without explicit command. Phase 10 follows only after this UI work and its owner review.
 
 ## Phase 9 — performance and launch (2026-11-17) — `✅*`, merged and live
 
