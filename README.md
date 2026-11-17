@@ -4,11 +4,10 @@ A first-party, zero-build static study site for West Bengal diploma CST students
 HTML, CSS, JavaScript and checked-in JSON can be served directly; no package
 installation or build is required to run the site.
 
-**Phases 1–8 are implemented, owner-accepted (`✅*`) and merged. Phase 9
-(performance/launch) implementation is complete on the session branch except its
-two owner/hardware gates (the dated measurement decision and the launch
-Lighthouse/phone pass); Phase 10 (device acceptance) remains.** Nothing was
-deployed. See
+**Phases 1–9 are implemented, owner-accepted (`✅*`) and merged to `main` (Phase 9
+as PR #17, published 2026-11-17). Two Phase 9 gates remain open — the 9.4 counter
+decision and a real-browser/phone launch pass — and Phase 10 (device acceptance)
+remains.** See
 [Current status and remaining work](docs/STATUS.md) for the handoff,
 [Roadmap](docs/ROADMAP.md) for phase status, and
 [Decisions](docs/DECISIONS.md) for owner instructions and gates.

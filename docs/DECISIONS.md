@@ -675,3 +675,23 @@ What this decides, and what it does not:
 - **9.4 counter gate (see above).** Open by the owner's choice of 2026-11-17; the
   follow-up questions (metric, storage location, retention, disclosure) are the
   remaining gate.
+
+## Explicit main-merge authorization — Phase 9 — 2026-11-17
+
+Owner instruction: **"Merge it to main"** (2026-11-17), given after the Phase 9
+report stated that nothing was deployed and no PR existed.
+
+- Authorized: open a PR from `arena/908b6b19-diploma-3rd-sem`, merge it to `main`.
+- Executed: **PR #17**, merged **2026-11-17T09:01:31Z** as
+  `c898a953bd2e78308a2a9575ded5241ae6ca5b16` (merge commit, matching PR #16).
+  CI on the PR tip was green (run `44050968304`).
+- Consequence, stated plainly: GitHub Pages publishes from `main` (`/`), so this
+  merge **is** the publication step. Pages built `c898a95` at 09:01:32Z and the
+  live site now serves the Phase 9 shell (`sw.js` `study-2026-11-17e`) and data
+  version (`data-6b1621c45599`).
+- Still **not** authorized, and not done: any Domain/`CNAME`/DNS change, any Pages
+  setting change, any tag or release, and any analytics counter (9.4's gate stays
+  open — this approval covers merging the phase code, nothing else).
+- Visitor effect: the shell version changed, so a returning visitor's installed
+  worker fetches the new shell as *waiting* and `pwa.js` asks before reloading;
+  the data cache is kept (its version namespace is separate).

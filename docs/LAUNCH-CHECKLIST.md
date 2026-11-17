@@ -83,6 +83,21 @@ Legend: ✅ proved here, with the command · ⛔ **not run** here · 🚧 owner 
 
 ## Deploy
 
-🚧 **Not performed.** No push of `main`, no PR, no Pages setting, no domain, no
-announcement. A later deploy chat must re-run the commands above *and* tick items
-6 and 8 on real hardware first (`P6` in `PROMPTS.md`).
+✅ **Published 2026-11-17 by explicit owner command** — "merge it to main": PR #17
+merged as `c898a95` at 09:01:31Z, GitHub Pages built that commit at 09:01:32Z, and
+the live site serves `sw.js` `study-2026-11-17e` and
+`assets/data/data-version.json` `data-6b1621c45599` (verified by fetching both from
+the published URL).
+
+Still **not** done, and still required before the launch is called finished:
+
+- ⛔ Lighthouse / Core Web Vitals on a real browser (§6) — a green byte budget is
+  not a Lighthouse score;
+- ⛔ the real-phone pass in §8 (offline reload, install, rotation, font scale,
+  print export);
+- 🚧 the 9.4 counter gate's four answers before any measurement code exists.
+
+No domain, `CNAME`, DNS, Pages setting, tag or release was changed, and no
+announcement was made. Rollback if the published build misbehaves: revert the PR
+#17 merge on `main`, bump the shell version, and let Pages publish the previous
+tree — never ask a student to clear storage.

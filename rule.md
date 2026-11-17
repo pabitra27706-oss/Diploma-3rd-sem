@@ -10,10 +10,11 @@
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
 > merged as PR #15, Phase 8 `✅*` accepted and merged as **PR #16**, and the
 > **Phase 9** work of 2026-11-17):
-> `arena/908b6b19-diploma-3rd-sem` is the **Phase 9 session branch**, branched from
+> `arena/908b6b19-diploma-3rd-sem` was the **Phase 9 session branch**, branched from
 > `main` at `0e53a4ad61f2aef7dbd9f188efbf15c2d05c9ff4` (the PR #16 merge). Phase 9
-> is implemented but **not deployed and not merged**. Read the branch name from
-> Git, not from this file.
+> is **merged to `main` as PR #17 (`c898a95`)** on the owner's command and
+> published by Pages; the branch is retired. **The next session starts from a
+> fresh Arena branch cut from that merge; read the branch name from Git.**
 > If you are reading this while a new phase has begun, §7's Termux block must be
 > updated to that new branch before any run instructions are given. Earlier branches
 > `arena/e0da0bec-...` (PR #16 `Phase 8`, retired), `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`),
@@ -32,7 +33,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/908b6b19-diploma-3rd-sem` (active session branch, branched from `main` at `0e53a4a` — the PR #16 merge; Phase 9 is implemented here and not deployed; prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/908b6b19-diploma-3rd-sem` (Phase 9 branch, merged as PR #17 `c898a95` on the owner's 2026-11-17 command; `main` now carries Phases 1–9 — prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
