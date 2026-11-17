@@ -3,6 +3,20 @@
 Content here must be **sourced**. A formula, a syllabus claim, or an answer
 without a citation is not ready to ship — say so in the record instead.
 
+**Status 2026-11-17** (evidence in [`record.md`](record.md)):
+
+| Part | State | What proves it |
+|---|---|---|
+| 8.1 Coverage map | ✅ implemented | `build_coverage.py` + `coverage.json` v2 + `coverage.html`; 74-page tree, 23 declared units, 2 out-of-syllabus rows listed, Unit-1 skew table, determinism test |
+| 8.2 Formula/definition sheets | ⛔ owner gate (structure built) | 44 authored entries, every `citationQuote` validated verbatim against the syllabus; 3 formulas each with a symbol legend; **0 verified**, not in navigation |
+| 8.3 Print | ✅ static side | `print.css` on 74/74 pages, answers-on-new-page toggle, shared print control, break control; **no real PDF export observed** (Phase 10) |
+| 8.4 Labs/internship | ✅ implemented | 3 lab pages + SI201 with credits/L-T-P/hours/assessment/task areas and syllabus page anchors |
+| 8.5 Exam pattern + marks | ✅ implemented | ESE table sums to 60; 28/28 paper maxima reconciled from each paper's own quotas; decision recorded |
+| 8.6 Verification workflow | ⛔ owner gate (structure built) | Register + fail-closed validator + derived ledger + expandable per-answer source line; **0 of 924 certified** |
+
+Steps below are kept as written; where the tree already satisfied a step the
+record says so instead of the step being quietly dropped.
+
 ## 8.1 — Syllabus coverage map
 
 **Steps**

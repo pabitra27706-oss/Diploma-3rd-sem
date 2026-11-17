@@ -327,3 +327,13 @@ What that does and does not mean here:
 - **Translating content** remains out of scope by design.
 - The 9 data + 3 syllabus source findings and answer certification are
   untouched; nothing here certifies an answer.
+
+### Post-merge note — 2026-11-17 (Phase 8)
+
+Phase 8 added six pages — `revision/index.html` plus the five subject sheets
+`revision/CST201.html`, `CST203`, `CST205`, `CST207`, `CST209` (68 → 74) — so
+`scripts/audit_accessibility.py --write-baseline` was re-run. The diff is **two
+keys only**: `pages: 68 → 74` and `pages_with_global_reduced_motion: 68 → 74`.
+Every finding bucket stays empty (0 findings across 74 pages; `no_skip` and
+`no_main` still `[]`; 47 contrast pairs passing), so no Phase 7 finding was
+waived, suppressed or re-scoped by that regeneration.

@@ -500,3 +500,59 @@ separate source-verification gate and needs the owner's explicit approval.
   attempts under background throttling.
 - **No merge authorization** was given in that message, so nothing was merged, no
   PR was opened, and no Pages, tag or release action was taken.
+
+## Phase 8 content-depth decisions — 2026-11-17
+
+Agent decisions (reversible — object if wrong). None of them certifies content.
+
+- **Paper totals: the data is right, the old comparison was wrong.** For all 28
+  frozen papers the marks obtainable under the paper's own printed quotas
+  (answer-any per group or per choice set) equal the printed `fullMarks`
+  exactly; the marks summed over *all set* questions are necessarily larger
+  because only a subset is answered. Consequence: the "unverified overall total"
+  wording on paper practice now *explains* that arithmetic instead of claiming
+  the total is unknown. What remains undecided — and stays recorded as
+  unverified on `exam-pattern.html` — is **which pattern applies to a given
+  session**: the syllabus ESE table (1/2/6 mix, 30+12+18) matches the June-2022
+  papers only; the 2024–2026 papers print 20+40, and March 2021 printed 70
+  marks. The site shows all three and tells the student to ask their
+  institution. It does not pick one, and this is not a waiver of the
+  marks-reconciliation gate.
+- **Coverage is published as counts and flags, never a percentage.** A unit with
+  one thin note must not read as "covered". `coverage.html` states the method on
+  the page.
+- **Stored out-of-syllabus tags and the reversed CST201 bank units stay as they
+  are.** Frozen bytes are not re-tagged; the coverage map shows both the stored
+  unit count and the syllabus-implied count side by side and flags the row. The
+  ledger finding remains open.
+- **Print sheet: one stylesheet, injected by the presence generator, on every
+  page.** Page `<header>` elements are deliberately not hidden because the unit
+  `<h1>` lives inside one. No fake running header is drawn: browser `@page`
+  margin boxes are unsupported in Chrome/Safari/Firefox, so the page's own
+  `<h1>` plus printed link URLs carry the identity. Consequence: "a header/footer
+  with subject/unit" in `tasks.md` 8.3 step 1 is met only in that weaker form,
+  and the record says so.
+- **Revision sheets are authored as sourced drafts, generated, and gated.**
+  `docs/revision-sheets/<course>.json` is the authored source; the builder
+  refuses any entry whose `citationQuote` is not a verbatim syllabus topic for
+  the stated unit, and refuses a formula without a symbol legend. Sheets are
+  **not** linked from navigation until the owner signs them off. Only 3 formulas
+  ship because the syllabus prints almost no arithmetic, and **no textbook page
+  numbers are cited** — no edition is verified in this repository, so inventing
+  a chapter reference was rejected in favour of the visible gap.
+- **The answer-verification register fails closed.** One batch without a
+  citation, without an ISO date, with a future date, with an unknown question
+  id, with a duplicate target, or with more than 40 items rejects the entire
+  register and certifies nothing. A scan check of question wording never counts
+  as answer certification.
+- **Six new pages (68 → 74) and their ripples are accepted deliberately:** the
+  Phase 7 audit baseline (page counts only), the search-scope literal
+  (50/68 → 56/74), the worker-version literal, and a corrected quiz recount in
+  `tests/test_runtime_derived.py` that previously compared against zero and
+  therefore agreed with a broken generator. No assertion was loosened.
+- **Regeneration order is load-bearing and now tested.** A freshly generated
+  page needs the documented **second** `generate_presence.py` pass before its
+  bytes settle (the first pass re-inserts the head block with a different
+  newline layout). `tests/test_content_depth.py` therefore runs builders →
+  presence ×2 and asserts the tree ends byte-identical; a new test also asserts
+  that running the whole suite leaves no file changed.

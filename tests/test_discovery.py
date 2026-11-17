@@ -252,7 +252,7 @@ class DiscoveryTests(unittest.TestCase):
 
     def test_service_worker_caches_discovery_offline(self):
         sw = (ROOT / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn("const VERSION = 'study-2026-11-17c'", sw)
+        self.assertIn("const VERSION = 'study-2026-11-17d'", sw)
         for asset in (
             'search.html',
             'repeated.html',

@@ -22,6 +22,14 @@ INDEXED_INFO_PAGES = {
     'subjects/CST213/index.html': {'category': 'Practical course', 'subject': 'CST213', 'relatedSubject': 'CST203'},
     'subjects/CST215/index.html': {'category': 'Practical course', 'subject': 'CST215', 'relatedSubject': 'CST205'},
     'subjects/SI201/index.html': {'category': 'Internship', 'subject': 'SI201'},
+    # Revision sheet drafts (6) — Phase 8.2. Each sheet carries an unverified
+    # banner, so a search hit cannot be mistaken for a certified definition.
+    'revision/index.html': {'category': 'Revision sheet'},
+    'revision/CST201.html': {'category': 'Revision sheet', 'subject': 'CST201'},
+    'revision/CST203.html': {'category': 'Revision sheet', 'subject': 'CST203'},
+    'revision/CST205.html': {'category': 'Revision sheet', 'subject': 'CST205'},
+    'revision/CST207.html': {'category': 'Revision sheet', 'subject': 'CST207'},
+    'revision/CST209.html': {'category': 'Revision sheet', 'subject': 'CST209'},
     # Syllabus & exam reference pages (3)
     'coverage.html': {'category': 'Syllabus & coverage'},
     'exam-pattern.html': {'category': 'Syllabus & coverage'},

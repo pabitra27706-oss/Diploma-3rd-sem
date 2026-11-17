@@ -1,9 +1,49 @@
 # Current status and remaining work
 
 Documentation checkpoint: **2026-11-09**; reconciled **2026-11-16** (branch/
-license audit — see `docs/AUDIT-2026-11-16.md`) and **2026-11-17** (sub-phase 8A
-— see `docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`). This is the current handoff;
+license audit — see `docs/AUDIT-2026-11-16.md`) and **2026-11-17** (sub-phase 8A,
+Phase 7 merge, and **Phase 8 content depth**
+— see `docs/phases/08-content-depth/record.md`). This is the current handoff;
 older phase evidence remains historical unless explicitly superseded here.
+
+## Phase 8 — content depth and syllabus coverage (2026-11-17)
+
+Implemented on `arena/e0da0bec-diploma-3rd-sem` (from `main` at `84e99aa`, the
+PR #15 merge). Full evidence: [`phases/08-content-depth/record.md`](phases/08-content-depth/record.md).
+
+- **Measured first, and three of the phase README's claims were already false**
+  for this tree: the lab/internship pages existed, CST201's *pages* were already
+  in syllabus order (the **quiz bank** is reversed), and the CST203 skew was
+  117/170, not 140/204. The old coverage page also printed `quizCount: 0` for all
+  23 units and a raw `{None: 211}` out-of-syllabus dict.
+- **8.1 ✅** Coverage map rebuilt: 23 declared units, both out-of-syllabus rows
+  (CST205 and CST209 Unit 5) listed instead of hidden, real per-unit quiz counts,
+  note sections/words per unit, flag legend, and the Unit-1 skew published as a
+  table — 496 of 924 records (53.7%) — with the June-2022 tagging explanation.
+- **8.5 ✅** The p.14 ESE table is reproduced and sums to 60; **all 28 paper
+  maxima reconcile** with the answer-any quotas printed on the papers. The old
+  comparison (marks on *all set* questions vs the maximum) could never match.
+  Three printed shapes are shown; which applies to a session stays unverified.
+  Decision recorded in `docs/DECISIONS.md`.
+- **8.3 ✅ (static side)** `print.css` now loads on **74/74** pages (was 33/68),
+  is precached, adds break control and answers-on-a-new-page, and one shared
+  labelled print control exists. A paper prints with or without answers and no
+  longer leaks `[Correct]` markers into a question sheet. No fake running header:
+  browser `@page` margin boxes are unsupported. **No real PDF export observed.**
+- **8.4 ✅** Lab/internship pages rewritten with credits, L-T-P, hours, assessment
+  fields, the supported theory course and every transcribed task area; still no
+  solution or completion claim.
+- **8.2 ⛔ owner gate** 44 sourced draft entries (41 definitions, 3 formulas with
+  symbol legends) across five sheets; every citation is validated as a verbatim
+  syllabus topic by `scripts/build_revision_sheets.py`. **0 verified**, not linked
+  from navigation.
+- **8.6 ⛔ owner gate** Register (`docs/data/answer-verification.json`) plus a
+  fail-closed validator and a derived ledger: **924 records, 924 with a source
+  page, 0 with a verification date, 0 certified**. Per-answer provenance is now an
+  expandable "Source … not certified" line.
+- **Still open:** 8.2/8.6 sign-off; 456 unkeyed quiz items; the reversed CST201
+  bank units and the six Unit-5 tags (source gate, never re-tagged); a real print
+  export on hardware (Phase 10).
 
 ## Sub-phase 8A — answer prose and subject labels (2026-11-17)
 
@@ -51,10 +91,10 @@ use PR #7/Git for the current CI and merge result.
 permission authorizes deployment, Pages or domain changes, and none closes an
 unfinished phase gate.
 
-- Branch: `arena/c56bb630-diploma-3rd-sem` (active session branch, branched
-  from `main` at `5b7eb663799614a826231f668920f8d597793943`, the PR #14 merge of
-  the Phase 6 branch).
-  Earlier branches `arena/be90e07e-...` (PR #14 `5b7eb66`), `arena/4d3997da-...`
+- Branch: `arena/e0da0bec-diploma-3rd-sem` (active session branch, branched
+  from `main` at `84e99aad91d1baf9b4e1110b0767a0ea0b4cd6c2`, the PR #15 merge of
+  the Phase 7 branch).
+  Earlier branches `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`), `arena/4d3997da-...`
   (PR #13 `a92a1ff`), `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11
   `9d47c7c7`), `arena/858a50c7-...` (PR #9 `365b8f7`),
   `arena/47d8bf99-...` (PR #8 `3e3cb2e1`), `arena/be3d9178-...` (PR #7
@@ -91,7 +131,7 @@ unfinished phase gate.
 - Phase 7 (`07-inclusion-trust`) is **`✅*`**: parts 7.1–7.5 implemented and
   gate-verified on `arena/c56bb630-diploma-3rd-sem` (2026-11-17) and
   **accepted by the owner on 2026-11-17** after an Android/Chrome smoke pass
-  reported no failures; **not merged**. The acceptance rests on static
+  reported no failures, and **merged as PR #15 (`84e99aa`)**. The acceptance rests on static
   measurement plus a general click-through, not a per-criterion device audit —
   the items named below stay open and unupgraded. Delivered: all 68 pages have
   one `<main>`, one `<h1>` and a skip link (0 of 68 missing, from 11); 134
@@ -106,7 +146,9 @@ unfinished phase gate.
   output, real tap accuracy, Bengali glyph rendering and keyboard-only core-flow
   completion remain unverified and move to Phase 10 — the owner's Android/Chrome
   smoke pass showed the branch runs on real hardware but measured none of them.
-  Worker version is `study-2026-11-17c`. See
+  Worker version is now `study-2026-11-17d` (Phase 8 added the print sheet); the
+  2026-11-17 Phase 7 measurement covers the 68-page tree, and Phase 8 regenerated
+  the audit baseline for 74 pages with identical findings. See
   [`phases/07-inclusion-trust/record.md`](phases/07-inclusion-trust/record.md).
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
@@ -132,7 +174,7 @@ unfinished phase gate.
 | 5 — Study system (`✅*`) | Source-linked cards with per-unit eligibility reporting, documented Leitner scheduling (clock/day-rollover/new-card-cap edges tested), review UI with URL+`popstate` filters and empty-queue fallbacks, Today dashboard with one primary action, weak-area denominators/attempt counts/trends, offline card caching (`WARM_STUDY`) | Owner-verified 2026-11-17 ("device test pass") and merged to `main` on owner instruction. Cards use existing model/keyed material, not new certification; answer certification stays a separate source gate. Device/screen-reader acceptance is Phase 10. |
 | 6 — Storage/portability (`✅*`) | Central namespaced boundary, verified legacy copy migration, notes on 24 unit pages + practice + quiz review, one preference record, group reset with live counts, previewed backup/merge/replace, recovery journal, IndexedDB recovery mirror with `hydrate()` | Merged via PR #14 (`5b7eb66`). Still needed if IndexedDB is to become a *primary* store: an async render contract, threshold/cutover evidence, concurrent-tab transaction isolation/state sync, and typed validation of further legacy variants. Current primary API remains synchronous local storage, and 6.6-3 stays a partial meet. |
 | 7 — Inclusion/trust | Static landmarks/skip links on many legacy pages, shared focus/motion/reading controls, settings en/bn labels, truthful feedback/privacy | Remaining structure/heading/form warnings, full dialog/tab keyboard behavior, measured contrast/target/zoom evidence, wider Bengali UI catalog, credits/README maintenance and license/content-rights decision. No WCAG compliance claim yet. |
-| 8 — Content depth | Derived 23-unit coverage/provenance, historical-total caveats, sourced practical/internship task pages, shared print styles | Cited formula/definition sheets, answer-verification batches, exam-total/source mapping reconciliation. No invented pedagogical sign-off. Physical print acceptance moves to Phase 10. |
+| 8 — Content depth | Measured coverage map with out-of-syllabus rows and Unit-1 skew, reconciled paper maxima, print sheet on 74/74 pages, sourced practical/internship pages, 44 cited draft sheet entries, fail-closed answer-verification register | **Owner/source GATE only:** sign off the revision sheets (0 of 44) and the answer batches (0 of 924, ≤40 per batch with citation + date); resolve the reversed CST201 bank units and the six Unit-5 tags; observe a real print/PDF export (Phase 10). |
 | 9 — Performance/launch | Derived pools and checked-in bundles, measured request reduction, cache/measurement/domain docs, local-only usefulness prompt | CSS tokens/dead-code/payload consolidation, finer data loading, independent data/shell cache versioning and update regression, root-path rewritten-copy test, Lighthouse measurement and completed launch checklist. Publication remains separately authorized. |
 
 Detailed evidence and qualifications live in each phase's `record.md` under
@@ -167,23 +209,33 @@ These cannot be solved by declaring a feature complete:
 These are local results from the latest implementation checkpoint, not a claim
 that documentation-only edits reran all browser suites:
 
-- Python unittest discovery: **22 PASS** (including 6 Phase 5 card-eligibility
-  tests — source-verbatim copies, citation hygiene, skip accounting, per-unit
-  counts, byte-identical regeneration, compact payload — and 5 discovery tests verifying
-  shard determinism, ≤ 40% byte budgets, 68-page scope partition, 2,410-entry
-  file/anchor resolution, 1 exact + 15 unverified candidate repeat clusters, and
-  SW discovery cache registration).
-- Nine deterministic Node suites: attempt state + 28-paper rule/quota/section-timer/explanation-split verification, quiz DOM/export/label contracts, scheduler/trends/clock/day-rollover/streak/goal helpers, storage, interruption/quota recovery, Phase 2 derived-pipeline consumers, Phase 4 discovery DOM/XSS/keyboard/repeat/deep-link/share-fallback/unit/SW offline simulation (`tests/discovery-dom.cjs`), Phase 5 study DOM/UI/keyboard/popstate/empty states (`tests/study-dom.cjs`) and the study worker precache/`WARM_STUDY`/offline navigation (`tests/study-offline.cjs`) — **PASS**.
+- Python unittest discovery: **63 PASS** (33 before Phase 8). The 30 extra cover
+  Phase 8: coverage-map determinism, the validate_syllabus recount, out-of-syllabus
+  rows, the CST201 bank-reversal disclosure, exam-pattern reconciliation of all 28
+  papers, print-sheet reach on 74/74 pages, lab/internship page citations, verbatim
+  revision-sheet citations and symbol legends, the fail-closed verification
+  register (five rejection cases plus one acceptance), and the "0 certified" lock.
+  Earlier suites still cover card eligibility, discovery shard budgets, the
+  74-page scope partition and SW discovery cache registration.
+- Sixteen deterministic Node suites (`tests/*.cjs` minus the Chromium ones): attempt state + 28-paper rule/quota/section-timer/explanation-split verification, quiz DOM/export/label contracts, scheduler/trends/clock/day-rollover/streak/goal helpers, storage, interruption/quota recovery, Phase 2 derived-pipeline consumers, Phase 4 discovery DOM/XSS/keyboard/repeat/deep-link/share-fallback/unit/SW offline simulation (`tests/discovery-dom.cjs`), Phase 5 study DOM/UI/keyboard/popstate/empty states (`tests/study-dom.cjs`) and the study worker precache/`WARM_STUDY`/offline navigation (`tests/study-offline.cjs`) — **PASS**. The remaining `.cjs` files (`paper-offline`, `cards-offline`, and every `*-browser.cjs`) need Chromium and were **not run** here, so they are not evidence for this tree.
 - Seven focused Chromium suites: Practice/data, quiz engine, discovery/study,
   storage/notes, cached-paper offline, feedback, cached 20-card offline keyboard
   review — PASS at the Phase 4 checkpoint. They were updated for the Phase 5
   markup but **not re-run** in the 2026-11-17 environment (no Chromium there); no
   broad device compatibility is inferred.
-- Full parse sweep: **55 JS/CJS files and all 79 JSON files passed**.
-- Site strict: **0 errors / 28 warnings**; platform check: **0 errors**.
+- Full parse sweep: **55 JS/CJS files and all 79 JSON files passed** (Phase 8
+  added no JSON under `_data`; the new derived files are `assets/data/coverage.json`,
+  `assets/data/verification.json` and `assets/data/revision-sheets.json`).
+- Accessibility audit: **74 pages, 0 findings**, 47 contrast pairs all passing,
+  74/74 pages load the global reduced-motion override. `check_readme_paths`: 0 missing.
+- Site strict: **0 errors / 0 warnings** (the 28 warnings recorded earlier were
+  paid down across Phases 6–8); platform check: **0 errors**.
 - PYQ integrity: **0 changed/added/missing original files**.
 - Exact data baseline matches; **full strict data/syllabus validation still
   fails on the recorded findings**.
+- Phase 8 regeneration order (README): builders → `generate_presence.py` ×2 →
+  `build_search_index.py` → `check_pyq_integrity.py`; the second presence pass is
+  required and a test now proves the tree ends byte-identical.
 - Cold local Chromium requests, service workers blocked: Practice **43 → 12**,
   quiz setup **28 → 12**. These are request counts, not real-device speed or
   Lighthouse scores. See [measurement data](phases/09-performance-launch/request-measurements.json).
@@ -201,16 +253,17 @@ Unavailable device access is **untested**, never silently passed.
 
 ## Recommended remaining order
 
-1. Phase 7 is `✅*` (owner-accepted) but **not merged**; the next step is the
-   owner's merge decision. Nothing in this branch authorizes it.
-2. Phase 7's acceptance left these unmeasured, and they are Phase 10 items:
+1. Phase 8 is `🚧`: 8.1/8.3/8.4/8.5 are implemented and gate-verified; **8.2 and
+   8.6 wait on owner sign-off** (revision-sheet entries, then answer batches of
+   ≤40 with a citation and a date). Nothing in this branch certifies content.
+2. Phase 7 is `✅*` and merged as PR #15; its acceptance left these unmeasured,
+   and they remain Phase 10 items:
    rendered contrast after compositing, 200 % zoom/reflow on the longest unit
    page, dialog and tab focus behaviour, screen-reader output
    (NVDA/TalkBack/VoiceOver), tap accuracy, Bengali conjunct rendering and
    keyboard-only core-flow completion.
-3. Finish the remaining content-depth work (cited formula/definition sheets,
-   lab/internship pages).
-3. Complete cited content/reference work and performance/cache/root-path work;
+3. Complete Phase 8's two owner gates, then the remaining performance/cache/
+   root-path work;
    retain source and rights gates explicitly if evidence is unavailable.
 4. Run final implementation gates and hosted CI when the branch is pushed;
    update records with real results, not forecasts.

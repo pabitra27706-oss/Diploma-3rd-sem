@@ -1,5 +1,5 @@
 /* Scope-relative, first-party-only shell. Updates activate only on user request. */
-const VERSION = 'study-2026-11-17c';
+const VERSION = 'study-2026-11-17d';
 const CACHE_PREFIX = 'diploma-3rd-sem-';
 const CACHE_NAME = CACHE_PREFIX + VERSION;
 const BASE = new URL('./', self.location.href);
@@ -8,7 +8,7 @@ const PRECACHE_ASSETS = [
   './', 'index.html', 'offline.html', 'search.html', 'repeated.html',
   'coverage.html', 'exam-pattern.html',
   'assets/css/variables.css', 'assets/css/main.css', 'assets/css/pwa.css',
-  'assets/css/discovery.css', 'assets/css/accessibility.css',
+  'assets/css/discovery.css', 'assets/css/accessibility.css', 'assets/css/print.css',
   'assets/js/theme.js', 'assets/js/storage.js', 'assets/js/accessibility.js',
   'assets/js/i18n.js', 'assets/i18n/en.json', 'assets/i18n/bn.json',
   'assets/js/subject-labels.js', 'assets/js/discovery.js',

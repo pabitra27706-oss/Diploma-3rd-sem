@@ -7,11 +7,12 @@
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
-> (sub-phase 8A, Phase 3 `✅*` sign-off, Phase 4 discovery merged as PR #12, and
-> Phase 5 study system): active session branch is
-> `arena/4d3997da-diploma-3rd-sem` (branched from `main` at
-> `7c20a5500118588419081362b7af869dc8c7806f`, the PR #12 merge). Earlier branches
-> `arena/80b11bcf-...` (PR #12 `7c20a55`), `arena/637a5a31-...` (PR #10
+> (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
+> merged as PR #15, Phase 8 content depth): active session branch is
+> `arena/e0da0bec-diploma-3rd-sem` (branched from `main` at
+> `84e99aad91d1baf9b4e1110b0767a0ea0b4cd6c2`, the PR #15 merge). Earlier branches
+> `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`),
+> `arena/4d3997da-...` (PR #13 `a92a1ff`), `arena/80b11bcf-...` (PR #12 `7c20a55`), `arena/637a5a31-...` (PR #10
 > `8f6eb97`, PR #11 `9d47c7c7`), `arena/858a50c7-...` (PR #9 `365b8f7`),
 > `arena/47d8bf99-...` (PR #8 `3e3cb2e1`), `arena/be3d9178-...` (PR #7
 > `125eb94`) and `arena/26856d99-...` (`8405b15`) are merged into `main` and
@@ -26,7 +27,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/4d3997da-diploma-3rd-sem` (active session branch, branched from `main` at `7c20a55` after PR #12 merged; prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/e0da0bec-diploma-3rd-sem` (active session branch, branched from `main` at `84e99aa` after PR #15 merged Phase 7; prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -194,19 +195,21 @@ A **public launch** additionally needs every item in
 - **Canonical post-phase Termux block (branch-specific, copy-paste):** after a
   phase is pushed, the owner runs this on their device to pull the current
   session branch and serve it at the real subpath. It follows **push → pull →
-  run**, using the branch named in §1 (`arena/4d3997da-diploma-3rd-sem`):
+  run**, using the branch named in §1 (`arena/e0da0bec-diploma-3rd-sem`):
 
   ```sh
   cd ~/Diploma-3rd-sem
-  git fetch origin arena/4d3997da-diploma-3rd-sem
-  git checkout arena/4d3997da-diploma-3rd-sem
-  git pull --ff-only origin arena/4d3997da-diploma-3rd-sem
+  git fetch origin arena/e0da0bec-diploma-3rd-sem
+  git checkout arena/e0da0bec-diploma-3rd-sem
+  git pull --ff-only origin arena/e0da0bec-diploma-3rd-sem
   cd ..
-  python3 -m http.server 8000 --bind 127.0.0.1
+  python3 -m http.server 8010 --bind 127.0.0.1
   ```
 
-  Open `http://127.0.0.1:8000/Diploma-3rd-sem/`; stop with Ctrl+C. The `git
-  push` makes the block self-contained and guarantees the branch is current
+  Open `http://127.0.0.1:8010/Diploma-3rd-sem/`; stop with Ctrl+C. Use a port
+  that has never served this site: an old service worker left on port 8000 has
+  caused cache skew before, so 8010 is the default here. The `git push` makes the
+  block self-contained and guarantees the branch is current
   before the pull; it is a no-op when the agent has already pushed. When the
   session branch changes, update the branch name here to match §1. Never claim a
   local preview proves real-device installation, deployed behaviour, or browser
