@@ -413,3 +413,59 @@ separate source-verification gate and needs the owner's explicit approval.
 - The merge does not close any content or source-verification gate: the 9 data
   findings, 3 grouped syllabus errors, 456 keyless quiz items, missing CST207 quiz
   bank and answer certification all remain open.
+## Phase 7 accessibility, language and truth-pass scope — 2026-11-17
+
+- **Measured, not asserted.** Phase 7 opens with a re-measurement because the
+  phase's own evidence table was stale: it claimed 55 pages, 55 without skip
+  links, 36 without `<main>`, 36 without a meta description and a missing
+  `LICENSE`. The shipped tree is **68 pages**, 11 without `<main>`/skip, 0
+  without a description, and `LICENSE` has existed since 2026-11-16. Every number
+  in `phases/07-inclusion-trust/README.md` and `record.md` now comes from
+  `python3 scripts/audit_accessibility.py` on this tree.
+- **Decorative card labels are not headings.** 933 `<h4>` card/sub-item labels on
+  the subject pages (plus 36 on info pages) became `<p class="card-title">`,
+  keeping every `style`/`id`/`class` attribute and the `<h4>` typography through
+  one class rule. This removed 134 heading-order jumps across 32 pages.
+- **Navigation chrome keeps its headings.** The mobile drawer's `<h3>` and the nav
+  brand were *not* demoted: `scripts/build_search_index.py` excludes drawer
+  chrome and `tests/test_discovery.py` asserts that exclusion count. The
+  accessibility gain came from content labels; loosening an existing assertion to
+  chase the remaining chrome was rejected.
+- **Contrast is fixed at the token level.** 14 tokens changed across
+  `assets/css/variables.css`, `quiz/css/common.css`, `practice/css/index.css`,
+  `practice/css/session.css` and `pyq/css/answers.css`, including matching
+  `--accent-*-rgb` triplets so `rgba()` tints do not keep old hues. No
+  component-level colour override was added and no palette identity was
+  redesigned beyond the lightness/vibrancy needed to pass.
+- **The focus indicator is solid, not a halo.** A 40 % alpha ring measured 2.2:1
+  on white, below the 3:1 SC 1.4.11 needs; it was replaced by
+  `--focus-ring-solid` (`#4a4fd0` light, `#a5a6ff` dark).
+- **Target size is judged on control boxes, not glyphs.** An icon may be 14–20 px
+  inside a 28–40 px button. The audit therefore reports only control rules that
+  *pin* a dimension below 24×24 CSS px (currently none), and does not fail
+  decorative glyph sizes.
+- **The language layer is a shared UI catalog, not a translation of content.**
+  38 keys per locale (navigation, shared actions, reading controls, common
+  states), applied by `assets/js/i18n.js` through the single `d3s:prefs.lang`
+  record. Question text, options, model answers and unit prose are never
+  translated; the page says so in both languages. Bengali glyph rendering on a
+  real phone is unverified.
+- **The truth pass deletes claims the build cannot support.** The privacy page no
+  longer claims the "app requires permissions" (it is a web app with no
+  install-time permissions); the offline claim is now "material you opened once
+  can be read offline, and the browser may evict that cache"; `about.html` says
+  installable web app rather than "Android application"; and the README's
+  "IndexedDB migration is not implemented" became the accurate Phase 6 statement
+  that IndexedDB is a recovery mirror, not the primary store.
+- **No WCAG conformance claim is made.** Measured source-level criteria are
+  recorded with their numbers. Rendered contrast after compositing (gradients,
+  glass blur, overlays), 200 % zoom/reflow, dialog and tab focus behaviour,
+  screen-reader output (NVDA/TalkBack/VoiceOver), real tap accuracy, Bengali
+  conjunct rendering and keyboard-only core-flow completion all move to the
+  Phase 10 device matrix.
+- **Two checks were added rather than a promise.** `scripts/audit_accessibility.py`
+  (with `--fail` and a baseline locked by `tests/test_accessibility_audit.py`) and
+  `scripts/check_readme_paths.py` make these numbers and the README's paths fail
+  the build when they drift.
+- **Nothing here authorizes a merge, deploy, Pages change or release.** The
+  branch stops at the owner review gate.

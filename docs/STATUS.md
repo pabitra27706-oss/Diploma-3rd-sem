@@ -47,17 +47,18 @@ use PR #7/Git for the current CI and merge result.
 
 **Merge authorization update:** the owner authorized merging on 2026-11-09
 (PR #7, `125eb94`), 2026-11-16 (PR #8, `3e3cb2e1`), and 2026-11-17 (PR #9
-`365b8f7`, PR #10 `8f6eb97`, and PR #11 `9d47c7c7`). No such permission
-authorizes deployment, Pages or domain changes, and none closes an unfinished
-phase gate.
+`365b8f7`, PR #10 `8f6eb97`, PR #11 `9d47c7c7`, PR #14 `5b7eb66`). No such
+permission authorizes deployment, Pages or domain changes, and none closes an
+unfinished phase gate.
 
-- Branch: `arena/4d3997da-diploma-3rd-sem` (active session branch, branched
-  from `main` at `7c20a5500118588419081362b7af869dc8c7806f`, the PR #12 merge of
-  the Phase 4 branch).
-  Earlier branches `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
-  `arena/858a50c7-...` (PR #9 `365b8f7`), `arena/47d8bf99-...` (PR #8
-  `3e3cb2e1`), `arena/be3d9178-...` (PR #7 `125eb94`), and `arena/26856d99-...`
-  (`8405b15`) are merged and retired.
+- Branch: `arena/c56bb630-diploma-3rd-sem` (active session branch, branched
+  from `main` at `5b7eb663799614a826231f668920f8d597793943`, the PR #14 merge of
+  the Phase 6 branch).
+  Earlier branches `arena/be90e07e-...` (PR #14 `5b7eb66`), `arena/4d3997da-...`
+  (PR #13 `a92a1ff`), `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11
+  `9d47c7c7`), `arena/858a50c7-...` (PR #9 `365b8f7`),
+  `arena/47d8bf99-...` (PR #8 `3e3cb2e1`), `arena/be3d9178-...` (PR #7
+  `125eb94`), and `arena/26856d99-...` (`8405b15`) are merged and retired.
 - Phase 2 engineering passed owner Termux verification (`✅*` at commit
   `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green);
   strict source-verification items (`9` data findings + `3` grouped syllabus
@@ -76,14 +77,31 @@ phase gate.
   owner-verified on device/Termux on 2026-11-17, merged to `main` on owner
   instruction; see
   [`phases/05-study-system/record.md`](phases/05-study-system/record.md). The
-  The offline worker version is `study-2026-11-17b`.
-- Phase 6 (`06-state-portability`) is **implemented and gate-verified on
-  `arena/be90e07e-diploma-3rd-sem` (2026-11-17), not merged**: one storage
-  boundary, one preference record with a pre-paint theme, registry-counted reset
-  groups, notes on unit pages plus practice and quiz review, backup with
-  `appVersion`, and an IndexedDB **recovery mirror** (6.6-3 partially met). Owner
-  device pass and merge are still pending; see
+  offline worker version is `study-2026-11-17b`.
+- Phase 6 (`06-state-portability`) is **`✅*`**: parts 6.1–6.6 gate-verified on
+  `arena/be90e07e-diploma-3rd-sem` (2026-11-17) and **merged to `main` on owner
+  instruction as `5b7eb66`** (PR #14; Web CI `44034450353` and Pages
+  `44034449241` green): one storage boundary, one preference record with a
+  pre-paint theme, registry-counted reset groups, notes on unit pages plus
+  practice and quiz review, backup with `appVersion`, and an IndexedDB
+  **recovery mirror** (6.6-3 partially met). Real eviction/Safari behaviour,
+  private-mode IndexedDB on hardware and real-phone backup download remain
+  **unverified** and move to Phase 10; see
   [`phases/06-state-portability/record.md`](phases/06-state-portability/record.md).
+- Phase 7 (`07-inclusion-trust`) is **`🚧` implemented and gate-verified on
+  `arena/c56bb630-diploma-3rd-sem` (2026-11-17), not merged**: all 68 pages have
+  one `<main>`, one `<h1>` and a skip link (0 of 68 missing, from 11); 134
+  heading-order jumps across 32 pages are 0; the one unlabelled control is
+  labelled; **all 47 measured contrast pairs pass; 27 failed before** (187 total findings → 0); 21 of 22
+  first-party CSS files declare a reduced-motion rule (from 7) and all 68 pages
+  load the global override; no control box is pinned below 24×24 CSS px; a
+  38-key English/Bengali UI catalog loads on every page; and the privacy, offline
+  and about claims that the build could not support are corrected. **No WCAG
+  conformance claim** — rendered contrast, 200 % zoom/reflow, screen-reader
+  output, real tap accuracy, Bengali glyph rendering and keyboard-only core-flow
+  completion remain unverified and move to Phase 10. Worker version is
+  `study-2026-11-17c`. See
+  [`phases/07-inclusion-trust/record.md`](phases/07-inclusion-trust/record.md).
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
   `arena/be3d9178-diploma-3rd-sem` as the branch that work was performed on. That
@@ -106,7 +124,7 @@ phase gate.
 | 3 — Quiz (`✅*`) | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes, full paper practice enforcing `paperFormat` `answerAny` section/choiceSet quotas across 28 papers, 30m `2023-03` Group A loose-script window, `1m option + 1m written explanation` split, ESE pattern warnings, Print/PDF export | Owner-approved with recorded caveats: no standalone CST207 quiz bank; 456 unkeyed items and subjective/written-explanation marks remain manual self-review; Phase 10 cross-device acceptance pending. |
 | 4 — Discovery (`✅*`) | 2,410 search entries across 5 subject shards + `index-pages.json` (50/68 HTML pages indexed, 18 explicitly excluded in `manifest.json`, all shards ≤ 40%), offline SW precache + `WARM_SEARCH`, XSS-safe keyboard/URL/`popstate` search UI, 1 exact alias + 15 unverified candidate repeat clusters (32 records), deep links + `navigator.share`/clipboard/input fallbacks across PYQ/Practice/Quiz, authored unit heading anchors + breadcrumbs + hub counts + filtered-PYQ URL handoff, `subjectLabel()` everywhere | Owner-verified 2026-11-17 ("device test pass") and merged via PR #12. Normalized candidate clusters remain pending source-verified dedup; physical phone latency/share-sheet/screen-reader testing stays in Phase 10. |
 | 5 — Study system (`✅*`) | Source-linked cards with per-unit eligibility reporting, documented Leitner scheduling (clock/day-rollover/new-card-cap edges tested), review UI with URL+`popstate` filters and empty-queue fallbacks, Today dashboard with one primary action, weak-area denominators/attempt counts/trends, offline card caching (`WARM_STUDY`) | Owner-verified 2026-11-17 ("device test pass") and merged to `main` on owner instruction. Cards use existing model/keyed material, not new certification; answer certification stays a separate source gate. Device/screen-reader acceptance is Phase 10. |
-| 6 — Storage/portability | Central namespaced boundary, verified legacy copy migration, notes, preferences, group reset, previewed backup/merge/replace, recovery journal | Implement IndexedDB threshold/async cutover/fallback and migration evidence; concurrent-tab transaction isolation/state sync; typed validation of further legacy variants. Current primary API remains synchronous local storage. |
+| 6 — Storage/portability (`✅*`) | Central namespaced boundary, verified legacy copy migration, notes on 24 unit pages + practice + quiz review, one preference record, group reset with live counts, previewed backup/merge/replace, recovery journal, IndexedDB recovery mirror with `hydrate()` | Merged via PR #14 (`5b7eb66`). Still needed if IndexedDB is to become a *primary* store: an async render contract, threshold/cutover evidence, concurrent-tab transaction isolation/state sync, and typed validation of further legacy variants. Current primary API remains synchronous local storage, and 6.6-3 stays a partial meet. |
 | 7 — Inclusion/trust | Static landmarks/skip links on many legacy pages, shared focus/motion/reading controls, settings en/bn labels, truthful feedback/privacy | Remaining structure/heading/form warnings, full dialog/tab keyboard behavior, measured contrast/target/zoom evidence, wider Bengali UI catalog, credits/README maintenance and license/content-rights decision. No WCAG compliance claim yet. |
 | 8 — Content depth | Derived 23-unit coverage/provenance, historical-total caveats, sourced practical/internship task pages, shared print styles | Cited formula/definition sheets, answer-verification batches, exam-total/source mapping reconciliation. No invented pedagogical sign-off. Physical print acceptance moves to Phase 10. |
 | 9 — Performance/launch | Derived pools and checked-in bundles, measured request reduction, cache/measurement/domain docs, local-only usefulness prompt | CSS tokens/dead-code/payload consolidation, finer data loading, independent data/shell cache versioning and update regression, root-path rewritten-copy test, Lighthouse measurement and completed launch checklist. Publication remains separately authorized. |
@@ -177,9 +195,14 @@ Unavailable device access is **untested**, never silently passed.
 
 ## Recommended remaining order
 
-1. Paper rule enforcement and storage/IndexedDB engineering (largest functional
-   and data-safety gaps), with focused regression checks.
-2. Finish discovery/study edges and accessibility/language implementation.
+1. Phase 7 is implemented and gate-verified but **not merged**; the next step is
+   the owner's review and merge decision. Nothing in this branch authorizes it.
+2. Phase 7 left-overs that need a real browser are Phase 10 items: rendered
+   contrast after compositing, 200 % zoom/reflow on the longest unit page, dialog
+   and tab focus behaviour, screen-reader output (NVDA/TalkBack/VoiceOver), tap
+   accuracy, Bengali conjunct rendering and keyboard-only core-flow completion.
+3. Finish the remaining content-depth work (cited formula/definition sheets,
+   lab/internship pages).
 3. Complete cited content/reference work and performance/cache/root-path work;
    retain source and rights gates explicitly if evidence is unavailable.
 4. Run final implementation gates and hosted CI when the branch is pushed;

@@ -91,6 +91,16 @@ Viewing a theory answer counts it as answered, inflating topic percentages.
 
 ## Severity 4 — accessibility and design
 
+> **Superseded 2026-11-17 (Phase 7).** The numbers in this section describe
+> commit `4bc8b0b` and are kept as the historical baseline. They are **not** the
+> current state: re-measured on the Phase 6 merge tree, the site had 68 pages
+> with 11 lacking `<main>`/a skip link (not 55/55 and 36/55), 0 pages lacking a
+> meta description, 134 heading-order jumps across 32 pages (not 24), 27 failing
+> contrast pairs of 47 measured, and 7 of 22 stylesheets with a reduced-motion
+> rule. After Phase 7 every one of those is 0 and reduced-motion coverage is 21
+> of 22. Current numbers: `python3 scripts/audit_accessibility.py` and
+> [`phases/07-inclusion-trust/record.md`](phases/07-inclusion-trust/record.md).
+
 - **55/55** pages have no skip link; **36/55** have no `<main>`; **36/55** have
   no meta description. All 24 unit pages have heading-order jumps.
 - PYQ search and feedback fields lack labels; PYQ keyboard semantics and the quiz

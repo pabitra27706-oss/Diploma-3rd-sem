@@ -1,9 +1,10 @@
 # Phase 6 — Engineering record
 
-Status: **🚧 implemented and gate-verified on
-`arena/be90e07e-diploma-3rd-sem` (2026-11-17). Not merged, no owner device pass
-yet.** Nothing here is a new answer certification and no claim is made about
-Safari storage eviction or real-phone download behaviour.
+Status: **✅* implemented, gate-verified and merged to `main` as merge commit
+`5b7eb66` (PR #14, 2026-11-17; Web CI `44034450353` and Pages `44034449241`
+green).** The work was performed on `arena/be90e07e-diploma-3rd-sem`. Nothing
+here is a new answer certification and no claim is made about Safari storage
+eviction or real-phone download behaviour.
 
 Offline worker `VERSION` moved to `study-2026-11-17b` so a returning browser
 drops the Phase 5 cache and picks up the new storage/preference code.
@@ -212,12 +213,32 @@ Not run here: `tests/paper-offline.cjs`, `tests/cards-offline.cjs`,
 --strict` and `validate_syllabus.py --strict` keep their recorded source-review
 findings.
 
+## Merge (2026-11-17)
+
+Owner-authorized merge of the Phase 6 branch, recorded after the fact:
+
+| Item | Value |
+|---|---|
+| PR | #14 — "Phase 6: one storage boundary, shared notes, honest IndexedDB mirror" |
+| Merge commit | `5b7eb663799614a826231f668920f8d597793943` (`5b7eb66`), merged into `main` 2026-11-17T06:52:34Z |
+| Web CI | run `44034450353` — success |
+| Pages build and deployment | run `44034449241` — success |
+| Authorized scope | merge only. No deploy command, domain change, tag, release or announcement. |
+
+The merge did not upgrade any caveat below into a claim. `6.6-3` stays a partial
+meet, and the untested items stay untested.
+
 ## Left open
 
 - Owner device pass: type notes on three unit pages and on practice, switch
   themes, export → clear → import on a phone; confirm the download and copy
-  fallbacks there.
+  fallbacks there. **Still unverified — the merge was authorised before this
+  pass, so it is now tracked by Phase 10, not by a Phase 6 gate.**
 - No measurement of real eviction behaviour, private-mode IDB availability or
-  Safari quota behaviour — the record says so instead of guessing.
+  Safari quota behaviour — the record says so instead of guessing. **Still
+  unverified after the merge.**
+- Real-phone backup download (and the copy-to-clipboard fallback) — **still
+  unverified after the merge.**
+
 - If a future phase needs IndexedDB as the primary store, it needs an async render
   contract first; the mirror adapter and `idbStatus()` are the seam for that.

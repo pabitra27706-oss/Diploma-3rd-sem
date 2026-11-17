@@ -2,12 +2,13 @@
 
 - Scope-relative URLs; no browser-facing localhost endpoints.
 - Shell dependencies are pre-cached in the versioned service-worker cache
-  (`VERSION = 'study-2026-11-17b'`), including core discovery shells and compact
+  (`VERSION = 'study-2026-11-17c'`), including core discovery shells and compact
   metadata (`search.html`, `repeated.html`, `coverage.html`, `exam-pattern.html`,
   `assets/css/discovery.css`, `assets/js/subject-labels.js`,
   `assets/js/discovery.js`, `assets/js/unit-discovery.js`,
   `assets/search/manifest.json`, `assets/search/index-pages.json`, and
-  `assets/search/repeated.json`) plus the Phase 5 study shell (`cards.html`,
+  `assets/search/repeated.json`) plus the Phase 7 UI language layer
+  (`assets/js/i18n.js`, `assets/i18n/en.json`, `assets/i18n/bn.json`) plus the Phase 5 study shell (`cards.html`,
   `today.html`, `assets/js/study-store.js`, `assets/js/study-ui.js`,
   `quiz/js/attempt-store.js`, and `assets/cards/manifest.json`).
 - Pages: network-first; on failure, returns the cached response, the pre-cached

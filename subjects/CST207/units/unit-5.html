@@ -167,7 +167,7 @@
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST207/units/unit-5.html">
-<meta name="app-build" content="study-2026-11-17b">
+<meta name="app-build" content="study-2026-11-17c">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unit 5 – Memory and Digital Interfacing | CSO">
@@ -186,6 +186,7 @@
 <!-- /presence -->
 <link rel="stylesheet" href="../../../assets/css/accessibility.css">
 <script defer src="../../../assets/js/accessibility.js"></script>
+<script defer src="../../../assets/js/i18n.js"></script>
 </head>
 <body>
 <a class="skip-study-content" href="#study-main-content">Skip to study content</a>
@@ -291,27 +292,27 @@
       <div class="topic-grid" style="margin-top:1rem;">
         <div class="topic-card">
           <i class="fas fa-key"></i>
-          <h4>Address Decoding</h4>
+          <p class="card-title">Address Decoding</p>
           <p>Techniques to select specific memory chips using decoders</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-server"></i>
-          <h4>Memory Interfacing</h4>
+          <p class="card-title">Memory Interfacing</p>
           <p>Connecting RAM, ROM, EPROM to the 8086</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-plug"></i>
-          <h4>PPI 8255</h4>
+          <p class="card-title">PPI 8255</p>
           <p>Programmable Peripheral Interface — modes and interfacing</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-bolt"></i>
-          <h4>Cache Memory</h4>
+          <p class="card-title">Cache Memory</p>
           <p>Direct, associative, set-associative mapping</p>
         </div>
         <div class="topic-card">
           <i class="fas fa-file-alt"></i>
-          <h4>Virtual Memory</h4>
+          <p class="card-title">Virtual Memory</p>
           <p>Logical vs physical address, TLB, page tables</p>
         </div>
       </div>
@@ -343,22 +344,22 @@
         <div class="box-title"><i class="fas fa-tools"></i> Address Decoding Techniques</div>
 
         <div class="mode-block" style="margin-top:0.75rem;">
-          <h4>1. Full Address Decoding (Absolute Decoding)</h4>
+          <p class="card-title">1. Full Address Decoding (Absolute Decoding)</p>
           <p>All address lines are used to uniquely identify each memory location. No address aliasing. Each memory address maps to exactly one physical location. More complex hardware but no wasted address space.</p>
         </div>
 
         <div class="mode-block" style="margin-top:0.5rem;">
-          <h4>2. Partial Address Decoding</h4>
+          <p class="card-title">2. Partial Address Decoding</p>
           <p>Only some upper address lines are used. Simpler hardware but creates address aliasing — the same memory chip responds to multiple address ranges. Some address space is wasted.</p>
         </div>
 
         <div class="mode-block" style="margin-top:0.5rem;">
-          <h4>3. Using 74LS138 (3-to-8 Decoder)</h4>
+          <p class="card-title">3. Using 74LS138 (3-to-8 Decoder)</p>
           <p>The 74LS138 takes 3 address lines as input and produces 8 active-LOW output lines (Y̅0 to Y̅7). Only one output is LOW at a time. Each output is connected to CS̄ of a memory chip, enabling one chip at a time.</p>
         </div>
 
         <div class="mode-block" style="margin-top:0.5rem;">
-          <h4>4. Using Logic Gates (AND, NAND, OR)</h4>
+          <p class="card-title">4. Using Logic Gates (AND, NAND, OR)</p>
           <p>Simple address decoding using combinational logic gates. Upper address lines are inputs to gates. Output connected to CS̄. Example: NAND gate with A15, A14, A13 as inputs gives CS̄ LOW only when all three are HIGH (address range 0xE000–0xFFFF).</p>
         </div>
       </div>
@@ -566,17 +567,17 @@
         <p>The 8255 operates in three modes set by the control word:</p>
 
         <div class="mode-block" style="margin-top:0.75rem;">
-          <h4>Mode 0 — Basic I/O (Simple Input/Output)</h4>
+          <p class="card-title">Mode 0 — Basic I/O (Simple Input/Output)</p>
           <p>Each port can be configured as input or output independently. No handshake signals. Data is simply read from input port or written to output port. Most commonly used mode. Port C can be split: upper half in one direction, lower half in another.</p>
         </div>
 
         <div class="mode-block" style="margin-top:0.5rem;">
-          <h4>Mode 1 — Strobed I/O (Handshake)</h4>
+          <p class="card-title">Mode 1 — Strobed I/O (Handshake)</p>
           <p>Ports A and B are used for data I/O. Port C bits are used as handshake signals (STB̄, IBF, OBF̄, ACK̄, INTR). Data transfer is synchronized using these handshake signals. Used for devices that need acknowledge/ready signaling (printers, data acquisition).</p>
         </div>
 
         <div class="mode-block" style="margin-top:0.5rem;">
-          <h4>Mode 2 — Bidirectional I/O (Port A only)</h4>
+          <p class="card-title">Mode 2 — Bidirectional I/O (Port A only)</p>
           <p>Port A becomes bidirectional — can both send and receive data on the same 8 lines. Port C bits provide handshake signals for bidirectional communication. Only Port A supports Mode 2. Port B can be in Mode 0 or Mode 1 simultaneously.</p>
         </div>
       </div>
@@ -656,15 +657,15 @@
 
       <div class="cache-grid">
         <div class="cache-card">
-          <h4><i class="fas fa-arrow-right"></i> Direct Mapping</h4>
+          <p class="card-title"><i class="fas fa-arrow-right"></i> Direct Mapping</p>
           <p>Each main memory block maps to exactly one specific cache line. Line number = Block number MOD Number of cache lines. Simple hardware but may cause conflicts (two frequently used blocks mapping to same line).</p>
         </div>
         <div class="cache-card">
-          <h4><i class="fas fa-random"></i> Fully Associative</h4>
+          <p class="card-title"><i class="fas fa-random"></i> Fully Associative</p>
           <p>Any main memory block can be placed in any cache line. Most flexible — no conflicts. But requires comparing the tag of every cache line simultaneously (expensive hardware — needs content-addressable memory).</p>
         </div>
         <div class="cache-card">
-          <h4><i class="fas fa-th"></i> Set-Associative</h4>
+          <p class="card-title"><i class="fas fa-th"></i> Set-Associative</p>
           <p>Cache is divided into sets, each containing N lines (N-way). A block maps to a specific set (like direct) but can go in any line within that set (like associative). Best compromise. 2-way and 4-way are most common.</p>
         </div>
       </div>
@@ -1093,7 +1094,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>In direct-mapped cache, which formula determines the cache line for a memory block?</p>
           <ul class="options">
             <li>a. Block MOD Tag size</li>
@@ -1109,7 +1110,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>The 8255 PPI has how many 8-bit I/O ports?</p>
           <ul class="options">
             <li>a. 2</li>
@@ -1125,7 +1126,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>A page fault occurs when:</p>
           <ul class="options">
             <li>a. Cache is full</li>
@@ -1141,7 +1142,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>If cache access time is 10 ns, main memory access time is 100 ns, and hit ratio is 0.9, what is the average access time?</p>
           <ul class="options">
             <li>a. 19 ns</li>
@@ -1157,7 +1158,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>Which mode of 8255 allows Port A to operate as a bidirectional I/O port?</p>
           <ul class="options">
             <li>a. Mode 0</li>
@@ -1173,7 +1174,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 6</h4>
+          <p class="card-title">Q 6</p>
           <p>In virtual memory, the TLB is used to speed up:</p>
           <ul class="options">
             <li>a. Disk access</li>
@@ -1189,7 +1190,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 7</h4>
+          <p class="card-title">Q 7</p>
           <p>Which cache mapping technique requires content-addressable memory (CAM) for searching?</p>
           <ul class="options">
             <li>a. Direct mapping</li>
@@ -1205,7 +1206,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 8</h4>
+          <p class="card-title">Q 8</p>
           <p>In a 16-bit address system with 4 KB page size, how many pages are there?</p>
           <ul class="options">
             <li>a. 4</li>
@@ -1221,7 +1222,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 9</h4>
+          <p class="card-title">Q 9</p>
           <p>In 8086, the even memory bank is connected to data lines:</p>
           <ul class="options">
             <li>a. D8–D15</li>
@@ -1237,7 +1238,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 10</h4>
+          <p class="card-title">Q 10</p>
           <p>The control word of 8255 with D7=1 indicates:</p>
           <ul class="options">
             <li>a. Port C bit set/reset mode</li>
@@ -1253,7 +1254,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 11</h4>
+          <p class="card-title">Q 11</p>
           <p>An EPROM 2764 has a capacity of:</p>
           <ul class="options">
             <li>a. 2 KB</li>
@@ -1269,7 +1270,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 12</h4>
+          <p class="card-title">Q 12</p>
           <p>In set-associative mapping, a 4-way set-associative cache with 256 lines has how many sets?</p>
           <ul class="options">
             <li>a. 256</li>
@@ -1300,7 +1301,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>What is address decoding and why is it necessary?</p>
           <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq1">
@@ -1309,7 +1310,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>What is the difference between full and partial address decoding?</p>
           <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq2">
@@ -1319,7 +1320,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>What is the role of BHĒ in 8086 memory interfacing?</p>
           <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq3">
@@ -1328,7 +1329,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>Define hit ratio and miss ratio in cache memory.</p>
           <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq4">
@@ -1338,7 +1339,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>What is a TLB and what problem does it solve?</p>
           <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq5">
@@ -1347,7 +1348,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 6</h4>
+          <p class="card-title">Q 6</p>
           <p>What are the three modes of operation of the 8255 PPI?</p>
           <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq6">
@@ -1358,7 +1359,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 7</h4>
+          <p class="card-title">Q 7</p>
           <p>What is the difference between a page and a frame in virtual memory?</p>
           <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq7">
@@ -1368,7 +1369,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 8</h4>
+          <p class="card-title">Q 8</p>
           <p>What is locality of reference? Name its two types.</p>
           <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq8">
@@ -1379,7 +1380,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 9</h4>
+          <p class="card-title">Q 9</p>
           <p>How is the control register of 8255 addressed? What are A1 and A0 values for each port?</p>
           <button class="toggle-btn" data-target="sq9"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq9">
@@ -1395,7 +1396,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 10</h4>
+          <p class="card-title">Q 10</p>
           <p>What is address aliasing in partial address decoding?</p>
           <button class="toggle-btn" data-target="sq10"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq10">
@@ -1419,7 +1420,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>Explain the three cache mapping techniques — direct, fully associative, and set-associative — with address breakdown examples for each.</p>
           <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq1">
@@ -1450,7 +1451,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>Explain the 8255 PPI in detail. Draw its block diagram description, explain all ports, modes, and write the control word for: Port A = output (Mode 0), Port B = input (Mode 1), Port C upper = output, Port C lower = input.</p>
           <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq2">
@@ -1480,7 +1481,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>Explain virtual memory with page table. Given: 20-bit logical address, 16-bit physical address, page size = 4 KB. Calculate pages, frames, page table entries, and show address translation with an example.</p>
           <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq3">
@@ -1507,7 +1508,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>Explain how to interface an 8 KB EPROM (2764) with the 8086 at address range F0000H–F1FFFH. Describe address decoding, pin connections, and signals used.</p>
           <button class="toggle-btn" data-target="lq4"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq4">
@@ -1535,7 +1536,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>Explain the concept of even and odd memory banks in 8086. Why is word-aligned access faster?</p>
           <button class="toggle-btn" data-target="lq5"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq5">
@@ -1563,7 +1564,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 6</h4>
+          <p class="card-title">Q 6</p>
           <p>Explain TLB with an example. How does effective memory access time change with TLB? Given: TLB access = 5 ns, memory access = 100 ns, TLB hit ratio = 0.95.</p>
           <button class="toggle-btn" data-target="lq6"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq6">
@@ -1587,7 +1588,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 7</h4>
+          <p class="card-title">Q 7</p>
           <p>Explain the different page replacement scenarios during a page fault. What is the role of the dirty bit?</p>
           <button class="toggle-btn" data-target="lq7"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq7">
@@ -1623,7 +1624,7 @@
       <div class="mcq-grid">
 
         <div class="mcq-item">
-          <h4>Q 1</h4>
+          <p class="card-title">Q 1</p>
           <p>A cache has 512 lines, block size = 16 bytes, and the system uses 24-bit addresses. Calculate tag, index, and offset bits for (a) direct mapping (b) 4-way set-associative mapping.</p>
           <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp1">
@@ -1640,7 +1641,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 2</h4>
+          <p class="card-title">Q 2</p>
           <p>Calculate the average memory access time for a system with: cache access = 5 ns, main memory = 80 ns, hit ratio = 0.92.</p>
           <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp2">
@@ -1656,7 +1657,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 3</h4>
+          <p class="card-title">Q 3</p>
           <p>A virtual memory system has 18-bit logical address, 14-bit physical address, page size = 1 KB. Find: number of pages, frames, offset bits, page and frame number bits, page table size.</p>
           <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp3">
@@ -1674,7 +1675,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 4</h4>
+          <p class="card-title">Q 4</p>
           <p>Write the 8255 control word for: Port A = input (Mode 1), Port B = output (Mode 0), Port C upper = input, Port C lower = output.</p>
           <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp4">
@@ -1696,7 +1697,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 5</h4>
+          <p class="card-title">Q 5</p>
           <p>An 8086 system needs 32 KB RAM starting at address 00000H. How many 2764 (8 KB) EPROM chips are needed? What are the address ranges for each chip?</p>
           <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp5">
@@ -1718,7 +1719,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 6</h4>
+          <p class="card-title">Q 6</p>
           <p>Calculate effective memory access time with TLB. Given: TLB access = 10 ns, memory access = 200 ns, TLB hit ratio = 0.90.</p>
           <button class="toggle-btn" data-target="pp6"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp6">
@@ -1735,7 +1736,7 @@
         </div>
 
         <div class="mcq-item">
-          <h4>Q 7</h4>
+          <p class="card-title">Q 7</p>
           <p>In a direct-mapped cache: total cache size = 2 KB, block size = 32 bytes, 20-bit address. Calculate number of lines, tag/index/offset bits, and which cache line does block number 50 map to?</p>
           <button class="toggle-btn" data-target="pp7"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp7">

@@ -127,10 +127,13 @@ body {
     text-align: center;
 }
 
-.card-content h3 {
+.card-content h3,
+.card-content .card-title,
+.developer-title {
     color: #2c3e50;
     margin-bottom: 10px;
     font-size: 1.3rem;
+    font-weight: 600;
 }
 
 .card-content p {
@@ -235,10 +238,23 @@ body {
     margin: 0 auto 20px;
 }
 
-.grid-card h3 {
+.grid-card h3,
+.grid-card .card-title,
+.feature-item h4,
+.feature-box .card-title {
     color: #2c3e50;
     margin-bottom: 10px;
     font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* Phase 7.1: these were <h4>. The browser's default <p> margin is not used
+   here, so the card spacing stays exactly what the heading had. */
+.grid-card p.card-title,
+.feature-box p.card-title,
+.feature-item p.card-title {
+    margin: 0 0 10px;
+    line-height: 1.4;
 }
 
 .grid-card p {
@@ -385,4 +401,12 @@ body {
     .grid-card {
         padding: 20px;
     }
+}
+
+/* Reduced motion (Phase 7.1 item 6): the global rule lives in
+   assets/css/accessibility.css; this file carries its own guard so a page
+   cannot animate just because that sheet loaded later. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
 }

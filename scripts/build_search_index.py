@@ -175,6 +175,9 @@ class PageParser(HTMLParser):
             }
 
     def handle_data(self, data):
+        # Phase 7.1: card and sub-item labels are <p class="card-title">, not
+        # headings. They still contribute body text to their enclosing section,
+        # so search keeps matching them exactly as it did when they were <h4>.
         if self._current_heading is not None:
             self._current_heading['title'] += data
             return

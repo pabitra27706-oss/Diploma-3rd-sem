@@ -4,20 +4,20 @@
 
 :root {
   /* ── Accent Colors ── */
-  --accent-primary: #6366f1;
-  --accent-secondary: #8b5cf6;
-  --accent-success: #10b981;
-  --accent-warning: #f59e0b;
-  --accent-error: #ef4444;
-  --accent-info: #3b82f6;
+  --accent-primary: #5b5ce0; /* 4.5:1+ as text and behind white (was #6366f1, 4.47:1) */
+  --accent-secondary: #7c3aed; /* white on it: 5.70:1 (was #8b5cf6, 4.23:1) */
+  --accent-success: #047857; /* white on it: 5.48:1 (was #10b981, 2.54:1) */
+  --accent-warning: #a05f08; /* white on it: 5.08:1 (was #f59e0b, 2.15:1) */
+  --accent-error: #dc2626; /* white on it: 4.83:1 (was #ef4444, 3.76:1) */
+  --accent-info: #2563eb; /* white on it: 5.17:1 (was #3b82f6, 3.68:1) */
   
   /* ── Accent RGB (for rgba() usage) ── */
-  --accent-primary-rgb: 99, 102, 241;
-  --accent-secondary-rgb: 139, 92, 246;
-  --accent-success-rgb: 16, 185, 129;
-  --accent-warning-rgb: 245, 158, 11;
-  --accent-error-rgb: 239, 68, 68;
-  --accent-info-rgb: 59, 130, 246;
+  --accent-primary-rgb: 91, 92, 224;
+  --accent-secondary-rgb: 124, 58, 237;
+  --accent-success-rgb: 4, 120, 87;
+  --accent-warning-rgb: 160, 95, 8;
+  --accent-error-rgb: 220, 38, 38;
+  --accent-info-rgb: 37, 99, 235;
   
   /* ── Light Theme Colors ── */
   --bg-primary-light: #ffffff;
@@ -31,7 +31,7 @@
   
   --text-primary-light: #0f172a;
   --text-secondary-light: #475569;
-  --text-tertiary-light: #94a3b8;
+  --text-tertiary-light: #5f6f85; /* 5.12:1 on white, 4.90:1 on bg-secondary (was #94a3b8, 2.56:1) */
   
   --border-light: #e2e8f0;
   --border-hover-light: #cbd5e1;
@@ -157,7 +157,10 @@
   --skeleton-highlight: rgba(148, 163, 184, 0.3);
   
   /* ── Focus Ring (Accessibility) ── */
-  --focus-ring: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.4);
+  /* The solid colour is what a keyboard user sees at the ring's edge; the
+     translucent halo is decoration and is not relied on for 1.4.11. */
+  --focus-ring-solid: #4a4fd0; /* 6.32:1 on white, 6.04:1 on bg-secondary */
+  --focus-ring: 0 0 0 3px var(--focus-ring-solid);
   
   /* ── Today Focus Card ── */
   --focus-card-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -226,7 +229,15 @@
   --toast-info-bg: rgba(30, 64, 175, 0.9);
   --toast-info-color: #93c5fd;
   --toast-info-border: #1e40af;
-  
+
+  /* Accent text on the dark canvas; filled buttons keep --accent-primary. */
+  --accent-primary-text-dark: #a5a6ff;   /* 8.58:1 on #0f0f1e */
+  --accent-secondary-text-dark: #a78bfa; /* 6.97:1 on #0f0f1e */
+
+  /* The light ring is too close to the dark canvas (3.0:1); the dark ring is
+     not a tint of it, it is the same role in the other palette. */
+  --focus-ring-solid: #a5a6ff; /* 9.51:1 on #0f0f1e */
+
   /* Skeleton dark */
   --skeleton-base: rgba(255, 255, 255, 0.05);
   --skeleton-highlight: rgba(255, 255, 255, 0.1);
