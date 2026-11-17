@@ -215,7 +215,8 @@ Authorized scope, executed on `arena/858a50c7-diploma-3rd-sem`:
 - Derived data was regenerated (catalog, practice days, search, repeat index,
   cards, runtime pools/bundles, coverage, exam-pattern, presence), and the
   tests that hard-coded 992 records / 30 papers / 69 aliases were updated to
-  958 / 29 / 35.
+  958 / 29 / 35. Recorded as sub-phase 8A:
+  `docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`.
 
 `_data/pyq-integrity.json` is re-anchored to this content revision because the
 owner explicitly authorized the prose edits and the deletion. This is recorded
@@ -298,3 +299,6 @@ separate source-verification gate and needs the owner's explicit approval.
   Python `unittest` 13 PASS, Node `attempt-store`, `storage`, `storage-recovery`,
   `study-store`, `data-pipeline-consumers`, `quiz-engine-dom` PASS.
   `check_site.py --strict` reports exactly the findings it already reported on `main`.
+- Recorded as sub-phase 8A:
+  `docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`, with
+  `README.md`, `tasks.md` and `record.md`.

@@ -1,8 +1,37 @@
 # Current status and remaining work
 
 Documentation checkpoint: **2026-11-09**; reconciled **2026-11-16** (branch/
-license audit — see `docs/AUDIT-2026-11-16.md`). This is the current handoff;
+license audit — see `docs/AUDIT-2026-11-16.md`) and **2026-11-17** (sub-phase 8A
+— see `docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`). This is the current handoff;
 older phase evidence remains historical unless explicitly superseded here.
+
+## Sub-phase 8A — answer prose and subject labels (2026-11-17)
+
+Owner-requested work delivered on `arena/637a5a31-diploma-3rd-sem` (PR #10,
+open) after the Python pilot merged as PR #9 (`main` at `365b8f7`). Recorded in
+[`phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`](phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/README.md).
+
+- **Prose:** 337 quiz-bank explanations (CST201/CST205/CST209) and 226 PYQ
+  answers now carry a short reason sized for a 1-mark item. Only `explanation`
+  and `answer` changed; a field-by-field diff against `365b8f7` shows zero change
+  to question, options, stored key, type, unit, topic or marks.
+- **Duplicates:** CST209-P002-2023-03 was deleted under the owner's rule (only
+  where the subject has no 2021 sitting); CST203's duplicate went in PR #9.
+  Repo now holds **28 papers / 924 raw PYQs / 923 unique / 1 alias**;
+  CST201, CST205 and CST207 keep every paper.
+- **Labels:** every page a learner sees names the subject (C · Python · DS · CSO ·
+  Algorithms) instead of showing a course code, and raw paper/question IDs are no
+  longer printed. Display only: no path, file, question ID, URL parameter,
+  `data-*` value, storage key or JSON payload changed.
+- **Gates:** `validate_pyq` PASS (28 papers / 924 questions),
+  `check_pyq_integrity` 0 changed, `validate_data --check-baseline` matches the
+  ledger (**9** open findings — the CST209-P002-Q34 finding closed with the
+  deleted paper), `check_platform` 0 errors, Python `unittest` 13 PASS, six Node
+  suites PASS, `check_site.py --strict` identical to `main` (17 pre-existing
+  accessibility labels). Playwright browser suites run in CI only here.
+- **Still open:** content verification (8.6) including the six CST203 key
+  conflicts, no quiz bank for CST207, 456 unkeyed quiz items, phase 7
+  accessibility findings, and device acceptance (phase 10).
 
 ## Current source reconciliation
 

@@ -16,6 +16,7 @@ docs/phases/
   06-state-portability/   one storage layer, notes, backup/restore
   07-inclusion-trust/     accessibility, reading controls, i18n, truth
   08-content-depth/       syllabus coverage, sheets, labs, print
+    sub-phase-8A-answer-prose-and-ui-labels/  answer prose + subject names
   09-performance-launch/  budgets, measurement, domain readiness, launch
   10-device-acceptance/   final cross-device matrix after implementation 1–9
 ```
@@ -33,6 +34,18 @@ Each phase folder holds at least:
 `record.md` is created when the phase starts, from
 `webflow/templates/docs-system/PHASE_RECORD.md`. A phase without a record is
 not done, even if the code works.
+
+## Sub-phases
+
+Owner-requested work that belongs to a phase but is not one of its numbered
+parts lives in a `sub-phase-<NN><letter>-<slug>/` folder **inside that phase**,
+with the same three files and the same rules. It never adds a part to the parent
+phase (rule 2 below) and it never gets its own roadmap row; the parent phase's
+record links to it.
+
+| Sub-phase | Parent | Covers |
+|---|---|---|
+| [`8A — Answer prose and subject labels`](08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/README.md) | 8 | MCQ/PYQ explanation prose, duplicate-reprint removal, subject names in the UI |
 
 ## Rules that apply to every phase
 
