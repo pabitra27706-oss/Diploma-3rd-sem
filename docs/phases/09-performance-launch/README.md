@@ -65,7 +65,8 @@ tool, a privacy-page update, and a page-weight budget — a gate, not a slip.
 - Lighthouse mobile: Performance ≥ 90, Accessibility ≥ 95, Best practices ≥ 95,
   SEO ≥ 95 on the two heaviest pages (run in CI or recorded from a real run).
 - LCP ≤ 2.5 s simulated on mid-range mobile; CLS ≤ 0.1; INP ≤ 200 ms.
-- One token file; no duplicated colour literals outside it (grep-checked).
+- One token file; no duplicated **hex** colour literals outside it (grep-checked;
+  `rgba()` values are a recorded remaining item, not part of this gate).
 - Data version and cache policy documented; a deploy can invalidate data without
   stranding clients.
 - Measurement decision recorded with its privacy consequence.

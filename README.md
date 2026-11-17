@@ -69,7 +69,7 @@ remains.** See
   task pages carry credits, hours, assessment fields and syllabus page anchors —
   no completed lab solution is claimed.
 - **Performance (Phase 9, 2026-11-17):** one 302-entry colour palette in
-  `assets/css/variables.css` and no colour literal anywhere else
+  `assets/css/variables.css` and no hex colour literal anywhere else
   (`scripts/check_tokens.py`); the three global sheets (accessibility, print and
   the install panel) are merged into one `assets/css/base.css`, and the
   accessibility/i18n/install scripts into one `assets/js/shell.bundle.js`; the Font Awesome CSS shipped to

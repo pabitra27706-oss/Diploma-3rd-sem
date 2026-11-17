@@ -1,9 +1,11 @@
 # Design — Diploma 3rd Sem Study Hub
 
 > Status: **token set consolidated 2026-11-17 (Phase 9.2); not otherwise frozen.**
-> Every colour literal in the tree is defined exactly once, in the palette block
-> of `assets/css/variables.css`, and enforced by `scripts/check_tokens.py`. A new
-> page may not hard-code a colour: add or reuse a palette token.
+> Every **hex** colour literal in the tree is defined exactly once, in the palette
+> block of `assets/css/variables.css`, and enforced by `scripts/check_tokens.py`.
+> A new page may not hard-code a hex colour: add or reuse a palette token.
+> `rgba()` values (373 occurrences, 188 distinct — mostly alpha shadows and
+> overlays) are **not** yet tokenised; that is a recorded open item.
 >
 > Method: `webflow/knowledge/design-system.md`. Playbook: `webflow/`.
 

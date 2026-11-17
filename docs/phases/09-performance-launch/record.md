@@ -52,7 +52,8 @@ run, unchanged and clearly labelled as browser-measured).
 ## 9.2 — CSS/JS consolidation (done, no browser)
 
 **One token file.** `assets/css/variables.css` now carries a palette block — 302
-entries — defining **every** colour literal in the tree exactly once. 1,205
+entries — defining **every hex colour literal** (`#rgb`/`#rrggbb`/`#rrggbbaa`) in
+the tree exactly once. 1,205
 literals were replaced by `var(--c-…)` references (1,148 across 20 stylesheets and
 74 pages, 57 inside `variables.css` itself). Equivalence was proven statically,
 not by eye: for every rewritten declaration the palette token resolves to the
@@ -64,14 +65,19 @@ as before the change (`scripts/audit_accessibility.py`, before vs after, 0 diffs
   `--bg-primary`/`--accent` names because those names already mean *different*
   colours per area; merging them would change rendered output. They are aliases
   of palette entries now, so no literal survives outside the token file.
-- `scripts/check_tokens.py --strict` enforces: no literal in first-party CSS, an
-  inline `style` attribute or a `<style>` block; one definition per palette
+- `scripts/check_tokens.py --strict` enforces: no **hex** literal in first-party
+  CSS, an inline `style` attribute or a `<style>` block; one definition per palette
   colour; no unused palette entry; no `var(--x)` without a definition unless it
   has a fallback; and every page loading the token file **first**. Allowlist, with
   reasons: the vendored Font Awesome CSS, `<meta name="theme-color">` (a meta tag
   cannot take `var()`), and the two literals `theme.js` writes into that meta tag.
 - 10 Python tests (`tests/test_tokens.py`) exercise the checker on temporary
   trees, so the gate cannot pass by accident.
+- **Not tokenised, and not claimed:** `rgba()`/`rgb()` values are outside the
+gate's scope — 373 occurrences (188 distinct) remain in first-party CSS, mostly
+alpha shadows, overlays and translucent borders. They are recorded here as an
+open item, not silently counted as done; tokenising them would need an
+alpha-capable token model and a fresh contrast check.
 
 **Dead code.** 71 rules removed (8,485 B) whose class/id names appear nowhere in
 shipped HTML, JS or JSON — quiz utility/card classes, unused unit figures,

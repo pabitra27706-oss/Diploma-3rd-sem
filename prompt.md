@@ -147,7 +147,8 @@ per-phase remainder table and the source/rights gates.
   exam-pattern caveats and print rules. Full accessibility/translation/reference
   sheet work remains. License remains a gate.
 - Performance (Phase 9, 2026-11-17): one 302-entry colour palette in
-  `assets/css/variables.css` with **0 colour literals elsewhere**
+  `assets/css/variables.css` with **0 hex colour literals elsewhere**
+  (`rgba()` values — 373 occurrences — are outside that gate and listed as open)
   (`scripts/check_tokens.py --strict`); `accessibility.css` + `print.css` +
   `pwa.css` merged into `assets/css/base.css` and the accessibility/i18n/install
   scripts into a generated `assets/js/shell.bundle.js`; pages load a 25,890 B

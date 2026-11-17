@@ -587,8 +587,13 @@ These are delegated implementation decisions (owner delegation of 2026-11-09),
 recorded because they change how the tree is built. None of them is a rights,
 content, publication or domain decision.
 
-1. **One palette file, per-area aliases kept.** Every colour literal now lives in
-   `assets/css/variables.css` (302 entries). The per-area semantic namespaces
+1. **One palette file, per-area aliases kept.** Every **hex** colour literal now
+   lives in `assets/css/variables.css` (302 entries). `rgba()`/`rgb()` values are
+   explicitly out of scope for this pass — 373 occurrences (188 distinct), mostly
+   alpha shadows, overlays and translucent borders — because an alpha-capable token
+   model plus a fresh contrast run is its own piece of work; they are recorded as
+   an open item in `docs/STATUS.md` and the phase record rather than counted as
+   done. The per-area semantic namespaces
    (`--bg-primary` in quiz vs pyq vs units) stay in their own stylesheets as
    aliases, because those names already mean *different* colours per area and
    merging them would change rendered output. `scripts/check_tokens.py` enforces
