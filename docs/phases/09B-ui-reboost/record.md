@@ -1,6 +1,6 @@
 # Phase 9B record — 2026-11-17
 
-Status: **checker-only batch confirmed; small colour-token batch implemented, awaiting owner screenshots and confirmation; home-header redesign not yet started**. Branch `arena/48a2ab20-diploma-3rd-sem`, base `816ef84`. Reuse: existing `variables.css`, `base.css`, quiz/practice controls and shared JS widgets are studied for adaptation; no runtime dependency or feature added.
+Status: **colour-preparation batch confirmed to continue; home-header batch implemented, awaiting owner screenshots and approval**. Branch `arena/48a2ab20-diploma-3rd-sem`, base `816ef84`. Reuse: existing `variables.css`, `base.css`, quiz/practice controls and shared JS widgets are studied for adaptation; no runtime dependency or feature added.
 
 ## Evidence received
 
@@ -49,3 +49,16 @@ Gates: strict site 0 errors/warnings, platform 0 errors, token checker 0 finding
 ## Batch 1B — owner after screenshots received (2026-11-17)
 
 Owner supplied `Screenshot_20261117_155932_Samsung Browser.jpg` (local Termux welcome), `Screenshot_20261117_155941_Samsung Browser.jpg` (local phone-width dark home), and `Screenshot_20261117_155948_Samsung Browser.jpg` (local home shown in a wide/scaled layout on the phone). The screenshots show the branch on `127.0.0.1`; exact CSS viewport width and physical desktop behavior are unknown. Earlier phone and wide-layout home screenshots were supplied from the live site, but no matching before screenshot of the welcome screen or actual desktop-device screenshot has been supplied. The phone home still shows the pre-existing crowded header, which has not yet been redesigned. No owner verdict on whether the colour-preparation batch passes was provided; ask for written confirmation and do not start the header batch until confirmed. No local browser rendering or visual comparison is claimed.
+
+
+## Batch 1B approval and home-header batch — 2026-11-17
+
+After the three Termux screenshots, the owner selected “Yes, continue” when asked whether the welcome/home colours looked normal and header work could start. This confirms proceeding from batch 1B; the matching welcome-before, light-mode after, physical desktop and print evidence remain outstanding for full phase acceptance.
+
+The home header retains all four desktop links; at up to 1024 CSS px the links move into the existing side menu and a labelled search icon appears. At up to 320 CSS px search remains available in that menu instead. Theme and menu controls remain; the title uses the owner-selected local serif heading stack, with sans-serif controls and body. The header is sticky in normal flow with a minimum rather than fixed height and allows wrapping for zoom or larger text; safe-area top padding is retained. The closed side menu now has `visibility: hidden`, and the existing focus trap/return logic is unchanged; this hides it immediately on close, rather than animating its exit. The relative destinations and sprite references were checked in source. These are source-level changes, not a rendered or device-tested approval. No content/data or new runtime request was added.
+
+Five source-level header contracts pass (first four were written before implementation and initially failed); they do not prove visual layout, keyboard use, safe-area behavior or focus under real scaling. Shell `study-2026-11-17f` → `g`; presence was regenerated twice, with the other 73 HTML changes limited to build metadata. Runtime bundles, icon subset, presence twice, search index and data version last were regenerated; data version remains `data-6b1621c45599`. Static CSS bytes 6,789,336 → 6,771,422 overall, home 55,777 → 55,061; requests remain 592 across 74 pages, and no page increased in CSS, JS or request counts. Numbers are file-based, not network measurements.
+
+Gates: strict site 0 errors/warnings; platform 0 errors; strict tokens 0 findings with 392 legacy RGBA occurrences still ledgered; icon subset/data version current; weight budget and root rewrite pass; static accessibility 47 pairs and 0 findings; all 14 deterministic Node suites pass. Python: **108 tests, one error**, the known missing Git object `664674b` in `test_data_pipeline.test_no_semantic_or_answer_changes`; not a full pass. No browser or Lighthouse available to the agent. No rendered contrast, keyboard/focus, zoom, safe-area, print, dark or desktop-device pass is claimed.
+
+Owner review required before the next batch: compare phone and desktop-width before/after screenshots of home in light and dark modes, including the open menu and a narrow/large-text view if possible; confirm links, theme toggle, menu close and scrolling work. A wide view on a phone is useful but not a physical-desktop pass. Do not merge/deploy without explicit authorization.

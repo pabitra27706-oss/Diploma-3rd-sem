@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Diploma 3rd Sem - Study Hub</title>
 
-    <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,19 +14,16 @@
     <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
     <meta name="description" content="Complete study companion for WB Diploma 3rd Semester - CST Stream">
 
-    <!-- Icons -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/pwa/icon-192x192.png">
     <link rel="apple-touch-icon" href="assets/pwa/icon-192x192.png">
 
-    <!-- Stylesheets -->
     <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/main.css">
-
 
 <script defer src="assets/js/data-catalog.js"></script>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/index.html">
-<meta name="app-build" content="study-2026-11-17f">
+<meta name="app-build" content="study-2026-11-17g">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Diploma 3rd Sem - Study Hub">
 <meta property="og:description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
@@ -48,9 +44,6 @@
 <body>
 <a class="skip-study-content" href="#mainContent">Skip to study content</a>
 
-    <!-- =============================================
-         WELCOME SCREEN (First Launch Only)
-         ============================================= -->
     <div class="welcome-screen" id="welcomeScreen" role="dialog" aria-modal="true" aria-label="Welcome to Study Hub">
         <div class="welcome-bg" aria-hidden="true">
             <div class="gradient-orb orb-1"></div>
@@ -87,7 +80,6 @@
                 </div>
             </div>
 
-            <!-- Name Input -->
             <div class="name-input-wrapper" id="nameInputWrapper">
                 <label for="studentName">What should we call you?</label>
                 <input
@@ -113,12 +105,8 @@
         </div>
     </div>
 
-    <!-- =============================================
-         MAIN APP CONTAINER
-         ============================================= -->
     <div class="app-container hidden" id="appContainer">
 
-        <!-- Top Header -->
         <header class="app-header" role="banner">
             <div class="header-left">
                 <button
@@ -137,10 +125,13 @@
                 </div>
             </div>
             <div class="header-right">
-                <a href="search.html" aria-label="Search study material">Search</a>
-                <a href="today.html">Today</a>
-                <a href="settings.html">Settings &amp; backup</a>
-                <a href="coverage.html">Coverage</a>
+                <a class="header-link" href="search.html" aria-label="Search study material">Search</a>
+                <a class="header-link" href="today.html">Today</a>
+                <a class="header-link" href="settings.html">Settings &amp; backup</a>
+                <a class="header-link" href="coverage.html">Coverage</a>
+                <a class="icon-btn header-search" href="search.html" aria-label="Search study material">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+                </a>
                 <button
                     class="icon-btn"
                     id="themeToggle"
@@ -167,10 +158,8 @@
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="main-content" id="mainContent" role="main">
 
-            <!-- Greeting Section -->
             <section class="greeting-section" aria-label="Greeting">
                 <div class="greeting-text">
                     <h2 class="greeting-title" id="greetingTitle">Good Morning</h2>
@@ -182,7 +171,6 @@
                 </div>
             </section>
 
-            <!-- Stats Bar -->
             <section class="stats-bar" aria-label="Your study stats">
 
                 <div class="stat-card" id="streakCard" aria-label="Study streak">
@@ -223,7 +211,6 @@
 
             </section>
 
-            <!-- Today's Focus Card -->
             <section aria-label="Today's study focus">
                 <div class="focus-card" id="focusCard" role="link" tabindex="0" aria-label="Today's focus - go to roadmap">
                     <div class="focus-card-top">
@@ -246,7 +233,6 @@
                 </div>
             </section>
 
-            <!-- Continue Card -->
             <a
                 class="continue-card"
                 id="continueCard"
@@ -270,7 +256,6 @@
                 </svg>
             </a>
 
-            <!-- Section: Subjects -->
             <section class="content-section" aria-label="All subjects">
                 <div class="section-header">
                     <h3 class="section-title">
@@ -283,7 +268,7 @@
                 </div>
 
                 <div class="subject-grid" id="subjectGrid" role="list" aria-label="Subject list">
-                    <!-- Skeleton placeholders -->
+
                     <div class="skeleton-card" aria-hidden="true">
                         <div style="display:flex;gap:12px;align-items:center;">
                             <div class="skeleton skeleton-icon"></div>
@@ -314,7 +299,6 @@
                 </div>
             </section>
 
-            <!-- Section: Quick Access (Below Subjects) -->
             <section class="content-section" aria-label="Quick access">
                 <div class="section-header">
                     <h3 class="section-title">
@@ -363,16 +347,11 @@
                         <span class="quick-label">Roadmap</span>
                     </a>
 
-
-
-
-
                 </div>
             </section>
 
         </main>
 
-        <!-- Bottom Navigation -->
         <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
             <a href="index.html" class="nav-item active" aria-label="Home" aria-current="page">
                 <svg class="icon" aria-hidden="true">
@@ -402,11 +381,6 @@
 
     </div>
 
-    <!-- =============================================
-         SIDE MENU
-         ============================================= -->
-
-    <!-- Overlay -->
     <div
         class="menu-overlay"
         id="menuOverlay"
@@ -414,7 +388,6 @@
         role="presentation"
     ></div>
 
-    <!-- Menu Panel -->
     <aside
         class="side-menu"
         id="sideMenu"
@@ -443,13 +416,17 @@
         </div>
 
         <nav class="menu-nav" aria-label="Side menu navigation">
+            <a href="search.html" class="menu-item"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><span>Search</span></a>
+            <a href="today.html" class="menu-item"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#calendar"></use></svg><span>Today</span></a>
+            <a href="settings.html" class="menu-item"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M8 3v6M16 9v6M10 15v6"></path></svg><span>Settings &amp; backup</span></a>
+            <a href="coverage.html" class="menu-item"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#target"></use></svg><span>Coverage</span></a>
+            <div class="menu-divider" role="separator"></div>
             <a href="roadmap/index.html" class="menu-item">
                 <svg class="icon" aria-hidden="true">
                     <use href="assets/icons/sprite.svg#map"></use>
                 </svg>
                 <span>10-Day Roadmap</span>
             </a>
-
 
             <div class="menu-divider" role="separator"></div>
 
@@ -494,9 +471,6 @@
         </div>
     </aside>
 
-    <!-- =============================================
-         TOAST CONTAINER
-         ============================================= -->
     <div
         class="toast-container"
         id="toastContainer"
@@ -506,13 +480,8 @@
         aria-atomic="false"
     ></div>
 
-    <!-- =============================================
-         SCRIPTS
-         ============================================= -->
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/app.js"></script>
-
-
 
 </body>
 </html>
