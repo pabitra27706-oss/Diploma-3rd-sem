@@ -5,8 +5,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 // ─── Theme ───────────────────────────────────────────────
-const savedTheme = StudyStorage.legacy.getItem('theme') ||
-  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+const savedTheme = StudyStorage.theme();
 document.documentElement.setAttribute('data-theme', savedTheme);
 
 const themeIcon = document.getElementById('themeIcon');
@@ -24,7 +23,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   const cur = document.documentElement.getAttribute('data-theme');
   const next = cur === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  StudyStorage.legacy.setItem('theme', next);
+  StudyStorage.setTheme(next);
   updateThemeIcon(next);
 });
 

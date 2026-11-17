@@ -582,16 +582,14 @@ function applyFilter(subject) {
    THEME
    ============================================================ */
 function initTheme() {
-  const saved = StudyStorage.legacy.getItem('theme');
-  const pref  = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', saved || pref);
+  document.documentElement.setAttribute('data-theme', StudyStorage.theme());
 }
 
 function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme');
   const next    = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  StudyStorage.legacy.setItem('theme', next);
+  StudyStorage.setTheme(next);
 }
 
 /* ============================================================

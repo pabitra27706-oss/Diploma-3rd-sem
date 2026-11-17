@@ -1,7 +1,28 @@
 (() => {
  'use strict';const $=s=>document.querySelector(s),status=$('#settings-status');let preview=null;
  const report=e=>{status.textContent=e.message||String(e);};
- function render(){const prefs=StudyStorage.prefs();for(const [key,value]of Object.entries(prefs)){const field=$('#prefs-form [name="'+key+'"]');if(field)field.value=value;}const groups=StudyStorage.estimate();$('#storage-summary').textContent=Object.entries(groups).map(([key,value])=>`${key}: ${value.records} records, ~${value.bytes} bytes`).join(' · ');}
+ function render(){const prefs=StudyStorage.prefs();for(const [key,value]of Object.entries(prefs)){const field=$('#prefs-form [name="'+key+'"]');if(field)field.value=value;}const groups=StudyStorage.estimate();$('#storage-summary').textContent=Object.entries(groups).map(([key,value])=>`${key}: ${value.records} records, ~${value.bytes} bytes`).join(' · ');labelResetOptions(groups);renderMirror();}
+ // Reset choices are named from the registry and carry live counts, so the
+ // dialog always shows what each group holds before anything is cleared.
+ function labelResetOptions(groups){
+  const base={progress:'Progress, quiz history, cards and mistakes',notes:'Notes and highlights',preferences:'Preferences',everything:'Everything stored by this app'};
+  const total=Object.values(groups).reduce((sum,value)=>({records:sum.records+value.records,bytes:sum.bytes+value.bytes}),{records:0,bytes:0});
+  for(const option of document.querySelectorAll('#reset-group option')){
+   const count=option.value==='everything'?total:groups[option.value]||{records:0,bytes:0};
+   option.textContent=base[option.value]+' — '+count.records+' records, ~'+count.bytes+' bytes';
+  }
+ }
+ // Reports what is actually stored and where. localStorage stays the primary
+ // store; IndexedDB is a recovery mirror, never presented as the main store.
+ async function renderMirror(){
+  const target=$('#storage-mode');if(!target)return;
+  try{
+   const info=await StudyStorage.idbStatus();
+   const mirror=info.available?(info.state==='unavailable'?'not usable in this browser':`available (${info.mode}, threshold ${Math.round(info.threshold/1024)} KiB)`):'unavailable — records rely on localStorage only';
+   const persisted=info.persisted===null?'not reported by this browser':info.persisted?'granted':'not granted';
+   target.textContent=`Records: ${info.records} · ~${info.bytes} bytes. Primary store: ${info.primary}. Device mirror: ${mirror}. Persistent storage: ${persisted}.`;
+  }catch(e){target.textContent='Storage health unavailable: '+e.message;}
+ }
  function invalidatePreview(){preview=null;$('#import-preview').hidden=true;}
  $('#backup-text').addEventListener('input',invalidatePreview);
  $('#retry-recovery').onclick=()=>{try{const recovered=StudyStorage.recover();render();status.textContent=recovered?'Original pre-import records recovered. Reload other open tabs.':'No pending import recovery.';}catch(e){report(e);}};
@@ -16,6 +37,8 @@
  $('#clear-data').onclick=()=>{try{const group=$('#reset-group').value;if(group==='everything'&&$('#reset-confirm').value!=='RESET')throw Error('Type RESET before clearing everything.');if(!confirm('Clear '+group+'? This cannot be undone without a backup.'))return;StudyStorage.clearGroup(group);render();status.textContent='Selected data cleared. Reload other open tabs.';}catch(e){report(e);}};
  $('#request-persistence').onclick=async()=>{try{const granted=await navigator.storage?.persist?.();$('#storage-persistence').textContent=granted?'Persistent storage granted by this browser.':'Persistent storage not granted or not supported; keep backups.';}catch(e){report(e);}};
  navigator.storage?.estimate?.().then(result=>{$('#storage-persistence').textContent=`Origin usage estimate: ${result.usage??'unknown'} bytes; quota: ${result.quota??'unknown'} bytes. Browser estimates include caches, not just student records.`;}).catch(()=>{});
+ $('#rebuild-mirror').onclick=async()=>{try{const result=await StudyStorage.hydrate();render();status.textContent=result.restored?`${result.restored} records rebuilt from the device mirror. Reload other open study tabs.`:`Nothing rebuilt: ${result.reason}.`;}catch(e){report(e);}};
+ $('#forget-mirror').onclick=async()=>{if(!confirm('Forget the device mirror? Local records stay; only the recovery copy is deleted.'))return;try{await StudyStorage.clearMirror();render();status.textContent='Device mirror cleared. Local records were not changed.';}catch(e){report(e);}};
  try{StudyStorage.migrate();render();}catch(e){report(e);}
  window.addEventListener('study-storage-error',e=>report(e.detail));
 })();

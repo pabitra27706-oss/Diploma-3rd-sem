@@ -14,7 +14,7 @@
 
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/pyq/select.html">
-<meta name="app-build" content="study-2026-11-17">
+<meta name="app-build" content="study-2026-11-17b">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Select Mode | Diploma 3rd Sem">
 <meta property="og:description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
@@ -136,8 +136,7 @@
 
   <script>
     // ─── Theme ─────────────────────────────────────────
-    const savedTheme = StudyStorage.legacy.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const savedTheme = StudyStorage.theme();
     document.documentElement.setAttribute('data-theme', savedTheme);
 
     const themeToggle = document.getElementById('themeToggle');
@@ -156,7 +155,7 @@
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      StudyStorage.legacy.setItem('theme', next);
+      StudyStorage.setTheme(next);
       updateThemeIcon(next);
     });
 

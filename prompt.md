@@ -118,7 +118,7 @@ per-phase remainder table and the source/rights gates.
   sheet work remains. License remains a gate.
 - Performance: compact derived pools and checked-in script bundles; measured
   Practice/setup cold loads are 12 requests each. CSS/cache/root-path/launch
-  work remains. Current worker VERSION: `study-2026-11-17` (Phase 5 added the study shell and
+  work remains. Current worker VERSION: `study-2026-11-17b` (Phase 5 added the study shell and
   `WARM_STUDY` card shards).
 
 ## Evidence and limits

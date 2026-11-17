@@ -231,11 +231,9 @@ function renderUnits(subjectCode, container, selectedUnits = []) {
  * Initialise theme from StudyStorage.legacy or system preference
  */
 function initTheme() {
-  const saved = getFromStorage(STORAGE_KEYS.THEME);
-  if (saved === 'dark' || saved === 'light') {
-    document.documentElement.setAttribute('data-theme', saved);
-  }
-  // If no saved preference, CSS media query handles it automatically
+  // One persisted preference record owns the theme (Phase 6.2); the legacy
+  // scalar keys are still migrated by the storage boundary.
+  document.documentElement.setAttribute('data-theme', StudyStorage.theme());
 }
 
 /**
@@ -244,7 +242,7 @@ function initTheme() {
  */
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  saveToStorage(STORAGE_KEYS.THEME, theme);
+  StudyStorage.setTheme(theme);
 }
 
 /**

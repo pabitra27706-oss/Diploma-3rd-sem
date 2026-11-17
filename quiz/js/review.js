@@ -382,6 +382,8 @@ function renderInfoBanner() {
 
 function renderQuestionList() {
   if (!dom.reviewQuestionList) return;
+  // Flush any pending note drafts before the cards are rebuilt.
+  window.SectionNotes?.flush();
   dom.reviewQuestionList.innerHTML = '';
 
   const filtered = getFilteredQuestions();
@@ -480,6 +482,16 @@ function buildQuestionCard(q, displayNum) {
   body.appendChild(buildReviewShareBar(q, Math.max(0, displayNum - 1)));
 
   card.appendChild(body);
+
+  // ── Private note for this question (Phase 6.4)
+  if (window.SectionNotes) {
+    const note = SectionNotes.mount({
+      key: SectionNotes.keyFor(`quiz-review/${q.id}`),
+      title: 'My note for this question'
+    });
+    note.classList.add('question-note');
+    card.appendChild(note);
+  }
 
   // ── Footer
   const footer = buildCardFooter(q, hasAnswer, isMCQ, Math.max(0, displayNum - 1));

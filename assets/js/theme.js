@@ -6,7 +6,7 @@
 
 class ThemeManager {
   constructor() {
-    this.storageKey = 'diploma-3rd-sem-theme';
+    this.storageKey = 'd3s:prefs';
     this.html = document.documentElement;
     this.toggle = null;
     this.isAnimating = false;
@@ -141,20 +141,19 @@ class ThemeManager {
   
   getSavedTheme() {
     try {
-      const saved = StudyStorage.legacy.getItem(this.storageKey);
-      // Validate — only accept known values
-      if (saved === 'dark' || saved === 'light') return saved;
-      return null;
+      // One preference record owns the theme. 'system' returns null so the
+      // media query below decides, matching the CSS default.
+      const choice = StudyStorage.prefs().theme;
+      return choice === 'dark' || choice === 'light' ? choice : null;
     } catch (e) {
-      // StudyStorage.legacy unavailable (private browsing, etc.)
-      console.warn('[Theme] StudyStorage.legacy unavailable:', e.message);
+      console.warn('[Theme] Preferences unavailable:', e.message);
       return null;
     }
   }
   
   saveTheme(theme) {
     try {
-      StudyStorage.legacy.setItem(this.storageKey, theme);
+      StudyStorage.setTheme(theme);
     } catch (e) {
       console.warn('[Theme] Could not save theme:', e.message);
     }

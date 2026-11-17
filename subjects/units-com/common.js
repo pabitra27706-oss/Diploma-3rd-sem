@@ -101,17 +101,13 @@ document.addEventListener("DOMContentLoaded", function () {
      ========================================================== */
 
   function getPreferredTheme() {
-    var saved = StudyStorage.legacy.getItem("theme");
-    if (saved === "dark" || saved === "light") return saved;
-    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-    return "light";
+    // One preference record owns the theme; 'system' resolves through the OS.
+    return StudyStorage.theme();
   }
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
-    StudyStorage.legacy.setItem("theme", theme);
+    StudyStorage.setTheme(theme);
     updateThemeIcons(theme);
   }
 
@@ -1465,7 +1461,7 @@ document.addEventListener("DOMContentLoaded", function () {
   (function () {
     var html = document.documentElement;
     var hardcoded = html.getAttribute("data-theme");
-    var saved = StudyStorage.legacy.getItem("theme");
+    var saved = StudyStorage.theme();
     if (saved && hardcoded !== saved) {
       html.setAttribute("data-theme", saved);
     }

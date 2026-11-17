@@ -62,14 +62,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initTheme() {
   const html  = document.documentElement;
   const btn   = document.getElementById('theme-toggle');
-  const saved = StudyStorage.legacy.getItem('theme') || 'light';
+  const saved = StudyStorage.theme();
   html.setAttribute('data-theme', saved);
   btn.querySelector('use').setAttribute('href',
     `../assets/icons/sprite.svg#${saved === 'dark' ? 'sun' : 'moon'}`);
   btn.addEventListener('click', () => {
     const n = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', n);
-    StudyStorage.legacy.setItem('theme', n);
+    StudyStorage.setTheme(n);
     btn.querySelector('use').setAttribute('href',
       `../assets/icons/sprite.svg#${n === 'dark' ? 'sun' : 'moon'}`);
   });
@@ -583,6 +583,9 @@ function renderQ(direction) {
   const q    = S.questions[S.index];
   if (!q) return;
 
+  // Flush a pending debounced note before the card is rebuilt.
+  window.SectionNotes?.flush();
+
   const card = document.getElementById('question-card');
 
   // Close answer instantly before swap
@@ -723,6 +726,14 @@ function renderQ(direction) {
   }
   shareBar.appendChild(statusEl);
   card.appendChild(shareBar);
+
+  /* ── Private note for this question (Phase 6.4) ── */
+  card.querySelector('.question-note')?.remove();
+  if (window.SectionNotes) {
+    const note = SectionNotes.mount({ key: SectionNotes.keyFor(`practice/${q.id}`), title: 'My note for this question' });
+    note.classList.add('question-note');
+    card.appendChild(note);
+  }
 
   if (S.deepLinkResolvedId && S.deepLinkResolvedId === q.id) {
     card.classList.add('is-deeplink-target');
