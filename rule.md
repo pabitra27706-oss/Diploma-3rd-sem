@@ -7,13 +7,14 @@
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
-> (sub-phase 8A): branch and license references corrected to the current session
-> branch `arena/637a5a31-diploma-3rd-sem` (PR #10, **merged 2026-11-17 as
-> `8f6eb97`**, branched from `main` at `365b8f7`); `arena/858a50c7-...`
-> (PR #9, `365b8f7`) is merged, and prior
-> `arena/47d8bf99-...`, `arena/be3d9178-...` and `arena/26856d99-...` branches
-> were merged into `main` and are retired. **If this manual and Git disagree on the branch name, Git
-> is right — update this file.**
+> (sub-phase 8A, Phase 3 `✅*` sign-off, and Phase 4 discovery): active session
+> branch is `arena/80b11bcf-diploma-3rd-sem` (branched from `main` at
+> `9d47c7c76b2384c72944a0880df058a2518394ec`, PR #11 merge). Earlier branches
+> `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
+> `arena/858a50c7-...` (PR #9 `365b8f7`), `arena/47d8bf99-...` (PR #8
+> `3e3cb2e1`), `arena/be3d9178-...` (PR #7 `125eb94`) and `arena/26856d99-...`
+> (`8405b15`) are merged into `main` and retired. **If this manual and Git
+> disagree on the branch name, Git is right — update this file.**
 >
 > **New-session reading order:** `rule.md` (this file) → `prompt.md` →
 > `docs/STATUS.md` → `docs/DECISIONS.md` → `docs/ROADMAP.md` → the relevant
@@ -23,7 +24,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/637a5a31-diploma-3rd-sem` (session branch, PR #10 merged as `8f6eb97`; `main` is now that merge commit and carries sub-phase 8A; `arena/858a50c7-...` (PR #9) and the older `arena/47d8bf99-...`, `arena/be3d9178-...`, `arena/26856d99-...` branches were merged into `main` and are retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/80b11bcf-diploma-3rd-sem` (active session branch, branched from `main` at `9d47c7c7` after PR #11 merged; prior `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -191,12 +192,13 @@ A **public launch** additionally needs every item in
 - **Canonical post-phase Termux block (branch-specific, copy-paste):** after a
   phase is pushed, the owner runs this on their device to pull the current
   session branch and serve it at the real subpath. It follows **push → pull →
-  run**, using the branch named in §1 (`arena/26856d99-diploma-3rd-sem`):
+  run**, using the branch named in §1 (`arena/80b11bcf-diploma-3rd-sem`):
 
   ```sh
   cd ~/Diploma-3rd-sem
-  git push origin arena/26856d99-diploma-3rd-sem   # ensure branch is current (agent already pushed)
-  git pull --ff-only                               # get latest on the branch
+  git fetch origin arena/80b11bcf-diploma-3rd-sem
+  git checkout arena/80b11bcf-diploma-3rd-sem
+  git pull --ff-only origin arena/80b11bcf-diploma-3rd-sem
   cd ..
   python3 -m http.server 8000 --bind 127.0.0.1
   ```

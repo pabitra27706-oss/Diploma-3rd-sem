@@ -112,8 +112,34 @@ const TYPE_LABELS = {
 // ─── URL Params ──────────────────────────────────────────
 const params = new URLSearchParams(window.location.search);
 const paperParam = params.get('paper') || '';
-const subjectCode = params.get('subject') || (/^CST\d{3}-/.test(paperParam) ? paperParam.split('-')[0] : null);
-const paperCode = paperParam.match(/(?:^|-)(P\d{3})(?:-|$)/)?.[1] || paperParam;
+const queryQ = params.get('q') || '';
+const queryQMatch = queryQ.match(/^(CST\d{3})-(P\d{3})-Q\d+$/);
+const subjectCode = params.get('subject')
+  || (/^CST\d{3}-/.test(paperParam) ? paperParam.split('-')[0] : null)
+  || (queryQMatch ? queryQMatch[1] : null);
+const paperCode = paperParam.match(/(?:^|-)(P\d{3})(?:-|$)/)?.[1]
+  || (paperParam || (queryQMatch ? queryQMatch[2] : ''));
+
+function shortSubject(code) {
+  if (typeof window !== 'undefined' && typeof window.subjectLabel === 'function') {
+    return window.subjectLabel(code);
+  }
+  return SUBJECT_NAMES[code] || 'Subject';
+}
+
+function canonicalPaperId() {
+  if (paperMeta && paperMeta.fileName) {
+    return paperMeta.fileName.replace(/\.json$/, '');
+  }
+  return subjectCode && paperCode ? `${subjectCode}-${paperCode}` : paperCode;
+}
+
+function canonicalQuestionUrl(q) {
+  const url = new URL('answers.html', window.location.href);
+  url.hash = '';
+  url.search = new URLSearchParams({ paper: canonicalPaperId(), q: q.id }).toString();
+  return url.href;
+}
 
 
 // ─── State ───────────────────────────────────────────────
@@ -590,35 +616,43 @@ function initSwipe() {
 // ═══════════════════════════════════════════════════════════
 
 async function init() {
-  if (!subjectCode || !paperCode) return showError('Invalid URL.');
+  if (!subjectCode || !paperCode) {
+    return showError('Requested paper was not specified. Return to the papers list to pick one.');
+  }
 
   loadState();
 
   try {
     const regRes = await fetch(`../_data/${subjectCode}/registry.json`);
-    if (!regRes.ok) throw new Error('Registry not found');
+    if (!regRes.ok) throw new Error('Requested paper is not in the archive.');
     const registry = await regRes.json();
 
     paperMeta = registry.papers.find(p => p.paperCode === paperCode);
-    if (!paperMeta) throw new Error(`Paper ${paperCode} not found`);
+    if (!paperMeta) throw new Error('Requested paper is not in the archive.');
+    if (/^CST\d{3}-P\d{3}-\d{4}-\d{2}$/.test(paperParam)
+        && paperMeta.fileName.replace(/\.json$/, '') !== paperParam) {
+      throw new Error('Requested paper is not in the archive.');
+    }
 
     const paperRes = await fetch(`../_data/${subjectCode}/${paperMeta.fileName}`);
-    if (!paperRes.ok) throw new Error('Paper file not found');
+    if (!paperRes.ok) throw new Error('Requested paper file could not be loaded.');
     const paperData = await paperRes.json();
 
     questions = paperData.questions || [];
-    if (questions.length === 0) throw new Error('No questions in this paper');
+    if (questions.length === 0) throw new Error('No questions are recorded in this paper.');
 
     const sessionLabel = paperMeta.examSession || `${paperMeta.month} ${paperMeta.year}`;
     const setLabel = paperMeta.scanSetNumber ? ` · Set ${paperMeta.scanSetNumber}` : '';
+    const fullName = SUBJECT_NAMES[subjectCode] || shortSubject(subjectCode);
+    const shortName = shortSubject(subjectCode);
 
     document.getElementById('headerTitle').textContent =
-      `${SUBJECT_NAMES[subjectCode] || ''} · ${paperMeta.paperCode}`;
+      `${fullName} · ${paperMeta.paperCode}`;
     document.getElementById('headerSub').textContent =
-      `${SUBJECT_NAMES[subjectCode] || ''} · ${sessionLabel}${setLabel}`;
+      `${fullName} · ${sessionLabel}${setLabel}`;
     document.getElementById('sidebarTitle').textContent = sessionLabel;
     document.title =
-      `Practice ${subjectCode} ${sessionLabel}`;
+      `${shortName} · ${sessionLabel} — PYQ Answers`;
 
     const ls = document.getElementById('loadingScreen');
     ls.classList.add('fade-out');
@@ -627,14 +661,35 @@ async function init() {
       document.getElementById('appShell').classList.remove('hidden');
     }, 400);
 
-    const target=params.get('q');
-    if(target){const index=questions.findIndex(q=>q.id===target);if(index>=0)currentIndex=index;else document.getElementById('headerSub').textContent+=' · Requested question not found; showing this paper.';}
+    const target = params.get('q');
+    let deepLinkMatched = false;
+    if (target) {
+      const index = questions.findIndex(q => q.id === target);
+      if (index >= 0) {
+        currentIndex = index;
+        deepLinkMatched = true;
+      } else {
+        document.getElementById('headerSub').textContent +=
+          ' · Requested question not found; showing this paper.';
+      }
+    }
     buildSidebar();
     buildNavDots();
     updateProgress();
     renderView();
     initSwipe();
-    if(params.get('q'))setTimeout(()=>{const card=document.querySelector('.question-card');card?.focus();card?.scrollIntoView({block:'center'});},450);
+    if (deepLinkMatched) {
+      setTimeout(() => {
+        const cards = Array.from(document.querySelectorAll('#questionContainer .question-card'));
+        const card = cards.find(el => el.getAttribute('data-question-id') === target) || cards[0];
+        if (window.StudyShare && typeof window.StudyShare.highlight === 'function') {
+          window.StudyShare.highlight(card);
+        } else if (card) {
+          card.focus();
+          card.scrollIntoView({ block: 'center' });
+        }
+      }, 450);
+    }
 
   } catch (err) {
     showError(err.message);
@@ -677,7 +732,6 @@ function renderView() {
   } else {
     renderReviewView();
   }
-  decorateQuestionLinks();
 }
 
 
@@ -911,6 +965,7 @@ function attachPracticeEvents(q, isMCQ, isAnswered, correctIndex) {
       renderPracticeView();
     });
   }
+  decorateQuestionLinks();
 }
 
 
@@ -1023,6 +1078,7 @@ function renderReviewView() {
       buildSidebar();
     });
   });
+  decorateQuestionLinks();
 }
 
 
@@ -1522,11 +1578,11 @@ document.querySelectorAll('.print-size-btn').forEach(btn => {
 
 function buildPrintContent() {
   const c = document.getElementById('printContent');
-  const subName = SUBJECT_NAMES[subjectCode] || subjectCode;
+  const subName = SUBJECT_NAMES[subjectCode] || shortSubject(subjectCode);
 
   let html = `
     <div class="print-header">
-      <h1>${subName} (${subjectCode})</h1>
+      <h1>${escapeHtml(subName)}</h1>
       <p>Previous Year Questions with Answers</p>
       <p>${paperMeta.month} ${paperMeta.year} · Paper: ${paperMeta.sourcePaperCode || paperMeta.paperCode}</p>
       <p>Total: ${questions.length} Questions</p>
@@ -1739,18 +1795,73 @@ init();
 
 // Canonical links contain source identity, never local answers or student data.
 function decorateQuestionLinks() {
-  document.querySelectorAll('#questionContainer .question-card').forEach((card,index)=>{
-    const q=questions[currentMode==='practice'?currentIndex:index];if(!q)return;
+  const sessionLabel = paperMeta
+    ? (paperMeta.examSession || `${paperMeta.month || ''} ${paperMeta.year || ''}`.trim())
+    : '';
+  const shortName = shortSubject(subjectCode);
+  const targetQ = params.get('q');
+
+  document.querySelectorAll('#questionContainer .question-card').forEach((card, index) => {
+    const qIndex = currentMode === 'practice' ? currentIndex : index;
+    const q = questions[qIndex];
+    if (!q) return;
     card.querySelector('.question-share')?.remove();
-    card.tabIndex=-1;
-    const url=new URL('answers.html',location.href);url.search=new URLSearchParams({subject:subjectCode,paper:paperCode,q:q.id}).toString();
-    const controls=document.createElement('div');controls.className='question-share';
-    const copy=document.createElement('button');copy.type='button';copy.textContent='Copy question link';
-    copy.onclick=async()=>{try{await navigator.clipboard.writeText(url.href);copy.textContent='Link copied';}catch{const field=document.createElement('input');field.value=url.href;field.setAttribute('aria-label','Question link — select and copy');controls.append(field);field.focus();field.select();}};
-    controls.append(copy);
-    if(navigator.share){const share=document.createElement('button');share.type='button';share.textContent='Share question';share.onclick=()=>navigator.share({title:q.question.slice(0,80),url:url.href}).catch(()=>{});controls.append(share);}
-    const provenance=document.createElement('p');provenance.textContent=`Answer status: ${q.answerStatus||'unverified'} · Source status: ${q.sourceStatus||'unverified'} · Citation: ${q.sourcePage||'not recorded'}${q.verifiedOn?' · Verification date: '+q.verifiedOn:''}`;controls.append(provenance);
+    card.tabIndex = -1;
+    card.setAttribute('data-question-id', q.id);
+
+    const shareUrl = canonicalQuestionUrl(q);
+    const cleanStem = String(q.question || '').replace(/\s+/g, ' ').trim();
+    const shareTitle = `${shortName} · Q${qIndex + 1}${sessionLabel ? ` (${sessionLabel})` : ''}`;
+    const shareText = `${shortName}${sessionLabel ? ` (${sessionLabel})` : ''}: ${cleanStem.slice(0, 120)}`;
+
+    const controls = document.createElement('div');
+    controls.className = 'question-share';
+
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.className = 'copy-question-link';
+    copy.textContent = 'Copy question link';
+
+    const share = document.createElement('button');
+    share.type = 'button';
+    share.className = 'share-question-link';
+    share.textContent = 'Share question';
+
+    const status = document.createElement('span');
+    status.className = 'share-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+
+    copy.addEventListener('click', () => {
+      window.StudyShare.copy(shareUrl, {
+        button: copy,
+        container: controls,
+        statusEl: status,
+        inputLabel: 'Question link — select and copy'
+      });
+    });
+
+    share.addEventListener('click', () => {
+      window.StudyShare.share(
+        { title: shareTitle, text: shareText, url: shareUrl },
+        {
+          button: share,
+          copyButton: copy,
+          container: controls,
+          statusEl: status,
+          inputLabel: 'Question link — select and copy'
+        }
+      );
+    });
+
+    controls.append(copy, share, status);
+
+    const provenance = document.createElement('p');
+    provenance.textContent =
+      `Answer status: ${q.answerStatus || 'unverified'} · Source status: ${q.sourceStatus || 'unverified'} · Citation: ${q.sourcePage || 'not recorded'}${q.verifiedOn ? ' · Verification date: ' + q.verifiedOn : ''}`;
+    controls.append(provenance);
     card.append(controls);
+
     loadRepeatIndex().then(repeatMap => {
       const info = repeatMap.get(q.id);
       if (!info || !controls.isConnected) return;
@@ -1763,14 +1874,25 @@ function decorateQuestionLinks() {
       info.others.forEach((other, idx) => {
         if (idx > 0) dup.append(document.createTextNode(' · '));
         const link = document.createElement('a');
-        const otherUrl = new URL('answers.html', location.href);
-        otherUrl.search = new URLSearchParams({ subject: other.subject, paper: other.paper, q: other.id }).toString();
+        const otherUrl = new URL('answers.html', window.location.href);
+        otherUrl.hash = '';
+        if (other.paperId) {
+          otherUrl.search = new URLSearchParams({ paper: other.paperId, q: other.id }).toString();
+        } else {
+          otherUrl.search = new URLSearchParams({ subject: other.subject, paper: other.paper, q: other.id }).toString();
+        }
         link.href = otherUrl.href;
-        link.textContent = `${other.month || ''} ${other.year || ''} (${other.paper})`.trim();
+        const labelParts = [shortSubject(other.subject), `${other.month || ''} ${other.year || ''}`.trim()].filter(Boolean);
+        link.textContent = `${labelParts.join(' · ')} (${other.paper})`;
         dup.append(link);
       });
       controls.append(dup);
     });
-    if(params.get('q')===q.id){card.style.outline='3px solid var(--accent, #5268d9)';document.title=q.id+' — '+q.question.slice(0,60);}
+
+    if (targetQ && targetQ === q.id) {
+      card.classList.add('is-deeplink-target');
+      card.setAttribute('data-deeplink', 'active');
+      document.title = `${shortName} · Q${qIndex + 1} — ${cleanStem.slice(0, 60)}`;
+    }
   });
 }

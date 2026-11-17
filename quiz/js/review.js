@@ -74,6 +74,120 @@ function cacheDOMRefs() {
    DATA LOADING
 ══════════════════════════════════════════════════════════════ */
 
+function inferSubjectCode(q) {
+  if (q && q.subjectCode) return q.subjectCode;
+  if (q && q.id) {
+    const m = String(q.id).match(/^(CST\d{3})-/);
+    if (m) return m[1];
+  }
+  const cfgSubj = reviewState.config && reviewState.config.subject;
+  return cfgSubj && cfgSubj !== 'all' ? cfgSubj : '';
+}
+
+function shortSubjectName(code) {
+  if (code && typeof window !== 'undefined' && typeof window.subjectLabel === 'function') {
+    return window.subjectLabel(code);
+  }
+  return 'Quiz';
+}
+
+function buildReviewDeepLink(q) {
+  const url = new URL('review.html', window.location.href);
+  url.hash = '';
+  const p = new URLSearchParams();
+  const hid = getParam('historyId') || (reviewState.result && reviewState.result.id);
+  if (hid) p.set('historyId', hid);
+  if (q && q.id) p.set('q', q.id);
+  url.search = p.toString();
+  return url.href;
+}
+
+function buildCanonicalPaperLink(q) {
+  if (!q || !q.id) return null;
+  const m = String(q.id).match(/^(CST\d{3})-(P\d{3})-Q\d+$/);
+  if (!m) return null;
+  const url = new URL('../pyq/answers.html', window.location.href);
+  url.hash = '';
+  const fileName = reviewState.config && reviewState.config.paper && reviewState.config.paper.fileName;
+  const paperId = fileName ? fileName.replace(/\.json$/, '') : '';
+  if (paperId && paperId.startsWith(`${m[1]}-${m[2]}`)) {
+    url.search = new URLSearchParams({ paper: paperId, q: q.id }).toString();
+  } else {
+    url.search = new URLSearchParams({ subject: m[1], paper: m[2], q: q.id }).toString();
+  }
+  return url.href;
+}
+
+function buildReviewShareBar(q, index) {
+  const bar = createElement('div', 'question-share');
+  const code = inferSubjectCode(q);
+  const shortName = shortSubjectName(code);
+  const cleanStem = String(q.question || '').replace(/\s+/g, ' ').trim();
+  const localUrl = buildReviewDeepLink(q);
+  const paperUrl = buildCanonicalPaperLink(q);
+  const shareUrl = paperUrl || localUrl;
+  const shareTitle = `${shortName} · Q${index + 1} Review`;
+  const shareText = paperUrl
+    ? `${shortName}: ${cleanStem.slice(0, 120)}`
+    : `${shortName} (opens on the device storing this quiz attempt): ${cleanStem.slice(0, 110)}`;
+
+  const copyBtn = createElement('button', 'copy-question-link', 'Copy review link (this device)');
+  copyBtn.type = 'button';
+
+  const shareBtn = createElement(
+    'button',
+    'share-question-link',
+    paperUrl ? 'Share question' : 'Share review link (this device)'
+  );
+  shareBtn.type = 'button';
+
+  const statusEl = createElement('span', 'share-status');
+  statusEl.setAttribute('role', 'status');
+  statusEl.setAttribute('aria-live', 'polite');
+
+  copyBtn.addEventListener('click', () => {
+    window.StudyShare.copy(localUrl, {
+      button: copyBtn,
+      container: bar,
+      statusEl: statusEl,
+      inputLabel: 'Quiz review link (this device) — select and copy'
+    });
+  });
+
+  shareBtn.addEventListener('click', () => {
+    window.StudyShare.share(
+      { title: shareTitle, text: shareText, url: shareUrl },
+      {
+        button: shareBtn,
+        copyButton: copyBtn,
+        container: bar,
+        statusEl: statusEl,
+        inputLabel: paperUrl
+          ? 'Canonical paper question link — select and copy'
+          : 'Quiz review link (this device) — select and copy'
+      }
+    );
+  });
+
+  bar.appendChild(copyBtn);
+  bar.appendChild(shareBtn);
+  if (paperUrl) {
+    const openPaper = createElement('a', 'open-paper-link', `Open in ${shortName} paper`);
+    openPaper.href = paperUrl;
+    bar.appendChild(openPaper);
+  }
+  bar.appendChild(statusEl);
+  const scopeNote = createElement(
+    'p',
+    '',
+    paperUrl
+      ? 'Review links reopen this attempt on this device; Share question uses the public archive link without your answers.'
+      : 'Quiz attempts stay in browser storage on this device; review links carry no personal answers.'
+  );
+  bar.appendChild(scopeNote);
+  return bar;
+}
+
 function loadReviewData() {
   const historyId = getParam('historyId');
   const result = historyId ? QuizAttempts.historyEntry(historyId) : QuizAttempts.current();
@@ -84,9 +198,9 @@ function loadReviewData() {
   }
 
   // Only show review for All Types mode
-  // If MCQ mode landed here redirect to result
+  // If MCQ mode landed here redirect to result (preserving deep-link query params)
   if (result.config && result.config.mode === 'mcq') {
-    window.location.href = 'result.html';
+    window.location.href = `result.html${window.location.search || ''}`;
     return;
   }
 
@@ -103,8 +217,32 @@ function loadReviewData() {
   renderPaperSummaryNote();
   renderInfoBanner();
   renderQuestionList();
-  const targetId=getParam('q');
-  if(targetId){const target=[...document.querySelectorAll('[data-question-id]')].find(el=>el.dataset.questionId===targetId);if(target){target.tabIndex=-1;target.focus();target.scrollIntoView({block:'center'});}else{const note=document.createElement('p');note.textContent='The linked question is not in this local attempt.';note.setAttribute('role','status');dom.reviewMain.prepend(note);}}
+  const targetId = getParam('q');
+  if (targetId) {
+    const targetIdx = reviewState.questions.findIndex(item => item.id === targetId);
+    const target = [...document.querySelectorAll('[data-question-id]')].find(el => el.dataset.questionId === targetId);
+    if (target) {
+      if (window.StudyShare && typeof window.StudyShare.highlight === 'function') {
+        window.StudyShare.highlight(target);
+      } else {
+        target.tabIndex = -1;
+        target.focus();
+        target.scrollIntoView({ block: 'center' });
+      }
+      if (targetIdx >= 0) {
+        const tq = reviewState.questions[targetIdx];
+        const shortName = shortSubjectName(inferSubjectCode(tq));
+        const cleanStem = String(tq.question || '').replace(/\s+/g, ' ').trim();
+        document.title = `${shortName} · Q${targetIdx + 1} — ${cleanStem.slice(0, 60)}`;
+      }
+    } else {
+      const note = document.createElement('p');
+      note.className = 'deeplink-notice';
+      note.textContent = 'Requested question is not in this local quiz attempt; showing the saved review.';
+      note.setAttribute('role', 'status');
+      dom.reviewMain.prepend(note);
+    }
+  }
   buildPalettePanel();
   bindEvents();
   updateRetryLink();
@@ -113,6 +251,24 @@ function loadReviewData() {
 function showNoData() {
   hideEl(dom.loadingState);
   showEl(dom.noDataState);
+  const targetId = getParam('q');
+  if (targetId && dom.noDataState && !dom.noDataState.querySelector('.deeplink-notice')) {
+    const note = document.createElement('p');
+    note.className = 'deeplink-notice';
+    note.setAttribute('role', 'status');
+    note.textContent = 'Quiz review links open attempts stored locally on the device where the quiz was taken. No matching local attempt was found here.';
+    const m = String(targetId).match(/^(CST\d{3})-(P\d{3})-Q\d+$/);
+    if (m) {
+      note.appendChild(document.createTextNode(' '));
+      const link = document.createElement('a');
+      const url = new URL('../pyq/answers.html', window.location.href);
+      url.search = new URLSearchParams({ subject: m[1], paper: m[2], q: targetId }).toString();
+      link.href = url.href;
+      link.textContent = `Open this ${shortSubjectName(m[1])} question in PYQ Answers`;
+      note.appendChild(link);
+    }
+    dom.noDataState.appendChild(note);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -320,10 +476,13 @@ function buildQuestionCard(q, displayNum) {
     }
   }
 
+  // Share & canonical deep-link controls
+  body.appendChild(buildReviewShareBar(q, Math.max(0, displayNum - 1)));
+
   card.appendChild(body);
 
   // ── Footer
-  const footer = buildCardFooter(q, hasAnswer, isMCQ);
+  const footer = buildCardFooter(q, hasAnswer, isMCQ, Math.max(0, displayNum - 1));
   card.appendChild(footer);
 
   return card;
@@ -500,7 +659,7 @@ function buildModelAnswerBox(q, headingText = '📖 Model Answer') {
 }
 
 /* ── Card Footer ─────────────────────────────────────────────── */
-function buildCardFooter(q, hasAnswer, isMCQ) {
+function buildCardFooter(q, hasAnswer, isMCQ, index) {
   const footer = createElement('div', 'review-q-footer');
 
   const left = createElement('div', 'review-q-footer-left');
@@ -512,9 +671,11 @@ function buildCardFooter(q, hasAnswer, isMCQ) {
     ));
   }
 
-  // Question ID
-  if (q.id) {
-    left.appendChild(createElement('span', 'text-xs text-secondary', q.id));
+  // Human-readable subject label (internal ID remains on card data-question-id and URLs)
+  const code = inferSubjectCode(q);
+  if (code) {
+    const label = shortSubjectName(code) + (q.unit ? ` · Unit ${q.unit}` : '');
+    left.appendChild(createElement('span', 'text-xs text-secondary', label));
   }
 
   const right = createElement('div', 'review-q-footer-right');

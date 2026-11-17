@@ -158,6 +158,38 @@ function normalizeCompleted(list) {
   return [...new Set((list || []).map(id => S.aliases[id] || id).filter(id => valid.has(id)))];
 }
 
+function showDeepLinkNotice(message) {
+  let note = document.getElementById('deeplink-status');
+  if (!note) {
+    note = document.createElement('p');
+    note.id = 'deeplink-status';
+    note.setAttribute('role', 'status');
+    note.setAttribute('aria-live', 'polite');
+    note.style.cssText = 'margin:0 0 .75rem;padding:.55rem .8rem;border-radius:.5rem;border:1px solid var(--border-color,rgba(120,130,150,.35));font-size:.86rem;';
+    const zone = document.getElementById('question-zone');
+    if (zone) zone.prepend(note);
+  }
+  note.textContent = message;
+}
+
+function canonicalPracticeUrl(q) {
+  const url = new URL('session.html', window.location.href);
+  url.hash = '';
+  url.search = new URLSearchParams({ q: q.id }).toString();
+  return url.href;
+}
+
+function canonicalPracticePaperUrl(q) {
+  const url = new URL('../pyq/answers.html', window.location.href);
+  url.hash = '';
+  url.search = new URLSearchParams({
+    subject: q.subjectCode,
+    paper: q.paperCode,
+    q: q.id
+  }).toString();
+  return url.href;
+}
+
 function checkResume() {
   let saved;
   try { saved = JSON.parse(StudyStorage.legacy.getItem(S.key)); } catch {}
@@ -166,8 +198,12 @@ function checkResume() {
   if (targetIdx >= 0) {
     S.done  = new Set(completed);
     S.index = targetIdx;
+    S.deepLinkResolvedId = S.questions[targetIdx].id;
     begin();
     return;
+  }
+  if (S.targetId) {
+    showDeepLinkNotice('Requested question was not found in this practice view; showing the first available question.');
   }
   if (!saved || !completed.length) { startFresh(); return; }
 
@@ -219,6 +255,19 @@ function begin() {
   updateNav();
   renderDots();
   showSwipeHint();
+
+  if (S.deepLinkResolvedId) {
+    const card = document.getElementById('question-card');
+    setTimeout(() => {
+      if (window.StudyShare && typeof window.StudyShare.highlight === 'function') {
+        window.StudyShare.highlight(card);
+      } else if (card) {
+        card.tabIndex = -1;
+        card.focus();
+        card.scrollIntoView({ block: 'center' });
+      }
+    }, 120);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -555,7 +604,10 @@ function renderQ(direction) {
   }
 
   /* ── Badges ── */
-  document.getElementById('q-subject').textContent = (window.subjectLabel && q.subjectCode) ? subjectLabel(q.subjectCode) : (q.subjectCode || '');
+  const shortSubj = (window.subjectLabel && q.subjectCode) ? subjectLabel(q.subjectCode) : 'Subject';
+  card.setAttribute('data-question-id', q.id);
+  card.tabIndex = -1;
+  document.getElementById('q-subject').textContent = shortSubj;
   document.getElementById('q-unit').textContent    = q.unit ? `Unit ${q.unit}` : '';
   document.getElementById('q-marks').textContent   = q.marks ? `${q.marks}M` : '';
   document.getElementById('q-type').textContent    = q.type ? cap(q.type) : '';
@@ -568,10 +620,26 @@ function renderQ(direction) {
   document.getElementById('q-topic').textContent =
     q.topicQuality === 'generic' || !q.topic ? 'Unspecified topic' : q.topic;
   const baseFrom = [q.year, q.month, q.paperCode].filter(Boolean).join(' · ') || '-';
-  document.getElementById('q-from').textContent =
-    Array.isArray(q.alsoAppearedIn) && q.alsoAppearedIn.length
-      ? `${baseFrom} · Also in: ${q.alsoAppearedIn.join(', ')}`
-      : baseFrom;
+  const fromEl = document.getElementById('q-from');
+  fromEl.textContent = '';
+  fromEl.appendChild(document.createTextNode(baseFrom));
+  if (Array.isArray(q.alsoAppearedIn) && q.alsoAppearedIn.length) {
+    fromEl.appendChild(document.createTextNode(' · Also appeared identically in: '));
+    q.alsoAppearedIn.forEach((aliasId, idx) => {
+      if (idx > 0) fromEl.appendChild(document.createTextNode(', '));
+      const m = String(aliasId).match(/^(CST\d{3})-(P\d{3})-Q(\d+)$/);
+      if (m) {
+        const a = document.createElement('a');
+        const u = new URL('../pyq/answers.html', window.location.href);
+        u.search = new URLSearchParams({ subject: m[1], paper: m[2], q: aliasId }).toString();
+        a.href = u.href;
+        a.textContent = `${m[2]} · Q${m[3]}`;
+        fromEl.appendChild(a);
+      } else {
+        fromEl.appendChild(document.createTextNode('another listing'));
+      }
+    });
+  }
 
   /* ── Tags ── */
   const tr = document.getElementById('q-tags-row');
@@ -597,6 +665,73 @@ function renderQ(direction) {
   const isDone = S.done.has(q.id);
   updateDoneUI(isDone);
   card.classList.toggle('is-done', isDone);
+
+  /* ── Canonical deep-link copy + share ── */
+  card.querySelector('.question-share')?.remove();
+  const shareBar = document.createElement('div');
+  shareBar.className = 'question-share';
+  const shareUrl = canonicalPracticeUrl(q);
+  const cleanStem = String(q.question || '').replace(/\s+/g, ' ').trim();
+  const sessionInfo = [q.month, q.year].filter(Boolean).join(' ');
+  const shareTitle = `${shortSubj} · Practice Question`;
+  const shareText = `${shortSubj}${sessionInfo ? ` (${sessionInfo})` : ''}: ${cleanStem.slice(0, 120)}`;
+
+  const copyBtn = document.createElement('button');
+  copyBtn.type = 'button';
+  copyBtn.className = 'copy-question-link';
+  copyBtn.textContent = 'Copy question link';
+
+  const shareBtn = document.createElement('button');
+  shareBtn.type = 'button';
+  shareBtn.className = 'share-question-link';
+  shareBtn.textContent = 'Share question';
+
+  const statusEl = document.createElement('span');
+  statusEl.className = 'share-status';
+  statusEl.setAttribute('role', 'status');
+  statusEl.setAttribute('aria-live', 'polite');
+
+  copyBtn.addEventListener('click', () => {
+    window.StudyShare.copy(shareUrl, {
+      button: copyBtn,
+      container: shareBar,
+      statusEl: statusEl,
+      inputLabel: 'Practice question link — select and copy'
+    });
+  });
+
+  shareBtn.addEventListener('click', () => {
+    window.StudyShare.share(
+      { title: shareTitle, text: shareText, url: shareUrl },
+      {
+        button: shareBtn,
+        copyButton: copyBtn,
+        container: shareBar,
+        statusEl: statusEl,
+        inputLabel: 'Practice question link — select and copy'
+      }
+    );
+  });
+
+  shareBar.append(copyBtn, shareBtn);
+  if (q.subjectCode && q.paperCode) {
+    const paperLink = document.createElement('a');
+    paperLink.className = 'open-paper-link';
+    paperLink.href = canonicalPracticePaperUrl(q);
+    paperLink.textContent = `Open in ${shortSubj} paper`;
+    shareBar.appendChild(paperLink);
+  }
+  shareBar.appendChild(statusEl);
+  card.appendChild(shareBar);
+
+  if (S.deepLinkResolvedId && S.deepLinkResolvedId === q.id) {
+    card.classList.add('is-deeplink-target');
+    card.setAttribute('data-deeplink', 'active');
+    document.title = `${shortSubj} · ${cleanStem.slice(0, 60)} — Practice`;
+  } else {
+    card.classList.remove('is-deeplink-target', 'is-deeplink-flash');
+    card.removeAttribute('data-deeplink');
+  }
 
   /* ── Counters ── */
   document.getElementById('header-counter').textContent = `Q${S.index + 1} / ${S.questions.length}`;
@@ -948,7 +1083,7 @@ function renderChips() {
   };
 
   const f = S.filters;
-  add('subjects',    f.subjects,    v => v);
+  add('subjects',    f.subjects,    v => (window.subjectLabel ? subjectLabel(v) : 'Subject'));
   add('units',       f.units,       v => `Unit ${v}`);
   add('topics',      f.topics,      v => v);
   add('difficulty',  f.difficulty,  v => cap(v));

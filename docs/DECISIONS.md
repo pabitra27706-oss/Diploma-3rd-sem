@@ -302,3 +302,41 @@ separate source-verification gate and needs the owner's explicit approval.
 - Recorded as sub-phase 8A:
   `docs/phases/08-content-depth/sub-phase-8A-answer-prose-and-ui-labels/`, with
   `README.md`, `tasks.md` and `record.md`.
+
+## Phase 3 sign-off and Phase 4 discovery scope / candidate-repeat disclosure — 2026-11-17
+
+- **Phase 3 (`03-quiz-engine`) reconciled to `✅*`:** Owner approved closing
+  Phase 3 after PR #11 merged to `main` as `9d47c7c7`, recording explicit
+  caveats in `docs/phases/03-quiz-engine/record.md` (no standalone CST207 quiz
+  bank; 456 unkeyed items and subjective / 1-mark written MCQ explanations stay
+  manual self-review; 9 data + 3 syllabus source findings remain separate;
+  hardware/browser matrix in Phase 10).
+- **Phase 4 (`04-discovery`) implemented on `arena/80b11bcf-diploma-3rd-sem`:**
+  - **Explicit HTML index scope:** `assets/search/manifest.json` `scope` records
+    the exact partition of all 68 shipped HTML pages into 50 indexed pages
+    (24 unit note pages + 26 informational, subject-hub, practical-lab,
+    internship, coverage, exam-pattern, study and policy pages in
+    `index-pages.json`) and 18 deliberately excluded shells (14 dynamic app
+    shells, 2 unshipped placeholders, 2 fallback pages), plus client-side-only
+    `section-note:*` notes. All six shards stay ≤ 40% of source bytes (10.5%–37.0%).
+  - **Honest repeated-question explorer:** With the two duplicate 2023 reprints
+    deleted in PR #9 and PR #10, `assets/search/repeated.json` and
+    `repeated.html` present both the **1 exact-content alias group**
+    (`CST203-P001-Q43` / `CST203-P001-Q44`) and the **15 normalized-text
+    candidate clusters (32 records)** across all five theory subjects, each
+    badged *"Unverified candidate, not a confirmed duplicate"* with `differsIn`
+    metadata and sample-size disclaimers. Candidates are never merged or claimed
+    as verified repeats.
+  - **Authored-only heading anchors:** Added 168 authored `<h3>` IDs across the
+    24 unit pages and 7 `<h2>` IDs on `coverage.html`/`exam-pattern.html`, while
+    indexing unit `<h2>` headings via their authored enclosing `<section id>` so
+    `section-notes.js` runtime `section-1..N` IDs and `section-note:*` storage
+    keys stay untouched; unanchored page-top headings are explicitly recorded as
+    `noAnchor: true`.
+  - **Deep-link sharing and UI label discipline:** `window.StudyShare` provides
+    `navigator.share` → `navigator.clipboard.writeText` → selectable readonly
+    `<input>` fallback across PYQ Answers, Practice, Quiz Review and Quiz Result,
+    retaining real course/paper/question IDs in URLs while showing only
+    `subjectLabel()` display names on screen and explicitly labelling quiz
+    review links as local to this device.
+

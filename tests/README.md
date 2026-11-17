@@ -20,11 +20,14 @@ node tests/study-store.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs
 node tests/data-pipeline-consumers.cjs
+node tests/discovery-dom.cjs
 ```
 
-Python discovery currently covers 13 tests: source-preserving/idempotent
+Python discovery currently covers 16 tests: source-preserving/idempotent
 pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
-integrity guard changes/additions/removals, compact discovery, card-source
+integrity guard changes/additions/removals, compact discovery (≤ 40% shard budget,
+68-page scope partition, 2,410-entry file/anchor validation, 1 exact alias + 15
+unverified candidate repeat clusters, and SW cache registration), card-source
 resolution, bundle/source consistency, runtime pools and coverage joins. Paper comparisons pin to the owner-approved
 sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons use the same
 revision (the 2026-11-17 explanation revision, where both pins now point). Both
@@ -73,7 +76,7 @@ Use an isolated local test profile; tests intentionally create local records.
 |---|---|
 | `data-browser.cjs` | Unique Practice pool/day counts, real bank filters, no-key scoring and live counts |
 | `quiz-engine-browser.cjs` | Virtual-clock resume, flags/order, exact preview/retry, selected exports/edit, fetch failure, honest paper-practice limits |
-| `discovery-study-browser.cjs` | Safe search query, exact-repeat count/source landing, card rating persistence and Today counts |
+| `discovery-study-browser.cjs` | Safe search query, dijkstra/info-page search, 1 exact + 15 unverified candidate repeat clusters, canonical question deep link, unit breadcrumb/anchor + filtered-PYQ handoff, card rating persistence and Today counts |
 | `storage-browser.cjs` | Notes on three pages, reading preferences, previewed restore and stale-preview invalidation |
 | `paper-offline.cjs` | Previously cached paper/registry/engine/review offline |
 | `feedback-browser.cjs` | Keyboard buttons, field errors, copied draft/no request, once-per-tab-session local prompt |

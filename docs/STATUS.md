@@ -46,21 +46,30 @@ use PR #7/Git for the current CI and merge result.
 ## Delivery state
 
 **Merge authorization update:** the owner authorized merging on 2026-11-09
-(PR #7), 2026-11-17 (PR #9, merged as `365b8f7`) and again on 2026-11-17 for
-PR #10. No such permission authorizes deployment, Pages or domain changes, and
-none closes an unfinished phase gate.
+(PR #7, `125eb94`), 2026-11-16 (PR #8, `3e3cb2e1`), and 2026-11-17 (PR #9
+`365b8f7`, PR #10 `8f6eb97`, and PR #11 `9d47c7c7`). No such permission
+authorizes deployment, Pages or domain changes, and none closes an unfinished
+phase gate.
 
-- Branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, merged into `main` as
-  `8f6eb97`; base it was branched from: `365b8f7`).
-  `arena/858a50c7-diploma-3rd-sem` (PR #9) was merged into `main` as
-  `365b8f7`; older `arena/47d8bf99-...`, `arena/be3d9178-...` (PR #7,
-  `125eb94`) and `arena/26856d99-...` (`8405b15`) branches are retired.
+- Branch: `arena/80b11bcf-diploma-3rd-sem` (active session branch, branched
+  from `main` at `9d47c7c76b2384c72944a0880df058a2518394ec`, the PR #11 merge).
+  Earlier branches `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
+  `arena/858a50c7-...` (PR #9 `365b8f7`), `arena/47d8bf99-...` (PR #8
+  `3e3cb2e1`), `arena/be3d9178-...` (PR #7 `125eb94`), and `arena/26856d99-...`
+  (`8405b15`) are merged and retired.
 - Phase 2 engineering passed owner Termux verification (`✅*` at commit
   `021c4f2f94f387f4dd4e020d09e82a12b8720bec`, Web CI `43917224887` green);
   strict source-verification items (`9` data findings + `3` grouped syllabus
   findings) remain tracked under the separate content-verification gate.
-- Phase 3 (`03-quiz-engine`) engineering parts 3.1–3.6 are complete and awaiting
-  owner local verification.
+- Phase 3 (`03-quiz-engine`) is owner-approved (`✅*`, merged via PR #11
+  `9d47c7c7`), with explicit caveats recorded in
+  [`phases/03-quiz-engine/record.md`](phases/03-quiz-engine/record.md) (no
+  standalone CST207 quiz bank; 456 unkeyed quiz items and subjective / 1-mark
+  written MCQ explanations stay manual self-review; 9 data + 3 syllabus
+  source-review findings; hardware/browser acceptance in Phase 10).
+- Phase 4 (`04-discovery`) engineering parts 4.1–4.5 are complete and
+  gate-verified on `arena/80b11bcf-diploma-3rd-sem` (`🚧` pending owner local
+  verification); see [`phases/04-discovery/record.md`](phases/04-discovery/record.md).
 - Historical note: `docs/phases/02-data-pipeline/record.md` and
   `docs/phases/03-quiz-engine/record.md` still name
   `arena/be3d9178-diploma-3rd-sem` as the branch that work was performed on. That
@@ -79,9 +88,9 @@ none closes an unfinished phase gate.
 | Phase | Present implementation | Still needed before closing implementation |
 |---|---|---|
 | 1 — Platform | Subpath-safe PWA, local assets, presence metadata, install/update controller | Preserve regressions as later modules change. Original platform implementation is complete; final hardware/install acceptance moves to Phase 10. Full source/syllabus gates remain separate. |
-| 2 — Data | Deterministic inventory/scheduling, enriched catalog & derived pools, all 5 subject + 24 unit HTML pages syllabus-aligned & validator-checked, alias deep links & PYQ repeat cross-refs, generic topics filtered, no-key labels, source-review ledger, immutable-PYQ guard | Owner/source GATE only: resolve 10 source-backed data findings and 3 grouped syllabus errors; verify reprint relationships/key candidates and CST207/Jan-2026 bank additions. No guessed keys or raw retags. |
-| 3 — Quiz | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes, full paper practice enforcing `paperFormat` `answerAny` section/choiceSet quotas, 30m `2023-03` Group A loose-script window, `1m option + 1m written explanation` split, ESE pattern warnings, Print/PDF export | Owner local/phone verification (`🚧`) + Phase 10 cross-device acceptance. Subjective and written-explanation marks intentionally remain manual self-review (no fabricated overall paper grade). |
-| 4 — Discovery | Compact search shards, safe search UI, exact-repeat explorer, question links, subject/unit related material | Finish remaining informational-page indexing and authored heading anchors; focused offline-search, back-button, share-fallback and keyboard acceptance. Do not describe current search as indexing every page. |
+| 2 — Data (`✅*`) | Deterministic inventory/scheduling, enriched catalog & derived pools, all 5 subject + 24 unit HTML pages syllabus-aligned & validator-checked, alias deep links & PYQ repeat cross-refs, generic topics filtered, no-key labels, source-review ledger, immutable-PYQ guard | Owner/source GATE only: resolve 9 source-backed data findings and 3 grouped syllabus errors; verify the 15 normalized-stem candidate clusters and CST207/Jan-2026 bank additions. No guessed keys or raw retags. |
+| 3 — Quiz (`✅*`) | Timed snapshots/resume, flags, grading boundaries, history/export/retry/edit, mistakes, full paper practice enforcing `paperFormat` `answerAny` section/choiceSet quotas across 28 papers, 30m `2023-03` Group A loose-script window, `1m option + 1m written explanation` split, ESE pattern warnings, Print/PDF export | Owner-approved with recorded caveats: no standalone CST207 quiz bank; 456 unkeyed items and subjective/written-explanation marks remain manual self-review; Phase 10 cross-device acceptance pending. |
+| 4 — Discovery (`🚧`) | 2,410 search entries across 5 subject shards + `index-pages.json` (50/68 HTML pages indexed, 18 explicitly excluded in `manifest.json`, all shards ≤ 40%), offline SW precache + `WARM_SEARCH`, XSS-safe keyboard/URL/`popstate` search UI, 1 exact alias + 15 unverified candidate repeat clusters (32 records), deep links + `navigator.share`/clipboard/input fallbacks across PYQ/Practice/Quiz, authored unit heading anchors + breadcrumbs + hub counts + filtered-PYQ URL handoff, `subjectLabel()` everywhere | Awaiting owner Termux/browser verification before closing `🚧` → `✅*`. Normalized candidate clusters remain pending source-verified dedup; physical phone latency/share-sheet/screen-reader testing in Phase 10. |
 | 5 — Study system | Source-linked cards, fixed Leitner reviews, Today/goals/streaks, weak-area denominators, local seven-day trends | Broader clock/day-rollover/new-card-cap edge cases and clearer card-level source-eligibility reporting. Cards use existing model/keyed material, not new certification. |
 | 6 — Storage/portability | Central namespaced boundary, verified legacy copy migration, notes, preferences, group reset, previewed backup/merge/replace, recovery journal | Implement IndexedDB threshold/async cutover/fallback and migration evidence; concurrent-tab transaction isolation/state sync; typed validation of further legacy variants. Current primary API remains synchronous local storage. |
 | 7 — Inclusion/trust | Static landmarks/skip links on many legacy pages, shared focus/motion/reading controls, settings en/bn labels, truthful feedback/privacy | Remaining structure/heading/form warnings, full dialog/tab keyboard behavior, measured contrast/target/zoom evidence, wider Bengali UI catalog, credits/README maintenance and license/content-rights decision. No WCAG compliance claim yet. |
@@ -96,10 +105,11 @@ acceptance criteria.
 
 These cannot be solved by declaring a feature complete:
 
-1. **Source truth:** seven archived questions have stored Unit-5 tags in
-   four-unit subjects; a 35-question CST209 Unit-5 quiz bank is outside the
-   declared course; CST201 U3/U4 bank mappings are reversed relative to the
-   syllabus. The ledger contains 10 data findings / 3 grouped syllabus errors.
+1. **Source truth:** six archived questions have stored Unit-5 tags in
+   four-unit subjects (4 in CST205, 2 in CST209); a 35-question CST209 Unit-5
+   quiz bank is outside the declared course; CST201 U3/U4 bank mappings are
+   reversed relative to the syllabus. The ledger contains 9 data findings /
+   3 grouped syllabus errors (plus 1 warning for missing CST207 quiz bank).
    See [exceptions](data/validation-exceptions.json) and
    [source review](data/source-review-batch-01.md).
 2. **Answer certification:** unknown keys remain ungraded. Existing model
@@ -119,8 +129,11 @@ These cannot be solved by declaring a feature complete:
 These are local results from the latest implementation checkpoint, not a claim
 that documentation-only edits reran all browser suites:
 
-- Python unittest discovery: **13 PASS**.
-- Six deterministic Node suites: attempt state + 30-paper rule/quota/section-timer/explanation-split verification, quiz DOM/export/label contracts, scheduler/trends (including generic-topic collapse), storage, interruption/quota recovery, and Phase 2 derived-pipeline consumers — PASS.
+- Python unittest discovery: **16 PASS** (including 5 discovery tests verifying
+  shard determinism, ≤ 40% byte budgets, 68-page scope partition, 2,410-entry
+  file/anchor resolution, 1 exact + 15 unverified candidate repeat clusters, and
+  SW discovery cache registration).
+- Seven deterministic Node suites: attempt state + 28-paper rule/quota/section-timer/explanation-split verification, quiz DOM/export/label contracts, scheduler/trends (including generic-topic collapse), storage, interruption/quota recovery, Phase 2 derived-pipeline consumers, and Phase 4 discovery DOM/XSS/keyboard/repeat/deep-link/share-fallback/unit/SW offline simulation (`tests/discovery-dom.cjs`) — **PASS**.
 - Seven focused Chromium suites: Practice/data, quiz engine, discovery/study,
   storage/notes, cached-paper offline, feedback, cached 20-card offline keyboard
   review — PASS. No broad device compatibility is inferred.

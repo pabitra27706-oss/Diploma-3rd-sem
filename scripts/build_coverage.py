@@ -8,6 +8,7 @@ from build_search_index import encode
 
 # Display-only labels: the UI never shows the internal course code.
 SHORT_LABEL={'CST201':'C','CST203':'Python','CST205':'DS','CST207':'CSO','CST209':'Algorithms'}
+SUBJECT_ANCHOR={'CST201':'subject-c','CST203':'subject-python','CST205':'subject-ds','CST207':'subject-cso','CST209':'subject-algorithms'}
 
 
 def label(code,title):
@@ -16,7 +17,7 @@ def label(code,title):
 
 
 def page(title,body,prefix=''):
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(title)} — Study Hub</title><link rel="stylesheet" href="{prefix}assets/css/variables.css"><link rel="stylesheet" href="{prefix}assets/css/discovery.css"><link rel="stylesheet" href="{prefix}assets/css/print.css"><script defer src="{prefix}assets/js/pwa.js"></script></head><body><main class="discovery"><nav><a href="{prefix}index.html">Study Hub</a><a href="{prefix}coverage.html">Coverage</a><a href="{prefix}exam-pattern.html">Exam pattern</a><a href="{prefix}courses.html">Practical courses</a></nav><h1>{e(title)}</h1>{body}<p><button type="button" onclick="window.print()">Print this page</button></p></main></body></html>\n'''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(title)} — Study Hub</title><link rel="stylesheet" href="{prefix}assets/css/variables.css"><link rel="stylesheet" href="{prefix}assets/css/discovery.css"><link rel="stylesheet" href="{prefix}assets/css/print.css"><script defer src="{prefix}assets/js/pwa.js"></script></head><body><main class="discovery"><nav><a href="{prefix}index.html">Study Hub</a><a href="{prefix}search.html">Search</a><a href="{prefix}coverage.html">Coverage</a><a href="{prefix}exam-pattern.html">Exam pattern</a><a href="{prefix}courses.html">Practical courses</a></nav><h1>{e(title)}</h1>{body}<p><button type="button" onclick="window.print()">Print this page</button></p></main></body></html>\n'''
 
 
 def build(root=ROOT):
@@ -25,7 +26,8 @@ def build(root=ROOT):
     for subject in syllabus['subjects']:
         code=subject['code'];qs=[q for _,p in papers if p['subject']==code for q in p['questions']];bq=[q for _,b in banks if b['subject']==code for q in b['questions']];cardfile=root/f'assets/cards/{code}.json';cards=load(cardfile) if cardfile.exists() else []
         declared={u['unit'] for u in subject['units']};outside=Counter(q.get('unit') for q in qs+bq if q.get('unit') not in declared)
-        body+=f'<h2>{e(label(code,subject["title"]))}</h2><p>Syllabus reference: Revised 2022, p.{subject["page"]}. Out-of-syllabus stored tags: {e(str(dict(outside)))}.</p><table><caption>{e(subject["title"])} — theory inventory</caption><thead><tr><th scope="col">Unit</th><th scope="col">Notes</th><th scope="col">PYQs</th><th scope="col">Quiz</th><th scope="col">Cards</th><th scope="col">Flags</th></tr></thead><tbody>'
+        anchor=SUBJECT_ANCHOR.get(code,f'subject-{code.lower()}')
+        body+=f'<h2 id="{e(anchor)}">{e(label(code,subject["title"]))}</h2><p>Syllabus reference: Revised 2022, p.{subject["page"]}. Out-of-syllabus stored tags: {e(str(dict(outside)))}.</p><table><caption>{e(subject["title"])} — theory inventory</caption><thead><tr><th scope="col">Unit</th><th scope="col">Notes</th><th scope="col">PYQs</th><th scope="col">Quiz</th><th scope="col">Cards</th><th scope="col">Flags</th></tr></thead><tbody>'
         for unit in subject['units']:
             n=unit['unit'];path=f'subjects/{code}/units/unit-{n}.html';pyq=sum(q.get('unit')==n for q in qs);quiz=sum(q.get('unit')==n for q in bq);card=sum(c.get('unit')==n for c in cards);notes=(root/path).is_file();flags=[]
             if not notes:flags.append('missing notes')
@@ -33,17 +35,17 @@ def build(root=ROOT):
             if code=='CST201' and n in (3,4):flags.append('known mapping review')
             row={'subject':code,'unit':n,'title':unit['title'],'hasNotes':notes,'pyqCount':pyq,'quizCount':quiz,'cardCount':card,'lastUpdated':None,'flags':flags,'sourcePage':subject['page']};rows.append(row)
             link=f'<a href="{path}">{n}: {e(unit["title"])}</a>' if notes else f'{n}: {e(unit["title"])}'
-            body+=f'<tr><th scope="row">{link}</th><td>{"present, not certified" if notes else "missing"}</td><td><a href="search.html?subject={code}&amp;unit={n}">{pyq}</a></td><td>{quiz}</td><td>{card}</td><td>{e(", ".join(flags) or "no inventory flag")}</td></tr>'
+            body+=f'<tr><th scope="row">{link}</th><td>{"present, not certified" if notes else "missing"}</td><td><a href="pyq/index.html?subject={code}&amp;unit={n}">{pyq}</a></td><td>{quiz}</td><td>{card}</td><td>{e(", ".join(flags) or "no inventory flag")}</td></tr>'
         body+='</tbody></table>'
         verified=sum(bool(q.get('verifiedOn') and q.get('sourcePage') and q.get('answerStatus')=='verified') for q in qs)
         provenance.append({'subject':code,'rawQuestions':len(qs),'verifiedAnswers':verified,'notCertified':len(qs)-verified,'missingAnswers':sum(not q.get('answer') or q.get('answerStatus')=='missing' for q in qs)})
     out=root/'assets/data';out.mkdir(parents=True,exist_ok=True);(out/'coverage.json').write_text(encode({'schemaVersion':1,'source':'docs/syllabus/syllabus.json','units':rows,'provenance':provenance}))
     titles={s['code']:s['title'] for s in syllabus['subjects']}
-    body+='<h2>Answer verification status</h2><p>Scan verification is not answer certification. Only an explicit verified answer status with a source page and verification date counts as certified here. No new sign-off is inferred.</p><ul>'+''.join(f'<li>{e(label(p["subject"],titles[p["subject"]]))}: {p["verifiedAnswers"]} certified / {p["rawQuestions"]} archived; {p["notCertified"]} not certified; {p["missingAnswers"]} missing answers.</li>' for p in provenance)+'</ul><p>Update dates are unknown unless recorded; no wall-clock build date is used as a content verification date.</p>'
+    body+='<h2 id="answer-verification-status">Answer verification status</h2><p>Scan verification is not answer certification. Only an explicit verified answer status with a source page and verification date counts as certified here. No new sign-off is inferred.</p><ul>'+''.join(f'<li>{e(label(p["subject"],titles[p["subject"]]))}: {p["verifiedAnswers"]} certified / {p["rawQuestions"]} archived; {p["notCertified"]} not certified; {p["missingAnswers"]} missing answers.</li>' for p in provenance)+'</ul><p>Update dates are unknown unless recorded; no wall-clock build date is used as a content verification date.</p>'
     (root/'coverage.html').write_text(page('Syllabus coverage and verification',body))
     assessment=syllabus['assessment'];body=f'<p>Source: <a href="docs/syllabus/syllabus-3rd-sem-2022.pdf#page={assessment["esePatternPage"]}">Revised 2022 syllabus, p.{assessment["esePatternPage"]}</a>. Internal {assessment["internal"]["total"]}; end-semester {assessment["endSemester"]}; maximum {assessment["maxMarks"]}.</p><table><caption>Transcribed end-semester pattern</caption><thead><tr><th scope="col">Question type</th><th scope="col">Set</th><th scope="col">Answer</th><th scope="col">Total marks</th></tr></thead><tbody>'
     for item in assessment['esePattern']:body+=f'<tr><td>{e(item["questionType"])}</td><td>{item["toSet"]}</td><td>{item["toAnswer"]}</td><td>{item["marks"]}</td></tr>'
-    body+='</tbody></table><h2>Historical paper totals — unresolved</h2><p>Archived printed maxima are source facts, not permission to replace them with the current syllabus total. Differences may reflect regulation, session or paper choice rules; these causes are not certified here. Paper practice displays an unverified-total warning and awards no automatic overall paper marks. Answer length expectations and explanation-mark splits need a cited marking scheme; they are not invented.</p><ul>'
+    body+='</tbody></table><h2 id="historical-paper-totals">Historical paper totals — unresolved</h2><p>Archived printed maxima are source facts, not permission to replace them with the current syllabus total. Differences may reflect regulation, session or paper choice rules; these causes are not certified here. Paper practice displays an unverified-total warning and awards no automatic overall paper marks. Answer length expectations and explanation-mark splits need a cited marking scheme; they are not invented.</p><ul>'
     for path,paper in papers:
         maximum=paper.get('fullMarks');shown=f"{SHORT_LABEL.get(paper['subject'],paper['subject'])} · {paper.get('paperCode','')} · {paper.get('month','')} {paper.get('year','')}";body+=f'<li>{e(shown)}: printed maximum {e(str(maximum))}; set-question sum {sum(q.get("marks",0) for q in paper["questions"])}; reconciliation unverified.</li>'
     body+='</ul>';(root/'exam-pattern.html').write_text(page('Exam pattern and historical totals',body))
