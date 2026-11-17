@@ -38,3 +38,7 @@ Each numbered screen is a separate gate if needed: change only its agreed surfac
 ## Decisions still needed
 
 Required desktop and other before screenshots; whether the existing home bottom nav should remain visually prominent; which screenshot viewport(s) are the owner's priority. Selected: navy/lavender, balanced density, serif-style brand title, no leaf. No merge/deploy without an explicit command. Local review cannot substitute for the owner's rendered screenshots.
+
+## Owner scope clarification — 2026-11-17
+
+The owner requested a fuller redesign, especially across practice, quiz and PYQ rather than a home-focused polish. See [page-by-page audit](page-audit.md) and [screenshot checklist](screenshot-checklist.md). Expand implementation coverage to quiz setup/play/result/review/export, PYQ selection/paper/answers and practice filters/session as well as landing screens, preserving all features and content. Review each screen/state in its own small batch as necessary, with phone and desktop before/after screenshots and written approval; shared changes require evidence from every affected context. Light/dark, empty/loading/error, dialogs, print and desktop remain part of review. This scope clarification does not authorize skipping the before-screenshot gate. Whether “Only one reference add” means one shared visual reference or another reference remains a question for the owner; do not infer it.
