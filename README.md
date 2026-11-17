@@ -121,6 +121,7 @@ node tests/storage-recovery.cjs
 node tests/storage-mirror.cjs
 node tests/preferences.cjs
 node tests/section-notes.cjs
+node tests/theme-skew.cjs
 node tests/data-pipeline-consumers.cjs
 node tests/discovery-dom.cjs
 ```

@@ -1,5 +1,5 @@
 // ─── Theme ───────────────────────────────────────────────
-const savedTheme = StudyStorage.theme();
+const savedTheme = (() => { try { return StudyStorage.theme(); } catch { return document.documentElement.getAttribute('data-theme') || 'light'; } })();
 document.documentElement.setAttribute('data-theme', savedTheme);
 
 // ─── URL Params ──────────────────────────────────────────

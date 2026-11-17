@@ -711,8 +711,11 @@ function renderUnits(subjectCode, container, selectedUnits = []) {
  */
 function initTheme() {
   // One persisted preference record owns the theme (Phase 6.2); the legacy
-  // scalar keys are still migrated by the storage boundary.
-  document.documentElement.setAttribute('data-theme', StudyStorage.theme());
+  // scalar keys are still migrated by the storage boundary. A failed read must
+  // never abort the rest of this page's init, so it falls back to light.
+  let theme = 'light';
+  try { theme = StudyStorage.theme(); } catch (e) { console.warn('[theme] read failed:', e.message); }
+  document.documentElement.setAttribute('data-theme', theme);
 }
 
 /**
@@ -721,7 +724,7 @@ function initTheme() {
  */
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  StudyStorage.setTheme(theme);
+  try { StudyStorage.setTheme(theme); } catch (e) { console.warn('[theme] save failed:', e.message); }
 }
 
 /**

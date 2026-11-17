@@ -582,14 +582,16 @@ function applyFilter(subject) {
    THEME
    ============================================================ */
 function initTheme() {
-  document.documentElement.setAttribute('data-theme', StudyStorage.theme());
+  let saved = 'light';
+  try { saved = StudyStorage.theme(); } catch { /* keep CSS default */ }
+  document.documentElement.setAttribute('data-theme', saved);
 }
 
 function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme');
   const next    = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  StudyStorage.setTheme(next);
+  try { StudyStorage.setTheme(next); } catch (e) { console.warn('[theme] save failed:', e.message); }
 }
 
 /* ============================================================

@@ -62,14 +62,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initTheme() {
   const html  = document.documentElement;
   const btn   = document.getElementById('theme-toggle');
-  const saved = StudyStorage.theme();
+  const saved = (() => { try { return StudyStorage.theme(); } catch { return 'light'; } })();
   html.setAttribute('data-theme', saved);
   btn.querySelector('use').setAttribute('href',
     `../assets/icons/sprite.svg#${saved === 'dark' ? 'sun' : 'moon'}`);
   btn.addEventListener('click', () => {
     const n = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', n);
-    StudyStorage.setTheme(n);
+    try { StudyStorage.setTheme(n); } catch (e) { console.warn('[theme] save failed:', e.message); }
     btn.querySelector('use').setAttribute('href',
       `../assets/icons/sprite.svg#${n === 'dark' ? 'sun' : 'moon'}`);
   });

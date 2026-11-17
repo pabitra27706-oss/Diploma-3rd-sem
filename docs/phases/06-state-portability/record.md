@@ -162,6 +162,30 @@ Stated plainly because the phase text asked for a swap:
   threshold branch (forced to 0) end to end, the no-IndexedDB fallback and honest
   `persisted` reporting.
 
+## Cache-skew hardening (found during the owner device pass)
+
+The owner's phone reported "PYQ, practice and quiz pages not loading properly and
+the quiz dark toggle does nothing" on the local Termux server. Cause: that
+origin still had the **Phase 5 service worker** installed, so its cache served the
+old `assets/js/storage.js` (no `theme()`) while the HTML and page scripts came
+from the new checkout. Every page script that read the theme threw
+`TypeError: StudyStorage.theme is not a function` at init, which aborted the
+rest of that page's startup — and on quiz pages it aborted `commonInit()` before
+the theme button got its click handler, so the toggle was inert.
+
+Reproduced with a local server that serves the `a92a1ff` (Phase 5) `storage.js`
+while everything else is current. Fixed by making a theme read or save
+non-fatal at every call site: the page paints with the current or default theme
+and the rest of init continues. The stored decision still lives only in
+`d3s:prefs`; nothing reads a second key. `tests/theme-skew.cjs` locks this in
+(static audit of all nine read sites and eight save sites, a Phase-5-shaped
+module where `initTheme`/`toggleTheme` must still work, and a current module that
+must still decide the theme).
+
+Operational note for device passes: after switching a served checkout between
+phases, clear site data (or unregister the service worker) for that origin once,
+otherwise the previous phase's cached module is served to the new pages.
+
 ## Settings surface
 
 `settings.html` / `assets/js/settings.js` now show, besides the estimates and
@@ -181,7 +205,7 @@ and that clearing everything deletes it.
 | `python3 scripts/check_pyq_integrity.py` | 0 changed/added/missing |
 | `python3 scripts/validate_data.py --check-baseline` | matches ledger (not a strict pass) |
 | `python3 -m unittest discover -s tests -p 'test_*.py'` | 22 tests OK |
-| Node suites | attempt-store, data-pipeline-consumers, discovery-dom, preferences, quiz-engine-dom, section-notes, storage, storage-mirror, storage-recovery, study-dom, study-offline, study-store all pass |
+| Node suites | attempt-store, data-pipeline-consumers, discovery-dom, preferences, quiz-engine-dom, section-notes, storage, storage-mirror, storage-recovery, study-dom, study-offline, study-store, theme-skew all pass |
 
 Not run here: `tests/paper-offline.cjs`, `tests/cards-offline.cjs`,
 `tests/*-browser.cjs` (need Playwright/Chromium, absent). `validate_data.py

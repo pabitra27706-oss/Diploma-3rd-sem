@@ -102,12 +102,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getPreferredTheme() {
     // One preference record owns the theme; 'system' resolves through the OS.
-    return StudyStorage.theme();
+    // A failed read falls back to light instead of breaking the page.
+    try { return StudyStorage.theme(); } catch (e) { return "light"; }
   }
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
-    StudyStorage.setTheme(theme);
+    try { StudyStorage.setTheme(theme); } catch (e) { /* painting still succeeded */ }
     updateThemeIcons(theme);
   }
 
