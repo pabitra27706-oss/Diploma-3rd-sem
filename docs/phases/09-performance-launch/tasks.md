@@ -3,7 +3,19 @@
 No new features. Every change here either removes bytes, removes requests,
 improves a measured number, or records a decision.
 
+**Status 2026-11-17:** 9.1 ✅ re-verified from disk (data fan-out unchanged, static
+side measured); 9.2 ✅ done, browser-free equivalence proof; 9.3 ✅ done with a
+browser-free update regression; 9.4 ⛔ **gate opened by the owner on 2026-11-17** —
+a first-party aggregate counter is wanted later, so the part stays open until the
+metric, storage, retention and disclosure answers exist (no counter code was
+written); 9.5 ✅ done, `/`-rooted
+copy passes the checker; 9.6 🚧 checklist ticked wherever this environment can
+prove an item — Lighthouse, real phone and deploy remain **not run**. Evidence and
+numbers: [`record.md`](record.md).
+
 ## 9.1 — Data loading
+
+**✅ Verified 2026-11-17 (data side unchanged; static side re-measured).**
 
 **Steps**
 1. Measure: count `fetch()` calls per page and their order; record the baseline
@@ -22,6 +34,8 @@ parallel, not sequential; offline still works; before/after table in the record.
 
 ## 9.2 — CSS/JS consolidation
 
+**✅ Done 2026-11-17.** 302-entry palette, 1,205 literals re-pointed, 71 dead rules removed, icon CSS −74.8 %, four requests removed per default view. No browser: colour equivalence proven statically, layout not.
+
 **Steps**
 1. Inventory the 19 CSS files: selectors used, literals duplicated, dead rules
    (compare against HTML).
@@ -39,6 +53,8 @@ regressions in the screenshots.
 
 ## 9.3 — Caching and update policy
 
+**✅ Done 2026-11-17.** Separate shell and data versions, separate caches, `tests/data-version.cjs` proves both directions without a browser.
+
 **Steps**
 1. Document strategy per resource class: shell (cache-first + versioned),
    data (stale-while-revalidate with version), pages (network-first with
@@ -52,6 +68,12 @@ a shell change prompts, never forces; no stale page serves deleted content
 without a visible "updated" note.
 
 ## 9.4 — Measurement without surveillance (owner gate)
+
+**⛔ Gate opened 2026-11-17 — still open.** The local-only prompt and
+`docs/MEASUREMENT.md` are in place and verified by reading the code; the owner
+chose a **first-party counter** route rather than confirming the default, so the
+four follow-up answers (metric, storage, retention, disclosure) must be recorded
+before any code exists. Nothing was implemented in response to the gate.
 
 **Steps**
 1. Record the default decision: no third-party analytics; local-only usefulness
@@ -69,6 +91,8 @@ the code); the doc lists the trade-off; the owner's answer is dated.
 
 ## 9.5 — Domain readiness (no purchase)
 
+**✅ Done 2026-11-17.** One constant (`scripts/site_config.py`), documented migration, `/`-rooted copy passes `check_site.py --strict`. Nothing bought or configured.
+
 **Steps**
 1. Centralise the base path in one place (config constant used by manifest, SW,
    canonical, sitemap generator).
@@ -82,6 +106,8 @@ the code); the doc lists the trade-off; the owner's answer is dated.
 executable by someone else; no domain action taken.
 
 ## 9.6 — Launch gate
+
+**🚧 Partially evidenced.** `docs/LAUNCH-CHECKLIST.md` is dated and ticked where this environment can prove the item; Lighthouse, the real-phone pass and the deploy are explicitly **not run**.
 
 **Steps**
 1. Run `webflow/templates/site-checklist.md` (or the repo's copy) end to end;

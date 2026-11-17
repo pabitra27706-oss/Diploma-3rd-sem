@@ -580,3 +580,98 @@ Agent decisions (reversible — object if wrong). None of them certifies content
   dialogs, tap accuracy against the 24 px floor, screen-reader output.
 - **Merge:** authorized for `arena/e0da0bec-diploma-3rd-sem` → `main` only. No
   deploy, no Pages change, no domain, no tag, no release.
+
+## Phase 9 performance and launch — engineering decisions — 2026-11-17
+
+These are delegated implementation decisions (owner delegation of 2026-11-09),
+recorded because they change how the tree is built. None of them is a rights,
+content, publication or domain decision.
+
+1. **One palette file, per-area aliases kept.** Every colour literal now lives in
+   `assets/css/variables.css` (302 entries). The per-area semantic namespaces
+   (`--bg-primary` in quiz vs pyq vs units) stay in their own stylesheets as
+   aliases, because those names already mean *different* colours per area and
+   merging them would change rendered output. `scripts/check_tokens.py` enforces
+   "no literal outside the token file" and "every page loads the token file first".
+   Colour equivalence is proven statically (1,205 literals re-pointed, 0 value
+   differences; 47 contrast pairs unchanged). No browser exists here, so layout
+   was not re-screenshotted.
+2. **Global sheets merged for requests, not for bytes.** `accessibility.css`,
+   `print.css` and `pwa.css` became `assets/css/base.css`; `accessibility.js`,
+   `i18n.js` and `pwa.js` became the generated `assets/js/shell.bundle.js`
+   (sources stay in place, as with the existing JS bundles). Two fewer CSS and two
+   fewer script requests on every page.
+3. **The English UI catalog is never fetched.** English is the authored markup and
+   already the fallback, so only Bengali costs a request. `assets/i18n/en.json`
+   stays as the reference catalog for the key-parity test.
+4. **Icon CSS is subset; icon fonts are NOT.** `scripts/build_icon_subset.py`
+   emits `used.min.css` (25,890 B from 102,641 B) for the 226 icons the tree names,
+   keeping the MIT/CC-BY/OFL banner and the unmodified webfonts. Font subsetting is
+   deliberately not done: SIL OFL reserved-font-name rules mean a modified font
+   would have to be renamed, which is a **rights** decision, not an engineering
+   one. The 156 KB solid and 117 KB brands webfonts therefore remain the largest
+   single payloads on icon pages and are recorded as such.
+5. **Data has its own cache version.** `assets/data/data-version.json`
+   (`data-6b1621c45599` over 81 files) is generated from the data bytes and names a
+   separate cache namespace, so a corrected answer reaches a returning device
+   without a shell update, a banner or a storage reset — and a shell update no
+   longer throws the pools away. Proved by `tests/data-version.cjs` with no browser.
+6. **The published URL is one constant.** `scripts/site_config.py`; everything
+   absolute is generated from it and `scripts/check_root_rewrite.py` proves a `/`
+   root works by running the site checker on a rewritten copy. No domain action.
+7. **Dead CSS/JS removal is name-based and conservative.** A rule is removed only
+   when none of its class/id names appear as a full token anywhere in shipped
+   HTML, JS or JSON; dynamically composed families (`pill-CST20x`, `dot-CST20x`,
+   `q-badge-difficulty-*`) are explicitly excluded. 71 rules (8,485 B) removed.
+   Six inline `var(--primary-color)` references that resolved to nothing now use
+   the defined `--primary`, which changes rendering on those diagrams (the borders
+   and fills were previously dropped) — recorded here because it is a visible fix.
+8. **Shell version bumped** to `study-2026-11-17e` because the shell bytes changed;
+   the data version is independent of it.
+
+## 9.4 measurement — owner opened a first-party counter gate — 2026-11-17
+
+Asked: "what should the dated measurement decision say?" Answered by the owner on
+2026-11-17: **open a first-party counter gate** rather than confirm the
+local-only default outright.
+
+What this decides, and what it does not:
+
+- **Decided:** the owner does want aggregate usage counts later, so the question
+  is no longer "analytics or nothing". Phase 9.4 therefore stays **open** — this is
+  a gate, not an implementation approval, and nothing was built in response.
+- **Not decided yet (a second, later owner answer is required before any code):**
+  1. **Which number** — e.g. daily page views, daily "site opened", or distinct
+     browsers; anything per-student, per-question or per-answer is out of scope
+     unless explicitly asked for.
+  2. **Where it is stored** — a first-party endpoint/worker the owner controls, or
+     GitHub Pages/HTTP logs. No third-party analytics service, no pixel, no
+     tag manager, no cookie for tracking.
+  3. **Retention** — how long counts are kept and who can read them.
+  4. **Disclosure text** — the privacy page must name the counter, the fields sent,
+     the purpose and the retention **before** it ships.
+- **Non-negotiable constraints inherited from Phases 1–9** (these are binding on
+  any future implementation, whoever writes it):
+  - one request, same origin, **never blocking render**; it must fit the page
+    budget (`scripts/audit_page_weight.py --budget`) and must not break offline
+    (`sw.js` must treat it as network-optional, never as a precache entry);
+  - no query string, note, name, answer, bookmark or search text may be sent —
+    pathname + a coarse bucket at most, and no persistent identifier;
+  - no third-party script, no resale of data, no ad/affiliate coupling (money
+    model stays "none");
+  - the local-only usefulness prompt stays as it is and is **not** replaced by a
+    counter;
+  - a counter is never presented as proof of learning, retention or "students
+    helped" — `docs/MEASUREMENT.md`'s unknowables stay unknowable.
+- **Status:** 9.4 open, blocked on the second answer above. Re-asking the *first*
+  question ("do you want any measurement at all?") is now a defect — it is
+  answered here.
+
+## Open owner decisions from Phase 9
+
+- **Deploy (9.6).** Not authorized and not performed. `docs/LAUNCH-CHECKLIST.md`
+  is ticked only where this environment can prove an item; Lighthouse and the
+  real-phone pass are recorded as **not run**.
+- **9.4 counter gate (see above).** Open by the owner's choice of 2026-11-17; the
+  follow-up questions (metric, storage location, retention, disclosure) are the
+  remaining gate.

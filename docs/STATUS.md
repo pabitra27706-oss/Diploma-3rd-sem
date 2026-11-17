@@ -1,10 +1,46 @@
 # Current status and remaining work
 
-Documentation checkpoint: **2026-11-09**; reconciled **2026-11-16** (branch/
-license audit — see `docs/AUDIT-2026-11-16.md`) and **2026-11-17** (sub-phase 8A,
-Phase 7 merge, and **Phase 8 content depth**
-— see `docs/phases/08-content-depth/record.md`). This is the current handoff;
+Documentation checkpoint: **2026-11-17 (Phase 9)**. Earlier reconciliations:
+2026-11-16 (branch/license audit — `docs/AUDIT-2026-11-16.md`), 2026-11-17
+(sub-phase 8A, Phase 7 merge, Phase 8 content depth). This is the current handoff;
 older phase evidence remains historical unless explicitly superseded here.
+
+## Phase 9 — performance and launch (2026-11-17) — `🚧`, branch only
+
+Implemented on `arena/908b6b19-diploma-3rd-sem` (from `main` at `0e53a4a`).
+**Nothing is deployed.** Full evidence: [`phases/09-performance-launch/record.md`](phases/09-performance-launch/record.md).
+
+- **9.1 ✅** Data fan-out unchanged from 2026-11-09 (Practice 36 → 1 JSON, quiz
+  setup 20 → 2); the static side is now measured too (table below).
+- **9.2 ✅** One token file: 302 palette entries in `assets/css/variables.css`,
+  1,205 literals re-pointed, **0 literals outside the token file** and 0 value
+  differences (47 contrast pairs unchanged). 71 dead rules removed. Icon CSS
+  subset 102,641 → **25,890 B** (−74.8 %). Three global sheets → `base.css` and
+  three global scripts → `shell.bundle.js`; the English catalog is no longer
+  fetched. **No browser here: colour equivalence is static, layout was not
+  re-screenshotted.**
+- **9.3 ✅** Data has its own generated version and cache namespace
+  (`data-6b1621c45599` over 81 files); shell `study-2026-11-17e`. A data fix now
+  reaches a returning device without a shell update or a storage reset, and a
+  shell update no longer discards the pools. Proved browser-free by
+  `tests/data-version.cjs`.
+- **9.5 ✅** `scripts/site_config.py` is the only place the published URL exists;
+  `scripts/check_root_rewrite.py` rewrites a temp copy to `/` and runs
+  `check_site.py --strict` inside it → 0 errors, 0 warnings. No domain action.
+- **9.4 ⛔ gate opened by the owner 2026-11-17** — the local-only prompt still
+  ships and makes no network call, but the owner chose a **first-party aggregate
+  counter** route rather than confirming the no-measurement default. So the part
+  stays open until the metric, storage location, retention and privacy-page text
+  are answered; **no counter code was written**. Constraints and the recorded
+  decision: `docs/DECISIONS.md` + `docs/MEASUREMENT.md`.
+- **9.6 🚧** `docs/LAUNCH-CHECKLIST.md` ticked with dates wherever this
+  environment can prove an item. **Lighthouse, the real-phone pass and the deploy
+  are explicitly not run** (no browser, no device), and no PR was opened.
+
+Measured from disk (74 pages, uncompressed): **592 static requests** (was 817),
+**6,817,906 CSS bytes** (was 8,638,771), 7–10 static requests per page (was
+9–15). Per view including its data fetch: Practice **9**, quiz setup **10**, unit
+page **10**, PYQ answers **8**, home **9**, study pages **12**, quiz play **11**.
 
 ## Phase 8 — content depth and syllabus coverage (2026-11-17) — `✅*`, merged
 
@@ -25,7 +61,8 @@ PR #15 merge). Full evidence: [`phases/08-content-depth/record.md`](phases/08-co
   comparison (marks on *all set* questions vs the maximum) could never match.
   Three printed shapes are shown; which applies to a session stays unverified.
   Decision recorded in `docs/DECISIONS.md`.
-- **8.3 ✅ (static side)** `print.css` now loads on **74/74** pages (was 33/68),
+- **8.3 ✅ (static side, superseded 2026-11-17 by the merged `assets/css/base.css`)**
+  the print rules now load on **74/74** pages (was 33/68),
   is precached, adds break control and answers-on-a-new-page, and one shared
   labelled print control exists. A paper prints with or without answers and no
   longer leaks `[Correct]` markers into a question sheet. No fake running header:
@@ -96,10 +133,10 @@ use PR #7/Git for the current CI and merge result.
 permission authorizes deployment, Pages or domain changes, and none closes an
 unfinished phase gate.
 
-- Branch: `arena/e0da0bec-diploma-3rd-sem` (active session branch, branched
-  from `main` at `84e99aad91d1baf9b4e1110b0767a0ea0b4cd6c2`, the PR #15 merge of
-  the Phase 7 branch).
-  Earlier branches `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`), `arena/4d3997da-...`
+- Branch: `arena/908b6b19-diploma-3rd-sem` (active session branch, branched
+  from `main` at `0e53a4ad61f2aef7dbd9f188efbf15c2d05c9ff4`, the **PR #16** merge
+  of the Phase 8 branch; carries the Phase 9 work, unmerged and undeployed).
+  Earlier branches `arena/e0da0bec-...` (PR #16, Phase 8), `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`), `arena/4d3997da-...`
   (PR #13 `a92a1ff`), `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11
   `9d47c7c7`), `arena/858a50c7-...` (PR #9 `365b8f7`),
   `arena/47d8bf99-...` (PR #8 `3e3cb2e1`), `arena/be3d9178-...` (PR #7
@@ -151,7 +188,8 @@ unfinished phase gate.
   output, real tap accuracy, Bengali glyph rendering and keyboard-only core-flow
   completion remain unverified and move to Phase 10 — the owner's Android/Chrome
   smoke pass showed the branch runs on real hardware but measured none of them.
-  Worker version is now `study-2026-11-17d` (Phase 8 added the print sheet); the
+  Worker version was `study-2026-11-17d` at Phase 8 (Phase 9 bumped the shell to
+  `study-2026-11-17e`); the
   2026-11-17 Phase 7 measurement covers the 68-page tree, and Phase 8 regenerated
   the audit baseline for 74 pages with identical findings. See
   [`phases/07-inclusion-trust/record.md`](phases/07-inclusion-trust/record.md).
@@ -258,14 +296,13 @@ Unavailable device access is **untested**, never silently passed.
 
 ## Recommended remaining order
 
-1. **Phase 9 — performance and launch** is next and is the last engineering
-   phase. It is already partially done (9.1 data loading shipped and measured:
-   Practice 43 → 12 requests, 36 → 1 JSON; quiz setup 28 → 12). Remaining:
-   9.2 CSS/JS consolidation with one token file, 9.3 independent data-cache
-   versioning plus an update-flow regression, 9.4 the measurement gate (owner
-   answer recorded), 9.5 base-path rewrite proof, 9.6 launch checklist and
-   Lighthouse/deep-metrics measurement. Re-measure from the **74-page**,
-   worker-`study-2026-11-17d` tree, not the 68-page numbers in the 11-09 record.
+1. **Phase 9 is implemented** on the session branch: 9.1 ✅, 9.2 ✅, 9.3 ✅,
+   9.5 ✅, with numbers in the Phase 9 section above and in
+   `phases/09-performance-launch/record.md`. Three things remain and none of them
+   can be done in the agent environment: the **9.4 counter gate's four answers**
+   (metric, storage, retention, disclosure — the owner opened the gate on
+   2026-11-17 and no code exists yet), a **real-browser launch pass** (Lighthouse,
+   print export, phone), and the **deploy decision** — not authorized, not done.
 2. Phase 8's two content gates stay open in parallel and are **owner work**:
    sign off revision entries, then answer batches of ≤40 with a citation and a
    date. Nothing in this branch certified content.

@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Feedback - Study Hub</title>
-    <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/vendor/fontawesome/css/used.min.css">
     <link rel="stylesheet" href="styles/professional.css">
     <style>
         .feedback-form {
@@ -24,14 +25,14 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #2c3e50;
+            color: var(--c-midnight);
             font-weight: 600;
         }
         
         select, textarea {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #ddd;
+            border: 2px solid var(--c-grey-85);
             border-radius: 10px;
             font-family: inherit;
             font-size: 1rem;
@@ -40,7 +41,7 @@
         
         select:focus, textarea:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: var(--c-blue-flat);
         }
         
         textarea {
@@ -58,7 +59,7 @@
         .type-card {
             padding: 20px;
             border-radius: 10px;
-            border: 2px solid #eee;
+            border: 2px solid var(--c-grey-95);
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -70,8 +71,8 @@
         }
         
         .type-card.selected {
-            border-color: #3498db;
-            background: #ebf5fb;
+            border-color: var(--c-blue-flat);
+            background: var(--c-ebf5fb);
         }
         
         .type-icon {
@@ -80,7 +81,7 @@
         }
         
         .submit-btn {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            background: linear-gradient(135deg, var(--c-green-flat), var(--c-green-flat-dark));
             color: white;
             border: none;
             padding: 15px 40px;
@@ -101,7 +102,7 @@
         .char-count {
             text-align: right;
             font-size: 0.9rem;
-            color: #666;
+            color: var(--c-grey-666);
             margin-top: 5px;
         }
         
@@ -109,22 +110,20 @@
             display: none;
             text-align: center;
             padding: 40px;
-            background: #e8f6ef;
+            background: var(--c-green-tint);
             border-radius: 15px;
             margin: 30px 0;
         }
         
         .thank-you-icon {
             font-size: 60px;
-            color: #2ecc71;
+            color: var(--c-green-flat);
             margin-bottom: 20px;
         }
     </style>
-    <script defer src="../assets/js/pwa.js"></script>
-    <link rel="stylesheet" href="../assets/css/pwa.css">
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/info/send-feedback.html">
-<meta name="app-build" content="study-2026-11-17d">
+<meta name="app-build" content="study-2026-11-17e">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Send Feedback - Study Hub">
@@ -141,10 +140,8 @@
 <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
 <link rel="manifest" href="../manifest.json">
 <!-- /presence -->
-<link rel="stylesheet" href="../assets/css/print.css">
-<link rel="stylesheet" href="../assets/css/accessibility.css">
-<script defer src="../assets/js/accessibility.js"></script>
-<script defer src="../assets/js/i18n.js"></script>
+<link rel="stylesheet" href="../assets/css/base.css">
+<script defer src="../assets/js/shell.bundle.js"></script>
 </head>
 <body>
 <a class="skip-study-content" href="#study-main-content">Skip to study content</a>
@@ -153,17 +150,17 @@
             <i class="fas fa-arrow-left"></i> Back to Hub
         </a>
         
-        <header class="professional-hero" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+        <header class="professional-hero" style="background: linear-gradient(135deg, var(--c-green-flat), var(--c-green-flat-dark));">
             <div class="hero-icon">💬</div>
             <h1>Send Feedback</h1>
             <p class="hero-subtitle">Your voice makes the app better</p>
         </header>
         
         <div class="content-card" style="text-align: center; margin-bottom: 20px;">
-            <h2 style="color: #2c3e50;">
+            <h2 style="color: var(--c-midnight);">
                 <i class="fas fa-comment-medical"></i> Help Improve the App
             </h2>
-            <p style="color: #666; line-height: 1.6;">
+            <p style="color: var(--c-grey-666); line-height: 1.6;">
                 Found a bug? Have a feature idea? Want to share your experience? 
                 Your feedback helps make this app better for all students.
             </p>
@@ -186,40 +183,40 @@
             <label for="feedback-preview">Prepared message (manual copy fallback)</label><textarea id="feedback-preview" rows="8" readonly></textarea>
         </form>
 
-        <div class="faq-section" style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 30px 0;">
-            <h3 style="color: #2c3e50; margin-bottom: 20px;">
+        <div class="faq-section" style="background: var(--c-grey-50); padding: 25px; border-radius: 15px; margin: 30px 0;">
+            <h3 style="color: var(--c-midnight); margin-bottom: 20px;">
                 <i class="fas fa-lightbulb"></i> Tips for Effective Feedback
             </h3>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #3498db;">
-                    <p class="card-title" style="color: #2c3e50; margin-bottom: 10px;">🔍 Be Specific</p>
-                    <p style="color: #666; margin: 0; font-size: 0.95rem;">
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid var(--c-blue-flat);">
+                    <p class="card-title" style="color: var(--c-midnight); margin-bottom: 10px;">🔍 Be Specific</p>
+                    <p style="color: var(--c-grey-666); margin: 0; font-size: 0.95rem;">
                         Instead of "app is slow", say "loading screen 2 takes 10 seconds"
                     </p>
                 </div>
                 
-                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #9b59b6;">
-                    <p class="card-title" style="color: #2c3e50; margin-bottom: 10px;">📸 Include Screenshots</p>
-                    <p style="color: #666; margin: 0; font-size: 0.95rem;">
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid var(--c-purple-flat);">
+                    <p class="card-title" style="color: var(--c-midnight); margin-bottom: 10px;">📸 Include Screenshots</p>
+                    <p style="color: var(--c-grey-666); margin: 0; font-size: 0.95rem;">
                         Screenshots help understand issues better
                     </p>
                 </div>
                 
-                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #2ecc71;">
-                    <p class="card-title" style="color: #2c3e50; margin-bottom: 10px;">🎯 Explain the Benefit</p>
-                    <p style="color: #666; margin: 0; font-size: 0.95rem;">
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid var(--c-green-flat);">
+                    <p class="card-title" style="color: var(--c-midnight); margin-bottom: 10px;">🎯 Explain the Benefit</p>
+                    <p style="color: var(--c-grey-666); margin: 0; font-size: 0.95rem;">
                         "This feature would help me save time while studying"
                     </p>
                 </div>
             </div>
         </div>
         
-        <div style="background: #fff3cd; padding: 20px; border-radius: 15px; margin: 30px 0; text-align: center;">
-            <p class="card-title" style="color: #856404; margin-bottom: 10px;">
+        <div style="background: var(--c-amber-75); padding: 20px; border-radius: 15px; margin: 30px 0; text-align: center;">
+            <p class="card-title" style="color: var(--c-amber-850); margin-bottom: 10px;">
                 <i class="fas fa-users"></i> Community Driven
             </p>
-            <p style="color: #856404; margin: 0;">
+            <p style="color: var(--c-amber-850); margin: 0;">
                 Suggestions can help prioritize future work. This static site cannot confirm receipt, review time, or whether a request will be implemented.
             </p>
         </div>

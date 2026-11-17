@@ -4,8 +4,7 @@ from pathlib import Path
 import json, re, struct, hashlib, subprocess, sys
 from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
-ROOT = Path(__file__).resolve().parent.parent
-SITE = 'https://pabitra27706-oss.github.io/Diploma-3rd-sem/'
+from site_config import ROOT, SITE, SITE_ORIGIN
 errors = []
 def require(ok, message):
     if not ok: errors.append(message)
@@ -28,7 +27,7 @@ for p in ROOT.rglob('*'):
     if p.is_file(): require(p.stat().st_size>0, f'empty file {p.relative_to(ROOT)}')
     if p.suffix == '.html':
         s=p.read_text()
-        require(not re.search(r'<(?:script|link|img)[^>]+(?:src|href)=["\']https?://(?!pabitra27706-oss.github.io/)',s),f'third-party runtime reference: {p}')
+        require(not re.search(r'<(?:script|link|img)[^>]+(?:src|href)=["\']https?://(?!' + re.escape(SITE_ORIGIN.split('://', 1)[1]) + ')',s),f'third-party runtime reference: {p}')
         require('rel="canonical"' in s and 'property="og:image"' in s,f'metadata missing: {p}')
 for loc in ET.parse(ROOT/'sitemap.xml').iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
     require(loc.text.startswith(SITE) and (ROOT/loc.text.removeprefix(SITE)).is_file(),f'sitemap missing: {loc.text}')

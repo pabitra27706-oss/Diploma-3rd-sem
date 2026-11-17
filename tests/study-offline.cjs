@@ -36,6 +36,7 @@ const BASE = 'https://example.test/Diploma-3rd-sem/';
           }
         },
         async put(key, response) { bucket.set(key, response); },
+        async keys() { return [...bucket.keys()].map(url => ({ url })); },
         async match(key) { return bucket.get(key); }
       };
     },
@@ -76,8 +77,12 @@ const BASE = 'https://example.test/Diploma-3rd-sem/';
   listeners.install({ waitUntil: promise => { installPromise = promise; } });
   await installPromise;
 
-  const cacheName = [...store.keys()].find(name => name.startsWith('diploma-3rd-sem-'));
+  const cacheName = [...store.keys()].find(name => /^diploma-3rd-sem-[a-z0-9]/.test(name) && !name.startsWith('diploma-3rd-sem-data-'));
   const bucket = store.get(cacheName);
+  const findCached = key => {
+    for (const candidate of store.values()) if (candidate.has(key)) return candidate.get(key);
+    return undefined;
+  };
   for (const asset of ['cards.html', 'today.html', 'assets/js/study-store.js', 'assets/js/study-ui.js',
     'quiz/js/attempt-store.js', 'assets/cards/manifest.json', 'search.html', 'index.html']) {
     assert(bucket.has(BASE + asset), `install must precache ${asset}`);
@@ -87,15 +92,17 @@ const BASE = 'https://example.test/Diploma-3rd-sem/';
   listeners.message({ data: { type: 'WARM_STUDY' }, waitUntil: promise => { warmPromise = promise; } });
   await warmPromise;
 
-  const version = source.match(/const VERSION = '([^']+)'/)[1];
+  // Phase 9.3: data has its own version, generated from the data bytes.
+  const version = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/data/data-version.json'), 'utf8')).dataVersion;
+  assert(version.startsWith('data-'), 'data version must be generated, not the shell version');
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/cards/manifest.json'), 'utf8'));
   assert.equal(Object.keys(manifest.subjects).length, 5, 'expected five subject card shards');
   for (const [code, meta] of Object.entries(manifest.subjects)) {
-    const warmed = bucket.get(`${BASE}assets/cards/${meta.file}?v=${version}`);
+    const warmed = findCached(`${BASE}assets/cards/${meta.file}?v=${version}`);
     assert(warmed, `WARM_STUDY must cache the ${code} shard under ?v=${version}`);
     assert(warmed.ok);
   }
-  assert(bucket.has(`${BASE}assets/cards/manifest.json`), 'the card manifest must be cached for offline origin checks');
+  assert(findCached(`${BASE}assets/cards/manifest.json`), 'the card manifest must be cached for offline origin checks');
 
   async function swFetch(url, mode = 'cors') {
     let responsePromise;

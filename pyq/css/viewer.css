@@ -1,31 +1,31 @@
 /* ─── Variables ─── */
 :root {
-  --bg-screen: #e8e8e8;
-  --bg-toolbar: #ffffff;
-  --text-toolbar: #111111;
-  --border-toolbar: #e0e0e0;
-  --accent: #1a73e8;
-  --accent-light: #e8f0fe;
+  --bg-screen: var(--c-e8e8e8);
+  --bg-toolbar: var(--c-white);
+  --text-toolbar: var(--c-grey-111);
+  --border-toolbar: var(--c-grey-88);
+  --accent: var(--c-1a73e8);
+  --accent-light: var(--c-e8f0fe);
   --shadow: 0 2px 8px rgba(0,0,0,0.1);
   --radius-sm: 8px;
   --transition: 0.2s ease;
 
   /* Paper colors - always light (for print accuracy) */
-  --paper-bg: #ffffff;
-  --paper-text: #000000;
-  --paper-border: #000000;
-  --paper-muted: #444444;
-  --paper-light: #888888;
-  --paper-group-bg: #f0f0f0;
+  --paper-bg: var(--c-white);
+  --paper-text: var(--c-black);
+  --paper-border: var(--c-black);
+  --paper-muted: var(--c-grey-444);
+  --paper-light: var(--c-grey-888);
+  --paper-group-bg: var(--c-grey-90);
   --paper-width: 794px; /* A4 width in px at 96dpi */
 }
 
 [data-theme="dark"] {
-  --bg-screen: #1a1a1a;
-  --bg-toolbar: #1e1e1e;
-  --text-toolbar: #f0f0f0;
-  --border-toolbar: #2e2e2e;
-  --bg-screen: #2a2a2a;
+  --bg-screen: var(--c-grey-1a);
+  --bg-toolbar: var(--c-ink-800);
+  --text-toolbar: var(--c-grey-90);
+  --border-toolbar: var(--c-2e2e2e);
+  --bg-screen: var(--c-2a2a2a);
 }
 
 /* ─── Reset ─── */
@@ -102,7 +102,7 @@ body {
   justify-content: center;
   gap: 1rem;
   padding: 4rem 2rem;
-  color: #888;
+  color: var(--c-grey-888);
   text-align: center;
 }
 
@@ -137,7 +137,7 @@ body {
   font-family: 'Times New Roman', Times, Georgia, serif;
   padding: 2.5rem 3rem;
   box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-  border: 1px solid #ccc;
+  border: 1px solid var(--c-cccccc);
   line-height: 1.6;
 }
 
@@ -328,9 +328,9 @@ body {
 .paper-source-note {
   margin: 0.75rem 0 1rem;
   padding: 0.55rem 0.75rem;
-  border-left: 3px solid var(--paper-border, #9ca3af);
+  border-left: 3px solid var(--paper-border, var(--c-grey-400));
   background: rgba(127, 127, 127, 0.06);
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
   font-size: 0.78rem;
   line-height: 1.5;
 }
@@ -338,7 +338,7 @@ body {
 .paper-instructions {
   margin-bottom: 1.25rem;
   padding: 0.7rem 0.9rem;
-  border: 1px solid var(--paper-border, #d1d5db);
+  border: 1px solid var(--paper-border, var(--c-grey-300));
   background: rgba(127, 127, 127, 0.05);
   font-size: 0.84rem;
   line-height: 1.55;
@@ -364,13 +364,13 @@ body {
   font-size: 0.8rem;
   text-align: center;
   margin: -0.55rem 0 0.65rem;
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
   font-style: italic;
 }
 
 .group-mark-split {
   font-weight: normal;
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
 }
 
 .exam-question {
@@ -387,7 +387,7 @@ body {
   display: block;
   margin: 0.5rem 0;
   padding: 0.65rem 0.8rem;
-  border: 1px solid var(--paper-border, #d1d5db);
+  border: 1px solid var(--paper-border, var(--c-grey-300));
   background: rgba(127, 127, 127, 0.08);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.85rem;
@@ -426,22 +426,22 @@ body {
 .exam-subpart-mark {
   font-size: 0.82rem;
   font-weight: bold;
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
   white-space: nowrap;
 }
 
 .exam-note {
   margin-top: 0.6rem;
   padding: 0.45rem 0.65rem;
-  border-left: 3px solid #6b7280;
+  border-left: 3px solid var(--c-grey-500);
   background: rgba(127, 127, 127, 0.07);
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
   font-size: 0.76rem;
   line-height: 1.45;
 }
 
 .exam-syllabus-note {
-  border-left-color: #b45309;
+  border-left-color: var(--c-b45309);
   background: rgba(180, 83, 9, 0.07);
 }
 
@@ -470,7 +470,7 @@ body {
 .overview-intro {
   margin-bottom: 1rem;
   padding: 0.75rem 0.9rem;
-  border: 1px solid var(--paper-border, #d1d5db);
+  border: 1px solid var(--paper-border, var(--c-grey-300));
   background: rgba(127, 127, 127, 0.05);
   font-size: 0.88rem;
   line-height: 1.55;
@@ -486,7 +486,7 @@ body {
 .overview-group {
   margin-bottom: 1.1rem;
   padding-bottom: 0.9rem;
-  border-bottom: 1px solid var(--paper-border, #d1d5db);
+  border-bottom: 1px solid var(--paper-border, var(--c-grey-300));
 }
 
 .overview-group:last-of-type {
@@ -503,7 +503,7 @@ body {
 
 .overview-meta {
   font-size: 0.8rem;
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
   margin-bottom: 0.55rem;
 }
 
@@ -519,7 +519,7 @@ body {
   gap: 0.6rem;
   align-items: start;
   padding: 0.42rem 0;
-  border-top: 1px dashed var(--paper-border, #e5e7eb);
+  border-top: 1px dashed var(--paper-border, var(--c-grey-200));
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -530,7 +530,7 @@ body {
 
 .overview-num {
   font-weight: 700;
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
 }
 
 .overview-text {
@@ -544,7 +544,7 @@ body {
 .overview-code {
   margin: 0.35rem 0;
   padding: 0.45rem 0.55rem;
-  border: 1px solid var(--paper-border, #d1d5db);
+  border: 1px solid var(--paper-border, var(--c-grey-300));
   background: rgba(127, 127, 127, 0.07);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.78rem;
@@ -559,7 +559,7 @@ body {
   gap: 0.15rem 0.65rem;
   margin-top: 0.3rem;
   font-size: 0.8rem;
-  color: var(--paper-muted, #374151);
+  color: var(--paper-muted, var(--c-grey-700));
 }
 
 .overview-option {
@@ -569,16 +569,16 @@ body {
 .overview-marks {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
   white-space: nowrap;
 }
 
 .overview-print-note {
   margin-top: 1rem;
   padding: 0.6rem 0.75rem;
-  border-left: 3px solid var(--paper-border, #9ca3af);
+  border-left: 3px solid var(--paper-border, var(--c-grey-400));
   background: rgba(127, 127, 127, 0.06);
-  color: var(--paper-muted, #4b5563);
+  color: var(--paper-muted, var(--c-grey-600));
   font-size: 0.8rem;
   line-height: 1.45;
 }

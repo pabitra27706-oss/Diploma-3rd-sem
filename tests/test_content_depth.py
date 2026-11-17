@@ -200,13 +200,17 @@ class ExamPatternTests(unittest.TestCase):
 
 class PrintTests(unittest.TestCase):
     def test_every_shipped_page_loads_the_print_sheet(self):
+        # Phase 9.2 merged print.css into the one global base sheet so a page
+        # makes two fewer requests; the print rules still ship on every page.
         missing = [p.relative_to(ROOT).as_posix() for p in SHIPPED
-                   if 'assets/css/print.css' not in p.read_text(encoding='utf-8')]
+                   if 'assets/css/base.css' not in p.read_text(encoding='utf-8')]
         self.assertEqual(missing, [])
         self.assertEqual(len(SHIPPED), 74)
+        self.assertFalse((ROOT / 'assets/css/print.css').exists(),
+                         'print.css must stay merged into base.css')
 
     def test_print_sheet_hides_chrome_and_keeps_content_breaks(self):
-        css = (ROOT / 'assets/css/print.css').read_text(encoding='utf-8')
+        css = (ROOT / 'assets/css/base.css').read_text(encoding='utf-8')
         for rule in ('@page', 'background:white', 'a[href^="http"]::after',
                      'break-inside:avoid', 'break-before:page', '.print-page-btn'):
             self.assertIn(rule, css.replace(' ', ''), rule)

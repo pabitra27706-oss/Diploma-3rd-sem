@@ -1,9 +1,9 @@
 # Design — Diploma 3rd Sem Study Hub
 
-> Status: **not frozen.** Values below are measured from the current tokens in
-> `assets/css/variables.css` (2026-11-06); they are evidence, not a spec. The
-> token set gets consolidated and frozen in Phase 6, and no new page may
-> hard-code a colour before then.
+> Status: **token set consolidated 2026-11-17 (Phase 9.2); not otherwise frozen.**
+> Every colour literal in the tree is defined exactly once, in the palette block
+> of `assets/css/variables.css`, and enforced by `scripts/check_tokens.py`. A new
+> page may not hard-code a colour: add or reuse a palette token.
 >
 > Method: `webflow/knowledge/design-system.md`. Playbook: `webflow/`.
 
@@ -14,37 +14,45 @@ decoration, everything reachable with one thumb and a keyboard."*
 
 - Chosen: **not yet** — recorded here only as a proposal.
 
-## Current token inventory (22 first-party CSS files)
+## Current token inventory (20 first-party CSS files)
 
-Re-measured 2026-11-17. The numbers this section used to carry were written
-before Phases 4–6 shipped and were wrong; these are counted from the tree by
-`python3 scripts/audit_accessibility.py`.
+Re-measured 2026-11-17 (Phase 9.2). The numbers this section used to carry were
+written before Phases 4–6 shipped and were wrong; these are counted from the tree
+by `python3 scripts/audit_accessibility.py` and `python3 scripts/check_tokens.py`.
 
-- **22 first-party stylesheets** (`assets/css/*` 8, `quiz/css/*` 6,
+- **20 first-party stylesheets** (`assets/css/*` 5 — `variables.css`, `main.css`,
+  `base.css`, `discovery.css`, `pwa.css` no longer exists — `quiz/css/*` 6,
   `practice/css/*` 3, `pyq/css/*` 3, `subjects/units-com/common.css`,
-  `roadmap/index.css`, `info/styles/professional.css`). Third-party Font Awesome
-  CSS is vendored and excluded from every count here.
-- `assets/css/variables.css` is the token file; several component files still
-  repeat literal colours instead of consuming tokens (Phase 8 consolidates).
-  Where a literal had to change for contrast, the change was made in that file's
-  own custom properties rather than inline in components.
+  `roadmap/index.css`, `info/styles/professional.css`). `accessibility.css`,
+  `print.css` and `pwa.css` are merged into `assets/css/base.css` so a page makes
+  two fewer requests. Third-party Font Awesome CSS is vendored and excluded from
+  every count here.
+- **One token file, 302 palette entries.** Every `#rgb`/`#rrggbb` literal in the
+  tree is defined once in the palette block of `assets/css/variables.css`; 1,205
+  occurrences elsewhere are `var(--c-…)` references. The per-area semantic
+  namespaces (`--bg-primary`, `--accent`, …) stay in their own files as aliases,
+  because those names legitimately mean different colours in different areas.
+- The colour equivalence of that rewrite was proven statically: every rewritten
+  declaration resolves to the same hex as before, and all 47 measured contrast
+  pairs are unchanged.
 - **Themes are one record.** Since Phase 6 the theme lives in the single
   `d3s:prefs` record applied by `assets/js/storage.js` before first paint; the
   old `diploma-3rd-sem-theme` / `theme` / `quiz-theme` keys are legacy read-only
   migration inputs, not live stores.
-- **Icons: Font Awesome is self-hosted** at `assets/vendor/fontawesome/`
-  (`css/all.min.css`) and referenced by 38 pages. There is no CDN link and no
+- **Icons: Font Awesome is self-hosted** at `assets/vendor/fontawesome/`. Pages
+  load the generated `css/used.min.css` (25,890 B, 226 icon rules, every utility
+  and both used `@font-face` families) instead of the full `all.min.css`
+  (102,641 B); the webfonts themselves are unmodified. There is no CDN link and no
   third-party network request on any shipped page. A single outbound `https`
   href remains — an optional Telegram contact link on
   `info/contact-support.html`, which is a link, not a request.
 - `assets/icons/sprite.svg` defines **34 symbols**; no shipped page currently
   references one via `<use href="#…">`, so the old "4 symbols referenced but
   missing" note no longer describes this tree.
-- **Motion: 21 of 22 stylesheets declare a `prefers-reduced-motion: reduce`
-  rule** (the 22nd, `print.css`, animates nothing); 14 actually animate. All 68
-  pages also load the global `@media (prefers-reduced-motion: reduce)` block and
-  honour the stored `data-motion="reduced"` preference in
-  `assets/css/accessibility.css`.
+- **Motion: 19 of 20 stylesheets declare a `prefers-reduced-motion: reduce`
+  rule** (the 20th animates nothing); 14 actually animate. All 74 pages also load
+  the global `@media (prefers-reduced-motion: reduce)` block and honour the stored
+  `data-motion="reduced"` preference in `assets/css/base.css`.
 
 ## Measured contrast (static computation, not rendered)
 

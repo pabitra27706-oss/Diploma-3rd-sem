@@ -15,7 +15,6 @@
    I. Card Style 5 — Paper / Notebook
    ============================================================ */
 
-
 /* ============================================================
    SECTION A: CSS VARIABLES
    ============================================================ */
@@ -23,40 +22,40 @@
 :root {
 
   /* ── Brand / Primary ── */
-  --primary:              #2962ff;
-  --primary-dark:         #1a56db;
-  --primary-light:        #e8eeff;
-  --accent:               #00c853;
-  --accent-blue:          #2962ff;
-  --accent-green:         #00c853;
-  --accent-red:           #d50000;
-  --accent-orange:        #ff6d00;
-  --purple:               #6200ea;
+  --primary:              var(--c-blue-brand);
+  --primary-dark:         var(--c-blue-brand-dark);
+  --primary-light:        var(--c-e8eeff);
+  --accent:               var(--c-green-brand);
+  --accent-blue:          var(--c-blue-brand);
+  --accent-green:         var(--c-green-brand);
+  --accent-red:           var(--c-red-brand);
+  --accent-orange:        var(--c-orange-brand);
+  --purple:               var(--c-purple-brand);
 
   /* ── Subject Color System ──
      Each subject overrides --subject-color on body
      All accents across the app use this variable        */
-  --subject-color:        #2962ff;
+  --subject-color:        var(--c-blue-brand);
   --subject-color-light:  rgba(41, 98, 255, 0.12);
   --subject-color-glow:   rgba(41, 98, 255, 0.35);
 
   /* ── Text Colors ── */
-  --text-primary:         #1a1a2e;
-  --text-secondary:       #64748b;
-  --text-muted:           #94a3b8;
+  --text-primary:         var(--c-ink-navy);
+  --text-secondary:       var(--c-slate-500);
+  --text-muted:           var(--c-slate-400);
 
   /* ── Background Colors ── */
-  --bg-primary:           #f8faff;
-  --bg-secondary:         #f1f5f9;
-  --bg-tertiary:          #e8eeff;
+  --bg-primary:           var(--c-grey-48);
+  --bg-secondary:         var(--c-slate-100);
+  --bg-tertiary:          var(--c-e8eeff);
 
   /* ── Card Backgrounds ── */
-  --card-bg:              #ffffff;
-  --card-bg-hover:        #fafbff;
+  --card-bg:              var(--c-white);
+  --card-bg-hover:        var(--c-fafbff);
 
   /* ── Border ── */
-  --border-color:         #e2e8f0;
-  --border-hover:         #cbd5e1;
+  --border-color:         var(--c-slate-200);
+  --border-hover:         var(--c-slate-300);
 
   /* ── Aliases for backward compatibility ──
      Fixes index.html using undefined variables    */
@@ -66,9 +65,9 @@
   --hover-bg:             var(--bg-secondary);
 
   /* ── Special Backgrounds ── */
-  --formula-bg:           #f3f0ff;
-  --code-bg:              #1e2433;
-  --code-text:            #e2e8f0;
+  --formula-bg:           var(--c-f3f0ff);
+  --code-bg:              var(--c-1e2433);
+  --code-text:            var(--c-slate-200);
 
   /* ── Glassmorphism ── */
   --glass-bg:             rgba(255, 255, 255, 0.55);
@@ -78,7 +77,7 @@
   --glass-blur:           blur(14px);
 
   /* ── Neumorphism ── */
-  --neu-bg:               #f0f4f8;
+  --neu-bg:               var(--c-f0f4f8);
   --neu-shadow-light:     rgba(255, 255, 255, 0.85);
   --neu-shadow-dark:      rgba(163, 177, 198, 0.60);
 
@@ -130,79 +129,79 @@
 
 /* ── Subject Color Overrides ── */
 body.subject-cst201 {
-  --subject-color:        #ff6d00;
+  --subject-color:        var(--c-orange-brand);
   --subject-color-light:  rgba(255, 109,   0, 0.10);
   --subject-color-glow:   rgba(255, 109,   0, 0.35);
-  --primary:              #ff6d00;
-  --primary-dark:         #e65100;
-  --primary-light:        #fff3e0;
-  --formula-bg:           #fff3e0;
+  --primary:              var(--c-orange-brand);
+  --primary-dark:         var(--c-e65100);
+  --primary-light:        var(--c-fff3e0);
+  --formula-bg:           var(--c-fff3e0);
 }
 
 body.subject-cst203 {
-  --subject-color:        #f9a825;
+  --subject-color:        var(--c-f9a825);
   --subject-color-light:  rgba(249, 168,  37, 0.10);
   --subject-color-glow:   rgba(249, 168,  37, 0.35);
-  --primary:              #f9a825;
-  --primary-dark:         #f57f17;
-  --primary-light:        #fffde7;
-  --formula-bg:           #fffde7;
+  --primary:              var(--c-f9a825);
+  --primary-dark:         var(--c-f57f17);
+  --primary-light:        var(--c-fffde7);
+  --formula-bg:           var(--c-fffde7);
 }
 
 body.subject-cst205 {
-  --subject-color:        #00c853;
+  --subject-color:        var(--c-green-brand);
   --subject-color-light:  rgba(  0, 200,  83, 0.10);
   --subject-color-glow:   rgba(  0, 200,  83, 0.35);
-  --primary:              #00c853;
-  --primary-dark:         #00952e;
-  --primary-light:        #e8f5e9;
-  --formula-bg:           #e8f5e9;
+  --primary:              var(--c-green-brand);
+  --primary-dark:         var(--c-00952e);
+  --primary-light:        var(--c-green-tint-50);
+  --formula-bg:           var(--c-green-tint-50);
 }
 
 body.subject-cst207 {
-  --subject-color:        #6200ea;
+  --subject-color:        var(--c-purple-brand);
   --subject-color-light:  rgba( 98,   0, 234, 0.10);
   --subject-color-glow:   rgba( 98,   0, 234, 0.35);
-  --primary:              #6200ea;
-  --primary-dark:         #4a00b0;
-  --primary-light:        #f3e5f5;
-  --formula-bg:           #f3e5f5;
+  --primary:              var(--c-purple-brand);
+  --primary-dark:         var(--c-4a00b0);
+  --primary-light:        var(--c-f3e5f5);
+  --formula-bg:           var(--c-f3e5f5);
 }
 
 body.subject-cst209 {
-  --subject-color:        #2962ff;
+  --subject-color:        var(--c-blue-brand);
   --subject-color-light:  rgba( 41,  98, 255, 0.10);
   --subject-color-glow:   rgba( 41,  98, 255, 0.35);
-  --primary:              #2962ff;
-  --primary-dark:         #1a56db;
-  --primary-light:        #e8eeff;
-  --formula-bg:           #eef2ff;
+  --primary:              var(--c-blue-brand);
+  --primary-dark:         var(--c-blue-brand-dark);
+  --primary-light:        var(--c-e8eeff);
+  --formula-bg:           var(--c-eef2ff);
 }
 
 /* ── Dark Theme Overrides ── */
 [data-theme="dark"] {
   /* Text */
-  --text-primary:         #f1f5f9;
-  --text-secondary:       #94a3b8;
-  --text-muted:           #64748b;
+  --text-primary:         var(--c-slate-100);
+  --text-secondary:       var(--c-slate-400);
+  --text-muted:           var(--c-slate-500);
 
   /* Backgrounds */
-  --bg-primary:           #0d1117;
-  --bg-secondary:         #161b22;
-  --bg-tertiary:          #1c2333;
+  --bg-primary:           var(--c-0d1117);
+  --bg-secondary:         var(--c-ink-900);
+  --bg-tertiary:          var(--c-1c2333);
 
   /* Cards */
-  --card-bg:              #161b22;
-  --card-bg-hover:        #1c2333;
+  --card-bg:              var(--c-ink-900);
+  --card-bg-hover:        var(--c-1c2333);
 
   /* Borders */
-  --border-color:         #30363d;
-  --border-hover:         #484f58;
+  --border-color:         var(--c-30363d);
+  --border-hover:         var(--c-484f58);
 
   /* Special */
-  --formula-bg:           #1c1f3a;
-  --code-bg:              #0d1117;
-  --neu-bg:               #161b22;
+  --formula-bg:           var(--c-1c1f3a);
+  --code-bg:              var(--c-0d1117);
+  --neu-bg:               var(--c-ink-900);
 
   /* Glassmorphism dark */
   --glass-bg:             rgba(22, 27, 34, 0.70);
@@ -220,7 +219,6 @@ body.subject-cst209 {
   --shadow-lg:            0 8px 30px rgba(0, 0, 0, 0.50);
   --shadow-xl:            0 16px 50px rgba(0, 0, 0, 0.60);
 }
-
 
 /* ============================================================
    SECTION B: BASE RESET
@@ -313,7 +311,6 @@ select {
   font-family: inherit;
   font-size:   inherit;
 }
-
 
 /* ============================================================
    SECTION C: TYPOGRAPHY
@@ -471,7 +468,6 @@ hr {
   margin:        1.5rem 0;
 }
 
-
 /* ============================================================
    SECTION D: LAYOUT + CONTAINER
    ============================================================ */
@@ -577,7 +573,6 @@ hr {
   padding-bottom: 0;
 }
 
-
 /* ============================================================
    SECTION E: CARD STYLE 1 — GLASSMORPHISM
    ============================================================ */
@@ -633,7 +628,6 @@ hr {
   border-color: rgba(255, 255, 255, 0.14);
 }
 
-
 /* ============================================================
    SECTION F: CARD STYLE 2 — NEUMORPHISM
    ============================================================ */
@@ -670,21 +664,6 @@ hr {
     6px 6px 14px  var(--neu-shadow-dark),
     -6px -6px 14px var(--neu-shadow-light);
 }
-
-
-/* ============================================================
-   SECTION G: CARD STYLE 3 — GRADIENT BORDER
-   ============================================================ */
-
-.card-gradient-border {
-  position:      relative;
-  background:    var(--card-bg);
-  border-radius: var(--card-radius);
-  border:        none;
-  transition:    var(--transition-smooth);
-  z-index:       0;
-}
-
 /* Animated gradient ring */
 .card-gradient-border::before {
   content:       "";
@@ -703,16 +682,6 @@ hr {
   animation:     rotate-border 6s linear infinite;
   transition:    opacity 0.3s ease;
 }
-
-.card-gradient-border::after {
-  content:       "";
-  position:      absolute;
-  inset:         1px;
-  border-radius: calc(var(--card-radius) - 1px);
-  background:    var(--card-bg);
-  z-index:       -1;
-}
-
 .card-gradient-border:hover::before {
   opacity: 1;
 }
@@ -721,7 +690,6 @@ hr {
   0%   { transform: rotate(0deg);   }
   100% { transform: rotate(360deg); }
 }
-
 
 /* ============================================================
    SECTION H: CARD STYLE 4 — NEON GLOW
@@ -775,15 +743,14 @@ hr {
     inset 0 0 30px rgba(41, 98, 255, 0.12);
 }
 
-
 /* ============================================================
    SECTION I: CARD STYLE 5 — PAPER / NOTEBOOK
    ============================================================ */
 
 .card-paper {
-  background-color:   #fffef5;
-  border:             1px solid #e8dfc8;
-  border-left:        4px solid #d4a373;
+  background-color:   var(--c-fffef5);
+  border:             1px solid var(--c-e8dfc8);
+  border-left:        4px solid var(--c-d4a373);
   border-radius:      var(--radius-sm);
   box-shadow:
     2px 3px 10px rgba(0, 0, 0, 0.08),
@@ -824,15 +791,15 @@ hr {
   height:        20px;
   background:    linear-gradient(
     225deg,
-    #e8dfc8 50%,
+    var(--c-e8dfc8) 50%,
     transparent 50%
   );
 }
 
 [data-theme="dark"] .card-paper {
-  background-color:   #1e1a14;
-  border-color:       #3a3020;
-  border-left-color:  #8b6843;
+  background-color:   var(--c-1e1a14);
+  border-color:       var(--c-3a3020);
+  border-left-color:  var(--c-8b6843);
   box-shadow:
     2px 3px 10px rgba(0, 0, 0, 0.30),
     0 1px 2px rgba(0, 0, 0, 0.20);
@@ -846,7 +813,7 @@ hr {
 [data-theme="dark"] .card-paper::after {
   background: linear-gradient(
     225deg,
-    #3a3020 50%,
+    var(--c-3a3020) 50%,
     transparent 50%
   );
 }
@@ -878,14 +845,13 @@ hr {
   100% { background-position: -200% 0; }
 }
 
-
 /* ============================================================
    SECTION K: ANIMATED HEADER
    ============================================================ */
 
 .header {
-  background:      linear-gradient(135deg, var(--subject-color) 0%, #1a237e 100%);
-  color:           #ffffff;
+  background:      linear-gradient(135deg, var(--subject-color) 0%, var(--c-1a237e) 100%);
+  color:           var(--c-white);
   padding:         3.5rem 1.5rem 3rem;
   text-align:      center;
   position:        relative;
@@ -897,7 +863,7 @@ hr {
   background:      linear-gradient(
     -45deg,
     var(--subject-color),
-    #1a237e,
+    var(--c-1a237e),
     var(--purple),
     var(--subject-color)
   );
@@ -1020,7 +986,7 @@ hr {
   font-size:      2.4rem;
   font-weight:    800;
   margin-bottom:  0.5rem;
-  color:          #ffffff;
+  color:          var(--c-white);
   letter-spacing: -0.02em;
 }
 
@@ -1033,13 +999,13 @@ hr {
   font-weight:   400;
   opacity:       0.85;
   margin-bottom: 1rem;
-  color:         #ffffff;
+  color:         var(--c-white);
 }
 
 .header-content p {
   font-size: 1rem;
   opacity:   0.85;
-  color:     #ffffff;
+  color:     var(--c-white);
 }
 
 /* ── Typewriter Effect ── */
@@ -1091,7 +1057,7 @@ hr {
   display:         inline-flex;
   align-items:     center;
   gap:             0.4rem;
-  color:           #ffffff;
+  color:           var(--c-white);
   backdrop-filter: blur(6px);
   border:          1px solid rgba(255, 255, 255, 0.10);
   transition:      var(--transition-fast);
@@ -1111,7 +1077,7 @@ hr {
   padding:     0.3rem 0.8rem;
   border-radius: var(--radius-full);
   font-size:   0.8rem;
-  color:       #ffffff;
+  color:       var(--c-white);
   margin-top:  0.75rem;
   border:      1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(6px);
@@ -1136,7 +1102,6 @@ hr {
 .header-wave svg path {
   fill: var(--bg-primary);
 }
-
 
 /* ============================================================
    SECTION L: NAVBAR
@@ -1317,7 +1282,6 @@ hr {
   color:            var(--subject-color);
 }
 
-
 /* ============================================================
    SECTION M: MOBILE DRAWER
    ============================================================ */
@@ -1467,7 +1431,6 @@ hr {
   color:        var(--subject-color);
 }
 
-
 /* ============================================================
    SECTION N: ROADMAP LAYOUT
    ============================================================ */
@@ -1531,7 +1494,7 @@ hr {
   height:          48px;
   border-radius:   50%;
   background:      var(--subject-color);
-  color:           #ffffff;
+  color:           var(--c-white);
   display:         flex;
   align-items:     center;
   justify-content: center;
@@ -1588,32 +1551,32 @@ hr {
 
 .difficulty-easy {
   background: rgba(0, 200, 83, 0.12);
-  color:      #00a152;
+  color:      var(--c-00a152);
   border:     1px solid rgba(0, 200, 83, 0.25);
 }
 
 .difficulty-medium {
   background: rgba(255, 171, 0, 0.12);
-  color:      #cc8800;
+  color:      var(--c-cc8800);
   border:     1px solid rgba(255, 171, 0, 0.25);
 }
 
 .difficulty-hard {
   background: rgba(213, 0, 0, 0.10);
-  color:      #d50000;
+  color:      var(--c-red-brand);
   border:     1px solid rgba(213, 0, 0, 0.20);
 }
 
 [data-theme="dark"] .difficulty-easy {
-  color: #66ffa6;
+  color: var(--c-66ffa6);
 }
 
 [data-theme="dark"] .difficulty-medium {
-  color: #ffd740;
+  color: var(--c-ffd740);
 }
 
 [data-theme="dark"] .difficulty-hard {
-  color: #ff5252;
+  color: var(--c-ff5252);
 }
 
 /* ── Unit Badge ── */
@@ -1622,7 +1585,7 @@ hr {
   align-items:   center;
   gap:           0.4rem;
   background:    var(--subject-color);
-  color:         #ffffff;
+  color:         var(--c-white);
   font-size:     0.72rem;
   font-weight:   700;
   padding:       0.2rem 0.75rem;
@@ -1686,7 +1649,7 @@ hr {
   align-items:   center;
   gap:           0.4rem;
   background:    var(--subject-color);
-  color:         #ffffff;
+  color:         var(--c-white);
   padding:       0.55rem 1.2rem;
   border-radius: var(--radius-md);
   text-decoration: none;
@@ -1715,7 +1678,6 @@ hr {
   transform: translateX(3px);
 }
 
-
 /* ============================================================
    SECTION O: STAGGER ANIMATION SYSTEM
    ============================================================ */
@@ -1738,11 +1700,7 @@ hr {
 .stagger-4  { transition-delay: 0.20s; }
 .stagger-5  { transition-delay: 0.25s; }
 .stagger-6  { transition-delay: 0.30s; }
-.stagger-7  { transition-delay: 0.35s; }
-.stagger-8  { transition-delay: 0.40s; }
-.stagger-9  { transition-delay: 0.45s; }
-.stagger-10 { transition-delay: 0.50s; }
-
+.stagger-7  { transition-delay: 0.35s; }.stagger-9  { transition-delay: 0.45s; }
 /* ── Alternative Animation: Fade Up + Scale ── */
 .animate-scale {
   opacity:   0;
@@ -1821,7 +1779,6 @@ hr {
   }
 }
 
-
 /* ============================================================
    SECTION P: PROGRESS DASHBOARD
    ============================================================ */
@@ -1890,7 +1847,7 @@ hr {
 .progress-unit-dot.completed .progress-dot-circle {
   border-color: var(--accent-green);
   background:   var(--accent-green);
-  color:        #ffffff;
+  color:        var(--c-white);
 }
 
 .progress-dot-label {
@@ -1921,7 +1878,6 @@ hr {
   color:     var(--subject-color);
 }
 
-
 /* ============================================================
    SECTION Q: COURSE META BAR
    ============================================================ */
@@ -1951,7 +1907,6 @@ hr {
   color:       var(--text-primary);
   font-weight: 600;
 }
-
 
 /* ============================================================
    SECTION R: ROADMAP MOBILE LAYOUT
@@ -2283,7 +2238,7 @@ hr {
 .copy-code-btn.copied {
   background:    var(--accent-green);
   border-color:  var(--accent-green);
-  color:         #ffffff;
+  color:         var(--c-white);
 }
 
 .copy-code-btn.copied::after {
@@ -2319,66 +2274,66 @@ hr {
    ============================================================ */
 
 .code-box .token.keyword {
-  color: #ff7b72;
+  color: var(--c-ff7b72);
   font-weight: 600;
 }
 
 .code-box .token.comment,
 .code-box .token.prolog {
-  color: #6a737d;
+  color: var(--c-6a737d);
   font-style: italic;
 }
 
 .code-box .token.string,
 .code-box .token.attr-value {
-  color: #a5d6ff;
+  color: var(--c-a5d6ff);
 }
 
 .code-box .token.punctuation {
-  color: #c9d1d9;
+  color: var(--c-c9d1d9);
 }
 
 .code-box .token.function,
 .code-box .token.class-name {
-  color: #79c0ff;
+  color: var(--c-79c0ff);
 }
 
 .code-box .token.number {
-  color: #79c0ff;
+  color: var(--c-79c0ff);
 }
 
 .code-box .token.operator {
-  color: #ffa657;
+  color: var(--c-ffa657);
 }
 
 .code-box .token.property,
 .code-box .token.variable {
-  color: #ffa657;
+  color: var(--c-ffa657);
 }
 
 .code-box .token.boolean {
-  color: #ff7b72;
+  color: var(--c-ff7b72);
 }
 
 .code-box .token.tag {
-  color: #ff7b72;
+  color: var(--c-ff7b72);
 }
 
 .code-box .token.selector {
-  color: #79c0ff;
+  color: var(--c-79c0ff);
 }
 
 .code-box .token.builtin {
-  color: #ffa657;
+  color: var(--c-ffa657);
 }
 
 /* Dark theme adjustments */
 [data-theme="dark"] .code-box .token.keyword {
-  color: #ff7b72;
+  color: var(--c-ff7b72);
 }
 
 [data-theme="dark"] .code-box .token.string {
-  color: #79c0ff;
+  color: var(--c-79c0ff);
 }
 
 /* ============================================================
@@ -2408,7 +2363,7 @@ hr {
 
 .data-table th {
   background:      var(--subject-color);
-  color:           #ffffff;
+  color:           var(--c-white);
   padding:         0.85rem 1rem;
   text-align:      left;
   font-weight:     600;
@@ -2564,7 +2519,7 @@ hr {
 
 .toggle-btn {
   background:    var(--subject-color);
-  color:         #ffffff;
+  color:         var(--c-white);
   border:        none;
   padding:       0.5rem 1rem;
   border-radius: var(--radius-md);
@@ -2630,35 +2585,10 @@ hr {
   color:         var(--text-secondary);
   margin-bottom: 0;
 }
-
-/* ============================================================
-   SECTION Y: FIGURE / DIAGRAM LINKS
-   ============================================================ */
-
-.figure-link {
-  text-decoration: none;
-  color:           inherit;
-  display:         block;
-  cursor:          pointer;
-  transition:      var(--transition);
-}
-
 .figure-link:hover {
   text-decoration: none;
   color:           inherit;
 }
-
-.diagram-placeholder {
-  border:          2px dashed var(--border-color);
-  border-radius:   var(--card-radius);
-  padding:         2rem 1.5rem;
-  text-align:      center;
-  margin:          1rem 0;
-  transition:      var(--transition);
-  color:           var(--text-muted);
-  background:      var(--bg-secondary);
-}
-
 .diagram-placeholder i {
   font-size:     2.5rem;
   margin-bottom: 0.75rem;
@@ -2666,28 +2596,10 @@ hr {
   color:         var(--subject-color);
   opacity:       0.7;
 }
-
-.figure-link:hover .diagram-placeholder {
-  border-color:   var(--subject-color);
-  background:    var(--subject-color-light);
-  transform:      translateY(-2px);
-  box-shadow:     var(--shadow-md);
-  color:          var(--subject-color);
-}
-
 .diagram-placeholder:hover {
   border-color: var(--subject-color);
   background:  var(--subject-color-light);
 }
-
-.click-hint {
-  display:       block;
-  margin-top:    0.5rem;
-  font-size:     0.8rem;
-  color:         var(--subject-color);
-  font-weight:   500;
-}
-
 .figure-row {
   display:       grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -2722,7 +2634,7 @@ hr {
 
 .tag:hover {
   background:    var(--subject-color);
-  color:         #ffffff;
+  color:         var(--c-white);
   border-color:  var(--subject-color);
   transform:     translateY(-1px);
 }
@@ -2730,39 +2642,17 @@ hr {
 .tag i {
   font-size: 0.7rem;
 }
-
-/* Tag colors */
-.tag-success {
-  background:    rgba(0, 200, 83, 0.10);
-  color:        var(--accent-green);
-  border-color:  rgba(0, 200, 83, 0.25);
-}
-
 .tag-success:hover {
   background: var(--accent-green);
-  color:      #ffffff;
+  color:      var(--c-white);
 }
-
-.tag-warning {
-  background:    rgba(255, 171, 0, 0.10);
-  color:        #cc8800;
-  border-color:  rgba(255, 171, 0, 0.25);
-}
-
 .tag-warning:hover {
-  background: #cc8800;
-  color:      #ffffff;
+  background: var(--c-cc8800);
+  color:      var(--c-white);
 }
-
-.tag-danger {
-  background:    rgba(213, 0, 0, 0.10);
-  color:        var(--accent-red);
-  border-color:  rgba(213, 0, 0, 0.25);
-}
-
 .tag-danger:hover {
   background: var(--accent-red);
-  color:      #ffffff;
+  color:      var(--c-white);
 }
 
 /* ============================================================
@@ -2882,7 +2772,7 @@ hr {
   height:          54px;
   border-radius:   50%;
   background:      var(--subject-color);
-  color:           #ffffff;
+  color:           var(--c-white);
   border:          none;
   box-shadow:
     0 4px 14px var(--subject-color-glow),
@@ -3036,7 +2926,7 @@ hr {
   height:          52px;
   border-radius:   50%;
   background:      var(--subject-color);
-  color:           #ffffff;
+  color:           var(--c-white);
   border:          none;
   box-shadow:
     0 4px 14px var(--subject-color-glow),
@@ -3096,7 +2986,6 @@ hr {
   transform:      scale(1);
 }
 
-
 /* ============================================================
    SECTION AC: PROGRESS WIDGET (Bottom Left)
    ============================================================ */
@@ -3114,7 +3003,7 @@ hr {
   height:          42px;
   border-radius:   50%;
   background:      var(--subject-color);
-  color:           #ffffff;
+  color:           var(--c-white);
   border:          none;
   cursor:          pointer;
   display:         flex;
@@ -3152,7 +3041,7 @@ hr {
 }
 
 .progress-widget-toggle svg circle.fill {
-  stroke:           #ffffff;
+  stroke:           var(--c-white);
   stroke-dasharray: 113;
   stroke-dashoffset: 113;
 }
@@ -3240,7 +3129,6 @@ hr {
   overflow:     hidden;
   text-overflow: ellipsis;
 }
-
 
 /* ============================================================
    SECTION AD: TOAST NOTIFICATION SYSTEM
@@ -3334,7 +3222,6 @@ hr {
 .toast-info::before    { background: var(--subject-color); }
 .toast-info::after     { background: var(--subject-color); }
 .toast-info i          { color:      var(--subject-color); }
-
 
 /* ============================================================
    SECTION AE: COMMAND PALETTE
@@ -3537,7 +3424,6 @@ hr {
   font-size:     0.65rem;
   line-height:   1.6;
 }
-
 
 /* ============================================================
    SECTION AF: NOTES PANEL (Slide-in)
@@ -3797,7 +3683,7 @@ hr {
 }
 
 .note-action-btn.star.starred {
-  color:      #ffc107;
+  color:      var(--c-amber-350);
 }
 
 /* ── Panel Footer ── */
@@ -3834,14 +3720,14 @@ hr {
 
 .notes-panel-footer .btn-add-note {
   background:   var(--subject-color);
-  color:        #ffffff;
+  color:        var(--c-white);
   border-color: var(--subject-color);
 }
 
 .notes-panel-footer .btn-add-note:hover {
   background:   var(--primary-dark);
   border-color: var(--primary-dark);
-  color:        #ffffff;
+  color:        var(--c-white);
 }
 
 /* ── Note Editor ── */
@@ -3895,17 +3781,7 @@ hr {
 .note-color-dot.active {
   border-color: var(--text-primary);
   transform:    scale(1.15);
-}
-
-.note-color-yellow { background: #fff9c4; }
-.note-color-green  { background: #c8e6c9; }
-.note-color-pink   { background: #f8bbd0; }
-.note-color-blue   { background: #bbdefb; }
-
-[data-theme="dark"] .note-color-yellow { background: #4a4520; }
-[data-theme="dark"] .note-color-green  { background: #1b3a1e; }
-[data-theme="dark"] .note-color-pink   { background: #3a1520; }
-[data-theme="dark"] .note-color-blue   { background: #15253a; }
+}.note-color-green  { background: var(--c-green-tint-100); }.note-color-blue   { background: var(--c-blue-tint-100); }[data-theme="dark"] .note-color-green  { background: var(--c-1b3a1e); }[data-theme="dark"] .note-color-blue   { background: var(--c-15253a); }
 
 .note-editor-actions {
   display:  flex;
@@ -3925,7 +3801,7 @@ hr {
 
 .note-editor-actions .save-note {
   background:  var(--subject-color);
-  color:       #ffffff;
+  color:       var(--c-white);
   border-color: var(--subject-color);
 }
 
@@ -3941,7 +3817,7 @@ hr {
 
 .note-editor-actions .cancel-note:hover {
   background:   var(--accent-red);
-  color:        #ffffff;
+  color:        var(--c-white);
   border-color: var(--accent-red);
 }
 
@@ -3950,8 +3826,8 @@ hr {
   display:        inline-flex;
   align-items:    center;
   gap:            0.25rem;
-  background:     #fff9c4;
-  color:          #6d5c00;
+  background:     var(--c-fff9c4);
+  color:          var(--c-6d5c00);
   padding:        0.1rem 0.5rem;
   border-radius:  var(--radius-full);
   font-size:      0.65rem;
@@ -3967,10 +3843,9 @@ hr {
 }
 
 [data-theme="dark"] .section-note-indicator {
-  background: #4a4520;
-  color:      #ffd740;
+  background: var(--c-4a4520);
+  color:      var(--c-ffd740);
 }
-
 
 /* ============================================================
    SECTION AG: HIGHLIGHT TOOLBAR
@@ -4046,62 +3921,19 @@ hr {
 .highlight-color-dot:hover {
   transform: scale(1.2);
   box-shadow: 0 0 0 2px var(--text-muted);
-}
-
-.highlight-dot-yellow { background: rgba(255, 214, 0, 0.85);  }
-.highlight-dot-green  { background: rgba(0, 200, 83, 0.65);   }
-.highlight-dot-pink   { background: rgba(233, 30, 99, 0.55);  }
-.highlight-dot-blue   { background: rgba(41, 98, 255, 0.55);  }
-
-/* ── Applied Highlight Marks ── */
-.text-highlight-yellow {
-  background:    rgba(255, 214, 0, 0.30);
-  border-radius: 2px;
-  padding:       0 2px;
-  cursor:        pointer;
-  transition:    background 0.2s ease;
-}
-
+}.highlight-dot-green  { background: rgba(0, 200, 83, 0.65);   }.highlight-dot-blue   { background: rgba(41, 98, 255, 0.55);  }
 .text-highlight-yellow:hover {
   background: rgba(255, 214, 0, 0.50);
 }
-
-.text-highlight-green {
-  background:    rgba(0, 200, 83, 0.22);
-  border-radius: 2px;
-  padding:       0 2px;
-  cursor:        pointer;
-  transition:    background 0.2s ease;
-}
-
 .text-highlight-green:hover {
   background: rgba(0, 200, 83, 0.40);
 }
-
-.text-highlight-pink {
-  background:    rgba(233, 30, 99, 0.18);
-  border-radius: 2px;
-  padding:       0 2px;
-  cursor:        pointer;
-  transition:    background 0.2s ease;
-}
-
 .text-highlight-pink:hover {
   background: rgba(233, 30, 99, 0.35);
 }
-
-.text-highlight-blue {
-  background:    rgba(41, 98, 255, 0.18);
-  border-radius: 2px;
-  padding:       0 2px;
-  cursor:        pointer;
-  transition:    background 0.2s ease;
-}
-
 .text-highlight-blue:hover {
   background: rgba(41, 98, 255, 0.35);
 }
-
 
 /* ============================================================
    SECTION AH: KEYBOARD SHORTCUTS MODAL
@@ -4181,7 +4013,6 @@ hr {
   min-width:     24px;
   text-align:    center;
 }
-
 
 /* ============================================================
    SECTION AI: EXPORT MODAL
@@ -4278,7 +4109,6 @@ hr {
   font-size: 0.75rem;
   color:     var(--text-muted);
 }
-
 
 /* ============================================================
    SECTION AJ: ABOUT / BOOK GRID STYLES
@@ -4398,17 +4228,6 @@ hr {
   background:    var(--subject-color-light);
   color:         var(--subject-color);
 }
-
-/* Old book-list backward compatibility */
-.book-list {
-  list-style:  none;
-  padding:     0;
-  margin:      0.5rem 0 0 0;
-  display:     flex;
-  flex-direction: column;
-  gap:         0.75rem;
-}
-
 .book-list li {
   display:       flex;
   align-items:   flex-start;
@@ -4423,19 +4242,12 @@ hr {
   line-height:   1.5;
   transition:    var(--transition);
 }
-
-.book-list li:hover {
-  transform:  translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-
 .book-list li i {
   color:       var(--subject-color);
   font-size:   1.05rem;
   flex-shrink: 0;
   margin-top:  2px;
 }
-
 
 /* ============================================================
    SECTION AK: TOPIC GRID + CARDS
@@ -4480,14 +4292,6 @@ hr {
   color:     var(--text-secondary);
 }
 
-/* ── Exercise Area ── */
-.exercise-area {
-  display:        flex;
-  flex-direction: column;
-  gap:            1.25rem;
-}
-
-
 /* ============================================================
    SECTION AL: EXAM TABLE STYLES
    ============================================================ */
@@ -4498,29 +4302,14 @@ hr {
   margin-top:      0.75rem;
   font-size:       0.88rem;
 }
-
-.exam-table th {
-  background:  var(--subject-color);
-  color:       #ffffff;
-  padding:     0.7rem 1rem;
-  text-align:  left;
-  font-weight: 600;
-}
-
 .exam-table td {
   padding:       0.6rem 1rem;
   border-bottom: 1px solid var(--border-color);
   color:         var(--text-primary);
 }
-
-.exam-table tr:nth-child(even) td {
-  background: var(--bg-secondary);
-}
-
 .exam-table tr:hover td {
   background: var(--subject-color-light);
 }
-
 
 /* ============================================================
    SECTION AM: PRINT STYLES
@@ -4579,8 +4368,8 @@ hr {
 
   /* Force light colors */
   body {
-    color:      #000000 !important;
-    background: #ffffff !important;
+    color:      var(--c-black) !important;
+    background: var(--c-white) !important;
     font-size:  12pt;
   }
 
@@ -4592,18 +4381,18 @@ hr {
   }
 
   h1, h2, h3, h4, h5, h6, .card-title {
-    color:       #000000 !important;
+    color:       var(--c-black) !important;
     page-break-after: avoid;
   }
 
   a {
-    color:           #000000 !important;
+    color:           var(--c-black) !important;
     text-decoration: underline;
   }
 
   .section {
     page-break-inside: avoid;
-    border:            1px solid #cccccc;
+    border:            1px solid var(--c-cccccc);
     box-shadow:        none;
     break-inside:      avoid;
   }
@@ -4622,46 +4411,35 @@ hr {
   }
 
   .header {
-    background: #ffffff !important;
-    color:      #000000 !important;
-    border-bottom: 2px solid #000000;
+    background: var(--c-white) !important;
+    color:      var(--c-black) !important;
+    border-bottom: 2px solid var(--c-black);
     padding:    1rem 0;
   }
 
   .header-content h1,
   .header-content h2,
   .header-content p {
-    color: #000000 !important;
+    color: var(--c-black) !important;
   }
 
   .info-item {
-    background:  #eeeeee !important;
-    color:       #000000 !important;
-    border:      1px solid #cccccc !important;
+    background:  var(--c-grey-95) !important;
+    color:       var(--c-black) !important;
+    border:      1px solid var(--c-cccccc) !important;
   }
-
-  /* Highlights print as underlined */
-  .text-highlight-yellow,
-  .text-highlight-green,
-  .text-highlight-pink,
-  .text-highlight-blue {
-    background:      none !important;
-    text-decoration: underline;
-    text-decoration-style: wavy;
-  }
-
   /* Code blocks */
   pre,
   .code-box {
-    background: #f5f5f5 !important;
-    color:      #000000 !important;
-    border:     1px solid #cccccc !important;
+    background: var(--c-grey-80) !important;
+    color:      var(--c-black) !important;
+    border:     1px solid var(--c-cccccc) !important;
     page-break-inside: avoid;
   }
 
   pre code,
   .code-box code {
-    color: #000000 !important;
+    color: var(--c-black) !important;
   }
 
   /* Roadmap for print */
@@ -4689,7 +4467,6 @@ hr {
     page-break-inside: avoid;
   }
 }
-
 
 /* ============================================================
    SECTION AN: RESPONSIVE RULES

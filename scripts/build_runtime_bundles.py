@@ -4,6 +4,10 @@ from data_pipeline import ROOT
 BUNDLES={
  'assets/js/quiz-setup.bundle.js':['quiz/js/paper-attempt.js','quiz/js/attempt-store.js','quiz/js/common.js','quiz/js/setup.js'],
  'assets/js/quiz-support.bundle.js':['quiz/js/attempt-store.js','quiz/js/mistakes.js'],
+ # Phase 9.2: the three scripts every page loads become one request. They are
+ # independent IIFEs that resolve their base from document.currentScript, which
+ # stays assets/js/ in the bundle, so behaviour is unchanged.
+ 'assets/js/shell.bundle.js':['assets/js/accessibility.js','assets/js/i18n.js','assets/js/pwa.js'],
 }
 def build(root=ROOT):
     for output,inputs in BUNDLES.items():

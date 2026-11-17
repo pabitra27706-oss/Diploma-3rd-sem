@@ -1,0 +1,121 @@
+/* ================================
+   Global base sheet — Phase 9.2 consolidation
+   ================================
+   One request per page instead of three. These three sheets were already loaded
+   on every shipped page, so merging them removes two requests from every view
+   without changing a byte of their rules. Order inside this file is the order the
+   browser used to apply them: safeguards, then print, then the install panel.
+
+   Sections:
+     1. Accessibility safeguards and preference overrides (Phase 7)
+     2. Print sheet (Phase 8.3) — answers on a new page, no fake running header
+     3. Install / update panel (Phase 1)
+   ================================ */
+
+/* ── 1. Accessibility safeguards (assets/css/accessibility.css) ── */
+/* Shared implementation safeguards; not a claim of audited WCAG conformance.
+   Colours are declared as tokens so scripts/audit_accessibility.py can measure
+   them instead of hoping a literal is right. */
+:root{--skip-fg:var(--c-grey-111);--skip-bg:var(--c-white);--focus-ring-solid:var(--c-indigo-650)}
+[data-theme="dark"]{--focus-ring-solid:var(--c-indigo-300)}
+.skip-study-content{position:fixed;top:-12rem;left:1rem;z-index:100000;background:var(--skip-bg);color:var(--skip-fg);padding:.8rem;border:3px solid var(--skip-fg)}.skip-study-content:focus{top:1rem}
+html{scroll-padding-top:6rem}body{line-height:var(--reading-line-height,1.6)}
+:focus-visible{outline:3px solid var(--focus-ring-solid,currentColor);outline-offset:3px}
+.is-deeplink-target{outline:3px solid var(--accent,var(--primary,var(--c-blue-royal-dark)));outline-offset:3px;border-radius:.5rem}
+.is-deeplink-flash{box-shadow:0 0 0 6px rgba(37,76,186,.18);transition:box-shadow .4s ease}
+.question-share{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--border-color,var(--border,rgba(120,130,150,.3)));font-size:.86rem}
+.question-share button,.question-share a.open-paper-link{font:inherit;font-size:.82rem;padding:.38rem .7rem;border-radius:.45rem;border:1px solid var(--border-color,var(--border,var(--c-slate-450)));background:var(--bg-secondary,transparent);color:inherit;cursor:pointer;text-decoration:none}
+.question-share a.open-paper-link{text-decoration:underline;text-underline-offset:.18em}
+.question-share .share-status{font-size:.8rem;color:var(--text-muted,var(--text-secondary,inherit))}
+.question-share .share-fallback-input{flex:1 1 14rem;min-width:12rem;font:inherit;font-size:.8rem;padding:.35rem .55rem;border-radius:.4rem;border:1px solid currentColor;background:var(--bg-primary,var(--c-white));color:inherit}
+.question-share p{flex:1 1 100%;margin:.2rem 0 0;font-size:.8rem;color:var(--text-muted,var(--text-secondary,inherit))}
+.unit-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;padding:.65rem 1rem;margin:.75rem 0 1rem;border-radius:.5rem;border:1px solid var(--border,rgba(120,130,150,.35));background:var(--bg-secondary,rgba(120,130,150,.08));font-size:.88rem}
+.unit-breadcrumb a{color:var(--accent,var(--primary,var(--c-blue-royal-dark)));text-decoration:underline;text-underline-offset:.18em}
+.unit-breadcrumb .crumb-sep{opacity:.7}
+.unit-breadcrumb [aria-current="location"]{font-weight:600}
+.section-anchor-link{margin-inline-start:.45rem;font-size:.85em;opacity:.75;text-decoration:none;color:inherit}
+.section-anchor-link:hover,.section-anchor-link:focus-visible{opacity:1;text-decoration:underline}
+html[data-contrast="high"] body,html[data-contrast="high"] main,html[data-contrast="high"] article,html[data-contrast="high"] section{background:var(--c-white)!important;color:var(--c-grey-111)!important}
+html[data-contrast="high"] a{color:var(--c-003078)!important}
+html[data-motion="reduced"] *,html[data-motion="reduced"] *::before,html[data-motion="reduced"] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.skip-study-content,.reading-shortcut,.question-share,.section-anchor-link,.unit-discovery nav{display:none!important}}
+.study-storage-alert{position:fixed;bottom:0;left:0;right:0;z-index:100001;padding:1rem;background:var(--c-white);color:var(--c-grey-111);border:3px solid var(--c-red-900)}
+
+/* ── 2. Print sheet (assets/css/print.css) ── */
+/* Print rules — Phase 8.3.
+   Loaded by every shipped page (scripts/generate_presence.py injects the link),
+   so a printed unit, paper, answer key or sheet is black on white with no
+   navigation. The page's own <h1> is the printed header: a browser @page
+   running header (margin box) is not available in Chrome, Safari or Firefox
+   from a zero-build static sheet, so no fake header is drawn here. */
+@media print{
+  /* A4/Letter margins; no forced page size so the printer keeps its default. */
+  @page{margin:15mm}
+
+  /* No dark background, no shadows, no themed surfaces. */
+  html,body,main,article,section,header,footer,div,aside,p,li,td,th,blockquote,pre,code,table,details,summary{
+    background:white!important;color:black!important;box-shadow:none!important;text-shadow:none!important}
+  body{font-size:11pt;line-height:1.45}
+
+  /* Navigation, application chrome, controls and overlays never print.
+     Page <header> containers are deliberately NOT hidden: on the unit pages the
+     <h1> lives inside <header class="header">, so hiding it would print a page
+     with no title. Their coloured backgrounds are flattened above instead. */
+  nav,button,.topbar,.navbar,.nav-links,.mobile-drawer,.nav-overlay,.scroll-progress,
+  .bottom-nav,.sidebar,.sidebar-overlay,.pwa-panel,.question-share,.unit-discovery,.toast-container,
+  .modal-overlay,.go-top-btn,.loading-screen,.error-screen,.no-print,[data-no-print],.print-toolbar,
+  .print-page-btn,.search-panel,.toolbar-strip,.skip-study-content,.reading-shortcut,.section-anchor-link,
+  .nav-dots,.nav-buttons,.app-footer,.theme-toggle,.mobile-menu-btn,.header-btn,.drawer-links,
+  .mobile-nav,.hamburger,.stats-btn,.filter-bar,.filters{
+    display:none!important}
+
+  /* External links stay honest on paper. */
+  a{color:black!important;text-decoration:none}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;overflow-wrap:anywhere}
+
+  /* Code keeps its own line breaks but never overflows the sheet. */
+  pre,code{white-space:pre-wrap!important;overflow-wrap:anywhere;border:1px solid var(--c-grey-999)}
+
+  /* Break control: a question, a card, a table row or a figure stays whole. */
+  .question-card,.review-question-card,.print-q-block,.card,.flashcard,article,figure,tr,img{
+    break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3,h4{counter-reset:none;break-after:avoid;page-break-after:avoid}
+  h1{font-size:16pt}
+  .answer-section,.review-answer-block,.print-answers-section{break-before:page;page-break-before:always}
+
+  /* Tables print their header row on each page where the engine supports it. */
+  table{border-collapse:collapse;width:100%}
+  thead{display:table-header-group}
+  th,td{border:1px solid var(--c-black);padding:.25rem .35rem;text-align:left}
+
+  /* The provenance summary line stays visible when the details element is
+     closed, so a printed answer still shows where it came from. */
+  details>summary{list-style:none;font-weight:600}
+  .rev-banner{border:1px solid var(--c-black);padding:.4rem}
+}
+
+/* Reduced motion (Phase 7.1 item 6): the global rule lives in
+   assets/css/accessibility.css; this file carries its own guard so a page
+   cannot animate just because that sheet loaded later. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
+/* ── 3. Install / update panel (assets/css/pwa.css) ── */
+.pwa-panel { position: sticky; bottom: 0; z-index: 100; background: var(--bg-primary, Canvas); color: var(--text-primary, CanvasText); padding: .5rem 1rem; border-top: 1px solid currentColor; font: inherit; }
+.pwa-panel:not(:has(button:not([hidden]))):not(:has(p)) { display: none; }
+.pwa-panel button { font: inherit; padding: .5rem 1rem; margin: .25rem; cursor: pointer; }
+.pwa-panel button:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+.pwa-panel [hidden] { display: none; }
+.pwa-panel p { margin: .5rem; }
+@media print { .pwa-panel { display: none; } }
+
+/* Reduced motion (Phase 7.1 item 6): the global rule lives in
+   assets/css/accessibility.css; this file carries its own guard so a page
+   cannot animate just because that sheet loaded later. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+}

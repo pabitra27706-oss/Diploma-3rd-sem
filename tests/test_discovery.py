@@ -252,7 +252,7 @@ class DiscoveryTests(unittest.TestCase):
 
     def test_service_worker_caches_discovery_offline(self):
         sw = (ROOT / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn("const VERSION = 'study-2026-11-17d'", sw)
+        self.assertIn("const VERSION = 'study-2026-11-17e'", sw)
         for asset in (
             'search.html',
             'repeated.html',
@@ -262,8 +262,9 @@ class DiscoveryTests(unittest.TestCase):
             'assets/js/discovery.js',
             'assets/js/unit-discovery.js',
             'assets/js/subject-labels.js',
-            # Phase 7.3 UI language layer travels with the same worker.
-            'assets/js/i18n.js',
+            # Phase 7.3 UI language layer travels with the same worker; Phase 9.2
+            # merged accessibility/i18n/pwa into one deferred shell bundle.
+            'assets/js/shell.bundle.js',
             'assets/search/manifest.json',
             'assets/search/repeated.json',
             'assets/search/index-pages.json',

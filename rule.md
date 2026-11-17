@@ -8,14 +8,15 @@
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
-> merged as PR #15, Phase 8 `✅*` accepted and merged as **PR #16**):
-> `arena/e0da0bec-diploma-3rd-sem` was the Phase 8 session branch, branched from
-> `main` at `84e99aad91d1baf9b4e1110b0767a0ea0b4cd6c2` (the PR #15 merge) and now
-> merged back. **The next session starts from a fresh Arena branch cut from the
-> PR #16 merge on `main`; read the branch name from Git, not from this file.**
+> merged as PR #15, Phase 8 `✅*` accepted and merged as **PR #16**, and the
+> **Phase 9** work of 2026-11-17):
+> `arena/908b6b19-diploma-3rd-sem` is the **Phase 9 session branch**, branched from
+> `main` at `0e53a4ad61f2aef7dbd9f188efbf15c2d05c9ff4` (the PR #16 merge). Phase 9
+> is implemented but **not deployed and not merged**. Read the branch name from
+> Git, not from this file.
 > If you are reading this while a new phase has begun, §7's Termux block must be
 > updated to that new branch before any run instructions are given. Earlier branches
-> `arena/e0da0bec-...` (PR #16 `Phase 8`), `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`),
+> `arena/e0da0bec-...` (PR #16 `Phase 8`, retired), `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...` (PR #14 `5b7eb66`),
 > `arena/4d3997da-...` (PR #13 `a92a1ff`), `arena/80b11bcf-...` (PR #12 `7c20a55`), `arena/637a5a31-...` (PR #10
 > `8f6eb97`, PR #11 `9d47c7c7`), `arena/858a50c7-...` (PR #9 `365b8f7`),
 > `arena/47d8bf99-...` (PR #8 `3e3cb2e1`), `arena/be3d9178-...` (PR #7
@@ -31,7 +32,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/e0da0bec-diploma-3rd-sem` (active session branch, branched from `main` at `84e99aa` after PR #15 merged Phase 7; prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/908b6b19-diploma-3rd-sem` (active session branch, branched from `main` at `0e53a4a` — the PR #16 merge; Phase 9 is implemented here and not deployed; prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -203,9 +204,9 @@ A **public launch** additionally needs every item in
 
   ```sh
   cd ~/Diploma-3rd-sem
-  git fetch origin arena/e0da0bec-diploma-3rd-sem
-  git checkout arena/e0da0bec-diploma-3rd-sem
-  git pull --ff-only origin arena/e0da0bec-diploma-3rd-sem
+  git fetch origin arena/908b6b19-diploma-3rd-sem
+  git checkout arena/908b6b19-diploma-3rd-sem
+  git pull --ff-only origin arena/908b6b19-diploma-3rd-sem
   cd ..
   python3 -m http.server 8010 --bind 127.0.0.1
   ```

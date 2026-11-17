@@ -1,6 +1,11 @@
 # Phase 9 — Performance, measurement and launch
 
-**Status:** 🚧 implementation in progress · **Parts:** 6 · **Depends on:** 1–8 · **Owner gates:** analytics decision (9.4), deploy (9.6), domain (9.5)
+**Status:** 🚧 implemented 2026-11-17 on `arena/908b6b19-diploma-3rd-sem`; 9.2/9.3/9.5 done, 9.4 open on the owner's dated measurement answer, 9.6 evidenced only where this environment can prove an item (no Lighthouse, no phone, no deploy) · **Parts:** 6 · **Depends on:** 1–8 · **Owner gates:** analytics decision (9.4), deploy (9.6), domain (9.5)
+
+> Results and exact numbers: [`record.md`](record.md). Task-level status:
+> [`tasks.md`](tasks.md). Per-page static measurements:
+> [`page-weight-before.json`](page-weight-before.json) and
+> [`page-weight-after.json`](page-weight-after.json).
 
 ## Goal
 

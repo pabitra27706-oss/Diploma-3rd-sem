@@ -14,6 +14,11 @@ python3 scripts/check_site.py --strict --quiet
 python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
 python3 scripts/audit_accessibility.py --fail
+python3 scripts/check_tokens.py --strict
+python3 scripts/build_icon_subset.py --check
+python3 scripts/build_data_version.py --check
+python3 scripts/audit_page_weight.py --budget
+python3 scripts/check_root_rewrite.py
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
 node tests/quiz-engine-dom.cjs
@@ -28,9 +33,16 @@ node tests/section-notes.cjs
 node tests/theme-skew.cjs
 node tests/data-pipeline-consumers.cjs
 node tests/discovery-dom.cjs
+node tests/data-version.cjs
 ```
 
-Python currently covers **63** tests: source-preserving/idempotent
+Python currently covers **92** tests (Phase 9 added 29): the colour-token gate
+(palette uniqueness, no literal outside the token file, page load order, and one
+negative case per rule on temporary trees), the generated icon-CSS subset
+(currentness, icon coverage, license banner, unknown-icon disclosure), the
+generated data version (currentness, input coverage, independence from the shell
+version), and the base-path proof (one constant, `/`-rooted copy passes the site
+checker). Earlier suites cover: source-preserving/idempotent
 pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
 integrity guard changes/additions/removals, compact discovery (≤ 40% shard budget,
 74-page scope partition, 2,410-entry file/anchor validation, 1 exact alias + 15

@@ -116,33 +116,28 @@ def css_vars(path: Path) -> list[dict]:
 def resolve(tokens: list[dict], name: str, *, dark: bool = False) -> str | None:
     """Resolve a token to the hex a painted page actually gets.
 
-    The site always sets `data-theme` on `<html>` before first paint, so:
-      light  -> the `[data-theme="light"]` block when a file has one, otherwise
-                the unconditional `:root` block (media-scoped dark blocks are
-                not the light palette);
-      dark   -> the unconditional `:root` declarations with the
-                `[data-theme="dark"]` block applied on top, which is exactly
-                the cascade on the same element.
-    `var(--alias)` chains are followed with a depth cap.
+    `tokens` is a *page cascade*: the shared palette/styles from
+    `assets/css/variables.css` first, then the page's own area stylesheet. The
+    site always sets `data-theme` on `<html>` before first paint, so a
+    declaration applies when
+      light  -> its selector is not `[data-theme="dark"]`-scoped and its media
+                query is not a dark-mode query;
+      dark   -> its selector is not `[data-theme="light"]`-scoped (base, the
+                `[data-theme="dark"]` block and `prefers-color-scheme: dark`
+                all apply).
+    Later declarations win, exactly as in the browser for equal specificity.
+    `var(--alias)` chains are followed with a depth cap, so an area token that
+    aliases a palette entry (`--bg-primary: var(--c-white)`) still resolves.
     """
-    explicit_light = any('[data-theme="light"]' in row['selector'] for row in tokens)
+
+    def applies(row: dict, dark_palette: bool) -> bool:
+        selector, media = row['selector'], row['media']
+        if dark_palette:
+            return '[data-theme="light"]' not in selector
+        return '[data-theme="dark"]' not in selector and 'prefers-color-scheme: dark' not in media
 
     def pool(token: str, dark_palette: bool) -> list[dict]:
-        rows = [row for row in tokens if row['name'] == token]
-        if dark_palette:
-            base = [row for row in rows
-                    if 'data-theme' not in row['selector'] and 'prefers-color-scheme: dark' not in row['media']]
-            themed = [row for row in rows if 'data-theme="dark"' in row['selector']]
-            return base + themed
-        if explicit_light:
-            themed = [row for row in rows if 'data-theme="light"' in row['selector']]
-            if themed:
-                return themed
-        base = [row for row in rows
-                if 'data-theme' not in row['selector'] and 'prefers-color-scheme: dark' not in row['media']]
-        if base:
-            return base
-        return [row for row in rows if 'data-theme' not in row['selector']]
+        return [row for row in tokens if row['name'] == token and applies(row, dark_palette)]
 
     value = None
     for _ in range(8):
@@ -214,16 +209,19 @@ CONTRAST_PAIRS = [
     ('unit primary on card', UNITS, False, '--primary', '--card-bg', 4.5, '1.4.3'),
     ('focus ring on light (3:1 non-text)', VARIABLES, False, '--focus-ring-solid', '--bg-primary-light', 3.0, '1.4.11'),
     ('focus ring on dark (3:1 non-text)', VARIABLES, True, '--focus-ring-solid', '--bg-primary-dark', 3.0, '1.4.11'),
-    ('skip link text', ROOT / 'assets/css/accessibility.css', False, '--skip-fg', '--skip-bg', 4.5, '1.4.3'),
+    ('skip link text', ROOT / 'assets/css/base.css', False, '--skip-fg', '--skip-bg', 4.5, '1.4.3'),
 ]
 
 
 def measure_contrast() -> list[dict]:
     cache: dict[Path, list[dict]] = {}
+    base_tokens = css_vars(VARIABLES)
 
     def tokens_for(path: Path) -> list[dict]:
+        """The cascade a page sees: shared tokens first, its own sheet after."""
         if path not in cache:
-            cache[path] = css_vars(path)
+            own = css_vars(path)
+            cache[path] = own if path == VARIABLES else base_tokens + own
         return cache[path]
 
     rows = []
@@ -323,7 +321,7 @@ def measure_motion() -> dict:
             handled.append(rel(path))
     pages = walk('.html')
     covered = 0
-    global_rule = {'assets/css/accessibility.css'}
+    global_rule = {'assets/css/base.css'}
     for path in pages:
         text = path.read_text(encoding='utf-8', errors='replace')
         if any(rel(ROOT / sheet) in text for sheet in global_rule):
