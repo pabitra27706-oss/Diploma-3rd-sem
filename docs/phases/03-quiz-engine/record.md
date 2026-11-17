@@ -1,7 +1,7 @@
 # Phase 3 — Quiz and exam engine
 
-- Status: 🚧 in progress (all engineering parts 3.1–3.6 implemented and verified; awaiting owner local/phone verification) · Updated: 2026-11-16
-- Branch: arena/be3d9178-diploma-3rd-sem **(retired — merged to main via PR #7; completed on active session branch `arena/47d8bf99-diploma-3rd-sem`)** · starting tip ac428d1
+- Status: ✅* owner-approved with recorded caveats (merged to `main` via PR #11 `9d47c7c7`; status reconciled 2026-11-17 on `arena/80b11bcf-diploma-3rd-sem`)
+- Branch: arena/be3d9178-diploma-3rd-sem **(retired — PR #7 `125eb94`; completed across `arena/47d8bf99-diploma-3rd-sem` PR #8 `3e3cb2e1` and `arena/637a5a31-diploma-3rd-sem` PR #11 `9d47c7c7`)** · starting tip ac428d1
 - Owner delegation permits independent engine work; Phase 2 source gates remain.
 - Owner confirms immutable authoritative PYQs; hash guard added before coding.
 
@@ -118,6 +118,25 @@ are deferred to Phase 10 / owner phone check. Phase 2 source-verification
 items remain tracked under the content gate; MIT license covers authored code
 while third-party exam-source rights remain separate. No PR, merge or deployment
 was performed for this work.
+
+## Owner sign-off and recorded caveats — 2026-11-17
+
+Owner approved closing Phase 3 (`🚧` → `✅*`) after PR #11 merged to `main` as
+`9d47c7c76b2384c72944a0880df058a2518394ec`, with these explicit open caveats:
+
+1. **No standalone CST207 (CSO) quiz bank:** CSO practice and timed mocks use
+   its 6 frozen PYQ papers (195 archived questions) until a verified quiz bank
+   is authored under the content gate.
+2. **Unkeyed items and subjective marks stay ungraded:** 456 of 872 quiz-bank
+   items are non-MCQ without automatic keys; subjective paper sections and
+   1-mark written MCQ explanations on the 15 `2024–2026` papers require manual
+   self-review (no fabricated overall paper grade).
+3. **Source-verification ledger stays separate:** 9 fingerprinted data findings
+   (`docs/data/validation-exceptions.json`) and 3 grouped syllabus findings
+   remain tracked under the Phase 2 / Phase 8.6 content-verification gate.
+4. **Cross-device / hardware acceptance deferred to Phase 10:** physical phone
+   background throttling, screen-lock timers, screen-reader testing and browser
+   matrix belong to `10-device-acceptance`.
 
 ### Storage integration follow-up
 

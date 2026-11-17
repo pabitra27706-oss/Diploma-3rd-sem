@@ -1,24 +1,22 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-17 (sub-phase 8A shipped; README/rule counts refreshed). Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`,
+Updated 2026-11-17 (Phase 3 reconciled to `✅*`; Phase 4 discovery parts 4.1–4.5 completed and verified on `arena/80b11bcf-diploma-3rd-sem`). Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`,
 `docs/ROADMAP.md` and the relevant phase record before continuing. Source files
 and actual Git status take precedence over older narrative.
 
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- `main` = `8f6eb976be19aa31bcd26a07a6b1d1da263059eb` — the merge of PR #10 —
-  and carries sub-phase 8A and the UI label pass.
-- Session branch: `arena/637a5a31-diploma-3rd-sem` (PR #10, merged), branched
-  from `main` at `365b8f7bc4769691c032ae93b969f9db931ce091`. Do not
+- `main` = `9d47c7c76b2384c72944a0880df058a2518394ec` — the merge of PR #11 —
+  carrying Phase 1 (`✅*`), Phase 2 (`✅*`), Phase 3 (`✅*`), and sub-phase 8A.
+- Session branch: `arena/80b11bcf-diploma-3rd-sem` (active), branched from
+  `main` at `9d47c7c76b2384c72944a0880df058a2518394ec`. Do not
   create/switch/rename branches or push another branch.
-  `arena/858a50c7-diploma-3rd-sem` (PR #9) was merged into `main` as `365b8f7`;
-  older `arena/be3d9178-diploma-3rd-sem` (PR #7, `125eb94`) and
-  `arena/26856d99-diploma-3rd-sem` (`8405b15`) branches are retired.
-- Base `main` commit: `365b8f7`. Sub-phase 8A is committed on the active branch
-  as `664674b` (content) → `49758b6` (pin) → `1dcc57a` (presence) → `9b66c31`
-  (test pins) → `4e906e2` (UI labels). Inspect actual Git/PR state rather than
-  assuming an older checkpoint is current.
+  Prior branches `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
+  `arena/858a50c7-...` (PR #9 `365b8f7`), `arena/47d8bf99-...` (PR #8
+  `3e3cb2e1`), `arena/be3d9178-...` (PR #7 `125eb94`), and `arena/26856d99-...`
+  (`8405b15`) were merged into `main` and are retired.
+- Inspect actual Git/PR state rather than assuming an older checkpoint is current.
 - Zero-build static HTML/CSS/JS/JSON; publication base `/Diploma-3rd-sem/`.
   Canonical configured URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
   This is not confirmation that the live site has current changes.
@@ -119,11 +117,13 @@ labels it reports on `main`. An exact-baseline pass is not a full strict pass.
 
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
-2. Use `docs/STATUS.md`'s remaining order. Phase 2 is `✅*` (owner-verified on
-   Termux; source gates tracked separately) and Phase 3 (`03-quiz-engine`)
-   engineering is complete; next sequential phase is Phase 4 (`04-discovery` —
-   remaining informational-page indexing, authored heading anchors, offline
-   search/back-button/share-fallback/keyboard acceptance), followed by Phases 5–9.
+2. Use `docs/STATUS.md`'s remaining order. Phases 1, 2 and 3 are `✅*`
+   (owner-approved with recorded caveats); Phase 4 (`04-discovery`) parts
+   4.1–4.5 are implemented and gate-verified on `arena/80b11bcf-diploma-3rd-sem`
+   (`🚧` awaiting owner local verification); next sequential phase is Phase 5
+   (`05-study-system` — parts 5.1–5.5: flashcards, Leitner edge cases, weak
+   areas with denominators, daily goal/streaks, and Today dashboard), followed
+   by Phases 6–9 and Phase 10 device acceptance.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
    visible; record new evidence/dispositions in derived metadata and decisions.
 4. Edit source scripts, not generated bundles. Regeneration order and check
@@ -141,13 +141,13 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git pull --ff-only origin arena/637a5a31-diploma-3rd-sem
+git pull --ff-only origin arena/80b11bcf-diploma-3rd-sem
 cd ..
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
 Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
-directory: `git clone --branch arena/637a5a31-diploma-3rd-sem
+directory: `git clone --branch arena/80b11bcf-diploma-3rd-sem
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling

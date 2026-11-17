@@ -118,6 +118,86 @@ function loadFromHistory(historyId) {
   applyHistoryEntry(entry);
 }
 
+function inferResultSubjectCode(q) {
+  if (q && q.subjectCode) return q.subjectCode;
+  if (q && q.id) {
+    const m = String(q.id).match(/^(CST\d{3})-/);
+    if (m) return m[1];
+  }
+  const cfgSubj = resultState.config && resultState.config.subject;
+  return cfgSubj && cfgSubj !== 'all' ? cfgSubj : '';
+}
+
+function resultSubjectLabel(code) {
+  if (code && typeof window !== 'undefined' && typeof window.subjectLabel === 'function') {
+    return window.subjectLabel(code);
+  }
+  return 'Quiz';
+}
+
+function buildResultDeepLink(q) {
+  const url = new URL('result.html', window.location.href);
+  url.hash = '';
+  const p = new URLSearchParams();
+  const hid = getParam('historyId') || (resultState.result && resultState.result.id);
+  if (hid) p.set('historyId', hid);
+  if (q && q.id) p.set('q', q.id);
+  url.search = p.toString();
+  return url.href;
+}
+
+function buildResultShareBar(q, displayNum) {
+  const bar = createElement('div', 'question-share');
+  const code = inferResultSubjectCode(q);
+  const shortName = resultSubjectLabel(code);
+  const cleanStem = String(q.question || '').replace(/\s+/g, ' ').trim();
+  const localUrl = buildResultDeepLink(q);
+
+  const copyBtn = createElement('button', 'copy-question-link', 'Copy review link (this device)');
+  copyBtn.type = 'button';
+
+  const shareBtn = createElement('button', 'share-question-link', 'Share review link (this device)');
+  shareBtn.type = 'button';
+
+  const statusEl = createElement('span', 'share-status');
+  statusEl.setAttribute('role', 'status');
+  statusEl.setAttribute('aria-live', 'polite');
+
+  copyBtn.addEventListener('click', () => {
+    window.StudyShare.copy(localUrl, {
+      button: copyBtn,
+      container: bar,
+      statusEl: statusEl,
+      inputLabel: 'Quiz result link (this device) — select and copy'
+    });
+  });
+
+  shareBtn.addEventListener('click', () => {
+    window.StudyShare.share(
+      {
+        title: `${shortName} · Q${displayNum} Result Review`,
+        text: `${shortName} (opens on the device storing this quiz attempt): ${cleanStem.slice(0, 110)}`,
+        url: localUrl
+      },
+      {
+        button: shareBtn,
+        copyButton: copyBtn,
+        container: bar,
+        statusEl: statusEl,
+        inputLabel: 'Quiz result link (this device) — select and copy'
+      }
+    );
+  });
+
+  bar.appendChild(copyBtn);
+  bar.appendChild(shareBtn);
+  bar.appendChild(statusEl);
+  bar.appendChild(
+    createElement('p', '', 'Quiz attempts stay in browser storage on this device; review links carry no personal answers.')
+  );
+  return bar;
+}
+
 function applyResult(result) {
   resultState.result    = result;
   resultState.questions = result.questions || [];
@@ -136,6 +216,30 @@ function applyResult(result) {
   renderScoreHero();
   renderPerformanceBars();
   renderQuestionList();
+  const targetId = getParam('q');
+  if (targetId) {
+    const idx = resultState.questions.findIndex(item => item.id === targetId);
+    const target = [...document.querySelectorAll('[data-question-id]')].find(el => el.dataset.questionId === targetId);
+    if (target) {
+      if (window.StudyShare && typeof window.StudyShare.highlight === 'function') {
+        window.StudyShare.highlight(target);
+      } else {
+        target.tabIndex = -1;
+        target.focus();
+        target.scrollIntoView({ block: 'center' });
+      }
+      if (idx >= 0) {
+        const tq = resultState.questions[idx];
+        const shortName = resultSubjectLabel(inferResultSubjectCode(tq));
+        const cleanStem = String(tq.question || '').replace(/\s+/g, ' ').trim();
+        document.title = `${shortName} · Q${idx + 1} — ${cleanStem.slice(0, 60)}`;
+      }
+    } else if (dom.resultMain) {
+      const note = createElement('p', 'deeplink-notice', 'Requested question is not in this local quiz attempt; showing your saved result.');
+      note.setAttribute('role', 'status');
+      dom.resultMain.prepend(note);
+    }
+  }
   bindEvents();
   updateRetryLinks();
 }
@@ -458,6 +562,7 @@ function buildResultQuestionCard(q, displayNum) {
 
   const card = createElement('div', `result-q-card ${statusCls}`);
   card.id = `result-q-${q.id}`;
+  card.setAttribute('data-question-id', q.id);
 
   // ── Header
   const header = document.createElement('div');
@@ -507,6 +612,9 @@ function buildResultQuestionCard(q, displayNum) {
   // Explanation
   const explEl = buildExplanationEl(q);
   if (explEl) body.appendChild(explEl);
+
+  // Copy / Share deep-link controls
+  body.appendChild(buildResultShareBar(q, displayNum));
 
   card.appendChild(body);
   return card;

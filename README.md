@@ -26,13 +26,22 @@ installation or build is required to run the site.
   and storage keys, so saved progress and deep links are unaffected.
 - Timed quiz snapshots, autosave/resume, marked flags, history, exact retry,
   selected-attempt export, answer edits and a local mistake queue.
-- Paper practice with original instructions and registry duration. **Answer-any
-  rules and explanation-mark splits are not enforced; there is no automatic
-  overall paper grade.**
-- [Search](search.html), [repeated-question explorer](repeated.html), question
-  deep links and related-material links on subject/unit pages. Search covers
-  question stems, topics, unit headings and this device's section notes—not
-  every informational page.
+- Paper practice with original instructions, registry durations, `answerAny`
+  section/choiceSet quotas across all 28 papers, compulsory 30-minute Group A
+  loose-script window on the five `2023-03` papers, and `1m option + 1m written
+  explanation` handling on the fifteen `2024–2026` papers. Subjective and
+  written-explanation marks require manual self-review, so there is no
+  automatic overall paper grade.
+- Offline-capable [search](search.html), [repeated-question explorer](repeated.html)
+  (1 exact-content alias group plus 15 explicitly labelled unverified
+  normalized-text candidate clusters / 32 records), canonical question deep
+  links with Web Share / clipboard / input fallbacks across PYQ Answers,
+  Practice, and Quiz Review, authored unit `#section` anchors, breadcrumbs, and
+  filtered-PYQ URL handoffs. Search indexes 2,410 items across 50 of 68 shipped
+  HTML pages (question stems/topics, unit headings, subject/lab/internship hubs,
+  coverage, exam-pattern, study, and info pages, plus this device's local
+  section notes); the 18 excluded app/placeholder/fallback shells are listed in
+  [`assets/search/manifest.json`](assets/search/manifest.json).
 - **1,339 revision cards** generated from existing model answers and keyed MCQ
   explanations, a fixed Leitner scheduler, and a [Today screen](today.html)
   with local goals and sample-qualified weak-area trends. Cards are not newly
@@ -63,7 +72,7 @@ are derived sidecars. Unknown answers remain ungraded.
 
 The [2022 syllabus package](docs/syllabus/README.md) supplies current-course
 coverage references; it does not authorize rewriting historical papers.
-Ten data findings and three grouped syllabus errors remain under source review.
+Nine data findings and three grouped syllabus errors remain under source review.
 An exact-baseline regression pass is **not** a full strict-data pass.
 
 ## Run locally
@@ -98,10 +107,12 @@ python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
+node tests/quiz-engine-dom.cjs
 node tests/study-store.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs
 node tests/data-pipeline-consumers.cjs
+node tests/discovery-dom.cjs
 ```
 
 `validate_data.py --strict` and `validate_syllabus.py --strict` still report
@@ -116,12 +127,12 @@ zero-build. Review the resulting diff and run the integrity guard afterwards.
 ```sh
 python3 scripts/build_data_catalog.py
 python3 scripts/build_practice_days.py
-python3 scripts/build_search_index.py
 python3 scripts/build_cards.py
 python3 scripts/build_runtime_data.py
 python3 scripts/build_coverage.py
 python3 scripts/build_runtime_bundles.py
 python3 scripts/generate_presence.py
+python3 scripts/build_search_index.py
 python3 scripts/check_pyq_integrity.py
 ```
 

@@ -184,23 +184,322 @@ function renderSubjects(subjects) {
   });
 }
 
-// ─── Filter ──────────────────────────────────────────────
+// ─── Filter & URL Handoff (subject / unit / topic) ──────
+const shardCache = new Map();
+
+function displaySubject(code) {
+  if (typeof window !== 'undefined' && typeof window.subjectLabel === 'function') {
+    return window.subjectLabel(code);
+  }
+  const found = SUBJECTS_META.find(s => s.code === code);
+  return found ? found.short : 'Subject';
+}
+
+function makeEl(tag, attrs, ...children) {
+  const el = document.createElement(tag);
+  if (attrs) {
+    Object.entries(attrs).forEach(([k, v]) => {
+      if (v === null || v === undefined) return;
+      if (k === 'class') el.className = v;
+      else el.setAttribute(k, String(v));
+    });
+  }
+  children.flat().forEach(ch => {
+    if (ch === null || ch === undefined || ch === false) return;
+    el.append(ch.nodeType ? ch : document.createTextNode(String(ch)));
+  });
+  return el;
+}
+
+function parseFilterUrl() {
+  const p = new URLSearchParams(window.location.search);
+  const rawSubj = (p.get('subject') || '').trim().toUpperCase();
+  const validCodes = new Set(SUBJECTS_META.map(s => s.code));
+  const subject = validCodes.has(rawSubj) ? rawSubj : 'ALL';
+  const invalidSubject = Boolean(rawSubj && !validCodes.has(rawSubj));
+  const rawUnit = (p.get('unit') || '').trim();
+  const parsedUnit = rawUnit && /^\d+$/.test(rawUnit) ? Number(rawUnit) : null;
+  const topic = (p.get('topic') || '').trim().slice(0, 120);
+  return { subject, invalidSubject, unit: parsedUnit, topic };
+}
+
+function pushFilterUrl({ subject, unit, topic }, replace = false) {
+  const p = new URLSearchParams();
+  if (subject && subject !== 'ALL') p.set('subject', subject);
+  if (unit !== null && unit !== undefined && unit !== '') p.set('unit', String(unit));
+  if (topic) p.set('topic', topic);
+  const next = p.toString() ? `${window.location.pathname}?${p}` : window.location.pathname;
+  window.history[replace ? 'replaceState' : 'pushState'](null, '', next);
+}
+
+function applySubjectPillFilter(selected) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.subject === selected);
+  });
+  document.querySelectorAll('.subject-card').forEach(card => {
+    const match = selected === 'ALL' || card.dataset.subject === selected;
+    card.classList.toggle('hidden', !match);
+    if (selected !== 'ALL' && match) {
+      card.classList.add('expanded');
+    }
+  });
+}
+
+async function fetchSubjectPyqs(code) {
+  if (!shardCache.has(code)) {
+    shardCache.set(
+      code,
+      fetch(`../assets/search/index-${code}.json`)
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(rows => rows.filter(r => r.type === 'pyq').map(r => ({ ...r, subject: code })))
+        .catch(err => {
+          shardCache.delete(code);
+          throw err;
+        })
+    );
+  }
+  return shardCache.get(code);
+}
+
+async function renderFilteredPyqPanel(filter) {
+  const panel = document.getElementById('filteredPyqPanel');
+  if (!panel) return;
+  panel.replaceChildren();
+
+  if (filter.invalidSubject) {
+    panel.classList.remove('hidden');
+    panel.append(
+      makeEl('p', { role: 'status' }, 'Requested subject filter was not recognized; showing all archived papers.')
+    );
+    return;
+  }
+
+  const hasQuestionFilter = filter.unit !== null || Boolean(filter.topic);
+  if (!hasQuestionFilter) {
+    panel.classList.add('hidden');
+    return;
+  }
+
+  panel.classList.remove('hidden');
+  panel.append(makeEl('p', { role: 'status' }, 'Loading filtered questions…'));
+
+  const targetCodes = filter.subject === 'ALL'
+    ? SUBJECTS_META.map(s => s.code)
+    : [filter.subject];
+
+  let rows = [];
+  try {
+    const chunks = await Promise.all(targetCodes.map(fetchSubjectPyqs));
+    rows = chunks.flat();
+  } catch (_) {
+    panel.replaceChildren();
+    const errP = makeEl('p', { role: 'alert' }, 'Filtered questions could not load right now. ');
+    const retry = makeEl('button', { type: 'button', class: 'retry-btn' }, 'Retry');
+    retry.addEventListener('click', () => renderFilteredPyqPanel(filter));
+    errP.append(retry);
+    panel.append(errP);
+    return;
+  }
+
+  const unitScoped = filter.unit !== null
+    ? rows.filter(r => Number(r.unit) === filter.unit)
+    : rows;
+  const topicLower = filter.topic.toLowerCase();
+  const matched = filter.topic
+    ? unitScoped.filter(r => !r.genericTopic && String(r.topic || '').toLowerCase() === topicLower)
+    : unitScoped;
+
+  matched.sort((a, b) => (Number(b.year) || 0) - (Number(a.year) || 0));
+
+  panel.replaceChildren();
+  const headingBits = [];
+  if (filter.subject !== 'ALL') headingBits.push(displaySubject(filter.subject));
+  else headingBits.push('All Subjects');
+  if (filter.unit !== null) headingBits.push(`Unit ${filter.unit}`);
+  if (filter.topic) headingBits.push(filter.topic);
+
+  panel.append(
+    makeEl(
+      'h2',
+      { style: 'font-size:1.12rem;margin:0 0 .45rem;' },
+      `${headingBits.join(' · ')} — Past Questions (${matched.length})`
+    )
+  );
+
+  // Action bar: clear filter, practice handoff, search handoff, back to unit notes.
+  const actions = makeEl('div', {
+    style: 'display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:0 0 .75rem;font-size:.86rem;'
+  });
+
+  const clearBtn = makeEl('button', { type: 'button', class: 'filter-btn' }, 'Clear question filter');
+  clearBtn.addEventListener('click', () => {
+    const next = { subject: filter.subject, invalidSubject: false, unit: null, topic: '' };
+    pushFilterUrl(next);
+    applySubjectPillFilter(next.subject);
+    renderFilteredPyqPanel(next);
+  });
+  actions.append(clearBtn);
+
+  if (filter.topic && filter.unit !== null) {
+    const showAllUnit = makeEl('button', { type: 'button', class: 'filter-btn' }, `All Unit ${filter.unit} questions`);
+    showAllUnit.addEventListener('click', () => {
+      const next = { subject: filter.subject, invalidSubject: false, unit: filter.unit, topic: '' };
+      pushFilterUrl(next);
+      renderFilteredPyqPanel(next);
+    });
+    actions.append(showAllUnit);
+  }
+
+  const practiceParams = new URLSearchParams();
+  if (filter.subject !== 'ALL') practiceParams.set('subjects', filter.subject);
+  if (filter.unit !== null) practiceParams.set('units', String(filter.unit));
+  if (filter.topic) practiceParams.set('topics', filter.topic);
+  if (matched.length > 0) {
+    actions.append(
+      makeEl(
+        'a',
+        { href: `../practice/session.html?${practiceParams}` },
+        `Practice these (${matched.length})`
+      )
+    );
+  }
+
+  const searchParams = new URLSearchParams({ type: 'pyq' });
+  if (filter.subject !== 'ALL') searchParams.set('subject', filter.subject);
+  if (filter.topic) searchParams.set('topic', filter.topic);
+  else if (filter.unit !== null) searchParams.set('q', `unit ${filter.unit}`);
+  actions.append(makeEl('a', { href: `../search.html?${searchParams}` }, 'Open in Search'));
+
+  if (filter.subject !== 'ALL' && filter.unit !== null) {
+    const maxUnits = { CST201: 5, CST203: 5, CST205: 4, CST207: 5, CST209: 5 }[filter.subject] || 4;
+    if (filter.unit >= 1 && filter.unit <= maxUnits) {
+      actions.append(
+        makeEl(
+          'a',
+          { href: `../subjects/${filter.subject}/units/unit-${filter.unit}.html` },
+          `Unit ${filter.unit} notes`
+        )
+      );
+    }
+  }
+  panel.append(actions);
+
+  // Topic filter chips inside the unit view
+  const topicCounts = new Map();
+  unitScoped.forEach(r => {
+    if (r.genericTopic || !r.topic) return;
+    topicCounts.set(r.topic, (topicCounts.get(r.topic) || 0) + 1);
+  });
+  if (topicCounts.size > 0) {
+    const topicBar = makeEl('div', {
+      style: 'display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .85rem;'
+    });
+    [...topicCounts.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 12)
+      .forEach(([topicName, count]) => {
+        const isCurrent = topicName.toLowerCase() === topicLower;
+        const chip = makeEl(
+          'button',
+          {
+            type: 'button',
+            class: `filter-btn${isCurrent ? ' active' : ''}`,
+            'aria-pressed': isCurrent ? 'true' : 'false'
+          },
+          `${topicName} (${count})`
+        );
+        chip.addEventListener('click', () => {
+          const next = {
+            subject: filter.subject,
+            invalidSubject: false,
+            unit: filter.unit,
+            topic: isCurrent ? '' : topicName
+          };
+          pushFilterUrl(next);
+          renderFilteredPyqPanel(next);
+        });
+        topicBar.append(chip);
+      });
+    panel.append(topicBar);
+  }
+
+  if (matched.length === 0) {
+    panel.append(
+      makeEl(
+        'p',
+        { role: 'status' },
+        '0 archived exam questions match this filter. Clear the filter above or pick a full paper below.'
+      )
+    );
+    return;
+  }
+
+  function paperIdFor(subjectCode, paperCode) {
+    const subj = allSubjectData.find(s => s.code === subjectCode);
+    const found = subj && Array.isArray(subj.papers)
+      ? subj.papers.find(p => p.paperCode === paperCode)
+      : null;
+    return found && found.fileName ? found.fileName.replace(/\.json$/, '') : '';
+  }
+
+  const list = makeEl('ol', {
+    class: 'filtered-pyq-list',
+    style: 'margin:0;padding-left:1.35rem;display:grid;gap:.55rem;'
+  });
+  matched.forEach(r => {
+    const fullPaperId = r.paperId || paperIdFor(r.subject, r.paper);
+    const params = fullPaperId
+      ? new URLSearchParams({ paper: fullPaperId, q: r.id })
+      : new URLSearchParams({ subject: r.subject, paper: r.paper, q: r.id });
+    const relHref = r.url
+      ? (String(r.url).startsWith('pyq/') ? r.url.slice(4) : `../${r.url}`)
+      : `answers.html?${params.toString()}`;
+    const cleanTitle = String(r.title || '').replace(
+      /\b(?:CST2\d{2}|SI201)\b/gi,
+      m => displaySubject(m.toUpperCase())
+    );
+    const metaParts = [displaySubject(r.subject)];
+    if (r.unit) metaParts.push(`Unit ${r.unit}`);
+    if (r.topic && !r.genericTopic) metaParts.push(r.topic);
+    if (r.month && r.year) metaParts.push(`${r.month} ${r.year}`);
+    else if (r.year) metaParts.push(String(r.year));
+    if (r.marks) metaParts.push(`${r.marks}m`);
+    const item = makeEl(
+      'li',
+      null,
+      makeEl('a', { href: relHref }, cleanTitle),
+      makeEl(
+        'div',
+        { style: 'font-size:.82rem;opacity:.82;margin-top:.12rem;' },
+        metaParts.join(' · ')
+      )
+    );
+    list.append(item);
+  });
+  panel.append(list);
+}
+
+function applyUrlFilters() {
+  const filter = parseFilterUrl();
+  applySubjectPillFilter(filter.subject);
+  renderFilteredPyqPanel(filter);
+}
+
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
     const selected = btn.dataset.subject;
-    
-    document.querySelectorAll('.subject-card').forEach(card => {
-      if (selected === 'ALL' || card.dataset.subject === selected) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
-    });
+    if (!selected) return;
+    const next = { subject: selected, invalidSubject: false, unit: null, topic: '' };
+    pushFilterUrl(next);
+    applySubjectPillFilter(selected);
+    renderFilteredPyqPanel(next);
   });
 });
+
+window.addEventListener('popstate', applyUrlFilters);
 
 // ─── Retry ───────────────────────────────────────────────
 const retryBtn = document.getElementById('retryBtn');
@@ -209,9 +508,9 @@ if (retryBtn) {
   retryBtn.addEventListener('click', () => {
     document.getElementById('errorState').classList.add('hidden');
     document.getElementById('loadingState').classList.remove('hidden');
-    loadAllRegistries();
+    loadAllRegistries().then(applyUrlFilters);
   });
 }
 
 // ─── Init ────────────────────────────────────────────────
-loadAllRegistries();
+loadAllRegistries().then(applyUrlFilters);
