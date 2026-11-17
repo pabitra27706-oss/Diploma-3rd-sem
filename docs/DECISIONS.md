@@ -36,7 +36,8 @@
 
 ## Law waivers (owner-approved exceptions to `rule.md`)
 
-- None. Time budget remains four weeks from 2026-11-06.
+- 2026-11-17 — **Phase 9B only:** owner suspends the four-question cap in `rule.md` §3; ask as many design clarification questions as needed, in batches. This exception expires with Phase 9B and does not waive any other gate.
+- Time budget remains four weeks from 2026-11-06.
 
 ## Agent decisions (reversible — object if wrong)
 
@@ -700,3 +701,7 @@ report stated that nothing was deployed and no PR existed.
 - Visitor effect: the shell version changed, so a returning visitor's installed
   worker fetches the new shell as *waiting* and `pwa.js` asks before reloading;
   the data cache is kept (its version namespace is separate).
+
+## Phase 9B — alpha-colour policy (2026-11-17)
+
+- Tokenise `rgba()` in this phase using the existing `assets/css/variables.css` token file. Extend the strict checker and tests before migration; preserve colour equivalence and rerun contrast checks. The current checker enforces hex only; the alpha gate is not yet implemented or green. Owner direction and plan approval remain pending.

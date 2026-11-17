@@ -1,5 +1,7 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
+> **Current handoff — 2026-11-17, Phase 9B:** work only on `arena/48a2ab20-diploma-3rd-sem` (base `816ef84`). Start with `docs/phases/09B-ui-reboost/audit.md`, `inventory.md`, `plan.md` and `record.md`. The owner supplied ten phone screenshots; no desktop/print evidence yet. Research and plan are proposals; await owner direction **and** plan approval before any CSS work, then obtain before/after screenshots and written confirmation per batch. Phase 9B suspends the four-question limit only for this phase. No browser/Chromium/Lighthouse; no visual pass claimed. No merge or deploy without explicit owner command. Phase 10 follows, not before. Alpha tokenisation is a decision, not an implemented gate. Older instructions below are historical when they conflict with this checkpoint.
+
 Updated 2026-11-17 (**Phases 1–9 are merged to `main`.** Phase 9 — performance
 and launch — was implemented on `arena/908b6b19-diploma-3rd-sem` and merged by
 explicit owner command as **PR #17** (`c898a95`), which Pages published: the live
@@ -211,15 +213,15 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git fetch origin arena/908b6b19-diploma-3rd-sem
-git checkout arena/908b6b19-diploma-3rd-sem
-git pull --ff-only origin arena/908b6b19-diploma-3rd-sem
+git fetch origin arena/48a2ab20-diploma-3rd-sem
+git checkout arena/48a2ab20-diploma-3rd-sem
+git pull --ff-only origin arena/48a2ab20-diploma-3rd-sem
 cd ..
 python3 -m http.server 8010 --bind 127.0.0.1
 ```
 
 Open `http://127.0.0.1:8010/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
-directory: `git clone --branch arena/908b6b19-diploma-3rd-sem
+directory: `git clone --branch arena/48a2ab20-diploma-3rd-sem
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling

@@ -28,11 +28,12 @@ Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 | 8 | Content depth and syllabus coverage | [`08-content-depth`](phases/08-content-depth/README.md) | 6 | Coverage map from the syllabus; formula sheets with sources; clean print; lab/internship pages; exam pattern reconciled | ✅* (owner smoke pass; 8.2 + 8.6 content gates open) |
 | 9 | Performance, measurement, launch | [`09-performance-launch`](phases/09-performance-launch/README.md) | 6 | ≤12 requests; one token file; cache policy; honest measurement; domain-ready; checklist green, still not deployed | 🚧 |
 
+| 9B | UI research and reboost | [`09B-ui-reboost`](phases/09B-ui-reboost/plan.md) | reviewed batches | Owner-approved direction and plan; phone/desktop review of each batch; token, a11y and weight gates | 🚧 research; awaiting owner |
 | 10 | Dedicated cross-device acceptance | [`10-device-acceptance`](phases/10-device-acceptance/README.md) | 5 | Observed device/browser matrix, defect retests, honest tested/untested report | 📋 |
 
 ## Owner-directed sequencing — 2026-11-09
 
-Complete implementation phases first, then run one dedicated
+Complete implementation phases including owner-gated Phase 9B first, then run one dedicated
 [Phase 10 — cross-device acceptance](phases/10-device-acceptance/README.md).
 Focused regression/integrity checks continue during development. Full hardware,
 browser, responsive, accessibility, offline and update acceptance is consolidated
