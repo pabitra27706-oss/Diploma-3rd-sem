@@ -1,8 +1,11 @@
 # Phase 9 — Engineering record
 
 Status: **implementation complete for 9.2, 9.3 and 9.5 on 2026-11-17; 9.1
-re-verified; 9.4 and 9.6 are owner/hardware gates**. Nothing was deployed, no PR
-was opened and no domain action was taken. Every number below was produced in
+re-verified; 9.4 and 9.6 are owner/hardware gates.** The owner then ordered
+**"merge it to main"**: **PR #17** merged on 2026-11-17 at 09:01:31Z as
+`c898a95`, Pages built that commit at 09:01:32Z, and the live site serves
+`sw.js` `study-2026-11-17e` + `data-6b1621c45599`. No domain, Pages setting, tag or
+release was touched. Every number below was produced in
 this environment (Linux, Python 3.11, Node, **no browser**) by the named script;
 anything that needs a browser or a phone is marked *not run*.
 
@@ -216,4 +219,5 @@ never been exercised because nothing was ever deployed from this branch.
 4. Font subsetting (156 KB solid + 117 KB brands per icon page) is measured but
    not attempted: it needs a rights decision on the OFL reserved font name.
 5. Seven icon class names that never rendered (see 9.2) — content follow-up.
-6. No PR, merge, deployment, Pages or domain change was performed.
+6. Publication happened only through the owner's explicit merge command (PR #17).
+   No Pages *setting*, domain, `CNAME`, tag or release was touched.

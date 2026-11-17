@@ -1,14 +1,15 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-17 (**Phases 1–8 are `✅*` and merged to `main`. Phase 9 —
-performance and launch — is implemented on the session branch
-`arena/908b6b19-diploma-3rd-sem`: 9.1 re-verified, 9.2 token/CSS/JS
+Updated 2026-11-17 (**Phases 1–9 are merged to `main`.** Phase 9 — performance
+and launch — was implemented on `arena/908b6b19-diploma-3rd-sem` and merged by
+explicit owner command as **PR #17** (`c898a95`), which Pages published: the live
+site serves `study-2026-11-17e` / `data-6b1621c45599`. Within Phase 9: 9.1 re-verified, 9.2 token/CSS/JS
 consolidation done, 9.3 shell-vs-data caching done, 9.5 base-path proof done;
 9.4 stays open by the owner's deliberate choice — on 2026-11-17 the owner **opened
 a first-party aggregate-counter gate** instead of confirming the no-measurement
 default, so no counter exists yet and four answers (metric, storage, retention,
 disclosure) are still required — and 9.6 is evidenced only where this
-environment can prove an item. Nothing was deployed and no PR was opened.**)
+environment can prove an item: no Lighthouse score and no real-phone pass exist.**)
 Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md` and
 [`docs/phases/09-performance-launch/record.md`](docs/phases/09-performance-launch/record.md)
 before continuing. Source files and actual Git status take precedence over older
@@ -17,13 +18,14 @@ narrative.
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- `main` carries Phases 1–8 (`✅*`): Phase 6 (PR #14 `5b7eb66`), Phase 7
-  (PR #15 `84e99aa`), Phase 8 (PR #16). Check `git log`; the PR #16 merge is the
+- `main` carries Phases 1–9: Phase 6 (PR #14 `5b7eb66`), Phase 7 (PR #15
+  `84e99aa`), Phase 8 (PR #16 `0e53a4a`), Phase 9 (**PR #17 `c898a95`**, merged
+  2026-11-17 and published by Pages). Check `git log`; the PR #17 merge is the
   newest `main` merge and the base for the next phase.
-- Session branch: whatever Arena names for the current session. The Phase 9
-  branch is `arena/908b6b19-diploma-3rd-sem`, cut from `main` at `0e53a4a`
-  (the PR #16 merge). The Phase 8 branch `arena/e0da0bec-diploma-3rd-sem` is
-  merged and retired. Do not create/switch/rename branches or push another branch.
+- Session branch: whatever Arena names for the current session, cut from `main`.
+  The Phase 9 branch `arena/908b6b19-diploma-3rd-sem` (cut from `0e53a4a`) is
+  **merged as PR #17 (`c898a95`)** and retired; `main` now carries Phase 9. The
+  Phase 8 branch `arena/e0da0bec-diploma-3rd-sem` is merged and retired. Do not create/switch/rename branches or push another branch.
   Prior branches `arena/c56bb630-...` (PR #15 `84e99aa`), `arena/be90e07e-...`
   (PR #14 `5b7eb66`), `arena/4d3997da-...` (PR #13 `a92a1ff`),
   `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
@@ -286,7 +288,7 @@ the session should still read `rule.md` → this file → `docs/STATUS.md` first
 
 ---
 
-## Phase 9 kickoff — executed 2026-11-17 (result block)
+## Phase 9 kickoff — executed and merged 2026-11-17 (result block)
 
 The instructions above were carried out on `arena/908b6b19-diploma-3rd-sem`. Do
 not re-run them; read
@@ -306,8 +308,10 @@ what is not.
   retention, and the privacy-page text (`docs/DECISIONS.md`, `docs/MEASUREMENT.md`).
 - 9.5 ✅ done — one `scripts/site_config.py` constant; `/`-rooted copy passes
   `check_site.py --strict`.
-- 9.6 🚧 — checklist dated and ticked only where provable; **Lighthouse, phone
-  pass and deploy are not run**; no PR, no merge, no domain.
+- 9.6 🚧 — checklist dated and ticked only where provable; **Lighthouse and the
+  phone pass are not run**. The owner then ordered the merge: **PR #17 →
+  `c898a95`**, Pages built it, live site serves the Phase 9 versions. No domain,
+  no Pages setting, no tag.
 
 Static budget, 74 pages, from disk: 817 → **592** requests; CSS 8,638,771 →
 **6,817,906 B**; 7–10 static requests per page. Per view incl. data: Practice 9,

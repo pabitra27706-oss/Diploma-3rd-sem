@@ -5,10 +5,14 @@ Documentation checkpoint: **2026-11-17 (Phase 9)**. Earlier reconciliations:
 (sub-phase 8A, Phase 7 merge, Phase 8 content depth). This is the current handoff;
 older phase evidence remains historical unless explicitly superseded here.
 
-## Phase 9 — performance and launch (2026-11-17) — `🚧`, branch only
+## Phase 9 — performance and launch (2026-11-17) — `✅*`, merged and live
 
-Implemented on `arena/908b6b19-diploma-3rd-sem` (from `main` at `0e53a4a`).
-**Nothing is deployed.** Full evidence: [`phases/09-performance-launch/record.md`](phases/09-performance-launch/record.md).
+Implemented on `arena/908b6b19-diploma-3rd-sem` (from `main` at `0e53a4a`) and
+**merged to `main` by explicit owner command on 2026-11-17 as PR #17**
+(`c898a95`); GitHub Pages built that commit and the live site serves the Phase 9
+shell (`study-2026-11-17e`) and data version (`data-6b1621c45599`). The asterisk
+is the whole story: 9.4's counter gate is still open and no Lighthouse/phone pass
+has been recorded. Full evidence: [`phases/09-performance-launch/record.md`](phases/09-performance-launch/record.md).
 
 - **9.1 ✅** Data fan-out unchanged from 2026-11-09 (Practice 36 → 1 JSON, quiz
   setup 20 → 2); the static side is now measured too (table below).
@@ -34,8 +38,9 @@ Implemented on `arena/908b6b19-diploma-3rd-sem` (from `main` at `0e53a4a`).
   are answered; **no counter code was written**. Constraints and the recorded
   decision: `docs/DECISIONS.md` + `docs/MEASUREMENT.md`.
 - **9.6 🚧** `docs/LAUNCH-CHECKLIST.md` ticked with dates wherever this
-  environment can prove an item. **Lighthouse, the real-phone pass and the deploy
-  are explicitly not run** (no browser, no device), and no PR was opened.
+  environment can prove an item. **Lighthouse and the real-phone pass are
+  explicitly not run** (no browser, no device). Publication happened by merging
+  `main` on owner command; nothing else (domain, Pages settings, tags) was touched.
 
 Measured from disk (74 pages, uncompressed): **592 static requests** (was 817),
 **6,817,906 CSS bytes** (was 8,638,771), 7–10 static requests per page (was
