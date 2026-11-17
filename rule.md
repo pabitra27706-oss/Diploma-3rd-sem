@@ -7,14 +7,16 @@
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
-> (sub-phase 8A, Phase 3 `✅*` sign-off, and Phase 4 discovery): active session
-> branch is `arena/80b11bcf-diploma-3rd-sem` (branched from `main` at
-> `9d47c7c76b2384c72944a0880df058a2518394ec`, PR #11 merge). Earlier branches
-> `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
-> `arena/858a50c7-...` (PR #9 `365b8f7`), `arena/47d8bf99-...` (PR #8
-> `3e3cb2e1`), `arena/be3d9178-...` (PR #7 `125eb94`) and `arena/26856d99-...`
-> (`8405b15`) are merged into `main` and retired. **If this manual and Git
-> disagree on the branch name, Git is right — update this file.**
+> (sub-phase 8A, Phase 3 `✅*` sign-off, Phase 4 discovery merged as PR #12, and
+> Phase 5 study system): active session branch is
+> `arena/4d3997da-diploma-3rd-sem` (branched from `main` at
+> `7c20a5500118588419081362b7af869dc8c7806f`, the PR #12 merge). Earlier branches
+> `arena/80b11bcf-...` (PR #12 `7c20a55`), `arena/637a5a31-...` (PR #10
+> `8f6eb97`, PR #11 `9d47c7c7`), `arena/858a50c7-...` (PR #9 `365b8f7`),
+> `arena/47d8bf99-...` (PR #8 `3e3cb2e1`), `arena/be3d9178-...` (PR #7
+> `125eb94`) and `arena/26856d99-...` (`8405b15`) are merged into `main` and
+> retired. **If this manual and Git disagree on the branch name, Git is right —
+> update this file.**
 >
 > **New-session reading order:** `rule.md` (this file) → `prompt.md` →
 > `docs/STATUS.md` → `docs/DECISIONS.md` → `docs/ROADMAP.md` → the relevant
@@ -24,16 +26,16 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/80b11bcf-diploma-3rd-sem` (active session branch, branched from `main` at `9d47c7c7` after PR #11 merged; prior `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/4d3997da-diploma-3rd-sem` (active session branch, branched from `main` at `7c20a55` after PR #12 merged; prior `arena/80b11bcf-...`, `arena/637a5a31-...`, `arena/858a50c7-...`, `arena/47d8bf99-...`, `arena/be3d9178-...`, and `arena/26856d99-...` branches are merged and retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
 - License: **MIT** (chosen 2026-11-16; see `LICENSE`). Covers the project's own code, documentation and authored content. Third-party examination-source material keeps unresolved, separate rights per `docs/DECISIONS.md`; this license does not relicense it.
 - Money: none — no ads, payments, donations, affiliates, or analytics
-- Scanned: 177 tracked files, 55 HTML pages, 20 standalone JS files, 55 JSON
-  files, 924 PYQ records, 872 quiz records (baseline 2026-11-06, re-scanned
-  2026-11-17 after two duplicate reprint papers were removed; rules
-  reconciled 2026-11-16 — see `docs/AUDIT-2026-11-16.md`)
+- Scanned: 392 tracked files, 68 HTML pages, 52 JS/CJS files (37 `.js`, 15
+  `.cjs`), 79 JSON files, 924 PYQ records, 872 quiz records, 1,339 generated
+  cards (baseline 2026-11-06; re-scanned 2026-11-17 after the duplicate reprint
+  papers were removed and Phase 4/5 landed — see `docs/AUDIT-2026-11-16.md`)
 - Time budget: 4 weeks from 2026-11-06, unless a waiver is recorded
 
 ## 2. Branching and the deploy gate (law)
@@ -192,13 +194,13 @@ A **public launch** additionally needs every item in
 - **Canonical post-phase Termux block (branch-specific, copy-paste):** after a
   phase is pushed, the owner runs this on their device to pull the current
   session branch and serve it at the real subpath. It follows **push → pull →
-  run**, using the branch named in §1 (`arena/80b11bcf-diploma-3rd-sem`):
+  run**, using the branch named in §1 (`arena/4d3997da-diploma-3rd-sem`):
 
   ```sh
   cd ~/Diploma-3rd-sem
-  git fetch origin arena/80b11bcf-diploma-3rd-sem
-  git checkout arena/80b11bcf-diploma-3rd-sem
-  git pull --ff-only origin arena/80b11bcf-diploma-3rd-sem
+  git fetch origin arena/4d3997da-diploma-3rd-sem
+  git checkout arena/4d3997da-diploma-3rd-sem
+  git pull --ff-only origin arena/4d3997da-diploma-3rd-sem
   cd ..
   python3 -m http.server 8000 --bind 127.0.0.1
   ```

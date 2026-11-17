@@ -1,6 +1,8 @@
 # Phase 4 — Discovery and sharing
 
-**Status:** 🚧 implementation in progress · **Parts:** 5 · **Depends on:** 2 · **Owner gates:** none
+**Status:** ✅* owner-verified (device/Termux pass 2026-11-17) with the caveats
+recorded in [`record.md`](record.md) · **Parts:** 5 · **Depends on:** 2 ·
+**Owner gates:** none
 
 ## Goal
 

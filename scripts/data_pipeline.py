@@ -12,6 +12,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SEED = 'diploma-phase2-v1'
 
+# Display-only short subject names (owner decision 2026-11-17). These never
+# replace a subject code in data keys, paths, URL parameters or storage keys;
+# they only decide what a learner reads. The browser mirror is
+# assets/js/subject-labels.js — keep the two tables equal.
+SUBJECT_LABELS = {
+    'CST201': 'C',
+    'CST203': 'Python',
+    'CST205': 'DS',
+    'CST207': 'CSO',
+    'CST209': 'Algorithms',
+    'CST211': 'C Lab',
+    'CST213': 'Python Lab',
+    'CST215': 'DS Lab',
+    'SI201': 'Internship',
+}
+
+
+def subject_label(code):
+    return SUBJECT_LABELS.get(code, 'Subject')
+
 
 def load(path):
     return json.loads(path.read_text(encoding='utf-8'))

@@ -17,27 +17,40 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 node tests/attempt-store.cjs
 node tests/quiz-engine-dom.cjs
 node tests/study-store.cjs
+node tests/study-dom.cjs
+node tests/study-offline.cjs
 node tests/storage.cjs
 node tests/storage-recovery.cjs
 node tests/data-pipeline-consumers.cjs
 node tests/discovery-dom.cjs
 ```
 
-Python discovery currently covers 16 tests: source-preserving/idempotent
+Python currently covers 22 tests: source-preserving/idempotent
 pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
 integrity guard changes/additions/removals, compact discovery (≤ 40% shard budget,
 68-page scope partition, 2,410-entry file/anchor validation, 1 exact alias + 15
-unverified candidate repeat clusters, and SW cache registration), card-source
-resolution, bundle/source consistency, runtime pools and coverage joins. Paper comparisons pin to the owner-approved
+unverified candidate repeat clusters, and SW cache registration), Phase 5 card
+eligibility (source-verbatim copies, citation hygiene, explicit skip accounting,
+per-unit counts, byte-identical regeneration, compact payload), bundle/source
+consistency, runtime pools and coverage joins. Paper comparisons pin to the owner-approved
 sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons use the same
 revision (the 2026-11-17 explanation revision, where both pins now point). Both
 values must be in Git history; do not use a shallow clone
 for these checks. CI checks out full history.
 
-Node suites cover attempt persistence/migration/retries/mistakes, fixed Leitner
-scheduling and seven-day trend boundaries, storage/reset/backup behavior, and
-injected quota/interrupted-import recovery. Injection is not proof of actual
-Safari eviction or private-mode behavior.
+Node suites cover attempt persistence/migration/retries/mistakes, Leitner
+scheduling (ladder, local-midnight rollover, per-day new-card cap, clock clamps,
+duplicate ratings, reload), seven-day trend boundaries, streak/goal/question-of-day
+helpers, the `cards.html`/`today.html` UI contracts (keyboard, URL + `popstate`
+filters, empty states, denominators, no raw identifiers), the study worker's
+precache + `WARM_STUDY` shards and offline navigation, storage/reset/backup
+behavior, and injected quota/interrupted-import recovery. Injection is not proof
+of actual Safari eviction or private-mode behavior.
+
+The DOM suites share `tests/lib/minidom.cjs`, a deliberately small DOM stand-in:
+anything those scripts need beyond `textContent`, real buttons, focus and
+`history`/`popstate` fails loudly. It is a contract test, not a rendering or
+screen-reader test.
 
 For full strict findings, run separately:
 
@@ -76,11 +89,11 @@ Use an isolated local test profile; tests intentionally create local records.
 |---|---|
 | `data-browser.cjs` | Unique Practice pool/day counts, real bank filters, no-key scoring and live counts |
 | `quiz-engine-browser.cjs` | Virtual-clock resume, flags/order, exact preview/retry, selected exports/edit, fetch failure, honest paper-practice limits |
-| `discovery-study-browser.cjs` | Safe search query, dijkstra/info-page search, 1 exact + 15 unverified candidate repeat clusters, canonical question deep link, unit breadcrumb/anchor + filtered-PYQ handoff, card rating persistence and Today counts |
+| `discovery-study-browser.cjs` | Safe search query, dijkstra/info-page search, 1 exact + 15 unverified candidate repeat clusters, canonical question deep link, unit breadcrumb/anchor + filtered-PYQ handoff, URL unit filter, honest card citation, card rating persistence and Today counts/primary action |
 | `storage-browser.cjs` | Notes on three pages, reading preferences, previewed restore and stale-preview invalidation |
 | `paper-offline.cjs` | Previously cached paper/registry/engine/review offline |
 | `feedback-browser.cjs` | Keyboard buttons, field errors, copied draft/no request, once-per-tab-session local prompt |
-| `cards-offline.cjs` | Twenty-card warmed-cache offline keyboard session, reload and Today counts |
+| `cards-offline.cjs` | Twenty-card warmed-cache offline keyboard session, honest citation, empty-queue fallbacks, reload and Today counts |
 
 The offline tests require an initial successful online visit. They do not
 promise uncached first visits, all resource combinations or storage persistence

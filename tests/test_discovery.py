@@ -252,7 +252,7 @@ class DiscoveryTests(unittest.TestCase):
 
     def test_service_worker_caches_discovery_offline(self):
         sw = (ROOT / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn("const VERSION = 'study-safety-2026-11-09'", sw)
+        self.assertIn("const VERSION = 'study-2026-11-17'", sw)
         for asset in (
             'search.html',
             'repeated.html',
@@ -265,9 +265,18 @@ class DiscoveryTests(unittest.TestCase):
             'assets/search/manifest.json',
             'assets/search/repeated.json',
             'assets/search/index-pages.json',
+            # Phase 5 study shell travels with the same worker.
+            'cards.html',
+            'today.html',
+            'assets/js/study-store.js',
+            'assets/js/study-ui.js',
+            'quiz/js/attempt-store.js',
+            'assets/cards/manifest.json',
         ):
             self.assertIn(f"'{asset}'", sw, f'missing discovery precache entry: {asset}')
         self.assertIn('WARM_SEARCH', sw)
+        self.assertIn('WARM_STUDY', sw)
+        self.assertIn('warmStudyCards', sw)
         self.assertIn("if (isData && !key.searchParams.has('v'))", sw)
 
 

@@ -1,16 +1,21 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-Updated 2026-11-17 (Phase 3 reconciled to `✅*`; Phase 4 discovery parts 4.1–4.5 completed and verified on `arena/80b11bcf-diploma-3rd-sem`). Read `rule.md`, `docs/STATUS.md`, `docs/DECISIONS.md`,
-`docs/ROADMAP.md` and the relevant phase record before continuing. Source files
-and actual Git status take precedence over older narrative.
+Updated 2026-11-17 (Phase 3 reconciled to `✅*`; Phase 4 discovery merged via
+PR #12 and owner-verified; Phase 5 study-system implemented, gate-verified and
+owner-verified — both `✅*` — and merged to `main` on owner instruction). Read `rule.md`,
+`docs/STATUS.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md` and the relevant phase
+record before continuing. Source files and actual Git status take precedence over
+older narrative.
 
 ## Fixed context
 
 - Repository: `pabitra27706-oss/Diploma-3rd-sem`.
-- `main` = `9d47c7c76b2384c72944a0880df058a2518394ec` — the merge of PR #11 —
-  carrying Phase 1 (`✅*`), Phase 2 (`✅*`), Phase 3 (`✅*`), and sub-phase 8A.
-- Session branch: `arena/80b11bcf-diploma-3rd-sem` (active), branched from
-  `main` at `9d47c7c76b2384c72944a0880df058a2518394ec`. Do not
+- `main` carries Phase 1 (`✅*`), Phase 2 (`✅*`), Phase 3 (`✅*`), Phase 4
+  (`✅*`, PR #12 `7c20a55` plus the owner's device-test pass), Phase 5 (`✅*`,
+  merged from `arena/4d3997da-diploma-3rd-sem`) and sub-phase 8A. Check `git log`
+  for the exact tip; the Phase 5 merge commit is the newest `main` merge.
+- Session branch: `arena/4d3997da-diploma-3rd-sem` (active), branched from
+  `main` at `7c20a5500118588419081362b7af869dc8c7806f`. Do not
   create/switch/rename branches or push another branch.
   Prior branches `arena/637a5a31-...` (PR #10 `8f6eb97`, PR #11 `9d47c7c7`),
   `arena/858a50c7-...` (PR #9 `365b8f7`), `arena/47d8bf99-...` (PR #8
@@ -89,9 +94,20 @@ per-phase remainder table and the source/rights gates.
   across all 28 frozen PYQ papers, compulsory 30-minute Group A loose-script
   windows on the five timed `2023-03` papers, and `1m option + 1m written explanation`
   splits on the fifteen `2024–2026` papers without fabricating an overall grade.
-- Discovery/study: compact search/repeat sidecars, source deep links, related
-  unit material, 1,339 model/keyed-source cards, fixed Leitner scheduling,
-  Today/goals/streaks, sample-qualified weak-area trends. Not newly certified facts.
+- Discovery: compact search/repeat sidecars, source deep links, related unit
+  material, 2,410 search entries, 1 exact alias + 15 unverified candidate repeat
+  clusters (Phase 4, merged in PR #12).
+- Study (Phase 5, `arena/4d3997da-diploma-3rd-sem`): 1,339 deterministic cards
+  (923 PYQ model answers + 416 keyed quiz explanations) with a reason for every
+  one of 457 skips, per subject **and** per unit, CST207 disclosed as PYQ-only and
+  a display-safe `citationLabel` on every card; documented fixed Leitner
+  scheduling (1/3/7/16/35 days) with local-midnight rollover, per-day new-card cap,
+  clock clamps, duplicate-rating idempotence and reload survival; review UI with
+  answer-first → reveal → rate, Space/1–4/Esc, subject/unit filters via URL +
+  `popstate` and empty-queue fallbacks; weak areas with `correct / attempted`,
+  contributing attempts and a five-observation percentage floor; Today with one
+  primary action, goal meter, honest resettable streak and a deterministic
+  question of the day. Not newly certified facts.
 - Storage: all runtime localStorage access is inside `assets/js/storage.js`;
   legacy callers use its adapter. Namespaced migration, notes, preferences,
   typed import validation, group resets, journaled recovery and no-write export.
@@ -102,13 +118,17 @@ per-phase remainder table and the source/rights gates.
   sheet work remains. License remains a gate.
 - Performance: compact derived pools and checked-in script bundles; measured
   Practice/setup cold loads are 12 requests each. CSS/cache/root-path/launch
-  work remains. Current worker VERSION: `study-safety-2026-11-09`.
+  work remains. Current worker VERSION: `study-2026-11-17` (Phase 5 added the study shell and
+  `WARM_STUDY` card shards).
 
 ## Evidence and limits
 
-Latest implementation checkpoint: 13 Python tests, six deterministic Node suites
-and seven focused Chromium suites PASS; full JS/CJS + JSON parse PASS. Site strict
-0 errors / 28 warnings, platform 0 errors, immutable-PYQ guard 0 changes.
+Latest implementation checkpoint (`2026-11-17`, Phase 5): 22 Python tests and nine
+deterministic Node suites PASS (`study-store`, `study-dom`, `study-offline` added);
+55 JS/CJS files and 79 JSON files parse; site strict 0 errors / 28 warnings,
+platform 0 errors, immutable-PYQ guard 0 changes. The seven focused Chromium
+suites were updated for the Phase 5 markup but not re-run in the 2026-11-17
+environment (no Chromium there).
 Full data strict still has 9 ledger findings; syllabus strict has 3 grouped
 errors. `check_site.py --strict` reports the same 17 pre-existing accessibility
 labels it reports on `main`. An exact-baseline pass is not a full strict pass.
@@ -117,13 +137,12 @@ labels it reports on `main`. An exact-baseline pass is not a full strict pass.
 
 1. Inspect Git status and actual files. Preserve the accumulated changes; do not
    redo completed engineering merely because older phase tasks say planned.
-2. Use `docs/STATUS.md`'s remaining order. Phases 1, 2 and 3 are `✅*`
-   (owner-approved with recorded caveats); Phase 4 (`04-discovery`) parts
-   4.1–4.5 are implemented and gate-verified on `arena/80b11bcf-diploma-3rd-sem`
-   (`🚧` awaiting owner local verification); next sequential phase is Phase 5
-   (`05-study-system` — parts 5.1–5.5: flashcards, Leitner edge cases, weak
-   areas with denominators, daily goal/streaks, and Today dashboard), followed
-   by Phases 6–9 and Phase 10 device acceptance.
+2. Use `docs/STATUS.md`'s remaining order. Phases 1–5 are `✅*`
+   (owner-verified with recorded caveats); Phase 4 and Phase 5 were accepted on
+   the owner's 2026-11-17 device-test pass and merged to `main` on owner
+   instruction. Next sequential phase is Phase 6 (`06-state-portability` — one
+   storage module, notes on unit pages, truthful reset, backup round-trip,
+   IndexedDB path), followed by Phases 7–9 and Phase 10 device acceptance.
 3. Never retag raw PYQs to make strict checks green. Keep source findings
    visible; record new evidence/dispositions in derived metadata and decisions.
 4. Edit source scripts, not generated bundles. Regeneration order and check
@@ -141,13 +160,15 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git pull --ff-only origin arena/80b11bcf-diploma-3rd-sem
+git fetch origin arena/4d3997da-diploma-3rd-sem
+git checkout arena/4d3997da-diploma-3rd-sem
+git pull --ff-only origin arena/4d3997da-diploma-3rd-sem
 cd ..
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
 Open `http://127.0.0.1:8000/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
-directory: `git clone --branch arena/80b11bcf-diploma-3rd-sem
+directory: `git clone --branch arena/4d3997da-diploma-3rd-sem
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling

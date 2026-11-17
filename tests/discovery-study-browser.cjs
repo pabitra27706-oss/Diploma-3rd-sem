@@ -78,11 +78,25 @@ const assert = require('node:assert/strict');
     await p.waitForFunction(() => !document.querySelector('#card-session').hidden);
     assert.equal(await p.evaluate(() => StudyStore.read().events.length), 1);
 
+    // Unit filter comes from the URL and stays in the URL after a filter change.
+    await p.goto(base + 'cards.html?subject=CST209&unit=4');
+    await p.waitForFunction(() => !document.querySelector('#card-session').hidden);
+    assert((await p.locator('#study-status').textContent()).startsWith('Algorithms Unit 4'));
+    assert.equal(await p.locator('#card-unit').inputValue(), '4');
+    const citation = await p.locator('#card-citation');
+    await p.locator('#reveal-card').click();
+    const citationText = await citation.textContent();
+    assert(/Model answer, not independently certified|Existing keyed explanation/.test(citationText));
+    assert(!/\bCST\d{3}\b/.test(citationText) && !/\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/.test(citationText));
+
     await p.goto(base + 'today.html');
     await p.waitForFunction(() => document.querySelector('#study-status').textContent.startsWith('Local-only'));
     assert((await p.locator('#goal-progress').textContent()).includes('1 card reviews'));
+    assert(await p.locator('#primary-action a').count(), 'Today must offer one primary action');
+    assert((await p.locator('#plan-detail').textContent()).includes('unresolved local mistake'));
+    assert(!/\bCST\d{3}\b/.test(await p.locator('main').textContent()), 'Today must not print raw course codes');
     assert.deepEqual(errors, []);
-    console.log('PASS source card reveal/rate persistence and Today local progress');
+    console.log('PASS source card reveal/rate persistence, URL unit filter, and Today local progress');
   } finally {
     await browser.close();
   }

@@ -1,6 +1,9 @@
 # Phase 5 — Study system
 
-**Status:** 🚧 implementation in progress · **Parts:** 5 · **Depends on:** 2 (keys), 3 (mistakes), 6 (storage) · **Owner gates:** content verification for card backs
+**Status:** ✅* implemented, gate-verified and owner-verified (device/Termux pass
+2026-11-17) with the caveats in [`record.md`](record.md) · **Parts:** 5 ·
+**Depends on:** 2 (keys), 3 (mistakes), 6 (storage) · **Owner gates:** content
+verification for card backs
 
 ## Goal
 
@@ -51,6 +54,22 @@ Details: [`tasks.md`](tasks.md).
 - Any card whose answer is unverified is not generated; the count of skipped
   items is shown, not hidden.
 - Scheduling state belongs to the Phase 6 storage module (one schema version).
+
+## Current state — 2026-11-17
+
+All five parts are implemented on `arena/4d3997da-diploma-3rd-sem`; `record.md`
+holds the pre-edit gap audit, the changes and the measured evidence.
+
+| Part | Implemented evidence |
+|---|---|
+| 5.1 | 1,339 deterministic cards (923 PYQ model answers + 416 keyed quiz explanations) with a reason for every one of the 457 skips, per subject **and per unit**, CST207-PYQ-only disclosure, display-safe `citationLabel` + raw `citation`, minified 1.07 MB payload, precached shell + `WARM_STUDY` shard warmer |
+| 5.2 | Documented Leitner ladder, `firstDay`-based per-day new-card cap, due-first ordering, local-midnight rollover, backwards/forwards clock clamps, duplicate-rating idempotence, reload survival, one schema version, non-destructive corrupt-state error |
+| 5.3 | Answer-first → reveal → rate, four interval-named buttons, Space/1–4/Esc, focus + `aria-live`, subject **and unit** filters with URL + `popstate`, empty queue with mistake/weak-unit/practice/Today fallbacks, zero raw codes or question ids |
+| 5.4 | `correct / attempted` + skipped + contributing attempts, percentage only at ≥ 5 observations with an explicit below-threshold statement, collapsed generic topics, both-window trend minimum, direct practice/card links |
+| 5.5 | Due cards, mistake queue, sample-qualified weakest area, configurable goal and cap, one primary action with a reason, goal meter with text equivalent, honest resettable local streak, deterministic question of the day, `subjectLabel()` throughout, one-tap home entry |
+
+Still open elsewhere: answer certification (owner/source gate), 456 keyless quiz
+items, no CST207 quiz bank, and the whole Phase 10 device matrix.
 
 ## Done means
 

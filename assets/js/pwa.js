@@ -7,6 +7,13 @@
   panel.className = 'pwa-panel';
   panel.setAttribute('aria-label', 'App installation and updates');
   document.body.append(panel);
+  // Keep any visible build badge equal to the generated app-build metadata.
+  const buildMeta = document.querySelector('meta[name="app-build"]');
+  if (buildMeta) {
+    document.querySelectorAll('[data-build-version]').forEach(node => {
+      node.textContent = 'Build ' + buildMeta.content;
+    });
+  }
   const button = (label, action) => {
     const b = document.createElement('button');
     b.type = 'button'; b.textContent = label; b.addEventListener('click', action);
