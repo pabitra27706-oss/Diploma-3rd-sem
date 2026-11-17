@@ -8,8 +8,9 @@
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A): branch and license references corrected to the current session
-> branch `arena/637a5a31-diploma-3rd-sem` (PR #10, branched from `main` at
-> `365b8f7`); `arena/858a50c7-...` (PR #9) is merged, and prior
+> branch `arena/637a5a31-diploma-3rd-sem` (PR #10, **merged 2026-11-17 as
+> `8f6eb97`**, branched from `main` at `365b8f7`); `arena/858a50c7-...`
+> (PR #9, `365b8f7`) is merged, and prior
 > `arena/47d8bf99-...`, `arena/be3d9178-...` and `arena/26856d99-...` branches
 > were merged into `main` and are retired. **If this manual and Git disagree on the branch name, Git
 > is right — update this file.**
@@ -22,7 +23,7 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/637a5a31-diploma-3rd-sem` (current session branch, PR #10, branched from `main` `365b8f7`; `arena/858a50c7-...` (PR #9) and the older `arena/47d8bf99-...`, `arena/be3d9178-...`, `arena/26856d99-...` branches were merged into `main` and are retired)
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · branch: `arena/637a5a31-diploma-3rd-sem` (session branch, PR #10 merged as `8f6eb97`; `main` is now that merge commit and carries sub-phase 8A; `arena/858a50c7-...` (PR #9) and the older `arena/47d8bf99-...`, `arena/be3d9178-...`, `arena/26856d99-...` branches were merged into `main` and are retired)
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
