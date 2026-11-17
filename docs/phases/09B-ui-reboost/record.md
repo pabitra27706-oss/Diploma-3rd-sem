@@ -80,3 +80,87 @@ Implemented a scoped utility-page design for Search, Today, Settings and generat
 To meet the no-CSS-weight-regression constraint, comments were archived in [css-comment-archive.md](css-comment-archive.md), and whitespace compacted in the two already-shared base and token sheets; non-comment lines are textually equivalent after stripping line-edge whitespace. No declarations in those sheets changed. File-based CSS totals 6,771,422 → 6,433,684 bytes; Search/Today/Settings/Coverage 28,675 → 28,370 each; 592 → 592 CSS/JS requests across 74 pages, with zero per-page increases in CSS bytes, JS bytes or request counts. This is not a browser network measurement. No additional runtime requests. CSS shell `study-2026-11-17g` → `h`. Search manifest's source byte count and generated version changed because indexed HTML changed; all remaining manifest fields and search shard content are unchanged. Consequently the generated data version changed `data-6b1621c45599` → `data-01e7be2065a4`, without changing study data. Coverage, runtime bundle, icon subset, presence twice, search index and data version last were regenerated.
 
 Checks: five new source contracts passed (initially red); seven token-resolved opaque colour pairs meet 4.5:1 in addition to the existing 47-pair audit, not a rendered contrast test. Strict site 0 errors/warnings, platform 0 errors, token checker 0 findings with 392 legacy RGBA occurrences ledgered, icon subset and data version current, weight budget and root rewrite pass, static accessibility 0 findings and 14 deterministic Node suites pass. Python suite: 113 tests, one known missing Git object `664674b` error in `test_data_pipeline.test_no_semantic_or_answer_changes`; not a full pass. No local browser/Lighthouse; no visual or device pass claimed. Owner review remains required; screenshots need not be supplied after every work item. No merge/deployment without explicit owner command.
+
+
+## Single design layer, retheme, PYQ phone fixes, and merge — 2026-11-17
+
+Owner command: complete the docs and merge to `main`. Branch
+`arena/7e77489f-diploma-3rd-sem` (base `816ef84`) merged by fast-forward; two
+commits of substance, `5b0f571` (design layer and retheme) and `9445158`
+(PYQ phone fixes), plus `07736cc` (Termux check recipe).
+
+### What was built
+
+- `assets/css/hub.css` (~118 KB, untracked until this work) is injected before
+  `</head>` on all 74 pages by `scripts/generate_presence.py`, after
+  `base.css`. One sheet for the whole site.
+- `mark_body()` stamps `data-page` / `data-page-family` on `<body>` from
+  `page_family(relative_path)`; 21 families.
+- Retheme in `assets/css/variables.css`: light bg `#f7f7fd`, accent `#5a4bc4`;
+  dark bg `#101120`, accent text `#a99bf7`. 57 measured pairs, all passing.
+- Duplicate token `--c-b9adf6` (identical to `--c-lav-300`) removed.
+
+### Rejections, with the evidence that drove them
+
+Recorded because both were attempted twice and look plausible:
+
+1. **Splitting `hub.css` into `assets/css/families/*.css`** — per-family
+   duplication produced 92 fingerprint differences; per-family emission
+   produced 146. Abandoned; the directory stays deleted.
+2. **Migrating unit/subject rules into `subjects/units-com/common.css`** —
+   that sheet loads *before* `hub.css`, so the `[data-page]` qualifier drops a
+   specificity level. 85/63 fingerprint regressions and 1,496 anchors reverting
+   to legacy colour. Reverted; `common.css` back to 108,291 B.
+
+### Root cause worth remembering
+
+`mark_body` existed but was **never called**. Seven pages therefore never
+received `data-page`, every `[data-page]` rule silently skipped them, and their
+navigation kept the legacy blue at 2.51:1 (40 rendered failures). A function
+present and correct is not a function in use; the call site is the thing to
+verify. The helper is now idempotent across repeat generator runs — the first
+repair duplicated the attribute on `index.html` on the second pass.
+
+A second trap: `accessibility.js` appends a print button to `<main>`. On
+`pyq/viewer.html` `<main>` is `.paper-wrapper`, a `display:flex` row, so the
+button became a flex sibling and squeezed the paper to 275 px at a 412 px
+viewport. The injector now skips pages that already own a print control and
+refuses flex/grid containers. Paper 275 → 380 px. Editing
+`assets/js/accessibility.js` alone changes nothing at runtime — it is inlined
+into `shell.bundle.js` by `scripts/build_runtime_bundles.py`, which must be
+re-run.
+
+### Budget
+
+Per-page CSS fence raised 250 KB → 300 KB by owner decision (Option A).
+Heaviest page 171.5 KB. Rationale in the `scripts/audit_page_weight.py`
+docstring; the same 300 KB ceiling already existed as `CSS_BUDGET_SINGLE` in
+`scripts/check_site.py`.
+
+### Verification obtained
+
+- 6/6 static gates pass.
+- 113/113 unit tests pass on a full clone. The single error reported inside the
+  Arena sandbox is environmental: `tests/test_data_pipeline.py` shells out to
+  `git show 664674b:...` and that object is absent from a shallow clone.
+- Headless Chromium, 148 page · theme combinations at 412 px: 0 contrast
+  failures, 0 unnamed controls, 0 sub-24 px targets, 0 JS errors — measured
+  *before* the PYQ fixes. After those fixes a simpler harness was rebuilt and
+  reported false positives because it did not composite translucent
+  backgrounds; the specific findings were hand-verified instead (white on
+  `#8ba4ff` 2.37:1 and on `#3b82f6` 3.68:1, both corrected to 6.48:1). **No
+  clean full-sweep number exists for the post-fix tree.**
+
+### Verification NOT obtained — do not imply otherwise
+
+No physical-device screenshot, no TalkBack or VoiceOver observation, no 200 %
+zoom or reflow check, no real print-to-PDF page counts, no warmed-cache offline
+launch, no Lighthouse run. Phase 10 owns all of it, and its own tasks file says
+no pre-filled row is a pass.
+
+### Note on the diverging branch
+
+`arena/48a2ab20-diploma-3rd-sem` (draft PR #20, 14 commits) shares base
+`816ef84` and overlaps 104 files with the work above. It is **superseded by
+this merge**. Merging both is not a clean operation; close it rather than
+resolve 104 files by hand.

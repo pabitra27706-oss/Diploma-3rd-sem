@@ -739,3 +739,31 @@ report stated that nothing was deployed and no PR existed.
 ## Phase 9B — screenshot cadence revised (2026-11-17)
 
 The owner asked for broader app-styled, phone-friendly CSS improvements and said screenshots are not required for every work item. Earlier per-batch screenshot instructions are therefore revised for Phase 9B: use supplied screenshots as evidence, do not block every iteration on new screenshots, and report which views remain unverified. This does not constitute visual approval of the completed site or permission to merge/deploy; final owner review, dark/print verification, safety gates and explicit publication authorization remain required.
+
+
+## Phase 9B — merged, and the diverging branch retired (2026-11-17)
+
+Owner command: complete the docs and merge. `arena/7e77489f-diploma-3rd-sem`
+merged to `main` by fast-forward.
+
+Two decisions are recorded because they were expensive and both remain tempting:
+
+1. **`hub.css` stays a single sheet.** Splitting into `assets/css/families/*`
+   was tried twice: per-family duplication gave 92 fingerprint differences,
+   per-family emission 146. Rejected. Do not recreate that directory.
+2. **Unit/subject rules stay in `hub.css`, not `subjects/units-com/common.css`.**
+   `common.css` loads before `hub.css`, so a rule moved there loses the
+   `[data-page]` specificity level: 1,496 anchors reverted to legacy colour.
+   Rejected.
+
+The per-page CSS fence moved 250 KB → 300 KB in the same pass (owner, Option A),
+matching the `CSS_BUDGET_SINGLE` ceiling that `scripts/check_site.py` already
+enforced. Heaviest page 171.5 KB.
+
+**`arena/48a2ab20-diploma-3rd-sem` (draft PR #20) is superseded and must be
+closed, not merged.** It shares base `816ef84` and overlaps 104 files with the
+merged work; a second merge would be a 104-file conflict resolution rather than
+an integration.
+
+Merging is not a claim of device verification. Phase 10 owns physical-device,
+screen-reader, zoom, print and offline evidence, and none of it exists yet.

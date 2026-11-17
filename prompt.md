@@ -1,6 +1,6 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-> **Current handoff — 2026-11-17, Phase 9B:** work only on `arena/7e77489f-diploma-3rd-sem` (base `816ef84`); read `docs/phases/09B-ui-reboost/{audit,inventory,plan,record}.md`. Owner confirmed proceeding from the first five alpha-token migrations and authorized the home-header batch, which the owner says is good and approves, although phone and desktop-width after screenshots and functional/zoom/theme checks remain outstanding. Search, Today, Coverage and Settings were redesigned after owner screenshots and are awaiting owner review; clarify any broken actions if reported. Phone-scaled wide screenshots are not a physical desktop pass. Matching welcome-before, light-mode 1B after, physical desktop, dark and print evidence remain outstanding for full acceptance. Owner explicitly waived screenshots for every work item; track unseen views, seek owner review, and retain final visual and deployment gates. Phase 9B suspends the four-question limit only for this phase. No browser/Chromium/Lighthouse; no visual pass claimed. No merge or deploy without explicit owner command. Phase 10 follows, not before. Alpha tokenisation is partial: the gate locks 392 remaining legacy rgba occurrences and must ratchet down with each migration. Older instructions below are historical when they conflict with this checkpoint.
+> **Current handoff — 2026-11-17, Phase 9B merged:** `main` carries Phases 1–9B. Phase 9B was implemented on `arena/7e77489f-diploma-3rd-sem` (base `816ef84`) and merged by explicit owner command on 2026-11-17 (fast-forward). Read `docs/phases/09B-ui-reboost/record.md` for what shipped and, more importantly, for what was verified versus not: the CSS layer, tokens, 6/6 static gates and 113/113 unit tests are real, but **no physical-device, screen-reader, zoom, print or offline-cache evidence exists** — Phase 10 owns it and its tasks file says no pre-filled row is a pass. One `hub.css` sheet is injected site-wide by `scripts/generate_presence.py`; do not split it into `assets/css/families/*` (92 and then 146 fingerprint regressions) or migrate rules into `subjects/units-com/common.css` (load order costs a specificity level; 1,496 anchors reverted). Per-page CSS fence is 300 KB by owner decision; heaviest page uses 171.5 KB. `assets/js/accessibility.js` is inlined into `shell.bundle.js` — regenerate with `scripts/build_runtime_bundles.py` after editing it. The diverging branch `arena/48a2ab20-diploma-3rd-sem` and its draft PR #20 are superseded: close, do not merge. Open debt: 392 ledgered legacy `rgba()` occurrences, 10 white-on-`var(--accent)` pairs still in `quiz/css/{common,play,index,result,review}.css` and `pyq/css/index.css`, Phase 9.4 counter gate. Phase 10 follows. Older instructions below are historical when they conflict with this checkpoint.
 
 Updated 2026-11-17 (**Phases 1–9 are merged to `main`.** Phase 9 — performance
 and launch — was implemented on `arena/908b6b19-diploma-3rd-sem` and merged by
@@ -213,15 +213,15 @@ pull → run** on the branch named in `rule.md` §1:
 
 ```sh
 cd ~/Diploma-3rd-sem
-git fetch origin arena/7e77489f-diploma-3rd-sem
-git checkout arena/7e77489f-diploma-3rd-sem
-git pull --ff-only origin arena/7e77489f-diploma-3rd-sem
+git fetch origin main
+git checkout main
+git pull --ff-only origin main
 cd ..
 python3 -m http.server 8010 --bind 127.0.0.1
 ```
 
 Open `http://127.0.0.1:8010/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
-directory: `git clone --branch arena/7e77489f-diploma-3rd-sem
+directory: `git clone --branch main
 https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
 above from inside the checkout. Unpushed Arena changes are not available through
 a fresh clone or pull; state which commit/branch holds a change before telling
