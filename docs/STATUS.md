@@ -47,7 +47,8 @@ use PR #7/Git for the current CI and merge result.
 
 **Merge authorization update:** the owner authorized merging on 2026-11-09
 (PR #7, `125eb94`), 2026-11-16 (PR #8, `3e3cb2e1`), and 2026-11-17 (PR #9
-`365b8f7`, PR #10 `8f6eb97`, PR #11 `9d47c7c7`, PR #14 `5b7eb66`). No such
+`365b8f7`, PR #10 `8f6eb97`, PR #11 `9d47c7c7`, PR #14 `5b7eb66`, PR #15
+`84e99aa`). No such
 permission authorizes deployment, Pages or domain changes, and none closes an
 unfinished phase gate.
 
@@ -91,7 +92,9 @@ unfinished phase gate.
 - Phase 7 (`07-inclusion-trust`) is **`✅*`**: parts 7.1–7.5 implemented and
   gate-verified on `arena/c56bb630-diploma-3rd-sem` (2026-11-17) and
   **accepted by the owner on 2026-11-17** after an Android/Chrome smoke pass
-  reported no failures; **not merged**. The acceptance rests on static
+  reported no failures, and **merged to `main` on owner instruction as merge
+  commit `84e99aa`** (PR #15; Web CI `44042637676` and Pages `44042636441`
+  green). The acceptance rests on static
   measurement plus a general click-through, not a per-criterion device audit —
   the items named below stay open and unupgraded. Delivered: all 68 pages have
   one `<main>`, one `<h1>` and a skip link (0 of 68 missing, from 11); 134
@@ -201,8 +204,9 @@ Unavailable device access is **untested**, never silently passed.
 
 ## Recommended remaining order
 
-1. Phase 7 is `✅*` (owner-accepted) but **not merged**; the next step is the
-   owner's merge decision. Nothing in this branch authorizes it.
+1. Phase 7 is `✅*` and merged (`84e99aa`). Next sequential phase is Phase 8
+   (`08-content-depth`), with Phase 9 after it. Nothing here authorizes a
+   deployment setting change, tag or release.
 2. Phase 7's acceptance left these unmeasured, and they are Phase 10 items:
    rendered contrast after compositing, 200 % zoom/reflow on the longest unit
    page, dialog and tab focus behaviour, screen-reader output

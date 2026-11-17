@@ -498,5 +498,8 @@ separate source-verification gate and needs the owner's explicit approval.
   skip-link traversal, focus after dialogs, tap accuracy against the 24 px floor,
   screen-reader output, offline cold/warm and update, backup/restore and timed
   attempts under background throttling.
-- **No merge authorization** was given in that message, so nothing was merged, no
-  PR was opened, and no Pages, tag or release action was taken.
+- **Merge:** the acceptance message itself carried no merge command, so none was
+  taken then. A later instruction ("Ok merge and next chat prompt") authorized
+  it; Phase 7 merged to `main` as **`84e99aa`** via PR #15 (Web CI `44042637676`,
+  Pages `44042636441` green). Merging updated `main` only — no tag, release,
+  domain or Pages setting was changed by this work.

@@ -3,8 +3,9 @@
 - Status: **✅*** — parts 7.1, 7.2, 7.3, 7.4 and 7.5 implemented, gate-verified
   on `arena/c56bb630-diploma-3rd-sem` (2026-11-17) and **accepted by the owner on
   2026-11-17** ("You can mark as passed") after a smoke pass on one Android phone
-  in Chrome reported no failures. **Not merged.** ·
-  Updated: 2026-11-17
+  in Chrome reported no failures. **Merged to `main` on owner instruction as merge
+  commit `84e99aa`** via PR #15 (Web CI `44042637676` and Pages `44042636441`
+  green). · Updated: 2026-11-17
 
 > **What `✅*` means here.** The engineered scope (7.1–7.5) is accepted. The
 > asterisk is load-bearing: the acceptance rests on static measurement plus a
@@ -306,8 +307,11 @@ What that does and does not mean here:
   as passed"**. Phase 7 is therefore recorded as **`✅*`**: accepted, with the
   caveats in *Left open* intact and unupgraded. The owner is the acceptance
   authority; this record states the evidence they accepted, not more.
-- **Not inferred**: no merge was authorized, so the branch stays unmerged and no
-  PR was opened. No Pages, tag or release action was taken.
+- **Merge**: authorized in a later message ("Ok merge and next chat prompt"), and
+  performed as PR #15 → merge commit `84e99aa` with CI and the Pages build green.
+  No tag, release, domain or Pages *setting* was changed; whatever the
+  already-configured Pages pipeline does with `main` is not a setting this work
+  touched.
 
 ## Left open (not closed by this phase)
 
