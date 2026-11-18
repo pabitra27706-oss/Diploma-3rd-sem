@@ -139,7 +139,7 @@ has been recorded. Full evidence: [`phases/09-performance-launch/record.md`](pha
   prospective only and does not authorize a counter. Reopening requires a new
   explicit decision. See `docs/DECISIONS.md` + `docs/MEASUREMENT.md`.
 - **9.6 🚧 in progress** — static launch gates and byte budgets pass; all pages
-  remain within 300 KB CSS / 350 KB JS. Owner-reported physical Android checks
+  remain within 340 KB CSS / 350 KB JS. Owner-reported physical Android checks
   (2026-11-18) passed several listed flows; evidence and missing device/browser
   versions are recorded in `docs/phases/10-device-acceptance/matrix.md`.
   Lighthouse/Core Web Vitals remain unrun, and this partial phone pass does not

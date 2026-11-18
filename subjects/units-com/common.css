@@ -4808,3 +4808,502 @@ hr {
     padding:   0.6rem 0.85rem;
   }
 }
+/* ============================================================================
+   PHASE 9C — UNIT NOTES READING LAYER  (phone-first, "calm editorial")
+   ----------------------------------------------------------------------------
+   Owner brief: modern but easy to stay focused on for a long time; phone first.
+   Everything here is scoped to unit-page bodies so subject/practice/quiz sheets
+   sharing this file are untouched. Rules are additive and later in the file, so
+   they win on equal specificity without !important escalations.
+
+   Design intent: one accent, generous line length and height, quiet surfaces,
+   no decorative noise. Reading comfort beats visual flourish for dense notes.
+   ========================================================================== */
+
+/* Reading measure: a comfortable single column, never edge-to-edge. */
+@media (max-width: 768px) {
+  body[data-page="unit"] .container {
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+
+  /* Each section is a quiet card, not a boxed panel with a heavy border. */
+  body[data-page="unit"] .section {
+    border: 1px solid var(--border-color);
+    border-radius: 1.15rem;
+    box-shadow: none;
+    margin-bottom: 1.1rem;
+    background: var(--card-bg);
+  }
+
+  body[data-page="unit"] .section:hover { box-shadow: none; }
+
+  /* Section heading: sticky within the page so long sections keep context. */
+  body[data-page="unit"] .section-title {
+    font-family: var(--font-heading);
+    font-size: 1.16rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    padding: 1rem 1.1rem;
+    gap: 0.55rem;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  body[data-page="unit"] .section-title::before {
+    width: 3px;
+    border-radius: 3px;
+    background: var(--subject-color);
+    opacity: 0.9;
+  }
+
+  body[data-page="unit"] .section-content {
+    padding: 1.05rem 1.1rem 1.35rem;
+  }
+
+  /* Body copy: the single biggest lever on long-read comfort. */
+  body[data-page="unit"] .section-content p,
+  body[data-page="unit"] .section-content li {
+    font-size: 1.0125rem;
+    line-height: 1.78;
+    color: var(--text-secondary);
+    text-wrap: pretty;
+  }
+
+  body[data-page="unit"] .section-content > p + p { margin-top: 0.85rem; }
+
+  /* Headings inside a section get clear but unhurried hierarchy. */
+  body[data-page="unit"] .section-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.06rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-top: 1.5rem;
+    margin-bottom: 0.45rem;
+    letter-spacing: -0.01em;
+  }
+
+  body[data-page="unit"] .section-content h3:first-child { margin-top: 0; }
+
+  body[data-page="unit"] .section-content h2 {
+    font-family: var(--font-heading);
+    font-size: 1.12rem;
+    margin-top: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Lists: enough indent to scan, not enough to squeeze the measure. */
+  body[data-page="unit"] .section-content ul,
+  body[data-page="unit"] .section-content ol {
+    padding-left: 1.15rem;
+    margin: 0.5rem 0 0.9rem;
+  }
+
+  body[data-page="unit"] .section-content li { margin-bottom: 0.42rem; }
+  body[data-page="unit"] .section-content li::marker { color: var(--subject-color); }
+
+  /* ---- Notes: a quiet inline affordance, not a card per section -------- */
+  body[data-page="unit"] .section-note--compact {
+    margin: 0.35rem 1.1rem 0;
+    border: 1px dashed var(--border-color);
+    border-radius: 0.7rem;
+    background: transparent;
+    padding: 0;
+  }
+
+  body[data-page="unit"] .section-note--compact > summary {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    cursor: pointer;
+  }
+
+  body[data-page="unit"] .section-note--compact > summary::before {
+    content: "";
+    width: 0.9rem;
+    height: 0.9rem;
+    flex: 0 0 auto;
+    background-color: currentColor;
+    opacity: 0.55;
+    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  }
+
+  body[data-page="unit"] .section-note--compact[open] {
+    border-style: solid;
+    background: color-mix(in srgb, var(--subject-color) 4%, transparent);
+  }
+
+  body[data-page="unit"] .section-note--compact textarea {
+    margin: 0 0.75rem;
+    width: calc(100% - 1.5rem);
+    min-height: 6.5rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 0.65rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  body[data-page="unit"] .section-note--compact > button {
+    margin: 0.5rem 0.75rem 0.75rem;
+    min-height: 2.75rem;
+    padding: 0 0.9rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+  }
+
+  body[data-page="unit"] .section-note--compact > label,
+  body[data-page="unit"] .section-note--compact > span[id$="-status"] {
+    display: block;
+    margin: 0.5rem 0.75rem 0;
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+  }
+
+  /* ---- Tables: never clip. Scroll with a sticky first column ----------- */
+  body[data-page="unit"] .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border-color);
+    border-radius: 0.8rem;
+    margin: 0.85rem 0 1.1rem;
+    background: var(--card-bg);
+    position: relative;
+  }
+
+  body[data-page="unit"] .table-wrapper::after {
+    content: "";
+    position: sticky;
+    right: 0;
+    float: right;
+    width: 1.6rem;
+    height: 100%;
+    margin-top: -100%;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--card-bg));
+  }
+
+  body[data-page="unit"] .table-wrapper table {
+    border-collapse: collapse;
+    min-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  body[data-page="unit"] .table-wrapper th,
+  body[data-page="unit"] .table-wrapper td {
+    padding: 0.6rem 0.75rem;
+    vertical-align: top;
+    line-height: 1.55;
+    white-space: normal;
+  }
+
+  body[data-page="unit"] .table-wrapper th:first-child,
+  body[data-page="unit"] .table-wrapper td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--card-bg);
+    box-shadow: 1px 0 0 var(--border-color);
+    min-width: 7rem;
+  }
+
+  body[data-page="unit"] .table-wrapper thead th {
+    background: var(--bg-secondary);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  /* ---- Code: readable and horizontally safe ---------------------------- */
+  body[data-page="unit"] .section-content pre {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 0.8rem;
+    padding: 0.85rem 0.9rem;
+    font-size: 0.84rem;
+    line-height: 1.62;
+    margin: 0.8rem 0 1.05rem;
+  }
+
+  body[data-page="unit"] .section-content code {
+    font-size: 0.9em;
+    padding: 0.1em 0.32em;
+    border-radius: 0.32rem;
+  }
+
+  /* ---- Callout boxes: calm surfaces instead of heavy frames ------------ */
+  body[data-page="unit"] .concept-box,
+  body[data-page="unit"] .definition-box,
+  body[data-page="unit"] .formula-box,
+  body[data-page="unit"] .info-box,
+  body[data-page="unit"] .syntax-box,
+  body[data-page="unit"] .algo-box,
+  body[data-page="unit"] .tip-box,
+  body[data-page="unit"] .warning-box,
+  body[data-page="unit"] .important-note,
+  body[data-page="unit"] .code-box {
+    border-radius: 0.85rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    padding: 0.95rem 1rem;
+    margin: 0.9rem 0 1.1rem;
+    box-shadow: none;
+  }
+
+  body[data-page="unit"] .box-title {
+    font-family: var(--font-heading);
+    font-size: 0.97rem;
+    font-weight: 700;
+    margin-bottom: 0.45rem;
+    color: var(--text-primary);
+  }
+
+  /* ---- Floating actions: out of the reading column --------------------- */
+  body[data-page="unit"] .fab-container {
+    right: 0.45rem;
+    bottom: max(4.9rem, env(safe-area-inset-bottom, 0px) + 4.4rem);
+    gap: 0.45rem;
+    flex-direction: column-reverse;
+  }
+
+  body[data-page="unit"] .fab {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.82rem;
+    box-shadow: var(--shadow-md);
+    opacity: 0.96;
+  }
+
+  /* On a narrow phone the print action duplicates the browser menu and is the
+     least used of the three; hide just it so the column clears the text. */
+  body[data-page="unit"] .fab-container .fab-print { display: none; }
+}
+
+/* Dark mode: keep surfaces flat and text calm rather than pure-contrast. */
+@media (max-width: 768px) {
+  [data-theme="dark"] body[data-page="unit"] .section,
+  [data-theme="dark"] body[data-page="unit"] .table-wrapper {
+    background: var(--card-bg);
+  }
+
+  [data-theme="dark"] body[data-page="unit"] .concept-box,
+  [data-theme="dark"] body[data-page="unit"] .definition-box,
+  [data-theme="dark"] body[data-page="unit"] .formula-box,
+  [data-theme="dark"] body[data-page="unit"] .info-box,
+  [data-theme="dark"] body[data-page="unit"] .syntax-box,
+  [data-theme="dark"] body[data-page="unit"] .algo-box,
+  [data-theme="dark"] body[data-page="unit"] .tip-box,
+  [data-theme="dark"] body[data-page="unit"] .warning-box,
+  [data-theme="dark"] body[data-page="unit"] .important-note,
+  [data-theme="dark"] body[data-page="unit"] .code-box {
+    background: var(--bg-tertiary);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reading-layer refinements: quiet the anchor marker and de-blue the icon
+   chips. The "#" is a real deep-link control, so it stays operable and keeps
+   its accessible name — it just stops competing with the heading text.
+   ------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  body[data-page="unit"] .section-content .section-anchor-link,
+  body[data-page="unit"] .topic-card .section-anchor-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    margin-inline-start: 0.3rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.28;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    border-radius: 0.4rem;
+    vertical-align: middle;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+  }
+
+  body[data-page="unit"] .section-content .section-anchor-link:hover,
+  body[data-page="unit"] .section-content .section-anchor-link:focus-visible,
+  body[data-page="unit"] .topic-card .section-anchor-link:hover,
+  body[data-page="unit"] .topic-card .section-anchor-link:focus-visible {
+    opacity: 1;
+    background: var(--bg-secondary);
+    text-decoration: none;
+  }
+
+  /* Topic grid: cards, but with an accent rule instead of a coloured glyph
+     block — one accent colour, no per-card rainbow. */
+  body[data-page="unit"] .topic-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  body[data-page="unit"] .topic-card {
+    border-radius: 0.85rem;
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--subject-color);
+    background: var(--card-bg);
+    padding: 0.9rem 1rem;
+    box-shadow: none;
+  }
+
+  body[data-page="unit"] .topic-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.02rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 0.35rem;
+    color: var(--text-primary);
+  }
+
+  /* The leading Font Awesome glyph becomes a restrained accent mark. */
+  body[data-page="unit"] .topic-card h3 > i.fas:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    flex: 0 0 auto;
+    border-radius: 0.55rem;
+    font-size: 0.85rem;
+    background: color-mix(in srgb, var(--subject-color) 10%, transparent);
+    color: var(--subject-color);
+  }
+
+  body[data-page="unit"] .topic-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.62;
+    color: var(--text-secondary);
+  }
+}
+
+/* ============================================================================
+   VIDEO WATCH-LIST  (Phase 12 pattern; structure only, links are data)
+   ----------------------------------------------------------------------------
+   Constraint from docs/phases/12.../README.md: plain external <a> links only.
+   No <iframe>, no i.ytimg.com thumbnails, no runtime third-party requests, so
+   this stays a static list and adds zero network cost.
+   ========================================================================== */
+@media (max-width: 768px) {
+  body[data-page="unit"] .video-list {
+    list-style: none;
+    margin: 0.9rem 0 1.2rem;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  body[data-page="unit"] .video-list li { margin: 0; }
+
+  body[data-page="unit"] .video-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.8rem;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  body[data-page="unit"] .video-link:hover,
+  body[data-page="unit"] .video-link:focus-visible {
+    border-color: var(--subject-color);
+    background: color-mix(in srgb, var(--subject-color) 4%, var(--card-bg));
+  }
+
+  /* Play glyph drawn in CSS: no icon font, no image request. */
+  body[data-page="unit"] .video-link::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, var(--subject-color) 12%, transparent);
+    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") center/1.15rem no-repeat;
+    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") center/1.15rem no-repeat;
+    background-color: var(--subject-color);
+  }
+
+  body[data-page="unit"] .video-link-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  body[data-page="unit"] .video-link-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--text-primary);
+  }
+
+  body[data-page="unit"] .video-link-meta {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+  }
+
+  /* Honest disclaimer: these are hand-picked links, not endorsed material. */
+  body[data-page="unit"] .video-note {
+    margin: 0 0 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--text-tertiary);
+  }
+}
+
+/* Sticky first column correction.
+   A table inside .definition-box/.concept-box inherits `overflow: hidden` from
+   its ancestor, and that ancestor then becomes the sticky containing block, so
+   the column never pins. Neutralise clipping on the wrapper's ancestors and
+   keep the horizontal scroll on the wrapper itself. */
+@media (max-width: 768px) {
+  body[data-page="unit"] .definition-box:has(.table-wrapper),
+  body[data-page="unit"] .concept-box:has(.table-wrapper),
+  body[data-page="unit"] .info-box:has(.table-wrapper),
+  body[data-page="unit"] .section-content:has(.table-wrapper) {
+    overflow: visible;
+  }
+
+  body[data-page="unit"] .table-wrapper { overflow: auto hidden; }
+  body[data-page="unit"] .table-wrapper td:first-child,
+  body[data-page="unit"] .table-wrapper th:first-child { position: sticky; left: 0; }
+}
+
+/* .section clips (overflow: hidden) for its rounded corners, which also traps
+   position: sticky descendants. Only sections that actually contain a scroll
+   table opt out; the rest keep their clipped corners. */
+@media (max-width: 768px) {
+  body[data-page="unit"] .section:has(.table-wrapper) { overflow: visible; }
+}
+
+/* The table element itself carries overflow: hidden, which makes the TABLE the
+   sticky scroll container rather than the wrapper — so the pinned column had
+   nowhere to pin within. Reset it here; the wrapper owns the scrolling. */
+@media (max-width: 768px) {
+  body[data-page="unit"] .table-wrapper > table { overflow: visible; }
+}

@@ -18,18 +18,31 @@ Usage:
     python3 scripts/audit_page_weight.py --compare old.json   # before/after delta
     python3 scripts/audit_page_weight.py --budget            # exit 1 over budget
 
-Budgets (uncompressed, first-party): 300 KB CSS, 350 KB JS per page. They are a
+Budgets (uncompressed, first-party): 340 KB CSS, 350 KB JS per page. They are a
 regression fence, not a Core Web Vitals claim.
 
-The CSS fence moved from 250 KB to 300 KB with the Phase 9C design layer
+The CSS fence moved from 300 KB to 340 KB with the Phase 9C unit-notes reading
+layer (owner-approved: "not a problem if need exceed 340kb"). That layer lives in
+subjects/units-com/common.css and is scoped with body[data-page="unit"] so the
+shared sheet's other consumers are untouched. Before the raise the heaviest unit
+pages measured 300,013 B against a 307,200 B fence — 13 bytes of headroom — so any
+addition there failed the gate regardless of merit. The measured reclaim available
+by safe deletion was only ~2 KB of genuinely dead rules; the remaining mass is
+comments (12.2 KB), indentation (7.3 KB) and rules that are live on other pages
+that share this stylesheet (card-glass, card-neumorphic, .particle). Minifying or
+deleting those trades a maintainability loss for bytes that this fence does not
+value enough to justify it. Post-raise heaviest page: see the table this script
+prints; the fence is checked, not assumed.
+
+The CSS fence previously moved from 250 KB to 300 KB with the Phase 9C design layer
 (assets/css/hub.css). That layer is a single shared sheet carrying the site-wide
 type scale, colour system and every component state; it added ~118 KB to the
 heaviest pages, whose own area sheets (subjects/units-com/common.css is 108 KB)
 already sat near the old ceiling. Splitting the layer per page-family was tried
 and rejected: hub.css relies on [data-page] qualifiers for specificity over the
 area sheets, so any split changes the cascade and regresses rendered colours.
-The single-file ceiling in check_site.py is already 300 KB, so this keeps the
-two fences consistent rather than introducing a new one.
+The single-file ceiling in check_site.py (`CSS_BUDGET_SINGLE`) tracks this value,
+so the two fences stay consistent rather than drifting apart.
 """
 
 from __future__ import annotations
@@ -45,7 +58,7 @@ from site_config import SITE
 
 ROOT = Path(__file__).resolve().parent.parent
 SKIP_DIRS = {".git", "node_modules", "webflow", ".github", "tests"}
-CSS_BUDGET = 300 * 1024
+CSS_BUDGET = 340 * 1024
 JS_BUDGET = 350 * 1024
 
 LINK = re.compile(r'<link\b[^>]*>', re.I)
