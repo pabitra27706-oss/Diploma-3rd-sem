@@ -10,6 +10,8 @@ Every phase has its own folder. The folder is the task record: what the phase
 is for, what its parts are, how each part is accepted, and what "done" means.
 `docs/ROADMAP.md` is the status board; this folder is the detail.
 [Current handoff and remaining work](../STATUS.md) is the up-to-date summary.
+[Phase 11](11-suggestions/README.md) is open for owner review of the five
+Suggestions pairs. It does not reopen Phases 1–10.
 
 ```text
 docs/phases/
@@ -25,6 +27,7 @@ docs/phases/
     sub-phase-8A-answer-prose-and-ui-labels/  answer prose + subject names
   09-performance-launch/  budgets, measurement, domain readiness, launch
   10-device-acceptance/   final cross-device matrix after implementation 1–9
+  11-suggestions/        subject-wise past questions and quick revision guides
 ```
 
 ## Folder convention

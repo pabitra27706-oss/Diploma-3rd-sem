@@ -6,6 +6,21 @@
 
 ## Owner decisions
 
+- 2026-11-18 — Roll the approved Algorithms layout out? — **Yes, all five
+  theory subjects.** Keep the workbook and priority table, and add more Easy
+  Read guidance on what matters and what to read. This supersedes the
+  Algorithms-only implementation limit, not the owner acceptance or release
+  gates.
+- 2026-11-18 — Which layout to build next within Phase 11? — **Algorithms pair
+  first.** Review the 2nd-semester repository and show both mockups before site
+  changes (done); use the chosen workbook and named-priority directions for
+  CST209 only. Show real phone and desktop renders for review. This is not
+  approval to adapt the other four subjects, pass the phase, or publish.
+- 2026-11-18 — 3rd-semester Suggestions? — **Approved as Phase 11.** Create the
+  phase entry before implementing. Use the 2nd-semester dashboard interaction
+  (expandable subjects, **Important Questions**, **Easy Read**) with 3rd-semester
+  styling and original, source-linked guidance. The approval does not amend
+  the Phases 1–10 closure or grant PR, merge or deployment permission.
 - 2026-11-06 — Playbook scope? — Build the reusable web playbook in
   `webflow/` **and** adopt it for this site (`rule.md`, `prompt.md`, `docs/`).
 - 2026-11-06 — Default web stack? — **Zero-build static + GitHub Pages.**

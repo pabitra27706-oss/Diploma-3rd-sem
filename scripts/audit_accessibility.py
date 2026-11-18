@@ -228,6 +228,20 @@ CONTRAST_PAIRS = [
     ('hub tertiary on card (light)', VARIABLES, False, '--text-tertiary-light', '--bg-card-light', 4.5, '1.4.3'),
     ('hub focus ring (light)', VARIABLES, False, '--focus-ring-solid', '--bg-primary-light', 3.0, '1.4.11'),
     ('hub focus ring (dark)', VARIABLES, True, '--focus-ring-solid', '--bg-primary-dark', 3.0, '1.4.11'),
+    ('suggestions link (light)', VARIABLES, False, '--hub-accent-text', '--bg-secondary-light', 4.5, '1.4.3'),
+    ('suggestions link (dark)', VARIABLES, True, '--hub-accent-text-dark', '--bg-secondary-dark', 4.5, '1.4.3'),
+    ('suggestions link on highlight (light)', VARIABLES, False, '--hub-accent-text', '--hub-accent-soft', 4.5, '1.4.3'),
+    ('suggestions link on highlight (dark)', VARIABLES, True, '--hub-accent-text-dark', '--hub-accent-soft-dark', 4.5, '1.4.3'),
+    ('suggestions hint on highlight (light)', VARIABLES, False, '--text-secondary-light', '--hub-accent-soft', 4.5, '1.4.3'),
+    ('suggestions hint on highlight (dark)', VARIABLES, True, '--text-secondary-dark', '--hub-accent-soft-dark', 4.5, '1.4.3'),
+    ('suggestion stars (light)', VARIABLES, False, '--c-amber-900', '--bg-card-light', 4.5, '1.4.3'),
+    ('suggestion stars (dark)', VARIABLES, True, '--c-amber-400', '--bg-card-dark', 4.5, '1.4.3'),
+    ('easy read link (light)', VARIABLES, False, '--c-green-800', '--bg-primary-light', 4.5, '1.4.3'),
+    ('easy read link (dark)', VARIABLES, True, '--c-green-300', '--bg-primary-dark', 4.5, '1.4.3'),
+    ('easy read source link (light)', VARIABLES, False, '--c-green-800', '--bg-secondary-light', 4.5, '1.4.3'),
+    ('easy read source link (dark)', VARIABLES, True, '--c-green-300', '--bg-secondary-dark', 4.5, '1.4.3'),
+    ('easy read priority (light)', VARIABLES, False, '--c-green-800', '--c-green-50', 4.5, '1.4.3'),
+    ('easy read priority (dark)', VARIABLES, True, '--c-green-300', '--c-green-950', 4.5, '1.4.3'),
 ]
 
 

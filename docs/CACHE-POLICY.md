@@ -5,8 +5,8 @@ and two independent versions (Phase 9.3, 2026-11-17):
 
 | Class | Cache | Version | Behaviour |
 |---|---|---|---|
-| shell (HTML, CSS, JS, icons, manifest) | `diploma-3rd-sem-<shell>` | live `study-2026-11-17e`; Phase 9B branch `sw.js` `VERSION = 'study-2026-11-17f'` (not deployed) | precached on install; a new shell waits and `pwa.js` asks before reloading |
-| data (pools, papers, search shards, card shards, catalog) | `diploma-3rd-sem-data-<dataVersion>` | generated `assets/data/data-version.json` (`data-6b1621c45599`) | stale-while-revalidate, keyed by the data version; refreshed silently |
+| shell (HTML, CSS, JS, icons, manifest) | `diploma-3rd-sem-<shell>` | Phase 11 working branch: `study-2026-11-18d` (not deployed) | precached on install; a new shell waits and `pwa.js` asks before reloading |
+| data (pools, papers, search shards, card shards, catalog) | `diploma-3rd-sem-data-<dataVersion>` | generated `assets/data/data-version.json` (`data-1cadf3283272` for the Phase 11 rollout) | stale-while-revalidate, keyed by the data version; refreshed silently |
 
 ## What each class does
 
@@ -19,7 +19,10 @@ and two independent versions (Phase 9.3, 2026-11-17):
   the student is asked once.
 - **Pages.** Network-first. On failure the worker returns the cached response, the
   pre-cached pathname shell (so `search.html?q=…` and `repeated.html?subject=…`
-  work offline) or `offline.html`.
+  work offline) or `offline.html`. The Suggestions hub at `suggestions/index.html`
+  is precached. Individual guides are cached on successful visits controlled
+  by the worker. Archive pages, notes and paper data follow their own cache
+  rules; opening a Suggestions guide does not download its sources.
 - **Data.** Any same-origin GET under `_data/`, `_quiz-data/`, `assets/data/`,
   `assets/search/`, `assets/cards/` is served from the data cache when present and
   refreshed in the background (stale-while-revalidate). The cache key carries

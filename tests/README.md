@@ -36,7 +36,7 @@ node tests/discovery-dom.cjs
 node tests/data-version.cjs
 ```
 
-Python currently covers **92** tests (Phase 9 added 29): the colour-token gate
+The Python suite has **123** tests, including the colour-token gate
 (palette uniqueness, no literal outside the token file, page load order, and one
 negative case per rule on temporary trees), the generated icon-CSS subset
 (currentness, icon coverage, license banner, unknown-icon disclosure), the
@@ -45,7 +45,7 @@ version), and the base-path proof (one constant, `/`-rooted copy passes the site
 checker). Earlier suites cover: source-preserving/idempotent
 pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
 integrity guard changes/additions/removals, compact discovery (≤ 40% shard budget,
-74-page scope partition, 2,410-entry file/anchor validation, 1 exact alias + 15
+84-page scope partition, file/anchor validation, 1 exact alias + 15
 unverified candidate repeat clusters, and SW cache registration), Phase 5 card
 eligibility (source-verbatim copies, citation hygiene, explicit skip accounting,
 per-unit counts, byte-identical regeneration, compact payload), bundle/source
@@ -63,7 +63,18 @@ single presence pass does not settle a fresh page; that is expected, not a bug. 
 sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons use the same
 revision (the 2026-11-17 explanation revision, where both pins now point). Both
 values must be in Git history; do not use a shallow clone
-for these checks. CI checks out full history.
+for these checks. CI checks out full history. Phase 11 also checks static
+Suggestions generation, the four-pattern minimum per unit, distinct sessions
+and derived star ratings, Easy Read rank/effort and exact source/marks labels,
+paired guide links, and sitemap/search presence. All five pairs have numbered
+workbooks with worked examples and named priority tables. Static validation
+checks both reading links per step against the actual unit-note fragments and
+rejects missing or duplicate sections. The nested-path `suggestions-browser.cjs`
+smoke checks all ten pages at 320, 390 and 1280 CSS px, both themes, 130% text
+and high contrast at 320, selected rendered colour pairs, focused jumps, five
+reading destinations, eleven archive destinations, no-JS navigation and warm
+offline revisits without source prefetch. This is not real-device or assistive-
+technology acceptance.
 
 Node suites cover attempt persistence/migration/retries/mistakes, Leitner
 scheduling (ladder, local-midnight rollover, per-day new-card cap, clock clamps,
@@ -103,7 +114,7 @@ export CHROMIUM_EXECUTABLE=/path/to/chromium
 export TEST_BASE=http://127.0.0.1:8000/Diploma-3rd-sem/
 
 for suite in data-browser quiz-engine-browser discovery-study-browser \
-  storage-browser paper-offline feedback-browser cards-offline; do
+  storage-browser paper-offline feedback-browser cards-offline suggestions-browser; do
   node "tests/$suite.cjs" || break
 done
 ```

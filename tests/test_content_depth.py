@@ -205,7 +205,7 @@ class PrintTests(unittest.TestCase):
         missing = [p.relative_to(ROOT).as_posix() for p in SHIPPED
                    if 'assets/css/base.css' not in p.read_text(encoding='utf-8')]
         self.assertEqual(missing, [])
-        self.assertEqual(len(SHIPPED), 74)
+        self.assertEqual(len(SHIPPED), 84)
         self.assertFalse((ROOT / 'assets/css/print.css').exists(),
                          'print.css must stay merged into base.css')
 

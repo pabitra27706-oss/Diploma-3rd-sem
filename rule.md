@@ -6,6 +6,11 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
+> **Current session (2026-11-18):** `arena/b06d66f8-diploma-3rd-sem`, based on
+> `45bc44d`. Phases 1–10 are administratively closed without upgrading their
+> skipped checks. Phase 11 is the separately approved Suggestions feature; the
+> notes below about earlier branches and phase progress are historical.
+>
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
 > merged as PR #15, Phase 8 `✅*` accepted and merged as **PR #16**, and the
@@ -33,7 +38,9 @@
 ## 1. Identity
 
 - Site: Diploma 3rd Semester — CST Study Hub
-- Repo: `pabitra27706-oss/Diploma-3rd-sem` · active branch: `main` (Phases 1–9B merged; Phase 9B merged 2026-11-17 by explicit owner command). Phase 10 — device acceptance — is next and is not started. No deploy without explicit owner command.
+- Repo: `pabitra27706-oss/Diploma-3rd-sem` · working branch:
+  `arena/b06d66f8-diploma-3rd-sem` (Phase 11). `main` is the Pages source;
+  no merge or deploy without an explicit owner command.
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -198,25 +205,19 @@ A **public launch** additionally needs every item in
   which branch/revision contains the changes and whether it has been pushed.
   Never suggest a destructive reset, overwrite local changes, or present an
   unpushed change as available through `git pull`.
-- **Canonical post-phase Termux block (branch-specific, copy-paste):** after a
-  phase is pushed, the owner runs this on their device to pull the current
-  session branch and serve it at the real subpath. It follows **push → pull →
-  run**, using the branch named in §1 (`arena/e0da0bec-diploma-3rd-sem`):
+- **Phase 11 Termux preview (only after the working branch has been pushed).**
+  For a fresh isolated checkout, with Python and Git installed:
 
   ```sh
-  cd ~/Diploma-3rd-sem
-  git fetch origin main
-  git checkout main
-  git pull --ff-only origin main
-  cd ..
+  mkdir -p ~/phase11-preview
+  cd ~/phase11-preview
+  git clone --single-branch --branch arena/b06d66f8-diploma-3rd-sem \
+    https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem
   python3 -m http.server 8010 --bind 127.0.0.1
   ```
 
-  Open `http://127.0.0.1:8010/Diploma-3rd-sem/`; stop with Ctrl+C. Use a port
-  that has never served this site: an old service worker left on port 8000 has
-  caused cache skew before, so 8010 is the default here. The `git push` makes the
-  block self-contained and guarantees the branch is current
-  before the pull; it is a no-op when the agent has already pushed. When the
-  session branch changes, update the branch name here to match §1. Never claim a
-  local preview proves real-device installation, deployed behaviour, or browser
-  checks that were not run.
+  Open `http://127.0.0.1:8010/Diploma-3rd-sem/suggestions/index.html`; stop with
+  Ctrl+C. If that preview checkout already exists on this branch, pull it with
+  `git pull --ff-only` inside `~/phase11-preview/Diploma-3rd-sem`, then serve
+  again from the parent directory. Use a fresh port if an older service worker
+  controls the origin. This is branch testing, not production deployment.
