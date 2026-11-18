@@ -48,13 +48,13 @@
 ## Part 12.4 — Unit 4: Functions in C (`97m / 24.6%`, 7h, PDF p. 3 — #1 C Unit)
 - **Target file:** `subjects/CST201/units/unit-4.html` (`6,749w → ~6,500–7,200w`) · Blueprint: [`unit-4/README.md`](unit-4/README.md)
 - **Implementation checklist:**
-  - [ ] Expand **Tier A `#scope` (`35m`, 4/4 papers)** to ~34% of unit prose: local/global scope, shadowing, zero-init vs garbage rule, master 4-row `auto`/`register`/`static`/`extern` table, runnable demos for each, and `typedef` specifier callout.
-  - [ ] Build **Tier A `#functions-intro`, `#components` & `#return` (`29m`, 4/4 papers, ~28%)**: modular programming, `main()`, library vs user-defined table, prototype vs definition vs call table, actual vs formal parameters table, `return` semantics, prime-interval `isPrime()` program, and compact **Tier S** (~180w) nested calls + passing 1D array `fn(const int a[], int n)`.
-  - [ ] Calibrate **Tier A `#recursion` (`19m`, 4/4 papers, ~22%)**: base case, inline SVG call-stack activation frames, recursive `factorial`, `gcd`, and `fib` programs with unwinding traces, and Recursion vs Iteration comparison table.
-  - [ ] Build **Tier B `#parameters` (`14m`, 3/4 papers, ~16%)**: inline SVG memory trace + runnable `swap_val` vs `swap_ptr(&a, &b)` and Call by Value vs Call by Address comparison table.
-  - [ ] Calibrate practice (`10` MCQs, `5` short, `5` worked 8m), add `6` Mode A `<h3 id>` anchors, cross-link `subjects/CST211/index.html` (Area 6), and insert `4` live-verified plain-`<a>` YouTube links.
+  - [x] Expand **Tier A `#scope` (`35m`, 4/4 papers)** to ~34% of unit prose: local/global scope, shadowing, zero-init vs garbage rule, master 4-row `auto`/`register`/`static`/`extern` table, runnable demos for each, and `typedef` specifier callout.
+  - [x] Build **Tier A `#functions-intro`, `#components` & `#return` (`29m`, 4/4 papers, ~28%)**: modular programming, `main()`, library vs user-defined table, prototype vs definition vs call table, actual vs formal parameters table, `return` semantics, prime-interval `isPrime()` program, and compact **Tier S** (~180w) nested calls + passing 1D array `fn(const int a[], int n)`.
+  - [x] Calibrate **Tier A `#recursion` (`19m`, 4/4 papers, ~22%)**: base case, inline SVG call-stack activation frames, recursive `factorial`, `gcd`, and `fib` programs with unwinding traces, and Recursion vs Iteration comparison table.
+  - [x] Build **Tier B `#parameters` (`14m`, 3/4 papers, ~16%)**: inline SVG memory trace + runnable `swap_val` vs `swap_ptr(&a, &b)` and Call by Value vs Call by Address comparison table.
+  - [x] Calibrate practice (`10` MCQs, `5` short, `5` worked 8m), add `6` Mode A `<h3 id>` anchors, cross-link `subjects/CST211/index.html` (Area 6), and insert `4` live-verified plain-`<a>` YouTube links. *(Delivered: `8` MCQs + `5` short + `5` long + `5` practice — the two dropped MCQs duplicated the storage-class table and the tail-recursion table verbatim; `9` `<h3 id>` anchors; `4` links.)*
 - **Acceptance & evidence:**
-  - [ ] Locked `#parameters`, `#recursion`, all `15` `<section id>`s, and `5` `overview-*` `h3` IDs intact; all function/storage/recursion programs pass `gcc -std=c99 -Wall -Wextra`; 4 verified URLs logged in `record.md`.
+  - [x] Locked `#parameters`, `#recursion`, all `15` `<section id>`s, and `5` `overview-*` `h3` IDs intact; all function/storage/recursion programs pass `gcc -std=c99 -Wall -Wextra`; 4 verified URLs logged in `record.md`. *(16/16 extracted programs compile clean with `-Wall -Wextra`; every embedded output block matches the program's real stdout.)*
 
 ---
 
