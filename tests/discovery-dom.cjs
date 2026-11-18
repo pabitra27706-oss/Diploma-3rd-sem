@@ -575,6 +575,54 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     assert.equal(pagesRes.status, 200, 'Warmed pages search shard must serve offline');
   }
   console.log('PASS service worker precache, WARM_SEARCH shard warming, and offline navigation/query serving');
+
+  /* ── 12. PYQ topic hand-off never resolves to a generic exercise section ── */
+  {
+    // A stored PYQ topic such as "Multiple Choice Questions" describes the
+    // exercise type, not a syllabus concept. With the generic sections excluded
+    // from entriesFor(), no section may be treated as a match, so the page must
+    // stay put instead of highlighting #mcqs.
+    function fixture(topic) {
+      const dom = createMiniDom(BASE + 'subjects/CST207/units/unit-1.html?topic=' + encodeURIComponent(topic));
+      dom.win.fetch = createRepoFetch('/Diploma-3rd-sem/', null, () => dom.win.location.href);
+      const main = dom.doc.createElement('main');
+      const concept = dom.doc.createElement('section');
+      concept.id = 'computer-structure';
+      const conceptHeading = dom.doc.createElement('h2');
+      conceptHeading.textContent = 'Computer Structure';
+      concept.append(conceptHeading);
+      const conceptSub = dom.doc.createElement('h3');
+      conceptSub.id = 'von-neumann-architecture-and-cpu-organization';
+      conceptSub.textContent = 'Computer Architecture, CPU Organization and Von Neumann Architecture';
+      concept.append(conceptSub);
+      const generic = dom.doc.createElement('section');
+      generic.id = 'mcqs';
+      const genericHeading = dom.doc.createElement('h2');
+      genericHeading.textContent = 'Multiple Choice Questions';
+      generic.append(genericHeading);
+      main.append(concept, generic);
+      dom.doc.body.appendChild(main);
+      runScriptIn(dom.win, 'assets/js/subject-labels.js');
+      runScriptIn(dom.win, 'assets/js/unit-discovery.js');
+      return dom;
+    }
+
+    const genericRun = fixture('Multiple Choice Questions');
+    await flush();
+    assert(!/#(?:overview|mcqs|short-questions|long-questions|practice|revision)$/.test(genericRun.win.location.href),
+      `topic hand-off must not land on a generic section: ${genericRun.win.location.href}`);
+    assert.equal(genericRun.doc.querySelectorAll('.pyq-topic-target').length, 0,
+      'no heading may be marked as the topic target for a generic topic');
+
+    // Positive control: a real concept topic still resolves to its authored <h3>.
+    const conceptRun = fixture('Von Neumann architecture');
+    await flush();
+    const target = conceptRun.doc.querySelector('#von-neumann-architecture-and-cpu-organization');
+    assert(target, 'the Von Neumann <h3> anchor must be present in the fixture');
+    assert(target.classList.contains('pyq-topic-target'),
+      'a matching concept topic must mark its authored heading');
+  }
+  console.log('PASS topic hand-off skips generic sections and still resolves concept headings');
 })().catch(err => {
   console.error(err);
   process.exitCode = 1;

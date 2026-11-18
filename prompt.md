@@ -1,5 +1,34 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
+> **Phase 15 handoff — 2026-11-18 (executed, awaiting owner sign-off):** the
+> owner ordered the six parts of
+> [`docs/phases/15-cst207-cso-content/tasks.md`](docs/phases/15-cst207-cso-content/tasks.md)
+> to be carried out. They were executed on `arena/ad819066-diploma-3rd-sem`
+> (base `f0ce76d`); read
+> [`docs/phases/15-cst207-cso-content/record.md`](docs/phases/15-cst207-cso-content/record.md)
+> for the numbers, the 15 video URLs and the gate table — don't re-run the work.
+> Five CSO unit pages now total **33,978w** (U1 6,081 · U2 8,561 · U3 7,302 ·
+> U4 3,669 · U5 8,365) with `13` SVGs, `20` `<pre><code>` listings, all `74`
+> `<section id>`s and all `25` required `<h3 id>` anchors intact. All `15`
+> YouTube slots hold plain external `<a>` links confirmed live through oEmbed
+> (no embeds, no thumbnails). `assets/js/unit-discovery.js` now skips generic
+> section ids and stems plural forms, so **`102 / 103`** 2023–2026 CSO questions
+> resolve to an exact syllabus heading (`0` generic false positives, `0`
+> wrong-unit collisions); only `P006-Q24` `"Short notes"` falls back to the unit
+> overview. `_data/` stayed byte-frozen (Mode A) and the canonical rebuild ran in
+> the documented order. Static gates are green (`check_site` 0/0, tokens 0,
+> a11y 0, weight budget, PYQ integrity 0 drift, `15/15` Node suites); the Python
+> suite is `122/123` because `test_data_pipeline` shells out to
+> `git show 664674b…` and this checkout is depth 1. **Not proved:** no
+> physical-device, screen-reader, zoom, print or offline-cache pass — this is
+> static plus unit-test evidence only. **Phase 15 is not passed.** Wait for the
+> owner's `mark as pass` / `add for later`, and do not PR, merge, deploy or
+> publish. Test under `/Diploma-3rd-sem/` using `rule.md` §7. The next execution
+> the owner may call for is **Phase 13 — Scripting Languages (Python)**
+> ([`docs/phases/13-cst203-python-content/README.md`](docs/phases/13-cst203-python-content/README.md));
+> Phases 12, 14 and 16 are still unexecuted, so take the owner's order rather
+> than assuming 13.
+
 > **Maintenance handoff — 2026-11-18:** On `arena/eec36cd0-diploma-3rd-sem`
 > (base `a2bb413`), Home now follows the manual theory checklist, uses the
 > same activity streak as Today, and refreshes greetings on local time. The

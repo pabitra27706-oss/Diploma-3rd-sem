@@ -6,7 +6,10 @@ installation or build is required to run the site.
 
 Phases 1–10 were administratively closed on 2026-11-18; any recorded skips
 remain unverified. **Phase 11 — Subject-wise Suggestions** has been revised on
-the working branch and remains open for owner review. See the [current status](docs/STATUS.md),
+the working branch and remains open for owner review. **Phase 15 — Computer
+System Organization** was executed on 2026-11-18 (five CSO units recalibrated,
+15 live-verified video links, PYQ↔unit sync) and also awaits owner sign-off —
+see the [phase record](docs/phases/15-cst207-cso-content/record.md). See the [current status](docs/STATUS.md),
 [roadmap](docs/ROADMAP.md) and [closure record](docs/PROJECT-CLOSURE.md). This
 checkout does not confirm what is deployed.
 

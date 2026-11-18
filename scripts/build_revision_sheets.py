@@ -149,8 +149,11 @@ def summarise(subjects, checked):
 
 
 def page(title, body, prefix=''):
+    description = (f'{title} — quick-revision definitions and formulas for the '
+                   'WBSCTE Diploma 3rd Semester Computer Science & Technology subjects')
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+            f'<meta name="description" content="{e(description)}">'
             f'<title>{e(title)} — Study Hub</title>'
             f'<link rel="stylesheet" href="{prefix}assets/css/variables.css">'
             f'<link rel="stylesheet" href="{prefix}assets/css/discovery.css">'

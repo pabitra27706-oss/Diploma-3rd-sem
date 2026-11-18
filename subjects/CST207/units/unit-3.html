@@ -359,19 +359,33 @@
     </h2>
     <div class="section-content">
 
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-sitemap"></i> Internal Architecture — Two Units</div>
-        <p>The 8086 is divided internally into two independent and parallel-working units:</p>
-        <ul style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
-          <li><strong>BIU (Bus Interface Unit):</strong> Handles all bus operations — fetches instructions from memory, reads/writes data. Contains the instruction queue (prefetch buffer), segment registers, IP (Instruction Pointer), and the address generation logic.</li>
-          <li><strong>EU (Execution Unit):</strong> Executes instructions. Contains the ALU, general-purpose registers, flag register, and the control unit. Receives instructions from the BIU's queue and executes them.</li>
-        </ul>
-        <div class="important-note" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-star"></i> Pipelining in 8086</div>
-          <p>The BIU and EU operate in parallel — while the EU executes one instruction, the BIU prefetches the next instructions into the 6-byte instruction queue. This is a basic form of pipelining that improves throughput.</p>
-        </div>
-      </div>
 
+      <h3 id="8086-architecture-biu-eu-pinout-and-modes"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-microchip"></i> Intel 8086 Architecture: BIU, EU, 40-Pin Pinout and Minimum / Maximum Modes
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        The 8086 is drawn as two cooperating halves. The <strong>bus interface unit</strong> owns the outside
+        world — segment registers, IP, the address adder and the 6-byte prefetch queue — while the
+        <strong>execution unit</strong> owns the inside — general registers, the ALU, the flags and the
+        control unit. Draw the two boxes, the queue between them, and the bus lines leaving the BIU, and the
+        diagram is complete.
+      </p>
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 350" width="100%" role="img" aria-label="Intel 8086 internal organisation split into the bus interface unit and execution unit" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="14" y="30" width="300" height="290" rx="12" fill="none" stroke="var(--primary)" stroke-width="2"/><rect x="330" y="30" width="376" height="290" rx="12" fill="none" stroke="var(--primary)" stroke-width="2"/><text x="164" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-primary)">BUS INTERFACE UNIT (BIU)</text><text x="518" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-primary)">EXECUTION UNIT (EU)</text><rect x="34" y="45" width="260" height="45" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="164.0" y="63.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">SEGMENT REGISTERS</text><text x="164.0" y="81.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">CS · DS · SS · ES</text><rect x="34" y="105" width="260" height="45" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="164.0" y="123.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">INSTRUCTION POINTER</text><text x="164.0" y="141.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">IP</text><rect x="34" y="165" width="260" height="55" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="164.0" y="188.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">6-BYTE INSTRUCTION QUEUE</text><text x="164.0" y="206.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">FIFO, filled ahead of the EU</text><rect x="34" y="235" width="260" height="55" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="164.0" y="258.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">ADDRESS GENERATOR</text><text x="164.0" y="276.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">&Sigma; segment &times; 10H + offset</text><rect x="350" y="45" width="336" height="45" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="518.0" y="63.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">GENERAL REGISTERS</text><text x="518.0" y="81.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">AX · BX · CX · DX · SP · BP · SI · DI</text><rect x="350" y="105" width="336" height="45" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="518.0" y="123.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">ALU</text><text x="518.0" y="141.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">16-bit arithmetic and logic</text><rect x="350" y="165" width="336" height="45" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="518.0" y="183.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">FLAG REGISTER</text><text x="518.0" y="201.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">9 flags: CF PF AF ZF SF TF IF DF OF</text><rect x="350" y="235" width="336" height="55" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="518.0" y="258.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CONTROL UNIT</text><text x="518.0" y="276.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">decodes the queued instruction</text><polyline points="164,165 164,150" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="164,150 160.4,156 167.6,156" fill="var(--text-secondary)"/><polyline points="294,192 350,132" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="350,132 346.4,138 353.6,138" fill="var(--text-secondary)"/><text x="322" y="158" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">bytes</text><polyline points="164,290 164,320 518,320 518,290" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="518,290 514.4,296 521.6,296" fill="var(--text-secondary)"/><text x="340" y="337" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">20-bit physical address and bus cycle</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 1 — The 8086 split. The BIU owns every bus cycle and prefetches into a 6-byte queue; the EU decodes and executes from that queue, so fetch and execute overlap.</figcaption></figure>
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Minimum mode vs maximum mode</p>
+        <table class="mode-table">
+          <thead>
+            <tr><th>Feature</th><th>Minimum mode (MN/MX̄ = 1)</th><th>Maximum mode (MN/MX̄ = 0)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Control signals</td><td>Generated by the 8086 itself</td><td>Generated by the external 8288 bus controller</td></tr>
+            <tr><td>Pins 24&ndash;31</td><td>Carry the processor's own control signals (INTĀ, ALE, DEN̄, DT/R̄, M/IŌ, WR̄, HOLD, HLDA)</td><td>Carry status lines (S0̄&ndash;S2̄, QS0, QS1) and bus request/grant lines</td></tr>
+            <tr><td>Typical system</td><td>Single-processor, small board</td><td>Multiprocessor or coprocessor (8087) system</td></tr>
+            <tr><td>Extra chips</td><td>Latches (8282) and transceivers (8286) only</td><td>Latches, transceivers and the 8288</td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-stream"></i> BIU — Bus Interface Unit Details</div>
         <ul style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
@@ -513,7 +527,17 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: BIU vs EU and the Six-Byte Queue</div>
+          <p><a href="https://www.youtube.com/watch?v=_JVhgrE5wuo" target="_blank" rel="noopener noreferrer">8086 Microprocessor Explained: BIU vs EU - How Data is Fetched and Processed</a> (C 4 Yourself). The Bus Interface Unit and Execution Unit split, the six-byte instruction queue and why the queue is what makes prefetching possible. Watch it before the register and flag tables here, so the queue animation has somewhere to attach.</p>
+        </div>
+
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: The 40-Pin Package and the Two Modes</div>
+          <p><a href="https://www.youtube.com/watch?v=D3S_J-KaJCU" target="_blank" rel="noopener noreferrer">PIN Diagram of 8086 Microprocessor: Configuration and Functions Explained</a> (Engineering Funda). Every pin group taken in order, including the 24–31 reassignment when MN/MX is grounded and the part the 8288 bus controller plays in maximum mode. Good companion to the minimum-versus-maximum comparison in this section.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 3: REGISTER STRUCTURE
@@ -629,53 +653,47 @@
         </div>
       </div>
 
+
+      <h3 id="8086-status-register-flags-and-interrupts"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-flag"></i> 8086 Status (Flag) Register and Interrupts
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        The flag register is 16 bits wide but only nine bits are defined: six <strong>status</strong> flags set
+        by the ALU and three <strong>control</strong> flags set by the programmer. Quoting the bit positions is
+        worth marks, because the question usually names one of them.
+      </p>
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <table class="mode-table">
+          <thead>
+            <tr><th>Bit</th><th>Flag</th><th>Name</th><th>Set when</th><th>Type</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0</td><td><code>CF</code></td><td>Carry</td><td>A carry or borrow leaves the MSB</td><td>Status</td></tr>
+            <tr><td>2</td><td><code>PF</code></td><td>Parity</td><td>The low byte of the result has an even number of 1s</td><td>Status</td></tr>
+            <tr><td>4</td><td><code>AF</code></td><td>Auxiliary carry</td><td>Carry out of bit 3 — used by BCD arithmetic</td><td>Status</td></tr>
+            <tr><td>6</td><td><code>ZF</code></td><td>Zero</td><td>The result is zero</td><td>Status</td></tr>
+            <tr><td>7</td><td><code>SF</code></td><td>Sign</td><td>The MSB of the result is 1</td><td>Status</td></tr>
+            <tr><td>8</td><td><code>TF</code></td><td>Trap</td><td>Set — single-step mode for debugging</td><td>Control</td></tr>
+            <tr><td>9</td><td><code>IF</code></td><td>Interrupt enable</td><td>Set — maskable interrupts are accepted</td><td>Control</td></tr>
+            <tr><td>10</td><td><code>DF</code></td><td>Direction</td><td>Set — string operations auto-decrement</td><td>Control</td></tr>
+            <tr><td>11</td><td><code>OF</code></td><td>Overflow</td><td>Signed result does not fit the destination</td><td>Status</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="important-note" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Interrupts in one paragraph</div>
+        <p><code>INTR</code> is maskable — it is ignored while <code>IF = 0</code> and acknowledged with
+        <code>INTĀ</code>, which makes the CPU read a vector number from the data bus.
+        <code>NMI</code> is non-maskable and is always taken. The first 1 KB of memory holds the interrupt
+        vector table: the vector number times four gives the address of the handler, whose offset and segment
+        are stored there. Interrupts numbered 0&ndash;4 are predefined (divide error, single step,
+        <code>NMI</code>, breakpoint, overflow).</p>
+      </div>
       <!-- Flag Register -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-flag"></i> Flag Register (16-bit)</div>
         <p>The flag register contains 9 active bits (7 are undefined). Divided into status flags and control flags:</p>
-        <div class="flag-grid">
-          <div class="flag-card">
-            <div class="flag-bit">CF</div>
-            <div class="flag-name">Carry Flag<br>Set on unsigned overflow</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">PF</div>
-            <div class="flag-name">Parity Flag<br>Set if result has even # of 1s</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">AF</div>
-            <div class="flag-name">Auxiliary Carry<br>BCD arithmetic carry from bit 3</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">ZF</div>
-            <div class="flag-name">Zero Flag<br>Set if result = 0</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">SF</div>
-            <div class="flag-name">Sign Flag<br>Set if result is negative (MSB=1)</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">OF</div>
-            <div class="flag-name">Overflow Flag<br>Set on signed overflow</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">TF</div>
-            <div class="flag-name">Trap Flag<br>Single-step/debug mode</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">IF</div>
-            <div class="flag-name">Interrupt Flag<br>Enables/disables INTR</div>
-          </div>
-          <div class="flag-card">
-            <div class="flag-bit">DF</div>
-            <div class="flag-name">Direction Flag<br>Controls string op direction</div>
-          </div>
-        </div>
-        <div class="tip-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-lightbulb"></i> Status vs Control Flags</div>
-          <p><strong>Status flags</strong> (CF, PF, AF, ZF, SF, OF) are set/cleared automatically by arithmetic and logic instructions to reflect the result. <strong>Control flags</strong> (TF, IF, DF) are set/cleared by the programmer to control CPU behavior.</p>
-        </div>
-      </div>
 
     </div>
   </section>
@@ -690,6 +708,11 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="8086-segmentation-and-physical-address"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-map-marked-alt"></i> 8086 Segment Registers and 20-Bit Physical Address
+      </h3>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> Why Segmentation?</div>
         <p>The 8086 has 16-bit registers but a 20-bit address bus. To address 1 MB (2²⁰ bytes) of memory using 16-bit registers, Intel introduced the segmented memory model. Memory is divided into logical segments, each up to 64 KB.</p>
@@ -726,20 +749,33 @@
 
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-calculator"></i> Physical Address Examples</div>
-        <div class="addr-formula">
-          CS = 1000H, IP = 0200H<br>
-          Physical Address = 1000H × 10H + 0200H<br>
-          = 10000H + 0200H = <strong>10200H</strong>
-        </div>
-        <div class="addr-formula" style="margin-top:0.5rem;">
-          DS = 2000H, Offset = 0050H<br>
-          Physical Address = 2000H × 10H + 0050H<br>
-          = 20000H + 0050H = <strong>20050H</strong>
-        </div>
+        
         <div class="warning-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Segment Overlap</div>
           <p>Segments can overlap in memory. Two different segment:offset pairs can point to the same physical address. The same physical address can have multiple logical addresses (segment aliasing). Maximum segment size is 64 KB (FFFFH offset).</p>
         </div>
+      </div>
+
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 220" width="100%" role="img" aria-label="Segment register shifted left four bits and added to a sixteen bit offset" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="30" y="30" width="190" height="60" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="125.0" y="56.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">SEGMENT REGISTER</text><text x="125.0" y="74.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">348AH</text><rect x="30" y="130" width="190" height="60" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="125.0" y="156.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">OFFSET</text><text x="125.0" y="174.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">4214H</text><text x="130" y="112" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">shift left 4 bits (× 10H)</text><polyline points="125,90 125,130" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="125,130 121.4,124 128.6,124" fill="var(--text-secondary)"/><rect x="300" y="30" width="200" height="60" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="400.0" y="56.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">348A0H</text><text x="400.0" y="74.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">segment base</text><rect x="300" y="130" width="200" height="60" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="400.0" y="156.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">4214H</text><text x="400.0" y="174.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">offset</text><rect x="560" y="80" width="145" height="60" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="632.5" y="106.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">38AB4H</text><text x="632.5" y="124.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">physical address</text><polyline points="220,60 300,60" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="300,60 294,56.4 294,63.6" fill="var(--text-secondary)"/><polyline points="220,160 300,160" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="300,160 294,156.4 294,163.6" fill="var(--text-secondary)"/><polyline points="500,60 560,100" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="560,100 554,96.4 554,103.6" fill="var(--text-secondary)"/><polyline points="500,160 560,120" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="560,120 554,116.4 554,123.6" fill="var(--text-secondary)"/><text x="360" y="205" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">20-bit result: five hex digits. The offset is added without shifting.</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 3 — Physical address generation. Only the segment base is shifted; add the offset unshifted and carry into the twenty-first bit, which the 8086 wraps away.</figcaption></figure>
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Physical addresses for DS = 2000H</div>
+        <div class="table-wrapper">
+          <table class="mode-table">
+            <thead>
+              <tr><th>Instruction operand</th><th>Offset used</th><th>Physical address</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>MOV AL, [5000H]</code></td><td>5000H</td><td>20000H + 5000H = <strong>25000H</strong></td></tr>
+              <tr><td><code>MOV AX, [BX]</code> with BX = 0300H</td><td>0300H</td><td>20000H + 0300H = <strong>20300H</strong></td></tr>
+              <tr><td><code>MOV AX, [BX+08H]</code></td><td>0308H</td><td><strong>20308H</strong></td></tr>
+              <tr><td><code>MOV AX, [SI+08H]</code> with SI = 0040H</td><td>0048H</td><td><strong>20048H</strong></td></tr>
+              <tr><td><code>MOV AX, [BX+SI]</code></td><td>0340H</td><td><strong>20340H</strong></td></tr>
+              <tr><td><code>MOV AX, [BX+SI+10H]</code></td><td>0350H</td><td><strong>20350H</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.5rem;">For a code fetch the same rule uses <code>CS</code>: with CS = 348AH and
+        IP = 4214H the address is 348A0H + 4214H = <strong>38AB4H</strong>.</p>
       </div>
 
     </div>
@@ -865,6 +901,23 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="8086-addressing-modes-and-effective-address"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-crosshairs"></i> 8086 Addressing Modes and Effective Address Calculation
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        An addressing mode is the rule that turns the operand field of an instruction into an address. Work
+        every example in three steps: compute the <strong>effective address</strong> from the registers and
+        displacement shown in the brackets, add the default segment base (<code>DS</code>, or <code>SS</code>
+        for BP-based operands), and state the 20-bit result in hex.
+      </p>
+      <div class="tip-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Default segment pairing</div>
+        <p><code>BX</code>, <code>SI</code> and <code>DI</code> pair with <code>DS</code>; <code>BP</code> and
+        <code>SP</code> pair with <code>SS</code>. A segment-override prefix can change that, and the exam
+        expects the default to be stated before any override is applied.</p>
+      </div>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> What are Addressing Modes?</div>
         <p>An addressing mode defines how the operand of an instruction is specified — where to find the data needed for the instruction. The 8086 supports a rich set of addressing modes providing flexibility in accessing data.</p>
@@ -958,7 +1011,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Addressing Modes Run in an Emulator</div>
+          <p><a href="https://www.youtube.com/watch?v=PUyVNWJjIyg" target="_blank" rel="noopener noreferrer">EMU 8086 Tutorial 2 | Addressing Modes of 8086</a> (Padharthi Sai Yashwardhan). Each addressing mode typed into emu8086 and executed, with the effective address visible as the program runs — immediate through based-indexed, in the same order as the table below. The description carries timestamps, so a single mode can be watched on its own.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 7: INSTRUCTIONS
@@ -970,6 +1028,34 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="instruction-formats-and-zero-address-stack-instructions"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-layer-group"></i> Instruction Formats and Zero-Address CPU Stack Instructions
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        The number of operand addresses an instruction carries decides how many instructions an expression
+        needs. A three-address machine evaluates <code>X = (A+B)*(C+D)</code> in three instructions; a
+        zero-address (stack) machine has to push every operand, apply the operator to the top two stack
+        entries, and pop the result.
+      </p>
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Zero, one, two and three address instruction formats" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><text x="10" y="56" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-primary)">3-address</text><rect x="120" y="30" width="70" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="155.0" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">OP</text><rect x="196" y="30" width="110" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="251.0" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">dest</text><rect x="312" y="30" width="110" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="367.0" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">src1</text><rect x="428" y="30" width="110" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="483.0" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">src2</text><text x="556" y="52" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">ADD R1, R2, R3</text><text x="10" y="114" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-primary)">2-address</text><rect x="120" y="88" width="70" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="155.0" y="110" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">OP</text><rect x="196" y="88" width="110" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="251.0" y="110" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">dest</text><rect x="312" y="88" width="120" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="372.0" y="110" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">src</text><text x="450" y="110" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">ADD R1, R2</text><text x="10" y="172" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-primary)">1-address</text><rect x="120" y="146" width="70" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="155.0" y="168" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">OP</text><rect x="196" y="146" width="150" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="271.0" y="168" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">operand</text><text x="364" y="168" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">ADD 2000H</text><text x="10" y="230" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-primary)">0-address</text><rect x="120" y="204" width="70" height="34" rx="5" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="155.0" y="226" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">OP</text><text x="208" y="226" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">ADD  (stack top two)</text><text x="360" y="285" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">Fewer addresses per instruction means more instructions, but shorter encodings.</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 2 — Instruction formats. The zero-address form takes both operands from the stack, which is why an expression needs push and pop instructions around the operator.</figcaption></figure>
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Zero-address evaluation of X = (A + B) &times; (C + D)</div>
+        <div class="syntax-box" style="margin-top:0.5rem;">
+          <pre style="margin:0.25rem 0 0; overflow-x:auto;"><code>PUSH  A      ; stack: A
+PUSH  B      ; stack: A B
+ADD          ; pop B, pop A, push A+B
+PUSH  C      ; stack: (A+B) C
+PUSH  D      ; stack: (A+B) C D
+ADD          ; pop D, pop C, push C+D
+MUL          ; pop (C+D), pop (A+B), push product
+POP   X      ; store the result in X</code></pre>
+        </div>
+        <p style="margin-top:0.5rem;">Eight instructions, no explicit register or memory address in any of
+        them — the stack pointer supplies the operand location implicitly. That is the whole argument for
+        stack machines, and it is also why they need a fast stack.</p>
+      </div>
       <!-- Data Transfer -->
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-exchange-alt"></i> Data Transfer Instructions</div>
@@ -985,24 +1071,9 @@
             <p>Push register onto stack (SP−2), Pop from stack into register (SP+2).</p>
           </div>
           <div class="instr-card">
-            <p class="card-title">XCHG</p>
-            <code>XCHG AX, BX</code>
-            <p>Exchange contents of two registers or register and memory.</p>
-          </div>
-          <div class="instr-card">
-            <p class="card-title">IN / OUT</p>
-            <code>IN AL, DX &nbsp; OUT DX, AL</code>
-            <p>Transfer data between accumulator and I/O port.</p>
-          </div>
-          <div class="instr-card">
             <p class="card-title">LEA</p>
             <code>LEA BX, [2000H]</code>
             <p>Load Effective Address — loads offset address into register (not the data).</p>
-          </div>
-          <div class="instr-card">
-            <p class="card-title">LDS / LES</p>
-            <code>LDS SI, [BX]</code>
-            <p>Load DS:SI or ES:DI from memory (loads both segment and offset).</p>
           </div>
         </div>
       </div>
@@ -1022,16 +1093,6 @@
             <p>Subtract source from destination. Uses 2's complement internally.</p>
           </div>
           <div class="instr-card">
-            <p class="card-title">ADC</p>
-            <code>ADC AX, BX</code>
-            <p>Add with Carry — AX ← AX + BX + CF. For multi-precision addition.</p>
-          </div>
-          <div class="instr-card">
-            <p class="card-title">SBB</p>
-            <code>SBB AX, BX</code>
-            <p>Subtract with Borrow — AX ← AX − BX − CF. Multi-precision subtraction.</p>
-          </div>
-          <div class="instr-card">
             <p class="card-title">INC / DEC</p>
             <code>INC CX &nbsp; DEC BX</code>
             <p>Increment/decrement by 1. Does NOT affect CF flag.</p>
@@ -1045,11 +1106,6 @@
             <p class="card-title">DIV / IDIV</p>
             <code>DIV BX</code>
             <p>Unsigned/Signed divide. 16-bit: AX=DX:AX÷src, DX=remainder.</p>
-          </div>
-          <div class="instr-card">
-            <p class="card-title">NEG</p>
-            <code>NEG AX</code>
-            <p>Negate — forms 2's complement of operand. AX ← 0 − AX.</p>
           </div>
           <div class="instr-card">
             <p class="card-title">CMP</p>
@@ -1084,19 +1140,9 @@
             <p>Bitwise NOT (1's complement). Does not affect any flags.</p>
           </div>
           <div class="instr-card">
-            <p class="card-title">TEST</p>
-            <code>TEST AX, 0001H</code>
-            <p>Bitwise AND but only sets flags (like CMP for AND). Checks specific bits.</p>
-          </div>
-          <div class="instr-card">
             <p class="card-title">SHL/SAL, SHR, SAR</p>
             <code>SHL AX, 1</code>
             <p>Shift left/right logical/arithmetic. CL holds shift count for counts &gt;1.</p>
-          </div>
-          <div class="instr-card">
-            <p class="card-title">ROL, ROR, RCL, RCR</p>
-            <code>ROL AX, 1</code>
-            <p>Rotate left/right, rotate through carry left/right.</p>
           </div>
         </div>
       </div>

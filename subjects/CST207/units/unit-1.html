@@ -248,6 +248,17 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="von-neumann-architecture-and-cpu-organization"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-brain"></i> Computer Architecture, CPU Organization and Von Neumann Architecture
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        The five functional units — input, memory, arithmetic-logic unit, control unit and output — are the
+        vocabulary of every architecture question in this paper. A drawing worth full marks labels each unit,
+        shows the CPU as a box containing the control unit, the ALU and the registers, and marks which bus
+        carries what.
+      </p>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-cubes"></i> Computer Functional Units</div>
         <p>A computer system is organized around three fundamental functional units that interact with each other to execute programs:</p>
@@ -269,11 +280,89 @@
         </ul>
       </div>
 
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 360" width="100%" role="img" aria-label="Von Neumann architecture with CPU, unified memory, I/O and the three buses" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="255" y="20" width="210" height="120" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="360.0" y="76.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CPU</text><text x="360.0" y="94.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">control unit + ALU + registers</text><rect x="20" y="30" width="150" height="60" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="95.0" y="56.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">INPUT</text><text x="95.0" y="74.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">keyboard, disk</text><rect x="550" y="30" width="150" height="60" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="625.0" y="56.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">OUTPUT</text><text x="625.0" y="74.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">display, printer</text><rect x="255" y="235" width="210" height="90" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="360.0" y="276.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">MEMORY</text><text x="360.0" y="294.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">instructions + data</text><rect x="80" y="160" width="560" height="40" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="360" y="185" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-primary)">SYSTEM BUS  —  address (unidirectional) · data (bidirectional) · control</text><polyline points="95,90 95,160" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="95,160 91.4,154 98.6,154" fill="var(--text-secondary)"/><polyline points="625,90 625,160" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="625,160 621.4,154 628.6,154" fill="var(--text-secondary)"/><polyline points="360,140 360,160" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="360,160 356.4,154 363.6,154" fill="var(--text-secondary)"/><polyline points="300,200 300,235" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="300,235 296.4,229 303.6,229" fill="var(--text-secondary)"/><polyline points="420,235 420,200" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="420,200 416.4,206 423.6,206" fill="var(--text-secondary)"/><text x="360" y="345" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">One memory holds the program as well as its data — the stored-program idea.</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 1 — Von Neumann (stored-program) architecture. Instructions and data share one memory and one set of buses, which is the source of the von Neumann bottleneck.</figcaption></figure>
+      <div class="concept-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-list-ol"></i> The four properties the examiner looks for</div>
+        <ol style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
+          <li><strong>Stored program:</strong> instructions are encoded as numbers and live in the same memory
+            as the data they operate on.</li>
+          <li><strong>Sequential execution:</strong> the program counter walks through memory in order unless a
+            branch changes it.</li>
+          <li><strong>Single memory and single bus:</strong> an instruction fetch and a data read cannot happen
+            in the same cycle. That serialisation is the <strong>von Neumann bottleneck</strong>.</li>
+          <li><strong>Harvard alternative:</strong> separate instruction and data memories with separate buses
+            remove the bottleneck, which is why microcontrollers and DSPs use it.</li>
+        </ol>
+      </div>
+
       <div class="important-note" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-exclamation-circle"></i> Von-Neumann Bottleneck</div>
         <p>Since both instructions and data share the same bus, only one can be transferred at a time. This limits performance. Harvard Architecture solves this by using separate buses and memory for instructions and data.</p>
       </div>
 
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Von Neumann vs Harvard organisation</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Feature</th><th>Von Neumann</th><th>Harvard</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Memory</td><td>One unified memory for code and data</td><td>Separate instruction and data memories</td></tr>
+            <tr><td>Buses</td><td>One address bus and one data bus, shared</td><td>Two independent bus pairs</td></tr>
+            <tr><td>Simultaneous access</td><td>Not possible — fetch and operand read contend</td><td>Possible — fetch and operand read overlap</td></tr>
+            <tr><td>Hardware cost</td><td>Lower (one memory)</td><td>Higher (two memories, more pins)</td></tr>
+            <tr><td>Used in</td><td>General-purpose CPUs (with caches hiding the bottleneck)</td><td>Microcontrollers, DSPs, some caches</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+      <h3 id="system-bus-cpu-registers-and-memory-write-cycle"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-exchange-alt"></i> System Bus (Address, Data and Control Buses), CPU Registers and Memory Write Cycle
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        A bus is a shared group of wires with one agreed protocol. The address bus says <em>where</em>, the data
+        bus carries <em>what</em>, and the control bus says <em>which direction and when</em>. Every
+        processor&ndash;memory transfer in the exam is one pass over these three.
+      </p>
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 320" width="100%" role="img" aria-label="Address bus, data bus and control bus between CPU, memory and I/O" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="20" y="120" width="130" height="80" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="85.0" y="156.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CPU</text><text x="85.0" y="174.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">master of the bus</text><rect x="300" y="20" width="150" height="70" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="375.0" y="51.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">MEMORY</text><text x="375.0" y="69.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">RAM / ROM</text><rect x="560" y="20" width="140" height="70" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="630.0" y="51.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">I/O</text><text x="630.0" y="69.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">ports, 8255</text><rect x="300" y="235" width="150" height="60" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="375.0" y="261.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">ADDRESS BUS</text><text x="375.0" y="279.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">k lines &rarr; 2^k locations</text><rect x="485" y="235" width="215" height="60" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="592.5" y="261.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">DATA BUS</text><text x="592.5" y="279.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">w bits, bidirectional</text><rect x="300" y="145" width="400" height="60" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="500.0" y="171.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CONTROL BUS</text><text x="500.0" y="189.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">RD, WR, M/IO, INTR, HOLD, CLK, RESET</text><polyline points="95,160 95,265 300,265" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="300,265 294,261.4 294,268.6" fill="var(--text-secondary)"/><polyline points="375,235 375,90" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="375,90 371.4,96 378.6,96" fill="var(--text-secondary)"/><polyline points="590,235 630,90" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="630,90 626.4,96 633.6,96" fill="var(--text-secondary)"/><polyline points="150,200 300,175" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="300,175 294,171.4 294,178.6" fill="var(--text-secondary)"/><polyline points="700,175 660,90" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="660,90 656.4,96 663.6,96" fill="var(--text-secondary)"/><polyline points="375,90 375,145" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="375,145 371.4,139 378.6,139" fill="var(--text-secondary)"/></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 2 — The three buses. The address bus is unidirectional so k lines give 2^k locations; the data bus is bidirectional and w bits wide; the control bus carries direction and timing.</figcaption></figure>
+      <div class="concept-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-microchip"></i> Registers that take part in a transfer</div>
+        <div class="table-wrapper" style="margin-top:0.6rem;">
+          <table class="reg-table">
+            <thead>
+              <tr><th>Register</th><th>Holds</th><th>Role in the cycle</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>PC</code></td><td>Address of the next instruction</td><td>Source of the fetch address; incremented after the fetch</td></tr>
+              <tr><td><code>MAR</code></td><td>Address currently on the address bus</td><td>Drives the address bus for every read and write</td></tr>
+              <tr><td><code>MDR</code> / <code>MBR</code></td><td>Word just read or about to be written</td><td>Buffers the data bus in both directions</td></tr>
+              <tr><td><code>IR</code></td><td>The fetched instruction</td><td>Supplies the opcode to the control unit for decoding</td></tr>
+              <tr><td><code>AC</code> and <code>R0..Rn</code></td><td>Operands and results</td><td>ALU inputs and outputs</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="syntax-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-code"></i> Memory read and write in register-transfer language</div>
+          <pre style="margin:0.5rem 0 0; overflow-x:auto;"><code>// Memory READ  (operand fetch)
+MAR &larr; address      // address onto the address bus
+Read                   // control bus asserts MEMR#
+MDR &larr; M[MAR]       // data bus into MDR, then into a register
+R   &larr; MDR
+
+// Memory WRITE  (store)
+MAR &larr; address      // destination address
+MDR &larr; R            // value onto the data bus
+Write                  // control bus asserts MEMW#
+M[MAR] &larr; MDR       // memory latches the word</code></pre>
+        </div>
+        <p style="margin-top:0.6rem; font-size:0.9rem; color:var(--text-secondary);">
+          A write cycle is the read cycle with the data flowing the other way: the CPU drives both the address
+          and the data bus, and <code>MEMW̄</code> replaces <code>MEMR̄</code>. During a read the CPU
+          drives only the address bus and the memory drives the data bus.</p>
+      </div>
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-random"></i> Bus Structures</div>
         <p>A bus is a shared communication pathway connecting all functional units. There are three main types:</p>
@@ -317,6 +406,18 @@
       </div>
 
       <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Bus width arithmetic worth two marks</div>
+        <p>An address bus of <code>k</code> lines can name <code>2<sup>k</sup></code> locations, so a 20-bit
+        address bus (the 8086) reaches 2<sup>20</sup> = 1 MB and a 32-bit bus reaches 4 GB. A data bus of
+        <code>w</code> bits moves <code>w</code> bits per transfer, so doubling the width halves the number of
+        transfers for the same block of memory. The two widths are independent: the 8086 has a 20-bit address
+        bus but a 16-bit data bus, which is why it can address 1 MB in 64 KB segments.</p>
+        <p style="margin-top:0.5rem;">Wider buses also cost pins and board area, so a design keeps the address
+        bus just wide enough for the installed memory and the data bus matching the processor word size.</p>
+      </div>
+
+
+      <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-sync-alt"></i> Instruction Execution Cycle</div>
         <p>The CPU repeatedly performs a fetch-decode-execute cycle for every instruction:</p>
         <div class="algo-box" style="margin-top:0.75rem;">
@@ -342,7 +443,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Von Neumann Architecture and the System Bus</div>
+          <p><a href="https://www.youtube.com/watch?v=j8NnE1YeSN0" target="_blank" rel="noopener noreferrer">L-1.2: Von Neumann's Architecture | Stored Memory Concept</a> (Gate Smashers). Covers the stored-program idea, the ALU / control-unit / register split, and why instructions and data share one memory. Watch it before the register-transfer walk-through below, which picks the story up at the memory read and write timing.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 3: DATA REPRESENTATION
@@ -354,6 +460,61 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="number-representation-fixed-point-and-twos-complement"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-thumbtack"></i> Number Representation: Fixed-Point and 2's Complement
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        Fixed-point keeps the binary point in one agreed place, so every value has the same scale and the same
+        width. Signed fixed-point exists in three flavours — sign-magnitude, 1's complement and 2's
+        complement — and only the last one lets the same adder circuit handle addition and subtraction.
+      </p>
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked: write &minus;75 in 8-bit 2's complement</div>
+        <p><strong>Step 1 — magnitude:</strong> +75 = <code>01001011</code>₂ (64 + 8 + 2 + 1).</p>
+        <p><strong>Step 2 — invert every bit (1's complement):</strong> <code>10110100</code>₂.</p>
+        <p><strong>Step 3 — add 1:</strong> <code>10110101</code>₂.</p>
+        <p><strong>Check by weights:</strong> &minus;128 + 32 + 16 + 4 + 1 = <strong>&minus;75</strong>. The
+        8-bit signed range is &minus;128 to +127, so &minus;75 fits.</p>
+        <p style="margin-top:0.4rem;">The same three steps in reverse recover +75: invert
+        <code>10110101</code> to <code>01001010</code>, add 1, and you have <code>01001011</code>.</p>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Sign-magnitude vs 1's complement vs 2's complement (8-bit)</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Feature</th><th>Sign-magnitude</th><th>1's complement</th><th>2's complement</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Negative of +75</td><td><code>11001011</code></td><td><code>10110100</code></td><td><code>10110101</code></td></tr>
+            <tr><td>Rule</td><td>Set the MSB, keep the magnitude</td><td>Invert every bit</td><td>Invert every bit, then add 1</td></tr>
+            <tr><td>Range</td><td>&minus;127 to +127</td><td>&minus;127 to +127</td><td>&minus;128 to +127</td></tr>
+            <tr><td>Zero</td><td>Two zeros (+0 and &minus;0)</td><td>Two zeros</td><td>One zero</td></tr>
+            <tr><td>Subtraction</td><td>Needs sign handling and magnitude comparison</td><td>Needs an end-around carry</td><td>Plain addition — the adder is reused</td></tr>
+            <tr><td>Used in</td><td>Floating-point sign bits, older machines</td><td>Textbook step only</td><td>Every modern integer ALU</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Fixed-point vs floating-point — the seven rows an answer needs</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Feature</th><th>Fixed-point</th><th>Floating-point</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Binary point</td><td>Fixed by the format</td><td>Moves with the exponent</td></tr>
+            <tr><td>Representation</td><td>Pure integer bits (sign + magnitude)</td><td>Sign + exponent + fraction</td></tr>
+            <tr><td>Range</td><td>Narrow, decided by the bit width</td><td>Very wide, decided by the exponent field</td></tr>
+            <tr><td>Precision</td><td>Uniform across the range</td><td>Relative — finer near zero, coarser far out</td></tr>
+            <tr><td>Hardware</td><td>Simple adder and shifters</td><td>Align, normalise, round — much more logic</td></tr>
+            <tr><td>Speed</td><td>Fast, one pass</td><td>Slower, several pipeline stages</td></tr>
+            <tr><td>Used for</td><td>Counters, addresses, DSP integers</td><td>Scientific and graphics arithmetic</td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-thumbtack"></i> Fixed-Point Numbers</div>
         <p>In fixed-point representation, the binary point is assumed to be at a fixed position — either at the extreme right (integers) or at a defined position (fractions).</p>
@@ -370,6 +531,35 @@
         </div>
       </div>
 
+
+      <h3 id="floating-point-and-ieee-754"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-wave-square"></i> Floating-Point Representation, Biased Exponent and IEEE-754 Standard
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        A floating-point value is <code>(&minus;1)<sup>S</sup> &times; 1.F &times; 2<sup>E &minus; bias</sup></code>.
+        IEEE 754 stores the exponent <em>biased</em>, that is with 127 (single) or 1023 (double) already added,
+        so the stored field is never negative and two floats can be ordered by comparing their bit patterns as
+        unsigned integers. The leading 1 of the significand is implicit and costs no storage.
+      </p>
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 260" width="100%" role="img" aria-label="IEEE 754 single and double precision fields, and an arithmetic right shift" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><text x="12" y="30" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-primary)">SINGLE (32 bits)</text><rect x="170" y="14" width="40" height="30" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><rect x="210" y="14" width="160" height="30" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><rect x="370" y="14" width="330" height="30" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="190" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">S</text><text x="290" y="34" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">Exponent · 8 · bias 127</text><text x="535" y="34" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">Fraction · 23 bits (implicit leading 1)</text><text x="12" y="80" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-primary)">DOUBLE (64 bits)</text><rect x="170" y="64" width="30" height="30" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><rect x="200" y="64" width="200" height="30" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><rect x="400" y="64" width="300" height="30" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="215" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">S</text><text x="300" y="84" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">Exponent · 11 · bias 1023</text><text x="550" y="84" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">Fraction · 52 bits</text><text x="12" y="150" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-primary)">ASR</text><rect x="90" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="106" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="124" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="140" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="158" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="174" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="192" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="208" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">0</text><rect x="226" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="242" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="260" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="276" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">0</text><rect x="294" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="310" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">0</text><rect x="328" y="128" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.6"/><text x="344" y="149" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">0</text><rect x="90" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="106" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="124" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="140" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="158" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="174" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="192" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="208" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="226" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="242" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">0</text><rect x="260" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="276" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">1</text><rect x="294" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="310" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">0</text><rect x="328" y="180" width="32" height="32" rx="4" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="344" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">0</text><text x="400" y="149" text-anchor="start" font-size="11" font-weight="600" fill="var(--text-primary)">&minus;24 = 11101000</text><text x="400" y="201" text-anchor="start" font-size="11" font-weight="600" fill="var(--text-primary)">&minus;12 = 11110100</text><text x="360" y="240" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">Arithmetic shift right copies the sign bit into the vacated position, so signed ÷2 keeps its sign.</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 3 — IEEE 754 field layouts, and an arithmetic right shift on an 8-bit register. The stored exponent is biased so that it can be compared as an unsigned number.</figcaption></figure>
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked: encode &minus;13.625 in single and double precision</div>
+        <p><strong>Step 1 — normalise:</strong> 13.625 = 1101.101₂ = <code>1.101101 &times; 2<sup>3</sup></code>.</p>
+        <p><strong>Step 2 — sign:</strong> negative, so <code>S = 1</code>.</p>
+        <p><strong>Step 3 — biased exponent:</strong> 3 + 127 = 130 = <code>10000010</code>₂.</p>
+        <p><strong>Step 4 — fraction:</strong> drop the leading 1, pad to 23 bits &rarr;
+        <code>10110100000000000000000</code>.</p>
+        <p><strong>Single precision:</strong> <code>1 10000010 10110100000000000000000</code> =
+        <code>11000001 01011010 00000000 00000000</code> = <strong><code>C15A0000</code>₁₆</strong>.</p>
+        <p style="margin-top:0.4rem;"><strong>Double precision:</strong> the exponent becomes 3 + 1023 = 1026 =
+        <code>10000000010</code>₂ and the fraction is padded to 52 bits, giving
+        <strong><code>C02B400000000000</code>₁₆</strong>.</p>
+        <p style="margin-top:0.4rem; font-size:0.9rem; color:var(--text-secondary);">
+          Special cases worth one line each: exponent all zeros with a zero fraction is &plusmn;0; all zeros with
+          a non-zero fraction is a denormal; all ones with a zero fraction is &plusmn;&infin;; all ones with a
+          non-zero fraction is NaN.</p>
+      </div>
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-wave-square"></i> Floating-Point Numbers</div>
         <p>Floating-point representation is used for very large or very small numbers. A floating-point number has two parts:</p>
@@ -414,7 +604,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: IEEE-754 Packing and Unpacking</div>
+          <p><a href="https://www.youtube.com/watch?v=9lLpAFapndo" target="_blank" rel="noopener noreferrer">Floating point representation | IEEE 754 | COA | Lec-06</a> (Education 4u). Mantissa, base and exponent first, then single (32-bit) and double (64-bit) IEEE-754 packing. Keep the bias-127 worked example from this section beside you: pause at the packed bit string, convert it to hex yourself, and only then read the answer.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 4: ERROR DETECTING CODES
@@ -426,6 +621,35 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="digital-logic-parity-and-error-codes"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-check-double"></i> Digital Logic Parity Bit and Error-Detecting Codes
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        A parity bit is one extra bit appended to a data word so that the total number of 1s is even (even
+        parity) or odd (odd parity). The receiver recomputes the count; a mismatch means an odd number of bits
+        flipped. It is the cheapest error-detecting code and the only one this syllabus asks for.
+      </p>
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Data word</th><th>Count of 1s</th><th>Even-parity bit</th><th>Odd-parity bit</th><th>Transmitted (even)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>1011001</code></td><td>4 (even)</td><td>0</td><td>1</td><td><code>10110010</code></td></tr>
+            <tr><td><code>1011011</code></td><td>5 (odd)</td><td>1</td><td>0</td><td><code>10110111</code></td></tr>
+            <tr><td><code>0000000</code></td><td>0 (even)</td><td>0</td><td>1</td><td><code>00000000</code></td></tr>
+            <tr><td><code>1111111</code></td><td>7 (odd)</td><td>1</td><td>0</td><td><code>11111111</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warning-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> What parity cannot do</div>
+        <p>Parity detects any <strong>odd</strong> number of flipped bits but misses an even number, so a
+        two-bit error passes silently. It also cannot say <em>which</em> bit is wrong, so it detects but does
+        not correct. That limit is why stronger codes (checksums, CRC, Hamming) exist.</p>
+      </div>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-check-double"></i> Parity Bits</div>
         <p>A parity bit is an extra bit added to a binary data word to make the total number of 1s either even or odd, allowing single-bit error detection.</p>
@@ -542,6 +766,26 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="micro-operations-and-shift-operations"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-cogs"></i> Register Transfer, Micro-Operations and Arithmetic Shift Right (ASR)
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        A micro-operation is the smallest step a datapath can take in one clock: a transfer between registers,
+        an arithmetic or logic function, or a shift. Every machine instruction is a short programme of these,
+        and the distinction the paper tests is between the three shift families.
+      </p>
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked: arithmetic shift right of &minus;24</div>
+        <p>Start with <code>R = 11101000</code>₂ = &minus;24. An <strong>ASR</strong> copies the sign bit into
+        the vacated MSB and drops the LSB: <code>11101000 &rarr; 11110100</code>₂ = <strong>&minus;12</strong>.
+        Signed division by two by a single micro-operation.</p>
+        <p style="margin-top:0.4rem;">A <strong>logical</strong> shift right of the same word inserts 0, giving
+        <code>01110100</code> = +116, which is meaningless as arithmetic — that is exactly why the arithmetic
+        variant exists. A <strong>circular</strong> shift right moves the LSB into the MSB, giving
+        <code>01110100</code> as well but with the bit <em>preserved</em> rather than destroyed.</p>
+      </div>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-atom"></i> What Are Micro-Operations?</div>
         <p>A micro-operation is the most basic, elementary operation performed on data stored in registers. A single machine instruction may consist of several micro-operations. There are four types:</p>
@@ -634,7 +878,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Logical vs Arithmetic vs Circular Shifts</div>
+          <p><a href="https://www.youtube.com/watch?v=jp7O_P-w1bA" target="_blank" rel="noopener noreferrer">Shift Micro-Operations in Computer Organization (logical, arithmetic, circular)</a> (Sundeep Saradhi Kanthety). Left and right shifts for all three families drawn side by side, which is exactly the distinction the ASR example below depends on. Watch the arithmetic right shift twice: the sign bit is copied out, not shifted in as a zero.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 7: ALU

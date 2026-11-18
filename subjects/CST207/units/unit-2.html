@@ -271,6 +271,83 @@
         </ul>
       </div>
 
+
+      <!-- ============================================================
+           Instruction cycle, control unit and control memory
+      ============================================================ -->
+      <h3 id="instruction-cycle-control-unit-and-control-memory"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-sync-alt"></i> Instruction Cycle, Control Unit and Control Memory
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        The control unit has one job: walk the CPU round the <strong>instruction cycle</strong> and turn the
+        opcode of each instruction into the timed control signals the datapath needs. Every 8-mark question on
+        this topic is answered by the two diagrams below — the cycle first, then the microprogrammed hardware
+        that drives it.
+      </p>
+
+      <div class="concept-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-redo"></i> The Four Phases of the Instruction Cycle</div>
+        <p>An instruction is executed in phases, and each phase is a short sequence of register-transfer
+        micro-operations that the control unit steps through:</p>
+        <ol style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
+          <li><strong>Fetch</strong> — <code>MAR &larr; PC</code>, assert <code>Read</code>,
+            <code>MDR &larr; M[MAR]</code>, <code>IR &larr; MDR</code>, then <code>PC &larr; PC + 1</code>
+            (or <code>PC + instruction length</code>). Those are several clock beats, one control step each.</li>
+          <li><strong>Decode</strong> — the opcode field held in <code>IR</code> is decoded. In a
+            microprogrammed design the opcode is mapped to the start address of that instruction's
+            microprogram in control memory; in a hardwired design it enables one fixed path of gates.</li>
+          <li><strong>Indirect</strong> — taken <em>only</em> when the instruction addresses its operand
+            indirectly: <code>MAR &larr; M[IR(address)]</code>, <code>Read</code>,
+            <code>MDR &larr; M[MAR]</code>. The effective address now sits in <code>MDR</code>.</li>
+          <li><strong>Execute</strong> — the micro-operations that actually do the work: an ALU operation, a
+            register transfer, an I/O transfer, or a change to <code>PC</code> for a branch.</li>
+          <li><strong>Interrupt check</strong> — if <code>INTR</code> is asserted and the interrupt flag
+            <code>IF = 1</code>, the control unit saves <code>PC</code> and the flags on the stack, clears
+            <code>IF</code>, and loads <code>PC</code> with the vector of the service routine.</li>
+        </ol>
+        <div class="important-note" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-exclamation-circle"></i> Two exam traps</div>
+          <ul style="padding-left:1.3rem; line-height:2;">
+            <li>The cycle is <strong>not always three steps</strong> — the indirect phase is conditional, and
+              the interrupt check is a fourth state in every complete answer.</li>
+            <li>Incrementing <code>PC</code> during fetch is what makes a program a stored program: the next
+              instruction is already addressed before the current one has finished executing.</li>
+          </ul>
+        </div>
+      </div>
+
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Instruction cycle: fetch, decode, indirect, execute and interrupt check" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="15" y="40" width="150" height="80" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="90.0" y="76.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">FETCH</text><text x="90.0" y="94.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">MAR, MDR, IR, PC</text><rect x="195" y="40" width="150" height="80" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="270.0" y="76.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">DECODE</text><text x="270.0" y="94.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">opcode &rarr; microprogram</text><rect x="375" y="40" width="150" height="80" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="450.0" y="76.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">INDIRECT</text><text x="450.0" y="94.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">operand address read</text><rect x="555" y="40" width="150" height="80" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="630.0" y="76.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">EXECUTE</text><text x="630.0" y="94.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">ALU / data movement</text><polyline points="165,80 195,80" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="195,80 189,76.4 189,83.6" fill="var(--text-secondary)"/><polyline points="345,80 375,80" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="375,80 369,76.4 369,83.6" fill="var(--text-secondary)"/><polyline points="525,80 555,80" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="555,80 549,76.4 549,83.6" fill="var(--text-secondary)"/><text x="180" y="70" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">IR ready</text><text x="360" y="70" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">I = 1?</text><text x="540" y="70" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">operand</text><rect x="500" y="190" width="200" height="70" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="600.0" y="221.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">INTERRUPT CHECK</text><text x="600.0" y="239.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">INTR and IF = 1</text><polyline points="630,120 630,190" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="630,190 626.4,184 633.6,184" fill="var(--text-secondary)"/><polyline points="500,225 90,225 90,120" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="90,120 86.4,126 93.6,126" fill="var(--text-secondary)"/><text x="295" y="240" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">save PC and flags, then fetch the service routine</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 1 — The instruction cycle. The indirect phase runs only when the instruction asks for an indirect operand; the interrupt check closes the loop back to FETCH.</figcaption></figure>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-memory"></i> Control Unit &amp; Control Memory — Block Diagram</div>
+        <p>A microprogrammed control unit is a small stored-program computer inside the CPU. Its
+        <strong>control memory</strong> is a fast ROM holding the microprogram; <strong>CAR</strong> addresses
+        the current micro-instruction, <strong>CDR</strong> (also written &micro;IR) holds the one just fetched,
+        and the <strong>next-address logic</strong> decides which address comes after it.</p>
+        <p style="margin-top:0.5rem;">The signal path in words, which is exactly what an 8-mark answer must
+        state: <em>opcode &rarr; mapping ROM &rarr; CAR &rarr; control memory &rarr; CDR &rarr; control signal
+        decoder &rarr; datapath</em>, with the CDR's branch field and the processor status flags feeding back
+        into the next-address logic.</p>
+        <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 340" width="100%" role="img" aria-label="Control unit block diagram with control memory, CAR, CDR and next-address logic" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="20" y="30" width="150" height="55" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="95.0" y="53.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">INSTRUCTION REG.</text><text x="95.0" y="71.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">IR opcode field</text><rect x="20" y="130" width="150" height="55" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="95.0" y="153.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">MAPPING ROM</text><text x="95.0" y="171.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">opcode &rarr; start address</text><rect x="230" y="30" width="170" height="55" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="315.0" y="53.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CONTROL ADDRESS REG.</text><text x="315.0" y="71.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">CAR / &micro;PC</text><rect x="460" y="30" width="240" height="55" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="580.0" y="53.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CONTROL MEMORY (ROM)</text><text x="580.0" y="71.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">microprogram words</text><rect x="460" y="140" width="240" height="55" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="580.0" y="163.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CONTROL DATA REG.</text><text x="580.0" y="181.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">CDR / &micro;IR</text><rect x="460" y="250" width="240" height="60" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="580.0" y="276.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CONTROL SIGNAL DECODER</text><text x="580.0" y="294.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">to ALU, registers, buses</text><rect x="230" y="130" width="170" height="80" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="315.0" y="166.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">NEXT-ADDRESS LOGIC</text><text x="315.0" y="184.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">increment / branch / map</text><rect x="20" y="250" width="150" height="55" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="95.0" y="273.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">STATUS FLAGS</text><text x="95.0" y="291.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">Z, C, S, interrupt</text><polyline points="95,85 95,130" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="95,130 91.4,124 98.6,124" fill="var(--text-secondary)"/><polyline points="170,157 230,157" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="230,157 224,153.4 224,160.6" fill="var(--text-secondary)"/><polyline points="315,130 315,85" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="315,85 310.8,92 319.2,92" fill="var(--text-secondary)"/><polyline points="400,57 460,57" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="460,57 454,53.4 454,60.6" fill="var(--text-secondary)"/><polyline points="580,85 580,140" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="580,140 576.4,134 583.6,134" fill="var(--text-secondary)"/><polyline points="580,195 580,250" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="580,250 576.4,244 583.6,244" fill="var(--text-secondary)"/><polyline points="460,168 400,168" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="400,168 406,164.4 406,171.6" fill="var(--text-secondary)"/><polyline points="170,277 230,200" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="230,200 226.4,206 233.6,206" fill="var(--text-secondary)"/><text x="315" y="20" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">next &micro;address</text><text x="370" y="200" text-anchor="start" font-size="9" font-weight="400" fill="var(--text-secondary)">branch field + condition</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 2 — Control unit and control memory. The opcode selects the first micro-instruction; the sequencer uses the branch field and the status flags to choose every later one.</figcaption></figure>
+        <div class="table-wrapper" style="margin-top:0.75rem;">
+          <table class="ctrl-compare-table">
+            <thead>
+              <tr><th>Micro-instruction field</th><th>Meaning</th><th>Exam use</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>F1, F2, F3</td><td>Micro-operation fields: which ALU function, which registers are read and written</td><td>Shows how one word drives several units in the same clock</td></tr>
+              <tr><td>CD</td><td>Condition select: test the carry, zero, sign or indirect bit</td><td>Explains how a conditional branch is decided without an extra instruction</td></tr>
+              <tr><td>BR</td><td>Branch field: jump, call, return or continue</td><td>Names the four address-sequencing methods</td></tr>
+              <tr><td>AD</td><td>Address field: the branch target, or zeros when the next address is CAR + 1</td><td>Completes the block diagram label set</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.6rem; font-size:0.9rem; color:var(--text-secondary);">
+          A wider micro-instruction that drives one signal per bit is <strong>horizontal</strong>; a narrower
+          word whose fields are decoded first is <strong>vertical</strong>. Horizontal buys parallel
+          micro-operations at the cost of control-memory width.</p>
+      </div>
       <!-- Control Memory -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-database"></i> Control Memory</div>
@@ -342,7 +419,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Address Sequencing in the Control Unit</div>
+          <p><a href="https://www.youtube.com/watch?v=VlqxXXF8eYc" target="_blank" rel="noopener noreferrer">Lecture 20: Address Sequencing in Microprogrammed Control Unit</a> (TECH COURSE). The control address register, the control memory and the mapping logic that produces the next microinstruction address. It is the animation of the CAR / CDR table in this section; watch the mapping-logic step twice, that is the part the exam asks for.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 3: COMPUTER ARITHMETIC
@@ -385,6 +467,20 @@
         </div>
       </div>
 
+
+      <!-- ============================================================
+           Worked exam traces: Booth with two negative operands, restoring division
+      ============================================================ -->
+      <h3 id="booth-multiplication-and-restoring-division"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-times"></i> Booth Multiplication Algorithm and Unsigned Restoring Division
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        The two traces below are the ones the exam actually sets: a signed product where
+        <em>both</em> operands are negative, and an unsigned division shown step by step. Reproduce the
+        tables with the register contents after every micro-operation — the marks sit on the intermediate
+        rows, not on the final product.
+      </p>
       <!-- Booth's Algorithm -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-times"></i> Booth's Multiplication Algorithm</div>
@@ -469,6 +565,27 @@
           </table>
         </div>
 
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked trace 1: (&minus;9) &times; (&minus;13) with Booth's algorithm (5-bit)</div>
+        <p><strong>M</strong> = &minus;9 = <code>10111</code>, <strong>&minus;M</strong> = <code>01001</code>,
+        <strong>Q</strong> = &minus;13 = <code>10011</code>, <strong>A</strong> = <code>00000</code>,
+        <strong>Q<sub>&minus;1</sub></strong> = 0, count = 5.</p>
+        <table class="booth-table"><thead><tr><th>Step</th><th>Operation</th><th>A</th><th>Q</th><th>Q<sub>&minus;1</sub></th><th>Q<sub>0</sub>Q<sub>&minus;1</sub></th></tr></thead><tbody><tr><td>Step 1</td><td>A &larr; A &minus; M</td><td><span style="font-family:monospace;">01001</span></td><td><span style="font-family:monospace;">10011</span></td><td>0</td><td>10</td></tr><tr><td>Step 1</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">00100</span></td><td><span style="font-family:monospace;">11001</span></td><td>1</td><td>&mdash;</td></tr><tr><td>Step 2</td><td>No operation</td><td><span style="font-family:monospace;">00100</span></td><td><span style="font-family:monospace;">11001</span></td><td>1</td><td>11</td></tr><tr><td>Step 2</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">00010</span></td><td><span style="font-family:monospace;">01100</span></td><td>1</td><td>&mdash;</td></tr><tr><td>Step 3</td><td>A &larr; A + M</td><td><span style="font-family:monospace;">11001</span></td><td><span style="font-family:monospace;">01100</span></td><td>1</td><td>01</td></tr><tr><td>Step 3</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">11100</span></td><td><span style="font-family:monospace;">10110</span></td><td>0</td><td>&mdash;</td></tr><tr><td>Step 4</td><td>No operation</td><td><span style="font-family:monospace;">11100</span></td><td><span style="font-family:monospace;">10110</span></td><td>0</td><td>00</td></tr><tr><td>Step 4</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">11110</span></td><td><span style="font-family:monospace;">01011</span></td><td>0</td><td>&mdash;</td></tr><tr><td>Step 5</td><td>A &larr; A &minus; M</td><td><span style="font-family:monospace;">00111</span></td><td><span style="font-family:monospace;">01011</span></td><td>0</td><td>10</td></tr><tr><td>Step 5</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">00011</span></td><td><span style="font-family:monospace;">10101</span></td><td>1</td><td>&mdash;</td></tr></tbody></table>
+        <p style="margin-top:0.6rem;">Result in <code>[A][Q]</code> = <code>00011 10101</code> =
+        <strong>+117</strong>. Check: 64 + 32 + 16 + 4 + 1 = 117, so the 2's complement pattern is
+        positive and the sign handling is entirely inside the algorithm — no sign-magnitude pre-processing
+        step is needed.</p>
+      </div>
+
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked trace 2: (&minus;11) &times; (&minus;9) with Booth's algorithm (5-bit)</div>
+        <p><strong>M</strong> = &minus;11 = <code>10101</code>, <strong>&minus;M</strong> = <code>01011</code>,
+        <strong>Q</strong> = &minus;9 = <code>10111</code>,
+        <strong>A</strong> = <code>00000</code>, <strong>Q<sub>&minus;1</sub></strong> = 0, count = 5.</p>
+        <table class="booth-table"><thead><tr><th>Step</th><th>Operation</th><th>A</th><th>Q</th><th>Q<sub>&minus;1</sub></th><th>Q<sub>0</sub>Q<sub>&minus;1</sub></th></tr></thead><tbody><tr><td>Step 1</td><td>A &larr; A &minus; M</td><td><span style="font-family:monospace;">01011</span></td><td><span style="font-family:monospace;">10111</span></td><td>0</td><td>10</td></tr><tr><td>Step 1</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">00101</span></td><td><span style="font-family:monospace;">11011</span></td><td>1</td><td>&mdash;</td></tr><tr><td>Step 2</td><td>No operation</td><td><span style="font-family:monospace;">00101</span></td><td><span style="font-family:monospace;">11011</span></td><td>1</td><td>11</td></tr><tr><td>Step 2</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">00010</span></td><td><span style="font-family:monospace;">11101</span></td><td>1</td><td>&mdash;</td></tr><tr><td>Step 3</td><td>No operation</td><td><span style="font-family:monospace;">00010</span></td><td><span style="font-family:monospace;">11101</span></td><td>1</td><td>11</td></tr><tr><td>Step 3</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">00001</span></td><td><span style="font-family:monospace;">01110</span></td><td>1</td><td>&mdash;</td></tr><tr><td>Step 4</td><td>A &larr; A + M</td><td><span style="font-family:monospace;">10110</span></td><td><span style="font-family:monospace;">01110</span></td><td>1</td><td>01</td></tr><tr><td>Step 4</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">11011</span></td><td><span style="font-family:monospace;">00111</span></td><td>0</td><td>&mdash;</td></tr><tr><td>Step 5</td><td>A &larr; A &minus; M</td><td><span style="font-family:monospace;">00110</span></td><td><span style="font-family:monospace;">00111</span></td><td>0</td><td>10</td></tr><tr><td>Step 5</td><td>Arithmetic right shift</td><td><span style="font-family:monospace;">00011</span></td><td><span style="font-family:monospace;">00011</span></td><td>1</td><td>&mdash;</td></tr></tbody></table>
+        <p style="margin-top:0.6rem;">Result in <code>[A][Q]</code> = <code>00011 00011</code> =
+        <strong>+99</strong> (64 + 32 + 2 + 1).</p>
+      </div>
         <div class="important-note" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-star"></i> Why Booth's Algorithm?</div>
           <ul style="padding-left:1.3rem; line-height:2;">
@@ -498,6 +615,17 @@
         </div>
       </div>
 
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked trace 3: unsigned restoring division, 11 &divide; 3 (4-bit)</div>
+        <p><strong>M</strong> = 3 = <code>0011</code>, <strong>Q</strong> = 11 = <code>1011</code>,
+        <strong>A</strong> = <code>0000</code>, count = 4. Each pass shifts <code>[A][Q]</code> left, subtracts
+        <code>M</code>, and keeps the trial remainder only when it stayed non-negative.</p>
+        <table class="booth-table"><thead><tr><th>Step</th><th>Operation</th><th>A</th><th>Q</th></tr></thead><tbody><tr><td>Step 1</td><td>Left shift A, Q</td><td><span style="font-family:monospace;">0001</span></td><td><span style="font-family:monospace;">0110</span></td></tr><tr><td>Step 1</td><td>A &larr; A &minus; M = 1110 (&lt; 0) &rarr; Q<sub>0</sub> = 0, restore A = 0001</td><td><span style="font-family:monospace;">0001</span></td><td><span style="font-family:monospace;">0110</span></td></tr><tr><td>Step 2</td><td>Left shift A, Q</td><td><span style="font-family:monospace;">0010</span></td><td><span style="font-family:monospace;">1100</span></td></tr><tr><td>Step 2</td><td>A &larr; A &minus; M = 1111 (&lt; 0) &rarr; Q<sub>0</sub> = 0, restore A = 0010</td><td><span style="font-family:monospace;">0010</span></td><td><span style="font-family:monospace;">1100</span></td></tr><tr><td>Step 3</td><td>Left shift A, Q</td><td><span style="font-family:monospace;">0101</span></td><td><span style="font-family:monospace;">1000</span></td></tr><tr><td>Step 3</td><td>A &larr; A &minus; M = 0010 (&ge; 0) &rarr; Q<sub>0</sub> = 1</td><td><span style="font-family:monospace;">0010</span></td><td><span style="font-family:monospace;">1001</span></td></tr><tr><td>Step 4</td><td>Left shift A, Q</td><td><span style="font-family:monospace;">0101</span></td><td><span style="font-family:monospace;">0010</span></td></tr><tr><td>Step 4</td><td>A &larr; A &minus; M = 0010 (&ge; 0) &rarr; Q<sub>0</sub> = 1</td><td><span style="font-family:monospace;">0010</span></td><td><span style="font-family:monospace;">0011</span></td></tr></tbody></table>
+        <p style="margin-top:0.6rem;">Quotient <code>Q</code> = <code>0011</code> = <strong>3</strong>,
+        remainder <code>A</code> = <code>0010</code> = <strong>2</strong>. Check: 3 &times; 3 + 2 = 11. The
+        first two passes restored <code>A</code> because 1 &lt; 3 and 2 &lt; 3 — that restore is the step the
+        non-restoring algorithm removes.</p>
+      </div>
       <!-- Division: Non-Restoring -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-divide"></i> Non-Restoring Division Algorithm</div>
@@ -580,7 +708,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Booth's Algorithm with a Worked Signed Example</div>
+          <p><a href="https://www.youtube.com/watch?v=bkpUP-uXXMc" target="_blank" rel="noopener noreferrer">Booth Multiplication Algorithm | 2's Complement Multiplication with Example</a> (T V Nagaraju Technical). Flowchart first, then a full signed multiplication with the Q-1 bit carried along from step to step. Trace the (−9) × (−13) table in this section while watching and check each partial product against the video's step count.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 4: PIPELINING
@@ -592,6 +725,11 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="pipelining-risc-pipeline-and-pipeline-hazards"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-stream"></i> Pipelining, RISC Pipeline and Pipeline Hazards
+      </h3>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> What is Pipelining?</div>
         <p>Pipelining is a technique of implementing instruction-level parallelism by overlapping the execution of multiple instructions. Like an assembly line in a factory, different stages of different instructions are processed simultaneously. Each stage handles one part of instruction processing.</p>
@@ -648,6 +786,27 @@
           <p style="margin-top:0.5rem; font-size:0.88rem;">Without pipeline: 4 instructions × 4 cycles = 16 cycles. With pipeline: 4 + 3 = 7 cycles. Speedup ≈ 2.3×</p>
         </div>
 
+        <div class="trace-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-table"></i> Worked speedup and efficiency (k = 5, T<sub>clk</sub> = 1 cycle)</div>
+          <div class="table-wrapper">
+            <table class="ctrl-compare-table">
+              <thead>
+                <tr><th>Instructions (n)</th><th>Sequential cycles (n &times; k)</th><th>Pipelined cycles (k + n &minus; 1)</th><th>Speedup</th><th>Efficiency</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>10</td><td>50</td><td>14</td><td>50 / 14 = <strong>3.57</strong></td><td>0.71</td></tr>
+                <tr><td>100</td><td>500</td><td>104</td><td>500 / 104 = <strong>4.81</strong></td><td>0.96</td></tr>
+                <tr><td>&infin;</td><td>&infin;</td><td>&infin;</td><td><strong>5</strong> (ideal)</td><td>1.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:0.6rem; font-size:0.9rem; color:var(--text-secondary);">
+            Efficiency = speedup / k. A longer program is closer to the ideal because the fill and drain cost
+            of the pipeline is amortised; both figures assume one cycle per stage and no hazards.</p>
+        </div>
+
+        <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Space-time diagram of a five-stage pipeline executing four instructions" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><text x="156.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T1</text><text x="232.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T2</text><text x="308.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T3</text><text x="384.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T4</text><text x="460.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T5</text><text x="536.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T6</text><text x="612.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T7</text><text x="688.0" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">T8</text><text x="104" y="82" text-anchor="end" font-size="12" font-weight="600" fill="var(--text-primary)">I1</text><rect x="121" y="57" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="156.0" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">IF</text><rect x="197" y="57" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="232.0" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">ID</text><rect x="273" y="57" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="308.0" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">EX</text><rect x="349" y="57" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="384.0" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">MEM</text><rect x="425" y="57" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="460.0" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">WB</text><rect x="501" y="57" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="577" y="57" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="653" y="57" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><text x="104" y="126" text-anchor="end" font-size="12" font-weight="600" fill="var(--text-primary)">I2</text><rect x="121" y="101" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="197" y="101" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="232.0" y="127" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">IF</text><rect x="273" y="101" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="308.0" y="127" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">ID</text><rect x="349" y="101" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="384.0" y="127" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">EX</text><rect x="425" y="101" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="460.0" y="127" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">MEM</text><rect x="501" y="101" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="536.0" y="127" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">WB</text><rect x="577" y="101" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="653" y="101" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><text x="104" y="170" text-anchor="end" font-size="12" font-weight="600" fill="var(--text-primary)">I3</text><rect x="121" y="145" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="197" y="145" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="273" y="145" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="308.0" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">IF</text><rect x="349" y="145" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="384.0" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">ID</text><rect x="425" y="145" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="460.0" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">EX</text><rect x="501" y="145" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="536.0" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">MEM</text><rect x="577" y="145" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="612.0" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">WB</text><rect x="653" y="145" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><text x="104" y="214" text-anchor="end" font-size="12" font-weight="600" fill="var(--text-primary)">I4</text><rect x="121" y="189" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="197" y="189" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="273" y="189" width="70" height="38" rx="6" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3 3"/><rect x="349" y="189" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="384.0" y="215" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">IF</text><rect x="425" y="189" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="460.0" y="215" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">ID</text><rect x="501" y="189" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="536.0" y="215" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">EX</text><rect x="577" y="189" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="612.0" y="215" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">MEM</text><rect x="653" y="189" width="70" height="38" rx="6" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="1.6"/><text x="688.0" y="215" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">WB</text><text x="360" y="268" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">four instructions leave the pipeline in 5 + (4 &minus; 1) = 8 cycles; without overlap they would need 4 &times; 5 = 20</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 3 — Space-time diagram: k = 5 stages, n = 4 instructions. A new instruction enters every cycle, so the last one finishes in k + (n − 1) cycles instead of n × k.</figcaption></figure>
+
         <div class="important-note" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-exclamation-circle"></i> Pipeline Hazards</div>
           <p>Hazards are situations that prevent the next instruction from executing in its designated clock cycle:</p>
@@ -688,7 +847,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Instruction Pipeline and Its Three Hazards</div>
+          <p><a href="https://www.youtube.com/watch?v=U4xxoldpBFE" target="_blank" rel="noopener noreferrer">5.3. Instruction Pipeline and Instruction Pipeline Hazards</a> (LUCKY Learning). Space-time diagram first, then the three hazard families: resource conflicts, data dependencies and branch difficulties. Have the k = 5, n = 10 speed-up calculation from this section on paper while you watch — the video builds the same pipeline but stops before the numbers.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 5: VECTOR & ARRAY PROCESSING
@@ -700,6 +864,39 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="flynn-classification-parallel-and-vector-architectures"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-project-diagram"></i> Flynn's Classification, Parallel Architectures and Advanced Vector Processors
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        Flynn sorts every computer by how many instruction streams and how many data streams it can handle at
+        the same time. The classification matters because it tells you which hardware unit does the parallel
+        work: a vector unit repeats one instruction over a long array, an array processor gives every
+        processing element the same instruction with different data, and a multicore processor lets each core
+        follow its own instruction stream.
+      </p>
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 330" width="100%" role="img" aria-label="Flynn classification grid: SISD, SIMD, MISD and MIMD" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><text x="360" y="16" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-secondary)">Instruction stream</text><text x="200" y="34" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">Single</text><text x="540" y="34" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-secondary)">Multiple</text><text x="14" y="110" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-secondary)">S</text><text x="24" y="124" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-secondary)">i</text><text x="14" y="240" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-secondary)">M</text><text x="24" y="254" text-anchor="start" font-size="11" font-weight="700" fill="var(--text-secondary)">u</text><rect x="40" y="50" width="305" height="95" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="192.5" y="93.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">SISD</text><text x="192.5" y="111.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">one CPU, one instruction, one data word</text><rect x="375" y="50" width="305" height="95" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="527.5" y="93.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">SIMD</text><text x="527.5" y="111.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">one instruction, many data — vector and array units</text><rect x="40" y="175" width="305" height="95" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="192.5" y="218.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">MISD</text><text x="192.5" y="236.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">many instructions on one data — systolic arrays</text><rect x="375" y="175" width="305" height="95" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="527.5" y="218.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">MIMD</text><text x="527.5" y="236.5" text-anchor="middle" font-size="10" fill="var(--text-secondary)">many CPUs, each with its own instruction</text><text x="360" y="300" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">Vector processors and array processors are the SIMD row; a multicore CPU or a GPU cluster is MIMD.</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 4 — Flynn classification: the two axes are the instruction stream and the data stream. MISD is a textbook entry with no commercial general-purpose machine.</figcaption></figure>
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <table class="ctrl-compare-table">
+          <thead>
+            <tr><th>Class</th><th>Instruction streams</th><th>Data streams</th><th>Example</th><th>Exam note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>SISD</strong></td><td>1</td><td>1</td><td>Single-core von Neumann CPU</td><td>The baseline architecture of Unit 1</td></tr>
+            <tr><td><strong>SIMD</strong></td><td>1</td><td>Many</td><td>Vector processor, array processor, GPU warps, Intel SSE/AVX</td><td>Where vector processing sits; one instruction drives many ALUs</td></tr>
+            <tr><td><strong>MISD</strong></td><td>Many</td><td>1</td><td>Systolic array (textbook only)</td><td>No commercial general-purpose example — say so</td></tr>
+            <tr><td><strong>MIMD</strong></td><td>Many</td><td>Many</td><td>Multicore CPU, cluster, modern GPU + CPU system</td><td>The most general class; covers shared and distributed memory</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Linking the classes to the syllabus units</div>
+        <p>A vector processor keeps its operands in wide vector registers, so one <code>VADD</code> performs n
+        additions instead of n scalar additions. An array processor instead connects many processing elements
+        through an interconnection network and broadcasts the instruction to all of them. Both are SIMD; the
+        difference is where the data lives, not how the parallel work is expressed.</p>
+      </div>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-list"></i> Vector Processing (SIMD)</div>
         <p>Vector processing performs the same operation on multiple data elements simultaneously. This is also called SIMD — Single Instruction Multiple Data.</p>
@@ -748,7 +945,12 @@
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Flynn's Taxonomy by Instruction and Data Streams</div>
+          <p><a href="https://www.youtube.com/watch?v=UiwI03ssJYw" target="_blank" rel="noopener noreferrer">Flynn's Taxonomy of computers</a> (kaushal bhardwaj). SISD, SIMD, MISD and MIMD classified by how many instruction streams and data streams run at once, rather than by hardware name. That is the framing the classification question in every paper expects, and the one this section's grid uses.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 6: FORMULAS
@@ -897,6 +1099,45 @@
         </table>
       </div>
 
+
+      <h3 id="risc-and-cisc-architectures"
+          style="margin:0 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-microchip"></i> RISC vs CISC Architectures
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        RISC and CISC are two answers to the same question — how much work should one instruction do. A CISC
+        instruction may fetch an operand from memory, add and store it back in a single instruction; the RISC
+        equivalent is three instructions. CISC wins on code density, RISC wins on pipeline regularity, and the
+        exam usually asks for exactly that trade-off.
+      </p>
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">RISC vs CISC — full comparison</p>
+        <table class="ctrl-compare-table">
+          <thead>
+            <tr><th>Feature</th><th>RISC</th><th>CISC</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Instruction length</td><td>Fixed, usually 32 bits</td><td>Variable, 1&ndash;15 bytes on x86</td></tr>
+            <tr><td>Instruction count</td><td>Few, simple instructions</td><td>Many, complex instructions</td></tr>
+            <tr><td>Addressing modes</td><td>Few (register, immediate, displacement)</td><td>Many, including memory operands</td></tr>
+            <tr><td>Memory access</td><td>Only <code>LOAD</code> / <code>STORE</code></td><td>Most instructions may address memory</td></tr>
+            <tr><td>Registers</td><td>Large register file</td><td>Fewer, general-purpose registers</td></tr>
+            <tr><td>Control unit</td><td>Hardwired</td><td>Microprogrammed</td></tr>
+            <tr><td>CPI</td><td>Close to 1 with a full pipeline</td><td>Higher, and varies per instruction</td></tr>
+            <tr><td>Pipeline</td><td>Uniform stages, fewer hazards</td><td>Irregular stages, more hazards</td></tr>
+            <tr><td>Code size</td><td>Larger for the same task</td><td>Smaller, so less instruction-fetch traffic</td></tr>
+            <tr><td>Compiler role</td><td>Heavy — the compiler schedules instructions</td><td>Lighter — hardware does more per instruction</td></tr>
+            <tr><td>Examples</td><td>MIPS, ARM, RISC-V</td><td>Intel x86, x86-64, VAX</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="important-note" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Modern processors are neither pure form</div>
+        <p>x86 processors translate each complex instruction into simple internal micro-operations and then
+        pipeline those. That is why an answer that says only &ldquo;RISC is fast, CISC is slow&rdquo; loses the
+        marks — the defensible statement is that RISC keeps the <em>architectural</em> instruction set pipeline
+        friendly, while CISC hides the pipeline behind a translation layer.</p>
+      </div>
       <div class="table-wrapper" style="margin-top:1.25rem;">
         <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">RISC vs CISC Pipelining</p>
         <table class="ctrl-compare-table">

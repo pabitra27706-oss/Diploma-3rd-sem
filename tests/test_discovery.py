@@ -108,7 +108,9 @@ class DiscoveryTests(unittest.TestCase):
         anchors = scope['headingAnchors']
         self.assertEqual(anchors['unitPageTopNoAnchor'], 24)
         self.assertEqual(anchors['unitDrawerChromeExcluded'], 24)
-        self.assertEqual(anchors['unitAnchored'], 515)
+        # 515 heading anchors before Phase 15; the phase added 25 concept <h3 id> anchors
+        # (U1 6, U2 5, U3 5, U4 3, U5 6) and removed none.
+        self.assertEqual(anchors['unitAnchored'], 540)
 
     def test_every_search_entry_and_anchor_resolves(self):
         from data_pipeline import stores

@@ -24,6 +24,19 @@
   // Subjects that ship a dedicated quiz bank under quiz/data/.
   const QUIZ_BANK_SUBJECTS = new Set(['CST201', 'CST203', 'CST205', 'CST209']);
 
+  // Sections that are page furniture rather than syllabus concepts. A PYQ topic
+  // must never resolve to one of them: "Practice Problems" or "MCQs" says
+  // nothing about what the question is on, so matching it sends the learner to
+  // a section heading that describes the exercise type instead of the topic.
+  const GENERIC_SECTION_IDS = new Set([
+    'overview',
+    'mcqs',
+    'short-questions',
+    'long-questions',
+    'practice',
+    'revision'
+  ]);
+
   function labelFor(code) {
     if (typeof window !== 'undefined' && typeof window.subjectLabel === 'function') {
       return window.subjectLabel(code);
@@ -90,20 +103,37 @@
     function entriesFor(doc, unit) {
       return Array.from(doc.querySelectorAll('h2, h3, h4')).map((heading) => {
         const title = normalized(cleanHeadingText(heading));
+        const section = heading.closest('section[id]');
+        const sectionId = section ? section.getAttribute('id') || '' : '';
         let anchor = heading.getAttribute('id') || '';
         if (!anchor || /^section-\d+$/.test(anchor)) {
-          const section = heading.closest('section[id]');
-          anchor = section ? section.id : '';
+          anchor = sectionId;
         }
-        return { title, anchor, unit };
-      }).filter((entry) => entry.title && entry.anchor && !/^section-\d+$/.test(entry.anchor));
+        return { title, anchor, sectionId, unit };
+      }).filter((entry) => entry.title
+        && entry.anchor
+        && !/^section-\d+$/.test(entry.anchor)
+        && !GENERIC_SECTION_IDS.has(entry.sectionId));
+    }
+
+    // Stored PYQ topics are terse noun phrases ("Buses", "Microprogramming",
+    // "Advanced architecture / cache") while headings are prose. Comparing the
+    // words exactly would never match "bus" against "buses", so both sides are
+    // reduced to a crude stem first. It is deliberately not a full stemmer:
+    // plural and participle endings are all the archived topics need.
+    function stem(word) {
+      return word
+        .replace(/ies$/, 'y')
+        .replace(/(?:es|s)$/, '')
+        .replace(/(?:ing|ed)$/, '')
+        .replace(/e$/, '');
     }
 
     function scoreTitle(title) {
       if (title === needle) return 100;
       if (title.includes(needle)) return 90;
-      const titleWords = new Set(title.split(/[^\p{L}\p{N}]+/u).filter(Boolean));
-      const matched = terms.filter((term) => titleWords.has(term)).length;
+      const titleWords = new Set(title.split(/[^\p{L}\p{N}]+/u).filter(Boolean).map(stem));
+      const matched = terms.filter((term) => titleWords.has(stem(term))).length;
       return matched ? matched / terms.length : 0;
     }
 

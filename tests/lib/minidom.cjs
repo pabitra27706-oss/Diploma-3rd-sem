@@ -139,6 +139,9 @@ function createMiniDom(initialUrl) {
     getAttribute(name) {
       return this.attributes.has(name) ? this.attributes.get(name) : null;
     }
+    hasAttribute(name) {
+      return this.attributes.has(String(name));
+    }
     removeAttribute(name) {
       this.attributes.delete(name);
     }
@@ -326,6 +329,8 @@ function createMiniDom(initialUrl) {
   };
 
   const documentElement = new MiniNode(1, 'html');
+  const head = new MiniNode(1, 'head');
+  documentElement.appendChild(head);
   const body = new MiniNode(1, 'body');
   documentElement.appendChild(body);
   activeEl = body;
@@ -334,6 +339,7 @@ function createMiniDom(initialUrl) {
     title: '',
     currentScript: null,
     documentElement,
+    head,
     body,
     get activeElement() { return activeEl; },
     createElement: tag => new MiniNode(1, tag),

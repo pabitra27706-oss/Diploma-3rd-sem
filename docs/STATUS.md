@@ -17,7 +17,41 @@ pass: remaining requirements are explicitly skipped or left unverified in
 [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md). Phase 10's device report is partial;
 content remains uncertified; no new deploy is authorized.
 
-## Phases 12–16 — 2023–2026 PYQ Weight-Calibrated Content, Video Curation & PYQ Sync Blueprints (2026-11-18) — 📋 planned
+## Phase 15 — Computer System Organization executed (2026-11-18) — 🚧 awaiting owner sign-off
+
+Executed on `arena/ad819066-diploma-3rd-sem` (base `f0ce76d`) under the standing
+rules: no PR, merge, deploy or Pages action, and `_data/` byte-frozen (Mode A).
+Evidence and the exact numbers live in
+[`phases/15-cst207-cso-content/record.md`](phases/15-cst207-cso-content/record.md).
+
+- **Content:** all five CSO units rewritten to the 2023–2026 weights —
+  5,713 → **6,081w** (U1), **8,561w** (U2), **7,302w** (U3), 6,733 → **3,669w**
+  (U4 right-sized), **8,365w** (U5) = **33,978w** total. `13` accessible SVGs,
+  `20` `<pre><code>` listings/tables, all `25` required `<h3 id>` anchors and all
+  `74` original `<section id>`s preserved.
+- **Videos:** `15` curation slots filled with plain external `<a>` links, each
+  confirmed live through the YouTube oEmbed endpoint on 2026-11-18 and logged
+  with channel, title and target section. Zero embeds, zero thumbnails, zero
+  runtime requests.
+- **PYQ sync:** `102 / 103` 2023–2026 CSO questions now resolve to an exact
+  syllabus heading (`22` same-unit, `80` cross-unit), `0` generic false positives,
+  `0` wrong-unit collisions; the one miss is `P006-Q24` `"Short notes"`, a prompt
+  format that correctly falls back to the unit overview. `_data/` untouched.
+- **Enabling fixes:** `assets/js/unit-discovery.js` now skips generic section ids
+  when handing off a topic and stems plural/participle word forms before scoring
+  a heading; `docs/revision-sheets/CST207.json` gained the Unit 4 `Macro` entry
+  (`CST207-d-09`, unverified pending owner sign-off); revision pages emit a
+  `meta description`.
+- **Gates:** `check_site --strict --quiet` 0/0, `check_tokens --strict` 0,
+  `audit_accessibility --fail` 0, page-weight budget satisfied, `check_pyq_integrity`
+  0 drift, `validate_pyq` / `validate_data --check-baseline` pass, `15/15` Node
+  suites pass. Python suite: `122/123`, the single error being
+  `test_data_pipeline`'s `git show 664674b…` against this depth-1 shallow clone.
+- **Not proved:** no physical-device, screen-reader, zoom, print or offline-cache
+  evidence, and the videos are third-party links verified for liveness only. The
+  owner signature is still required before this phase counts as passed.
+
+## Phases 12–16 — 2023–2026 PYQ Weight-Calibrated Content, Video Curation & PYQ Sync Blueprints (2026-11-18) — Phase 15 executed, 12/13/14/16 planned
 
 Five documentation-only subject blueprints are planned on
 `arena/d77ff9fd-diploma-3rd-sem` (from `main` at `f52d2f6`) without touching any

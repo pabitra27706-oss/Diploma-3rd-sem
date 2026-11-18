@@ -326,68 +326,25 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Why Address Decoding?</div>
-        <p>A microprocessor system typically has multiple memory chips and I/O devices. When the CPU sends an address on the address bus, only the intended chip should respond. Address decoding uses the upper address lines and logic circuits (decoders, gates) to generate a Chip Select (CS̄) signal that activates only the correct chip.</p>
+        <div class="box-title"><i class="fas fa-info-circle"></i> Why Address Decoding? (compact reference)</div>
+        <p>The 8086 puts a 20-bit address on the bus, but only one chip may answer. <strong>Address
+        decoding</strong> uses the upper address lines and a decoder to raise exactly one <code>CS̄</code>
+        (chip select, active LOW); the lower lines then pick a location inside that chip.</p>
         <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
-          <li><strong>Address Bus:</strong> Carries the full address (20-bit in 8086).</li>
-          <li><strong>Lower Address Lines:</strong> Used to select a specific location within a chip.</li>
-          <li><strong>Upper Address Lines:</strong> Used to select which chip is activated via address decoding.</li>
-          <li><strong>Chip Select (CS̄):</strong> Active LOW signal that enables a specific memory chip.</li>
+          <li><strong>Full (absolute) decoding:</strong> every upper line is decoded, so each address maps to
+            one location and no address space is wasted.</li>
+          <li><strong>Partial decoding:</strong> only some upper lines are decoded, which is cheaper but
+            aliases the chip across several address blocks.</li>
+          <li><strong>74LS138 3-to-8 decoder:</strong> three address lines in, eight active-LOW outputs out,
+            one per chip — the standard 8086 example.</li>
+          <li><strong>Gate decoding:</strong> a NAND of A19&ndash;A13 raises <code>CS̄</code> only for
+            <code>FE000H</code> to <code>FFFFFH</code>, the 8 KB block an EPROM needs at reset.</li>
         </ul>
-      </div>
-
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-tools"></i> Address Decoding Techniques</div>
-
-        <div class="mode-block" style="margin-top:0.75rem;">
-          <p class="card-title">1. Full Address Decoding (Absolute Decoding)</p>
-          <p>All address lines are used to uniquely identify each memory location. No address aliasing. Each memory address maps to exactly one physical location. More complex hardware but no wasted address space.</p>
-        </div>
-
-        <div class="mode-block" style="margin-top:0.5rem;">
-          <p class="card-title">2. Partial Address Decoding</p>
-          <p>Only some upper address lines are used. Simpler hardware but creates address aliasing — the same memory chip responds to multiple address ranges. Some address space is wasted.</p>
-        </div>
-
-        <div class="mode-block" style="margin-top:0.5rem;">
-          <p class="card-title">3. Using 74LS138 (3-to-8 Decoder)</p>
-          <p>The 74LS138 takes 3 address lines as input and produces 8 active-LOW output lines (Y̅0 to Y̅7). Only one output is LOW at a time. Each output is connected to CS̄ of a memory chip, enabling one chip at a time.</p>
-        </div>
-
-        <div class="mode-block" style="margin-top:0.5rem;">
-          <p class="card-title">4. Using Logic Gates (AND, NAND, OR)</p>
-          <p>Simple address decoding using combinational logic gates. Upper address lines are inputs to gates. Output connected to CS̄. Example: NAND gate with A15, A14, A13 as inputs gives CS̄ LOW only when all three are HIGH (address range 0xE000–0xFFFF).</p>
-        </div>
-      </div>
-
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-calculator"></i> Address Range Calculation</div>
-        <p>To find the address range of a memory chip:</p>
-        <div class="algo-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-list-ol"></i> Steps</div>
-          <ol style="padding-left:1.3rem; line-height:2.2;">
-            <li>Determine the chip capacity (e.g., 4 KB = 4096 bytes = 2¹² locations).</li>
-            <li>Number of address lines needed for the chip = log₂(capacity) (e.g., 12 lines for 4 KB).</li>
-            <li>These lower address lines (A0–A11) select locations within the chip.</li>
-            <li>Remaining upper address lines (A12–A19 for 8086) are used for chip select (decoded).</li>
-            <li>Start address: when all lower lines = 0 and upper lines match chip select pattern.</li>
-            <li>End address: when all lower lines = 1 and same upper pattern.</li>
-          </ol>
-        </div>
-
-        <div class="formula-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-calculator"></i> Address Range Size</div>
-          <div class="formula">Address Range Size = Chip Capacity = 2<sup>n</sup> bytes</div>
-          <p style="font-size:0.88rem; margin-top:0.4rem;">where n = number of address lines connected to the chip.</p>
-        </div>
-
-        <div class="trace-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-table"></i> Example: 8 KB EPROM, CS̄ active when A19–A13 = 1111111</div>
-          <p>8 KB = 2¹³ bytes → needs 13 address lines (A0–A12).</p>
-          <p>A19–A13 = 1111111 → Upper bits fixed.</p>
-          <p>Start: 1111111 0000000000000 = <strong>FE000H</strong></p>
-          <p>End: &nbsp; 1111111 1111111111111 = <strong>FFFFFH</strong></p>
-          <p>Address range: <strong>FE000H to FFFFFH</strong> (8 KB)</p>
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-lightbulb"></i> Sizing rule</div>
+          <p>A chip of <code>2<sup>n</sup></code> locations needs <code>n</code> address lines; the remaining
+          upper lines go to the decoder. 8 KB = 2<sup>13</sup> therefore takes A0&ndash;A12, and A19&ndash;A13
+          select the chip.</p>
         </div>
       </div>
 
@@ -404,97 +361,136 @@
     </h2>
     <div class="section-content">
 
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Memory Interfacing Concepts</div>
-        <p>Memory interfacing means connecting memory chips to the microprocessor's address, data, and control buses so the CPU can read/write data. Key signals involved:</p>
+      <h3 id="memory-hierarchy-organization-and-memory-size"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-layer-group"></i> Memory Hierarchy, Memory Organization and Memory Size
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        No single memory technology is both fast and cheap, so a computer stacks several of them. The
+        hierarchy is the reason a program feels as if it has fast memory as large as the disk: each level
+        caches the one below it, and locality of reference keeps most requests at the top.
+      </p>
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 330" width="100%" role="img" aria-label="Memory hierarchy pyramid from registers to archival storage" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><polygon points="210,34 510,34 532,80 188,80" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="360" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">Registers</text><text x="360" y="71" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">a few hundred bytes · under 1 ns</text><polygon points="186,82 534,82 556,128 164,128" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="360" y="104" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">L1 / L2 / L3 cache</text><text x="360" y="119" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">kilobytes to megabytes · 1–10 ns</text><polygon points="162,130 558,130 580,176 140,176" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="360" y="152" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">Main memory (DRAM)</text><text x="360" y="167" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">gigabytes · 50–100 ns</text><polygon points="138,178 582,178 604,224 116,224" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="360" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">SSD / hard disk</text><text x="360" y="215" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">terabytes · microseconds to milliseconds</text><polygon points="114,226 606,226 628,272 92,272" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="360" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)">Magnetic tape / archive</text><text x="360" y="263" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">terabytes · seconds</text><text x="20" y="60" text-anchor="start" font-size="10" font-weight="600" fill="var(--text-secondary)">faster</text><text x="20" y="76" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">costlier</text><text x="20" y="92" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">per bit</text><text x="20" y="232" text-anchor="start" font-size="10" font-weight="600" fill="var(--text-secondary)">larger</text><text x="20" y="248" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">cheaper</text><text x="20" y="264" text-anchor="start" font-size="10" font-weight="400" fill="var(--text-secondary)">per bit</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 1 — Memory hierarchy. Moving down a level multiplies capacity by roughly 10–100 while access time grows by a similar factor; the cache in front of main memory exists to keep the top of the pyramid busy.</figcaption></figure>
+
+      <div class="table-wrapper" style="margin-top:0.75rem;">
+        <table class="mem-table">
+          <thead>
+            <tr><th>Level</th><th>Typical size</th><th>Access time</th><th>Technology</th><th>Volatile?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Registers</td><td>hundreds of bytes</td><td>&lt; 1 ns</td><td>Flip-flops</td><td>Yes</td></tr>
+            <tr><td>Cache L1 / L2 / L3</td><td>KB to MB</td><td>1&ndash;10 ns</td><td>SRAM</td><td>Yes</td></tr>
+            <tr><td>Main memory</td><td>GB</td><td>50&ndash;100 ns</td><td>DRAM</td><td>Yes</td></tr>
+            <tr><td>Secondary storage</td><td>TB</td><td>&micro;s to ms</td><td>SSD / HDD</td><td>No</td></tr>
+            <tr><td>Archival</td><td>TB</td><td>seconds</td><td>Magnetic tape</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">SRAM vs DRAM</p>
+        <table class="mem-table">
+          <thead>
+            <tr><th>Feature</th><th>SRAM</th><th>DRAM</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Storage cell</td><td>6 transistors, a latch</td><td>1 transistor + 1 capacitor</td></tr>
+            <tr><td>Refresh</td><td>Not needed</td><td>Needed every few milliseconds</td></tr>
+            <tr><td>Speed</td><td>Very fast (1&ndash;10 ns)</td><td>Slower (50&ndash;100 ns)</td></tr>
+            <tr><td>Density and cost</td><td>Low density, expensive per bit</td><td>High density, cheap per bit</td></tr>
+            <tr><td>Used as</td><td>Cache and registers</td><td>Main memory</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">ROM family</p>
+        <table class="mem-table">
+          <thead>
+            <tr><th>Type</th><th>Written how</th><th>Erased how</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mask ROM</td><td>At manufacture</td><td>Never</td></tr>
+            <tr><td>PROM</td><td>Once, by the user</td><td>Never</td></tr>
+            <tr><td>EPROM</td><td>By a programmer (high voltage)</td><td>UV light through a quartz window</td></tr>
+            <tr><td>EEPROM / Flash</td><td>Electrically, in circuit</td><td>Electrically, byte or block</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-calculator"></i> Chip Capacity and Chip Count</div>
+        <div class="formula-box" style="margin-top:0.5rem;">
+          <div class="box-title"><i class="fas fa-calculator"></i> Capacity and expansion</div>
+          <div class="formula">Chip capacity = 2<sup>a</sup> &times; d &nbsp;bits, where a = address lines, d = data bits</div>
+          <div class="formula">Chips needed = (Total words / Chip words) &times; (Word width / d)</div>
+        </div>
+        <div class="trace-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-table"></i> Worked examples</div>
+          <p><strong>1 MB memory from 256K &times; 8 chips:</strong> 1 MB = 2<sup>20</sup> bytes and each chip is
+          2<sup>18</sup> &times; 8 bits, so 2<sup>20</sup> / 2<sup>18</sup> = <strong>4 chips</strong> in a row
+          with no width expansion (8-bit data bus).</p>
+          <p style="margin-top:0.4rem;"><strong>Chip from 14 address lines and 4 data bits:</strong>
+          2<sup>14</sup> &times; 4 = 16K &times; 4 = <strong>8 KB</strong> of storage.</p>
+        </div>
+      </div>
+
+      <div class="concept-box" style="margin-top:1rem;">
+        <div class="box-title"><i class="fas fa-plug"></i> Interfacing RAM, ROM and EPROM — the short version</div>
+        <p>Tie the chip's address pins to A0 upwards, its data pins to the data bus, its <code>CS̄</code>
+        to the decoder output, <code>OĒ</code> to <code>RD̄</code> and — for RAM only —
+        <code>WĒ</code> to <code>WR̄</code>. ROM leaves <code>WĒ</code> unconnected because it
+        cannot be written. On the 8086 the memory is split into an even bank on D0&ndash;D7 selected by
+        <code>A0 = 0</code> and an odd bank on D8&ndash;D15 selected by <code>BHĒ = 0</code>; a word at an
+        odd address therefore costs two bus cycles.</p>
+      </div>
+
+      <h3 id="io-and-direct-memory-access-dma"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-exchange-alt"></i> I/O and Direct Memory Access (DMA) Controller
+      </h3>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Exam note — outside the listed syllabus topics</div>
+        <p>DMA is not named in the 2022 syllabus for this course, but it has appeared in the 2023&ndash;2026
+        papers (1-mark and 3-mark parts). Learn the handshake and the three transfer modes; do not let it
+        displace cache or paging revision.</p>
+      </div>
+      <div class="concept-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-microchip"></i> How a DMA transfer works</div>
+        <p>Programmed I/O and interrupt-driven I/O both move data <em>through</em> the CPU. A DMA controller
+        instead becomes the bus master for the duration of the transfer:</p>
+        <ol style="padding-left:1.3rem; line-height:2.1; margin-top:0.5rem;">
+          <li>The CPU programs the controller: start address, word count, direction and mode.</li>
+          <li>The peripheral asserts <code>DRQ</code> when it has data ready (or space for data).</li>
+          <li>The controller asserts <code>HOLD</code>; the CPU finishes its current bus cycle and replies
+            <code>HLDA</code>, floating its address/data/control lines.</li>
+          <li>The controller drives the address bus and moves the data, acknowledging the peripheral with
+            <code>DACK</code>.</li>
+          <li>When the count reaches zero the controller raises an interrupt (or sets a status bit) and drops
+            <code>HOLD</code>; the CPU takes the bus back.</li>
+        </ol>
+        <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 290" width="100%" role="img" aria-label="DMA controller handshake with the CPU and memory" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="15" y="40" width="150" height="70" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="90.0" y="71.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CPU</text><text x="90.0" y="89.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">holds the bus</text><rect x="15" y="180" width="150" height="70" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="90.0" y="211.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">PERIPHERAL</text><text x="90.0" y="229.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">disk / ADC</text><rect x="255" y="100" width="210" height="90" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="360.0" y="141.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">DMA CONTROLLER</text><text x="360.0" y="159.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">address · count · control</text><rect x="540" y="100" width="165" height="90" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="622.5" y="141.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">MEMORY</text><text x="622.5" y="159.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">burst or single word</text><polyline points="165,205 255,160" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="255,160 249,156.4 249,163.6" fill="var(--text-secondary)"/><text x="205" y="200" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">DRQ</text><polyline points="255,140 165,140" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="165,140 171,136.4 171,143.6" fill="var(--text-secondary)"/><text x="210" y="132" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">DACK</text><polyline points="465,130 540,130" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="540,130 534,126.4 534,133.6" fill="var(--text-secondary)"/><text x="500" y="120" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">data</text><polyline points="300,100 300,60 165,60" fill="none" stroke="var(--text-secondary)" stroke-width="1.8" stroke-dasharray="5 4"/><polygon points="165,60 171,56.4 171,63.6" fill="var(--text-secondary)"/><text x="232" y="52" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">HOLD</text><polyline points="165,88 285,100" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="285,100 279,96.4 279,103.6" fill="var(--text-secondary)"/><text x="232" y="92" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">HLDA</text><text x="360" y="240" text-anchor="middle" font-size="10" font-weight="400" fill="var(--text-secondary)">The CPU releases the bus after HLDA; the DMAC moves one byte/word per cycle (cycle stealing) or a whole block (burst).</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 3 — DMA handshake: the peripheral raises DRQ, the controller asks the CPU for the bus with HOLD, the CPU grants it with HLDA, and the transfer happens without the CPU executing instructions.</figcaption></figure>
         <div class="table-wrapper" style="margin-top:0.75rem;">
           <table class="mem-table">
             <thead>
-              <tr><th>Signal</th><th>Direction</th><th>Purpose</th></tr>
+              <tr><th>Mode</th><th>How the bus is taken</th><th>Effect on the CPU</th></tr>
             </thead>
             <tbody>
-              <tr><td>Address Lines (A0–A19)</td><td>CPU → Memory</td><td>Select specific memory location</td></tr>
-              <tr><td>Data Lines (D0–D15)</td><td>Bidirectional</td><td>Transfer data between CPU and memory</td></tr>
-              <tr><td>RD̄ (Read)</td><td>CPU → Memory</td><td>Memory outputs data when LOW</td></tr>
-              <tr><td>WR̄ (Write)</td><td>CPU → Memory</td><td>Memory accepts data when LOW</td></tr>
-              <tr><td>CS̄ (Chip Select)</td><td>Decoder → Memory</td><td>Enables specific chip (from address decoder)</td></tr>
-              <tr><td>OĒ (Output Enable)</td><td>CPU → Memory</td><td>Enables data output (usually tied to RD̄)</td></tr>
-              <tr><td>WĒ (Write Enable)</td><td>CPU → Memory</td><td>Enables data write (usually tied to WR̄)</td></tr>
-              <tr><td>BHĒ (Bus High Enable)</td><td>CPU → Memory</td><td>Enables upper byte (D8–D15) for odd addresses</td></tr>
+              <tr><td>Burst (block) transfer</td><td>Whole block moved before the bus is released</td><td>CPU is halted for the block — fastest, worst latency</td></tr>
+              <tr><td>Cycle stealing</td><td>One byte or word per bus cycle, repeatedly interleaved</td><td>CPU loses single cycles — the usual compromise</td></tr>
+              <tr><td>Transparent DMA</td><td>Data moved on cycles the CPU is not using the bus</td><td>No slowdown at all, but needs a fast memory bus</td></tr>
             </tbody>
           </table>
-        </div>
-      </div>
-
-      <!-- ROM Interfacing -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-lock"></i> ROM (Read Only Memory) Interfacing</div>
-        <p>ROM is non-volatile memory that stores permanent data (BIOS, bootloader). It is read-only — the CPU can read but cannot write to ROM during normal operation.</p>
-        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
-          <li>Address lines: A0–An connected for location selection within the chip.</li>
-          <li>Data lines: D0–D7 (or D0–D15 for 16-bit) connected to data bus.</li>
-          <li>CS̄: Connected to address decoder output.</li>
-          <li>OĒ: Connected to CPU's RD̄ signal. Data output enabled only during read cycle.</li>
-          <li>WR̄ is NOT connected (ROM is read-only).</li>
-        </ul>
-        <div class="important-note" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-star"></i> 8086 ROM at Reset</div>
-          <p>After RESET, the 8086 starts execution from FFFF0H (CS=FFFFH, IP=0000H). ROM containing the bootstrap/BIOS code must be interfaced at the top of the address space (typically FE000H–FFFFFH).</p>
-        </div>
-      </div>
-
-      <!-- RAM Interfacing -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-database"></i> RAM (Random Access Memory) Interfacing</div>
-        <p>RAM is volatile read/write memory. Both RD̄ and WR̄ signals are connected to enable both read and write operations.</p>
-        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
-          <li>Address lines: A0–An for location selection.</li>
-          <li>Data lines: D0–D7 (or D0–D15).</li>
-          <li>CS̄: From address decoder.</li>
-          <li>OĒ: Connected to RD̄ (output data during read).</li>
-          <li>WĒ: Connected to WR̄ (accept data during write).</li>
-        </ul>
-      </div>
-
-      <!-- EPROM Interfacing -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-sun"></i> EPROM (Erasable Programmable ROM) Interfacing</div>
-        <p>EPROM is non-volatile, can be erased using UV light, and reprogrammed using a programmer device. During normal system operation, it behaves like ROM (read-only). Common chips: 2716 (2 KB), 2732 (4 KB), 2764 (8 KB), 27128 (16 KB), 27256 (32 KB).</p>
-        <div class="table-wrapper" style="margin-top:0.75rem;">
-          <table class="mem-table">
-            <thead>
-              <tr><th>EPROM Chip</th><th>Capacity</th><th>Address Lines</th><th>Data Lines</th><th>Pins</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>2716</td><td>2 KB (2048 × 8)</td><td>A0–A10 (11 lines)</td><td>D0–D7</td><td>24-pin</td></tr>
-              <tr><td>2732</td><td>4 KB (4096 × 8)</td><td>A0–A11 (12 lines)</td><td>D0–D7</td><td>24-pin</td></tr>
-              <tr><td>2764</td><td>8 KB (8192 × 8)</td><td>A0–A12 (13 lines)</td><td>D0–D7</td><td>28-pin</td></tr>
-              <tr><td>27128</td><td>16 KB (16384 × 8)</td><td>A0–A13 (14 lines)</td><td>D0–D7</td><td>28-pin</td></tr>
-              <tr><td>27256</td><td>32 KB (32768 × 8)</td><td>A0–A14 (15 lines)</td><td>D0–D7</td><td>28-pin</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 16-bit Bus Interfacing -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-arrows-alt-h"></i> 16-bit Bus Interfacing (Even/Odd Banks)</div>
-        <p>The 8086 has a 16-bit data bus and can access either a byte or a word. To support byte access at any address, memory is organized into two banks:</p>
-        <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
-          <li><strong>Even Bank (Lower Bank):</strong> Connected to D0–D7. Selected when A0 = 0. Contains bytes at even addresses (0, 2, 4, ...).</li>
-          <li><strong>Odd Bank (Upper Bank):</strong> Connected to D8–D15. Selected when BHĒ = 0. Contains bytes at odd addresses (1, 3, 5, ...).</li>
-          <li><strong>Word access (16-bit):</strong> Both banks active simultaneously when A0=0 and BHĒ=0.</li>
-          <li><strong>Even byte access:</strong> Only even bank (A0=0, BHĒ=1).</li>
-          <li><strong>Odd byte access:</strong> Only odd bank (A0=1, BHĒ=0).</li>
-        </ul>
-        <div class="warning-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Misaligned Word Access</div>
-          <p>Accessing a 16-bit word at an odd address requires two bus cycles because the word spans both banks at different addresses. This is slower. Keeping data word-aligned (at even addresses) avoids this penalty.</p>
         </div>
       </div>
 
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Memory Hierarchy: SRAM versus DRAM</div>
+          <p><a href="https://www.youtube.com/watch?v=pcq1Emf1ezY" target="_blank" rel="noopener noreferrer">The Memory Hierarchy | SRAM, DRAM, and Storage</a> (Guidance Warehouse Official). Registers, cache, main memory and secondary storage laid out by speed, size and cost, with the SRAM cell set against the DRAM cell that has to be refreshed. Watch it before the comparison table below: that table is the examinable summary of what the video shows.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 4: PPI 8255
@@ -507,105 +503,51 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> What is the 8255 PPI?</div>
-        <p>The 8255 PPI is a general-purpose programmable I/O device that provides three 8-bit I/O ports (Port A, Port B, Port C) and a control register. It acts as an interface between the CPU and external I/O devices, allowing the CPU to communicate with peripherals like keyboards, displays, switches, and LEDs.</p>
-      </div>
-
-      <div class="ppi-port">
-        <div class="ppi-port-card">
-          <div class="port-name">Port A (PA0–PA7)</div>
-          <div class="port-info">8-bit, Input or Output. Group A control. Latched output, non-latched input.</div>
+        <div class="box-title"><i class="fas fa-info-circle"></i> Intel 8255 PPI — compact reference</div>
+        <p>The 8255 gives a processor 24 programmable I/O lines as Port A, Port B and Port C, plus a
+        write-only control register. <code>A1A0 = 00/01/10/11</code> selects Port A / Port B / Port C / the
+        control register, and <code>CS̄</code> comes from the address decoder.</p>
+        <div class="ppi-port">
+          <div class="ppi-port-card">
+            <div class="port-name">Port A (PA0&ndash;PA7)</div>
+            <div class="port-info">8-bit, Group A, always usable; the only port that can be bidirectional.</div>
+          </div>
+          <div class="ppi-port-card">
+            <div class="port-name">Port B (PB0&ndash;PB7)</div>
+            <div class="port-info">8-bit, Group B; Mode 0 or Mode 1 only.</div>
+          </div>
+          <div class="ppi-port-card">
+            <div class="port-name">Port C (PC0&ndash;PC7)</div>
+            <div class="port-info">Two 4-bit halves used as data lines or as handshake signals.</div>
+          </div>
         </div>
-        <div class="ppi-port-card">
-          <div class="port-name">Port B (PB0–PB7)</div>
-          <div class="port-info">8-bit, Input or Output. Group B control. Latched output, non-latched input.</div>
-        </div>
-        <div class="ppi-port-card">
-          <div class="port-name">Port C (PC0–PC7)</div>
-          <div class="port-info">8-bit, split into upper (PC4–PC7) and lower (PC0–PC3). Used as I/O or handshake control signals.</div>
-        </div>
-        <div class="ppi-port-card">
-          <div class="port-name">Control Register</div>
-          <div class="port-info">8-bit. Write-only. Configures port direction and mode of operation.</div>
-        </div>
-      </div>
-
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-microchip"></i> 8255 Pin Connections</div>
+        <p style="margin-top:0.75rem;"><strong>Modes:</strong> Mode 0 is simple input/output with no handshake;
+        Mode 1 is strobed I/O using Port C bits as <code>STB̄</code>, <code>IBF</code>,
+        <code>OBF̄</code>, <code>ACK̄</code> and <code>INTR</code>; Mode 2 is bidirectional and
+        exists only on Port A, with Port B free to run in Mode 0 or 1.</p>
         <div class="table-wrapper" style="margin-top:0.75rem;">
           <table class="mem-table">
             <thead>
-              <tr><th>Pin(s)</th><th>Name</th><th>Connection to 8086</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>D0–D7</td><td>Data Bus</td><td>Connected to lower data bus D0–D7</td></tr>
-              <tr><td>A0, A1</td><td>Port Select</td><td>From 8086 A0, A1 — select Port A/B/C/Control</td></tr>
-              <tr><td>CS̄</td><td>Chip Select</td><td>From address decoder (active LOW)</td></tr>
-              <tr><td>RD̄</td><td>Read</td><td>From 8086 RD̄ signal</td></tr>
-              <tr><td>WR̄</td><td>Write</td><td>From 8086 WR̄ signal</td></tr>
-              <tr><td>RESET</td><td>Reset</td><td>From system RESET signal</td></tr>
-              <tr><td>PA0–PA7</td><td>Port A</td><td>Connected to I/O devices</td></tr>
-              <tr><td>PB0–PB7</td><td>Port B</td><td>Connected to I/O devices</td></tr>
-              <tr><td>PC0–PC7</td><td>Port C</td><td>Connected to I/O devices or handshake</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="formula-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-calculator"></i> Port Address Selection (A1, A0)</div>
-          <div class="formula">A1 A0 = 00 → Port A &nbsp;|&nbsp; 01 → Port B &nbsp;|&nbsp; 10 → Port C &nbsp;|&nbsp; 11 → Control Register</div>
-        </div>
-      </div>
-
-      <!-- Modes of Operation -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-sliders-h"></i> Modes of Operation</div>
-        <p>The 8255 operates in three modes set by the control word:</p>
-
-        <div class="mode-block" style="margin-top:0.75rem;">
-          <p class="card-title">Mode 0 — Basic I/O (Simple Input/Output)</p>
-          <p>Each port can be configured as input or output independently. No handshake signals. Data is simply read from input port or written to output port. Most commonly used mode. Port C can be split: upper half in one direction, lower half in another.</p>
-        </div>
-
-        <div class="mode-block" style="margin-top:0.5rem;">
-          <p class="card-title">Mode 1 — Strobed I/O (Handshake)</p>
-          <p>Ports A and B are used for data I/O. Port C bits are used as handshake signals (STB̄, IBF, OBF̄, ACK̄, INTR). Data transfer is synchronized using these handshake signals. Used for devices that need acknowledge/ready signaling (printers, data acquisition).</p>
-        </div>
-
-        <div class="mode-block" style="margin-top:0.5rem;">
-          <p class="card-title">Mode 2 — Bidirectional I/O (Port A only)</p>
-          <p>Port A becomes bidirectional — can both send and receive data on the same 8 lines. Port C bits provide handshake signals for bidirectional communication. Only Port A supports Mode 2. Port B can be in Mode 0 or Mode 1 simultaneously.</p>
-        </div>
-      </div>
-
-      <!-- Control Word -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-cog"></i> Control Word Format</div>
-        <p>The control word is an 8-bit value written to the control register (A1A0=11) to configure ports:</p>
-        <div class="table-wrapper" style="margin-top:0.75rem;">
-          <table class="mem-table">
-            <thead>
-              <tr><th>Bit</th><th>D7</th><th>D6 D5</th><th>D4</th><th>D3</th><th>D2</th><th>D1</th><th>D0</th></tr>
+              <tr><th>Control-word bit</th><th>D7</th><th>D6 D5</th><th>D4</th><th>D3</th><th>D2</th><th>D1</th><th>D0</th></tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Purpose</strong></td>
-                <td>Mode Set Flag (1=active)</td>
-                <td>Port A Mode (00=M0, 01=M1, 1X=M2)</td>
-                <td>Port A Dir (1=Input, 0=Output)</td>
-                <td>Port C Upper Dir (1=In, 0=Out)</td>
-                <td>Port B Mode (0=M0, 1=M1)</td>
-                <td>Port B Dir (1=In, 0=Out)</td>
-                <td>Port C Lower Dir (1=In, 0=Out)</td>
+                <td><strong>Meaning</strong></td>
+                <td>Mode-set flag, 1 = active</td>
+                <td>Port A mode (00/01/1X = 0/1/2)</td>
+                <td>Port A: 1 = input</td>
+                <td>Port C upper: 1 = input</td>
+                <td>Port B mode (0 = Mode 0)</td>
+                <td>Port B: 1 = input</td>
+                <td>Port C lower: 1 = input</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="trace-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-table"></i> Example: Port A Output, Port B Input, Port C Output, all Mode 0</div>
-          <p>D7=1 (mode set), D6D5=00 (Port A Mode 0), D4=0 (A out), D3=0 (C upper out)</p>
-          <p>D2=0 (Port B Mode 0), D1=1 (B input), D0=0 (C lower out)</p>
-          <p>Control Word = <strong>10000010 = 82H</strong></p>
+          <div class="box-title"><i class="fas fa-table"></i> Example: Port A out, Port B in, Port C out, all Mode 0</div>
+          <p>D7 = 1, D6D5 = 00, D4 = 0, D3 = 0, D2 = 0, D1 = 1, D0 = 0 &rarr; control word
+          <strong>10000010 = 82H</strong>.</p>
         </div>
       </div>
 
@@ -622,6 +564,11 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="cache-hit-ratio-data-transfer-and-eat"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-tachometer-alt"></i> Cache Hit Ratio, Data Transfer and Average Access Time (EAT)
+      </h3>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> What is Cache Memory?</div>
         <p>Cache is a small, very fast memory placed between the CPU and main memory. It stores frequently accessed data and instructions to reduce the average memory access time. Based on the principle of <strong>locality of reference</strong>:</p>
@@ -645,25 +592,40 @@
         </div>
       </div>
 
+
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked EAT numericals — both textbook formulas</div>
+        <p>Two formulas appear in the papers. Use the <strong>simultaneous</strong> form when the cache and
+        main memory are searched at the same time, and the <strong>sequential</strong> form when the cache is
+        checked first and main memory is only touched on a miss.</p>
+        <div class="table-wrapper" style="margin-top:0.6rem;">
+          <table class="mem-table">
+            <thead>
+              <tr><th>Given</th><th>Simultaneous access<br><code>T = h&middot;t<sub>c</sub> + (1 &minus; h)&middot;t<sub>m</sub></code></th><th>Sequential access<br><code>T = t<sub>c</sub> + (1 &minus; h)&middot;t<sub>m</sub></code></th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>t<sub>c</sub> = 8 ns</code>, <code>t<sub>m</sub> = 65 ns</code>, <code>h = 0.9</code></td><td>0.9 &times; 8 + 0.1 &times; 65 = <strong>13.70 ns</strong></td><td>8 + 0.1 &times; 65 = <strong>14.50 ns</strong></td></tr>
+              <tr><td><code>t<sub>c</sub> = 8 ns</code>, <code>t<sub>m</sub> = 80 ns</code>, <code>h = 0.9</code></td><td>7.2 + 8 = <strong>15.20 ns</strong></td><td>8 + 8 = <strong>16.00 ns</strong></td></tr>
+              <tr><td><code>t<sub>c</sub> = 8 ns</code>, <code>t<sub>m</sub> = 65 ns</code>, <code>h = 0.85</code></td><td>6.8 + 9.75 = <strong>16.55 ns</strong></td><td>8 + 9.75 = <strong>17.75 ns</strong></td></tr>
+              <tr><td><code>t<sub>c</sub> = 8 ns</code>, <code>t<sub>m</sub> = 80 ns</code>, <code>h = 0.85</code></td><td>6.8 + 12 = <strong>18.80 ns</strong></td><td>8 + 12 = <strong>20.00 ns</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.6rem; font-size:0.9rem; color:var(--text-secondary);">
+          State the formula you used before substituting — the two answers differ by <code>t<sub>c</sub></code>,
+          and that is exactly what the examiner is checking. Data moves between CPU and cache one
+          <strong>word</strong> at a time, but between cache and main memory one <strong>block (line)</strong> at
+          a time, which is why the miss penalty covers a whole block fetch.</p>
+      </div>
+
+      <h3 id="cache-mapping-and-write-policy"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-map-marked-alt"></i> Cache Mapping (Direct, Associative, Set-Associative) and Write Policy
+      </h3>
       <!-- Cache Mapping Techniques -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-map-marked-alt"></i> Cache Mapping Techniques</div>
         <p>Cache mapping determines how main memory blocks are mapped to cache lines. There are three techniques:</p>
-      </div>
-
-      <div class="cache-grid">
-        <div class="cache-card">
-          <p class="card-title"><i class="fas fa-arrow-right"></i> Direct Mapping</p>
-          <p>Each main memory block maps to exactly one specific cache line. Line number = Block number MOD Number of cache lines. Simple hardware but may cause conflicts (two frequently used blocks mapping to same line).</p>
-        </div>
-        <div class="cache-card">
-          <p class="card-title"><i class="fas fa-random"></i> Fully Associative</p>
-          <p>Any main memory block can be placed in any cache line. Most flexible — no conflicts. But requires comparing the tag of every cache line simultaneously (expensive hardware — needs content-addressable memory).</p>
-        </div>
-        <div class="cache-card">
-          <p class="card-title"><i class="fas fa-th"></i> Set-Associative</p>
-          <p>Cache is divided into sets, each containing N lines (N-way). A block maps to a specific set (like direct) but can go in any line within that set (like associative). Best compromise. 2-way and 4-way are most common.</p>
-        </div>
       </div>
 
       <!-- Direct Mapping Detail -->
@@ -688,21 +650,6 @@
           <p>Index bits = log₂(256) = 8 bits (to select cache line).</p>
           <p>Tag bits = 16 − 8 − 2 = 6 bits.</p>
           <p>Address format: <strong>[6-bit Tag | 8-bit Index | 2-bit Offset]</strong></p>
-        </div>
-      </div>
-
-      <!-- Associative Mapping Detail -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-random"></i> Fully Associative Mapping — Address Breakdown</div>
-        <p>No index field needed — any block can go in any line. The entire address (minus offset) becomes the tag.</p>
-        <div class="addr-split">
-          <div class="addr-field tag">Tag<br><small>all remaining bits</small></div>
-          <div class="addr-field offset">Word Offset<br><small>selects word in block</small></div>
-        </div>
-        <div class="formula-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-calculator"></i> Associative Mapping Formulas</div>
-          <div class="formula">Tag bits = Total address bits − Offset bits</div>
-          <div class="formula answer">No index field needed. Tag compared with ALL cache lines simultaneously.</div>
         </div>
       </div>
 
@@ -732,8 +679,61 @@
         </div>
       </div>
 
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Direct vs fully associative vs set-associative</p>
+        <table class="mem-table">
+          <thead>
+            <tr><th>Feature</th><th>Direct</th><th>Fully associative</th><th>Set-associative (k-way)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Block placement</td><td>Exactly one line: <code>line = block mod L</code></td><td>Any line</td><td>Any line inside set <code>block mod S</code></td></tr>
+            <tr><td>Address fields</td><td>Tag | Line | Offset</td><td>Tag | Offset</td><td>Tag | Set | Offset</td></tr>
+            <tr><td>Tag comparison</td><td>One comparator</td><td>One comparator per line</td><td>k comparators</td></tr>
+            <tr><td>Hardware cost</td><td>Lowest</td><td>Highest</td><td>Middle</td></tr>
+            <tr><td>Hit speed</td><td>Fastest</td><td>Slowest (all tags searched)</td><td>Fast</td></tr>
+            <tr><td>Conflict misses</td><td>Frequent (thrashing)</td><td>None</td><td>Only when more than k blocks share a set</td></tr>
+            <tr><td>Replacement choice</td><td>None — the mapping fixes it</td><td>Needed (LRU, FIFO, random)</td><td>Needed within the set</td></tr>
+            <tr><td>Used in</td><td>Small, cheap caches</td><td>Small TLB-like structures</td><td>Real L1/L2/L3 caches</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper" style="margin-top:1rem;">
+        <p style="font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Write-through vs write-back</p>
+        <table class="mem-table">
+          <thead>
+            <tr><th>Feature</th><th>Write-through</th><th>Write-back</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>When main memory is written</td><td>On every store</td><td>Only when the dirty line is replaced</td></tr>
+            <tr><td>Dirty bit</td><td>Not required</td><td>Required — one per line</td></tr>
+            <tr><td>Memory bus traffic</td><td>High</td><td>Low</td></tr>
+            <tr><td>Consistency across caches</td><td>Simple (memory is always current)</td><td>Needs a coherence protocol</td></tr>
+            <tr><td>Speed of a store</td><td>Slower unless buffered</td><td>Faster (only the cache is updated)</td></tr>
+            <tr><td>Typical use</td><td>Simple systems, I/O-heavy paths</td><td>Modern CPU caches</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="important-note" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Worked mapping bit-splits you can quote</div>
+        <p><strong>Direct:</strong> 32-bit address, 64 cache lines, 8-word blocks &rarr; offset 3 bits,
+        line 6 bits, tag 23 bits. <strong>4-way set-associative:</strong> 64 lines / 4 = 16 sets &rarr;
+        set 4 bits, offset 3 bits, tag 25 bits. <strong>Fully associative:</strong> no set or line field at
+        all, so the tag is 29 bits. Always subtract the index and offset widths from the address width.</p>
+      </div>
+
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Mapping Techniques with the Bit Split</div>
+          <p><a href="https://www.youtube.com/watch?v=DJnhfcFBNfM" target="_blank" rel="noopener noreferrer">Cache Memory Mapping Techniques</a> (Learn with Maitrik Shah). Direct, fully associative and set-associative mapping drawn side by side, with the tag / line / word split spelled out for each. Follow it with the bit-count numericals here: on the 32-bit direct-mapped example that means 23 tag bits, 6 line bits and 3 offset bits.</p>
+        </div>
+
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: Write-Through, Write-Back and the Dirty Bit</div>
+          <p><a href="https://www.youtube.com/watch?v=XhfIMjNyMfA" target="_blank" rel="noopener noreferrer">Write Policy in cache Memory | Write back Cache | Write through Cache</a> (CS with SANJOY). Write-through against write-back with the dirty bit drawn explicitly, plus why write-back forces a flush on eviction while write-through never needs one. This is the other half of the write-policy table above; watch it after the mapping video, not before.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 6: VIRTUAL MEMORY
@@ -745,6 +745,11 @@
     </h2>
     <div class="section-content">
 
+
+      <h3 id="virtual-memory-paging-address-space-and-tlb"
+          style="margin:0.2rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-file-alt"></i> Virtual Memory, Paging, Address Space, Page Table and TLB
+      </h3>
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> What is Virtual Memory?</div>
         <p>Virtual memory is a memory management technique that provides the illusion of a much larger main memory by using disk storage as an extension of RAM. Programs use <strong>logical (virtual) addresses</strong> which are translated to <strong>physical addresses</strong> in RAM by the Memory Management Unit (MMU).</p>
@@ -785,6 +790,17 @@
         </div>
       </div>
 
+
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> Worked address-space maths</div>
+        <p><strong>35-bit address, 4 KB pages:</strong> 2<sup>12</sup> = 4096 bytes per page, so the offset is
+        12 bits and the page number is 35 &minus; 12 = 23 bits. The address space is
+        2<sup>35</sup> = 34,359,738,368 bytes = <strong>32 GB</strong>, containing 2<sup>23</sup> =
+        8,388,608 pages.</p>
+        <p style="margin-top:0.4rem;"><strong>Reading a translation:</strong> logical <code>0x1234</code> with
+        4 KB pages has page 1 and offset <code>0x234</code>. If page 1 maps to frame 7, the physical address
+        is <code>0x7234</code> — the offset is copied, never translated.</p>
+      </div>
       <!-- TLB -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-bolt"></i> TLB — Translation Lookaside Buffer</div>
@@ -806,6 +822,8 @@
           <p style="font-size:0.88rem; margin-top:0.4rem;">h = TLB hit ratio. On hit: TLB + 1 memory access. On miss: TLB + 2 memory accesses (page table + actual data).</p>
         </div>
       </div>
+
+      <figure style="margin:1.25rem 0; padding:0.75rem; border:1px solid var(--border-color); border-radius:12px; background:var(--card-bg);"><svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Logical to physical address translation through the TLB and page table" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;"><rect x="15" y="40" width="170" height="70" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="100.0" y="71.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">CPU</text><text x="100.0" y="89.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">logical [p | d]</text><rect x="255" y="30" width="190" height="90" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="350.0" y="71.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">TLB</text><text x="350.0" y="89.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">page &rarr; frame (associative)</text><rect x="255" y="180" width="190" height="90" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="2"/><text x="350.0" y="221.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">PAGE TABLE</text><text x="350.0" y="239.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">in main memory</text><rect x="520" y="40" width="185" height="70" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-width="2"/><text x="612.5" y="71.0" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">PHYSICAL ADDRESS</text><text x="612.5" y="89.0" text-anchor="middle" font-size="10" fill="var(--text-secondary)">[f | d]</text><polyline points="185,75 255,70" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="255,70 249,66.4 249,73.6" fill="var(--text-secondary)"/><polyline points="445,62 520,70" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="520,70 514,66.4 514,73.6" fill="var(--text-secondary)"/><text x="482" y="52" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">hit</text><polyline points="350,120 350,180" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="350,180 346.4,174 353.6,174" fill="var(--text-secondary)"/><text x="360" y="155" text-anchor="start" font-size="9" font-weight="400" fill="var(--text-secondary)">miss</text><polyline points="350,270 350,288 612,288 612,110" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/><polygon points="612,110 608.4,116 615.6,116" fill="var(--text-secondary)"/><text x="470" y="285" text-anchor="middle" font-size="9" font-weight="400" fill="var(--text-secondary)">frame number, then cached in the TLB</text><text x="600" y="30" text-anchor="end" font-size="9" font-weight="400" fill="var(--text-secondary)">offset d is never translated</text></svg><figcaption style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-secondary); text-align:center;">Figure 2 — Paging and the TLB. The page number is replaced by a frame number; the offset is copied unchanged, which is why page size must be a power of two.</figcaption></figure>
 
       <!-- Page Table -->
       <div class="concept-box" style="margin-top:1rem;">
@@ -836,8 +854,40 @@
         </div>
       </div>
 
+      <h3 id="fifo-and-lru-page-replacement"
+          style="margin:1.25rem 0 0.6rem; font-size:1.05rem; color:var(--primary);">
+        <i class="fas fa-sync"></i> Page Replacement Algorithms: FIFO and LRU
+      </h3>
+      <p style="line-height:1.9; color:var(--text-secondary);">
+        When every frame is full, a page must be evicted before the faulting page can be loaded. FIFO evicts
+        the page that has been in memory longest; LRU evicts the page whose last use is furthest in the past.
+        Both traces below use three frames on the reference string
+        <code>5, 0, 2, 1, 0, 3, 0, 2, 4, 3, 0, 3, 2, 1, 3, 0, 1, 5</code> — the exact string the paper uses.
+      </p>
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> FIFO on 18 references with 3 frames</div>
+        <div class="table-wrapper"><table class="mem-table"><thead><tr><th>#</th><th>Reference</th><th>F1</th><th>F2</th><th>F3</th><th>Result</th></tr></thead><tbody><tr><td>1</td><td><strong>5</strong></td><td>5</td><td>&ndash;</td><td>&ndash;</td><td class="highlight">Fault</td></tr><tr><td>2</td><td><strong>0</strong></td><td>5</td><td>0</td><td>&ndash;</td><td class="highlight">Fault</td></tr><tr><td>3</td><td><strong>2</strong></td><td>5</td><td>0</td><td>2</td><td class="highlight">Fault</td></tr><tr><td>4</td><td><strong>1</strong></td><td>1</td><td>0</td><td>2</td><td class="highlight">Fault</td></tr><tr><td>5</td><td><strong>0</strong></td><td>1</td><td>0</td><td>2</td><td>Hit</td></tr><tr><td>6</td><td><strong>3</strong></td><td>1</td><td>3</td><td>2</td><td class="highlight">Fault</td></tr><tr><td>7</td><td><strong>0</strong></td><td>1</td><td>3</td><td>0</td><td class="highlight">Fault</td></tr><tr><td>8</td><td><strong>2</strong></td><td>2</td><td>3</td><td>0</td><td class="highlight">Fault</td></tr><tr><td>9</td><td><strong>4</strong></td><td>2</td><td>4</td><td>0</td><td class="highlight">Fault</td></tr><tr><td>10</td><td><strong>3</strong></td><td>2</td><td>4</td><td>3</td><td class="highlight">Fault</td></tr><tr><td>11</td><td><strong>0</strong></td><td>0</td><td>4</td><td>3</td><td class="highlight">Fault</td></tr><tr><td>12</td><td><strong>3</strong></td><td>0</td><td>4</td><td>3</td><td>Hit</td></tr><tr><td>13</td><td><strong>2</strong></td><td>0</td><td>2</td><td>3</td><td class="highlight">Fault</td></tr><tr><td>14</td><td><strong>1</strong></td><td>0</td><td>2</td><td>1</td><td class="highlight">Fault</td></tr><tr><td>15</td><td><strong>3</strong></td><td>3</td><td>2</td><td>1</td><td class="highlight">Fault</td></tr><tr><td>16</td><td><strong>0</strong></td><td>3</td><td>0</td><td>1</td><td class="highlight">Fault</td></tr><tr><td>17</td><td><strong>1</strong></td><td>3</td><td>0</td><td>1</td><td>Hit</td></tr><tr><td>18</td><td><strong>5</strong></td><td>3</td><td>0</td><td>5</td><td class="highlight">Fault</td></tr></tbody></table></div><p style="margin-top:0.5rem; font-size:0.9rem; color:var(--text-secondary);">FIFO: <strong>15 page faults</strong>, 3 hits out of 18 references.</p>
+      </div>
+      <div class="trace-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-table"></i> LRU on the same 18 references with 3 frames</div>
+        <div class="table-wrapper"><table class="mem-table"><thead><tr><th>#</th><th>Reference</th><th>F1</th><th>F2</th><th>F3</th><th>Result</th></tr></thead><tbody><tr><td>1</td><td><strong>5</strong></td><td>5</td><td>&ndash;</td><td>&ndash;</td><td class="highlight">Fault</td></tr><tr><td>2</td><td><strong>0</strong></td><td>5</td><td>0</td><td>&ndash;</td><td class="highlight">Fault</td></tr><tr><td>3</td><td><strong>2</strong></td><td>5</td><td>0</td><td>2</td><td class="highlight">Fault</td></tr><tr><td>4</td><td><strong>1</strong></td><td>1</td><td>0</td><td>2</td><td class="highlight">Fault</td></tr><tr><td>5</td><td><strong>0</strong></td><td>1</td><td>0</td><td>2</td><td>Hit</td></tr><tr><td>6</td><td><strong>3</strong></td><td>1</td><td>0</td><td>3</td><td class="highlight">Fault</td></tr><tr><td>7</td><td><strong>0</strong></td><td>1</td><td>0</td><td>3</td><td>Hit</td></tr><tr><td>8</td><td><strong>2</strong></td><td>2</td><td>0</td><td>3</td><td class="highlight">Fault</td></tr><tr><td>9</td><td><strong>4</strong></td><td>2</td><td>0</td><td>4</td><td class="highlight">Fault</td></tr><tr><td>10</td><td><strong>3</strong></td><td>2</td><td>3</td><td>4</td><td class="highlight">Fault</td></tr><tr><td>11</td><td><strong>0</strong></td><td>0</td><td>3</td><td>4</td><td class="highlight">Fault</td></tr><tr><td>12</td><td><strong>3</strong></td><td>0</td><td>3</td><td>4</td><td>Hit</td></tr><tr><td>13</td><td><strong>2</strong></td><td>0</td><td>3</td><td>2</td><td class="highlight">Fault</td></tr><tr><td>14</td><td><strong>1</strong></td><td>1</td><td>3</td><td>2</td><td class="highlight">Fault</td></tr><tr><td>15</td><td><strong>3</strong></td><td>1</td><td>3</td><td>2</td><td>Hit</td></tr><tr><td>16</td><td><strong>0</strong></td><td>1</td><td>3</td><td>0</td><td class="highlight">Fault</td></tr><tr><td>17</td><td><strong>1</strong></td><td>1</td><td>3</td><td>0</td><td>Hit</td></tr><tr><td>18</td><td><strong>5</strong></td><td>1</td><td>5</td><td>0</td><td class="highlight">Fault</td></tr></tbody></table></div><p style="margin-top:0.5rem; font-size:0.9rem; color:var(--text-secondary);">LRU: <strong>13 page faults</strong>, 5 hits out of 18 references.</p>
+      </div>
+      <div class="detail-box" style="margin-top:0.75rem;">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What the two tables prove</div>
+        <p>FIFO needs <strong>15 faults</strong> and LRU only <strong>13</strong> on this string, so LRU is
+        closer to optimal here. For reference, the optimal (Belady) algorithm needs just 9 faults and shows
+        that FIFO can suffer <strong>Belady's anomaly</strong> — on some strings it produces <em>more</em>
+        faults after frames are added. LRU never does, which is why real systems approximate LRU rather than
+        FIFO. A page fault costs a disk or SSD access, so it must never be confused with a cache miss.</p>
+      </div>
+
     </div>
-  </section>
+  
+        <div class="tip-box" style="margin-top:0.75rem;">
+          <div class="box-title"><i class="fas fa-play-circle"></i> Watch: FIFO Page Replacement, Reference by Reference</div>
+          <p><a href="https://www.youtube.com/watch?v=8rcUs5RutX0" target="_blank" rel="noopener noreferrer">L-5.22: Page Replacement Introduction | FIFO Page Replacement algorithm</a> (Gate Smashers). Page faults, frames and the FIFO queue built up one reference at a time. Run the 18-reference string from this section on paper while the video runs, then repeat the same string for LRU and OPT — the video stops at FIFO, and the exam does not.</p>
+        </div>
+</section>
 
   <!-- ============================================================
        SECTION 7: FORMULAS
