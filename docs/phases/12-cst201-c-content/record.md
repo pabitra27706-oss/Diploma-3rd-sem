@@ -128,5 +128,11 @@
   4. **Only one inline SVG was authored** (`#compilation-process`). The blueprint's §5 checklist asks for one; Unit 1's other gaps are tables, not diagrams.
   5. **`unitAnchored` will now move `548 → 568`** (11 from Unit 2, 9 from Unit 1). Still deferred to the single update after 12.5.
   6. **Same two environment-only failures** as 12.4 and 12.2 (`test_data_pipeline` shallow clone, `node tests/section-notes.cjs` fixture).
-- **Owner decision (`rule.md` §4.7):** _Pending — this is part 12.4 only, not the phase gate._
+- **Owner decisions (`rule.md` §4.7):**
+  - **12.4 (Unit 4):** accepted — word overrun (`7,195w`) acknowledged, not re-cut.
+  - **12.2 (Unit 2):** accepted — word overrun (`7,532w`) acknowledged as a documented overrun; the `_data/` U3↔U4 unit-order exception stays in Mode A.
+  - **12.1 (Unit 1):** accepted.
+  - **12.3 (Unit 3):** accepted.
+  - **12.5 (Unit 5):** **passed by the owner on 2026-11-18** after a Termux local-browser check of the branch — the `−17.2%` right-sizing was accepted **without** requiring the full `26–34%` cut, so `5,572w` stands as the final Unit 5 figure. The `P005-Q11` anchor fix and the two inline SVGs were confirmed rendering.
+  - **Phase 12 as a whole:** _not yet gated_ — part 12.6 (the phase gate) has not run.
 - **Standing caveats:** Real-device browser check remains owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`; legacy U3↔U4 tag order in `_data/CST201/` and `_quiz-data/CST201/` remains documented in `docs/data/validation-exceptions.json` unless Mode B is requested.
