@@ -91,14 +91,31 @@ def segments_covered(title, needle):
     return covered
 
 
+def _rank(title, needle):
+    """Rank a heading by (segments covered, score).
+
+    Coverage must outrank the score. Taking the plain maximum over segments
+    means one exact segment match (100) beats a heading that covers BOTH
+    segments at 90 -- so "Recursion / stack" landed on the one-line
+    `#overview-recursion` card instead of the full `#functions-and-recursion`
+    section, and "Storage classes / parameter passing" likewise lost the
+    section that answers it. Breadth first, then quality.
+    """
+    return (segments_covered(title, needle), score_title(title, needle))
+
+
+def _better(candidate, incumbent, needle):
+    cref, iref = _rank(candidate, needle), _rank(incumbent, needle)
+    if cref[0] == 0 and iref[0] == 0:
+        return cref[1] > iref[1]
+    return cref > iref
+
+
 def _pick(entries, needle, home, best):
-    """Best entry, breaking equal scores on segment coverage rather than order."""
+    """Best entry by coverage-then-score, independent of document order."""
     for title, anchor in entries:
-        score = score_title(title, needle)
-        covered = segments_covered(title, needle)
-        if score > best[0] or (score == best[0] and score > 0
-                               and covered > segments_covered(best[2] or '', needle)):
-            best = (score, anchor, title, home)
+        if _better(title, best[2] or '', needle):
+            best = (score_title(title, needle), anchor, title, home)
     return best
 
 

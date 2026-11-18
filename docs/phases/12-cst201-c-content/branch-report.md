@@ -172,6 +172,39 @@ have anything to break. The original test for this
 in unit 2", which passed via an unrelated heading; it now asserts the score
 against the singular heading directly and the coverage counts that decide the tie.
 
+### 3.2c Known limitations of the matcher (found by auditing every question, not by testing)
+
+The matcher is much better than it was, but it is **not** "every question lands on its
+best section". Auditing all 105 questions old-vs-new found 15 changed anchors:
+4 gained segment coverage, 1 lost it, and 10 changed within equal coverage. Three
+defects are known and *not* fixed:
+
+1. **Coverage-first fixed the worst case but introduced one regression.**
+   `P004-Q1` ("Global variables / initialization", filed U1) now lands on
+   U1 `#identifiers-and-keywords` (1/2, score 0.50) instead of U4
+   `#global-and-local-variables-initialization` (2/2, score 90). Cause: the in-unit
+   search accepts a partial match that clears the `0.5` floor, so the cross-unit
+   fallback never runs. A global search was tried and rejected — it redirects 17
+   questions and sends every bare "Functions" topic to a stray
+   `U5 #overview-functions` card (cov=1, score=100).
+2. **The score scale is inconsistent.** Exact-title = 100, substring = 90,
+   term-ratio = 0–1. A term-ratio match can therefore never outrank a substring
+   match, and ties fall through to document order. That is why `P005-Q24`
+   ("Pointers / parameter passing") lands on U5 `#overview` rather than
+   `#understanding-pointers-and-addresses`: both score 90 on 1/2 coverage.
+3. **Overview cards tie with real sections and win by document order.**
+   **35 of 105** questions land on a generic `overview-*` / `intro` /
+   `fundamentals` anchor (it was 34 before this work). For most of those the card
+   is the right destination, but for topics like "Operators / modulus" the card
+   is the unit introduction rather than the operator section.
+
+Reported honestly: the headline `103/2/0` counts *whether* a question resolves and
+*which unit*, not whether the anchor is the best section on the page. Scoring
+quality is up sharply (strong matches ≥0.9: **59 → 102** of 105; weak 0.5–0.89:
+**43 → 3**), and generic-anchor landings are flat (34 → 35). Fixing 2 and 3 means
+redesigning the score as a single consistent scale; that is a separate change with
+its own regression surface and is not done here.
+
 ### 3.3 Data — `_data/CST201/` (44 questions re-tagged)
 
 **Verified mechanically against the base commit:** 44 questions changed, and the

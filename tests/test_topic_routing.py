@@ -74,7 +74,7 @@ class TopicRoutingTests(unittest.TestCase):
             'CST201-P005-Q11': (5, 'pointers-to-structures-and-unions'),
             'CST201-P005-Q15': (4, 'storage-classes-in-c'),
             'CST201-P006-Q6': (4, 'functions-intro'),
-            'CST201-P006-Q21': (4, 'overview-recursion'),
+            'CST201-P006-Q21': (4, 'functions-and-recursion'),
         }
         by_id = {q['id']: q for q in routing.questions('CST201', 'P00[3-6]')}
         for qid, (unit, anchor) in expected.items():

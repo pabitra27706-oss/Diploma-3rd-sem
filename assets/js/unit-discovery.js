@@ -131,8 +131,7 @@
 
     // A unit overview heading is a broad summary, so a topic like
     // "Arrays / loops" can tie with it at 90. A heading that covers MORE of
-    // the topic's segments is the better landing spot, so ties are broken on
-    // that count instead of on document order.
+    // the topic's segments is the better landing spot.
     function segmentsCovered(title) {
       let covered = 0;
       for (const segment of needles) {
@@ -140,6 +139,19 @@
         if (targetTerms.length && scoreAgainst(title, segment, targetTerms) > 0) covered += 1;
       }
       return covered;
+    }
+
+    // Coverage must OUTRANK the score, not merely break ties. Scoring each
+    // segment separately and taking the best means one exact segment match
+    // (100) beats a heading that covers BOTH segments at 90 -- so
+    // "Recursion / stack" landed on the one-line `#overview-recursion` card
+    // instead of the full `#functions-and-recursion` section that answers it.
+    function better(candidate, incumbent) {
+      if (!incumbent) return true;
+      const candidateCovered = segmentsCovered(candidate);
+      const incumbentCovered = segmentsCovered(incumbent);
+      if (candidateCovered !== incumbentCovered) return candidateCovered > incumbentCovered;
+      return scoreTitle(candidate) > scoreTitle(incumbent);
     }
 
     let candidates = entriesFor(document, currentUnit);
@@ -167,12 +179,8 @@
 
     let best = null;
     for (const entry of candidates) {
-      const score = scoreTitle(entry.title);
-      const covered = segmentsCovered(entry.title);
-      if (!best || score > best.score
-          || (score === best.score && score > 0 && covered > best.covered)) {
-        best = { ...entry, score, covered };
-      }
+      if (!better(entry.title, best && best.title)) continue;
+      best = { ...entry, score: scoreTitle(entry.title), covered: segmentsCovered(entry.title) };
     }
     if (!best || best.score < 0.5) return;
 
