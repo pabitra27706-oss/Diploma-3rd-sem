@@ -60,6 +60,43 @@
 
 ## 4. 2023–2026 PYQ ↔ Unit Routing Audit (`105` Questions)
 
+- **Sync mode used:** **Mode B**, owner-approved 2026-11-18 (see §6 "Owner decisions"). The earlier parts ran Mode A by design; part 12.6 was authorised to correct `_data/CST201/` because the routing misses could not be closed from the JS side alone (see §4.1).
+
+### 4.1 Part 12.6 result — `105/105` route cleanly (`103` same-unit / `2` correct redirect / `0` unmatched)
+
+| Stage | Same-unit | Redirect | Unmatched |
+| :--- | ---: | ---: | ---: |
+| Baseline (`f52d2f6`) | 46 | 29 | 30 |
+| After 12.1–12.5 (all five unit pages shipped) | 66 | 35 | 4 |
+| After the discovery fix only (`3440211`, "part B") | 77 | 28 | 0 |
+| After the `unit` re-tag (part C1) | 103 | 2 | 0 |
+
+- **Part B — the discovery defect, fixed first.** `assets/js/unit-discovery.js` had two independent faults that only showed together: it required the *whole* stored topic to appear as a heading string, and it compared plural topics against singular headings. `scoreTitle()` now splits topics on `/ , ;` and scores each segment separately (best wins), and singularises terms. Recorded as the reproducible gauge `scripts/audit_topic_routing.py` (`--verbose`, `--fail-unmatched`) so the number can be re-derived without a browser.
+- **Part B follow-up — the overview tie-break.** With segments scoring, `"Arrays / loops"` reached `90` against BOTH the generic `#overview` card and the specific `#arrays-initialization-memory-and-loops` section, and document order sent it to the overview. Ties are now broken on **how many of the topic's own segments the heading covers**, so the specific section wins. 17 anchors improve under this rule and none regress; the five questions named in the part 12.6 brief all land on a specific authored heading:
+
+| Question | Topic | Resolves to |
+| :--- | :--- | :--- |
+| `P003-Q8` | Arrays / loops | U3 `#arrays-initialization-memory-and-loops` |
+| `P005-Q11` | Unions / memory | U5 `#pointers-to-structures-and-unions` |
+| `P005-Q15` | Storage classes / data types | U4 `#storage-classes-in-c` |
+| `P006-Q6` | Functions | U4 `#functions-intro` |
+| `P006-Q21` | Functions / recursion | U4 `#overview-recursion` |
+
+- **Part C1 — the data defect (`44` questions re-tagged, `unit` only).** The stored `unit` on 44 of the 105 `P003`–`P006` questions was simply wrong — mostly the legacy U3/U4 inversion, plus a 23-mark under-count in Unit 5. Each move was read against the question stem and options, not inferred from the old tag. **Zero non-`unit` fields changed**: ids, order, stems, options, marks, topics, tags and `subparts` are byte-identical, verified field-by-field against `sourceCommit` and now pinned by a test. The four paper files (`P003`–`P006`) were re-hashed and the integrity baseline re-frozen with the exact 44 `{from, to}` moves recorded in `_data/pyq-integrity.json → reconciliation.unitMoves`.
+  - Distribution before → after: `{1:39, 2:18, 3:21, 4:22, 5:5}` → `{1:40, 2:16, 3:15, 4:21, 5:13}`. **Unit 4 lands exactly on the blueprint's `97m`** — an independent check that the moves are right, not just plausible.
+- **The remaining `2` redirects are correct, not misses.** `P004-Q8` (scope/declarations, filed U1) belongs to U4 `#overview-scope-storage`, and `P006-Q9` (operator parsing, filed U2) belongs to U1 `#operator-precedence-and-parsing`. A redirect into `90`-scoring syllabus content is the feature working.
+- **Part C2 — deliberately NOT done, and why.** The blueprint's per-unit mark figures (`{1:86, 2:95, 3:66, 4:97, 5:51}`) are attributed **per subpart**, while `_data` stores one `unit` per *question*. 35 of the 105 questions are composites (e.g. `P004-Q16` splits across U1/U2/U4), so no whole-question re-tag can ever reproduce those totals — the residual is exactly the six 8-mark composites. Reaching them needs a new `subparts[].unit` field plus pipeline, viewer and re-baseline work; it is recorded as scoped follow-up in `tasks.md` rather than smuggled into this pass.
+
+### 4.2 Quiz-bank reversal — resolved at source (not waived)
+
+- `_quiz-data/CST201/unit-3.json` held **User Defined Functions** and `unit-4.json` held **Arrays & Strings**: the `unit-order` finding recorded in `docs/data/validation-exceptions.json` since Phase 11. The banks were swapped and their `unit`/`unitTitle` corrected, so Unit 3 now carries `38` items on Arrays/Strings and Unit 4 `42` on Functions.
+- **Question ids were deliberately left unchanged.** The id encodes the old unit (`CST201-U4-Q001` now lives in `unit-3.json`). Renumbering was rejected because content moved *with* its id, so a learner's stored attempt history still resolves to the same question text; `q.unit` is authoritative in `quiz-setup`, with `extractUnit(q.id)` only a fallback.
+- The stale disclosure went with it: `build_coverage.py`'s `BANK_UNIT_REVERSAL` map, both "counts shown both ways" renderers, the legend row and the hub paragraph are **deleted**, and `quiz/js/common.js` no longer labels CST201 units 3/4 "mapping under review" (only genuinely out-of-syllabus units keep a label). `coverage.html` now prints `38` and `42` with no inventory flag.
+- **Both `unit-order` findings were removed from the source-review ledger as RESOLVED**, so `validate_data.py --check-baseline` reports *"Baseline matches source-review ledger"* for the first time.
+
+---
+
+### 4.3 Historical routing detail (parts 12.1–12.5, Mode A)
 - **Sync mode used:** Mode A (`_data/CST201/*.json` untouched) / Mode B (owner approval date: _N/A_)
 - **Baseline (`f52d2f6`):** `46` same-unit (`43.8%`) · `29` redirect (`27.6%`, incl. 5 wrong-unit collisions) · `30` unmatched (`28.6%`) · `0` out-of-unit
 - **After Unit 4 (part 12.4 only):** `48` same-unit (`45.7%`) · `35` redirect (`33.3%`) · `22` unmatched (`21.0%`).
@@ -87,8 +124,14 @@
 | `python3 scripts/audit_accessibility.py --fail` & `check_tokens.py --strict` | `0` findings | ✅ `0` findings / ✅ `0` findings |
 | `python3 scripts/audit_page_weight.py --budget` | `84/84` within 300 KB CSS / 350 KB JS | ✅ all pages within 340 KB CSS / 350 KB JS (unit-4: 319,885 B CSS, unchanged — no new CSS file) |
 | `python3 scripts/build_icon_subset.py --check` & `build_data_version.py --check` | current | ✅ current after regeneration |
-| `python3 -m unittest discover -s tests` | all pass | ✅ **`122/123` after 12.5 — the `unitAnchored` lock was refreshed `548 → 580` in this part** (see §6.6), so `test_discovery` passes again for the first time since 12.4. The single error is `test_data_pipeline.test_no_semantic_or_answer_changes`, which runs `git show 664674b…` — that commit is absent from this shallow clone. **Pre-existing, environment-only, unrelated to this part.** |
-| `node tests/*.cjs` (14 files) | all pass | ⚠️ `13/14` pass. `section-notes.cjs` fails when building its *synthetic* fixture: the fixture's `MiniNode` has no `childNodes` and `section-notes.js` iterates it. The same test's real-page phase (`24 unit pages`) prints PASS. **Pre-existing, unmodified files, unrelated to this part.** |
+| `python3 -m unittest discover -s tests -p "test_*.py"` | all pass | ✅ **`130/130` pass.** The two long-standing blockers were cleared in 12.6, not waived: `test_data_pipeline.test_no_semantic_or_answer_changes` now passes because the missing `664674b` commit was fetched into the shallow clone **and** the test was taught to honour the recorded `unitMoves` list (an unlisted change, a non-`unit` change, or a grown move list still fails, and quiz origins stay byte-identical); `test_content_depth` was inverted to assert the *resolved* bank order instead of the old reversed state. |
+| `node tests/*.cjs` (14 files) | all pass | ✅ **`14/14` pass.** `section-notes.cjs` was a real shim gap, not a test bug: `assets/js/section-notes.js:labelFor` iterates `heading.childNodes`, which `tests/lib/minidom.cjs` never exposed (it had only `children`). Added the alias. |
+| `python3 scripts/validate_syllabus.py` (first time run in Phase 12) | `0` CST201 errors | ✅ `3` errors, all pre-existing out-of-syllabus unit-5 records (`CST205` 4 PYQ, `CST209` 2 PYQ + 35 quiz); **`0` CST201 errors** and the `unit-order` error is gone. |
+| `python3 scripts/check_platform.py` / `check_readme_paths.py` / `check_root_rewrite.py` | clean | ✅ `0` errors / `39` paths, `0` missing / PASS |
+| `python3 scripts/audit_topic_routing.py` | `105/105` route | ✅ `103` same-unit · `2` redirect · `0` unmatched |
+| Raw-code / iframe sweep of the five unit pages | `0` | ✅ `0` `CST201`/`CST211`/`P00\d` strings in rendered text, `0` `<iframe>`, `0` `ytimg` |
+| Canonical rebuild (`README.md:187–215`) | tree unchanged | ✅ run in the documented order; `check_pyq_integrity.py` `0` changed/added/missing afterwards |
+| `unitAnchored` lock (`tests/test_discovery.py:111`) | current | ✅ **`580`, unchanged** — part 12.6 added no headings, only a tie-break rule, so the 12.5 refresh still holds |
 
 ---
 
@@ -99,6 +142,13 @@
   2. **Two blueprint anchor names differ slightly.** The blueprint asked for `#storage-classes-and-parameter-passing` (created, heading *Parameter Passing and Storage Classes*) and `#prime-numbers-using-functions` (created, heading *Finding Primes in an Interval Using Functions*). Both resolve in the routing sim.
   3. **`unitAnchored` lock moved `539 → 548`** in `tests/test_discovery.py`, matching the 9 new `<h3 id>` anchors.
   4. **`P006-Q6` remains a cross-unit collision** (see §4) and needs an owner decision if part 12.4 is expected to close it.
+- **Part 12.6 caveats:**
+  1. **Mode B was used, and the phase brief said Mode A.** The 12.6 checklist literally reads "in Mode A (`0` `_data/` edits)". That could not close the four remaining misses: they were wrong *data*, not wrong discovery, so the owner was asked and authorised Mode B on 2026-11-18 with the constraint **"Don't break anything"**. B and C were then approved together. Nothing was force-pushed, `reset --hard`-ed, or re-frozen without the diff being shown.
+  2. **The C1/C2 split was the owner's delegated call.** Whole-question re-tagging (C1) was done because it is reversible, field-scoped and provable; per-subpart `subparts[].unit` (C2) was deferred because it needs a new field plus pipeline, viewer and re-baseline work. **No whole-question re-tag can ever reproduce the blueprint's per-subpart mark totals**, and the residual is exactly the six 8-mark composites — so C2 is a real requirement for *those* numbers, not a nicety.
+  3. **`44` questions re-tagged, not `43`.** An earlier draft of the policy text said 43; the authoritative field-by-field diff against `sourceCommit` says 44, and the integrity file now records all 44 `{from, to}` moves individually so the count is checkable rather than asserted.
+  4. **Quiz question ids no longer match their bank.** `CST201-U4-Q001` lives in `unit-3.json` after the swap. This is deliberate and safe (`q.unit` wins; the id is only a fallback, and content moved with its id so attempt history still resolves), but it *is* cosmetic debt — the ids read as the old unit to anyone inspecting `_quiz-data` by hand.
+  5. **Two things looked like regressions and were not.** `test_content_depth.test_coverage_file_is_reproducible` failed only when `build_coverage.py` and `generate_presence.py` were run *alternately*; under the documented order (`build`, `build`, `presence`, `presence`) the tree is byte-stable. And `data-version.json` "staleness" was my own ordering mistake — it must be the last script, because it hashes everything else.
+  6. **`17` anchors changed by the tie-break, beyond the five named.** All were checked to exist in their unit page and all are more specific than the generic `#overview` they replaced; no same-unit/redirect/unmatched total moved.
 - **Part 12.5 caveats:**
   1. **The word metric changed, and every number in this file changed with it.** The `/tmp/wc.py` script from parts 12.1–12.3 did not survive between sessions and is not recoverable. It turned out to anchor a *constant recorded baseline* and report only a measured delta, so its absolute output can never be reproduced. §1 below re-derives a single, documented recipe (drop `<style>`/`<script>`/comments, strip tags, unescape entities, count tokens containing a letter or digit) and uses it for every unit from here on. Under it the pristine pages measure `5,418→4,882`, `5,406→4,957`, `5,848→5,149`, `6,749→6,086`, `7,558→6,732` against the old anchors. **The blueprint's budget is therefore applied as a relative cut**, which is metric-independent.
   2. **Unit 5 shipped at `5,572w` = `−1,160w` (`−17.2%`), not the `26–34%` the blueprint's band implies.** The page really was over-weighted (`6732w`, the longest C unit, for `12.9%` of marks) and it is now the second-shortest, so the right-sizing *intent* is met. Reaching `≈5,100w` would have cost either the `#dma` comparisons the paper asks for by name or the two new SVGs. Following the Unit 2 precedent, depth was kept and the miss is recorded here rather than concealed.
@@ -134,5 +184,6 @@
   - **12.1 (Unit 1):** accepted.
   - **12.3 (Unit 3):** accepted.
   - **12.5 (Unit 5):** **passed by the owner on 2026-11-18** after a Termux local-browser check of the branch — the `−17.2%` right-sizing was accepted **without** requiring the full `26–34%` cut, so `5,572w` stands as the final Unit 5 figure. The `P005-Q11` anchor fix and the two inline SVGs were confirmed rendering.
-  - **Phase 12 as a whole:** _not yet gated_ — part 12.6 (the phase gate) has not run.
-- **Standing caveats:** Real-device browser check remains owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`; legacy U3↔U4 tag order in `_data/CST201/` and `_quiz-data/CST201/` remains documented in `docs/data/validation-exceptions.json` unless Mode B is requested.
+  - **12.6 (the phase gate):** **submitted for sign-off 2026-11-18.** Two decisions were taken with owner authorisation rather than on my own judgement: (a) **Mode B** was used, overriding the brief's "Mode A" wording, because the residual misses were wrong data; (b) the **C1-vs-C2** choice was explicitly delegated ("do what will be best") and C1 was chosen with C2 recorded as scoped follow-up. Both are disclosed above rather than presented as the original plan.
+  - **Phase 12 as a whole:** _awaiting the 12.6 verdict_ — every gate above is green, and the only remaining work is owner-side device verification.
+- **Standing caveats:** Real-device browser check remains owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md` (`0/924` certified — a scan check is not a certification). The legacy U3↔U4 tag order in `_data/CST201/` and `_quiz-data/CST201/` is **no longer open**: Mode B was authorised and both were corrected on 2026-11-18 (§4.1, §4.2). What remains open in `docs/data/validation-exceptions.json` is the pre-existing out-of-syllabus unit-5 content for `CST205` and `CST209`, untouched by this phase.
