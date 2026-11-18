@@ -1,6 +1,6 @@
 # Phase 9 — Performance, measurement and launch
 
-**Status:** ✅* implemented 2026-11-17 on `arena/908b6b19-diploma-3rd-sem` and **merged to `main` as PR #17** (`c898a95`, published by Pages); 9.2/9.3/9.5 done, 9.4 open on the owner's dated measurement answer, 9.6 evidenced only where this environment can prove an item (no Lighthouse, no phone, no deploy) · **Parts:** 6 · **Depends on:** 1–8 · **Owner gates:** analytics decision (9.4), deploy (9.6), domain (9.5)
+**Historical implementation status:** ✅* implemented 2026-11-17 and merged as PR #17. **Owner closure update (2026-11-18):** Phase 9 is administratively closed; 9.4 is closed without a counter by owner choice; unrun Lighthouse and remaining launch/device checks are skipped, not passed. See [`docs/PROJECT-CLOSURE.md`](../../PROJECT-CLOSURE.md). No deploy is authorized by this closure. · **Parts:** 6 · **Depends on:** 1–8
 
 > Results and exact numbers: [`record.md`](record.md). Task-level status:
 > [`tasks.md`](tasks.md). Per-page static measurements:

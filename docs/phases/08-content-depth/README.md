@@ -1,6 +1,6 @@
 # Phase 8 — Content depth and syllabus coverage
 
-**Status:** **`✅*`** — 8.1, 8.3, 8.4, 8.5 implemented and gate-verified; 8.2 and 8.6 built but **uncertified**; owner-accepted on a smoke use pass 2026-11-17 (see [`record.md`](record.md) and `docs/DECISIONS.md`) · **Parts:** 6 · **Depends on:** 2, 7 · **Owner gates:** content verification (8.2, 8.6) — still open
+**Historical implementation status:** `✅*` — 8.1, 8.3, 8.4, 8.5 implemented and gate-verified; 8.2 and 8.6 remain **uncertified**. **Owner closure update (2026-11-18):** no further verification will be undertaken; 8.2/8.6 are closed as skipped, not passed. Counts remain 0/44 verified and 0/924 certified. See [`docs/PROJECT-CLOSURE.md`](../../PROJECT-CLOSURE.md).
 
 > The asterisk: acceptance covers the implementation, not the content. 0 of 44
 > revision entries and 0 of 924 answers are source-verified, and no real

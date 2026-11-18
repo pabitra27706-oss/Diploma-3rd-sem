@@ -1,18 +1,11 @@
 # Measurement without surveillance
 
-> **Phase 9.4 status (2026-11-17): the owner opened a first-party counter GATE.**
-> That is a decision to *want* aggregate counts later, not an approval to add one
-> today — nothing was built, and the site still sends no analytics, tracker or
-> third-party script. The gate's four open questions (which number, where it is
-> stored, retention, disclosure text) are in `docs/DECISIONS.md` under
-> "9.4 measurement — owner opened a first-party counter gate — 2026-11-17", with
-> the binding constraints any future counter must satisfy. What
-> ships is the local-only usefulness prompt described below; reading its code
-> (`assets/js/accessibility.js`, bundled into `assets/js/shell.bundle.js`) confirms
-> it makes **no network call** — no `fetch`, no `sendBeacon`, no image ping — and
-> that a dismissed or unavailable `sessionStorage` simply skips the prompt. A
-> dated owner decision is required before Phase 9.4 closes; see
-> `docs/DECISIONS.md` → "Open owner decisions from Phase 9".
+> **Phase 9.4 status (2026-11-18): closed without a counter by owner choice.**
+> The owner selected no measurement; no counter, network request, or storage is
+> authorized. The disclosure scope was approved only in case measurement is
+> reconsidered later; that does not authorize implementation. Existing runtime
+> remains first-party and local-only. `assets/js/accessibility.js` (bundled into
+> `shell.bundle.js`) makes no analytics `fetch`, `sendBeacon`, or image ping.
 
 Runtime remains first-party and local-only: no third-party analytics, tracking
 pixels or usage upload. Local goal/card counts and quiz histories describe only
@@ -49,11 +42,10 @@ scores, real-device timings, install rates, retention, number of students, which
 questions are actually difficult, whether anyone found the site useful. There is
 no browser in the build environment and no analytics by design.
 
-**The owner has opened that gate (2026-11-17).** The honest option chosen for
-further work is a **first-party, non-tracking aggregate counter** — not a
-third-party analytics service. Before it can ship, the owner must answer what is
-counted, where it is stored, how long it is kept and what the privacy page says;
-and the implementation must keep these non-negotiables:
+The owner closed Phase 9.4 without a counter on 2026-11-18. If measurement is
+reconsidered, obtain new explicit authorization and re-evaluate endpoint,
+retention, request-log, and privacy requirements first. These constraints remain
+binding for any future implementation:
 
 - one same-origin request, non-blocking, inside the existing page budget, and
   never a precache entry (offline must not depend on it);
@@ -65,5 +57,5 @@ and the implementation must keep these non-negotiables:
 - counts are reported as what they are (sessions/views), never as learning gains,
   retention or "students helped". Repository traffic is still not student usage.
 
-Until those answers exist, Phase 9.4 stays **open** and this document stays the
-record of what cannot be known.
+Phase 9.4 is **closed without implementation**. A later change requires a new
+owner decision; a working build is not authorization to deploy or change hosting.

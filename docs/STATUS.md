@@ -1,8 +1,12 @@
-Documentation checkpoint: **2026-11-17 (Phase 9B merged)**. Earlier reconciliations:
-2026-11-16 (branch/license audit — `docs/AUDIT-2026-11-16.md`), 2026-11-17
-(sub-phase 8A, Phase 7 merge, Phase 8 content depth, Phase 9B). This is the
-current handoff; older phase evidence remains historical unless explicitly
-superseded here.
+Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
+
+## Owner closure — 2026-11-18
+
+**Phases 1–10 are closed at the owner's direction.** No further tests are to be
+run in this scope. This is an administrative closeout, not a blanket technical
+pass: remaining requirements are explicitly skipped or left unverified in
+[`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md). Phase 10's device report is partial;
+content remains uncertified; no new deploy is authorized.
 
 ## Phase 9B — UI reboost (2026-11-17) — `✅*`, merged
 
@@ -78,16 +82,16 @@ has been recorded. Full evidence: [`phases/09-performance-launch/record.md`](pha
 - **9.5 ✅** `scripts/site_config.py` is the only place the published URL exists;
   `scripts/check_root_rewrite.py` rewrites a temp copy to `/` and runs
   `check_site.py --strict` inside it → 0 errors, 0 warnings. No domain action.
-- **9.4 ⛔ gate opened by the owner 2026-11-17** — the local-only prompt still
-  ships and makes no network call, but the owner chose a **first-party aggregate
-  counter** route rather than confirming the no-measurement default. So the part
-  stays open until the metric, storage location, retention and privacy-page text
-  are answered; **no counter code was written**. Constraints and the recorded
-  decision: `docs/DECISIONS.md` + `docs/MEASUREMENT.md`.
-- **9.6 🚧** `docs/LAUNCH-CHECKLIST.md` ticked with dates wherever this
-  environment can prove an item. **Lighthouse and the real-phone pass are
-  explicitly not run** (no browser, no device). Publication happened by merging
-  `main` on owner command; nothing else (domain, Pages settings, tags) was touched.
+- **9.4 ⚪ closed without a counter (owner choice, 2026-11-18)** — no measurement
+  requests or storage are authorized. The approved disclosure scope is
+  prospective only and does not authorize a counter. Reopening requires a new
+  explicit decision. See `docs/DECISIONS.md` + `docs/MEASUREMENT.md`.
+- **9.6 🚧 in progress** — static launch gates and byte budgets pass; all pages
+  remain within 300 KB CSS / 350 KB JS. Owner-reported physical Android checks
+  (2026-11-18) passed several listed flows; evidence and missing device/browser
+  versions are recorded in `docs/phases/10-device-acceptance/matrix.md`.
+  Lighthouse/Core Web Vitals remain unrun, and this partial phone pass does not
+  complete the launch or Phase 10 matrix. No new deploy is authorized or performed.
 
 Measured from disk (74 pages, uncompressed): **592 static requests** (was 817),
 **6,817,906 CSS bytes** (was 8,638,771), 7–10 static requests per page (was
@@ -135,9 +139,13 @@ PR #15 merge). Full evidence: [`phases/08-content-depth/record.md`](phases/08-co
   asterisk is the whole story: acceptance covers the implementation, not the
   content. **0 of 44** revision entries and **0 of 924** answers are
   source-verified, and no real print/PDF export was observed.
-- **Still open:** 8.2/8.6 sign-off; 456 unkeyed quiz items; the reversed CST201
-  bank units and the six Unit-5 tags (source gate, never re-tagged); a real print
-  export on hardware (Phase 10).
+- **Owner direction (2026-11-18): no further Phase 8 answer or revision-sheet
+  verification will be undertaken.** The entries remain expressly uncertified:
+  0/44 revision drafts verified and 0/924 PYQ answers certified. This is a scope
+  decision, not a quality pass. `info/disclaimer-notice.html` now states there is
+  no guarantee of 100% accuracy and directs students to official sources.
+- **Still open:** 456 unkeyed quiz items; the reversed CST201 bank units and six
+  Unit-5 tags remain uncorrected/flagged; a real print export on hardware (Phase 10).
 
 ## Sub-phase 8A — answer prose and subject labels (2026-11-17)
 
@@ -338,26 +346,25 @@ that documentation-only edits reran all browser suites:
 For repeatable commands, see [tests](../tests/README.md). For the actual
 incomplete cache guarantees, see [cache policy](CACHE-POLICY.md).
 
-## Dedicated final device phase — not started
+## Dedicated final device phase — in progress, partial evidence recorded
 
-[Phase 10](phases/10-device-acceptance/README.md) follows implementation 1–9.
-It consolidates actual Android/iOS/tablet/desktop, browser, keyboard/screen-reader,
-zoom/reflow, background timer/screen lock, install/update/offline, backup download,
-and print acceptance. Emulation and actual hardware must be identified separately.
+[Phase 10](phases/10-device-acceptance/README.md) consolidates actual
+Android/iOS/tablet/desktop, browser, keyboard/screen-reader, zoom/reflow,
+background timer/screen lock, install/update/offline, backup download, and print
+acceptance. The owner supplied partial Android evidence on 2026-11-18; see the
+device matrix. Emulation and actual hardware must be identified separately.
 Unavailable device access is **untested**, never silently passed.
 
 ## Recommended remaining order
 
-1. **Phase 9 is implemented** on the session branch: 9.1 ✅, 9.2 ✅, 9.3 ✅,
-   9.5 ✅, with numbers in the Phase 9 section above and in
-   `phases/09-performance-launch/record.md`. Three things remain and none of them
-   can be done in the agent environment: the **9.4 counter gate's four answers**
-   (metric, storage, retention, disclosure — the owner opened the gate on
-   2026-11-17 and no code exists yet), a **real-browser launch pass** (Lighthouse,
-   print export, phone), and the **deploy decision** — not authorized, not done.
-2. Phase 8's two content gates stay open in parallel and are **owner work**:
-   sign off revision entries, then answer batches of ≤40 with a citation and a
-   date. Nothing in this branch certified content.
+1. **Phase 9.4 is closed without measurement by owner choice.** Phase 9.6 still
+   needs Lighthouse/Core Web Vitals. Phase 10 is underway with partial Android
+   evidence; the remaining device matrix, including the untested checks listed
+   above, and the separate deploy decision remain.
+2. **Phase 8 verification will not continue by owner direction (2026-11-18).**
+   No entries or answers are certified: 0/44 revision drafts and 0/924 PYQ
+   answers. The site now carries an explicit no-100%-accuracy disclaimer; this
+   scope decision is not verification or a quality pass.
 3. Phase 7 is `✅*` and merged as PR #15; its acceptance left these unmeasured,
    and they remain Phase 10 items together with Phase 8's print export:
    rendered contrast after compositing, 200 % zoom/reflow on the longest unit

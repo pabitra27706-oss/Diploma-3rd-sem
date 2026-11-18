@@ -1,8 +1,8 @@
 # Phase 10 — Dedicated cross-device acceptance
 
-**Status:** planned, not started — one owner smoke pass exists (used to accept
-Phase 7), no acceptance sweep · **Parts:** 5 · **Depends on:** implementation
-phases 1–9
+**Status:** **closed by owner direction (2026-11-18)** — partial Android evidence
+recorded; remaining matrix checks skipped, not passed · **Parts:** 5 ·
+**Depends on:** implementation phases 1–9
 
 Owner-directed sequencing: finish implementation work first, then run the full
 cross-device acceptance sweep here. Focused automated regression checks continue

@@ -1,5 +1,11 @@
 # Roadmap — Diploma 3rd Sem Study Hub
 
+> **Closure update (2026-11-18):** by owner direction, Phases 1–10 are now
+> administratively closed; any remaining test or acceptance item is **SKIPPED**,
+> not passed. Use [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md) for the controlling
+> per-phase disposition. Earlier roadmap text below is historical where it
+> conflicts with that closeout.
+
 Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 (10 original phases plus owner-requested device acceptance, one folder each)
 
@@ -25,11 +31,11 @@ Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 | 5 | Study system | [`05-study-system`](phases/05-study-system/README.md) | 5 | Cards from verified content; deterministic scheduler; weak areas with denominators; daily goal + Today screen | ✅* |
 | 6 | State, notes, portability | [`06-state-portability`](phases/06-state-portability/README.md) | 6 | One storage module; one theme key; truthful reset; notes on all unit pages; backup round-trip; IDB path | ✅* |
 | 7 | Inclusion and trust | [`07-inclusion-trust`](phases/07-inclusion-trust/README.md) | 5 | WCAG 2.2 AA measured; reading controls; en/bn UI layer; privacy matches code; LICENSE + true README | ✅* |
-| 8 | Content depth and syllabus coverage | [`08-content-depth`](phases/08-content-depth/README.md) | 6 | Coverage map from the syllabus; formula sheets with sources; clean print; lab/internship pages; exam pattern reconciled | ✅* (owner smoke pass; 8.2 + 8.6 content gates open) |
-| 9 | Performance, measurement, launch | [`09-performance-launch`](phases/09-performance-launch/README.md) | 6 | ≤12 requests; one token file; cache policy; honest measurement; domain-ready; checklist green, still not deployed | 🚧 |
+| 8 | Content depth and syllabus coverage | [`08-content-depth`](phases/08-content-depth/README.md) | 6 | Coverage map from the syllabus; formula sheets with sources; clean print; lab/internship pages; exam pattern reconciled | Closed by owner direction; 8.2/8.6 verification SKIPPED (0/44, 0/924 certified) |
+| 9 | Performance, measurement, launch | [`09-performance-launch`](phases/09-performance-launch/README.md) | 6 | ≤12 requests; one token file; cache policy; honest measurement; domain-ready; checklist green, still not deployed | Closed by owner direction; 9.4 no counter; Lighthouse/remaining checks SKIPPED |
 
 | 9B | UI reboost | [`09B-ui-reboost`](phases/09B-ui-reboost/record.md) | reviewed batches | Owner-approved direction and plan; phone/desktop review of each batch; token, a11y and weight gates | ✅* merged 2026-11-17 (no physical-device pass) |
-| 10 | Dedicated cross-device acceptance | [`10-device-acceptance`](phases/10-device-acceptance/README.md) | 5 | Observed device/browser matrix, defect retests, honest tested/untested report | 📋 |
+| 10 | Dedicated cross-device acceptance | [`10-device-acceptance`](phases/10-device-acceptance/README.md) | 5 | Observed device/browser matrix, defect retests, honest tested/untested report | Closed by owner direction; partial Galaxy A35 report retained; remaining matrix SKIPPED |
 
 ## Owner-directed sequencing — 2026-11-09
 
@@ -58,14 +64,15 @@ For the complete current remainder list and evidence limits, see
 [Current status](STATUS.md). Phase records contain historical and current
 results; do not treat their earlier checkpoints as passes on later changes.
 
-## Gates still open
+## Closure disposition (supersedes the historical gate list below)
 
-- **License** — **MIT chosen 2026-11-16** (see `LICENSE`); covers project code/authored content. Third-party exam-source material rights remain a separate gate.
-- **Content verification** — Phase 2.5 and Phase 8.6, owner sign-off per batch.
-- **Measurement method** — Phase 9.4, local-only by default; real analytics is a
-  new decision.
-- **Deploy** — never authorised implicitly; Phase 9.6 stops before it.
-- **Domain** — readiness only; purchasing is a separate gate.
+The owner closed Phases 1–10 on 2026-11-18 and directed no further tests. The
+Phase 2/8 content verification and Phase 9.6/10 device/browser items that were
+not completed are skipped/untested, not passed. Phase 9.4 is closed without a
+counter. This does not grant new deployment or domain authorization. See
+[`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md) for the per-phase table; preceding
+phase evidence and the historical notes below remain available without being
+current action items.
 
 ## Held / cancelled (keep visible)
 

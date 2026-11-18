@@ -1,7 +1,9 @@
 # Phase 10 — Dedicated device acceptance tasks
 
-Status: planned, **not started**. Run after implementation phases 1–9.
-Use `matrix.md`; no pre-filled row is a pass.
+Status: **closed by owner direction, 2026-11-18**. The owner's partial Galaxy A35
+report is recorded in `matrix.md`. No further tests are authorized in this scope;
+all criteria not explicitly evidenced there are **SKIPPED/UNTESTED**, not passed.
+This closeout does not claim full cross-device acceptance.
 
 ## 10.1 — Inventory and core journeys
 

@@ -582,6 +582,17 @@ Agent decisions (reversible — object if wrong). None of them certifies content
 - **Merge:** authorized for `arena/e0da0bec-diploma-3rd-sem` → `main` only. No
   deploy, no Pages change, no domain, no tag, no release.
 
+## Phase 8 verification scope — owner direction — 2026-11-18
+
+The owner directed that no further Phase 8 answer or revision-sheet verification
+be undertaken. This closes the verification work as **not pursued**, not as a
+pass: the 44 revision entries remain drafts, and all 924 archived PYQ answers
+remain uncertified. No data status or verified date is changed. The public
+`info/disclaimer-notice.html` now states that content is provided as-is, is not
+guaranteed 100% accurate, and must be cross-checked with official sources. This
+disclaimer is not a substitute for certification and does not change any
+individual answer's provenance.
+
 ## Phase 9 performance and launch — engineering decisions — 2026-11-17
 
 These are delegated implementation decisions (owner delegation of 2026-11-09),
@@ -646,16 +657,16 @@ What this decides, and what it does not:
 - **Decided:** the owner does want aggregate usage counts later, so the question
   is no longer "analytics or nothing". Phase 9.4 therefore stays **open** — this is
   a gate, not an implementation approval, and nothing was built in response.
-- **Not decided yet (a second, later owner answer is required before any code):**
-  1. **Which number** — e.g. daily page views, daily "site opened", or distinct
-     browsers; anything per-student, per-question or per-answer is out of scope
-     unless explicitly asked for.
-  2. **Where it is stored** — a first-party endpoint/worker the owner controls, or
-     GitHub Pages/HTTP logs. No third-party analytics service, no pixel, no
-     tag manager, no cookie for tracking.
-  3. **Retention** — how long counts are kept and who can read them.
-  4. **Disclosure text** — the privacy page must name the counter, the fields sent,
-     the purpose and the retention **before** it ships.
+- **Not decided yet (owner answers required before implementation):**
+  1. **Metric** — choose what aggregate is counted. No per-student, per-question,
+     or per-answer metric is in scope under the existing constraints.
+  2. **Storage** — choose/authorize a first-party endpoint or other owner-approved
+     storage. No third-party analytics service, pixel, tag manager, or tracking
+     cookie; GitHub Pages itself is static and offers no counter endpoint.
+  3. **Retention/access** — specify how long aggregates are kept and who may read
+     them; include the chosen host's request-log behavior.
+  4. **Disclosure** — approve the privacy-page text describing the counter, fields
+     sent, purpose, and retention **before** any request ships.
 - **Non-negotiable constraints inherited from Phases 1–9** (these are binding on
   any future implementation, whoever writes it):
   - one request, same origin, **never blocking render**; it must fit the page
@@ -669,18 +680,24 @@ What this decides, and what it does not:
     counter;
   - a counter is never presented as proof of learning, retention or "students
     helped" — `docs/MEASUREMENT.md`'s unknowables stay unknowable.
-- **Status:** 9.4 open, blocked on the second answer above. Re-asking the *first*
-  question ("do you want any measurement at all?") is now a defect — it is
-  answered here.
+- **Owner follow-up — 2026-11-18:** the owner selected **no counter / no
+  measurement**; storage is deferred, and no counts are to be persisted. The
+  owner also approved the standard disclosure scope if measurement is ever
+  reconsidered, but this does not authorize a counter or require a new disclosure
+  for a feature that will not ship. Phase 9.4 is closed as **not implemented by
+  choice**, not as a shipped measurement feature. No counter code, request, or
+  hosting change is authorized.
+- The 2026-11-17 gate record above is retained as historical context; this
+  follow-up supersedes its open status.
 
 ## Open owner decisions from Phase 9
 
 - **Deploy (9.6).** Not authorized and not performed. `docs/LAUNCH-CHECKLIST.md`
   is ticked only where this environment can prove an item; Lighthouse and the
   real-phone pass are recorded as **not run**.
-- **9.4 counter gate (see above).** Open by the owner's choice of 2026-11-17; the
-  follow-up questions (metric, storage location, retention, disclosure) are the
-  remaining gate.
+- **9.4 counter.** Closed unimplemented by the owner's 2026-11-18 choice of no
+  counter. No measurement request or storage is authorized; any later reopening
+  requires a new explicit decision.
 
 ## Explicit main-merge authorization — Phase 9 — 2026-11-17
 
