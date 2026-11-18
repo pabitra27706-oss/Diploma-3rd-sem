@@ -22,13 +22,14 @@
 ## Part 12.2 — Unit 2: Decision & Loop Control Statements (`95m / 24.1%`, 5h, PDF p. 3)
 - **Target file:** `subjects/CST201/units/unit-2.html` (`5,406w → ~6,200–6,800w`) · Blueprint: [`unit-2/README.md`](unit-2/README.md)
 - **Implementation checklist:**
-  - [ ] Allocate ~54% of concept prose to **Tier A `#loops` (`52m`, 4/4 papers)**: `for` vs `while` and `while` vs `do-while` comparison tables, loop-trap traces, and the 7-program workbench (Euclidean GCD, sum of digits, Armstrong `100..1000`, iterative Fibonacci, `1/1!+...+1/n!`, `1+(1+2)+...+(1..n)`, and nested pattern `5 / 45 / 345 / 2345 / 12345`) with sample I/O and dry-run tables.
-  - [ ] Allocate ~26% to **Tier A `#decision` (`25m`, 4/4 papers)**: simple `if`, `if-else`, accessible inline SVG nested `if-else` flowchart, dangling-`else`, `else-if` ladder, plus 4 programs (max of 3, divisible by 5 & 11, 5-subject percentage/grade, Gregorian leap year) and `?:` cross-link to Unit 1.
-  - [ ] Allocate ~12% to **Tier B `#jump` & `#goto` (`11m`, 3/4 papers)**: `break` vs `continue` trace table, `goto` label syntax + nested-exit demo, and structured-programming rationale against `goto`.
-  - [ ] Allocate ~8% to **Tier C `#switch` (`7m`, 2/4 papers)**: integral selector rules, `break`/fall-through/`default`, `switch` vs `if-else` table, and calculator/day program.
-  - [ ] Calibrate practice (`8` MCQs, `5` short, `6` worked 8m), add `5` Mode A `<h3 id>` anchors, cross-link `subjects/CST211/index.html` (Areas 3–4), and insert `3` live-verified plain-`<a>` YouTube links.
+  - [x] Allocate ~54% of concept prose to **Tier A `#loops` (`52m`, 4/4 papers)**: `for` vs `while` and `while` vs `do-while` comparison tables, loop-trap traces, and the 7-program workbench (Euclidean GCD, sum of digits, Armstrong `100..1000`, iterative Fibonacci, `1/1!+...+1/n!`, `1+(1+2)+...+(1..n)`, and nested pattern `5 / 45 / 345 / 2345 / 12345`) with sample I/O and dry-run tables.
+  - [x] Allocate ~26% to **Tier A `#decision` (`25m`, 4/4 papers)**: simple `if`, `if-else`, accessible inline SVG nested `if-else` flowchart, dangling-`else`, `else-if` ladder, plus 4 programs (max of 3, divisible by 5 & 11, 5-subject percentage/grade, Gregorian leap year) and `?:` cross-link to Unit 1.
+  - [x] Allocate ~12% to **Tier B `#jump` & `#goto` (`11m`, 3/4 papers)**: `break` vs `continue` trace table, `goto` label syntax + nested-exit demo, and structured-programming rationale against `goto`.
+  - [x] Allocate ~8% to **Tier C `#switch` (`7m`, 2/4 papers)**: integral selector rules, `break`/fall-through/`default`, `switch` vs `if-else` table, and calculator/day program.
+  - [x] Calibrate practice (`8` MCQs, `5` short, `6` worked 8m), add `5` Mode A `<h3 id>` anchors, cross-link `subjects/CST211/index.html` (Areas 3–4), and insert `3` live-verified plain-`<a>` YouTube links.
 - **Acceptance & evidence:**
-  - [ ] Locked `#loops`, `#jump`, all `14` `<section id>`s, and `5` `overview-*` `h3` IDs intact; all 12 benchmark programs compile and match verified sample outputs; 3 verified URLs logged in `record.md`.
+  - [x] Locked `#loops`, `#jump`, all `14` `<section id>`s intact **plus `#videos`** (`15` shipped), and the `5` `overview-*` `h3` IDs re-created (they were absent from the shipped page, owner-approved); 12 benchmark programs compiled clean with `gcc -std=c99 -Wall -Wextra -O2` and every sample output matched; **4** verified URLs logged in `record.md` (blueprint asked for 3).
+  - [x] Delivered at **`7,532w`** on the calibrated metric against the `6,200–6,800` band — owner-approved overrun, disclosed in `record.md` §6 (same treatment as Unit 4's `7,195` over a `7,200` ceiling).
 
 ---
 

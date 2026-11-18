@@ -1,6 +1,6 @@
 # CST201 Unit 2 — Decision & Loop Control Statements
 
-> **Target file:** `subjects/CST201/units/unit-2.html` (current: `5,406w` → target: **`~6,200–6,800w`**)  
+> **Target file:** `subjects/CST201/units/unit-2.html` (shipped: **`7,532w`** — owner-approved overrun over the `~6,200–6,800w` target, see `record.md` §6.1)  
 > **Syllabus (`syllabus.json`, PDF p. 3):** **5 contact hours** (of `30h`, `2` credits, L–T–P `2-0-0`)  
 > **2023–2026 Exam Weight (`P003–P006` only):** **`95 / 395` marks (`24.1%`, #2 in C — #1 in Group B long-answer marks at `87m`!)** · avg **`23.8m/paper`** · **`4/4` papers** · **`8m` MCQ + `87m` 8m-subparts** (`2021–2022` `P001`/`P002` excluded)  
 > **Locked `guides.json` anchors (must preserve):** `#loops`, `#jump`  
@@ -80,9 +80,9 @@
 ---
 
 ## 5. Programs, Diagrams & Comparison Tables Checklist
-- [ ] **Inline SVGs (2):** (1) Nested `if-else` decision flowchart (`P005-Q17a`); (2) Entry-controlled `while` vs exit-controlled `do-while` loop flowchart.
-- [ ] **Programs (12 `gcc -std=c99 -Wall -Wextra` verified):** 7 loop programs + 4 `if-else` programs + 1 `switch-case` calculator (plus `break`/`continue`/`goto` snippets).
-- [ ] **Comparison tables (4):** `for` vs `while`; `while` vs `do-while`; `break` vs `continue` vs `goto`; `switch` vs `else-if` ladder.
+- [x] **Inline SVGs (2):** (1) Nested `if-else` decision flowchart (`P005-Q17a`); (2) Entry-controlled `while` vs exit-controlled `do-while` loop flowchart.
+- [x] **Programs (12 `gcc -std=c99 -Wall -Wextra` verified):** 7 loop programs + 4 `if-else` programs + 1 `switch-case` calculator (plus `break`/`continue`/`goto` snippets).
+- [x] **Comparison tables (4):** `for` vs `while`; `while` vs `do-while`; `break` vs `continue` vs `goto`; `switch` vs `else-if` ladder.
 
 ---
 
