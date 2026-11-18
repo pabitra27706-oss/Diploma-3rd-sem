@@ -6,6 +6,11 @@
 
 ## Owner decisions
 
+- 2026-11-18 — Roll the approved Algorithms layout out? — **Yes, all five
+  theory subjects.** Keep the workbook and priority table, and add more Easy
+  Read guidance on what matters and what to read. This supersedes the
+  Algorithms-only implementation limit, not the owner acceptance or release
+  gates.
 - 2026-11-18 — Which layout to build next within Phase 11? — **Algorithms pair
   first.** Review the 2nd-semester repository and show both mockups before site
   changes (done); use the chosen workbook and named-priority directions for

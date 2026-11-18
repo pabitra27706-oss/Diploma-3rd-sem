@@ -4,10 +4,11 @@ import re
 import sys
 import tempfile
 import unittest
+from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
 from unittest.mock import patch
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, quote, urlsplit
 from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,7 +108,7 @@ class SuggestionsTests(unittest.TestCase):
             slug = guides.SUBJECTS[code][0]
             with self.subTest(subject=code):
                 page = Page(f'suggestions/{slug}/important-questions.html')
-                self.assertTrue(page.with_class('main', 'suggestions-main--bank'))
+                self.assertTrue(page.with_class('main', 'suggestions-workbook'))
                 self.assertFalse(page.with_class('li', 'suggestions-step'))
                 unit_links = [url for url in page.links() if url.startswith('#unit-')]
                 self.assertEqual(unit_links, [f"#unit-{u['unit']}" for u in subject['units']])
@@ -127,7 +128,7 @@ class SuggestionsTests(unittest.TestCase):
                                  [f'{min(n, 5)} out of 5 stars' for n in counts])
                 self.assertEqual(page.text.count('1 cited session · no repeat cited'), counts.count(1))
                 self.assertIn('not necessarily exact repeats', page.text)
-                self.assert_archive_links(page, expected, archived, compact=code == 'CST209')
+                self.assert_archive_links(page, expected, archived, compact=True)
 
     def test_easy_read_prioritizes_quick_wins_with_dated_paper_examples(self):
         choices = read_json(guides.CURATION)
@@ -139,18 +140,14 @@ class SuggestionsTests(unittest.TestCase):
                 units = choices[code]['units']
                 self.assertNotEqual(order, sorted(order))
                 self.assertEqual(units[str(order[0])]['effort'], 'quick')
-                self.assertTrue(easy.with_class('main', 'suggestions-main--easy'))
+                self.assertTrue(easy.with_class('main', 'suggestions-priority'))
                 self.assertFalse(easy.with_class('li', 'suggestions-pattern'))
                 self.assertEqual(len(easy.with_class('li', 'suggestions-step--first')), 1)
                 self.assertIn('Last-minute checklist</h2>', easy.text)
                 self.assertIn('Marks are for the whole linked question', easy.text)
-                if code == 'CST209':
-                    self.assertEqual(easy.text.count('<strong>Try it</strong>'), len(order))
-                    self.assertEqual(easy.text.count('<strong>Why first?</strong>'), 1)
-                    self.assertEqual(easy.text.count('<strong>Why here?</strong>'), len(order) - 1)
-                else:
-                    self.assertEqual(easy.text.count('<strong>Try it:</strong>'), len(order))
-                    self.assertEqual(easy.text.count('<strong>Why here:</strong>'), len(order))
+                self.assertEqual(easy.text.count('>Try it</h4>'), len(order))
+                self.assertEqual(easy.text.count('<strong>Why first?</strong>'), 1)
+                self.assertEqual(easy.text.count('<strong>Why here?</strong>'), len(order) - 1)
                 self.assertEqual([a for a in easy.links() if a.startswith('#step-unit-')],
                                  [f'#step-unit-{unit}' for unit in order])
                 self.assertEqual([div['id'] for div in easy.with_class('div', 'suggestions-step-heading')],
@@ -174,35 +171,60 @@ class SuggestionsTests(unittest.TestCase):
                 self.assertEqual([int(n) for n in re.findall(r"· (\d+) marks? total", easy.text)],
                                  [archived[ident][3] for ident in expected])
 
-    def test_workbook_and_priority_table_are_algorithms_only(self):
-        for path, code in guides.guide_paths().items():
-            with self.subTest(path=path):
-                page = Page(path)
-                self.assertEqual(bool(page.with_class('main', 'suggestions-workbook')),
-                                 code == 'CST209' and path.endswith('important-questions.html'))
-                self.assertEqual(bool(page.with_class('table', 'suggestions-priority-table')),
-                                 code == 'CST209' and path.endswith('easy-read.html'))
-        bank = Page('suggestions/algorithms/important-questions.html')
-        easy = Page('suggestions/algorithms/easy-read.html')
-        short_titles = ['Fundamentals', 'Sorting', 'Searching', 'Graphs']
-        for unit, title in enumerate(short_titles, 1):
-            self.assertIn(f'<a href="#unit-{unit}"><span>Unit {unit}</span> {title}</a>', bank.text)
-        cards = bank.with_class('li', 'suggestions-workbook-fact')
-        self.assertEqual(len(cards), 13)
-        self.assertEqual(len(bank.with_class('p', 'suggestions-workbook-example')), len(cards))
-        self.assertEqual(len(bank.with_class('aside', 'suggestions-workbook-reference')), 4)
-        self.assertEqual(len(bank.with_class('span', 'suggestions-workbook-number')), 20)
-        self.assertIn('7 mod 5 = 12 mod 5 = 2', bank.text)
-        self.assertEqual(len(bank.with_class('span', 'suggestions-workbook-source')), 75)
-        self.assertEqual([href for href in easy.links() if href.startswith('#step-unit-')],
-                         ['#step-unit-3', '#step-unit-2', '#step-unit-1', '#step-unit-4'])
-        self.assertEqual([th['role'] for th in easy.elements('th') if th.get('scope') == 'col'],
-                         ['columnheader'] * 4)
-        self.assertEqual([th['role'] for th in easy.elements('th') if th.get('scope') == 'row'],
-                         ['rowheader'] * 4)
-        self.assertIn('Find 7 in [1, 3, 5, 7, 9]', easy.text)
-        self.assertLess(easy.text.index('</table>'), easy.text.index('Find 7 in'))
-        self.assertEqual(easy.times[:2], [('2024-01', 'January 2024'), ('2023-03', 'March 2023')])
+    def test_workbook_and_priority_table_cover_every_subject(self):
+        choices = read_json(guides.CURATION)
+        for code, (slug, _, _) in guides.SUBJECTS.items():
+            with self.subTest(subject=code):
+                bank = Page(f'suggestions/{slug}/important-questions.html')
+                easy = Page(f'suggestions/{slug}/easy-read.html')
+                items = choices[code]['units']
+                patterns = sum(len(row['patterns']) for row in items.values())
+                cites = sum(len(p['refs']) for row in items.values() for p in row['patterns'])
+                facts = sum(len(row['quickReference']) for row in items.values())
+                self.assertGreaterEqual(facts, 3 * len(items))
+                self.assertEqual(len(bank.with_class('li', 'suggestions-workbook-fact')), facts)
+                self.assertEqual(len(bank.with_class('p', 'suggestions-workbook-example')), facts)
+                self.assertEqual(len(bank.with_class('aside', 'suggestions-workbook-reference')), len(items))
+                self.assertEqual(len(bank.with_class('span', 'suggestions-workbook-number')), patterns)
+                self.assertEqual(len(bank.with_class('span', 'suggestions-workbook-source')), cites)
+                for unit, row in items.items():
+                    self.assertIn(f'<a href="#unit-{unit}"><span>Unit {unit}</span> {escape(row["shortTitle"])}</a>', bank.text)
+                self.assertEqual(len(easy.with_class('table', 'suggestions-priority-table')), 1)
+                self.assertEqual([th['role'] for th in easy.elements('th') if th.get('scope') == 'col'],
+                                 ['columnheader'] * 4)
+                self.assertEqual([th['role'] for th in easy.elements('th') if th.get('scope') == 'row'],
+                                 ['rowheader'] * len(items))
+                self.assertLess(easy.text.index('</table>'), easy.text.index('>Try it</h4>'))
+        searching = Page('suggestions/algorithms/easy-read.html')
+        self.assertIn('Find 7 in [1, 3, 5, 7, 9]', searching.text)
+        self.assertEqual(searching.times[:2], [('2024-01', 'January 2024'), ('2023-03', 'March 2023')])
+
+    def test_easy_read_links_to_two_real_note_sections_per_step(self):
+        choices = read_json(guides.CURATION)
+        for code, (slug, _, _) in guides.SUBJECTS.items():
+            with self.subTest(subject=code):
+                easy = Page(f'suggestions/{slug}/easy-read.html')
+                guide = choices[code]
+                order = guide['studyOrder']
+                self.assertEqual(len(easy.with_class('ul', 'suggestions-focus-list')), len(order))
+                self.assertEqual(len(easy.with_class('ol', 'suggestions-reading-links')), len(order))
+                self.assertEqual(easy.text.count('>What’s important</h4>'), len(order))
+                self.assertEqual(easy.text.count('>What to read first</h4>'), len(order))
+                expected = []
+                for unit in order:
+                    path = f'subjects/{code}/units/unit-{unit}.html'
+                    notes = Page(path)
+                    targets = {attrs['id'] for _, attrs in notes.starts if 'id' in attrs}
+                    reading = guide['units'][str(unit)]['reading']
+                    self.assertEqual(len(reading), 2)
+                    self.assertEqual(len({link['anchor'] for link in reading}), 2)
+                    for link in reading:
+                        self.assertIn(link['anchor'], targets)
+                        href = f'../../{path}#{quote(link["anchor"], safe="")}'
+                        expected.append(href)
+                        self.assertIn(f'<a href="{href}">{escape(link["label"])}</a> <span>— {escape(link["cue"])}</span>', easy.text)
+                actual = [href for href in easy.links() if href.startswith(f'../../subjects/{code}/') and '#' in href]
+                self.assertEqual(actual, expected)
 
     def test_discovery_and_presence_include_all_suggestions_pages(self):
         expected = {guides.HUB: None, **guides.guide_paths()}
@@ -232,6 +254,10 @@ class SuggestionsTests(unittest.TestCase):
             (lambda c: c['CST209']['units']['3']['quickReference'].pop(), 'at least three quick-reference examples'),
             (lambda c: c['CST209']['units']['3']['quickReference'][0].update(example=' '), 'worked example: expected non-empty text'),
             (lambda c: c['CST209']['units']['3'].update(firstPractice=' '), 'first practice: expected non-empty text'),
+            (lambda c: unit_one(c)['reading'].pop(), 'choose two sections to read first'),
+            (lambda c: unit_one(c)['reading'][0].update(anchor='loops'), 'unknown note section #loops'),
+            (lambda c: unit_one(c)['reading'][1].update(anchor='operators'), 'duplicate note section #operators'),
+            (lambda c: unit_one(c)['reading'][0].update(cue=' '), 'reading cue: expected non-empty text'),
         )
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / 'curation.json'

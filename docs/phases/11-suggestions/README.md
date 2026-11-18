@@ -1,6 +1,6 @@
 # Phase 11 — Subject-wise Suggestions
 
-**Status:** 🚧 Algorithms-only layout pilot ready for owner review; not accepted, 2026-11-18 · **Parts:** 4
+**Status:** 🚧 All five pairs updated; awaiting owner review, not accepted, 2026-11-18 · **Parts:** 4
 
 Help 3rd-semester CST students decide what to practise and what to revise first.
 On the base commit, `suggestions/index.html` was a Coming Soon placeholder with
@@ -13,8 +13,9 @@ is the interaction reference: expand a subject card, then choose one of two guid
   Python, Data Structures, Computer System Organization and Algorithms.
 - Give each subject two separate pages: **Important Questions** (syllabus-grouped
   question patterns with dated, source-linked appearances and a transparent star
-  scale) and **Easy Read** (a distinct, quick-win-first plan with scoring evidence,
-  practice tasks and a revision checklist).
+  scale and worked reference boxes) and **Easy Read** (a distinct, quick-win-first
+  table with priority topics, direct note sections, dated practice, drills and
+  a revision checklist).
 - Use the 3rd-semester design and theme, existing notes and PYQ routes, and
   native keyboard-operable disclosures. Add Home Quick Access and menu links;
   keep bottom navigation unchanged on Home.
@@ -30,11 +31,11 @@ static, syllabus-linked guides; archived-question links resolve under
 `/Diploma-3rd-sem/`; targeted checks pass and evidence limits are recorded.
 Formal acceptance and release remain separate owner decisions.
 
-**Current review:** The owner chose the Algorithms pair as the first layout
-pilot after reviewing the second-semester references and mockups. Test the
-[workbook's Searching unit](../../../suggestions/algorithms/important-questions.html#unit-3)
-and the [priority table and drill](../../../suggestions/algorithms/easy-read.html)
-at both phone and desktop widths. The other four subject layouts stay as they
-were until the owner reviews this pair.
+**Current review:** The owner approved applying the Algorithms layout to all
+five subjects and asked for more reading guidance in Easy Read. Use the
+[Suggestions hub](../../../suggestions/index.html) and try the
+[C workbook](../../../suggestions/c/important-questions.html#unit-2) and
+[C Easy Read](../../../suggestions/c/easy-read.html) at phone and desktop widths.
+Test **What to read first** links, drills, exact paper jumps and both themes.
 
 See [tasks](tasks.md) and the [phase record](record.md).

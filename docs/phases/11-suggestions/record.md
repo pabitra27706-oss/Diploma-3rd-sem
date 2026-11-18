@@ -270,3 +270,86 @@ rollout to the other four subjects, or a release.
 
 Wait for owner review of this pair. Other subjects, Phase 11 acceptance, PR,
 merge and deployment are not authorized by the pilot decision.
+
+## Owner-authorized rollout and Easy Read expansion
+
+The owner reviewed the Algorithms pilot and said: **“Thats good apply to all
+subjects and try to easy read bit extra like what's important what to read
+etc”**. Extend the approved layout to all five theory subjects and enrich Easy
+Read now. This is not the Phase 11 acceptance phrase or permission to release.
+The Algorithms pilot `e8450bf` passed [Web CI 44241832604](https://github.com/pabitra27706-oss/Diploma-3rd-sem/actions/runs/44241832604)
+with `site-preview` and `site-check` artifacts; that evidence is for the pilot.
+
+- **ADAPT** the reviewed workbook and semantic priority table in
+  `scripts/build_suggestions.py` and `assets/css/hub.css` as the single pair of
+  layouts. Keep syllabus order, distinct-session ratings, real paper links,
+  responsive stacking and the first-study-unit order for each subject. Add
+  original practice examples to the workbook reference boxes for the remaining
+  units, without editing the source papers.
+- **ADAPT** the existing unit-note anchors and site link parser for short **What's
+  important** and **What to read first** lists in every Easy Read step. Provide
+  specific cues for selected sections, not generic “read Unit N”; retain the
+  immediate drill, two dated paper examples, unit notes, workbook jump and
+  checklist. Treat priorities as a first pass, not exam predictions or a reason
+  to skip syllabus topics. No added library or runtime requests.
+- **Keep scope:** C, Python, Data Structures, CSO and Algorithms, their existing
+  guide routes, and generated discovery/cache metadata. Dashboard/Home
+  behaviour, syllabus, unit-note prose, paper archive and quizzes are frozen.
+  Verify the five pairs on phone and desktop, check exact note-section and
+  paper links, and keep keyboard, both themes, scaled high contrast, no-JS and
+  warm offline evidence at the nested project URL before offering review.
+
+### Rollout delivered for review — 2026-11-18
+
+- All five workbooks use the same syllabus-order layout: named jumps, numbered
+  prompts, dated question links and beside/below quick references. Across 23
+  units there are **104 patterns, 393 cited appearances and 70 worked reference
+  boxes**. The prompts, cited questions, session counts and stars did not change
+  from the pilot. The boxes are original study examples, not answer keys.
+- Easy Read retains the orders (C **2→3→1→4→5**, Python **2→1→3→5→4**,
+  Data Structures **2→3→1→4**, CSO **3→1→5→4→2**, Algorithms **3→2→1→4**).
+  Every step explains the rank, names what to focus on, and links two specific
+  sections of the current unit notes with a reading cue (46 links). The prior
+  drills, checklists and 46 dated practice examples are unchanged. Keep the
+  warm-up option where fundamentals are needed.
+- Rebuilt Suggestions, presence, search and data version. Shell
+  `study-2026-11-18d`; data `data-1cadf3283272` over 81 files. Discovery has
+  2,523 entries (188 page rows); all eleven Suggestions routes remain in
+  search and sitemap. Only the ten guide bodies changed; 74 other HTML pages
+  match the pilot except for the shell marker. The hub remains precached and
+  visited guides are cached without prefetching notes or papers.
+- Local gates: **123 Python tests**, **63 JS/CJS syntax checks**, **10 Node
+  suites**, deterministic output, strict site and platform checks, tokens,
+  README paths, root-path copy, icon subset and page-weight budgets passed.
+  Accessibility audit measured 84 pages and 74 token pairs with zero findings.
+  Freeze diff against `45bc44d` clean for the archive, quizzes and syllabus;
+  28 papers/924 questions schema-valid. Data baseline matched the existing
+  nine errors/one warning, not strict certification.
+- Chromium at `/Diploma-3rd-sem/`: both Home entries, all ten guides at
+  320/390/1280 CSS px, both themes and 130% high-contrast text at 320, no
+  horizontal overflow, selected rendered contrast pairs, focused jumps,
+  five note-section and eleven archive destinations, no-JS navigation and
+  warm offline revisits for all pairs. PYQ viewer smoke also passed at 390.
+  No physical-device, assistive-technology, print or source-accuracy sign-off.
+- Actual renders in Arena (not shipped): `review/phase-11-all-subjects/` has
+  workbook and Easy Read captures for each subject at 390 and 1280, plus
+  C's workbook overview, dark CSO and scaled high-contrast Python samples.
+  Open `c-easy-read-desktop.png` to see the table and first full study step.
+  The CI preview artifact contains the static site, not these review images.
+
+### What to test on the website — all subjects
+
+1. Open `/Diploma-3rd-sem/suggestions/index.html` in the branch preview or the
+   Termux server from `rule.md` §7. Expand each of the five subject cards; each
+   should offer just **Important Questions** and **Easy Read**.
+2. On `/Diploma-3rd-sem/suggestions/c/easy-read.html`, choose **Rank 1, Unit 2**.
+   Read the priority topics, open **Looping statements**, return for the drill,
+   then follow **Practice questions** to `c/important-questions.html#unit-2`.
+3. On `/Diploma-3rd-sem/suggestions/c/important-questions.html#unit-2`, select
+   **Jan 2026** under the running-total prompt. The viewer should select the
+   archived question containing the series. Quick references sit alongside on
+   desktop and below the prompts on phone. Try a second subject and dark mode.
+4. Load a pair online, then revisit offline. Visited guides should load; an
+   unvisited note or paper is not promised offline.
+
+Awaiting the owner's Phase 11 verification. No PR, merge or deployment.

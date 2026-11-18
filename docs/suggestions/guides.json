@@ -8,15 +8,28 @@
       4,
       5
     ],
-    "start": "If you can read a small C program, start with branches and loops, then reuse those ideas on arrays. If syntax is new, use Unit 1 as a short warm-up and return to this order.",
+    "start": "If C syntax is new, skim the types and operators in Unit 1 before tracing the loops in Unit 2.",
     "units": {
       "1": {
-        "title": "Read a short C expression",
-        "effort": "quick",
+        "shortTitle": "C Basics",
+        "effort": "theory",
+        "firstPractice": "Predict an expression",
         "reason": "These short expression traces and header explanations make a useful third pass. If syntax is the thing slowing you down, do this unit as a warm-up.",
         "essentials": [
-          "Operator precedence and assignment versus comparison",
-          "Headers, common types and conversions"
+          "Group operators before evaluating an expression. Check integer division and casts separately.",
+          "Recognise basic types and tokens. Know what a header such as <stdio.h> declares."
+        ],
+        "reading": [
+          {
+            "anchor": "operators",
+            "label": "Operators in C",
+            "cue": "parenthesise a mixed expression and check precedence and associativity."
+          },
+          {
+            "anchor": "typecasting",
+            "label": "Type conversion and casting",
+            "cue": "compare integer division with a division that has a floating-point operand."
+          }
         ],
         "try": "Predict the results of 5/2 and 5/2.0, then trace one expression that mixes multiplication and addition. Explain where parentheses would change the result.",
         "examples": [
@@ -29,9 +42,22 @@
             "task": "Explain precedence, associativity and the difference between a header and a library."
           }
         ],
-        "recall": [
-          "Integer division discards the fractional part; 5 / 2 is 2.",
-          "Precedence groups operators; associativity breaks ties within a precedence level."
+        "quickReference": [
+          {
+            "title": "Group before evaluating",
+            "rule": "Precedence determines grouping. Associativity resolves ties at the same precedence level.",
+            "example": "2 + 3 * 4 groups as 2 + (3 * 4) and gives 14. (2 + 3) * 4 gives 20."
+          },
+          {
+            "title": "Division and casts",
+            "rule": "Integer division truncates toward zero. Convert an operand before dividing if you need a fractional result.",
+            "example": "5 / 2 gives 2; (double)5 / 2 gives 2.5. Casting the result of 5 / 2 cannot restore the fraction."
+          },
+          {
+            "title": "Bitwise AND",
+            "rule": "A result bit is 1 only when both corresponding input bits are 1.",
+            "example": "For 6 & 3: 0110 AND 0011 gives 0010, or 2."
+          }
         ],
         "patterns": [
           {
@@ -57,12 +83,25 @@
         ]
       },
       "2": {
-        "title": "Trace the branch and the loop",
+        "shortTitle": "Control & Loops",
         "effort": "quick",
+        "firstPractice": "Dry-run a loop",
         "reason": "Short loop templates cover written comparisons and full programs. The same dry run helps with both the running-total series and GCD.",
         "essentials": [
-          "Trace while and do–while before coding",
-          "Rehearse one branch problem and one running-total loop"
+          "Mark the test, body and update in a loop. Be able to explain why do–while runs its body at least once.",
+          "Trace a running total and a digit or GCD problem. Check one input that stops the loop early."
+        ],
+        "reading": [
+          {
+            "anchor": "loops",
+            "label": "Looping statements",
+            "cue": "compare where the test happens in while and do–while, then dry-run a for loop."
+          },
+          {
+            "anchor": "jump",
+            "label": "Break and continue",
+            "cue": "explain which statements still run after each jump."
+          }
         ],
         "try": "Trace digit sum with input 402, noting each remainder and updated value. Then write a GCD loop and test it with 18 and 12.",
         "examples": [
@@ -75,9 +114,22 @@
             "task": "Compare while and do–while, then write a GCD program."
           }
         ],
-        "recall": [
-          "while tests before the body; do–while tests afterward.",
-          "In a nested loop, show where the inner counter and any running total are reset."
+        "quickReference": [
+          {
+            "title": "Before or after the body?",
+            "rule": "while tests first; do–while tests after its body.",
+            "example": "If x = 0 and the test is x > 0, while skips the body. A do–while with a body that leaves x unchanged runs once."
+          },
+          {
+            "title": "Trace both totals",
+            "rule": "For a sum of running totals, update the inner total before adding it to the outer total.",
+            "example": "With i = 1, 2, 3, the inner totals are 1, 3, 6. Their total is 1 + 3 + 6 = 10."
+          },
+          {
+            "title": "Euclid’s remainder step",
+            "rule": "Replace (a, b) with (b, a % b) while b is nonzero.",
+            "example": "For 18 and 12: (18, 12) → (12, 6) → (6, 0), so the GCD is 6."
+          }
         ],
         "patterns": [
           {
@@ -108,12 +160,25 @@
         ]
       },
       "3": {
-        "title": "Work through arrays and strings",
-        "effort": "standard",
+        "shortTitle": "Arrays & Strings",
+        "effort": "trace",
+        "firstPractice": "Trace matrix indices",
         "reason": "Matrix and string questions reuse loops you already know. A clear index trace is useful across several written question forms.",
         "essentials": [
-          "Matrix rows, columns, diagonals and transpose",
-          "String terminator and basic library functions"
+          "Write the row and column bounds before working on a matrix diagonal or transpose.",
+          "Leave room for the null terminator. Distinguish measuring, comparing and editing a string."
+        ],
+        "reading": [
+          {
+            "anchor": "2d-arrays",
+            "label": "Two-dimensional arrays",
+            "cue": "label rows and columns, then follow a diagonal or transpose example."
+          },
+          {
+            "anchor": "strings",
+            "label": "Strings as character arrays",
+            "cue": "draw where the terminator goes before trying a string loop."
+          }
         ],
         "try": "Sketch a 3 × 3 matrix, mark its diagonal indices, and write a loop that adds only those elements. Then draw how a short string is stored.",
         "examples": [
@@ -126,9 +191,22 @@
             "task": "Show string functions and check an input string for a palindrome."
           }
         ],
-        "recall": [
-          "In a square matrix the main diagonal has row index equal to column index.",
-          "A C string needs room for the terminating null character as well as its visible characters."
+        "quickReference": [
+          {
+            "title": "Main diagonal",
+            "rule": "For a square matrix, sum only positions whose row equals the column.",
+            "example": "In [[1, 2], [3, 4]], add a[0][0] and a[1][1]: 1 + 4 = 5."
+          },
+          {
+            "title": "Transpose",
+            "rule": "Move an element at row i, column j to row j, column i.",
+            "example": "A 2 × 3 matrix becomes a 3 × 2 matrix. The element a[0][2] goes to t[2][0]."
+          },
+          {
+            "title": "String storage",
+            "rule": "A C string ends at the first null character, written \\0.",
+            "example": "char s[] = \"cat\" stores c, a, t, \\0 in four slots; strlen(s) is 3."
+          }
         ],
         "patterns": [
           {
@@ -154,12 +232,25 @@
         ]
       },
       "4": {
-        "title": "Turn a solution into a function",
-        "effort": "standard",
+        "shortTitle": "Functions",
+        "effort": "trace",
+        "firstPractice": "Trace a call and return",
         "reason": "Storage-class comparisons and parameter examples are reusable. Recursion is worth practising after you can trace the same task with a loop.",
         "essentials": [
-          "Prototype, call and return value",
-          "Compare scopes and trace a recursive base case"
+          "Show which parameters receive copies and what the function returns. Use an address if the caller’s object must change.",
+          "Compare scope and lifetime, then trace a recursive base case and the return steps."
+        ],
+        "reading": [
+          {
+            "anchor": "parameters",
+            "label": "Parameter passing",
+            "cue": "compare passing an integer with passing its address in a pointer parameter."
+          },
+          {
+            "anchor": "recursion",
+            "label": "Recursion",
+            "cue": "mark the stopping case and write the return values on the way back up."
+          }
         ],
         "try": "Write a factorial function and trace the stack by hand for input 3. Test the base case separately.",
         "examples": [
@@ -172,9 +263,22 @@
             "task": "Write a recursive factorial function."
           }
         ],
-        "recall": [
-          "Scope is where a name is visible; lifetime is how long the object exists.",
-          "C passes arguments by value. A copy of an address still lets the function access the original object."
+        "quickReference": [
+          {
+            "title": "Value versus address",
+            "rule": "C passes arguments by value. A copied pointer still points to the caller’s object.",
+            "example": "If a function takes int *p and executes *p = 9 after being called with &x, the caller’s x becomes 9."
+          },
+          {
+            "title": "Scope and lifetime",
+            "rule": "Scope is where a name is visible; lifetime is how long the object exists.",
+            "example": "A local static counter initialised to 0 and incremented on each call retains its value between calls."
+          },
+          {
+            "title": "Recursive returns",
+            "rule": "Specify a base case, then reduce each call toward it.",
+            "example": "With fact(0) = 1, fact(3) is 3 × fact(2), which unwinds to 3 × 2 × 1 × 1 = 6."
+          }
         ],
         "patterns": [
           {
@@ -200,12 +304,25 @@
         ]
       },
       "5": {
-        "title": "Draw pointers before writing code",
+        "shortTitle": "Pointers",
         "effort": "extended",
+        "firstPractice": "Draw what a pointer refers to",
         "reason": "Pointers turn up in written questions, but correct traversal and allocation take more careful tracing. Start them after arrays and function calls.",
         "essentials": [
-          "Draw address, pointer and value separately",
-          "Trace allocation, failure check, use and cleanup"
+          "Draw the pointer, the address and the object separately. Check the array bound before dereferencing.",
+          "For dynamic memory, calculate the size, check allocation, use the block and free it once."
+        ],
+        "reading": [
+          {
+            "anchor": "declaration",
+            "label": "Declaring and accessing pointers",
+            "cue": "explain what & and * mean in a short example."
+          },
+          {
+            "anchor": "dma",
+            "label": "Dynamic memory allocation",
+            "cue": "compare malloc, calloc and realloc, then mark where free belongs."
+          }
         ],
         "try": "Draw a small dynamically allocated array. Write the allocation, failure check, traversal and cleanup in that order.",
         "examples": [
@@ -218,9 +335,22 @@
             "task": "Explain malloc, calloc, realloc and free."
           }
         ],
-        "recall": [
-          "For a valid index i, a[i] is equivalent to *(a + i).",
-          "Check whether allocation succeeded before dereferencing, and release owned memory when done."
+        "quickReference": [
+          {
+            "title": "Address and dereference",
+            "rule": "For an object x, &x is its address; *p accesses the object that p points to.",
+            "example": "Declare int x = 4 and int *p = &x. Assigning *p = 7 changes x to 7."
+          },
+          {
+            "title": "Array access",
+            "rule": "Within the array, a[i] accesses the same element as *(a + i).",
+            "example": "For a = {5, 8, 13}, *(a + 1) reads 8. Index 3 is outside the three elements."
+          },
+          {
+            "title": "Allocate, then check",
+            "rule": "Size a block by the element count times the size of one element. Check before use; free it when finished.",
+            "example": "For three int values, allocate 3 * sizeof *p bytes for an int pointer p. Do not dereference a null result."
+          }
         ],
         "patterns": [
           {
@@ -262,15 +392,28 @@
       5,
       4
     ],
-    "start": "Start with short loop and condition problems you can dry-run on paper. Next revise collections, then functions. A Django flow diagram is a quicker first pass than learning several file and regular-expression APIs at once.",
+    "start": "Predict the output before running a snippet. Use Unit 1 as a warm-up if types or slices slow you down.",
     "units": {
       "1": {
-        "title": "Choose a type and predict the result",
+        "shortTitle": "Types & Collections",
         "effort": "quick",
+        "firstPractice": "Predict a slice",
         "reason": "Comparing collections and dry-running slices are short tasks with both objective and written examples in the archive.",
         "essentials": [
-          "Lists versus tuples and dictionaries",
-          "Index, slice, split and join on small examples"
+          "Choose among a mutable list, an immutable tuple and a dictionary keyed by a lookup value.",
+          "Trace indexing and slicing. Explain what split and join return on the same short string."
+        ],
+        "reading": [
+          {
+            "anchor": "collections",
+            "label": "Lists, tuples and dictionaries",
+            "cue": "make a tiny example of each and try changing one value."
+          },
+          {
+            "anchor": "strings",
+            "label": "Strings and slicing",
+            "cue": "check the excluded stop index and practise split and join."
+          }
         ],
         "try": "Make a list of five values. Predict two slices and try changing an element; explain how the same operation differs on a tuple.",
         "examples": [
@@ -283,9 +426,22 @@
             "task": "Show what join and split do and explain string immutability."
           }
         ],
-        "recall": [
-          "Indexing normally selects one element; a slice excludes its stop index.",
-          "split separates a string into a list; separator.join combines strings into one."
+        "quickReference": [
+          {
+            "title": "Index versus slice",
+            "rule": "An index picks one element; a slice normally excludes its stop index.",
+            "example": "With a = [10, 20, 30, 40], a[1] is 20 and a[1:3] is [20, 30]."
+          },
+          {
+            "title": "Choose a collection",
+            "rule": "Use a list for a mutable sequence, a tuple for a fixed sequence, or a dict for key lookup.",
+            "example": "scores = {\"Mina\": 7} lets you look up scores[\"Mina\"] directly instead of remembering a list position."
+          },
+          {
+            "title": "Split and join",
+            "rule": "split produces pieces; separator.join puts string pieces together.",
+            "example": "\"a,b,c\".split(\",\") gives [\"a\", \"b\", \"c\"]. \"-\".join of those pieces gives \"a-b-c\"."
+          }
         ],
         "patterns": [
           {
@@ -316,12 +472,25 @@
         ]
       },
       "2": {
-        "title": "Dry-run conditions and loops",
+        "shortTitle": "Control Flow",
         "effort": "quick",
+        "firstPractice": "Dry-run a prime test",
         "reason": "Loop traces and small programs appear repeatedly. One dry-run habit transfers to range, prime checks and break/continue questions.",
         "essentials": [
-          "for, while and range with a dry run",
-          "if–elif–else and break versus continue"
+          "Trace if/elif/else, indentation and range bounds. Test the first, last and empty cases.",
+          "Explain break, continue and pass by showing which line executes next."
+        ],
+        "reading": [
+          {
+            "anchor": "loops",
+            "label": "Loops and range",
+            "cue": "write down each value produced by range before tracing the body."
+          },
+          {
+            "anchor": "loop-control",
+            "label": "Loop control statements",
+            "cue": "compare exit, skip-to-next-iteration and no operation."
+          }
         ],
         "try": "Write a prime checker and dry-run it on 1, 2 and 9. Mark exactly which condition rejects a composite number.",
         "examples": [
@@ -334,9 +503,22 @@
             "task": "Compare for and while and write a digit-sum program."
           }
         ],
-        "recall": [
-          "range(start, stop) excludes stop; check the first and last loop values.",
-          "break exits the loop, continue advances to the next iteration, and pass does nothing."
+        "quickReference": [
+          {
+            "title": "End of a range",
+            "rule": "The stop value is excluded.",
+            "example": "range(2, 6, 2) yields 2 and 4, not 6."
+          },
+          {
+            "title": "Three loop controls",
+            "rule": "break exits the innermost loop, continue skips the rest of this iteration, and pass does nothing.",
+            "example": "Over [1, 2, 3], skipping 2 with continue leaves 1 and 3 to print. Breaking at 2 prints only 1."
+          },
+          {
+            "title": "Prime check",
+            "rule": "Reject values below 2, then look for a divisor up to and including the square root.",
+            "example": "For 9 the divisor 3 makes the remainder zero. For 2 there is no candidate divisor to test."
+          }
         ],
         "patterns": [
           {
@@ -367,12 +549,25 @@
         ]
       },
       "3": {
-        "title": "Package small, testable functions",
-        "effort": "standard",
+        "shortTitle": "Functions & Modules",
+        "effort": "trace",
+        "firstPractice": "Call a function two ways",
         "reason": "Function-argument and scope questions reuse a few compact examples. Practise those before writing longer scripts or following imports.",
         "essentials": [
-          "Default and variable-length arguments",
-          "Local/global scope and module versus package"
+          "Explain positional, keyword, default and variable-length arguments with calls to a small function.",
+          "Distinguish a local name from a module-level name, and a module from a package."
+        ],
+        "reading": [
+          {
+            "anchor": "parameters",
+            "label": "Parameters and arguments",
+            "cue": "compare a call that supplies a value with one that uses the default."
+          },
+          {
+            "anchor": "modules",
+            "label": "Modules and imports",
+            "cue": "trace where an imported function is defined and how it is called."
+          }
         ],
         "try": "Write a function with one default argument, call it with and without that argument, and move it to a module that you import.",
         "examples": [
@@ -385,9 +580,22 @@
             "task": "Compare module and package, and distinguish local, global and nonlocal scope."
           }
         ],
-        "recall": [
-          "An argument is the value supplied at a call; a parameter is the name in the definition.",
-          "A package groups modules. Test an import with the same directory layout you describe."
+        "quickReference": [
+          {
+            "title": "Default argument",
+            "rule": "A parameter’s default is used when the caller leaves that argument out.",
+            "example": "For def scale(n, k=2): return n*k, scale(3) returns 6 and scale(3, k=4) returns 12."
+          },
+          {
+            "title": "Local versus global",
+            "rule": "An ordinary assignment inside a function binds a local name unless declared otherwise.",
+            "example": "With x = 10 at module level, a function that assigns x = 3 and returns x yields 3 without changing the module’s x."
+          },
+          {
+            "title": "Module import",
+            "rule": "A module supplies named objects. A package can group related modules.",
+            "example": "If tools.py defines double, import tools makes tools.double(3) available when tools.py is on the import path."
+          }
         ],
         "patterns": [
           {
@@ -413,12 +621,25 @@
         ]
       },
       "4": {
-        "title": "Read a file and extract a match",
+        "shortTitle": "Files & Regex",
         "effort": "extended",
+        "firstPractice": "Pick a file mode and match",
         "reason": "File questions are useful, but modes, read/write methods and regex returns need separate practice. Learn them after the short reusable answers.",
         "essentials": [
-          "Choose the file mode before any operation",
-          "Compare readline, readlines, match and findall"
+          "Choose between read, overwrite and append. Know what read, readline and readlines return.",
+          "Compare re.match, re.search and re.findall using input where the first match is not at the start."
+        ],
+        "reading": [
+          {
+            "anchor": "fileio",
+            "label": "File I/O operations",
+            "cue": "read the mode table and a with-block before trying read or write."
+          },
+          {
+            "anchor": "regex",
+            "label": "Regular expressions",
+            "cue": "trace which API returns one match and which returns a list."
+          }
         ],
         "try": "Read a short text file, count its lines, and use a regular expression to pick out digit groups from the text.",
         "examples": [
@@ -431,9 +652,22 @@
             "task": "Compare re.match, re.split and re.findall with examples."
           }
         ],
-        "recall": [
-          "In text mode, r reads, w truncates or creates, and a appends or creates.",
-          "re.match checks from the start of the string; re.search can find a match later."
+        "quickReference": [
+          {
+            "title": "Read, write, or append",
+            "rule": "r reads an existing file, w creates or truncates, and a creates or appends.",
+            "example": "To add a new line to a log without discarding earlier lines, choose a rather than w."
+          },
+          {
+            "title": "One line at a time",
+            "rule": "readline returns the next line, while readlines returns a list of the remaining lines.",
+            "example": "For a file containing A\\nB\\n, the first readline gives \"A\\n\"; a subsequent readlines gives [\"B\\n\"]."
+          },
+          {
+            "title": "Regex starting position",
+            "rule": "match checks the start of a string, search looks anywhere, and findall can collect all matching spans.",
+            "example": "On \"A12 B3\", re.match(r\"\\d+\", text) returns None; re.findall with that pattern returns [\"12\", \"3\"]."
+          }
         ],
         "patterns": [
           {
@@ -459,12 +693,25 @@
         ]
       },
       "5": {
-        "title": "Follow a Django request",
-        "effort": "standard",
+        "shortTitle": "Django",
+        "effort": "theory",
+        "firstPractice": "Sketch URL → view → template",
         "reason": "Start with the repeatable architecture diagram and template purpose. Project setup and forms can follow as separate practice.",
         "essentials": [
-          "Map URL → view → template",
-          "Know what templates and static files are used for"
+          "Trace a request through the URL pattern and view to the response. Explain the role of the model and template.",
+          "Distinguish template data from static assets. Practise one template tag for a CSS file."
+        ],
+        "reading": [
+          {
+            "anchor": "mvc",
+            "label": "MVC and Django’s roles",
+            "cue": "label which part stores data, which renders it and which handles the request."
+          },
+          {
+            "anchor": "urls-templates",
+            "label": "URLs and templates",
+            "cue": "follow a request to the view, then show where template context is used."
+          }
         ],
         "try": "Draw the route for a page that lists books, labelling what receives the URL and what displays the list. Add where a form would be validated.",
         "examples": [
@@ -477,9 +724,22 @@
             "task": "Show how to insert a static file into a Django template."
           }
         ],
-        "recall": [
-          "A URL pattern selects a view; a view can render a template with context data.",
-          "A template controls presentation; CSS and images are static assets, not template context."
+        "quickReference": [
+          {
+            "title": "Request flow",
+            "rule": "A URL pattern selects a view. The view returns the response and can render a template.",
+            "example": "For /books/, a books view could load a book list and render books.html with that list in the context."
+          },
+          {
+            "title": "Model, template and view",
+            "rule": "A model describes the data, a template presents it, and a view coordinates the request.",
+            "example": "A Book model stores titles. The view supplies the books; the template loops through them to show the titles."
+          },
+          {
+            "title": "Static assets",
+            "rule": "Static CSS and images are files; template context is per-request data.",
+            "example": "After {% load static %}, use {% static \"css/main.css\" %} to build the asset URL in a template."
+          }
         ],
         "patterns": [
           {
@@ -520,15 +780,28 @@
       1,
       4
     ],
-    "start": "Start with stack and queue traces, then draw linked-list operations step by step. If classification words are unfamiliar, skim the Unit 1 definitions first. Leave the longer tree and graph traces for a separate pass.",
+    "start": "Draw every index or link that changes. If the names of the structures are unfamiliar, skim Unit 1 first.",
     "units": {
       "1": {
-        "title": "Name the structure and its operations",
-        "effort": "quick",
+        "shortTitle": "DS Basics",
+        "effort": "theory",
+        "firstPractice": "Classify a structure",
         "reason": "The definitions are fast to revise, but most of the practice here is comparing and explaining. Put the reusable stack and linked-list algorithms first unless the terms are unfamiliar.",
         "essentials": [
-          "Linear versus non-linear structure with examples",
-          "Basic operations and abstract data type"
+          "Give one linear and one non-linear example and explain how their elements are organised.",
+          "Describe an ADT by its behaviour before naming an implementation. Know traversal, insertion and deletion."
+        ],
+        "reading": [
+          {
+            "anchor": "classification",
+            "label": "Classification of data structures",
+            "cue": "compare a linear sequence with a branching structure."
+          },
+          {
+            "anchor": "terminology-5-abstract-data-type-adt",
+            "label": "Abstract data types",
+            "cue": "list the permitted operations without choosing an array or links yet."
+          }
         ],
         "try": "Pick a linear structure and a non-linear one. Sketch both and describe what it means to visit every element in each.",
         "examples": [
@@ -541,9 +814,22 @@
             "task": "Give an example of an abstract data type."
           }
         ],
-        "recall": [
-          "An ADT describes operations and behaviour, not the underlying storage layout.",
-          "A sequence is linear; a tree is non-linear because a node can branch."
+        "quickReference": [
+          {
+            "title": "Linear or non-linear?",
+            "rule": "A linear structure organises elements in a sequence; a tree branches.",
+            "example": "A queue of A, B, C has a single order. A root with two children illustrates a non-linear structure."
+          },
+          {
+            "title": "ADT and implementation",
+            "rule": "An ADT describes operations and behaviour, not the memory representation.",
+            "example": "A stack promises LIFO removal. An array or linked list can implement the same push and pop behaviour."
+          },
+          {
+            "title": "Delete from an array",
+            "rule": "With a packed array, deleting an element leaves a gap that later elements must fill.",
+            "example": "Delete index 1 from [4, 7, 9]: shift 9 left and reduce the logical length to get [4, 9]."
+          }
         ],
         "patterns": [
           {
@@ -569,12 +855,25 @@
         ]
       },
       "2": {
-        "title": "Trace stacks and circular queues",
+        "shortTitle": "Stacks & Queues",
         "effort": "quick",
+        "firstPractice": "Trace push and pop",
         "reason": "Push/pop, postfix and circular queues recur in full questions. One trace table helps with algorithms, boundary cases and objective items.",
         "essentials": [
-          "Write stack operations and evaluate postfix",
-          "Trace front and rear in a circular queue"
+          "Trace the top index for push/pop and cover overflow and underflow. Use the stack state to check each postfix token.",
+          "Mark front and rear after each circular queue operation, including wraparound."
+        ],
+        "reading": [
+          {
+            "anchor": "stacks-operations-on-stack",
+            "label": "Stack operations",
+            "cue": "check the empty and full conditions before changing top."
+          },
+          {
+            "anchor": "queues-types-of-queues",
+            "label": "Queue types",
+            "cue": "focus on the circular queue and draw its wraparound."
+          }
         ],
         "try": "Evaluate the postfix expression 8 3 − 2 × with a stack. Then use a circular capacity of four and trace rear as it wraps after a dequeue.",
         "examples": [
@@ -587,9 +886,22 @@
             "task": "Write circular-queue insertion and deletion algorithms."
           }
         ],
-        "recall": [
-          "A stack is last-in, first-out. For a binary operator in postfix, the first pop is its right operand.",
-          "A circular queue wraps an index using modulo capacity. State how your version distinguishes full from empty."
+        "quickReference": [
+          {
+            "title": "Stack top",
+            "rule": "A stack removes the most recently pushed item. In a zero-based array implementation, top = −1 denotes empty.",
+            "example": "Push 4, then 9: top changes −1 → 0 → 1. Pop returns 9 and leaves top at 0."
+          },
+          {
+            "title": "Postfix subtraction",
+            "rule": "When applying a binary operator, the first popped value is the right operand.",
+            "example": "For 9 2 − 3 ×, pop 2 then 9 for 9 − 2 = 7. Multiply by 3 to get 21."
+          },
+          {
+            "title": "Circular queue wrap",
+            "rule": "When space exists, an index advances to (index + 1) mod capacity.",
+            "example": "In four slots, rear = 3 advances to 0 on the next insertion if slot 0 is free."
+          }
         ],
         "patterns": [
           {
@@ -620,12 +932,25 @@
         ]
       },
       "3": {
-        "title": "Draw before and after each list operation",
-        "effort": "standard",
+        "shortTitle": "Linked Lists",
+        "effort": "trace",
+        "firstPractice": "Draw links before and after",
         "reason": "Insertion and comparison questions reuse a before/after diagram. Practise singly linked lists first, then add back links or a circular tail.",
         "essentials": [
-          "Insert and delete at the head, tail and middle",
-          "Draw singly, doubly and circular variants"
+          "Draw the head, changed link and next node for inserts and deletes. Include the empty-list case.",
+          "Compare a null-terminated list with a circular list, and show which back links a doubly linked list needs."
+        ],
+        "reading": [
+          {
+            "anchor": "singly-insertion-operations",
+            "label": "Singly linked-list insertion",
+            "cue": "trace head, middle and tail cases before writing the code."
+          },
+          {
+            "anchor": "comparisons-all-four-types-of-linked-lists",
+            "label": "Four list types",
+            "cue": "compare the stopping condition and the links stored per node."
+          }
         ],
         "try": "On paper, insert into an empty list, insert in the middle, and delete the last node. Label which references change each time.",
         "examples": [
@@ -638,9 +963,22 @@
             "task": "Compare a linked list with an array and describe the advantage of back links."
           }
         ],
-        "recall": [
-          "In a singly linked insertion, save the old successor before replacing its link.",
-          "In a circular list, stop on returning to the starting node, not on finding NULL."
+        "quickReference": [
+          {
+            "title": "Insert after a node",
+            "rule": "Preserve the old successor before replacing the predecessor’s link.",
+            "example": "For A → B, set X.next = B and A.next = X to get A → X → B."
+          },
+          {
+            "title": "Doubly linked pair",
+            "rule": "An adjacent pair needs a forward link and a matching backward link.",
+            "example": "Inserting X between A and B sets A.next = X, X.prev = A, X.next = B and B.prev = X."
+          },
+          {
+            "title": "Circular stop condition",
+            "rule": "In a nonempty circular list the tail links back to the head, not to NULL.",
+            "example": "With A → B → A and head A, visit A and B once; stop when the next pointer returns to A."
+          }
         ],
         "patterns": [
           {
@@ -671,12 +1009,25 @@
         ]
       },
       "4": {
-        "title": "Separate tree and graph traces",
+        "shortTitle": "Trees & Graphs",
         "effort": "extended",
+        "firstPractice": "Trace a tree traversal",
         "reason": "Trees and graph traversals have good past-paper coverage, but they need several distinct traces. Give AVL, traversal and graph work separate time.",
         "essentials": [
-          "Reconstruct trees and practise AVL rotations",
-          "Trace BFS/DFS with a named start vertex"
+          "Write pre-, in- and post-order on one tree. Reconstruct a tree with distinct keys and practise an AVL rotation separately.",
+          "Run BFS and DFS from a named start with a fixed neighbour order, marking visited vertices."
+        ],
+        "reading": [
+          {
+            "anchor": "traversals",
+            "label": "Tree traversals",
+            "cue": "write the position of the root in each visit order."
+          },
+          {
+            "anchor": "graph-traversals",
+            "label": "BFS and DFS",
+            "cue": "trace the queue or stack and mark when each vertex is first visited."
+          }
         ],
         "try": "Take a small tree and write all three traversal orders. On a small graph, run BFS and DFS from the same vertex and compare the orders.",
         "examples": [
@@ -689,9 +1040,22 @@
             "task": "Explain AVL rotations and construct an AVL tree from the given values."
           }
         ],
-        "recall": [
-          "With distinct keys, the first pre-order item is the root; in-order separates the subtrees.",
-          "BFS uses a queue. DFS can use a stack or recursion. Mark visited vertices when tracing a graph."
+        "quickReference": [
+          {
+            "title": "Reconstruct from two orders",
+            "rule": "With distinct keys, pre-order gives the root first; in-order separates its left and right subtrees.",
+            "example": "Pre-order B, A, C and in-order A, B, C give B at the root. Post-order is A, C, B."
+          },
+          {
+            "title": "AVL rotation",
+            "rule": "Identify the first unbalanced node on the insertion path and the side of the imbalance.",
+            "example": "Inserting 30, 20, 10 creates an LL case. Rotate right at 30 to make 20 the root."
+          },
+          {
+            "title": "Compare BFS and DFS",
+            "rule": "BFS uses a queue; DFS goes deep first using recursion or a stack.",
+            "example": "On edges A–B, A–C, B–D from A with alphabetical neighbours, BFS is A, B, C, D; DFS is A, B, D, C."
+          }
         ],
         "patterns": [
           {
@@ -738,15 +1102,28 @@
       4,
       2
     ],
-    "start": "Start with the 8086 diagram and addressing modes. You can reuse the same labelled drawings and a few short operand examples. If the hardware vocabulary is new, skim the Unit 1 computer diagram before that first pass.",
+    "start": "Use labelled diagrams for architecture and a register table for traces. Skim the Unit 1 bus diagram first if needed.",
     "units": {
       "1": {
-        "title": "Draw the path that data takes",
+        "shortTitle": "Computer Basics",
         "effort": "quick",
+        "firstPractice": "Draw the blocks and buses",
         "reason": "A labelled computer diagram and a short register trace are easy to rehearse. Do the floating-point exercises as a second pass within this unit.",
         "essentials": [
-          "Von Neumann functional units and buses",
-          "Register shifts, two’s complement and bit fields"
+          "Label the CPU, memory and I/O, plus the address, data and control paths.",
+          "Practise fixed-width signed representation and register shifts. Keep the floating-point fields distinct."
+        ],
+        "reading": [
+          {
+            "anchor": "computer-structure",
+            "label": "Computer structure",
+            "cue": "follow a memory read and label what travels on each bus."
+          },
+          {
+            "anchor": "data-representation",
+            "label": "Data representation",
+            "cue": "work through a signed two’s-complement value before the float fields."
+          }
         ],
         "try": "Draw the Von Neumann block diagram without notes, then encode −6 with eight bits using two’s complement. Check which bits change in a logical right shift.",
         "examples": [
@@ -759,9 +1136,22 @@
             "task": "Compare fixed-point and floating-point formats, then encode −75 in eight bits."
           }
         ],
-        "recall": [
-          "Address, data and control buses carry different kinds of signals; label all three.",
-          "IEEE binary32 has 1 sign bit, 8 exponent bits and 23 fraction bits."
+        "quickReference": [
+          {
+            "title": "Three buses",
+            "rule": "The address identifies a location, the data bus carries the value, and control coordinates the operation.",
+            "example": "On a CPU memory read, the CPU supplies an address and a read signal; memory supplies the data."
+          },
+          {
+            "title": "Eight-bit negative value",
+            "rule": "For two’s complement, invert the fixed-width positive bits and add 1.",
+            "example": "+6 is 00000110. Inverting and adding 1 gives 11111010 for −6 in eight bits."
+          },
+          {
+            "title": "Binary32 normal numbers",
+            "rule": "Normal IEEE binary32 values use one sign bit, eight exponent bits with bias 127, and 23 fraction bits.",
+            "example": "1.5 = 1.1₂ × 2⁰: sign 0, exponent field 127, and fraction starting with 1 then zeros."
+          }
         ],
         "patterns": [
           {
@@ -787,12 +1177,25 @@
         ]
       },
       "2": {
-        "title": "Trace arithmetic, control and the pipeline",
+        "shortTitle": "Arithmetic & Pipeline",
         "effort": "extended",
+        "firstPractice": "Mark a pipeline hazard",
         "reason": "This unit has substantial written examples, but arithmetic traces, control sequencing and hazards are separate skills. Tackle them once the shorter diagrams are secure.",
         "essentials": [
-          "Control memory and instruction pipeline",
-          "Booth multiplication and restoring division traces"
+          "Draw overlapping instruction stages and distinguish structural, data and control hazards.",
+          "Keep control memory and arithmetic traces separate. For Booth and restoring division, label the registers after each step."
+        ],
+        "reading": [
+          {
+            "anchor": "pipelining",
+            "label": "Pipelining and hazards",
+            "cue": "mark one dependency on a stage timeline and show why a stall can occur."
+          },
+          {
+            "anchor": "arithmetic",
+            "label": "Computer arithmetic",
+            "cue": "practise a Booth decision and a restoring-division iteration separately."
+          }
         ],
         "try": "Trace a small signed multiplication using the taught register format. Draw a separate pipeline timeline and mark where a dependency can delay an instruction.",
         "examples": [
@@ -805,9 +1208,22 @@
             "task": "Multiply two negative numbers using Booth’s algorithm."
           }
         ],
-        "recall": [
-          "An arithmetic right shift copies the sign bit; a logical right shift fills with zero.",
-          "A pipeline can improve throughput without reducing the latency of one instruction."
+        "quickReference": [
+          {
+            "title": "Overlapping stages",
+            "rule": "Pipelining overlaps work on different instructions; throughput and single-instruction latency are different.",
+            "example": "Without a stall, instruction 1 can decode in cycle 2 while instruction 2 fetches in cycle 2."
+          },
+          {
+            "title": "One Booth decision",
+            "rule": "For the pair (Q₀, Q₋₁), 01 adds M and 10 subtracts M from A before the arithmetic shift.",
+            "example": "If the pair is 10, A = 0000 and M = 0011, subtract to get A = 1101 in four bits before shifting."
+          },
+          {
+            "title": "Microprogrammed control",
+            "rule": "A microinstruction selects control actions and how to obtain the next microinstruction.",
+            "example": "A fetch sequence can include MAR ← PC, followed by requesting a memory read and receiving the instruction."
+          }
         ],
         "patterns": [
           {
@@ -838,12 +1254,25 @@
         ]
       },
       "3": {
-        "title": "Label the 8086 before memorising instructions",
+        "shortTitle": "8086 Architecture",
         "effort": "quick",
+        "firstPractice": "Label BIU, EU and operands",
         "reason": "Addressing-mode questions recur and the architecture uses repeatable diagrams. Rehearse one example per mode before studying all pin details.",
         "essentials": [
-          "8086 blocks, BIU, EU and registers",
-          "Addressing modes with one instruction each"
+          "Draw the BIU, EU and registers. Explain how instruction fetch and execution divide the work.",
+          "Give an example per addressing mode and tell the effective offset apart from the physical address."
+        ],
+        "reading": [
+          {
+            "anchor": "block-diagram",
+            "label": "8086 block diagram",
+            "cue": "label the BIU, EU and the instruction queue before studying the pins."
+          },
+          {
+            "anchor": "addressing",
+            "label": "8086 addressing modes",
+            "cue": "circle the operand source in one instruction per mode."
+          }
         ],
         "try": "Draw the BIU and EU and label several registers. Explain which part of each example instruction tells you where its operand comes from.",
         "examples": [
@@ -856,9 +1285,22 @@
             "task": "Explain the 8086 internal architecture and describe interrupt types."
           }
         ],
-        "recall": [
-          "The BIU handles bus transfers and instruction fetch; the EU executes instructions.",
-          "For a memory operand, distinguish the offset from the physical address formed using the segment."
+        "quickReference": [
+          {
+            "title": "BIU and EU",
+            "rule": "The BIU handles bus transfers and instruction fetch. The EU decodes and executes instructions.",
+            "example": "The BIU fills the instruction queue; the EU consumes instruction bytes from that queue."
+          },
+          {
+            "title": "Segment and offset",
+            "rule": "Form an 8086 physical address from the segment value times 16 plus the offset.",
+            "example": "1234h:0010h gives 12340h + 0010h = 12350h."
+          },
+          {
+            "title": "Immediate or memory?",
+            "rule": "An immediate value is encoded in the instruction; register-indirect addressing gets a memory offset from a register.",
+            "example": "MOV AX, 0005h loads the value 5. MOV AX, [BX] reads a word from memory using BX as the offset."
+          }
         ],
         "patterns": [
           {
@@ -884,12 +1326,25 @@
         ]
       },
       "4": {
-        "title": "Track the state after each instruction",
-        "effort": "standard",
+        "shortTitle": "Assembly",
+        "effort": "trace",
+        "firstPractice": "Trace register changes",
         "reason": "A short register trace is a good first drill, but the archived examples here are less consistent than those for 8086 addressing or cache. Use the notes for branches, procedures and macros as well.",
         "essentials": [
-          "Trace data movement and register arithmetic",
-          "Distinguish a normal call from an interrupt"
+          "Keep the destination and source straight. Record the registers a move or arithmetic instruction changes.",
+          "Explain the difference between a jump, a procedure call and a stack-machine expression. Do not mix their notation."
+        ],
+        "reading": [
+          {
+            "anchor": "simple-programs",
+            "label": "Simple assembly programs",
+            "cue": "trace a short add-and-store example register by register."
+          },
+          {
+            "anchor": "branch-call",
+            "label": "Branch and call instructions",
+            "cue": "mark the next instruction and the return point for a call."
+          }
         ],
         "try": "Write a short sequence that adds two register values and stores the result elsewhere. Trace what each instruction changes before adding a branch.",
         "examples": [
@@ -902,9 +1357,22 @@
             "task": "Write zero-address instructions to evaluate an arithmetic expression."
           }
         ],
-        "recall": [
-          "For 8086 Intel syntax, MOV destination, source copies the value into the destination.",
-          "Keep a register table. Add a row after each instruction that changes a register or flag."
+        "quickReference": [
+          {
+            "title": "Read destination first",
+            "rule": "In 8086 Intel syntax, MOV destination, source copies the value without changing the source.",
+            "example": "With AX = 2 and BX = 3, ADD AX, BX gives AX = 5; MOV CX, AX then gives CX = 5."
+          },
+          {
+            "title": "Call or jump?",
+            "rule": "CALL saves a return address; an ordinary JMP does not.",
+            "example": "If CALL transfers to a procedure, RET can resume at the instruction following the CALL."
+          },
+          {
+            "title": "Zero-address expression",
+            "rule": "On an abstract stack machine, an operator takes operands from the stack, not explicit register arguments.",
+            "example": "To evaluate 8 − 3, push 8, push 3, then subtract the top from the next item. The result on the stack is 5."
+          }
         ],
         "patterns": [
           {
@@ -935,12 +1403,25 @@
         ]
       },
       "5": {
-        "title": "Keep cache, virtual memory and interfacing separate",
-        "effort": "standard",
+        "shortTitle": "Memory & I/O",
+        "effort": "trace",
+        "firstPractice": "Map a cache block",
         "reason": "Mapping comparisons and hit-ratio questions reuse similar worked examples. Add memory interfacing after you can distinguish cache and address translation.",
         "essentials": [
-          "Cache mappings and hit/miss calculations",
-          "Virtual memory, TLB and where an address goes"
+          "Compare cache mappings and state what a miss time includes before calculating average access time.",
+          "Trace a virtual address into page and offset. Keep that separate from cache mapping and chip selection."
+        ],
+        "reading": [
+          {
+            "anchor": "cache-memory",
+            "label": "Cache memory",
+            "cue": "map one block, then practise a hit/miss average."
+          },
+          {
+            "anchor": "virtual-memory",
+            "label": "Virtual memory",
+            "cue": "separate the page number, frame number and offset."
+          }
         ],
         "try": "Sketch a direct-mapped cache lookup, then draw a separate RAM/ROM address-selection example from the notes.",
         "examples": [
@@ -953,9 +1434,22 @@
             "task": "Explain direct mapping and define virtual memory."
           }
         ],
-        "recall": [
-          "Direct mapping assigns a block to one cache line; a set-associative cache offers ways within a set.",
-          "For average access time, distinguish the time of a hit from the total time of a miss."
+        "quickReference": [
+          {
+            "title": "Direct mapping",
+            "rule": "With L lines, block b maps to line b mod L. The tag determines whether the desired block is present.",
+            "example": "With eight lines, block 14 maps to line 6. Check the tag before calling it a hit."
+          },
+          {
+            "title": "Average access time",
+            "rule": "Weight the total time for a hit and for a miss by their probabilities.",
+            "example": "With 90% hits at 2 ns and a total miss time of 22 ns: 0.9 × 2 + 0.1 × 22 = 4 ns."
+          },
+          {
+            "title": "Page and offset",
+            "rule": "Translation replaces the page number with a frame number while keeping the offset.",
+            "example": "With 4 KiB pages, virtual 0x1234 has page 1 and offset 0x234. If page 1 maps to frame 7, the address is 0x7234."
+          }
         ],
         "patterns": [
           {
@@ -996,18 +1490,28 @@
       1,
       4
     ],
-    "start": "Begin with binary search and hashing; both are quick to demonstrate on a small input. Next practise sorting passes. Read Unit 1 notation first only if you cannot yet label the time or space cost of a trace.",
+    "start": "If you cannot yet name a time bound for a trace, skim the notation in Unit 1 before starting Searching.",
     "units": {
       "1": {
         "shortTitle": "Fundamentals",
-        "title": "Count work before naming the growth rate",
         "effort": "theory",
         "firstPractice": "Explain a time bound",
         "reason": "The definitions are quick, but search and sort traces give you more chances to practise a complete procedure. If you get stuck on the notation, use this unit as a warm-up.",
         "essentials": [
-          "Algorithm properties",
-          "time vs space costs",
-          "Big O, Omega and Theta"
+          "State what the algorithm receives and produces. Distinguish time from extra space.",
+          "Name the input size and case before using Big O, Omega or Theta."
+        ],
+        "reading": [
+          {
+            "anchor": "asymptotic",
+            "label": "Asymptotic notation",
+            "cue": "compare upper, lower and tight bounds on one function."
+          },
+          {
+            "anchor": "complexity",
+            "label": "Time and space complexity",
+            "cue": "count the loop steps before choosing a growth class."
+          }
         ],
         "try": "With n = 20, count how often a loop runs if i starts at 1 and doubles while i ≤ n. Then count a loop that adds 1 instead. Name each growth rate.",
         "examples": [
@@ -1019,10 +1523,6 @@
             "id": "CST209-P003-Q27",
             "task": "Count iterations in a loop whose index doubles."
           }
-        ],
-        "recall": [
-          "O gives an upper bound; Ω gives a lower bound; Θ gives a tight bound.",
-          "Name what n measures and whether you are counting time or auxiliary space."
         ],
         "quickReference": [
           {
@@ -1071,13 +1571,24 @@
       },
       "2": {
         "shortTitle": "Sorting",
-        "title": "Show the intermediate sorting passes",
         "effort": "trace",
         "firstPractice": "Show each sorting pass",
-        "reason": "Simple sorts are quick to trace and frequently tested. Start with one array and reuse it before moving to pivot selection and non-comparison methods.",
+        "reason": "Simple sorts are quick to trace and well represented in the archive. Start with one array and reuse it before moving to pivot selection and non-comparison methods.",
         "essentials": [
-          "One pass each for bubble, selection and insertion",
-          "merge, quick and radix sort traces"
+          "Trace bubble, selection and insertion passes. Mark what part of the array is already sorted.",
+          "Keep quicksort’s partition and merge sort’s merge separate. Explain why least-significant-digit radix sort needs stable digit passes."
+        ],
+        "reading": [
+          {
+            "anchor": "elementary",
+            "label": "Elementary sorts",
+            "cue": "trace bubble, selection and insertion on the same small array."
+          },
+          {
+            "anchor": "efficient",
+            "label": "Merge, quick and heap sort",
+            "cue": "compare the intermediate steps and which bounds apply."
+          }
         ],
         "try": "Bubble-sort [4, 3, 2, 1]. Write the array after each pass and underline the sorted suffix. Try selection sort on the same input.",
         "examples": [
@@ -1089,10 +1600,6 @@
             "id": "CST209-P004-Q17",
             "task": "Trace selection sort and state its worst-case time complexity."
           }
-        ],
-        "recall": [
-          "Selection sort picks a minimum; insertion sort puts the next item into a sorted prefix.",
-          "State the pivot and partition rule before tracing quicksort."
         ],
         "quickReference": [
           {
@@ -1146,14 +1653,24 @@
       },
       "3": {
         "shortTitle": "Searching",
-        "title": "State the search assumptions",
         "effort": "quick",
         "firstPractice": "Trace binary search",
         "reason": "A short trace shows why the array must be sorted and how each step halves the search interval.",
         "essentials": [
-          "Binary search bounds",
-          "hash collisions",
-          "BST updates"
+          "Check that the array is sorted. Show the midpoint and remaining interval, including a missing key.",
+          "Trace a hash collision before comparing chaining and probing. Practise one BST update separately."
+        ],
+        "reading": [
+          {
+            "anchor": "binary-search",
+            "label": "Binary search",
+            "cue": "follow the midpoint and boundary updates on a sorted array."
+          },
+          {
+            "anchor": "hashing-collision-resolution-techniques",
+            "label": "Collision resolution",
+            "cue": "compare what happens to keys that map to the same slot."
+          }
         ],
         "try": "Find 7 in [1, 3, 5, 7, 9]. Record each midpoint and the remaining interval. Then repeat for a missing key: 6.",
         "examples": [
@@ -1165,10 +1682,6 @@
             "id": "CST209-P003-Q32",
             "task": "Explain hashing and compare collision-resolution techniques."
           }
-        ],
-        "recall": [
-          "Binary search discards half of a sorted search interval at each comparison.",
-          "Chaining stores colliding keys in a bucket; probing searches for another slot."
         ],
         "quickReference": [
           {
@@ -1212,13 +1725,24 @@
       },
       "4": {
         "shortTitle": "Graphs",
-        "title": "Choose the graph algorithm for the goal",
         "effort": "extended",
         "firstPractice": "Choose a graph algorithm",
         "reason": "Graph questions provide written practice, but shortest paths, minimum spanning trees and topological order solve different problems. Keep a separate trace for each.",
         "essentials": [
-          "Minimum spanning trees vs shortest paths",
-          "DAGs and topological order"
+          "State whether the goal is a spanning tree, a shortest path or a topological order.",
+          "Check edge assumptions before tracing. Record distance relaxations separately from MST edge choices."
+        ],
+        "reading": [
+          {
+            "anchor": "mst",
+            "label": "Minimum spanning trees",
+            "cue": "write down the edge choices in Prim or Kruskal and why each edge is allowed."
+          },
+          {
+            "anchor": "shortest-path",
+            "label": "Shortest paths",
+            "cue": "compare Dijkstra, Bellman–Ford and Floyd–Warshall by the problem they solve."
+          }
         ],
         "try": "Use an undirected triangle with edge weights A–B = 3, B–C = 4 and A–C = 5. Trace Prim and Dijkstra from A. Compare the spanning-tree weight with the shortest A-to-C distance.",
         "examples": [
@@ -1230,10 +1754,6 @@
             "id": "CST209-P003-Q33",
             "task": "Write Dijkstra’s algorithm and demonstrate the distance updates."
           }
-        ],
-        "recall": [
-          "A minimum spanning tree minimizes total tree weight, not distance from a source.",
-          "Dijkstra needs non-negative edge weights. A topological order requires a directed acyclic graph."
         ],
         "quickReference": [
           {

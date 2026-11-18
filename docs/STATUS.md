@@ -10,18 +10,17 @@ content remains uncertified; no new deploy is authorized.
 
 ## Phase 11 — Subject-wise Suggestions (2026-11-18) — 🚧
 
-The owner declined the first draft, reviewed the second-semester reference
-and chose an **Algorithms-only layout pilot** on `arena/b06d66f8-diploma-3rd-sem`.
-The bank is a numbered syllabus workbook with dated links, computed stars and
-worked quick-reference boxes. Easy Read shows named priorities (3 → 2 → 1 → 4)
-and opens the first drill with linked Searching questions. The pair awaits
-owner review. Do not adapt the other four subjects without that review.
+After reviewing the Algorithms pilot, the owner approved applying its layout
+pair to **all five theory subjects** on `arena/b06d66f8-diploma-3rd-sem`.
+Each Important Questions workbook keeps syllabus order, 104 patterns and 393
+linked appearances across the set, and adds worked references. Each Easy Read
+starts with a ranked table and adds **What’s important** and **What to read
+first** links to actual sections, with drills and dated practice retained.
 
-The dashboard, both Home entries, other guide layouts, 104 patterns and 393
-archived-session citations remain. See the [phase plan](phases/11-suggestions/README.md)
-and [pilot checks and limits](phases/11-suggestions/record.md). The archive, quiz
-bank and syllabus are unchanged. No owner or physical-device acceptance,
-Phase 1–10 recheck, or release is implied.
+See the [phase plan](phases/11-suggestions/README.md) and [rollout checks](phases/11-suggestions/record.md).
+The dashboard, Home, unit-note prose, archive, quiz bank and syllabus are
+unchanged. The owner has not marked Phase 11 as passed. No physical-device
+acceptance, Phase 1–10 recheck or release is implied.
 
 ## Phase 9B — UI reboost (2026-11-17) — `✅*`, merged
 

@@ -36,7 +36,7 @@ node tests/discovery-dom.cjs
 node tests/data-version.cjs
 ```
 
-The Python suite has **122** tests, including the colour-token gate
+The Python suite has **123** tests, including the colour-token gate
 (palette uniqueness, no literal outside the token file, page load order, and one
 negative case per rule on temporary trees), the generated icon-CSS subset
 (currentness, icon coverage, license banner, unknown-icon disclosure), the
@@ -66,15 +66,15 @@ values must be in Git history; do not use a shallow clone
 for these checks. CI checks out full history. Phase 11 also checks static
 Suggestions generation, the four-pattern minimum per unit, distinct sessions
 and derived star ratings, Easy Read rank/effort and exact source/marks labels,
-paired guide links, and sitemap/search presence. The layout pilot checks the
-scope (Algorithms only), workbook numbers and worked examples, and the named
-priority table before the first Searching drill. The nested-path
-`suggestions-browser.cjs` smoke keeps the other guides in its regression sweep.
-It additionally checks the pilot at 320, 390 and 1280 CSS px, with both themes,
-130% text and high contrast at 320, selected rendered colour pairs, focus on
-jumps, ten archive deep links, script-free navigation, and visited-guide offline
-caching without source prefetch. These are automated checks, not real-device or
-assistive-technology acceptance.
+paired guide links, and sitemap/search presence. All five pairs have numbered
+workbooks with worked examples and named priority tables. Static validation
+checks both reading links per step against the actual unit-note fragments and
+rejects missing or duplicate sections. The nested-path `suggestions-browser.cjs`
+smoke checks all ten pages at 320, 390 and 1280 CSS px, both themes, 130% text
+and high contrast at 320, selected rendered colour pairs, focused jumps, five
+reading destinations, eleven archive destinations, no-JS navigation and warm
+offline revisits without source prefetch. This is not real-device or assistive-
+technology acceptance.
 
 Node suites cover attempt persistence/migration/retries/mistakes, Leitner
 scheduling (ladder, local-midnight rollover, per-day new-card cap, clock clamps,
