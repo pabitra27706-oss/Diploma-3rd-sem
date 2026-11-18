@@ -1,5 +1,14 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
+## Home maintenance — 2026-11-18 (working tree)
+
+The theory roadmap now follows existing manual checkmarks rather than the date
+of first launch. Home and Today agree on study streaks. The local greeting
+updates at its time boundaries and on resume; the welcome screen, Home, tab
+and install surfaces share one book-and-code logo. The focused Chromium
+regression covers these flows and the cached checklist offline; it is not a
+physical launcher, device or deployment sign-off.
+
 ## Owner closure — 2026-11-18
 
 **Phases 1–10 are closed at the owner's direction.** No further tests are to be

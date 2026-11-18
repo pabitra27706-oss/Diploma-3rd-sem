@@ -114,7 +114,7 @@ export CHROMIUM_EXECUTABLE=/path/to/chromium
 export TEST_BASE=http://127.0.0.1:8000/Diploma-3rd-sem/
 
 for suite in data-browser quiz-engine-browser discovery-study-browser \
-  storage-browser paper-offline feedback-browser cards-offline suggestions-browser; do
+  storage-browser paper-offline feedback-browser cards-offline home-roadmap-browser suggestions-browser; do
   node "tests/$suite.cjs" || break
 done
 ```
@@ -125,6 +125,7 @@ Use an isolated local test profile; tests intentionally create local records.
 
 | Suite | Focused coverage |
 |---|---|
+| `home-roadmap-browser.cjs` | Existing manual marks, no visit credit, keyboard completion/undo, cross-tab/Back/reset, card-review streak, local greeting boundaries and resumed clocks in Asia/Kolkata, offline checklist and icon decoding |
 | `data-browser.cjs` | Unique Practice pool/day counts, real bank filters, no-key scoring and live counts |
 | `quiz-engine-browser.cjs` | Virtual-clock resume, flags/order, exact preview/retry, selected exports/edit, fetch failure, honest paper-practice limits |
 | `discovery-study-browser.cjs` | Safe search query, dijkstra/info-page search, 1 exact + 15 unverified candidate repeat clusters, canonical question deep link, unit breadcrumb/anchor + filtered-PYQ handoff, URL unit filter, honest card citation, card rating persistence and Today counts/primary action |

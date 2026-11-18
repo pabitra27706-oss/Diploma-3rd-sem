@@ -524,7 +524,7 @@ white-space:nowrap;
 padding-top:.3rem
 }
 /* The focus card keeps its home-specific */
-[data-page="home"] .focus-card{
+[data-page="home"] a.focus-card{
 position:relative;
 overflow:hidden;
 padding:var(--hub-gap-lg) var(--hub-gap-lg) var(--hub-gap-md);
@@ -534,6 +534,11 @@ background:linear-gradient(140deg,var(--c-navy-800) 0%,var(--c-navy-700) 55%,var
 color:var(--c-f8fafc);
 box-shadow:var(--hub-shadow-card)
 }
+html[data-contrast="high"] [data-page="home"] .focus-card{
+background:var(--c-white);
+border-color:currentColor
+}
+html[data-contrast="high"] [data-page="home"] .focus-card h3{color:inherit}
 [data-page="home"] .focus-card::after{
 content:"";
 position:absolute;
@@ -581,7 +586,7 @@ border-color:var(--hub-accent-solid)
 }
 [data-page="home"] .stats-bar{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(auto-fit,minmax(min(100%,5.5rem),1fr));
 gap:var(--hub-gap-md);
 margin-block:var(--hub-gap-md)
 }
@@ -1695,7 +1700,7 @@ text-transform:uppercase
 flex:1
 }
 [data-page="roadmap"] .progress-bar{
-background:var(--hub-accent-solid);
+background:var(--border);
 border-radius:var(--hub-radius-pill)
 }
 [data-page="roadmap"] .filter-bar{

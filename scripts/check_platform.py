@@ -11,13 +11,20 @@ def require(ok, message):
 m = json.loads((ROOT/'manifest.json').read_text())
 for key in ('id','start_url','scope'):
     require(m.get(key) == './', f'manifest {key} must be ./')
-for icon in m['icons']:
+def check_icon(icon):
     p = ROOT/icon['src']
     data = p.read_bytes()
     require(data[:8] == b'\x89PNG\r\n\x1a\n', f'{p}: invalid PNG')
     size = 'x'.join(map(str,struct.unpack('>II',data[16:24])))
     require(size == icon['sizes'], f'{p}: icon dimensions mismatch')
-require({'192x192','512x512'} <= {i['sizes'] for i in m['icons']}, 'required install sizes absent')
+for icon in m['icons']:
+    check_icon(icon)
+for shortcut in m['shortcuts']:
+    for icon in shortcut['icons']:
+        check_icon(icon)
+        require(icon['src'] in {i['src'] for i in m['icons']}, 'shortcut should use the Study Hub icon family')
+require({'192x192','512x512'} <= {i['sizes'] for i in m['icons'] if 'any' in i['purpose'].split()}, 'required install sizes absent')
+require(any(i['sizes']=='512x512' and 'maskable' in i['purpose'].split() for i in m['icons']), 'missing maskable launcher icon')
 sw = (ROOT/'sw.js').read_text()
 precache = sw.split('const PRECACHE_ASSETS = [',1)[1].split(']',1)[0]
 for path in re.findall(r"'([^']+)'",precache):

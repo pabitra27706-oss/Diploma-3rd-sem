@@ -14,16 +14,13 @@
     <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
     <meta name="description" content="Complete study companion for WB Diploma 3rd Semester - CST Stream">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/pwa/icon-192x192.png">
-    <link rel="apple-touch-icon" href="assets/pwa/icon-192x192.png">
-
     <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/main.css">
 
 <script defer src="assets/js/data-catalog.js"></script>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/index.html">
-<meta name="app-build" content="study-2026-11-18d">
+<meta name="app-build" content="study-2026-11-18e">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Diploma 3rd Sem - Study Hub">
 <meta property="og:description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
@@ -33,8 +30,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Diploma 3rd Sem - Study Hub">
 <meta name="twitter:image" content="https://pabitra27706-oss.github.io/Diploma-3rd-sem/docs/phases/01-platform/screenshots/after-home.png">
-<link rel="icon" href="./assets/pwa/icon-192x192.png">
-<link rel="apple-touch-icon" href="./assets/pwa/icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/pwa/icon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/pwa/icon-180x180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">
 <!-- /presence -->
@@ -55,11 +52,7 @@
         <div class="welcome-content">
             <div class="welcome-badge" aria-label="WB Polytechnic">WB Polytechnic</div>
 
-            <div class="welcome-icon" aria-hidden="true">
-                <svg class="icon-large" aria-hidden="true">
-                    <use href="assets/icons/sprite.svg#graduation"></use>
-                </svg>
-            </div>
+            <img class="welcome-icon" src="assets/pwa/study-hub.svg" width="100" height="100" alt="">
 
             <p class="welcome-title">Diploma 3rd Sem</p>
             <p class="welcome-subtitle">Computer Science &amp; Technology</p>
@@ -120,6 +113,7 @@
                         <use href="assets/icons/sprite.svg#arrow-left"></use>
                     </svg>
                 </button>
+                <img class="header-mark" src="assets/pwa/study-hub.svg" width="36" height="36" alt="">
                 <div class="header-title">
                     <h1 id="pageTitle">Study Hub</h1>
                     <p id="pageBreadcrumb">3rd Semester - CST</p>
@@ -163,7 +157,7 @@
 
             <section class="greeting-section" aria-label="Greeting">
                 <div class="greeting-text">
-                    <h2 class="greeting-title" id="greetingTitle">Good Morning</h2>
+                    <h2 class="greeting-title" id="greetingTitle">Welcome</h2>
                     <p class="greeting-name" id="greetingName">Ready to study?</p>
                 </div>
                 <div class="greeting-date">
@@ -174,7 +168,7 @@
 
             <section class="stats-bar" aria-label="Your study stats">
 
-                <div class="stat-card" id="streakCard" aria-label="Study streak">
+                <div class="stat-card" id="streakCard" aria-label="Study streak" title="Days with a card review or submitted quiz">
                     <div class="stat-card-icon streak" aria-hidden="true">
                         <svg class="icon" aria-hidden="true">
                             <use href="assets/icons/sprite.svg#trending-up"></use>
@@ -213,7 +207,7 @@
             </section>
 
             <section aria-label="Today's study focus">
-                <div class="focus-card" id="focusCard" role="link" tabindex="0" aria-label="Today's focus - go to roadmap">
+                <a class="focus-card" id="focusCard" href="roadmap/index.html" aria-label="Open your roadmap checklist">
                     <div class="focus-card-top">
                         <div class="focus-badge" aria-hidden="true">
                             <svg class="icon" aria-hidden="true">
@@ -226,12 +220,13 @@
                     <h3 class="focus-title" id="focusTitle">Loading today's plan...</h3>
                     <div class="focus-subjects" id="focusSubjects" aria-label="Today's subjects"></div>
                     <div class="focus-action" aria-hidden="true">
-                        <span>View full roadmap</span>
+                        <span>Open roadmap checklist</span>
                         <svg class="icon" aria-hidden="true">
                             <use href="assets/icons/sprite.svg#arrow-right"></use>
                         </svg>
+                        <span class="focus-progress" id="focusProgress"></span>
                     </div>
-                </div>
+                </a>
             </section>
 
             <a
@@ -466,12 +461,12 @@
 
             <div class="menu-divider" role="separator"></div>
 
-            <button class="menu-item" id="resetAppBtn" aria-label="Reset all app data">
+            <a class="menu-item" href="settings.html#reset-group">
                 <svg class="icon" aria-hidden="true">
                     <use href="assets/icons/sprite.svg#refresh"></use>
                 </svg>
                 <span>Reset App Data</span>
-            </button>
+            </a>
         </nav>
 
         <div class="menu-footer" role="contentinfo">
@@ -490,6 +485,9 @@
     ></div>
 
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/study-store.js"></script>
+    <script src="quiz/js/attempt-store.js"></script>
+    <script src="roadmap/progress.js"></script>
     <script src="assets/js/app.js"></script>
 
 </body>

@@ -5,15 +5,15 @@ and two independent versions (Phase 9.3, 2026-11-17):
 
 | Class | Cache | Version | Behaviour |
 |---|---|---|---|
-| shell (HTML, CSS, JS, icons, manifest) | `diploma-3rd-sem-<shell>` | Phase 11 working branch: `study-2026-11-18d` (not deployed) | precached on install; a new shell waits and `pwa.js` asks before reloading |
-| data (pools, papers, search shards, card shards, catalog) | `diploma-3rd-sem-data-<dataVersion>` | generated `assets/data/data-version.json` (`data-1cadf3283272` for the Phase 11 rollout) | stale-while-revalidate, keyed by the data version; refreshed silently |
+| shell (HTML, CSS, JS, icons, manifest) | `diploma-3rd-sem-<shell>` | `study-2026-11-18e` (manual roadmap, greeting and app icon update) | precached on install; a new shell waits and `pwa.js` asks before reloading |
+| data (pools, papers, search shards, card shards, catalog) | `diploma-3rd-sem-data-<dataVersion>` | generated `assets/data/data-version.json` (`data-85d29b750f55` for the current search index) | stale-while-revalidate, keyed by the data version; refreshed silently |
 
 ## What each class does
 
 - **Shell.** `PRECACHE_ASSETS` covers the shared head assets (`assets/css/variables.css`,
   `assets/css/main.css`, `assets/css/base.css`, `assets/css/discovery.css`), the
   generated `assets/js/shell.bundle.js` (accessibility + i18n + pwa), the storage
-  boundary, the discovery/study shells and the study scripts plus
+  boundary, the home logo and roadmap checklist shell, the discovery/study shells and the study scripts plus
   `assets/cards/manifest.json`. Installs into a fresh cache name; `activate`
   deletes superseded shell caches. A shell change therefore never forces a reload:
   the student is asked once.
