@@ -1,22 +1,42 @@
-# Device acceptance matrix — unexecuted template
+# Device acceptance matrix — owner-reported evidence
 
-Status: **not started** as a full acceptance sweep. One owner **smoke pass** on
-an Android phone in Chrome is recorded below (2026-11-17) — a click-through with
-nothing reported as failing, not a per-criterion pass. Every cell it did not
-measure stays `Untested`. The owner accepted **Phase 7** on the strength of it
-(see `../07-inclusion-trust/record.md`); that decision does not populate this
-matrix and does not close Phase 10.
-Replace each placeholder only with an observed result. Add rows for actual
-browser versions; do not collapse hardware and emulation into one result.
+Status: **partial**. The owner reported a detailed real-Android-phone run on
+2026-11-18. It covers several Phase 9.6/Phase 10 journeys, but does not close
+Phase 10: browser versions are missing and other acceptance areas remain
+untested. The earlier 2026-11-17 smoke report is retained below.
+Record only observed results; do not collapse hardware and emulation into one
+result.
 
 | Environment | Device / OS / browser version | Hardware or emulation | Core journeys | Reading / accessibility | Background timer | Backup / recovery | Offline / install / update | Print | Evidence / date |
 |---|---|---|---|---|---|---|---|---|---|
-| Android phone | Not recorded (owner-reported; model/OS/browser version not supplied) | Hardware | **Partial — smoke pass, no failures reported** | Untested | Untested | Untested | Untested | Untested | Owner report only, 2026-11-17; no screenshot/log |
+| Samsung Galaxy A35 | Android 16; Brave Browser and Via Browser (versions not supplied) | Hardware | **Pass (reported):** nested pages/back navigation; Practice filters/session/answer reveal/question navigation | **Partial:** portrait/landscape layout observed; font scaling, screen reader and keyboard access untested | **Partial pass:** active session state reportedly recovered after switching away to another app and returning; timer expiry/screen-lock behavior not tested | **Partial pass:** notes persisted after reload/language toggle; backup/restore and storage-error recovery untested | **Partial pass (reported):** previously visited pages available offline; unvisited page showed offline fallback; home-screen install/shortcut reported passing; update behavior untested | **Pass (reported):** PYQ page produced readable one-page Save as PDF preview | Updated owner report, 2026-11-18 08:40–08:54 IST; Wi-Fi; deployed URL; Lighthouse not run; no screenshot/log; browser versions missing |
 | iPhone / iOS | Not recorded | Not recorded | Untested | Untested | Untested | Untested | Untested | Untested | None |
 | Tablet | Not recorded | Not recorded | Untested | Untested | Untested | Untested | Untested | Untested | None |
 | Desktop browser | Not recorded | Not recorded | Untested | Untested | Untested | Untested | Untested | Untested | None |
 
 ## Per-run evidence
+
+### Run 2 — updated owner report, 2026-11-18 08:40–08:54 IST
+
+- Build/commit and dirty-tree status: tested deployed URL; exact served commit not
+  independently verified. No local branch build was deployed.
+- URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`.
+- Device: Samsung Galaxy A35, Android 16. Browsers: Brave Browser and Via Browser;
+  versions not supplied. Wi-Fi; portrait and landscape tested.
+- **Passed as reported:** nested pages/back navigation; practice flow; theme
+  persistence after reload; landscape layout; previously visited pages available
+  offline; home-screen shortcut creation; readable Save as PDF preview; notes
+  persisted across reload and language toggle; active session state recovered
+  after switching to another app and returning.
+- Offline scope: previously visited pages worked; an unvisited page displayed the
+  offline fallback. This does not establish cold-cache offline use.
+- **Not tested/reported:** Lighthouse/Core Web Vitals, desktop, exact browser
+  versions, font scaling/200% zoom, screen reader, keyboard-only access, timer
+  expiry/screen-lock behavior, backup/restore, storage-error recovery, and
+  install/update behavior after an app update.
+- Issues: none reported. Screenshots/log/PDF: none supplied.
+- Scope: useful real-device evidence for the reported journeys; not a complete
+  device-acceptance sweep or a claim of broad Android/browser compatibility.
 
 ### Run 1 — 2026-11-17, owner smoke pass
 

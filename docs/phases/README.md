@@ -1,5 +1,11 @@
 # Phases
 
+> **Owner closure, 2026-11-18:** Phases 1–10 are administratively closed; further
+> testing is skipped by direction. This does not convert skipped/unverified work
+> to passes. See the authoritative [project closure table](../PROJECT-CLOSURE.md)
+> and [current status](../STATUS.md); older phase records preserve evidence and
+> caveats as written.
+
 Every phase has its own folder. The folder is the task record: what the phase
 is for, what its parts are, how each part is accepted, and what "done" means.
 `docs/ROADMAP.md` is the status board; this folder is the detail.

@@ -3,20 +3,26 @@
 Content here must be **sourced**. A formula, a syllabus claim, or an answer
 without a citation is not ready to ship — say so in the record instead.
 
-**Status 2026-11-17** (evidence in [`record.md`](record.md)):
+**Status updated 2026-11-18** (evidence in [`record.md`](record.md)): owner
+has directed that no further verification be undertaken. This closes the planned
+verification effort as **not pursued**, not as passed: 8.2 remains 0/44 verified
+and 8.6 remains 0/924 certified. The public disclaimer now explicitly says
+content is not guaranteed 100% accurate and must be checked against official
+sources.
 
 | Part | State | What proves it |
 |---|---|---|
 | 8.1 Coverage map | ✅ implemented | `build_coverage.py` + `coverage.json` v2 + `coverage.html`; 74-page tree, 23 declared units, 2 out-of-syllabus rows listed, Unit-1 skew table, determinism test |
-| 8.2 Formula/definition sheets | ⛔ owner gate (structure built) | 44 authored entries, every `citationQuote` validated verbatim against the syllabus; 3 formulas each with a symbol legend; **0 verified**, not in navigation |
+| 8.2 Formula/definition sheets | ⚠️ closed unverified by owner scope decision | 44 authored entries; 3 formulas with symbol legends; **0/44 verified**, remain drafts and not in navigation; no further verification planned |
 | 8.3 Print | ✅ static side | `print.css` on 74/74 pages, answers-on-new-page toggle, shared print control, break control; **no real PDF export observed** (Phase 10) |
 | 8.4 Labs/internship | ✅ implemented | 3 lab pages + SI201 with credits/L-T-P/hours/assessment/task areas and syllabus page anchors |
 | 8.5 Exam pattern + marks | ✅ implemented | ESE table sums to 60; 28/28 paper maxima reconciled from each paper's own quotas; decision recorded |
-| 8.6 Verification workflow | ⛔ owner gate (structure built) | Register + fail-closed validator + derived ledger + expandable per-answer source line; **0 of 924 certified** |
+| 8.6 Verification workflow | ⚠️ closed unverified by owner scope decision | Register + fail-closed validator + derived ledger; **0/924 certified**; no further verification planned |
 
 **Accepted `✅*` by the owner on 2026-11-17** after a smoke use pass ("nothing
-breaks"), and merged to `main` as PR #16. The two ⛔ rows stay ⛔: acceptance did
-not certify a single sheet entry or answer, and the owner did not claim it did.
+breaks"), and merged to `main` as PR #16. That acceptance did not certify
+content. On 2026-11-18 the owner directed no further Phase 8 verification; the
+8.2/8.6 records remain explicitly uncertified, not passed.
 
 Steps below are kept as written; where the tree already satisfied a step the
 record says so instead of the step being quietly dropped.

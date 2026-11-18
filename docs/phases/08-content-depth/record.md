@@ -265,6 +265,17 @@ name with `python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | grep -A20
 - **Merge:** PR #16, `--merge` (no squash), so the phase's three commits keep
   their individual messages.
 
+## Owner scope update — 2026-11-18
+
+The owner directed that no further Phase 8 revision-sheet or answer verification
+be undertaken. This closes that work as **not pursued**, not passed: the 44
+revision entries remain drafts (0/44 verified), and the 924 archived PYQ answers
+remain uncertified (0/924). No content status, provenance, or verified date was
+changed. The public accuracy disclaimer was strengthened to say materials may
+contain errors, are not guaranteed 100% accurate, and should be checked against
+official sources. The disclaimer is not verification and does not certify any
+entry or answer.
+
 ## Handoff to Phase 9
 
 Phase 9 (`09-performance-launch`) already has a partial implementation from

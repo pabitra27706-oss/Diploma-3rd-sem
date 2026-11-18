@@ -55,8 +55,9 @@ class AccessibilityAuditTests(unittest.TestCase):
         self.assertEqual(failing, [])
         # The measurement must stay honest about how many pairs it covers.
         self.assertEqual(len(self.data['contrast']), self.baseline['contrast_measured'])
-        # Phase 9C added the navy/lavender pair set (47 -> 57 measured pairs).
-        self.assertEqual(self.baseline['contrast_measured'], 57)
+        # Phase 9C added the navy/lavender pair set; this patch adds explicit
+        # dark-theme coverage for the quiz and PYQ solid accent controls.
+        self.assertEqual(self.baseline['contrast_measured'], 60)
 
     def test_contrast_measurement_reads_real_tokens(self):
         rows = {row['label']: row for row in self.data['contrast']}

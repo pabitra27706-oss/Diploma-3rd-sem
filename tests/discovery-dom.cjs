@@ -331,14 +331,20 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     assert(resolvedPracticeQ && resolvedPracticeQ.subjectCode === 'CST203');
     assert.equal(pool.questions.find(item => item.id === 'CST201-P001-Q9999'), undefined);
 
-    // Every surface wires StudyShare.copy + StudyShare.share + StudyShare.highlight + graceful missing-q notice
+    // Share/deep-link wiring remains on every surface. PYQ answer cards now
+    // replace Copy with a direct unit/topic link; the other surfaces retain Copy.
     for (const [name, src] of [
       ['pyq/js/answers.js', answersSrc],
       ['practice/js/session.js', practiceSrc],
       ['quiz/js/review.js', reviewSrc],
       ['quiz/js/result.js', resultSrc]
     ]) {
-      assert(src.includes('StudyShare.copy('), `${name} must use StudyShare.copy`);
+      if (name === 'pyq/js/answers.js') {
+        assert(src.includes('unit-topic-link') && src.includes('q.topic'), 'PYQ cards must link to their unit and question topic');
+        assert(!src.includes('copy-question-link'), 'PYQ cards should replace the Copy action');
+      } else {
+        assert(src.includes('StudyShare.copy('), `${name} must use StudyShare.copy`);
+      }
       assert(src.includes('StudyShare.share('), `${name} must use StudyShare.share`);
       assert(src.includes('StudyShare.highlight('), `${name} must highlight deep-link targets`);
       assert(src.includes('data-question-id'), `${name} must expose data-question-id for deep-link targeting`);

@@ -1,10 +1,11 @@
 # Pre-launch checklist — Diploma 3rd Sem Study Hub
 
-Repo copy of `webflow/templates/site-checklist.md`, ticked **2026-11-17** with
-evidence from this environment (Linux, Python 3.11, Node; **no browser, no phone,
-no network run**). An unticked box is an item this environment cannot prove — it
-is not a claim that the feature is broken, and it blocks a public URL until it is
-ticked on real hardware.
+Repo copy of `webflow/templates/site-checklist.md`, initially ticked **2026-11-17**
+with evidence from the agent environment (Linux, Python 3.11, Node; no browser or
+phone available there). A later owner-reported physical Android run is recorded
+in §8 and the Phase 10 device matrix; it does not fill untested cells. An unticked
+box is not a claim that a feature is broken, but means required evidence is still
+missing.
 
 Legend: ✅ proved here, with the command · ⛔ **not run** here · 🚧 owner gate.
 
@@ -30,7 +31,7 @@ Legend: ✅ proved here, with the command · ⛔ **not run** here · 🚧 owner 
 - ✅ No zero-byte icon; no empty shipped file — `check_platform.py`.
 - ✅ `sw.js` scope is `new URL('./', self.location.href)`; every precache path exists — `check_platform.py` (0 errors).
 - ✅ `offline.html` exists, is precached and is the navigation fallback — `tests/study-offline.cjs`, `tests/discovery-dom.cjs` (deterministic stubs).
-- ⛔ Manual load → airplane mode → reload → navigate two levels — needs a device (Phase 10).
+- ✅ **Partial owner-reported Android check (2026-11-18):** previously visited pages loaded offline; an unvisited page showed the offline fallback. Full cold-cache/two-level offline coverage remains untested — see `phases/10-device-acceptance/matrix.md`.
 - ✅ Cache version bumped for this change: shell `study-2026-11-17d` → **`study-2026-11-17e`**; data `data-6b1621c45599`.
 - ✅ Update behaviour proved without a browser — `node tests/data-version.cjs` (data-only update, shell-only update, offline after both).
 
@@ -43,7 +44,7 @@ Legend: ✅ proved here, with the command · ⛔ **not run** here · 🚧 owner 
 - ✅ Contrast measured from tokens: 47 pairs, all above requirement (body ≥ 4.5:1, UI/focus ≥ 3:1).
 - ✅ Focus visible (solid ring token, 6.32:1 light / 9.51:1 dark); no keyboard traps known; Escape closes overlays (Phase 5 UI).
 - ✅ `prefers-reduced-motion` honoured: 19 of 20 sheets declare a rule, 74/74 pages load the global override.
-- ⛔ 200 % zoom and 320 px width without horizontal scroll — **not measured** (no browser).
+- ⛔ 200 % zoom / font scaling and 320 px width without horizontal scroll — **not measured**. Owner tested portrait/landscape adaptation on Android (2026-11-18); exact viewport and text scale were not recorded.
 - ⛔ Screen-reader output, tap accuracy, Bengali conjunct rendering — **not measured** (Phase 10).
 
 ## 5. Truth and privacy
@@ -54,7 +55,7 @@ Legend: ✅ proved here, with the command · ⛔ **not run** here · 🚧 owner 
 - ✅ No "AI", "verified", "guaranteed", "official" claim without evidence (Phase 7).
 - ✅ Contact route is honest (mailto/copy template; the site cannot confirm receipt) — `docs/MEASUREMENT.md`.
 - ✅ No placeholder counters, ratings or hard-coded status pills; every displayed number is generated.
-- 🚧 Measurement decision (9.4): the local-only default is documented, the dated owner confirmation is **still missing**.
+- ✅ Phase 9.4 decision recorded (2026-11-18): owner chose no counter / no measurement; no requests or stored counts are authorized. Any future reopening needs a new explicit decision.
 
 ## 6. Performance
 
@@ -74,12 +75,11 @@ Legend: ✅ proved here, with the command · ⛔ **not run** here · 🚧 owner 
 
 ## 8. Real-phone pass (once, recorded)
 
-- ⛔ Homepage → nested page → back on the deployed URL.
-- ⛔ Theme toggle + reload (persisted, no flash).
-- ⛔ Airplane-mode reload and two-level navigation.
-- ⛔ Add to Home screen → launch inside scope.
-- ⛔ Rotate, system font scale, one form with the keyboard.
-- ⛔ Written result with device, browser and date — belongs to **Phase 10**, the dedicated device phase.
+- ✅ **Partial owner-reported Android run, 2026-11-18 08:40–08:54 IST:** Samsung Galaxy A35 / Android 16; Brave and Via (versions unspecified). Navigation, practice interaction, theme persistence, landscape layout, visited-page offline behavior, home-screen shortcut creation, readable one-page PDF preview, note persistence across reload/language toggle, and active-session recovery after app switching were reported as passing. Full details and remaining untested areas: `phases/10-device-acceptance/matrix.md`.
+- ⛔ Brave/Via browser version numbers not recorded; browser-version compatibility cannot be established.
+- ⛔ Screen-reader, keyboard-only, font scaling/200% zoom, background timer/screen lock, backup/recovery, and install-update behavior not tested/reported.
+- ⛔ Lighthouse/Core Web Vitals not run; this is separate from physical-phone smoke evidence.
+- 📝 Detailed report recorded in [`phases/10-device-acceptance/matrix.md`](phases/10-device-acceptance/matrix.md). Phase 10 remains open until the full matrix and exit gate are addressed.
 
 ## Deploy
 
@@ -93,9 +93,9 @@ Still **not** done, and still required before the launch is called finished:
 
 - ⛔ Lighthouse / Core Web Vitals on a real browser (§6) — a green byte budget is
   not a Lighthouse score;
-- ⛔ the real-phone pass in §8 (offline reload, install, rotation, font scale,
-  print export);
-- 🚧 the 9.4 counter gate's four answers before any measurement code exists.
+- 🚧 the full device matrix in §8/Phase 10 — the 2026-11-18 Android report is
+  partial evidence; missing checks and device/browser version details remain;
+- ⚪ Phase 9.4 closed without a counter by owner choice (2026-11-18); no measurement request or storage is authorized.
 
 No domain, `CNAME`, DNS, Pages setting, tag or release was changed, and no
 announcement was made. Rollback if the published build misbehaves: revert the PR
