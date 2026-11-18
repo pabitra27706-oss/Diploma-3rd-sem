@@ -32,6 +32,11 @@ checkout does not confirm what is deployed.
 - **Subject names in the UI**: pages read C · Python · DS · CSO · Algorithms
   instead of course codes; the codes stay in file paths, IDs, URL parameters
   and storage keys, so saved progress and deep links are unaffected.
+- The [10-day theory roadmap](roadmap/index.html) is a manual checklist. After
+  studying a day’s topics, select **Mark Done**; select it again to undo. Home
+  shows the first unchecked day, even after a break. Visits never advance the
+  plan or earn a streak. The Home streak counts the same card reviews and
+  submitted quizzes as Today, separately from the theory checklist.
 - Timed quiz snapshots, autosave/resume, marked flags, history, exact retry,
   selected-attempt export, answer edits and a local mistake queue.
 - Paper practice with original instructions, registry durations, `answerAny`
@@ -215,6 +220,12 @@ block with a different newline layout, the second settles it. Regenerating in
 this order ends byte-identical to the committed tree, and
 `tests/test_content_depth.py` asserts that. A checked-in page is therefore
 generator output *plus* that head block — never hand-edit a generated page.
+
+The app logo source is `assets/pwa/study-hub.svg`. Only when changing the
+artwork, run `node scripts/build_app_icons.cjs` with `sharp@0.34.5`
+installed in a development directory on `NODE_PATH`. This exports the browser,
+Apple and manifest PNGs, including the uncropped Android maskable icon. Neither
+serving the app nor running its checks requires the renderer.
 
 Do not edit generated bundles directly. Source scripts remain under `quiz/js/`;
 concatenation has no runtime dependency. `build_cards.py` rewrites

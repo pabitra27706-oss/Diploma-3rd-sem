@@ -159,6 +159,14 @@ body {
   margin: 0 auto;
 }
 
+.progress-note {
+  margin: 0.65rem auto 0;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+.progress-note:empty { margin: 0; }
+
 .progress-stat {
   display: flex;
   flex-direction: column;
@@ -282,6 +290,7 @@ body {
 
 /* ── Day Header ── */
 .day-header {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -290,6 +299,17 @@ body {
   user-select: none;
   transition: background 0.2s;
 }
+/* Stretch the disclosure's hit area over the header, not over the independent
+   checklist button. Both actions retain native keyboard and focus behaviour. */
+.day-toggle {
+  display: block;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+}
+.day-toggle::after { content: ''; position: absolute; inset: 0; }
 .day-header:hover { background: var(--bg-secondary); }
 
 .day-number {
@@ -339,6 +359,8 @@ body {
 }
 
 .btn-done {
+  position: relative;
+  z-index: 1;
   padding: 0.3rem 0.7rem;
   border: 1.5px solid var(--success);
   background: transparent;

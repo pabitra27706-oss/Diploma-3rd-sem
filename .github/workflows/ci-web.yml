@@ -178,7 +178,7 @@ jobs:
           done
           TEST_BASE=http://127.0.0.1:8001/ node tests/pyq-browser.cjs
 
-      - name: Suggestions browser smoke — nested-path navigation and offline revisit
+      - name: Home and Suggestions browser smoke — roadmap, clock, navigation and offline revisit
         shell: bash
         run: |
           set -euo pipefail
@@ -192,6 +192,7 @@ jobs:
             if curl --fail --silent "${base}suggestions/index.html" >/dev/null; then break; fi
             sleep 0.2
           done
+          TEST_BASE="$base" node tests/home-roadmap-browser.cjs
           TEST_BASE="$base" node tests/suggestions-browser.cjs
 
       - name: Asset budgets summary

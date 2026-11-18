@@ -10,7 +10,6 @@
 var APP_CONFIG = {
   version: '1.0.0',
   examDate: new Date(2026, 12, 15),
-  streakGracePeriodHours: 26,
   toastDuration: 3500,
   skeletonDelay: 600
 };
@@ -800,10 +799,7 @@ var Storage = {
     lastVisited:      'diploma-3rd-sem-last-visited',
     bookmarks:        'diploma-3rd-sem-bookmarks',
     practiceProgress: 'diploma-3rd-sem-practice-progress',
-    quizScores:       'diploma-3rd-sem-quiz-scores',
-    streak:           'diploma-3rd-sem-streak',
-    lastStudyDate:    'diploma-3rd-sem-last-study-date',
-    roadmapStartDate: 'diploma-3rd-sem-roadmap-start'
+    quizScores:       'diploma-3rd-sem-quiz-scores'
   },
 
   get: function(key) {
@@ -822,29 +818,6 @@ var Storage = {
       return true;
     } catch (e) {
       console.error('[Storage] set error:', e);
-      return false;
-    }
-  },
-
-  remove: function(key) {
-    try {
-      StudyStorage.legacy.removeItem(key);
-      return true;
-    } catch (e) {
-      console.error('[Storage] remove error:', e);
-      return false;
-    }
-  },
-
-  clear: function() {
-    try {
-      var self = this;
-      Object.values(self.keys).forEach(function(key) {
-        self.remove(key);
-      });
-      return true;
-    } catch (e) {
-      console.error('[Storage] clear error:', e);
       return false;
     }
   }
@@ -930,94 +903,29 @@ var Toast = {
 };
 
 // ================================
-// Streak System
+// Activity streak (same recorded work and local days as Today)
 // ================================
 
 var Streak = {
-
-  getData: function() {
-    return Storage.get(Storage.keys.streak) || { count: 0, lastDate: null };
-  },
-
-  saveData: function(data) {
-    Storage.set(Storage.keys.streak, data);
-  },
-
-  todayString: function() {
-    return new Date().toISOString().split('T')[0];
-  },
-
-  yesterdayString: function() {
-    var d = new Date();
-    d.setDate(d.getDate() - 1);
-    return d.toISOString().split('T')[0];
-  },
-
-  recordStudy: function() {
-    var data      = this.getData();
-    var today     = this.todayString();
-    var yesterday = this.yesterdayString();
-
-    if (data.lastDate === today)      return data;
-    if (data.lastDate === yesterday)  { data.count++; }
-    else if (data.lastDate === null)  { data.count = 1; }
-    else                              { data.count = 1; }
-
-    data.lastDate = today;
-    this.saveData(data);
-    return data;
-  },
-
-  isAlive: function() {
-    var data = this.getData();
-    if (!data.lastDate) return false;
-    var today     = this.todayString();
-    var yesterday = this.yesterdayString();
-    return data.lastDate === today || data.lastDate === yesterday;
-  },
-
   getCount: function() {
-    if (!this.isAlive()) return 0;
-    return this.getData().count;
-  },
-
-  reset: function() {
-    this.saveData({ count: 0, lastDate: null });
+    return StudyStore.streak(StudyStore.read(), QuizAttempts.history()).days;
   }
 };
 
 // ================================
-// Roadmap Day Calculator
+// Next unchecked theory day, regardless of time since the first visit
 // ================================
 
 var Roadmap = {
-
-  getStartDate: function() {
-    var saved = Storage.get(Storage.keys.roadmapStartDate);
-    if (saved) return new Date(saved);
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    Storage.set(Storage.keys.roadmapStartDate, today.toISOString());
-    return today;
+  getTodayEntry: function(marks = RoadmapProgress.read()) {
+    return APP_STATE.roadmap.find(function(entry) {
+      return !RoadmapProgress.isDone(marks, entry.day);
+    }) || null;
   },
 
   getCurrentDay: function() {
-    var start = this.getStartDate();
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    var diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-    var day = diffDays + 1;
-    if (day < 1)  return 1;
-    if (day > 10) return null;
-    return day;
-  },
-
-  getTodayEntry: function() {
-    var day = this.getCurrentDay();
-    if (!day) return null;
-    return APP_STATE.roadmap.find(function(r) {
-      return r.day === day;
-    }) || null;
+    var entry = this.getTodayEntry();
+    return entry ? entry.day : null;
   }
 };
 
@@ -1071,8 +979,6 @@ WelcomeScreen.prototype.handleStart = function() {
   Storage.set(Storage.keys.firstLaunch, true);
   APP_STATE.studentName = safeName;
 
-  Streak.recordStudy();
-
   if (this.startBtn) {
     this.startBtn.style.opacity = '0.7';
     this.startBtn.disabled = true;
@@ -1104,21 +1010,21 @@ WelcomeScreen.prototype.showApp = function() {
 function initApp() {
   Toast.init();
   loadStudentName();
-  renderGreeting();
-  renderDate();
-  calculateExamCountdown();
-  renderStatsBar();
-  renderTodayFocus();
+  refreshHomeClock();
+  refreshRoadmap();
+  RoadmapProgress.onChange(refreshRoadmap);
+  document.addEventListener('visibilitychange', refreshHomeClock);
+  window.addEventListener('focus', refreshHomeClock);
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) refreshHomeClock();
+  });
   checkContinueCard();
   setupNavigation();
   setupMenu();
-  scheduleNextMidnightUpdate();
 
   setTimeout(function() {
     renderSubjects();
   }, APP_CONFIG.skeletonDelay);
-
-  Streak.recordStudy();
 }
 
 // ================================
@@ -1134,22 +1040,33 @@ function loadStudentName() {
 // Greeting
 // ================================
 
-function renderGreeting() {
-  var hour = new Date().getHours();
+// Upper bounds are exclusive, in the device's local time. The same bounds
+// choose the words and schedule their replacement (24 means local midnight).
+var greetingPeriods = [
+  { until: 5,  text: 'Good Night' },
+  { until: 12, text: 'Good Morning' },
+  { until: 17, text: 'Good Afternoon' },
+  { until: 21, text: 'Good Evening' },
+  { until: 24, text: 'Good Night' }
+];
+var homeClockTimer;
 
-  var greetings = [
-    { range: [5,  12], text: 'Good Morning' },
-    { range: [12, 17], text: 'Good Afternoon' },
-    { range: [17, 21], text: 'Good Evening' },
-    { range: [21, 24], text: 'Good Night' },
-    { range: [0,   5], text: 'Still Studying?' }
-  ];
+function refreshHomeClock() {
+  clearTimeout(homeClockTimer);
+  if (document.hidden) return;
+  var now = new Date();
+  var period = greetingPeriods.find(function(p) { return now.getHours() < p.until; });
+  var next = new Date(now);
+  next.setHours(period.until, 0, 0, 0);
+  homeClockTimer = setTimeout(refreshHomeClock, next - Date.now());
 
-  var match = greetings.find(function(g) {
-    return hour >= g.range[0] && hour < g.range[1];
-  });
-  var greetText = match ? match.text : greetings[0].text;
+  renderGreeting(period.text);
+  renderDate(now);
+  calculateExamCountdown(now);
+  renderStatsBar();
+}
 
+function renderGreeting(greetText) {
   var greetingTitle = document.getElementById('greetingTitle');
   var greetingName  = document.getElementById('greetingName');
   var profileName   = document.getElementById('profileName');
@@ -1171,10 +1088,10 @@ function renderGreeting() {
 // Date Display
 // ================================
 
-function renderDate() {
+function renderDate(now) {
   var dateDisplay = document.getElementById('dateDisplay');
   if (!dateDisplay) return;
-  dateDisplay.textContent = new Date().toLocaleDateString('en-US', {
+  dateDisplay.textContent = now.toLocaleDateString('en-US', {
     weekday: 'short',
     month:   'short',
     day:     'numeric'
@@ -1185,11 +1102,11 @@ function renderDate() {
 // Exam Countdown
 // ================================
 
-function calculateExamCountdown() {
+function calculateExamCountdown(now) {
   var examCountdown = document.getElementById('examCountdown');
   if (!examCountdown) return;
 
-  var today    = new Date();
+  var today    = new Date(now);
   var examDate = new Date(APP_CONFIG.examDate);
   today.setHours(0, 0, 0, 0);
   examDate.setHours(0, 0, 0, 0);
@@ -1234,8 +1151,14 @@ function renderStreak() {
   var streakCard  = document.getElementById('streakCard');
   if (!streakValue || !streakCard) return;
 
-  var count   = Streak.getCount();
-  var isAlive = Streak.isAlive();
+  var count;
+  try { count = Streak.getCount(); }
+  catch (error) {
+    streakValue.textContent = '—';
+    streakCard.setAttribute('aria-label', 'Study streak unavailable');
+    console.warn('Study streak unavailable:', error);
+    return;
+  }
 
   streakValue.textContent = count;
 
@@ -1246,13 +1169,13 @@ function renderStreak() {
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#' + iconName + '"></use></svg>';
   }
 
-  streakCard.classList.toggle('streak-active', isAlive && count > 0);
-  streakCard.classList.toggle('streak-zero',   !isAlive || count === 0);
+  streakCard.classList.toggle('streak-active', count > 0);
+  streakCard.classList.toggle('streak-zero',   count === 0);
   streakCard.setAttribute(
     'aria-label',
     count > 0
       ? count + ' day study streak - keep it up!'
-      : 'No streak yet - study today to start one!'
+      : 'No streak yet. Review a card or submit a quiz to start one.'
   );
 }
 
@@ -1275,55 +1198,50 @@ function renderQuizCount() {
 // Today's Focus Card
 // ================================
 
-function renderTodayFocus() {
+function refreshRoadmap() {
+  var marks = null;
+  try { marks = RoadmapProgress.read(); }
+  catch (error) { console.warn('Roadmap progress unavailable:', error); }
+  renderTodayFocus(marks);
+  renderSubjectProgress(marks);
+}
+
+function renderTodayFocus(marks) {
   var focusCard     = document.getElementById('focusCard');
   var focusDay      = document.getElementById('focusDay');
   var focusTitle    = document.getElementById('focusTitle');
   var focusSubjects = document.getElementById('focusSubjects');
+  var focusProgress = document.getElementById('focusProgress');
 
   if (!focusCard) return;
 
-  var entry = Roadmap.getTodayEntry();
+  if (!marks) {
+    if (focusProgress) focusProgress.textContent = '';
+    focusDay.textContent = 'Checklist unavailable';
+    focusTitle.textContent = 'Open the roadmap to check your saved progress.';
+    focusSubjects.textContent = '';
+    focusCard.setAttribute('aria-label', focusTitle.textContent);
+    return;
+  }
 
-  // Roadmap complete
+  var done = APP_STATE.roadmap.filter(function(entry) { return RoadmapProgress.isDone(marks, entry.day); }).length;
+  var progressLabel = done + ' of ' + APP_STATE.roadmap.length + ' done';
+  if (focusProgress) focusProgress.textContent = progressLabel;
+  var entry = Roadmap.getTodayEntry(marks);
   if (!entry) {
     if (focusDay) focusDay.innerHTML =
       '<svg class="icon" style="width:14px;height:14px;" aria-hidden="true">' +
       '<use href="assets/icons/sprite.svg#check"></use></svg> Complete!';
-    if (focusTitle) focusTitle.textContent = 'You have finished the 10-day theory roadmap. Time to practice!';
+    if (focusTitle) focusTitle.textContent = 'You marked all 10 roadmap days done.';
     if (focusSubjects) focusSubjects.innerHTML = '';
-    focusCard.setAttribute('aria-label', 'Theory roadmap complete!');
-    focusCard.addEventListener('click', function() {
-      window.location.href = 'roadmap/index.html';
-    });
-    focusCard.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        window.location.href = 'roadmap/index.html';
-      }
-    });
+    focusCard.setAttribute('aria-label', 'Theory roadmap complete. Review your checklist.');
     return;
   }
 
-  // Day label with difficulty icon
+  // A checkmark is reserved for a completed checklist, not an easy day.
   if (focusDay) {
-    var difficultyIcons = {
-      easy:   'check',
-      medium: 'clock',
-      hard:   'zap'
-    };
-    var difficultyLabels = {
-      easy:   'Easy',
-      medium: 'Medium',
-      hard:   'Hard'
-    };
-    var iconRef  = difficultyIcons[entry.difficulty] || 'clock';
-    var diffText = difficultyLabels[entry.difficulty] || 'Medium';
-
-    focusDay.innerHTML = 'Day ' + entry.day + ' of 10 ' +
-      '<svg class="icon" style="width:14px;height:14px;" aria-hidden="true">' +
-      '<use href="assets/icons/sprite.svg#' + iconRef + '"></use></svg> ' +
-      diffText;
+    var difficulty = entry.difficulty.charAt(0).toUpperCase() + entry.difficulty.slice(1);
+    focusDay.textContent = 'Day ' + entry.day + ' of ' + APP_STATE.roadmap.length + ' · ' + difficulty;
   }
 
   // Theme title
@@ -1352,22 +1270,10 @@ function renderTodayFocus() {
     }).join('');
   }
 
-  // Navigation
-  var navigate = function() {
-    window.location.href = 'roadmap/index.html';
-  };
-  focusCard.addEventListener('click', navigate);
-  focusCard.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      navigate();
-    }
-  });
-
   focusCard.setAttribute(
     'aria-label',
-    'Todays focus: Day ' + entry.day + ' - ' + entry.theme +
-    '. ' + entry.subjects.length + ' subjects. Tap to view roadmap.'
+    "Today's focus: Day " + entry.day + ' - ' + entry.theme +
+    '. ' + progressLabel + '. Open the roadmap checklist.'
   );
 }
 
@@ -1379,32 +1285,10 @@ function renderSubjects() {
   var grid = document.getElementById('subjectGrid');
   if (!grid) return;
 
-  var practiceProgress = Storage.get(Storage.keys.practiceProgress) || {};
-
   grid.innerHTML = APP_STATE.subjects.map(function(subject) {
-
-    var subjectDays = [];
-    APP_STATE.roadmap.forEach(function(r) {
-      var found = r.subjects.some(function(s) {
-        return s.code === subject.code;
-      });
-      if (found) subjectDays.push(r.day);
-    });
-
-    var completedDays = subjectDays.filter(function(day) {
-      var key = 'day' + day;
-      return practiceProgress[key] && practiceProgress[key].completed === true;
-    });
-
-    var progressPct = subjectDays.length > 0
-      ? Math.round((completedDays.length / subjectDays.length) * 100)
-      : 0;
-
     return '<a href="' + subject.path + '"' +
       ' class="subject-card"' +
       ' role="listitem"' +
-      ' aria-label="' + subject.name + ' - ' + subject.units + ' units, ' +
-      subject.credits + ' credits, ' + progressPct + '% complete"' +
       ' style="--subject-color:' + subject.color +
       ';--subject-color-light:' + subject.colorLight +
       ';--subject-color-rgb:' + subject.colorRgb + ';">' +
@@ -1427,12 +1311,14 @@ function renderSubjects() {
 
       '<div class="subject-progress" aria-hidden="true">' +
       '<div class="subject-progress-header">' +
-      '<span class="subject-progress-label">Progress</span>' +
-      '<span class="subject-progress-value">' + progressPct + '%</span></div>' +
+      '<span class="subject-progress-label">Roadmap progress</span>' +
+      '<span class="subject-progress-value"></span></div>' +
       '<div class="progress-bar-track">' +
-      '<div class="progress-bar-fill" style="width:' + progressPct + '%"></div>' +
+      '<div class="progress-bar-fill"></div>' +
       '</div></div></a>';
   }).join('');
+
+  refreshRoadmap();
 
   // Track visits
   var cards = grid.querySelectorAll('.subject-card');
@@ -1445,8 +1331,23 @@ function renderSubjects() {
         subjectPath: subject.path,
         timestamp:   Date.now()
       });
-      Streak.recordStudy();
     });
+  });
+}
+
+// Update the meters in place so syncing another tab never steals link focus.
+function renderSubjectProgress(marks) {
+  document.querySelectorAll('#subjectGrid .subject-card').forEach(function(card, index) {
+    var subject = APP_STATE.subjects[index];
+    var days = APP_STATE.roadmap.filter(function(entry) {
+      return entry.subjects.some(function(s) { return s.code === subject.code; });
+    });
+    var done = marks ? days.filter(function(entry) { return RoadmapProgress.isDone(marks, entry.day); }).length : 0;
+    var pct = days.length ? Math.round(done / days.length * 100) : 0;
+    card.querySelector('.progress-bar-fill').style.width = pct + '%';
+    card.querySelector('.subject-progress-value').textContent = marks ? pct + '%' : '—';
+    card.setAttribute('aria-label', subject.name + ' - ' + subject.units + ' units, ' + subject.credits +
+      ' credits. Roadmap progress: ' + (marks ? pct + '%' : 'unavailable'));
   });
 }
 
@@ -1522,7 +1423,6 @@ function setupMenu() {
   var closeMenuBtn = document.getElementById('closeMenuBtn');
   var menuOverlay  = document.getElementById('menuOverlay');
   var sideMenu     = document.getElementById('sideMenu');
-  var resetAppBtn  = document.getElementById('resetAppBtn');
 
   function openMenu() {
     if (!menuOverlay || !sideMenu) return;
@@ -1588,41 +1488,6 @@ function setupMenu() {
       }
     });
   }
-
-  // Reset
-  if (resetAppBtn) {
-    resetAppBtn.addEventListener('click', function() {
-      if (!confirm(
-        'Reset all app data?\n\nThis clears:\n' +
-        '- Your name\n- Bookmarks\n- Practice progress\n' +
-        '- Quiz scores\n- Study streak\n\nCannot be undone!'
-      )) return;
-      Storage.clear();
-      Streak.reset();
-      Toast.success('App data reset. Reloading...');
-      setTimeout(function() { window.location.reload(); }, 1500);
-    });
-  }
-}
-
-// ================================
-// Midnight Update Scheduler
-// ================================
-
-function scheduleNextMidnightUpdate() {
-  var now      = new Date();
-  var tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(0, 0, 0, 0);
-
-  setTimeout(function() {
-    renderDate();
-    renderGreeting();
-    calculateExamCountdown();
-    renderTodayFocus();
-    renderStatsBar();
-    scheduleNextMidnightUpdate();
-  }, tomorrow - now);
 }
 
 // ================================
@@ -1673,14 +1538,6 @@ function getSubjectByCode(code) {
 // ================================
 // App Lifecycle Events
 // ================================
-
-document.addEventListener('visibilitychange', function() {
-  if (document.hidden) return;
-  renderGreeting();
-  renderDate();
-  calculateExamCountdown();
-  renderStatsBar();
-});
 
 window.addEventListener('online', function() {
   Toast.success('You are back online!');

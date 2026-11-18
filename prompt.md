@@ -1,6 +1,13 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-> **Current handoff — 2026-11-18:** The owner closed Phases 1–10 with the
+> **Maintenance handoff — 2026-11-18:** On `arena/eec36cd0-diploma-3rd-sem`
+> (base `a2bb413`), Home now follows the manual theory checklist, uses the
+> same activity streak as Today, and refreshes greetings on local time. The
+> welcome screen, Home and install icons use one Study Hub mark. See
+> `tests/home-roadmap-browser.cjs` for the focused regression. This bug fix
+> does not change any phase acceptance or deployment status.
+
+> **Phase 11 handoff — 2026-11-18:** The owner closed Phases 1–10 with the
 > recorded skips in `docs/PROJECT-CLOSURE.md`, then approved **Phase 11 —
 > Subject-wise Suggestions** on `arena/b06d66f8-diploma-3rd-sem` (base
 > `45bc44d`). The phase was recorded before site work; see

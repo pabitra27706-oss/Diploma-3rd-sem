@@ -6,10 +6,10 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
-> **Current session (2026-11-18):** `arena/b06d66f8-diploma-3rd-sem`, based on
-> `45bc44d`. Phases 1–10 are administratively closed without upgrading their
-> skipped checks. Phase 11 is the separately approved Suggestions feature; the
-> notes below about earlier branches and phase progress are historical.
+> **Current session (2026-11-18):** `arena/eec36cd0-diploma-3rd-sem`, based on
+> `a2bb413` (the Phase 11 Suggestions merge). This maintenance branch fixes
+> manual roadmap progress, local greetings and the Study Hub icon. It does
+> not change earlier phase acceptance or authorize publication.
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
@@ -39,7 +39,7 @@
 
 - Site: Diploma 3rd Semester — CST Study Hub
 - Repo: `pabitra27706-oss/Diploma-3rd-sem` · working branch:
-  `arena/b06d66f8-diploma-3rd-sem` (Phase 11). `main` is the Pages source;
+  `arena/eec36cd0-diploma-3rd-sem` (Home maintenance). `main` is the Pages source;
   no merge or deploy without an explicit owner command.
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
@@ -205,19 +205,19 @@ A **public launch** additionally needs every item in
   which branch/revision contains the changes and whether it has been pushed.
   Never suggest a destructive reset, overwrite local changes, or present an
   unpushed change as available through `git pull`.
-- **Phase 11 Termux preview (only after the working branch has been pushed).**
+- **Home maintenance Termux preview (only after the working branch has been pushed).**
   For a fresh isolated checkout, with Python and Git installed:
 
   ```sh
-  mkdir -p ~/phase11-preview
-  cd ~/phase11-preview
-  git clone --single-branch --branch arena/b06d66f8-diploma-3rd-sem \
+  mkdir -p ~/study-hub-fixes-preview
+  cd ~/study-hub-fixes-preview
+  git clone --single-branch --branch arena/eec36cd0-diploma-3rd-sem \
     https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem
   python3 -m http.server 8010 --bind 127.0.0.1
   ```
 
-  Open `http://127.0.0.1:8010/Diploma-3rd-sem/suggestions/index.html`; stop with
+  Open `http://127.0.0.1:8010/Diploma-3rd-sem/`; stop with
   Ctrl+C. If that preview checkout already exists on this branch, pull it with
-  `git pull --ff-only` inside `~/phase11-preview/Diploma-3rd-sem`, then serve
+  `git pull --ff-only` inside `~/study-hub-fixes-preview/Diploma-3rd-sem`, then serve
   again from the parent directory. Use a fresh port if an older service worker
   controls the origin. This is branch testing, not production deployment.

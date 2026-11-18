@@ -8,7 +8,7 @@
                   names the data cache, so a corrected explanation reaches a
                   returning device without a shell update, a prompt or a reset.
 */
-const VERSION = 'study-2026-11-18d';
+const VERSION = 'study-2026-11-18e';
 const CACHE_PREFIX = 'diploma-3rd-sem-';
 const CACHE_NAME = CACHE_PREFIX + VERSION;
 const DATA_CACHE_PREFIX = CACHE_PREFIX + 'data-';
@@ -25,6 +25,9 @@ const PRECACHE_ASSETS = [
   'assets/js/subject-labels.js', 'assets/js/discovery.js',
   'assets/js/unit-discovery.js', 'assets/js/app.js',
   'assets/js/data-catalog.js', 'assets/icons/sprite.svg',
+  'roadmap/progress.js', 'roadmap/index.html', 'roadmap/index.css', 'roadmap/index.js',
+  'assets/pwa/study-hub.svg', 'assets/pwa/icon-32x32.png', 'assets/pwa/icon-180x180.png',
+  'assets/pwa/icon-192x192.png', 'assets/pwa/icon-512x512.png', 'assets/pwa/study-hub-maskable.png',
   'assets/search/manifest.json', 'assets/search/index-pages.json',
   'assets/search/repeated.json', 'manifest.json',
   'cards.html', 'today.html', 'assets/js/study-store.js', 'assets/js/study-ui.js',

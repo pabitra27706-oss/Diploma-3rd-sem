@@ -4,9 +4,6 @@
 
 'use strict';
 
-/* ── Storage key ── */
-const STORAGE_KEY = 'practice-progress';
-
 /* ── Subject meta ── */
 const SUBJECT_META = {
   CST201: 'Computer Programming in C',
@@ -405,61 +402,50 @@ const ROADMAP = [
 /* ============================================================
    STATE
    ============================================================ */
-let progress   = {};   // { 'day-1': true, 'day-3': true, ... }
 let activeFilter = 'all';
 
 /* ============================================================
    PROGRESS HELPERS
    ============================================================ */
-function loadProgress() {
-  try {
-    const raw = StudyStorage.legacy.getItem(STORAGE_KEY);
-    progress = raw ? JSON.parse(raw) : {};
-  } catch {
-    progress = {};
+function refreshProgress() {
+  const status = document.getElementById('progress-status');
+  let marks;
+  try { marks = RoadmapProgress.read(); status.textContent = ''; }
+  catch (error) { status.textContent = error.message; }
+
+  let done = 0;
+  const total = ROADMAP.length;
+  for (const { day } of ROADMAP) {
+    const card = document.querySelector(`.day-card[data-day="${day}"]`);
+    const button = card.querySelector('.btn-done');
+    const checked = marks && RoadmapProgress.isDone(marks, day);
+    if (checked) done++;
+    card.classList.toggle('completed', !!checked);
+    card.querySelector('.day-number').textContent = checked ? '✓' : day;
+    button.disabled = !marks;
+    button.setAttribute('aria-pressed', checked ? 'true' : 'false');
+    button.textContent = checked ? 'Done ✓' : 'Mark Done';
   }
+
+  const pct = Math.round(done / total * 100);
+  document.getElementById('days-done').textContent = marks ? done : '—';
+  document.getElementById('days-left').textContent = marks ? total - done : '—';
+  document.getElementById('progress-pct').textContent = marks ? pct + '%' : '—';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  const bar = document.getElementById('overall-bar');
+  if (marks) bar.setAttribute('aria-valuenow', pct);
+  else bar.removeAttribute('aria-valuenow');
 }
 
-function saveProgress() {
-  StudyStorage.legacy.setItem(STORAGE_KEY, JSON.stringify(progress));
-}
-
-function toggleDay(dayKey) {
-  progress[dayKey] = !progress[dayKey];
-  saveProgress();
-  renderAll();
+function updateProgress(change) {
+  try { change(); refreshProgress(); }
+  catch (error) { document.getElementById('progress-status').textContent = error.message; }
 }
 
 function resetProgress() {
-  if (!confirm('Reset all progress? This cannot be undone.')) return;
-  progress = {};
-  saveProgress();
-  renderAll();
-}
-
-/* ============================================================
-   RENDER
-   ============================================================ */
-function renderAll() {
-  renderCards();
-  renderProgressBar();
-}
-
-/* ── Progress bar ── */
-function renderProgressBar() {
-  const done  = Object.values(progress).filter(Boolean).length;
-  const total = ROADMAP.length;                          // 10
-  const pct   = Math.round((done / total) * 100);
-
-  document.getElementById('days-done').textContent   = done;
-  document.getElementById('days-left').textContent   = total - done;
-  document.getElementById('progress-pct').textContent = pct + '%';
-
-  const fill = document.getElementById('progress-fill');
-  fill.style.width = pct + '%';
-
-  const bar = document.getElementById('overall-bar');
-  bar.setAttribute('aria-valuenow', pct);
+  if (confirm('Clear all ten roadmap checkmarks? This cannot be undone.')) {
+    updateProgress(RoadmapProgress.reset);
+  }
 }
 
 /* ── Day cards ── */
@@ -468,30 +454,21 @@ function renderCards() {
   container.innerHTML = '';
 
   ROADMAP.forEach(dayData => {
-    const key       = `day-${dayData.day}`;
-    const isDone    = !!progress[key];
-    const isOpen    = dayData._open || false;
-
     const card = document.createElement('article');
-    card.className  = 'day-card' + (isDone ? ' completed' : '') + (isOpen ? ' open' : '');
+    card.className = 'day-card';
     card.dataset.day = dayData.day;
 
     /* ── Header ── */
     const header = document.createElement('div');
     header.className = 'day-header';
-    header.setAttribute('role', 'button');
-    header.setAttribute('tabindex', '0');
-    header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     header.innerHTML = `
-      <div class="day-number">${isDone ? '✓' : dayData.day}</div>
+      <div class="day-number" aria-hidden="true">${dayData.day}</div>
       <div class="day-info">
-        <div class="day-title">Day ${dayData.day} — ${dayData.title}</div>
+        <button type="button" class="day-title day-toggle" aria-expanded="false" aria-controls="topics-${dayData.day}">Day ${dayData.day} — ${dayData.title}</button>
         <div class="day-subtitle">${Object.keys(dayData.subjects).length} subjects · ${dayData.practiceCount ?? "Unavailable"} mixed-revision questions</div>
       </div>
       <div class="day-actions">
-        <button class="btn-done" data-key="${key}" aria-label="${isDone ? 'Mark incomplete' : 'Mark complete'}">
-          ${isDone ? 'Done ✓' : 'Mark Done'}
-        </button>
+        <button type="button" class="btn-done" aria-pressed="false" aria-label="Mark day ${dayData.day} done">Mark Done</button>
         <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
@@ -501,6 +478,7 @@ function renderCards() {
     /* ── Body ── */
     const body = document.createElement('div');
     body.className = 'day-body';
+    body.id = `topics-${dayData.day}`;
     const practiceLink = document.createElement('a');
     practiceLink.href = `../practice/session.html?days=${dayData.day}`;
     practiceLink.textContent = `Practise ${dayData.practiceCount ?? "available"} mixed-revision questions (separate from the reading topics below)`;
@@ -534,28 +512,14 @@ function renderCards() {
     card.appendChild(body);
     container.appendChild(card);
 
-    /* ── Toggle open/close on header click ── */
-    header.addEventListener('click', e => {
-      /* Don't toggle card if "Mark Done" button was clicked */
-      if (e.target.closest('.btn-done')) return;
-      dayData._open = !dayData._open;
-      card.classList.toggle('open', dayData._open);
-      header.setAttribute('aria-expanded', dayData._open ? 'true' : 'false');
+    const toggle = header.querySelector('.day-toggle');
+    toggle.addEventListener('click', () => {
+      toggle.setAttribute('aria-expanded', String(card.classList.toggle('open')));
     });
 
-    /* ── Keyboard support ── */
-    header.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        header.click();
-      }
-    });
-
-    /* ── Mark Done button ── */
     const btnDone = header.querySelector('.btn-done');
-    btnDone.addEventListener('click', e => {
-      e.stopPropagation();
-      toggleDay(key);
+    btnDone.addEventListener('click', () => {
+      updateProgress(() => RoadmapProgress.setDone(dayData.day, btnDone.getAttribute('aria-pressed') !== 'true'));
     });
   });
 }
@@ -606,8 +570,9 @@ async function init() {
     });
   } catch (error) { console.warn('Practice schedule unavailable', error); }
   initTheme();
-  loadProgress();
-  renderAll();
+  renderCards();
+  refreshProgress();
+  RoadmapProgress.onChange(refreshProgress);
 
   /* Theme toggle */
   document.getElementById('btn-theme')
