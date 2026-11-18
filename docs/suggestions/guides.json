@@ -999,14 +999,17 @@
     "start": "Begin with binary search and hashing; both are quick to demonstrate on a small input. Next practise sorting passes. Read Unit 1 notation first only if you cannot yet label the time or space cost of a trace.",
     "units": {
       "1": {
+        "shortTitle": "Fundamentals",
         "title": "Count work before naming the growth rate",
-        "effort": "quick",
+        "effort": "theory",
+        "firstPractice": "Explain a time bound",
         "reason": "The definitions are quick, but search and sort traces give you more chances to practise a complete procedure. If you get stuck on the notation, use this unit as a warm-up.",
         "essentials": [
-          "Properties of an algorithm and common bounds",
-          "Distinguish time, space and the case being analysed"
+          "Algorithm properties",
+          "time vs space costs",
+          "Big O, Omega and Theta"
         ],
-        "try": "Count iterations for a loop that increments by one and one that doubles its index. Show your reasoning for both before writing the asymptotic bound.",
+        "try": "With n = 20, count how often a loop runs if i starts at 1 and doubles while i ≤ n. Then count a loop that adds 1 instead. Name each growth rate.",
         "examples": [
           {
             "id": "CST209-P005-Q16",
@@ -1021,43 +1024,62 @@
           "O gives an upper bound; Ω gives a lower bound; Θ gives a tight bound.",
           "Name what n measures and whether you are counting time or auxiliary space."
         ],
+        "quickReference": [
+          {
+            "title": "Growth bounds",
+            "rule": "O is an upper bound; Ω is a lower bound; Θ is a tight bound.",
+            "example": "Example: 3n + 4 grows as Θ(n)."
+          },
+          {
+            "title": "Count a loop",
+            "rule": "Write out the values before naming the time bound.",
+            "example": "Starting at 1 and doubling while i ≤ 16 gives 1, 2, 4, 8, 16: five iterations."
+          },
+          {
+            "title": "Divide and conquer",
+            "rule": "Split the input, solve the subproblems, then combine the results.",
+            "example": "Merge sort splits in half and merges in linear time: T(n) = 2T(n/2) + Θ(n)."
+          }
+        ],
         "patterns": [
           {
             "title": "Define a good algorithm",
-            "prompt": "Define an algorithm and explain its characteristics with a small example or a counterexample.",
+            "prompt": "Define an algorithm. Explain its essential properties with an example.",
             "refs": ["CST209-P001-Q54", "CST209-P003-Q26", "CST209-P004-Q16", "CST209-P005-Q16", "CST209-P006-Q16"]
           },
           {
             "title": "Big O, Omega and Theta",
-            "prompt": "Explain the bounds with an example. Distinguish a tight bound from an upper or lower bound.",
+            "prompt": "Compare Big O, Omega and Theta using a growth-rate example.",
             "refs": ["CST209-P001-Q44", "CST209-P003-Q26", "CST209-P004-Q3", "CST209-P005-Q16", "CST209-P006-Q16"]
           },
           {
             "title": "Time and space complexity",
-            "prompt": "Identify the input size and count the key operation in a short loop. Distinguish that cost from the extra memory used.",
+            "prompt": "Count the iterations in a short loop. Distinguish time from extra space.",
             "refs": ["CST209-P001-Q53", "CST209-P003-Q27", "CST209-P005-Q17", "CST209-P006-Q1"]
           },
           {
             "title": "Divide and conquer",
-            "prompt": "Explain the split, solve and combine steps. Compare with dynamic programming or identify the design model used in a known algorithm.",
+            "prompt": "Explain divide and conquer. Show the split, solve and combine steps.",
             "refs": ["CST209-P001-Q59", "CST209-P003-Q27", "CST209-P004-Q5", "CST209-P005-Q17", "CST209-P006-Q17"]
           },
           {
             "title": "Sets and multisets",
-            "prompt": "Explain how a set and multiset differ using a collection that contains the same value twice.",
+            "prompt": "Distinguish a set from a multiset using a repeated value.",
             "refs": ["CST209-P004-Q16"]
           }
         ]
       },
       "2": {
+        "shortTitle": "Sorting",
         "title": "Show the intermediate sorting passes",
-        "effort": "standard",
+        "effort": "trace",
+        "firstPractice": "Show each sorting pass",
         "reason": "Simple sorts are quick to trace and frequently tested. Start with one array and reuse it before moving to pivot selection and non-comparison methods.",
         "essentials": [
-          "Write one pass each for bubble, selection and insertion",
-          "Compare merge/quick/heap sorts, then practise radix"
+          "One pass each for bubble, selection and insertion",
+          "merge, quick and radix sort traces"
         ],
-        "try": "Trace selection sort and merge sort on the same short list with a duplicate value. Write the array after each pass or merge.",
+        "try": "Bubble-sort [4, 3, 2, 1]. Write the array after each pass and underline the sorted suffix. Try selection sort on the same input.",
         "examples": [
           {
             "id": "CST209-P006-Q18",
@@ -1072,48 +1094,68 @@
           "Selection sort picks a minimum; insertion sort puts the next item into a sorted prefix.",
           "State the pivot and partition rule before tracing quicksort."
         ],
+        "quickReference": [
+          {
+            "title": "One pass",
+            "rule": "Bubble compares adjacent items; selection picks the smallest remaining item.",
+            "example": "On [4, 3, 2, 1], the first ascending bubble pass gives [3, 2, 1, 4]. The first selection pass gives [1, 3, 2, 4]."
+          },
+          {
+            "title": "Worst-case costs",
+            "rule": "Selection and insertion take Θ(n²); merge sort and heapsort take Θ(n log n).",
+            "example": "Quicksort can take Θ(n²) when each pivot leaves one partition almost as large as the input."
+          },
+          {
+            "title": "Radix sort by digits",
+            "rule": "Least-significant-digit radix sort needs a stable sort at each digit.",
+            "example": "Sort [16, 13, 25] by ones → [13, 25, 16], then by tens → [13, 16, 25]."
+          }
+        ],
         "patterns": [
           {
             "title": "Bubble sort passes",
-            "prompt": "Write the bubble sort steps and trace the array after each pass. State when the version you use can stop.",
+            "prompt": "Write bubble sort. Show the array after each pass.",
             "refs": ["CST209-P001-Q55", "CST209-P003-Q17", "CST209-P005-Q18", "CST209-P006-Q18"]
           },
           {
             "title": "Selection sort",
-            "prompt": "Trace which minimum is selected in each pass. State what the sorted prefix contains after each swap and give the worst-case time bound.",
+            "prompt": "Trace selection sort. Show each new minimum and give the worst-case time bound.",
             "refs": ["CST209-P003-Q13", "CST209-P004-Q17", "CST209-P005-Q18", "CST209-P006-Q8"]
           },
           {
             "title": "Insertion sort",
-            "prompt": "Trace the shifting and insertion steps as each new item is inserted into a sorted prefix. Compare the work for sorted and reverse-sorted input.",
+            "prompt": "Trace insertion sort. Compare sorted and reverse-sorted inputs.",
             "refs": ["CST209-P001-Q29", "CST209-P003-Q8", "CST209-P005-Q18"]
           },
           {
             "title": "Merge sort and comparison-sort costs",
-            "prompt": "Show the split and merge steps. Compare merge, quick and heap sort on time and extra space when requested.",
+            "prompt": "Trace merge sort. Compare the time and extra space used by merge, quick and heap sort.",
             "refs": ["CST209-P001-Q57", "CST209-P003-Q31", "CST209-P004-Q5", "CST209-P006-Q19"]
           },
           {
             "title": "Quick sort and partitioning",
-            "prompt": "Show how the pivot partitions the input. Explain how different partitions affect best- and worst-case costs.",
+            "prompt": "Partition around a pivot. Explain quicksort’s best and worst cases.",
             "refs": ["CST209-P001-Q41", "CST209-P003-Q20", "CST209-P005-Q19", "CST209-P006-Q19"]
           },
           {
             "title": "Linear-time sorts",
-            "prompt": "Explain what makes a non-comparison sort applicable. Trace bucket or radix sorting on the given input.",
+            "prompt": "Explain when a non-comparison sort applies. Trace bucket or radix sort.",
             "refs": ["CST209-P001-Q33", "CST209-P004-Q19", "CST209-P005-Q7", "CST209-P006-Q19"]
           }
         ]
       },
       "3": {
+        "shortTitle": "Searching",
         "title": "State the search assumptions",
         "effort": "quick",
-        "reason": "Binary search and hash collisions have repeatable traces in written groups. Start with those before practising more involved tree updates.",
+        "firstPractice": "Trace binary search",
+        "reason": "A short trace shows why the array must be sorted and how each step halves the search interval.",
         "essentials": [
-          "Binary search with a missing key and sorted input",
-          "One hash collision and a BST insertion/deletion"
+          "Binary search bounds",
+          "hash collisions",
+          "BST updates"
         ],
-        "try": "Find a present key and an absent key with binary search. Then place two keys in a small hash table so you can demonstrate one collision.",
+        "try": "Find 7 in [1, 3, 5, 7, 9]. Record each midpoint and the remaining interval. Then repeat for a missing key: 6.",
         "examples": [
           {
             "id": "CST209-P004-Q20",
@@ -1128,38 +1170,57 @@
           "Binary search discards half of a sorted search interval at each comparison.",
           "Chaining stores colliding keys in a bucket; probing searches for another slot."
         ],
+        "quickReference": [
+          {
+            "title": "Binary search",
+            "rule": "Check the midpoint of the sorted interval and keep only the possible half.",
+            "example": "To find 8 in [2, 4, 6, 8, 10], check 6, keep [8, 10], then check 8 (rounding the midpoint down)."
+          },
+          {
+            "title": "Hash collision",
+            "rule": "7 mod 5 = 12 mod 5 = 2.",
+            "example": "Chaining stores both keys in bucket 2. Probing looks for another slot instead."
+          },
+          {
+            "title": "Search costs",
+            "rule": "Worst-case time on arrays: linear O(n), binary O(log n).",
+            "example": "Binary search needs sorted input; linear search can scan an unsorted array."
+          }
+        ],
         "patterns": [
           {
             "title": "Binary search and when to use it",
-            "prompt": "Write binary search and show how the bounds change. State when linear search is appropriate and what binary search assumes.",
+            "prompt": "Write binary search. Why must the array be sorted?",
             "refs": ["CST209-P001-Q58", "CST209-P003-Q28", "CST209-P004-Q20", "CST209-P005-Q20", "CST209-P006-Q20"]
           },
           {
             "title": "Hashing and collision resolution",
-            "prompt": "Explain the hash function and trace one collision. Show chaining or the probing procedure requested in the paper.",
+            "prompt": "Explain hashing and trace one collision using chaining or probing.",
             "refs": ["CST209-P003-Q32", "CST209-P004-Q21", "CST209-P005-Q20", "CST209-P006-Q22"]
           },
           {
             "title": "Binary search tree operations",
-            "prompt": "Sketch a BST built from the input order. Trace an insert or delete and show how the ordering invariant is preserved.",
+            "prompt": "Draw the BST after inserting the given keys. Show how insertion or deletion preserves its order.",
             "refs": ["CST209-P003-Q29", "CST209-P004-Q14", "CST209-P006-Q21"]
           },
           {
             "title": "Height-balanced search trees",
-            "prompt": "Explain why height balancing matters for search. Practise identifying the balance factor or the effect of a rotation.",
+            "prompt": "Explain why height-balanced trees help search. Identify a balance factor or rotation.",
             "refs": ["CST209-P001-Q25", "CST209-P003-Q29", "CST209-P004-Q13", "CST209-P006-Q21"]
           }
         ]
       },
       "4": {
+        "shortTitle": "Graphs",
         "title": "Choose the graph algorithm for the goal",
         "effort": "extended",
+        "firstPractice": "Choose a graph algorithm",
         "reason": "Graph questions provide written practice, but shortest paths, minimum spanning trees and topological order solve different problems. Keep a separate trace for each.",
         "essentials": [
-          "Prim versus Kruskal on the same graph",
-          "Dijkstra, Bellman–Ford, Floyd–Warshall and DAG order"
+          "Minimum spanning trees vs shortest paths",
+          "DAGs and topological order"
         ],
-        "try": "Run Prim’s and Dijkstra’s algorithms on the same small undirected graph with positive weights. Record each chosen edge or updated distance and explain the different goals.",
+        "try": "Use an undirected triangle with edge weights A–B = 3, B–C = 4 and A–C = 5. Trace Prim and Dijkstra from A. Compare the spanning-tree weight with the shortest A-to-C distance.",
         "examples": [
           {
             "id": "CST209-P004-Q18",
@@ -1174,30 +1235,52 @@
           "A minimum spanning tree minimizes total tree weight, not distance from a source.",
           "Dijkstra needs non-negative edge weights. A topological order requires a directed acyclic graph."
         ],
+        "quickReference": [
+          {
+            "title": "Two different goals",
+            "rule": "An MST minimizes total tree weight. A shortest path minimizes cost between vertices.",
+            "example": "In an undirected triangle with A–B = 2, B–C = 3, A–C = 4, the MST costs 5. The shortest A-to-C path is the direct edge of weight 4."
+          },
+          {
+            "title": "Relax an edge",
+            "rule": "Replace d[v] if d[u] + w(u,v) is smaller. Dijkstra needs non-negative edge weights.",
+            "example": "If d[u] = 3, w(u,v) = 2 and d[v] = 8, update d[v] to 5."
+          },
+          {
+            "title": "All-pairs shortest paths",
+            "rule": "Floyd–Warshall tests each vertex k as an intermediate stop.",
+            "example": "If i→k costs 2 and k→j costs 4, a current i→j distance of 9 drops to 6."
+          },
+          {
+            "title": "Topological order",
+            "rule": "Only a DAG has a topological order. Every edge points from an earlier vertex to a later one.",
+            "example": "If A→C and B→C, put both A and B before C."
+          }
+        ],
         "patterns": [
           {
             "title": "Minimum spanning trees with Prim or Kruskal",
-            "prompt": "Construct a spanning tree on the given weighted graph. Show the order in which edges are chosen and when an edge is rejected.",
+            "prompt": "Find a minimum spanning tree with Prim or Kruskal. Show the edge choices.",
             "refs": ["CST209-P001-Q62", "CST209-P003-Q30", "CST209-P004-Q18", "CST209-P005-Q21", "CST209-P006-Q23"]
           },
           {
             "title": "Dijkstra’s shortest paths",
-            "prompt": "Trace distance updates from one source. State the required edge-weight assumption and show the final distances.",
+            "prompt": "Trace Dijkstra’s distance updates from the given source. State the edge-weight assumption.",
             "refs": ["CST209-P003-Q33", "CST209-P004-Q11", "CST209-P006-Q24"]
           },
           {
             "title": "Bellman–Ford and negative weights",
-            "prompt": "Show how the supplied edges are relaxed over repeated passes and explain when the algorithm is appropriate.",
+            "prompt": "Trace Bellman–Ford. When can it handle edges that Dijkstra cannot?",
             "refs": ["CST209-P004-Q22", "CST209-P005-Q9"]
           },
           {
             "title": "Floyd–Warshall and all-pairs paths",
-            "prompt": "Set up the distance matrix for a small graph and show how considering an additional intermediate vertex changes it.",
+            "prompt": "Use Floyd–Warshall to update the all-pairs distance matrix.",
             "refs": ["CST209-P001-Q12", "CST209-P005-Q22"]
           },
           {
             "title": "Directed acyclic graphs and topological order",
-            "prompt": "Recognise a DAG and explain how a topological order respects dependencies. Draw examples with and without a cycle.",
+            "prompt": "Recognise a DAG. Explain how a topological order respects its edges.",
             "refs": ["CST209-P001-Q60", "CST209-P004-Q8", "CST209-P005-Q22", "CST209-P006-Q24"]
           }
         ]

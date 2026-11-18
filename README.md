@@ -18,6 +18,9 @@ checkout does not confirm what is deployed.
   and links to dated past-paper appearances) and **Easy Read** (a quick-win-first
   study order, past-paper examples, drills and a checklist). Stars count distinct
   cited sessions, not predictions; the guides are not official answer keys.
+  The [Algorithms workbook](suggestions/algorithms/important-questions.html#unit-3)
+  and [Algorithms priority table](suggestions/algorithms/easy-read.html) are
+  the only layout pilot, pending owner review.
 - **28 papers / 924 archived questions**; exact-content aliases retain their
   source IDs. Practice uses **923 unique questions** across ten derived days.
   (A duplicated Python March-2023 reprint was removed on 2026-11-17, and the

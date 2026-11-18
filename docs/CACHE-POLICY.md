@@ -5,8 +5,8 @@ and two independent versions (Phase 9.3, 2026-11-17):
 
 | Class | Cache | Version | Behaviour |
 |---|---|---|---|
-| shell (HTML, CSS, JS, icons, manifest) | `diploma-3rd-sem-<shell>` | Phase 11 working branch: `study-2026-11-18b` (not deployed) | precached on install; a new shell waits and `pwa.js` asks before reloading |
-| data (pools, papers, search shards, card shards, catalog) | `diploma-3rd-sem-data-<dataVersion>` | generated `assets/data/data-version.json` (`data-15377289b5c8` for Phase 11) | stale-while-revalidate, keyed by the data version; refreshed silently |
+| shell (HTML, CSS, JS, icons, manifest) | `diploma-3rd-sem-<shell>` | Phase 11 working branch: `study-2026-11-18c` (not deployed) | precached on install; a new shell waits and `pwa.js` asks before reloading |
+| data (pools, papers, search shards, card shards, catalog) | `diploma-3rd-sem-data-<dataVersion>` | generated `assets/data/data-version.json` (`data-8d1e3541d614` for the Phase 11 pilot) | stale-while-revalidate, keyed by the data version; refreshed silently |
 
 ## What each class does
 

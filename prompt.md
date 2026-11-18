@@ -5,11 +5,14 @@
 > Subject-wise Suggestions** on `arena/b06d66f8-diploma-3rd-sem` (base
 > `45bc44d`). The phase was recorded before site work; see
 > `docs/phases/11-suggestions/{README,tasks,record}.md`. The owner rejected
-> the first draft. The revision keeps the dashboard and Home links, expands
-> Important Questions to 104 patterns with dated citations and computed stars,
-> and gives Easy Read a separate quick-win-first route. Targeted checks are
-> recorded; **Phase 11 is not passed**. Continue only with owner review or
-> owner-reported fixes. Don't reopen Phases 1–10 or infer permission to publish.
+> the first draft and requested a review of the 2nd-semester repository and
+> mockups before another change. That review is done; the owner authorized
+> **only the Algorithms pair**. The branch now has a compact syllabus workbook
+> and separate named priority table (3 → 2 → 1 → 4) with a Searching drill.
+> The dashboard, Home, other layouts and source archive stay unchanged. Test
+> under `/Diploma-3rd-sem/` using `rule.md` §7. **Phase 11 is not passed.** Wait
+> for review of the real phone/desktop renders before any wider rollout. Do
+> not reopen Phases 1–10 or infer permission to PR, merge, deploy or publish.
 > Older notes below are historical where superseded by this checkpoint.
 
 > **Current handoff — 2026-11-17, Phase 9B merged:** `main` carries Phases 1–9B. Phase 9B was implemented on `arena/7e77489f-diploma-3rd-sem` (base `816ef84`) and merged by explicit owner command on 2026-11-17 (fast-forward). Read `docs/phases/09B-ui-reboost/record.md` for what shipped and, more importantly, for what was verified versus not: the CSS layer, tokens, 6/6 static gates and 113/113 unit tests are real, but **no physical-device, screen-reader, zoom, print or offline-cache evidence exists** — Phase 10 owns it and its tasks file says no pre-filled row is a pass. One `hub.css` sheet is injected site-wide by `scripts/generate_presence.py`; do not split it into `assets/css/families/*` (92 and then 146 fingerprint regressions) or migrate rules into `subjects/units-com/common.css` (load order costs a specificity level; 1,496 anchors reverted). Per-page CSS fence is 300 KB by owner decision; heaviest page uses 171.5 KB. `assets/js/accessibility.js` is inlined into `shell.bundle.js` — regenerate with `scripts/build_runtime_bundles.py` after editing it. The diverging branch `arena/48a2ab20-diploma-3rd-sem` and its draft PR #20 are superseded: close, do not merge. Open debt: 392 ledgered legacy `rgba()` occurrences, 10 white-on-`var(--accent)` pairs still in `quiz/css/{common,play,index,result,review}.css` and `pyq/css/index.css`, Phase 9.4 counter gate. Phase 10 follows. Older instructions below are historical when they conflict with this checkpoint.

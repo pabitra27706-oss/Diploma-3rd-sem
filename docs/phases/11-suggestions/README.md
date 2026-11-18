@@ -1,6 +1,6 @@
 # Phase 11 — Subject-wise Suggestions
 
-**Status:** 🚧 Revision ready for owner review; not accepted, 2026-11-18 · **Parts:** 4
+**Status:** 🚧 Algorithms-only layout pilot ready for owner review; not accepted, 2026-11-18 · **Parts:** 4
 
 Help 3rd-semester CST students decide what to practise and what to revise first.
 On the base commit, `suggestions/index.html` was a Coming Soon placeholder with
@@ -29,5 +29,12 @@ reopening Phases 1–10, or publishing the branch to the live site.
 static, syllabus-linked guides; archived-question links resolve under
 `/Diploma-3rd-sem/`; targeted checks pass and evidence limits are recorded.
 Formal acceptance and release remain separate owner decisions.
+
+**Current review:** The owner chose the Algorithms pair as the first layout
+pilot after reviewing the second-semester references and mockups. Test the
+[workbook's Searching unit](../../../suggestions/algorithms/important-questions.html#unit-3)
+and the [priority table and drill](../../../suggestions/algorithms/easy-read.html)
+at both phone and desktop widths. The other four subject layouts stay as they
+were until the owner reviews this pair.
 
 See [tasks](tasks.md) and the [phase record](record.md).

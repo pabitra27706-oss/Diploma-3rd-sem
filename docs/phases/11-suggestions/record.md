@@ -178,3 +178,95 @@ marks. Keep all archive files frozen.
    question bank. Check the two layouts on a phone and switch the theme.
 
 Phase 11 stays open for the owner. No PR, merge or deployment is authorized.
+
+## Algorithms-only layout pilot — owner approved to build
+
+The owner asked to see a GitHub review and image references **before** another
+code change, then directed: **“Build the Algorithms pair first.”** That
+approves implementation of these two pages, not acceptance of the pilot,
+rollout to the other four subjects, or a release.
+
+- **STUDY:** the full [second-semester Suggestions tree at `6b2798d`](https://github.com/pabitra27706-oss/Diploma-2nd-sem/tree/6b2798d2b76217d5a2b1ab0504829c07356e58a3/suggestions),
+  including the [Physics workbook](https://github.com/pabitra27706-oss/Diploma-2nd-sem/blob/6b2798d2b76217d5a2b1ab0504829c07356e58a3/suggestions/physics/Phy-1st.html)
+  with paired question/formula columns and the [Physics Easy Read](https://github.com/pabitra27706-oss/Diploma-2nd-sem/blob/6b2798d2b76217d5a2b1ab0504829c07356e58a3/suggestions/physics/Read.html)
+  opening with a priority table and non-syllabus order. The owner selected
+  one Algorithms mockup for each layout in Arena before authorizing code.
+  These are references, not copied HTML, assets, claims about marks, or time
+  estimates. The PNG review artifacts are not part of the shipped site.
+- **ADAPT:** keep the shared Study Hub shell, theme, generation, syllabus and
+  exact citation contract. Important Questions is an open workbook in syllabus
+  order: named unit jump links, numbered compact prompts with dates and stars,
+  and concrete reference examples alongside each unit (below on phones).
+  Easy Read opens with the named priority table, keeping rank and syllabus unit
+  distinct. Order: **3 → 2 → 1 → 4**. The first drill and dated evidence follow
+  immediately, with practice links for every unit and a final checklist.
+- **Review gate:** show both real pages at phone and desktop widths, check
+  keyboard jumps, themes, citation destinations and warm offline behaviour.
+  Keep the dashboard, other guide layouts, bottom navigation and archived data
+  unchanged. Ask for review of this pair before any wider rollout.
+
+### Pilot delivered for review (not accepted)
+
+- **Important Questions:** the `[1, 2, 3, 4]` syllabus jumps name each unit.
+  The workbook keeps all **20 patterns and 75 date links** for CST209. Each
+  numbered row puts its citations and computed rating together; shortened date
+  labels still carry the paper's question number in the accessible link name.
+  The **13 quick-reference examples** show procedures or worked values, not
+  answers attributed to a paper. At 1280 CSS px the examples sit beside the
+  prompts; at phone widths they sit below them.
+- **Easy Read:** a real table separates rank, syllabus unit, effort and the
+  first practice task. On narrow screens the same rows reflow with visible
+  labels. Immediately below, the Searching drill asks for the midpoints for
+  `7` in `[1, 3, 5, 7, 9]`, then for missing key `6`. January 2024 recursive
+  binary search (`CST209-P004-Q20`) and March 2023 collision resolution
+  (`CST209-P003-Q32`) link to the selected questions. All four steps retain
+  unit notes, their workbook jump, two examples and the closing checklist.
+- **Scope proof:** Home, the hub and the eight other guides matched their
+  `bdee358` bytes apart from the generated shell marker. No `_data`,
+  `_quiz-data` or `docs/syllabus` changes against `45bc44d`. No new runtime
+  dependency, requests to external services, or copied reference-site code.
+  Shell `study-2026-11-18c` refreshes the shared CSS; discovery still has 2,523
+  entries / 188 page rows, with `data-8d1e3541d614` tracking the changed search
+  output. The cache policy is unchanged: visited guides work offline; papers
+  and notes are not downloaded just by opening the guides.
+
+### Pilot verification and previews
+
+- Local: 122 Python tests (7 Suggestions), 63 JS/CJS parse checks, ten Node
+  regression suites, deterministic generation/platform, strict tokens and site
+  checks (0 errors / 0 warnings), README paths, root-path copy and 300 KB CSS /
+  350 KB JS budgets passed. Measured accessibility audit: 84 pages, 74 token
+  pairs, zero findings. The two pilot pages each load about 200 KB CSS and
+  44 KB JS uncompressed, using the same shell requests as the other guides.
+- Archive check: unchanged, 28 schema-valid papers / 924 records. The data
+  baseline gate still matches nine errors and one warning on the source-review
+  ledger; this is not strict data or answer certification.
+- Chromium at the real `/Diploma-3rd-sem/` subpath: 320/390/1280 CSS px
+  pilot widths, light and dark, 130% text with high contrast at 320, selected
+  rendered text/background pairs, no horizontal overflow, focused jumps below
+  the sticky header, both Home entries, all ten guides, ten working archive
+  deep links, script-free guide navigation, and warm offline revisits without
+  paper/notes prefetch. These are automated browser checks, not physical-device,
+  screen-reader, print, or source-review sign-off.
+- Arena review files under `review/phase-11-algorithms/` (not shipped):
+  `workbook-desktop.png`, `workbook-phone.png`, the complete Searching unit
+  crops `workbook-searching-{desktop,phone}.png`, and
+  `easy-read-{desktop,phone}.png` show the actual pages, not mockups.
+
+### What to test on the website — pilot
+
+1. Use the branch preview or the Termux checkout in `rule.md` §7. Open
+   `/Diploma-3rd-sem/suggestions/algorithms/important-questions.html`. Select
+   **Searching**. Compare the workbook on a phone and desktop, then select
+   **Jan 2026** on the first prompt: the archived binary-search question
+   should be selected. The five stars represent the five shown sessions.
+2. Open `/Diploma-3rd-sem/suggestions/algorithms/easy-read.html`. Check that
+   the ranks read **Searching → Sorting → Fundamentals → Graphs** while the
+   syllabus labels stay **3 → 2 → 1 → 4**. Try the first drill, open both
+   dated sources, then use **Practice questions** to return to Searching.
+3. Switch theme and try the pilot on a phone. After loading both guides
+   online, revisit them offline. This does not promise an unvisited paper
+   or notes page is available offline.
+
+Wait for owner review of this pair. Other subjects, Phase 11 acceptance, PR,
+merge and deployment are not authorized by the pilot decision.

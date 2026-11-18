@@ -1,5 +1,10 @@
 # Phase 11 — Tasks
 
+The current implementation batch is **Algorithms only**, within 11.2 and 11.3.
+Check its rendered phone and desktop layouts and links before considering
+adapting the other subjects. 11.1 and the other guide layouts are unchanged;
+11.4 supplies regression evidence only. This is not a Phase 11 pass.
+
 | Part | Work | Acceptance evidence |
 |---|---|---|
 | 11.1 — Dashboard | Replace `suggestions/index.html`; reuse the existing theme and provide five expandable subject cards. | All cards expose exactly the two promised guides; phone and desktop layouts and keyboard-only expansion are checked. |

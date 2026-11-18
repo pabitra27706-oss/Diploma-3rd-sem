@@ -6,6 +6,11 @@
 
 ## Owner decisions
 
+- 2026-11-18 — Which layout to build next within Phase 11? — **Algorithms pair
+  first.** Review the 2nd-semester repository and show both mockups before site
+  changes (done); use the chosen workbook and named-priority directions for
+  CST209 only. Show real phone and desktop renders for review. This is not
+  approval to adapt the other four subjects, pass the phase, or publish.
 - 2026-11-18 — 3rd-semester Suggestions? — **Approved as Phase 11.** Create the
   phase entry before implementing. Use the 2nd-semester dashboard interaction
   (expandable subjects, **Important Questions**, **Easy Read**) with 3rd-semester

@@ -79,14 +79,15 @@ class SuggestionsTests(unittest.TestCase):
         self.assertTrue(any('quick-card--suggestions' in classes for classes in links))
         self.assertTrue(any('menu-item' in classes for classes in links))
 
-    def assert_archive_links(self, page, expected, archived):
+    def assert_archive_links(self, page, expected, archived, *, compact=False):
         cites = [urlsplit(url) for url in page.links() if url.startswith('../../pyq/answers.html?')]
         self.assertEqual(len(cites), len(expected))
         self.assertEqual(len(page.times), len(expected))
         for citation, shown_time, question_id in zip(cites, page.times, expected):
             paper_id, date, session, _ = archived[question_id]
             self.assertEqual(parse_qs(citation.query), {'paper': [paper_id], 'q': [question_id]})
-            self.assertEqual(shown_time, (date, session))
+            shown_session = f'{session[:3]} {date[:4]}' if compact else session
+            self.assertEqual(shown_time, (date, shown_session))
 
     @staticmethod
     def archive(code):
@@ -126,7 +127,7 @@ class SuggestionsTests(unittest.TestCase):
                                  [f'{min(n, 5)} out of 5 stars' for n in counts])
                 self.assertEqual(page.text.count('1 cited session · no repeat cited'), counts.count(1))
                 self.assertIn('not necessarily exact repeats', page.text)
-                self.assert_archive_links(page, expected, archived)
+                self.assert_archive_links(page, expected, archived, compact=code == 'CST209')
 
     def test_easy_read_prioritizes_quick_wins_with_dated_paper_examples(self):
         choices = read_json(guides.CURATION)
@@ -143,8 +144,13 @@ class SuggestionsTests(unittest.TestCase):
                 self.assertEqual(len(easy.with_class('li', 'suggestions-step--first')), 1)
                 self.assertIn('Last-minute checklist</h2>', easy.text)
                 self.assertIn('Marks are for the whole linked question', easy.text)
-                self.assertEqual(easy.text.count('<strong>Try it:</strong>'), len(order))
-                self.assertEqual(easy.text.count('<strong>Why here:</strong>'), len(order))
+                if code == 'CST209':
+                    self.assertEqual(easy.text.count('<strong>Try it</strong>'), len(order))
+                    self.assertEqual(easy.text.count('<strong>Why first?</strong>'), 1)
+                    self.assertEqual(easy.text.count('<strong>Why here?</strong>'), len(order) - 1)
+                else:
+                    self.assertEqual(easy.text.count('<strong>Try it:</strong>'), len(order))
+                    self.assertEqual(easy.text.count('<strong>Why here:</strong>'), len(order))
                 self.assertEqual([a for a in easy.links() if a.startswith('#step-unit-')],
                                  [f'#step-unit-{unit}' for unit in order])
                 self.assertEqual([div['id'] for div in easy.with_class('div', 'suggestions-step-heading')],
@@ -167,6 +173,36 @@ class SuggestionsTests(unittest.TestCase):
                 self.assert_archive_links(easy, expected, archived)
                 self.assertEqual([int(n) for n in re.findall(r"· (\d+) marks? total", easy.text)],
                                  [archived[ident][3] for ident in expected])
+
+    def test_workbook_and_priority_table_are_algorithms_only(self):
+        for path, code in guides.guide_paths().items():
+            with self.subTest(path=path):
+                page = Page(path)
+                self.assertEqual(bool(page.with_class('main', 'suggestions-workbook')),
+                                 code == 'CST209' and path.endswith('important-questions.html'))
+                self.assertEqual(bool(page.with_class('table', 'suggestions-priority-table')),
+                                 code == 'CST209' and path.endswith('easy-read.html'))
+        bank = Page('suggestions/algorithms/important-questions.html')
+        easy = Page('suggestions/algorithms/easy-read.html')
+        short_titles = ['Fundamentals', 'Sorting', 'Searching', 'Graphs']
+        for unit, title in enumerate(short_titles, 1):
+            self.assertIn(f'<a href="#unit-{unit}"><span>Unit {unit}</span> {title}</a>', bank.text)
+        cards = bank.with_class('li', 'suggestions-workbook-fact')
+        self.assertEqual(len(cards), 13)
+        self.assertEqual(len(bank.with_class('p', 'suggestions-workbook-example')), len(cards))
+        self.assertEqual(len(bank.with_class('aside', 'suggestions-workbook-reference')), 4)
+        self.assertEqual(len(bank.with_class('span', 'suggestions-workbook-number')), 20)
+        self.assertIn('7 mod 5 = 12 mod 5 = 2', bank.text)
+        self.assertEqual(len(bank.with_class('span', 'suggestions-workbook-source')), 75)
+        self.assertEqual([href for href in easy.links() if href.startswith('#step-unit-')],
+                         ['#step-unit-3', '#step-unit-2', '#step-unit-1', '#step-unit-4'])
+        self.assertEqual([th['role'] for th in easy.elements('th') if th.get('scope') == 'col'],
+                         ['columnheader'] * 4)
+        self.assertEqual([th['role'] for th in easy.elements('th') if th.get('scope') == 'row'],
+                         ['rowheader'] * 4)
+        self.assertIn('Find 7 in [1, 3, 5, 7, 9]', easy.text)
+        self.assertLess(easy.text.index('</table>'), easy.text.index('Find 7 in'))
+        self.assertEqual(easy.times[:2], [('2024-01', 'January 2024'), ('2023-03', 'March 2023')])
 
     def test_discovery_and_presence_include_all_suggestions_pages(self):
         expected = {guides.HUB: None, **guides.guide_paths()}
@@ -193,6 +229,9 @@ class SuggestionsTests(unittest.TestCase):
             (lambda c: unit_one(c)['examples'][1].update(id='CST201-P006-Q22'), 'Easy Read examples must appear in this unit'),
             (lambda c: unit_one(c).update(effort='unclassified'), 'unknown preparation effort'),
             (lambda c: c['CST201'].update(studyOrder=[1, 2, 3, 4, 4]), 'cover the syllabus once each'),
+            (lambda c: c['CST209']['units']['3']['quickReference'].pop(), 'at least three quick-reference examples'),
+            (lambda c: c['CST209']['units']['3']['quickReference'][0].update(example=' '), 'worked example: expected non-empty text'),
+            (lambda c: c['CST209']['units']['3'].update(firstPractice=' '), 'first practice: expected non-empty text'),
         )
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / 'curation.json'

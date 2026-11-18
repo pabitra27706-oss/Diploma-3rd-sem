@@ -3587,6 +3587,246 @@ fill:currentColor
   .suggestions-jump a{padding-inline:.5rem;font-size:.875rem}
   .suggestions-appearances{gap:var(--hub-gap-xs)}
 }
+/* Algorithms-only pilot: an open workbook and a priority table. */
+.suggestions-workbook,.suggestions-priority{padding-block-start:var(--hub-gap-sm)}
+.suggestions-pilot-heading{text-align:center;padding-block:var(--hub-gap-xs)}
+[data-page="suggestions"] .suggestions-pilot-heading h1{
+  font-size:clamp(1.625rem,4vw,2.375rem);
+  line-height:1.15;
+  margin-bottom:var(--hub-gap-xs);
+}
+.suggestions-pilot-heading p{color:var(--text-secondary)}
+.suggestions-pilot-heading+.suggestions-guide-links{justify-content:center;margin-block:0}
+.suggestions-pilot-heading+.suggestions-guide-links a,.suggestions-workbook .suggestions-panel-heading a,
+.suggestions-priority .suggestions-unit-links a{text-decoration:underline}
+.suggestions-workbook [id^="unit-"],.suggestions-priority .suggestions-step-heading{scroll-margin-block-start:.75rem}
+
+.suggestions-workbook{
+  --suggestions-band:var(--hub-accent-solid);
+  --suggestions-band-ink:var(--c-white);
+}
+[data-contrast="high"] .suggestions-workbook{
+  --suggestions-band:var(--c-white);
+  --suggestions-band-ink:var(--c-grey-111);
+}
+.suggestions-workbook-jump{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+  margin-block:var(--hub-gap-sm);
+}
+[data-page="suggestions"] .suggestions-workbook-jump a{
+  padding:.4rem var(--hub-gap-sm);
+  background:var(--bg-card);
+  gap:var(--hub-gap-sm);
+  line-height:1.3;
+}
+[data-page="suggestions"] .suggestions-workbook-jump a:is(:hover,:focus-visible){
+  background:var(--suggestions-tint);
+  border-color:currentColor;
+}
+.suggestions-workbook-jump a span{
+  flex:none;
+  border:1px solid var(--border);
+  border-radius:var(--hub-radius-pill);
+  padding:.15rem .4rem;
+  background:var(--suggestions-tint);
+  font-size:.75rem;
+  font-weight:700;
+}
+.suggestions-workbook-legend{
+  display:flex;
+  gap:var(--hub-gap-sm);
+  align-items:baseline;
+  margin-top:var(--hub-gap-sm);
+  padding:.45rem var(--hub-gap-md);
+  border:1px solid var(--border);
+  border-radius:var(--hub-radius-sm);
+  background:var(--bg-card);
+  font-size:.825rem;
+}
+.suggestions-workbook .suggestions-bank-unit{margin-block:var(--hub-gap-md) var(--hub-gap-xl)}
+.suggestions-workbook .suggestions-panel-heading{
+  padding:.4rem var(--hub-gap-lg);
+  color:var(--suggestions-band-ink);
+  background:var(--suggestions-band);
+  --focus-ring-solid:var(--suggestions-band-ink);
+}
+[data-page="suggestions"] .suggestions-workbook .suggestions-panel-heading a{color:inherit;font-size:.875rem}
+.suggestions-workbook .suggestions-bank-grid{gap:0;padding:0}
+.suggestions-workbook-prompts,.suggestions-workbook-reference{min-width:0;padding:var(--hub-gap-lg)}
+.suggestions-workbook-reference{border-block-start:1px solid var(--border)}
+.suggestions-workbook-label{font-family:var(--font-heading);font-size:1.18rem;font-weight:700}
+.suggestions-workbook .suggestions-pattern{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  align-items:start;
+  gap:var(--hub-gap-sm);
+  padding-block:.75rem;
+}
+.suggestions-workbook-number{
+  display:grid;
+  place-items:center;
+  min-width:1.8rem;
+  min-height:1.8rem;
+  padding-inline:.2rem;
+  border-radius:var(--hub-radius-pill);
+  background:var(--suggestions-tint);
+  color:var(--suggestions-accent);
+  font-size:.85rem;
+  font-weight:700;
+}
+[data-page="suggestions"] .suggestions-workbook .suggestions-pattern h3{
+  font-size:1.05rem;
+  font-weight:600;
+  line-height:1.35;
+}
+.suggestions-workbook-evidence{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.25rem var(--hub-gap-md);
+  margin-top:.35rem;
+}
+.suggestions-workbook .suggestions-appearances{gap:var(--hub-gap-xs)}
+.suggestions-workbook .suggestions-question{
+  position:relative;
+  padding:.15rem .4rem;
+  font-size:.8rem;
+}
+/* Keep the source's printed number in the link name, even in a compact date chip. */
+.suggestions-workbook-source{
+  position:absolute;
+  inline-size:1px;
+  block-size:1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+.suggestions-workbook .suggestions-rating{line-height:1.3;font-size:.75rem}
+.suggestions-workbook-facts{list-style:none;margin-top:var(--hub-gap-sm)}
+.suggestions-workbook-fact{
+  padding:.65rem .8rem;
+  border:1px solid var(--border);
+  border-inline-start:3px solid var(--suggestions-accent);
+  border-radius:var(--hub-radius-sm);
+  background:var(--bg-secondary);
+  font-size:.9rem;
+}
+.suggestions-workbook-fact+.suggestions-workbook-fact{margin-top:var(--hub-gap-sm)}
+.suggestions-workbook-fact strong{color:var(--suggestions-accent)}
+.suggestions-workbook-example{margin-top:var(--hub-gap-xs);color:var(--text-secondary)}
+@media (min-width:50rem){
+  .suggestions-workbook-jump{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .suggestions-workbook-jump a{justify-content:center}
+  .suggestions-workbook .suggestions-bank-grid{grid-template-columns:minmax(0,1.65fr) minmax(0,1fr)}
+  .suggestions-workbook-reference{border-block-start:0;border-inline-start:1px solid var(--border)}
+  .suggestions-workbook .suggestions-workbook-evidence{justify-content:space-between}
+  .suggestions-workbook .suggestions-rating{flex-direction:column;align-items:flex-end;margin-inline-start:auto}
+}
+@media (min-width:50rem) and (pointer:fine){
+  .suggestions-workbook .suggestions-question{min-height:1.75rem}
+}
+@media (max-width:23rem){.suggestions-workbook-jump{grid-template-columns:minmax(0,1fr)}}
+
+.suggestions-priority-overview{
+  padding:var(--hub-gap-lg);
+  border:1px solid var(--border);
+  border-radius:var(--hub-radius-lg);
+  background:var(--bg-card);
+  box-shadow:var(--hub-shadow-sm);
+}
+.suggestions-priority-table{width:100%;border-collapse:collapse;text-align:start;font-size:.925rem;margin-top:var(--hub-gap-sm)}
+[data-page="suggestions"] .suggestions-priority-table thead th{
+  position:static;
+  text-align:start;
+  letter-spacing:normal;
+  text-transform:none;
+  font-size:.85rem;
+}
+[data-page="suggestions"] .suggestions-priority-table th,[data-page="suggestions"] .suggestions-priority-table td{
+  padding:.2rem .65rem;
+  border:0;
+  border-bottom:1px solid var(--border);
+}
+[data-page="suggestions"] .suggestions-priority-table tbody tr{background:var(--bg-card)}
+[data-page="suggestions"] .suggestions-priority-table tbody tr:first-child{background:var(--suggestions-tint)}
+.suggestions-priority-table th[scope="row"]{text-align:start}
+.suggestions-priority-table a{
+  display:inline-flex;
+  align-items:center;
+  min-height:var(--hub-control);
+  text-decoration:underline;
+  font-weight:700;
+}
+.suggestions-priority-rank>span{
+  display:inline-block;
+  min-width:1.8rem;
+  padding:.15rem .35rem;
+  border:1px solid var(--border);
+  border-radius:var(--hub-radius-pill);
+  background:var(--bg-card);
+  text-align:center;
+  color:var(--suggestions-accent);
+  font-size:.85rem;
+  font-weight:700;
+}
+.suggestions-priority-field{display:none}
+.suggestions-priority .suggestions-step-heading{display:block}
+.suggestions-priority .suggestions-step h3 span{color:var(--suggestions-accent)}
+.suggestions-priority .suggestions-reason{margin-block:var(--hub-gap-sm)}
+.suggestions-priority-topics{margin-bottom:var(--hub-gap-md);color:var(--text-secondary)}
+.suggestions-priority .suggestions-step-grid{gap:var(--hub-gap-md)}
+.suggestions-priority .suggestions-task,.suggestions-priority-papers{
+  margin:0;
+  padding:var(--hub-gap-md);
+  border:1px solid var(--border);
+  border-radius:var(--hub-radius-md);
+  background:var(--bg-secondary);
+}
+.suggestions-priority .suggestions-step--first .suggestions-task{background:var(--suggestions-tint)}
+.suggestions-priority .suggestions-example{background:var(--bg-card)}
+.suggestions-priority .suggestions-example:hover{background:var(--suggestions-tint)}
+.suggestions-priority .suggestions-unit-links{
+  padding-inline:var(--hub-gap-md);
+  border-radius:var(--hub-radius-sm);
+  background:var(--bg-secondary);
+}
+@media screen and (max-width:43rem){
+  .suggestions-priority-table,.suggestions-priority-table tbody{display:block}
+  .suggestions-priority-table thead{
+    position:absolute;
+    inline-size:1px;
+    block-size:1px;
+    overflow:hidden;
+    clip-path:inset(50%);
+    white-space:nowrap;
+  }
+  .suggestions-priority-table tbody tr{
+    display:grid;
+    grid-template-columns:max-content minmax(0,1fr) minmax(0,48%);
+    gap:0 var(--hub-gap-sm);
+    align-items:baseline;
+    padding:.25rem .5rem .6rem;
+    border-bottom:1px solid var(--border);
+  }
+  [data-page="suggestions"] .suggestions-priority-table tbody :is(th,td){padding:0;border:0}
+  .suggestions-priority-table th[scope="row"]{grid-column:2/-1}
+  .suggestions-priority-prep{grid-column:1/span 2}
+  .suggestions-priority-practice{grid-column:3}
+  .suggestions-priority-rank .suggestions-priority-field{display:inline}
+  .suggestions-priority-table :is(.suggestions-priority-prep,.suggestions-priority-practice) .suggestions-priority-field{
+    display:block;
+    font-size:.8rem;
+    font-weight:700;
+    color:var(--text-secondary);
+  }
+}
+@media screen and (max-width:23rem){
+  .suggestions-priority-overview{padding:var(--hub-gap-sm)}
+  .suggestions-priority-rank>span{line-height:1.15}
+  .suggestions-priority-rank .suggestions-priority-field{display:block;font-size:.65rem}
+}
 @media print{
   .suggestions-header,.suggestions-emblem,.suggestions-breadcrumb,.suggestions-guide-links,.suggestions-jump,
   .suggestions-unit-links,.suggestions-end,.suggestions-panel-heading a{display:none!important}
@@ -3605,4 +3845,11 @@ fill:currentColor
   .suggestions-bank-grid,.suggestions-step-grid{display:block}
   .suggestions-pattern,.suggestions-step,.suggestions-recall,.suggestions-checklist{break-inside:avoid}
   .suggestions-panel-heading,.suggestions-step-heading{break-after:avoid}
+  .suggestions-workbook .suggestions-question{min-height:0}
+  .suggestions-workbook-source{position:static;inline-size:auto;block-size:auto;clip-path:none}
+  .suggestions-workbook .suggestions-panel-heading,.suggestions-workbook-number,.suggestions-priority-rank>span{
+    color:var(--c-black);background:var(--c-white);
+  }
+  .suggestions-workbook-reference{border-inline-start:0;border-block-start:1px solid var(--border)}
+  .suggestions-workbook-fact{break-inside:avoid}
 }
