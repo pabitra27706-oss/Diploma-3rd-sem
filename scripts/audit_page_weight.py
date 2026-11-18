@@ -37,7 +37,7 @@ prints; the fence is checked, not assumed.
 The CSS fence previously moved from 250 KB to 300 KB with the Phase 9C design layer
 (assets/css/hub.css). That layer is a single shared sheet carrying the site-wide
 type scale, colour system and every component state; it added ~118 KB to the
-heaviest pages, whose own area sheets (subjects/units-com/common.css is 108 KB)
+heaviest pages, whose own area sheets (subjects/units-com/common.css was 108,851 B before sub-phase 9C)
 already sat near the old ceiling. Splitting the layer per page-family was tried
 and rejected: hub.css relies on [data-page] qualifiers for specificity over the
 area sheets, so any split changes the cascade and regresses rendered colours.
