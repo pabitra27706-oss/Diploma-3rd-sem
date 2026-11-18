@@ -17,6 +17,35 @@ pass: remaining requirements are explicitly skipped or left unverified in
 [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md). Phase 10's device report is partial;
 content remains uncertified; no new deploy is authorized.
 
+## Phases 12–16 — 2023–2026 PYQ Weight-Calibrated Content, Video Curation & PYQ Sync Blueprints (2026-11-18) — 📋 planned
+
+Five documentation-only subject blueprints are planned on
+`arena/d77ff9fd-diploma-3rd-sem` (from `main` at `f52d2f6`) without touching any
+shipped HTML, CSS, JS, Python, `_data/`, or `_quiz-data/` file and without
+reopening closed Phases 1–10. By owner direction, topic depth and exam weights
+are calibrated strictly to the **2023–2026 WBSCTE PYQ window** (`P003-2023-03`,
+`P004-2024-01`, `P005-2024-12`, `P006-2026-01` per subject — **20 papers, 523
+scan-verified questions, 1,965 printed set marks**; excluding the 8 older
+`2021–2022` `P001`/`P002` papers = 401 questions) paired with verbatim
+Revised-2022 syllabus scope (`docs/syllabus/syllabus.json`, PDF pp. 3–13):
+
+- **[Phase 12 — Computer Programming in C](phases/12-cst201-c-content/README.md)** (`unit-1/`–`unit-5/`, 6 parts · 2 cr, 30h [5+5+7+7+6], p. 3 · 4 papers / 105 Qs / 395m: U4 `97m` 24.6%, U2 `95m` 24.1%, U1 `86m` 21.8%, U3 `66m` 16.7%, U5 `51m` 12.9%)
+- **[Phase 13 — Scripting Languages (Python)](phases/13-cst203-python-content/README.md)** (`unit-1/`–`unit-5/`, 6 parts · 2 cr, 30h [7+5+6+6+6], pp. 5–7 · 4 papers / 104 Qs / 387m: U1 `152m` 39.3%, U3 `92m` 23.8%, U2 `64m` 16.5%, U4 `49m` 12.7%, U5 `30m` 7.8%)
+- **[Phase 14 — Data Structures](phases/14-cst205-ds-content/README.md)** (`unit-1/`–`unit-4/`, 5 parts · 3 cr, 45h [3+12+15+15], p. 7 · 4 papers / 106 Qs / 403m: U4 `145m` 36.0%, U2 `143m` 35.5%, U3 `75m` 18.6%, U1 `40m` 9.9%)
+- **[Phase 15 — Computer System Organization](phases/15-cst207-cso-content/README.md)** (`unit-1/`–`unit-5/`, 6 parts · 4 cr, 60h [6+20+10+9+15], p. 10 · 4 papers / 103 Qs / 385m: U2 `112m` 29.1%, U5 `110m` 28.6%, U1 `81m` 21.0%, U3 `78m` 20.3%, U4 `4m` 1.0%)
+- **[Phase 16 — Algorithms](phases/16-cst209-algorithms-content/README.md)** (`unit-1/`–`unit-4/` + `unit-5-supplementary/`, 6 parts · 4 cr, 60h [6+16+18+20], p. 12 · 4 papers / 105 Qs / 395m: U4 `93m` 23.5%, U3 `92m` 23.3%, U1 `89m` 22.5%, U2 `79m` 20.0%, CO5 U5 `42m` 10.6%)
+
+Each unit blueprint grades every topic into weight tiers (**Tier A** core
+heavyweight, **Tier B** regular, **Tier C** low-weight, **Tier S** syllabus-only
+`0m`, and **Tier E** explicitly badged out-of-syllabus 2023–2026 exam hits),
+defines execution-time online YouTube curation slots (zero pre-filled URLs;
+plain external `<a>` links only, zero embeds/thumbnails/runtime requests), locks
+all 46 `docs/suggestions/guides.json` and `section-notes.js` anchors, and sets a
+two-mode PYQ↔unit synchronization contract (default Mode A keeps `_data/`
+byte-frozen; Mode B gates any `_data/` or `pyq-integrity.json` edit on explicit
+owner approval). Recommended execution order by 2023–2026 weight-to-page gap:
+**15 (CSO) → 13 (Python) → 16 (Algorithms) → 14 (Data Structures) → 12 (C)**.
+
 ## Phase 11 — Subject-wise Suggestions (2026-11-18) — 🚧
 
 After reviewing the Algorithms pilot, the owner approved applying its layout
