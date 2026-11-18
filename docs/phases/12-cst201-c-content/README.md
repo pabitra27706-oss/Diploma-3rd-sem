@@ -93,7 +93,7 @@ Right-size and upgrade all five C unit pages (`subjects/CST201/units/unit-{1..5}
 | **Dependencies** | Closed Phases 0–10 + `guides.json` anchor contract (Phase 11) | Self-contained; no dependency on Phases 13–16 |
 | **C standards accuracy** | WBSCTE mixes C89/16-bit (`32` keywords, `2B int`) with modern C99/64-bit (`4B int`) and has one UB MCQ (`P005-Q4`) | Compile all authored programs with `gcc -std=c99 -Wall -Wextra -Werror`; state both 16-bit and 32/64-bit sizes and flag UB explicitly |
 | **Student-copy hygiene** | Zero raw `CST201`, `CST211`, or `P00X-QY` strings in rendered HTML | Grep check in Part 12.6 before rebuild |
-| **Accessibility & budget** | Strict `h1 → h2 → h3`, contrast AA, CSS ≤ 300 KB, JS ≤ 350 KB | Use only `variables.css` tokens; keep inline `<style>` ≤ baseline; run `audit_accessibility.py --fail` & `audit_page_weight.py --budget` |
+| **Accessibility & budget** | Strict `h1 → h2 → h3`, contrast AA, CSS ≤ 340 KB, JS ≤ 350 KB | Use only `variables.css` tokens; keep inline `<style>` ≤ baseline; run `audit_accessibility.py --fail` & `audit_page_weight.py --budget` |
 | **Discovery test ratchet** | Adding `<h3 id>` changes `unitAnchored` in `tests/test_discovery.py:111` | Update exact count after `build_search_index.py` and run `unittest` + `node tests/discovery-dom.cjs` |
 | **Owner gates** | Mode B PYQ/quiz U3↔U4 retagging & deployment | Both remain strictly off until explicit owner instruction |
 

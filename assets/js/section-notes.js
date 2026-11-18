@@ -22,10 +22,10 @@
 
  /** Builds the note widget and returns its <details> element (not yet inserted). */
  function mount(options={}){
-  const {anchor,key,title='Note',label='Private plain-text note',placeholder='Type your note — saved on this device',open=false}=options;
+  const {anchor,key,title='Note',label='Private plain-text note',placeholder='Type your note — saved on this device',open=false,compact=false}=options;
   const id='section-note-'+sequence++;
   const details=document.createElement('details');
-  details.className='section-note';
+  details.className='section-note'+(compact?' section-note--compact':'');
   details.open=Boolean(open);
   const summary=document.createElement('summary');
   summary.textContent=title;
@@ -98,10 +98,23 @@
  // Unit pages keep their existing behaviour: one note per .section-title.
  if(/\/subjects\/[^/]+\/units\//.test(location.pathname)){
   const headings=[...document.querySelectorAll('.section-title')].filter(heading=>!heading.closest('.unit-discovery'));
+  // The heading also contains icon <i> elements (including the "#" anchor
+  // icon), so textContent yields "Unit Overview #". Read only the text nodes
+  // and drop any anchor marker, so the note label is the heading's own words.
+  const labelFor=heading=>{
+   const text=[...heading.childNodes]
+    .filter(node=>node.nodeType===3||(node.nodeType===1&&!node.classList.contains('collapse-icon')&&!node.classList.contains('section-anchor-link')))
+    .map(node=>node.textContent||'')
+    .join(' ')
+    .replace(/\s*#\s*$/,'')
+    .replace(/\s+/g,' ')
+    .trim();
+   return text||'this section';
+  };
   headings.forEach((heading,index)=>{
    heading.id||='section-'+(index+1);
    const scope=location.pathname.split('/subjects/')[1]+'#'+heading.id;
-   mountAfter(heading,{key:keyFor(scope),title:'My note for '+heading.textContent.trim(),open:false});
+   mountAfter(heading,{key:keyFor(scope),title:'Note on '+labelFor(heading),open:false,compact:true});
   });
  }
 })();

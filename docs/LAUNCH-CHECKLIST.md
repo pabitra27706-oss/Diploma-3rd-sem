@@ -60,7 +60,7 @@ Legend: ✅ proved here, with the command · ⛔ **not run** here · 🚧 owner 
 ## 6. Performance
 
 - ✅ ≤ 12 requests per view from code: Practice **9**, quiz setup **10**, unit page **10**, PYQ answers **8**, home **9**, study pages **12**, quiz play **11** (`scripts/audit_page_weight.py`; static files + the JSON a view fetches).
-- ✅ Page weight within budget — `--budget` passes every page at 300 KB CSS / 350 KB JS (the CSS fence was raised from 250 KB when the Phase 9C shared design layer, `assets/css/hub.css`, was added; see the rationale in `scripts/audit_page_weight.py`).
+- ✅ Page weight within budget — `--budget` passes every page at 340 KB CSS / 350 KB JS. The fence was raised 250 KB → 300 KB when the Phase 9C shared design layer (`assets/css/hub.css`) landed, and 300 KB → 340 KB for the Phase 9C unit-notes reading layer in `subjects/units-com/common.css` (owner-approved). Rationale and the measured reclaim analysis are in the `scripts/audit_page_weight.py` docstring.
 - ✅ No icon font CDN, no font CDN, no framework layer nobody uses. **Note:** the self-hosted Font Awesome *webfonts* (156 KB solid, 117 KB brands) remain on icon pages — subsetting them is a rights decision, see `docs/DECISIONS.md`.
 - ⛔ Images lazy-load below the fold with dimensions — **not verified in a browser**.
 - ⛔ Lighthouse mobile pass recorded — **not run**: no Chrome, no browser, no network run here. A green byte/request budget is **not** a Lighthouse score.

@@ -134,7 +134,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Budget fence (300 KB CSS / 350 KB JS per page) and the /-rooted copy
+          # Budget fence (340 KB CSS / 350 KB JS per page) and the /-rooted copy
           # proof. These are byte and link checks, not Lighthouse scores.
           python3 scripts/audit_page_weight.py --budget > budgets-pages.txt
           cat budgets-pages.txt >> "$GITHUB_STEP_SUMMARY"

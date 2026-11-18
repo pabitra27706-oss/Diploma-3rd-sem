@@ -98,7 +98,7 @@ Eliminate the site's upside-down Python word-count distribution (where `7.8%`-we
 | **Dependencies** | Closed Phases 0–10 + `guides.json` (Phase 11) | Independent of Phases 12, 14–16 |
 | **Code correctness** | Python floor division, slicing, aliasing, LEGB, and `re` outputs are subtle | Run all standalone code blocks under `python3` in sandbox; `ast.parse` on Django/NumPy snippets |
 | **Syllabus honesty** | `22m` of 2023–2026 PYQs touch `lambda`, recursion, `numpy`, `set`, Flask | Badge every Tier E item transparently as *"Exam note (outside printed syllabus)"* |
-| **Accessibility & budget** | Strict `h1 → h2 → h3`, AA tokens, CSS ≤ 300 KB, JS ≤ 350 KB | Verify via `audit_accessibility.py --fail`, `check_tokens.py --strict`, `audit_page_weight.py --budget` |
+| **Accessibility & budget** | Strict `h1 → h2 → h3`, AA tokens, CSS ≤ 340 KB, JS ≤ 350 KB | Verify via `audit_accessibility.py --fail`, `check_tokens.py --strict`, `audit_page_weight.py --budget` |
 | **Discovery tests** | New `<h3 id>`s raise `unitAnchored` in `tests/test_discovery.py:111` | Update exact count after `build_search_index.py`; run `unittest` + `node tests/discovery-dom.cjs` |
 
 ---

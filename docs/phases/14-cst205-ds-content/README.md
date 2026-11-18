@@ -94,7 +94,7 @@ Calibrate all four Data Structures unit pages (`subjects/CST205/units/unit-{1..4
 | **Dependencies** | Closed Phases 0–10 + `guides.json` (Phase 11) | Independent of Phases 12–13, 15–16 |
 | **Indexing conventions** | WBSCTE mixes 0-based and 1-based indexing in row-major (`P005-Q16d`) and array BT (`P005-Q12`), and root-height `0` vs `1` (`P004-Q6`) | State both conventions side by side in formula boxes |
 | **C & trace correctness** | Pointer bugs in SLL/DLL/BST or reversed operand order `op1 - op2` in postfix evaluation cost marks | Compile all C with `gcc -std=c99 -Wall -Wextra` and verify every dry-run programmatically |
-| **Accessibility & budget** | Strict `h1 → h2 → h3`, AA contrast, CSS ≤ 300 KB, JS ≤ 350 KB | Verify via `audit_accessibility.py --fail`, `check_tokens.py --strict`, `audit_page_weight.py --budget` |
+| **Accessibility & budget** | Strict `h1 → h2 → h3`, AA contrast, CSS ≤ 340 KB, JS ≤ 350 KB | Verify via `audit_accessibility.py --fail`, `check_tokens.py --strict`, `audit_page_weight.py --budget` |
 | **Discovery tests** | New `<h3 id>`s update `unitAnchored` in `tests/test_discovery.py:111` | Update exact count after `build_search_index.py`; pass `unittest` + `node tests/discovery-dom.cjs` |
 
 ---

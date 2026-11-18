@@ -42,7 +42,7 @@ EXTERNAL = ("http://", "https://", "//", "mailto:", "tel:", "data:", "javascript
 
 # Bytes (uncompressed) before a file is called out.
 JS_BUDGET_SINGLE = 300 * 1024
-CSS_BUDGET_SINGLE = 300 * 1024
+CSS_BUDGET_SINGLE = 340 * 1024
 DATA_BUDGET_SINGLE = 1024 * 1024
 
 ROOT = Path(__file__).resolve().parent.parent
