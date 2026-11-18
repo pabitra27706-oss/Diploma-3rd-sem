@@ -148,8 +148,8 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     assert(!RAW_QID_RE.test(results.textContent), `Raw QID leaked in search results: ${results.textContent}`);
     assert(!RAW_CODE_RE.test(scopeEl.textContent), `Raw code leaked in scope disclosure: ${scopeEl.textContent}`);
     // Indexed/excluded page counts are derived from assets/search/manifest.json;
-    // Phase 8 added six revision-sheet pages, so 50/68 became 56/74 indexed/excluded.
-    assert(scopeEl.textContent.includes('56 of 74') && scopeEl.textContent.includes('18'));
+    // Phase 11 replaces the Suggestions placeholder and adds ten indexed guides.
+    assert(scopeEl.textContent.includes('67 of 84') && scopeEl.textContent.includes('17'));
     assert.deepEqual(subSel.options.slice(1).map(o => o.textContent), ['C', 'Python', 'DS', 'CSO', 'Algorithms']);
 
     // Keyboard completeness: /, Ctrl+K, ArrowDown, ArrowUp, Home, End, Escape

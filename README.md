@@ -4,17 +4,20 @@ A first-party, zero-build static study site for West Bengal diploma CST students
 HTML, CSS, JavaScript and checked-in JSON can be served directly; no package
 installation or build is required to run the site.
 
-**Phases 1–9 are implemented, owner-accepted (`✅*`) and merged to `main` (Phase 9
-as PR #17, published 2026-11-17). Two Phase 9 gates remain open — the 9.4 counter
-decision and a real-browser/phone launch pass — and Phase 10 (device acceptance)
-remains.** See
-[Current status and remaining work](docs/STATUS.md) for the handoff,
-[Roadmap](docs/ROADMAP.md) for phase status, and
-[Decisions](docs/DECISIONS.md) for owner instructions and gates.
+Phases 1–10 were administratively closed on 2026-11-18; any recorded skips
+remain unverified. **Phase 11 — Subject-wise Suggestions** is implemented on
+the working branch and is pending owner acceptance. See the [current status](docs/STATUS.md),
+[roadmap](docs/ROADMAP.md) and [closure record](docs/PROJECT-CLOSURE.md). This
+checkout does not confirm what is deployed.
 
 ## What exists in the working tree
 
 - Five theory subjects, unit notes and source-linked previous-year papers.
+- [Study Suggestions](suggestions/index.html): five expandable subject cards,
+  each with **Important Questions** (51 selected archived questions across
+  the 23 syllabus units) and **Easy Read** (study order, practice tasks and a
+  revision checklist). Each question links to its real paper session; the
+  guides are study aids, not exam predictions or official answers.
 - **28 papers / 924 archived questions**; exact-content aliases retain their
   source IDs. Practice uses **923 unique questions** across ten derived days.
   (A duplicated Python March-2023 reprint was removed on 2026-11-17, and the
@@ -40,10 +43,10 @@ remains.** See
   normalized-text candidate clusters / 32 records), canonical question deep
   links with Web Share / clipboard / input fallbacks across PYQ Answers,
   Practice, and Quiz Review, authored unit `#section` anchors, breadcrumbs, and
-  filtered-PYQ URL handoffs. Search indexes 2,410 items across 56 of 74 shipped
+  filtered-PYQ URL handoffs. Search indexes 2,518 items across 67 of 84 shipped
   HTML pages (question stems/topics, unit headings, subject/lab/internship hubs,
-  coverage, exam-pattern, revision sheets, study, and info pages, plus this
-  device's local section notes); the 18 excluded app/placeholder/fallback shells are listed in
+  coverage, exam-pattern, revision sheets, Suggestions, study, and info pages,
+  plus this device's local section notes); the 17 excluded app/placeholder/fallback shells are listed in
   [`assets/search/manifest.json`](assets/search/manifest.json).
 - **1,339 revision cards** generated from existing model answers (923) and keyed
   MCQ explanations (416), a documented fixed Leitner scheduler, and a
@@ -81,7 +84,7 @@ remains.** See
   No browser exists in the build environment, so no Lighthouse number and no
   screenshot claim is made.
 - **Printable** unit pages, papers, answer keys and revision sheets: one
-  stylesheet on all 74 pages, answers on their own page, and a labelled
+  stylesheet on all shipped pages, answers on their own page, and a labelled
   "Include answers" toggle on a paper. No running header is drawn — browsers do
   not support `@page` margin boxes here.
 - **Revision sheets are drafts, not facts.** 44 entries exist across the five
@@ -107,9 +110,9 @@ remains.** See
   uncached first visits still need a connection. Full device/install/update
   acceptance is deferred to a dedicated final phase.
 
-Counts above describe the current generated data, not a guarantee of verified
-answers or complete syllabus coverage. Global bookmark/Study Tips placeholder
-pages are not advertised as finished features.
+Content counts describe generated data, not a guarantee of verified answers
+or complete syllabus coverage. The standalone Bookmarks placeholder remains
+unadvertised.
 
 ## Authoritative content and verification
 
@@ -150,6 +153,7 @@ From the repository root, with Python 3 and Node.js available:
 ```sh
 python3 scripts/check_pyq_integrity.py
 python3 scripts/check_platform.py
+python3 scripts/build_suggestions.py --check
 python3 scripts/check_site.py --strict --quiet
 python3 scripts/validate_pyq.py
 python3 scripts/validate_data.py --check-baseline
@@ -196,6 +200,7 @@ python3 scripts/build_revision_sheets.py
 python3 scripts/build_verification.py
 python3 scripts/build_runtime_bundles.py   # includes assets/js/shell.bundle.js
 python3 scripts/build_icon_subset.py       # assets/vendor/fontawesome/css/used.min.css
+python3 scripts/build_suggestions.py       # edit docs/suggestions/guides.json, not the generated HTML
 python3 scripts/generate_presence.py
 python3 scripts/generate_presence.py
 python3 scripts/build_search_index.py

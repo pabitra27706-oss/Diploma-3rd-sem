@@ -1,6 +1,6 @@
 # Phase 11 — Subject-wise Suggestions
 
-**Status:** 🚧 Owner-approved for implementation, 2026-11-18 · **Parts:** 4
+**Status:** 🚧 Implemented; pending owner acceptance, 2026-11-18 · **Parts:** 4
 
 Help 3rd-semester CST students decide what to practise and what to revise first.
 The existing `suggestions/index.html` is a Coming Soon placeholder and has no

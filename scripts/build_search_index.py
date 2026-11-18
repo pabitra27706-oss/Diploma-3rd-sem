@@ -9,6 +9,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlencode, urlsplit
 from data_pipeline import ROOT, stores, duplicates, load, generic_topic, normal
+from build_suggestions import HUB as SUGGESTIONS_HUB, guide_paths
 
 INDEXED_INFO_PAGES = {
     # Theory subject overview hubs (5)
@@ -40,6 +41,9 @@ INDEXED_INFO_PAGES = {
     'roadmap/index.html': {'category': 'Study tool'},
     'settings.html': {'category': 'Study tool'},
     'today.html': {'category': 'Study tool'},
+    # Suggestions hub and the two authored guides for each theory course.
+    SUGGESTIONS_HUB: {'category': 'Suggestions'},
+    **{rel: {'category': 'Suggestions', 'subject': code} for rel, code in guide_paths().items()},
     # Site information, privacy, legal & support pages (9)
     'info/about.html': {'category': 'Site guide & policy'},
     'info/contact-support.html': {'category': 'Site guide & policy'},
@@ -71,7 +75,6 @@ EXCLUDED_PAGES = {
     ],
     'placeholders': [
         'bookmarks/index.html',
-        'suggestions/index.html',
     ],
     'fallbacks': [
         '404.html',

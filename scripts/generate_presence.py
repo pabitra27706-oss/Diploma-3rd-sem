@@ -4,7 +4,6 @@ Run after changing pages. No network or wall clock inputs.
 """
 from pathlib import Path
 from html import escape, unescape
-import os
 import re
 
 from site_config import ROOT, SITE, SOCIAL_IMAGE
@@ -60,63 +59,76 @@ def mark_body(s, family):
 
 
 
+def is_indexable(relative):
+    return relative.name != '404.html' and relative.parts[0] != 'bookmarks'
+
+
+def shell_version(root=ROOT):
+    return re.search(r"const VERSION = '([^']+)'", (root / 'sw.js').read_text())[1]
+
+
+def render_presence(s, relative, version):
+    """Return a page with the standard metadata and shared shell assets."""
+    s = re.sub(r'\n?<!-- presence:v1 -->.*?<!-- /presence -->\n?', '', s, flags=re.S)
+    title = re.search(r'<title>(.*?)</title>', s, re.S | re.I)
+    title = unescape(re.sub('<[^>]*>', '', title[1]).strip()) if title else 'CST Study Hub'
+    canonical = SITE + relative.as_posix()
+    desc = 'Diploma 3rd Semester CST study resources: notes, practice and previous year questions.'
+    tags = [f'<link rel="canonical" href="{canonical}">',f'<meta name="app-build" content="{version}">']
+    if not re.search(r'<meta[^>]+name=[\"\']description', s, re.I):
+        tags.append(f'<meta name="description" content="{desc}">')
+    for prop, val in [('og:type','website'),('og:title',title),('og:description',desc),('og:url',canonical),('og:image',IMAGE),('og:image:alt','CST Study Hub homepage screenshot'),('twitter:card','summary_large_image'),('twitter:title',title),('twitter:image',IMAGE)]:
+        key = 'name' if prop.startswith('twitter:') else 'property'
+        tags.append(f'<meta {key}="{prop}" content="{escape(val, quote=True)}">')
+    # The 404 page can be served at any depth; other pages use relative assets.
+    assets = SITE if relative.name == '404.html' else ('../' * (len(relative.parts) - 1) or './')
+    tags += [f'<link rel="icon" href="{assets}assets/pwa/icon-192x192.png">', f'<link rel="apple-touch-icon" href="{assets}assets/pwa/icon-192x192.png">', '<meta name="apple-mobile-web-app-capable" content="yes">', '<meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">']
+    if 'rel="manifest"' not in s:
+        tags.append(f'<link rel="manifest" href="{assets}manifest.json">')
+    if not is_indexable(relative):
+        tags.append('<meta name="robots" content="noindex">')
+    block = '\n<!-- presence:v1 -->\n' + '\n'.join(tags) + '\n<!-- /presence -->\n'
+    s = s.replace('</head>', block + '</head>')
+    # Storage boundary is blocking and precedes all legacy inline/theme scripts.
+    s = re.sub(r'<script src="[^"]*assets/js/storage\.js"></script>\n?', '', s)
+    s = re.sub(r'(<head(?:\s[^>]*)?>)', lambda m: m[0]+'\n<script src="'+assets+'assets/js/storage.js"></script>', s, count=1, flags=re.I)
+    # The UI language layer (Phase 7.3) is shared like the safeguards: it is a
+    # deferred, first-party script with an English fallback, so it is safe to
+    # load everywhere and it works without a build step.
+    s = re.sub(r'<script defer src="[^"]*assets/js/i18n\.js"></script>\n?', '', s)
+    s = re.sub(r'<script defer src="[^"]*assets/js/pwa\.js"></script>\n?', '', s)
+    s = re.sub(r'<script defer src="[^"]*assets/js/shell\.bundle\.js"></script>\n?', '', s)
+    # Shared additive safeguards load on every shipped page.
+    s = re.sub(r'<script defer src="[^"]*assets/js/accessibility\.js"></script>\n?', '', s)
+    s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/accessibility\.css">\n?', '', s)
+    s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/base\.css">\n?', '', s)
+    s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/hub\.css">\n?', '', s)
+    s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/pwa\.css">\n?', '', s)
+    # One print sheet on every shipped page (Phase 8.3): the printed unit,
+    # paper, answer key and revision sheet must all come out black on white.
+    s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/print\.css">\n?', '', s)
+    s = s.replace('</head>', f'<link rel="stylesheet" href="{assets}assets/css/base.css">\n<link rel="stylesheet" href="{assets}assets/css/hub.css">\n<script defer src="{assets}assets/js/shell.bundle.js"></script>\n</head>')
+    if re.search(r'<main\b', s, re.I):
+        match = re.search(r'<main\b[^>]*>', s, re.I)
+        ident = re.search(r'\bid=["\']([^"\']+)', match[0])
+        target = ident[1] if ident else 'study-main-content'
+        if not ident:
+            s = s[:match.start()]+match[0][:-1]+' id="'+target+'">'+s[match.end():]
+        if 'class="skip-study-content"' not in s:
+            s = re.sub(r'(<body\b[^>]*>)', lambda m:m[0]+'\n<a class="skip-study-content" href="#'+target+'">Skip to study content</a>', s, count=1, flags=re.I)
+    s = mark_body(s, page_family(relative))
+    return s
+
+
 def main():
     pages = sorted(p for p in ROOT.rglob('*.html') if not set(p.relative_to(ROOT).parts) & {'webflow', '.git', 'node_modules', 'assets'})
+    version = shell_version()
     urls = []
     for p in pages:
-        s = p.read_text()
-        s = re.sub(r'\n?<!-- presence:v1 -->.*?<!-- /presence -->\n?', '', s, flags=re.S)
-        title = re.search(r'<title>(.*?)</title>', s, re.S | re.I)
-        title = unescape(re.sub('<[^>]*>', '', title[1]).strip()) if title else 'CST Study Hub'
-        canonical = SITE + p.relative_to(ROOT).as_posix()
-        if p.name != '404.html' and not set(p.relative_to(ROOT).parts) & {'bookmarks', 'suggestions'}:
-            urls.append(canonical)
-        desc = 'Diploma 3rd Semester CST study resources: notes, practice and previous year questions.'
-        version = re.search(r"const VERSION = '([^']+)'", (ROOT/'sw.js').read_text())[1]
-        tags = [f'<link rel="canonical" href="{canonical}">',f'<meta name="app-build" content="{version}">']
-        if not re.search(r'<meta[^>]+name=[\"\']description', s, re.I):
-            tags.append(f'<meta name="description" content="{desc}">')
-        for prop, val in [('og:type','website'),('og:title',title),('og:description',desc),('og:url',canonical),('og:image',IMAGE),('og:image:alt','CST Study Hub homepage screenshot'),('twitter:card','summary_large_image'),('twitter:title',title),('twitter:image',IMAGE)]:
-            key = 'name' if prop.startswith('twitter:') else 'property'
-            tags.append(f'<meta {key}="{prop}" content="{escape(val, quote=True)}">')
-        # The 404 page can be served at any depth; other pages use relative assets.
-        assets = SITE if p.name == '404.html' else os.path.relpath(ROOT, p.parent).rstrip('/') + '/'
-        tags += [f'<link rel="icon" href="{assets}assets/pwa/icon-192x192.png">', f'<link rel="apple-touch-icon" href="{assets}assets/pwa/icon-192x192.png">', '<meta name="apple-mobile-web-app-capable" content="yes">', '<meta name="apple-mobile-web-app-title" content="Diploma 3rd Sem">']
-        if 'rel="manifest"' not in s:
-            tags.append(f'<link rel="manifest" href="{assets}manifest.json">')
-        if p.name == '404.html' or set(p.relative_to(ROOT).parts) & {'bookmarks','suggestions'}:
-            tags.append('<meta name="robots" content="noindex">')
-        block = '\n<!-- presence:v1 -->\n' + '\n'.join(tags) + '\n<!-- /presence -->\n'
-        s = s.replace('</head>', block + '</head>')
-        # Storage boundary is blocking and precedes all legacy inline/theme scripts.
-        s = re.sub(r'<script src="[^"]*assets/js/storage\.js"></script>\n?', '', s)
-        s = re.sub(r'(<head(?:\s[^>]*)?>)', lambda m: m[0]+'\n<script src="'+assets+'assets/js/storage.js"></script>', s, count=1, flags=re.I)
-        # The UI language layer (Phase 7.3) is shared like the safeguards: it is a
-        # deferred, first-party script with an English fallback, so it is safe to
-        # load everywhere and it works without a build step.
-        s = re.sub(r'<script defer src="[^"]*assets/js/i18n\.js"></script>\n?', '', s)
-        s = re.sub(r'<script defer src="[^"]*assets/js/pwa\.js"></script>\n?', '', s)
-        s = re.sub(r'<script defer src="[^"]*assets/js/shell\.bundle\.js"></script>\n?', '', s)
-        # Shared additive safeguards load on every shipped page.
-        s = re.sub(r'<script defer src="[^"]*assets/js/accessibility\.js"></script>\n?', '', s)
-        s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/accessibility\.css">\n?', '', s)
-        s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/base\.css">\n?', '', s)
-        s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/hub\.css">\n?', '', s)
-        s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/pwa\.css">\n?', '', s)
-        # One print sheet on every shipped page (Phase 8.3): the printed unit,
-        # paper, answer key and revision sheet must all come out black on white.
-        s = re.sub(r'<link rel="stylesheet" href="[^"]*assets/css/print\.css">\n?', '', s)
-        s = s.replace('</head>', f'<link rel="stylesheet" href="{assets}assets/css/base.css">\n<link rel="stylesheet" href="{assets}assets/css/hub.css">\n<script defer src="{assets}assets/js/shell.bundle.js"></script>\n</head>')
-        if re.search(r'<main\b', s, re.I):
-            match = re.search(r'<main\b[^>]*>', s, re.I)
-            ident = re.search(r'\bid=["\']([^"\']+)', match[0])
-            target = ident[1] if ident else 'study-main-content'
-            if not ident:
-                s = s[:match.start()]+match[0][:-1]+' id="'+target+'">'+s[match.end():]
-            if 'class="skip-study-content"' not in s:
-                s = re.sub(r'(<body\b[^>]*>)', lambda m:m[0]+'\n<a class="skip-study-content" href="#'+target+'">Skip to study content</a>', s, count=1, flags=re.I)
-        s = mark_body(s, page_family(p.relative_to(ROOT)))
-        p.write_text(s)
+        relative = p.relative_to(ROOT)
+        if is_indexable(relative):
+            urls.append(SITE + relative.as_posix())
+        p.write_text(render_presence(p.read_text(), relative, version))
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<!-- Generated by scripts/generate_presence.py v1 -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     xml += ''.join(f'  <url><loc>{escape(url)}</loc></url>\n' for url in urls)
     (ROOT/'sitemap.xml').write_text(xml + '</urlset>\n')

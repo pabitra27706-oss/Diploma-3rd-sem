@@ -12,9 +12,12 @@ content remains uncertified; no new deploy is authorized.
 
 The owner approved a separate phase for the five theory subjects, with
 **Important Questions** and **Easy Read** guides, and asked to record the phase
-before writing site code. See the [phase plan](phases/11-suggestions/README.md)
-and [record](phases/11-suggestions/record.md). This work does not reopen Phases
-1–10 or authorize publishing.
+before writing site code. The dashboard and ten static guides are implemented on
+`arena/b06d66f8-diploma-3rd-sem`. The 51 archive links cover all 23 syllabus units.
+Targeted headless Chromium and local regression checks passed; physical-device
+and owner acceptance are not claimed. See the [phase plan](phases/11-suggestions/README.md)
+and [record](phases/11-suggestions/record.md). This does not reopen Phases 1–10
+or authorize publishing.
 
 ## Phase 9B — UI reboost (2026-11-17) — `✅*`, merged
 

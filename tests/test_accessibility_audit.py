@@ -32,9 +32,8 @@ class AccessibilityAuditTests(unittest.TestCase):
 
     def test_page_count_matches_baseline(self):
         self.assertEqual(self.data['pages'], self.baseline['pages'])
-        # Phase 7 measured 68 pages; Phase 8 added six revision-sheet pages
-        # (revision/index.html + one sheet per theory course), so the lock is 74.
-        self.assertEqual(self.data['pages'], 74)
+        # Phase 11 replaced a placeholder and added ten guide pages.
+        self.assertEqual(self.data['pages'], 84)
 
     def test_every_page_has_one_main_and_one_h1_and_a_skip_link(self):
         self.assertEqual(self.data['no_main'], [])
@@ -55,9 +54,8 @@ class AccessibilityAuditTests(unittest.TestCase):
         self.assertEqual(failing, [])
         # The measurement must stay honest about how many pairs it covers.
         self.assertEqual(len(self.data['contrast']), self.baseline['contrast_measured'])
-        # Phase 9C added the navy/lavender pair set; this patch adds explicit
-        # dark-theme coverage for the quiz and PYQ solid accent controls.
-        self.assertEqual(self.baseline['contrast_measured'], 60)
+        # Phase 11 adds six light/dark pairs for the links and source hints.
+        self.assertEqual(self.baseline['contrast_measured'], 66)
 
     def test_contrast_measurement_reads_real_tokens(self):
         rows = {row['label']: row for row in self.data['contrast']}

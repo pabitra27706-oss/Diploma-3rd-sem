@@ -45,7 +45,7 @@ version), and the base-path proof (one constant, `/`-rooted copy passes the site
 checker). Earlier suites cover: source-preserving/idempotent
 pipeline transformations, source + syllabus-HTML + runtime-pool mutation detection,
 integrity guard changes/additions/removals, compact discovery (≤ 40% shard budget,
-74-page scope partition, 2,410-entry file/anchor validation, 1 exact alias + 15
+84-page scope partition, file/anchor validation, 1 exact alias + 15
 unverified candidate repeat clusters, and SW cache registration), Phase 5 card
 eligibility (source-verbatim copies, citation hygiene, explicit skip accounting,
 per-unit counts, byte-identical regeneration, compact payload), bundle/source
@@ -63,7 +63,9 @@ single presence pass does not settle a fresh page; that is expected, not a bug. 
 sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons use the same
 revision (the 2026-11-17 explanation revision, where both pins now point). Both
 values must be in Git history; do not use a shallow clone
-for these checks. CI checks out full history.
+for these checks. CI checks out full history. Phase 11 also checks static
+Suggestions generation, coverage of all syllabus units, exact archive routes
+and session labels, paired revision-guide links, and sitemap/search presence.
 
 Node suites cover attempt persistence/migration/retries/mistakes, Leitner
 scheduling (ladder, local-midnight rollover, per-day new-card cap, clock clamps,
@@ -103,7 +105,7 @@ export CHROMIUM_EXECUTABLE=/path/to/chromium
 export TEST_BASE=http://127.0.0.1:8000/Diploma-3rd-sem/
 
 for suite in data-browser quiz-engine-browser discovery-study-browser \
-  storage-browser paper-offline feedback-browser cards-offline; do
+  storage-browser paper-offline feedback-browser cards-offline suggestions-browser; do
   node "tests/$suite.cjs" || break
 done
 ```
