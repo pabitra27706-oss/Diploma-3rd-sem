@@ -115,6 +115,31 @@ hover/focus.
 Topics are per-unit and per-subject (e.g. CST207 unit 2 → hardwired vs
 microprogrammed control, microinstruction sequencing, Booth multiplication).
 
+### 9C.5b — discoverability (owner-reported)
+
+The first cut put `#videos` only at the very bottom of each page. On a phone a
+unit page is **~39,871 px** tall and the section is the 15th of 15, so the owner
+reasonably reported "there isn't any youtube link" — the links were there but
+unreachable without scrolling the whole unit.
+
+Fixed in two places on all 24 pages:
+
+- `Videos` added to the desktop `.nav-links` bar and to the mobile drawer,
+  appended after `Revision`. `.nav-links` is `overflow-x:auto`, so the extra item
+  scrolls rather than wrapping at narrow desktop widths.
+- A `.jump-videos` card at the end of the **Overview** section: 3px accent
+  border, 2.75rem CSS-mask play chip, "Watch & Learn / Hand-picked videos for
+  this unit" and an arrow. Phones get a full-width row (312 × 72 px measured);
+  desktop a slim banner.
+
+Verified: `.jump-videos` renders on phone and desktop, the nav link moves the
+page from `scrollY 300` to `38,236`, and every page has exactly **3**
+`#videos` anchors (nav, drawer, jump card).
+
+An earlier attempt at this edit was applied with three inconsistent patterns and
+left 4 pages with 2 anchors and 5 with 4. It was reverted with
+`git checkout` and re-applied as one verifiable pass rather than patched forward.
+
 ### 9C.6 — subject accent
 
 `body.subject-cstNNN` added to all 24 unit pages. Computed `--subject-color` is
@@ -126,7 +151,7 @@ were switched to `var(--subject-color)`.
 
 `scripts/audit_page_weight.py` `CSS_BUDGET` and `scripts/check_site.py`
 `CSS_BUDGET_SINGLE` raised 300 KB → **340 KB**, with the rationale in the script
-docstring. Heaviest page is now **316,817 B**, so headroom is **3.3 KB**.
+docstring. Heaviest page is now **319,885 B**, so headroom is **27.6 KB**.
 
 Why raise rather than trim: the old ceiling left **13 bytes**; a re-measured
 audit found only **~2 KB** of genuinely dead rules in the whole sheet, while
@@ -147,7 +172,7 @@ Run on the committed tree:
 | `audit_accessibility.py` | pass |
 | `validate_pyq.py` | pass |
 | `check_root_rewrite.py` | pass |
-| `audit_page_weight.py --budget` | pass — heaviest 316,817 B of 348,160 B |
+| `audit_page_weight.py --budget` | pass — heaviest 319,885 B of 348,160 B |
 | `unittest discover -s tests` | **123/123 OK** |
 | node suites (12 files) | pass |
 | `validate_data.py --check-baseline` | pass |
@@ -218,8 +243,8 @@ Not done. This is the one open acceptance item for the sub-phase.
 - [ ] Owner review on a physical phone (primary target for this layer).
 - [ ] Replace `results?search_query=` with verified `watch?v=` links when Phase
       12 content work starts — each URL must be checked live first.
-- [ ] CSS headroom is 3.3 KB; the next addition needs either trimming or a
-      recorded fence decision.
+- [x] CSS headroom is 27.6 KB (corrected: an earlier draft of this record
+      wrongly said 3.3 KB by mis-subtracting the fence in KB from a byte value).
 - [ ] Consider whether the layer should extend above 768px (tablets) once a
       device pass exists. Not done now to keep the change phone-scoped and
       reversible.

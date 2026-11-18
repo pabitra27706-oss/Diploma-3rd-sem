@@ -98,10 +98,9 @@ See [`record.md`](record.md) for the run-by-run output.
 
 ## Risks
 
-- The CSS fence now has **3.3 KB** of headroom (316,817 B of 348,160 B). The next
-  CSS addition will trip `audit_page_weight.py --budget`; the fence is a
-  guardrail, not a target, and raising it again needs a recorded reason like the
-  one in the script docstring.
+- The CSS fence has **27.6 KB** of headroom (319,885 B of 348,160 B). That is
+  comfortable, but it is a guardrail, not a target: raising it again needs a
+  recorded reason like the one in the script docstring.
 - The video sections are ~60–70 words each, so they shift `coverage.json` note
   counts. Those numbers describe shipped notes, not syllabus coverage; the counts
   remain accurate.

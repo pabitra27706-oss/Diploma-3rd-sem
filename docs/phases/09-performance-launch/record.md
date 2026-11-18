@@ -210,7 +210,7 @@ never been exercised because nothing was ever deployed from this branch.
 | `build_icon_subset.py --check` | current, 25,890 B, 226 icons |
 | `build_data_version.py --check` | current, `data-6b1621c45599` |
 | `check_root_rewrite.py` | 0 errors on the `/`-rooted copy |
-| `audit_page_weight.py --budget` | every page within 340 KB CSS / 350 KB JS (raised from 300 KB by the Phase 9C unit-notes reading layer; heaviest page 316,817 B) |
+| `audit_page_weight.py --budget` | every page within 340 KB CSS / 350 KB JS (raised from 300 KB by the Phase 9C unit-notes reading layer; heaviest page 319,885 B) |
 | `check_readme_paths.py` | 0 missing |
 | Chromium suites, Lighthouse, real phone | **not run — no browser, no device** |
 
