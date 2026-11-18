@@ -79,30 +79,77 @@
     }
   }
 
-  function focusQuestionTopic(main) {
+  async function focusQuestionTopic(main, subject, currentUnit, maxUnits) {
     const topic = new URLSearchParams(window.location.search).get('topic');
     if (!topic || !topic.trim()) return;
-    const needle = topic.trim().replace(/\s+/g, ' ').toLocaleLowerCase();
+    const normalized = (value) => String(value || '').replace(/\s+/g, ' ').trim().toLocaleLowerCase();
+    const needle = normalized(topic);
     const terms = needle.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 2);
-    const candidates = Array.from(main.querySelectorAll('h2, h3, h4, p, li, td, .important-note, .topic-card'))
-      .filter((el) => !el.closest('.unit-discovery, .section-note-box'))
-      .map((el) => ({ el, text: cleanHeadingText(el).toLocaleLowerCase() }))
-      .filter(({ text }) => text && text.length < 700);
-    let match = candidates.find(({ text }) => text.includes(needle));
-    if (!match && terms.length) {
-      let bestScore = 0;
-      for (const candidate of candidates) {
-        const score = terms.reduce((sum, term) => sum + (candidate.text.includes(term) ? 1 : 0), 0);
-        if (score > bestScore) {
-          bestScore = score;
-          match = candidate;
-        }
-      }
-    }
-    if (!match) return;
+    if (!terms.length) return;
 
-    const heading = match.el.matches('h2, h3, h4') ? match.el : match.el.closest('section')?.querySelector('h2, h3, h4');
-    const target = heading || match.el;
+    function entriesFor(doc, unit) {
+      return Array.from(doc.querySelectorAll('h2, h3, h4')).map((heading) => {
+        const title = normalized(cleanHeadingText(heading));
+        let anchor = heading.getAttribute('id') || '';
+        if (!anchor || /^section-\d+$/.test(anchor)) {
+          const section = heading.closest('section[id]');
+          anchor = section ? section.id : '';
+        }
+        return { title, anchor, unit };
+      }).filter((entry) => entry.title && entry.anchor && !/^section-\d+$/.test(entry.anchor));
+    }
+
+    function scoreTitle(title) {
+      if (title === needle) return 100;
+      if (title.includes(needle)) return 90;
+      const titleWords = new Set(title.split(/[^\p{L}\p{N}]+/u).filter(Boolean));
+      const matched = terms.filter((term) => titleWords.has(term)).length;
+      return matched ? matched / terms.length : 0;
+    }
+
+    let candidates = entriesFor(document, currentUnit);
+    // When a stored PYQ unit is stale, search the subject's authored section
+    // headings instead of sending the learner to a vaguely related overview.
+    if (!candidates.some((entry) => scoreTitle(entry.title) >= 0.5)) {
+      const others = await Promise.all(Array.from({ length: maxUnits }, async (_, index) => {
+        const unit = index + 1;
+        if (unit === currentUnit) return [];
+        try {
+          const url = new URL(`unit-${unit}.html`, window.location.href);
+          url.search = '';
+          url.hash = '';
+          const response = await fetch(url.href);
+          if (!response.ok) return [];
+          const html = await response.text();
+          const parsed = new DOMParser().parseFromString(html, 'text/html');
+          return entriesFor(parsed, unit);
+        } catch (_) {
+          return [];
+        }
+      }));
+      candidates = candidates.concat(...others);
+    }
+
+    let best = null;
+    for (const entry of candidates) {
+      const score = scoreTitle(entry.title);
+      if (!best || score > best.score) best = { ...entry, score };
+    }
+    if (!best || best.score < 0.5) return;
+
+    if (best.unit !== currentUnit) {
+      const destination = new URL(`unit-${best.unit}.html`, window.location.href);
+      destination.search = new URLSearchParams({ topic }).toString();
+      destination.hash = best.anchor;
+      window.location.replace(destination.href);
+      return;
+    }
+
+    const target = document.getElementById(best.anchor);
+    if (!target) return;
+    if (window.location.hash !== `#${best.anchor}`) {
+      history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${best.anchor}`);
+    }
     target.classList.add('pyq-topic-target');
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
     const styleId = 'pyq-topic-target-style';
@@ -292,8 +339,8 @@
     const subjName = labelFor(subject);
 
     const anchoredEntries = decorateUnitHeadings(main);
-    focusQuestionTopic(main);
     mountUnitBreadcrumb(main, subject, unit, isSupplementary, anchoredEntries);
+    await focusQuestionTopic(main, subject, unit, maxSyllabusUnit);
 
     let rows = [];
     let shardFailed = false;

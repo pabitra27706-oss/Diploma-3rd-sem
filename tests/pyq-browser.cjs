@@ -36,15 +36,19 @@ const assert = require('node:assert/strict');
 
     // An answer card's former copy-link action now opens its exact unit with
     // topic context, and the destination scrolls to/highlights related content.
-    await page.goto(`${base}pyq/answers.html?paper=CST201-P001-2021-03&q=CST201-P001-Q1`, { waitUntil: 'networkidle' });
+    await page.goto(`${base}pyq/answers.html?paper=CST203-P006-2026-01&q=CST203-P006-Q11`, { waitUntil: 'networkidle' });
     await page.waitForSelector('.question-share .unit-topic-link');
     const topic = await page.evaluate(() => questions[currentIndex].topic);
     const unitLink = page.locator('.question-share .unit-topic-link');
-    assert.equal(new URL(await unitLink.getAttribute('href'), page.url()).searchParams.get('topic'), topic);
+    const rawHref = await unitLink.getAttribute('href');
+    assert.equal(new URL(rawHref, page.url()).searchParams.get('topic'), topic);
+    assert.equal(new URL(rawHref, page.url()).hash, '#modules');
     assert.equal(await page.locator('.question-share .copy-question-link').count(), 0);
     await unitLink.click();
     await page.waitForFunction(() => document.querySelector('.pyq-topic-target'));
     assert.equal(new URL(page.url()).searchParams.get('topic'), topic);
+    assert.match(new URL(page.url()).pathname, /subjects\/CST203\/units\/unit-3\.html$/);
+    assert.equal(new URL(page.url()).hash, '#modules');
     assert.deepEqual(errors, [], `browser page errors: ${errors.join('; ')}`);
     console.log(`PASS PYQ viewer at ${geometry.viewport}px: paper ${geometry.paperWidth}px, ${geometry.toolbarIcons} toolbar icons, one print control; answer-to-topic link verified`);
   } finally {

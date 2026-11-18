@@ -1853,10 +1853,12 @@ function decorateQuestionLinks() {
     // the destination unit page can scroll to and highlight the closest match.
     const unitLink = document.createElement('a');
     unitLink.className = 'unit-topic-link q-action';
-    unitLink.href = `../subjects/${encodeURIComponent(subjectCode)}/units/unit-${encodeURIComponent(q.unit)}.html?topic=${encodeURIComponent(q.topic || '')}`;
+    const topicAnchor = String(q.topic || 'topic').normalize('NFKD').toLowerCase()
+      .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    unitLink.href = `../subjects/${encodeURIComponent(subjectCode)}/units/unit-${encodeURIComponent(q.unit)}.html?topic=${encodeURIComponent(q.topic || '')}#${topicAnchor || 'topic'}`;
     unitLink.innerHTML = ICONS.unit;
-    unitLink.setAttribute('aria-label', `Open Unit ${q.unit}: ${q.topic || 'related topic'}`);
-    unitLink.title = `Unit ${q.unit}: ${q.topic || 'Related topic'}`;
+    unitLink.setAttribute('aria-label', `Open topic: ${q.topic || 'related topic'}`);
+    unitLink.title = `Topic: ${q.topic || 'Related topic'}`;
 
     const share = document.createElement('button');
     share.type = 'button';
