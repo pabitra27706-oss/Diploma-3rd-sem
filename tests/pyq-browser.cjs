@@ -15,7 +15,7 @@ const assert = require('node:assert/strict');
     page.on('pageerror', error => errors.push(error.message));
     const base = process.env.TEST_BASE || 'http://127.0.0.1:8001/';
     console.log('SMOKE: opening the paper viewer');
-    await page.goto(`${base}pyq/viewer.html?subject=CST201&paper=CST201-P001`, { waitUntil: 'networkidle' });
+    await page.goto(`${base}pyq/viewer.html?subject=CST201&paper=P001`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => {
       const wrapper = document.querySelector('#paperWrapper');
       const error = document.querySelector('#errorState');
