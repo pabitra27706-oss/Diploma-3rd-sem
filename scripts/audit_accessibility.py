@@ -158,6 +158,7 @@ VARIABLES = ROOT / 'assets/css/variables.css'
 QUIZ = ROOT / 'quiz/css/common.css'
 PRACTICE = ROOT / 'practice/css/index.css'
 PYQ_ANSWERS = ROOT / 'pyq/css/answers.css'
+PYQ_INDEX = ROOT / 'pyq/css/index.css'
 UNITS = ROOT / 'subjects/units-com/common.css'
 
 # (label, source file, theme selector, foreground token, background token,
@@ -185,6 +186,9 @@ CONTRAST_PAIRS = [
     ('quiz tertiary text (light)', QUIZ, False, '--text-tertiary', '--bg-primary', 4.5, '1.4.3'),
     ('quiz accent as text (light)', QUIZ, False, '--accent', '--bg-primary', 4.5, '1.4.3'),
     ('white on quiz accent', QUIZ, False, '--bg-primary', '--accent', 4.5, '1.4.3'),
+    # Selected quiz controls use the shared solid fill in both themes because
+    # the quiz-local --accent becomes a pale tint in dark mode.
+    ('white on quiz solid accent (dark)', VARIABLES, True, '--c-white', '--hub-accent-solid', 4.5, '1.4.3'),
     ('white on quiz success', QUIZ, False, '--bg-primary', '--success', 4.5, '1.4.3'),
     ('white on quiz error', QUIZ, False, '--bg-primary', '--error', 4.5, '1.4.3'),
     ('white on quiz warning', QUIZ, False, '--bg-primary', '--warning', 4.5, '1.4.3'),
@@ -201,6 +205,8 @@ CONTRAST_PAIRS = [
     ('pyq secondary text', PYQ_ANSWERS, False, '--text-secondary', '--bg-primary', 4.5, '1.4.3'),
     ('pyq accent as text', PYQ_ANSWERS, False, '--accent', '--bg-primary', 4.5, '1.4.3'),
     ('white on pyq accent', PYQ_ANSWERS, False, '--bg-secondary', '--accent', 4.5, '1.4.3'),
+    ('white on pyq solid accent (light)', PYQ_INDEX, False, '--c-white', '--hub-accent-solid', 4.5, '1.4.3'),
+    ('white on pyq solid accent (dark)', PYQ_INDEX, True, '--c-white', '--hub-accent-solid', 4.5, '1.4.3'),
     ('white on pyq success', PYQ_ANSWERS, False, '--bg-secondary', '--success', 4.5, '1.4.3'),
     ('white on pyq danger', PYQ_ANSWERS, False, '--bg-secondary', '--danger', 4.5, '1.4.3'),
     ('unit body text', UNITS, False, '--text-primary', '--bg-primary', 4.5, '1.4.3'),

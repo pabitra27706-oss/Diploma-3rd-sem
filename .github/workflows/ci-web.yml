@@ -159,6 +159,21 @@ jobs:
           python3 scripts/validate_data.py --check-baseline
           python3 -m unittest discover -s tests -p 'test_*.py' -v
 
+      - name: PYQ browser smoke — paper width, icon cluster, print control
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save playwright-core
+          npx --yes playwright install --with-deps chromium
+          python3 -m http.server 8001 --bind 127.0.0.1 >/tmp/pyq-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for _ in $(seq 1 50); do
+            if curl --fail --silent http://127.0.0.1:8001/pyq/viewer.html >/dev/null; then break; fi
+            sleep 0.2
+          done
+          TEST_BASE=http://127.0.0.1:8001/ node tests/pyq-browser.cjs
+
       - name: Asset budgets summary
         run: |
           python3 scripts/report_budgets.py > budgets.txt

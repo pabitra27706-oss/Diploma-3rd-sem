@@ -79,6 +79,45 @@
     }
   }
 
+  function focusQuestionTopic(main) {
+    const topic = new URLSearchParams(window.location.search).get('topic');
+    if (!topic || !topic.trim()) return;
+    const needle = topic.trim().replace(/\s+/g, ' ').toLocaleLowerCase();
+    const terms = needle.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 2);
+    const candidates = Array.from(main.querySelectorAll('h2, h3, h4, p, li, td, .important-note, .topic-card'))
+      .filter((el) => !el.closest('.unit-discovery, .section-note-box'))
+      .map((el) => ({ el, text: cleanHeadingText(el).toLocaleLowerCase() }))
+      .filter(({ text }) => text && text.length < 700);
+    let match = candidates.find(({ text }) => text.includes(needle));
+    if (!match && terms.length) {
+      let bestScore = 0;
+      for (const candidate of candidates) {
+        const score = terms.reduce((sum, term) => sum + (candidate.text.includes(term) ? 1 : 0), 0);
+        if (score > bestScore) {
+          bestScore = score;
+          match = candidate;
+        }
+      }
+    }
+    if (!match) return;
+
+    const heading = match.el.matches('h2, h3, h4') ? match.el : match.el.closest('section')?.querySelector('h2, h3, h4');
+    const target = heading || match.el;
+    target.classList.add('pyq-topic-target');
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    const styleId = 'pyq-topic-target-style';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = '.pyq-topic-target{outline:3px solid var(--hub-accent-solid);outline-offset:5px;border-radius:4px;scroll-margin-top:5rem}';
+      document.head.append(style);
+    }
+    window.setTimeout(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.focus({ preventScroll: true });
+    }, 0);
+  }
+
   function decorateUnitHeadings(main) {
     const entries = [];
     // Mark unanchored top h1 explicitly without fabricating a runtime ID.
@@ -253,6 +292,7 @@
     const subjName = labelFor(subject);
 
     const anchoredEntries = decorateUnitHeadings(main);
+    focusQuestionTopic(main);
     mountUnitBreadcrumb(main, subject, unit, isSupplementary, anchoredEntries);
 
     let rows = [];

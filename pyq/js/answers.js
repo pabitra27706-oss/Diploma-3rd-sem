@@ -1844,17 +1844,19 @@ function decorateQuestionLinks() {
     // the accessible name and the tooltip carry the wording, and the label is
     // still exposed to assistive tech via aria-label on the control.
     const ICONS = {
-      copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+      unit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h8"/></svg>',
       share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
       info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
     };
 
-    const copy = document.createElement('button');
-    copy.type = 'button';
-    copy.className = 'copy-question-link q-action';
-    copy.innerHTML = ICONS.copy;
-    copy.setAttribute('aria-label', 'Copy link to this question');
-    copy.title = 'Copy link';
+    // Every archived question has a mapped unit. The link carries its topic so
+    // the destination unit page can scroll to and highlight the closest match.
+    const unitLink = document.createElement('a');
+    unitLink.className = 'unit-topic-link q-action';
+    unitLink.href = `../subjects/${encodeURIComponent(subjectCode)}/units/unit-${encodeURIComponent(q.unit)}.html?topic=${encodeURIComponent(q.topic || '')}`;
+    unitLink.innerHTML = ICONS.unit;
+    unitLink.setAttribute('aria-label', `Open Unit ${q.unit}: ${q.topic || 'related topic'}`);
+    unitLink.title = `Unit ${q.unit}: ${q.topic || 'Related topic'}`;
 
     const share = document.createElement('button');
     share.type = 'button';
@@ -1868,21 +1870,11 @@ function decorateQuestionLinks() {
     status.setAttribute('role', 'status');
     status.setAttribute('aria-live', 'polite');
 
-    copy.addEventListener('click', () => {
-      window.StudyShare.copy(shareUrl, {
-        button: copy,
-        container: controls,
-        statusEl: status,
-        inputLabel: 'Question link — select and copy'
-      });
-    });
-
     share.addEventListener('click', () => {
       window.StudyShare.share(
         { title: shareTitle, text: shareText, url: shareUrl },
         {
           button: share,
-          copyButton: copy,
           container: controls,
           statusEl: status,
           inputLabel: 'Question link — select and copy'
@@ -1891,9 +1883,8 @@ function decorateQuestionLinks() {
     });
 
     // Provenance is a <details> panel in the header action group so the
-    // citation, copy and share all sit as one icon cluster next to the
-    // bookmark (owner request), instead of a full-width row that pushed the
-    // question text off a phone screen.
+    // citation, unit-topic link and share all sit as one icon cluster next to
+    // the bookmark, instead of a full-width row on a phone screen.
     const provenance = document.createElement('details');
     provenance.className = 'question-provenance q-action';
     const provenanceSummary = document.createElement('summary');
@@ -1911,10 +1902,10 @@ function decorateQuestionLinks() {
     // Keep `question-share` as the semantic hook existing tests and the
     // print sheet rely on; `q-actions` adds the compact icon-cluster layout.
     controls.className = 'question-share q-actions';
-    controls.append(copy, share, provenance, status);
+    controls.append(unitLink, share, provenance, status);
 
     // Sit the icon cluster inside the question header, immediately before the
-    // bookmark, so the row reads [copy][share][info][bookmark].
+    // bookmark, so the row reads [unit/topic][share][info][bookmark].
     const header = card.querySelector('.q-header');
     const bookmark = header && header.querySelector('.q-bookmark-btn');
     if (bookmark && bookmark.parentNode === header) {

@@ -55,7 +55,16 @@ const assert = require('node:assert/strict');
     assert(deepTitle.startsWith('Python · Q') && !/\bCST\d{3}\b/.test(deepTitle));
     assert.equal(await p.evaluate(() => questions[currentIndex].id), new URL(p.url()).searchParams.get('q'));
     assert((await p.locator('.question-share .share-question-link').count()) === 1);
-    console.log('PASS search, safe query, exact + candidate repeat clusters, and question deep link');
+    const unitTopicLink = p.locator('.question-share .unit-topic-link');
+    assert.equal(await unitTopicLink.count(), 1, 'each answer card must link directly to its mapped unit/topic');
+    const unitTopicHref = await unitTopicLink.getAttribute('href');
+    assert.match(unitTopicHref, /subjects\/CST203\/units\/unit-\d+\.html\?topic=/);
+    const targetTopic = await p.evaluate(() => questions[currentIndex].topic);
+    assert.equal(new URL(unitTopicHref, p.url()).searchParams.get('topic'), targetTopic);
+    await unitTopicLink.click();
+    await p.waitForFunction(() => document.querySelector('.pyq-topic-target'));
+    assert.equal(new URL(p.url()).searchParams.get('topic'), targetTopic);
+    console.log('PASS search, safe query, exact + candidate repeat clusters, and question-to-topic unit link');
 
     // 4. Unit breadcrumb, authored #section anchor, prev/next nav, and filtered-PYQ handoff
     await p.goto(base + 'subjects/CST209/units/unit-4.html#dijkstras-algorithm');
