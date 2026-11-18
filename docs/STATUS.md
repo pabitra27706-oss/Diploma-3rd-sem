@@ -10,14 +10,19 @@ content remains uncertified; no new deploy is authorized.
 
 ## Phase 11 — Subject-wise Suggestions (2026-11-18) — 🚧
 
-The owner approved a separate phase for the five theory subjects, with
-**Important Questions** and **Easy Read** guides, and asked to record the phase
-before writing site code. The dashboard and ten static guides are implemented on
-`arena/b06d66f8-diploma-3rd-sem`. The 51 archive links cover all 23 syllabus units.
-Targeted headless Chromium and local regression checks passed; physical-device
-and owner acceptance are not claimed. See the [phase plan](phases/11-suggestions/README.md)
-and [record](phases/11-suggestions/record.md). This does not reopen Phases 1–10
-or authorize publishing.
+The owner declined the first draft. The revision on
+`arena/b06d66f8-diploma-3rd-sem` is ready for review, **not accepted**. The five
+expandable subject cards and both Home entries are unchanged in behaviour.
+**Important Questions** now has 104 patterns (4–6 per unit) and 393 dated
+citations, with one star per distinct cited session up to five. **Easy Read**
+has a separate quick-win-first route, two real paper examples per unit,
+practice tasks and a checklist. Ranks do not predict exam marks.
+
+See the [phase plan](phases/11-suggestions/README.md) and
+[revision checks and limits](phases/11-suggestions/record.md). Physical-device
+and owner acceptance are not claimed. The archived papers, quiz bank and
+syllabus remain unchanged. This does not reopen Phases 1–10 or authorize
+publishing.
 
 ## Phase 9B — UI reboost (2026-11-17) — `✅*`, merged
 

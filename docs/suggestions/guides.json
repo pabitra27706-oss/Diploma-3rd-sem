@@ -1,52 +1,248 @@
 {
   "CST201": {
     "topics": "Loops, arrays, functions and pointers",
-    "studyOrder": [1, 2, 3, 4, 5],
-    "start": "Trace a loop on paper, then reuse it to process an array. Once the indices make sense, move the same work into a function and revisit it using pointers.",
+    "studyOrder": [
+      2,
+      3,
+      1,
+      4,
+      5
+    ],
+    "start": "If you can read a small C program, start with branches and loops, then reuse those ideas on arrays. If syntax is new, use Unit 1 as a short warm-up and return to this order.",
     "units": {
       "1": {
         "title": "Read a short C expression",
-        "focus": "Start with types, formatted input and output, and operator precedence. Keep a tiny example for each operator family.",
-        "try": "Predict the results of integer and floating-point division with the same operands, then run both expressions and explain the difference.",
-        "questions": [
-          {"id": "CST201-P005-Q16", "focus": "Explain operator precedence and associativity with an example."},
-          {"id": "CST201-P006-Q16", "focus": "Review header files and show how C bitwise operators work."}
+        "effort": "quick",
+        "reason": "These short expression traces and header explanations make a useful third pass. If syntax is the thing slowing you down, do this unit as a warm-up.",
+        "essentials": [
+          "Operator precedence and assignment versus comparison",
+          "Headers, common types and conversions"
+        ],
+        "try": "Predict the results of 5/2 and 5/2.0, then trace one expression that mixes multiplication and addition. Explain where parentheses would change the result.",
+        "examples": [
+          {
+            "id": "CST201-P003-Q9",
+            "task": "Predict the result of an expression that mixes division, multiplication and addition."
+          },
+          {
+            "id": "CST201-P005-Q16",
+            "task": "Explain precedence, associativity and the difference between a header and a library."
+          }
+        ],
+        "recall": [
+          "Integer division discards the fractional part; 5 / 2 is 2.",
+          "Precedence groups operators; associativity breaks ties within a precedence level."
+        ],
+        "patterns": [
+          {
+            "title": "Operator precedence and output tracing",
+            "prompt": "Add parentheses to show how an expression is evaluated. Explain precedence and associativity, then predict the output of a short expression.",
+            "refs": ["CST201-P001-Q6", "CST201-P002-Q57", "CST201-P003-Q9", "CST201-P004-Q9", "CST201-P005-Q16", "CST201-P006-Q9"]
+          },
+          {
+            "title": "Header files and their purpose",
+            "prompt": "Explain why a header is included, distinguish it from a library file, and name a relevant standard header in a short example.",
+            "refs": ["CST201-P002-Q47", "CST201-P003-Q7", "CST201-P004-Q21", "CST201-P005-Q16", "CST201-P006-Q16"]
+          },
+          {
+            "title": "Type conversion and integer division",
+            "prompt": "Explain a cast or predict what happens to a value when the operands or the receiving type change. Check integer division separately.",
+            "refs": ["CST201-P001-Q17", "CST201-P002-Q42", "CST201-P004-Q11"]
+          },
+          {
+            "title": "Bitwise operators",
+            "prompt": "Define bitwise operations and show one with a short bit pattern.",
+            "refs": ["CST201-P002-Q46", "CST201-P006-Q16"]
+          }
         ]
       },
       "2": {
         "title": "Trace the branch and the loop",
-        "focus": "Compare if–else with switch. For each loop type (for, while and do–while), note when the condition is checked and what changes each iteration.",
-        "try": "Trace a digit-sum loop with input 402. Include a separate test for zero and check what happens before the first iteration.",
-        "questions": [
-          {"id": "CST201-P001-Q25", "focus": "Compare entry-controlled and exit-controlled loops; practise the accompanying loop program."},
-          {"id": "CST201-P006-Q18", "focus": "Illustrate switch–case, then write a program to sum a series of running totals."}
+        "effort": "quick",
+        "reason": "Short loop templates cover written comparisons and full programs. The same dry run helps with both the running-total series and GCD.",
+        "essentials": [
+          "Trace while and do–while before coding",
+          "Rehearse one branch problem and one running-total loop"
+        ],
+        "try": "Trace digit sum with input 402, noting each remainder and updated value. Then write a GCD loop and test it with 18 and 12.",
+        "examples": [
+          {
+            "id": "CST201-P002-Q59",
+            "task": "Write the running-total series using loops."
+          },
+          {
+            "id": "CST201-P006-Q17",
+            "task": "Compare while and do–while, then write a GCD program."
+          }
+        ],
+        "recall": [
+          "while tests before the body; do–while tests afterward.",
+          "In a nested loop, show where the inner counter and any running total are reset."
+        ],
+        "patterns": [
+          {
+            "title": "Compare loop types",
+            "prompt": "Show when each loop tests its condition. Give an example where while and do–while behave differently.",
+            "refs": ["CST201-P001-Q25", "CST201-P002-Q50", "CST201-P003-Q27", "CST201-P005-Q18", "CST201-P006-Q17"]
+          },
+          {
+            "title": "Switch–case or nested if–else",
+            "prompt": "Write a small branching program and explain when switch–case is a good fit. Be ready to draw the nested-if flow.",
+            "refs": ["CST201-P001-Q22", "CST201-P004-Q23", "CST201-P005-Q17", "CST201-P006-Q18"]
+          },
+          {
+            "title": "Sum a series of running totals",
+            "prompt": "Given n, write a program to add 1, then 1 + 2, then 1 + 2 + 3, and so on. Trace your accumulator on a small input.",
+            "refs": ["CST201-P001-Q26", "CST201-P002-Q59", "CST201-P006-Q18"]
+          },
+          {
+            "title": "Explain loop control statements",
+            "prompt": "Trace what break or continue changes, and explain why an unstructured jump can make the program harder to follow.",
+            "refs": ["CST201-P001-Q5", "CST201-P002-Q57", "CST201-P003-Q21", "CST201-P006-Q16"]
+          },
+          {
+            "title": "Find the GCD of two numbers",
+            "prompt": "Write a loop for Euclid’s algorithm. Show how each remainder becomes the next divisor, and state when the loop stops.",
+            "refs": ["CST201-P002-Q58", "CST201-P003-Q26", "CST201-P004-Q17", "CST201-P006-Q17"]
+          }
         ]
       },
       "3": {
         "title": "Work through arrays and strings",
-        "focus": "Write the valid index range before touching an array. For strings, identify the terminator and the buffer size before using a library function.",
+        "effort": "standard",
+        "reason": "Matrix and string questions reuse loops you already know. A clear index trace is useful across several written question forms.",
+        "essentials": [
+          "Matrix rows, columns, diagonals and transpose",
+          "String terminator and basic library functions"
+        ],
         "try": "Sketch a 3 × 3 matrix, mark its diagonal indices, and write a loop that adds only those elements. Then draw how a short string is stored.",
-        "questions": [
-          {"id": "CST201-P004-Q18", "focus": "Define a C string and demonstrate four standard string-handling functions."},
-          {"id": "CST201-P005-Q19", "focus": "Read an integer matrix and compute its diagonal sum."}
+        "examples": [
+          {
+            "id": "CST201-P005-Q19",
+            "task": "Sum the diagonal of a 4 × 4 matrix."
+          },
+          {
+            "id": "CST201-P006-Q20",
+            "task": "Show string functions and check an input string for a palindrome."
+          }
+        ],
+        "recall": [
+          "In a square matrix the main diagonal has row index equal to column index.",
+          "A C string needs room for the terminating null character as well as its visible characters."
+        ],
+        "patterns": [
+          {
+            "title": "Matrix programs",
+            "prompt": "Write nested loops for a task such as finding diagonal elements, checking an identity matrix, or producing a transpose. Label rows and columns.",
+            "refs": ["CST201-P001-Q23", "CST201-P003-Q29", "CST201-P005-Q19", "CST201-P006-Q22"]
+          },
+          {
+            "title": "String library functions",
+            "prompt": "Explain or implement the requested string operation: copy, concatenate, compare or find length. Give an input and the expected result.",
+            "refs": ["CST201-P001-Q28", "CST201-P002-Q60", "CST201-P003-Q31", "CST201-P004-Q18", "CST201-P006-Q20"]
+          },
+          {
+            "title": "Process a string character by character",
+            "prompt": "Practise a manual string operation such as reversal, case conversion or a palindrome check. Show the indices you compare or advance.",
+            "refs": ["CST201-P001-Q22", "CST201-P002-Q62", "CST201-P003-Q31", "CST201-P004-Q19", "CST201-P006-Q20"]
+          },
+          {
+            "title": "Array declarations and subscripts",
+            "prompt": "Declare a one-dimensional array, give an initializer and check which subscripts are valid. Explain why the last index is one less than the length.",
+            "refs": ["CST201-P001-Q8", "CST201-P002-Q26", "CST201-P003-Q3", "CST201-P005-Q19", "CST201-P006-Q22"]
+          }
         ]
       },
       "4": {
         "title": "Turn a solution into a function",
-        "focus": "Match the prototype, call and return type. Compare variable scope and lifetime, then practise spotting a recursion base case.",
+        "effort": "standard",
+        "reason": "Storage-class comparisons and parameter examples are reusable. Recursion is worth practising after you can trace the same task with a loop.",
+        "essentials": [
+          "Prototype, call and return value",
+          "Compare scopes and trace a recursive base case"
+        ],
         "try": "Write a factorial function and trace the stack by hand for input 3. Test the base case separately.",
-        "questions": [
-          {"id": "CST201-P002-Q61", "focus": "Explain C storage classes using small declarations as examples."},
-          {"id": "CST201-P004-Q22", "focus": "Generate Fibonacci terms with recursion, then write a loop version."}
+        "examples": [
+          {
+            "id": "CST201-P003-Q30",
+            "task": "Compare storage classes and passing a value versus an address."
+          },
+          {
+            "id": "CST201-P006-Q21",
+            "task": "Write a recursive factorial function."
+          }
+        ],
+        "recall": [
+          "Scope is where a name is visible; lifetime is how long the object exists.",
+          "C passes arguments by value. A copy of an address still lets the function access the original object."
+        ],
+        "patterns": [
+          {
+            "title": "Storage classes and scope",
+            "prompt": "Explain the common storage classes with small declarations. Compare scope, lifetime and the behaviour of repeated calls.",
+            "refs": ["CST201-P001-Q12", "CST201-P002-Q61", "CST201-P003-Q30", "CST201-P004-Q17", "CST201-P005-Q23", "CST201-P006-Q19"]
+          },
+          {
+            "title": "Passing arguments by value or address",
+            "prompt": "Use one small example to show why passing a value does not change the caller’s variable but using its address can.",
+            "refs": ["CST201-P001-Q21", "CST201-P003-Q30", "CST201-P005-Q24", "CST201-P006-Q19"]
+          },
+          {
+            "title": "Function declaration and parameters",
+            "prompt": "Distinguish a prototype or declaration from a definition. Label actual and formal parameters in an example call.",
+            "refs": ["CST201-P002-Q32", "CST201-P005-Q20", "CST201-P006-Q24"]
+          },
+          {
+            "title": "Recursive functions",
+            "prompt": "Write a base case and show the call sequence for a numeric example. Be able to compare the recursive and iterative versions.",
+            "refs": ["CST201-P002-Q64", "CST201-P003-Q11", "CST201-P004-Q22", "CST201-P005-Q22", "CST201-P006-Q21"]
+          }
         ]
       },
       "5": {
         "title": "Draw pointers before writing code",
-        "focus": "Label each variable, address and pointed-to value. Then revise pointer-based array traversal and the allocation/free lifecycle.",
+        "effort": "extended",
+        "reason": "Pointers turn up in written questions, but correct traversal and allocation take more careful tracing. Start them after arrays and function calls.",
+        "essentials": [
+          "Draw address, pointer and value separately",
+          "Trace allocation, failure check, use and cleanup"
+        ],
         "try": "Draw a small dynamically allocated array. Write the allocation, failure check, traversal and cleanup in that order.",
-        "questions": [
-          {"id": "CST201-P003-Q34", "focus": "Explain when to use malloc, calloc, realloc and free."},
-          {"id": "CST201-P006-Q23", "focus": "Sum array elements through a pointer and explain the related memory operations."}
+        "examples": [
+          {
+            "id": "CST201-P004-Q20",
+            "task": "Explain address-of and dereference, then access an array using pointers."
+          },
+          {
+            "id": "CST201-P003-Q34",
+            "task": "Explain malloc, calloc, realloc and free."
+          }
+        ],
+        "recall": [
+          "For a valid index i, a[i] is equivalent to *(a + i).",
+          "Check whether allocation succeeded before dereferencing, and release owned memory when done."
+        ],
+        "patterns": [
+          {
+            "title": "Pointer declarations and dereferencing",
+            "prompt": "Show a valid declaration and label the address-of and dereference operations. Explain what the pointer refers to.",
+            "refs": ["CST201-P001-Q27", "CST201-P002-Q8", "CST201-P003-Q32", "CST201-P004-Q20", "CST201-P005-Q24", "CST201-P006-Q23"]
+          },
+          {
+            "title": "Array access with pointers",
+            "prompt": "Traverse an array or find an element through a pointer. Relate pointer arithmetic to the element type and the array indices.",
+            "refs": ["CST201-P001-Q27", "CST201-P002-Q63", "CST201-P003-Q6", "CST201-P004-Q20", "CST201-P005-Q9", "CST201-P006-Q23"]
+          },
+          {
+            "title": "Dynamic allocation routines",
+            "prompt": "Compare malloc, calloc, realloc and free. In a program, show where allocation is checked and where memory is released.",
+            "refs": ["CST201-P002-Q65", "CST201-P003-Q34", "CST201-P004-Q21", "CST201-P006-Q23"]
+          },
+          {
+            "title": "Pointer to a function",
+            "prompt": "Explain what a pointer to a function refers to, and sketch a declaration and a call using it.",
+            "refs": ["CST201-P001-Q23", "CST201-P002-Q63"]
+          }
         ]
       }
     },
@@ -59,52 +255,253 @@
   },
   "CST203": {
     "topics": "Python basics, functions, files and Django",
-    "studyOrder": [1, 2, 3, 4, 5],
-    "start": "Start by predicting the output of short snippets. Then pass a collection to a function, process text from a file, and finish by drawing how a Django page is served.",
+    "studyOrder": [
+      2,
+      1,
+      3,
+      5,
+      4
+    ],
+    "start": "Start with short loop and condition problems you can dry-run on paper. Next revise collections, then functions. A Django flow diagram is a quicker first pass than learning several file and regular-expression APIs at once.",
     "units": {
       "1": {
         "title": "Choose a type and predict the result",
-        "focus": "Compare lists, tuples and dictionaries. Predict slicing, indexing, string operations and the output of simple expressions.",
+        "effort": "quick",
+        "reason": "Comparing collections and dry-running slices are short tasks with both objective and written examples in the archive.",
+        "essentials": [
+          "Lists versus tuples and dictionaries",
+          "Index, slice, split and join on small examples"
+        ],
         "try": "Make a list of five values. Predict two slices and try changing an element; explain how the same operation differs on a tuple.",
-        "questions": [
-          {"id": "CST203-P003-Q27", "focus": "Show how split and join work, and explain why Python strings are immutable."},
-          {"id": "CST203-P006-Q18", "focus": "Compare lists, tuples and dictionaries; illustrate indexing and slicing."}
+        "examples": [
+          {
+            "id": "CST203-P006-Q18",
+            "task": "Compare lists, tuples and dictionaries, and distinguish indexing from slicing."
+          },
+          {
+            "id": "CST203-P003-Q27",
+            "task": "Show what join and split do and explain string immutability."
+          }
+        ],
+        "recall": [
+          "Indexing normally selects one element; a slice excludes its stop index.",
+          "split separates a string into a list; separator.join combines strings into one."
+        ],
+        "patterns": [
+          {
+            "title": "Lists, tuples and dictionaries",
+            "prompt": "Compare how lists, tuples and dictionaries store and change values. Give a short example and identify which examples are mutable.",
+            "refs": ["CST203-P001-Q59", "CST203-P003-Q29", "CST203-P004-Q16", "CST203-P005-Q17", "CST203-P006-Q18"]
+          },
+          {
+            "title": "Indexing and slicing",
+            "prompt": "Predict which elements a slice selects. Explain the difference between a slice and an index using a small list.",
+            "refs": ["CST203-P001-Q46", "CST203-P003-Q12", "CST203-P004-Q17", "CST203-P006-Q18"]
+          },
+          {
+            "title": "String methods and formatting",
+            "prompt": "Show what split and join return. Practise a string-formatting example and explain why changing one character does not mutate a string.",
+            "refs": ["CST203-P003-Q27", "CST203-P004-Q15", "CST203-P005-Q22"]
+          },
+          {
+            "title": "Data types and conversions",
+            "prompt": "Identify built-in types in examples and show how to convert a number or string. Explain when the interpreter converts a value and when an explicit conversion is needed.",
+            "refs": ["CST203-P001-Q58", "CST203-P005-Q16", "CST203-P006-Q16"]
+          },
+          {
+            "title": "Membership, identity and other operators",
+            "prompt": "Demonstrate an operator with a short expression and explain the result. In particular, distinguish membership, equality and identity.",
+            "refs": ["CST203-P001-Q47", "CST203-P003-Q31", "CST203-P006-Q20"]
+          }
         ]
       },
       "2": {
         "title": "Dry-run conditions and loops",
-        "focus": "Read indentation before tracing code. Compare for and while, then test what changes when a loop meets break, continue, pass or else.",
-        "try": "Write a loop that adds only the odd values in a list. Dry-run it on a mixed list and on an empty list.",
-        "questions": [
-          {"id": "CST203-P001-Q62", "focus": "Explain the different Python loops with examples."},
-          {"id": "CST203-P005-Q17", "focus": "Illustrate break, continue and pass, then practise a prime-number check."}
+        "effort": "quick",
+        "reason": "Loop traces and small programs appear repeatedly. One dry-run habit transfers to range, prime checks and break/continue questions.",
+        "essentials": [
+          "for, while and range with a dry run",
+          "if–elif–else and break versus continue"
+        ],
+        "try": "Write a prime checker and dry-run it on 1, 2 and 9. Mark exactly which condition rejects a composite number.",
+        "examples": [
+          {
+            "id": "CST203-P005-Q17",
+            "task": "Explain break, continue and pass, then write a prime checker."
+          },
+          {
+            "id": "CST203-P004-Q18",
+            "task": "Compare for and while and write a digit-sum program."
+          }
+        ],
+        "recall": [
+          "range(start, stop) excludes stop; check the first and last loop values.",
+          "break exits the loop, continue advances to the next iteration, and pass does nothing."
+        ],
+        "patterns": [
+          {
+            "title": "Trace loops and range",
+            "prompt": "Compare for and while, then predict the values a small range-based loop prints. Identify the update and the stopping condition.",
+            "refs": ["CST203-P001-Q62", "CST203-P004-Q18", "CST203-P005-Q22", "CST203-P006-Q9"]
+          },
+          {
+            "title": "Break, continue and pass",
+            "prompt": "On the same loop input, show which iteration is skipped or which statement ends the loop. Distinguish pass from both.",
+            "refs": ["CST203-P001-Q48", "CST203-P003-Q28", "CST203-P004-Q22", "CST203-P005-Q17", "CST203-P006-Q19"]
+          },
+          {
+            "title": "Check whether a value is a palindrome",
+            "prompt": "Write a short program for the numeric or string version in the paper. Check a palindrome, a non-palindrome and a one-character case.",
+            "refs": ["CST203-P001-Q63", "CST203-P006-Q17"]
+          },
+          {
+            "title": "Test whether a number is prime",
+            "prompt": "Write a divisibility loop. Test it with 1, 2 and a composite number, and explain when the loop can stop.",
+            "refs": ["CST203-P003-Q28", "CST203-P005-Q17"]
+          },
+          {
+            "title": "Indentation and conditional branching",
+            "prompt": "Mark the statements inside and outside an indented branch, then show which branch runs on two inputs.",
+            "refs": ["CST203-P004-Q16", "CST203-P005-Q15", "CST203-P006-Q8"]
+          }
         ]
       },
       "3": {
         "title": "Package small, testable functions",
-        "focus": "Practise arguments and scope before modules and packages. Check which names belong to the function and what its caller gets back.",
+        "effort": "standard",
+        "reason": "Function-argument and scope questions reuse a few compact examples. Practise those before writing longer scripts or following imports.",
+        "essentials": [
+          "Default and variable-length arguments",
+          "Local/global scope and module versus package"
+        ],
         "try": "Write a function with one default argument, call it with and without that argument, and move it to a module that you import.",
-        "questions": [
-          {"id": "CST203-P004-Q19", "focus": "Demonstrate positional, default and variable-length function arguments."},
-          {"id": "CST203-P005-Q19", "focus": "Compare a module with a package and distinguish the four kinds of variable scope asked for in the paper."}
+        "examples": [
+          {
+            "id": "CST203-P004-Q19",
+            "task": "Give examples of positional, default and variable-length arguments."
+          },
+          {
+            "id": "CST203-P005-Q19",
+            "task": "Compare module and package, and distinguish local, global and nonlocal scope."
+          }
+        ],
+        "recall": [
+          "An argument is the value supplied at a call; a parameter is the name in the definition.",
+          "A package groups modules. Test an import with the same directory layout you describe."
+        ],
+        "patterns": [
+          {
+            "title": "Function arguments and return",
+            "prompt": "Demonstrate positional, default, keyword or variable-length arguments. Use a small call and state what is returned.",
+            "refs": ["CST203-P003-Q30", "CST203-P004-Q19", "CST203-P005-Q18"]
+          },
+          {
+            "title": "Scope of variables",
+            "prompt": "Show which names are available inside and outside a function. Distinguish local, global and nonlocal scope using an example.",
+            "refs": ["CST203-P001-Q35", "CST203-P003-Q26", "CST203-P004-Q23", "CST203-P005-Q19"]
+          },
+          {
+            "title": "Modules, packages and imports",
+            "prompt": "Compare a module with a package, draw a tiny package layout and give a valid import statement.",
+            "refs": ["CST203-P001-Q61", "CST203-P003-Q32", "CST203-P004-Q1", "CST203-P005-Q19", "CST203-P006-Q22"]
+          },
+          {
+            "title": "Lambda functions",
+            "prompt": "Explain a lambda with a one-expression example. State its inputs and result, and compare with an ordinary named function.",
+            "refs": ["CST203-P001-Q31", "CST203-P005-Q6", "CST203-P006-Q21"]
+          }
         ]
       },
       "4": {
         "title": "Read a file and extract a match",
-        "focus": "Choose the correct file mode before using a read or write method. Then predict which pieces of a string the regular-expression call returns.",
+        "effort": "extended",
+        "reason": "File questions are useful, but modes, read/write methods and regex returns need separate practice. Learn them after the short reusable answers.",
+        "essentials": [
+          "Choose the file mode before any operation",
+          "Compare readline, readlines, match and findall"
+        ],
         "try": "Read a short text file, count its lines, and use a regular expression to pick out digit groups from the text.",
-        "questions": [
-          {"id": "CST203-P003-Q33", "focus": "Explain file access modes and give examples of read and write."},
-          {"id": "CST203-P005-Q23", "focus": "Practise the regular-expression subparts on match locations and match, split and findall."}
+        "examples": [
+          {
+            "id": "CST203-P003-Q33",
+            "task": "Explain file access modes and show read and write methods."
+          },
+          {
+            "id": "CST203-P005-Q23",
+            "task": "Compare re.match, re.split and re.findall with examples."
+          }
+        ],
+        "recall": [
+          "In text mode, r reads, w truncates or creates, and a appends or creates.",
+          "re.match checks from the start of the string; re.search can find a match later."
+        ],
+        "patterns": [
+          {
+            "title": "Choose a file mode",
+            "prompt": "Explain what happens when opening an existing or missing file in the requested mode. Use a separate example for reading, writing and appending.",
+            "refs": ["CST203-P001-Q6", "CST203-P003-Q33", "CST203-P004-Q20", "CST203-P005-Q3", "CST203-P006-Q13"]
+          },
+          {
+            "title": "Read and write methods",
+            "prompt": "Compare the file methods by the data they return or accept. Demonstrate read, readline, readlines, write and writelines where relevant.",
+            "refs": ["CST203-P001-Q50", "CST203-P003-Q33", "CST203-P005-Q20", "CST203-P006-Q23"]
+          },
+          {
+            "title": "Work with a text file",
+            "prompt": "Practise an open–read–process–close solution. For a word count, explain how the text is split and counted; for output, state what is written.",
+            "refs": ["CST203-P001-Q64", "CST203-P005-Q21"]
+          },
+          {
+            "title": "Regular-expression matching",
+            "prompt": "Explain pattern matching and compare methods such as match, split and findall on one short test string.",
+            "refs": ["CST203-P004-Q20", "CST203-P005-Q23", "CST203-P006-Q24"]
+          }
         ]
       },
       "5": {
         "title": "Follow a Django request",
-        "focus": "Map a URL to a view and a template. Then revisit forms, validation, template inheritance and static files in the notes.",
+        "effort": "standard",
+        "reason": "Start with the repeatable architecture diagram and template purpose. Project setup and forms can follow as separate practice.",
+        "essentials": [
+          "Map URL → view → template",
+          "Know what templates and static files are used for"
+        ],
         "try": "Draw the route for a page that lists books, labelling what receives the URL and what displays the list. Add where a form would be validated.",
-        "questions": [
-          {"id": "CST203-P001-Q55", "focus": "Explain how a Django template refers to a static file."},
-          {"id": "CST203-P006-Q24", "focus": "Explain Django’s architecture and how it relates to MVC, focusing on the framework subpart."}
+        "examples": [
+          {
+            "id": "CST203-P006-Q24",
+            "task": "Describe Django’s MVC/MTV architecture."
+          },
+          {
+            "id": "CST203-P001-Q55",
+            "task": "Show how to insert a static file into a Django template."
+          }
+        ],
+        "recall": [
+          "A URL pattern selects a view; a view can render a template with context data.",
+          "A template controls presentation; CSS and images are static assets, not template context."
+        ],
+        "patterns": [
+          {
+            "title": "Explain MVC and Django’s MTV architecture",
+            "prompt": "Label the responsibilities in a diagram. Describe how the model, template and view work together for a page request.",
+            "refs": ["CST203-P001-Q18", "CST203-P003-Q34", "CST203-P004-Q21", "CST203-P005-Q21", "CST203-P006-Q24"]
+          },
+          {
+            "title": "Templates and static assets",
+            "prompt": "Explain why a template is used for page output and how static files can be referenced or managed.",
+            "refs": ["CST203-P001-Q55", "CST203-P005-Q11", "CST203-P006-Q15"]
+          },
+          {
+            "title": "What Django is and when to use it",
+            "prompt": "Describe why a web app might use Django. When comparing with Flask, state your project assumptions instead of claiming one is always better.",
+            "refs": ["CST203-P001-Q56", "CST203-P004-Q21", "CST203-P005-Q21"]
+          },
+          {
+            "title": "Create and run a Django project",
+            "prompt": "Outline the setup and run steps. Practise explaining the difference between a project and an app as you walk through the process.",
+            "refs": ["CST203-P003-Q34"]
+          }
         ]
       }
     },
@@ -117,45 +514,211 @@
   },
   "CST205": {
     "topics": "Stacks, queues, linked lists, trees and graphs",
-    "studyOrder": [2, 3, 4, 1],
-    "start": "If you know the basic terms, start with stack and queue traces, then draw linked lists. If the terminology feels unfamiliar, review Unit 1 before that sequence.",
+    "studyOrder": [
+      2,
+      3,
+      1,
+      4
+    ],
+    "start": "Start with stack and queue traces, then draw linked-list operations step by step. If classification words are unfamiliar, skim the Unit 1 definitions first. Leave the longer tree and graph traces for a separate pass.",
     "units": {
       "1": {
         "title": "Name the structure and its operations",
-        "focus": "Organise examples by how elements are arranged. Connect each example to real operations such as insertion, deletion and traversal.",
+        "effort": "quick",
+        "reason": "The definitions are fast to revise, but most of the practice here is comparing and explaining. Put the reusable stack and linked-list algorithms first unless the terms are unfamiliar.",
+        "essentials": [
+          "Linear versus non-linear structure with examples",
+          "Basic operations and abstract data type"
+        ],
         "try": "Pick a linear structure and a non-linear one. Sketch both and describe what it means to visit every element in each.",
-        "questions": [
-          {"id": "CST205-P003-Q26", "focus": "Classify primitive, non-primitive, linear and non-linear structures, and compare data types with data structures."},
-          {"id": "CST205-P006-Q16", "focus": "Explain common operations on data structures and compare linear with non-linear structures."}
+        "examples": [
+          {
+            "id": "CST205-P002-Q55",
+            "task": "Define a data structure and compare linear with non-linear structures."
+          },
+          {
+            "id": "CST205-P005-Q17",
+            "task": "Give an example of an abstract data type."
+          }
+        ],
+        "recall": [
+          "An ADT describes operations and behaviour, not the underlying storage layout.",
+          "A sequence is linear; a tree is non-linear because a node can branch."
+        ],
+        "patterns": [
+          {
+            "title": "Linear and non-linear structures",
+            "prompt": "Classify examples by how their elements relate. Give a clear difference with a linear and a non-linear example.",
+            "refs": ["CST205-P002-Q55", "CST205-P003-Q26", "CST205-P005-Q16", "CST205-P006-Q16"]
+          },
+          {
+            "title": "Primitive types and structures",
+            "prompt": "Define primitive and non-primitive structures and distinguish a data type from a data structure using an example.",
+            "refs": ["CST205-P003-Q26", "CST205-P005-Q16"]
+          },
+          {
+            "title": "Abstract data type",
+            "prompt": "Define an ADT and give an example. Describe its operations before choosing how to implement them.",
+            "refs": ["CST205-P002-Q56", "CST205-P003-Q34", "CST205-P005-Q17"]
+          },
+          {
+            "title": "Common operations and their preconditions",
+            "prompt": "Explain insertion, deletion and traversal. Discuss what happens if insertion is attempted without spare capacity.",
+            "refs": ["CST205-P003-Q23", "CST205-P006-Q16"]
+          }
         ]
       },
       "2": {
         "title": "Trace stacks and circular queues",
-        "focus": "Record top, front and rear after each operation. Revisit postfix evaluation and write a recursion trace with a clear base case.",
-        "try": "Evaluate a short postfix expression with a stack. Then trace a circular queue until rear wraps, showing its full and empty states.",
-        "questions": [
-          {"id": "CST205-P001-Q23", "focus": "Write push and pop, then evaluate the given postfix expression using a stack."},
-          {"id": "CST205-P002-Q61", "focus": "Write pseudocode for an array-backed circular queue."},
-          {"id": "CST205-P005-Q19", "focus": "Compare recursion with iteration and write the recursive Tower of Hanoi routine."}
+        "effort": "quick",
+        "reason": "Push/pop, postfix and circular queues recur in full questions. One trace table helps with algorithms, boundary cases and objective items.",
+        "essentials": [
+          "Write stack operations and evaluate postfix",
+          "Trace front and rear in a circular queue"
+        ],
+        "try": "Evaluate the postfix expression 8 3 − 2 × with a stack. Then use a circular capacity of four and trace rear as it wraps after a dequeue.",
+        "examples": [
+          {
+            "id": "CST205-P004-Q16",
+            "task": "Write push and pop algorithms with overflow and underflow checks."
+          },
+          {
+            "id": "CST205-P003-Q28",
+            "task": "Write circular-queue insertion and deletion algorithms."
+          }
+        ],
+        "recall": [
+          "A stack is last-in, first-out. For a binary operator in postfix, the first pop is its right operand.",
+          "A circular queue wraps an index using modulo capacity. State how your version distinguishes full from empty."
+        ],
+        "patterns": [
+          {
+            "title": "Stack push, pop and boundary cases",
+            "prompt": "Write the array-based push and pop algorithms. Trace the top index, including full and empty cases.",
+            "refs": ["CST205-P001-Q23", "CST205-P002-Q53", "CST205-P003-Q27", "CST205-P004-Q16", "CST205-P005-Q17", "CST205-P006-Q17"]
+          },
+          {
+            "title": "Infix and postfix exercises",
+            "prompt": "Use a stack to convert or evaluate the expression requested in the paper. Record the stack state after each token.",
+            "refs": ["CST205-P001-Q23", "CST205-P002-Q6", "CST205-P003-Q33", "CST205-P004-Q19", "CST205-P005-Q18"]
+          },
+          {
+            "title": "Circular queue operations",
+            "prompt": "Trace insertion and deletion with a front and rear. Show when each index wraps and explain how full and empty are distinguished.",
+            "refs": ["CST205-P001-Q24", "CST205-P002-Q61", "CST205-P003-Q28", "CST205-P004-Q17", "CST205-P005-Q20", "CST205-P006-Q18"]
+          },
+          {
+            "title": "Deque and restricted operations",
+            "prompt": "Draw the two ends of a deque and distinguish input-restricted from output-restricted operations.",
+            "refs": ["CST205-P001-Q24", "CST205-P002-Q33", "CST205-P003-Q28", "CST205-P006-Q17"]
+          },
+          {
+            "title": "Recursive problem solving",
+            "prompt": "Identify the base case and show smaller calls in a GCD or Tower of Hanoi solution. Compare recursion with iteration.",
+            "refs": ["CST205-P003-Q33", "CST205-P004-Q19", "CST205-P005-Q19", "CST205-P006-Q19"]
+          }
         ]
       },
       "3": {
         "title": "Draw before and after each list operation",
-        "focus": "Handle the head, tail and an interior node separately. In a doubly linked list, check the links in both directions.",
+        "effort": "standard",
+        "reason": "Insertion and comparison questions reuse a before/after diagram. Practise singly linked lists first, then add back links or a circular tail.",
+        "essentials": [
+          "Insert and delete at the head, tail and middle",
+          "Draw singly, doubly and circular variants"
+        ],
         "try": "On paper, insert into an empty list, insert in the middle, and delete the last node. Label which references change each time.",
-        "questions": [
-          {"id": "CST205-P001-Q19", "focus": "Write singly linked-list algorithms for insertion after a given node and for counting nodes."},
-          {"id": "CST205-P004-Q18", "focus": "Compare arrays and linked lists, then explain when a doubly linked list helps."}
+        "examples": [
+          {
+            "id": "CST205-P005-Q21",
+            "task": "Insert a node at the beginning of a singly linked list."
+          },
+          {
+            "id": "CST205-P006-Q20",
+            "task": "Compare a linked list with an array and describe the advantage of back links."
+          }
+        ],
+        "recall": [
+          "In a singly linked insertion, save the old successor before replacing its link.",
+          "In a circular list, stop on returning to the starting node, not on finding NULL."
+        ],
+        "patterns": [
+          {
+            "title": "Insert into a singly linked list",
+            "prompt": "Write an insertion algorithm and sketch the affected links. Trace the separate cases for the beginning, middle and end of the list.",
+            "refs": ["CST205-P001-Q19", "CST205-P003-Q29", "CST205-P005-Q21", "CST205-P006-Q19"]
+          },
+          {
+            "title": "Array versus linked list",
+            "prompt": "Compare storage and access, then give a case where you would choose each representation.",
+            "refs": ["CST205-P004-Q18", "CST205-P005-Q21", "CST205-P006-Q20"]
+          },
+          {
+            "title": "Doubly linked-list behaviour",
+            "prompt": "Label previous and next links, explain the benefit of two-way traversal and show which references are updated.",
+            "refs": ["CST205-P001-Q14", "CST205-P002-Q48", "CST205-P004-Q18", "CST205-P005-Q4", "CST205-P006-Q20"]
+          },
+          {
+            "title": "Circular linked lists",
+            "prompt": "Draw a circular linked list, explain the last link and distinguish it from a list that terminates with NULL.",
+            "refs": ["CST205-P001-Q10", "CST205-P003-Q29", "CST205-P004-Q20", "CST205-P005-Q22", "CST205-P006-Q11"]
+          },
+          {
+            "title": "Represent a polynomial as a linked list",
+            "prompt": "Draw a node layout for a polynomial term and show how links connect the terms of the given expression.",
+            "refs": ["CST205-P002-Q62", "CST205-P004-Q20", "CST205-P006-Q20"]
+          }
         ]
       },
       "4": {
         "title": "Separate tree and graph traces",
-        "focus": "Write tree traversals next to the diagram and identify where an AVL rotation is needed. For graphs, label the starting vertex and visited set.",
+        "effort": "extended",
+        "reason": "Trees and graph traversals have good past-paper coverage, but they need several distinct traces. Give AVL, traversal and graph work separate time.",
+        "essentials": [
+          "Reconstruct trees and practise AVL rotations",
+          "Trace BFS/DFS with a named start vertex"
+        ],
         "try": "Take a small tree and write all three traversal orders. On a small graph, run BFS and DFS from the same vertex and compare the orders.",
-        "questions": [
-          {"id": "CST205-P003-Q30", "focus": "Reconstruct a binary tree from the given in-order and pre-order traversals."},
-          {"id": "CST205-P006-Q21", "focus": "Explain AVL rotations and apply them to the insertion sequence in the paper."},
-          {"id": "CST205-P006-Q24", "focus": "Compare depth-first and breadth-first search in the graph-traversal subpart."}
+        "examples": [
+          {
+            "id": "CST205-P002-Q60",
+            "task": "Reconstruct the tree from in-order and pre-order and give post-order."
+          },
+          {
+            "id": "CST205-P006-Q21",
+            "task": "Explain AVL rotations and construct an AVL tree from the given values."
+          }
+        ],
+        "recall": [
+          "With distinct keys, the first pre-order item is the root; in-order separates the subtrees.",
+          "BFS uses a queue. DFS can use a stack or recursion. Mark visited vertices when tracing a graph."
+        ],
+        "patterns": [
+          {
+            "title": "Tree traversals and reconstruction",
+            "prompt": "Use the given in-order and pre-order lists to reconstruct the tree. Check the result by producing another traversal.",
+            "refs": ["CST205-P001-Q20", "CST205-P002-Q60", "CST205-P003-Q30", "CST205-P005-Q23", "CST205-P006-Q22"]
+          },
+          {
+            "title": "AVL trees and rotations",
+            "prompt": "Insert values one at a time, identify the imbalance and show the rotation after which the tree is balanced.",
+            "refs": ["CST205-P001-Q20", "CST205-P002-Q59", "CST205-P003-Q32", "CST205-P004-Q7", "CST205-P006-Q21"]
+          },
+          {
+            "title": "B-tree properties and construction",
+            "prompt": "Explain the properties of a B-tree of a given order. For an insertion trace, draw the node split and the promoted key.",
+            "refs": ["CST205-P003-Q32", "CST205-P005-Q24", "CST205-P006-Q23"]
+          },
+          {
+            "title": "Graph representation",
+            "prompt": "Draw a small graph and give its adjacency matrix or adjacency list. Explain why the chosen representation suits it.",
+            "refs": ["CST205-P002-Q57", "CST205-P004-Q23"]
+          },
+          {
+            "title": "Graph traversal with BFS and DFS",
+            "prompt": "Practise BFS with a queue, then compare it with DFS. Specify the start vertex and neighbour order, and show how you track visited vertices.",
+            "refs": ["CST205-P003-Q31", "CST205-P005-Q25", "CST205-P006-Q24"]
+          }
         ]
       }
     },
@@ -168,53 +731,253 @@
   },
   "CST207": {
     "topics": "CPU, 8086, assembly and memory",
-    "studyOrder": [1, 3, 4, 5, 2],
-    "start": "Start with the computer block diagram and 8086 registers. Trace one short assembly sequence while the registers are fresh, then give memory and computer arithmetic their own study sessions.",
+    "studyOrder": [
+      3,
+      1,
+      5,
+      4,
+      2
+    ],
+    "start": "Start with the 8086 diagram and addressing modes. You can reuse the same labelled drawings and a few short operand examples. If the hardware vocabulary is new, skim the Unit 1 computer diagram before that first pass.",
     "units": {
       "1": {
         "title": "Draw the path that data takes",
-        "focus": "Label the processor, memory, I/O and buses. Use a before-and-after register diagram for transfers and shift micro-operations.",
-        "try": "Draw the Von Neumann block diagram without notes. Use a small register example to trace a logical shift in each direction.",
-        "questions": [
-          {"id": "CST207-P002-Q40", "focus": "Define a logical shift; practise illustrating it with a register example."},
-          {"id": "CST207-P004-Q16", "focus": "Draw and label the Von Neumann structure and explain the computer bus architecture."}
+        "effort": "quick",
+        "reason": "A labelled computer diagram and a short register trace are easy to rehearse. Do the floating-point exercises as a second pass within this unit.",
+        "essentials": [
+          "Von Neumann functional units and buses",
+          "Register shifts, two’s complement and bit fields"
+        ],
+        "try": "Draw the Von Neumann block diagram without notes, then encode −6 with eight bits using two’s complement. Check which bits change in a logical right shift.",
+        "examples": [
+          {
+            "id": "CST207-P004-Q16",
+            "task": "Draw the Von Neumann blocks and explain the buses."
+          },
+          {
+            "id": "CST207-P005-Q20",
+            "task": "Compare fixed-point and floating-point formats, then encode −75 in eight bits."
+          }
+        ],
+        "recall": [
+          "Address, data and control buses carry different kinds of signals; label all three.",
+          "IEEE binary32 has 1 sign bit, 8 exponent bits and 23 fraction bits."
+        ],
+        "patterns": [
+          {
+            "title": "Von Neumann architecture and buses",
+            "prompt": "Draw a labelled computer diagram and show how instructions and data reach the CPU. Explain what each bus carries.",
+            "refs": ["CST207-P001-Q18", "CST207-P002-Q59", "CST207-P003-Q26", "CST207-P004-Q16", "CST207-P005-Q15", "CST207-P006-Q16"]
+          },
+          {
+            "title": "Floating-point representation",
+            "prompt": "Label the sign, exponent and fraction fields of an IEEE representation. When asked, compare fixed-point and floating-point formats.",
+            "refs": ["CST207-P002-Q58", "CST207-P003-Q26", "CST207-P004-Q21", "CST207-P005-Q20", "CST207-P006-Q21"]
+          },
+          {
+            "title": "Two’s complement representation",
+            "prompt": "Write the requested negative number using the stated bit width, and show the intermediate steps.",
+            "refs": ["CST207-P002-Q48", "CST207-P005-Q20"]
+          },
+          {
+            "title": "Register micro-operations and shifts",
+            "prompt": "Identify a register micro-operation and trace a shift on a small register value. State which bits enter and leave the register.",
+            "refs": ["CST207-P002-Q40", "CST207-P003-Q6", "CST207-P005-Q13", "CST207-P006-Q22"]
+          }
         ]
       },
       "2": {
         "title": "Trace arithmetic, control and the pipeline",
-        "focus": "Keep separate diagrams for the control unit and instruction pipeline. For a multiplication or division algorithm, track every register update.",
+        "effort": "extended",
+        "reason": "This unit has substantial written examples, but arithmetic traces, control sequencing and hazards are separate skills. Tackle them once the shorter diagrams are secure.",
+        "essentials": [
+          "Control memory and instruction pipeline",
+          "Booth multiplication and restoring division traces"
+        ],
         "try": "Trace a small signed multiplication using the taught register format. Draw a separate pipeline timeline and mark where a dependency can delay an instruction.",
-        "questions": [
-          {"id": "CST207-P005-Q16", "focus": "Explain restoring division and trace the given signed multiplication with Booth’s algorithm."},
-          {"id": "CST207-P005-Q21", "focus": "Explain pipelining and distinguish different kinds of pipeline hazards."},
-          {"id": "CST207-P006-Q23", "focus": "Describe the instruction cycle and draw the control-memory block diagram asked for in the paper."}
+        "examples": [
+          {
+            "id": "CST207-P005-Q21",
+            "task": "Explain pipelining and identify the kinds of hazards."
+          },
+          {
+            "id": "CST207-P006-Q22",
+            "task": "Multiply two negative numbers using Booth’s algorithm."
+          }
+        ],
+        "recall": [
+          "An arithmetic right shift copies the sign bit; a logical right shift fills with zero.",
+          "A pipeline can improve throughput without reducing the latency of one instruction."
+        ],
+        "patterns": [
+          {
+            "title": "Pipelining and hazards",
+            "prompt": "Draw the stages and identify a hazard on a short timeline. Explain how a mitigation changes the execution.",
+            "refs": ["CST207-P001-Q22", "CST207-P002-Q55", "CST207-P003-Q31", "CST207-P004-Q23", "CST207-P005-Q21", "CST207-P006-Q18"]
+          },
+          {
+            "title": "Microprogrammed control",
+            "prompt": "Draw the control-memory path and explain address sequencing. Compare with hardwired control when the paper asks for it.",
+            "refs": ["CST207-P001-Q27", "CST207-P002-Q62", "CST207-P003-Q34", "CST207-P005-Q9", "CST207-P006-Q23"]
+          },
+          {
+            "title": "Signed multiplication with Booth’s algorithm",
+            "prompt": "Track the registers for the given operands. State the bit width and show each add/subtract/shift decision.",
+            "refs": ["CST207-P001-Q26", "CST207-P005-Q16", "CST207-P006-Q22"]
+          },
+          {
+            "title": "Restoring division",
+            "prompt": "Show the subtract, test and restore steps for a small unsigned example. Label the quotient and remainder.",
+            "refs": ["CST207-P003-Q27", "CST207-P005-Q16"]
+          },
+          {
+            "title": "Vector processing",
+            "prompt": "Explain what a vector instruction does to a collection of elements. Give one example and distinguish it from a scalar operation.",
+            "refs": ["CST207-P001-Q20", "CST207-P005-Q22"]
+          }
         ]
       },
       "3": {
         "title": "Label the 8086 before memorising instructions",
-        "focus": "Identify the BIU, EU and the main registers. For an instruction, distinguish the addressing mode from the instruction’s operation.",
+        "effort": "quick",
+        "reason": "Addressing-mode questions recur and the architecture uses repeatable diagrams. Rehearse one example per mode before studying all pin details.",
+        "essentials": [
+          "8086 blocks, BIU, EU and registers",
+          "Addressing modes with one instruction each"
+        ],
         "try": "Draw the BIU and EU and label several registers. Explain which part of each example instruction tells you where its operand comes from.",
-        "questions": [
-          {"id": "CST207-P006-Q17", "focus": "Define an addressing mode and illustrate different 8086 modes with examples."},
-          {"id": "CST207-P006-Q19", "focus": "Explain what the 8086 BIU and EU do and compare its minimum and maximum modes."}
+        "examples": [
+          {
+            "id": "CST207-P006-Q17",
+            "task": "Explain 8086 addressing modes with examples."
+          },
+          {
+            "id": "CST207-P005-Q17",
+            "task": "Explain the 8086 internal architecture and describe interrupt types."
+          }
+        ],
+        "recall": [
+          "The BIU handles bus transfers and instruction fetch; the EU executes instructions.",
+          "For a memory operand, distinguish the offset from the physical address formed using the segment."
+        ],
+        "patterns": [
+          {
+            "title": "Addressing modes and 8086 examples",
+            "prompt": "Name the addressing mode from an instruction and explain how its operand or address is obtained. Give several short examples.",
+            "refs": ["CST207-P001-Q25", "CST207-P002-Q25", "CST207-P003-Q30", "CST207-P004-Q18", "CST207-P005-Q15", "CST207-P006-Q17"]
+          },
+          {
+            "title": "8086 internal architecture",
+            "prompt": "Draw the BIU and EU, label the registers and describe how instruction fetching and execution are coordinated.",
+            "refs": ["CST207-P002-Q60", "CST207-P003-Q27", "CST207-P004-Q21", "CST207-P005-Q17", "CST207-P006-Q19"]
+          },
+          {
+            "title": "Minimum and maximum modes",
+            "prompt": "Compare minimum and maximum modes and identify the purpose of the mode selection or relevant pins in the diagram.",
+            "refs": ["CST207-P003-Q32", "CST207-P004-Q18", "CST207-P006-Q19"]
+          },
+          {
+            "title": "Types of interrupts",
+            "prompt": "Distinguish maskable and non-maskable interrupts. Sketch how an interrupt transfers control to a service routine.",
+            "refs": ["CST207-P002-Q15", "CST207-P005-Q17"]
+          }
         ]
       },
       "4": {
         "title": "Track the state after each instruction",
-        "focus": "Start with moves and arithmetic, then trace a branch or call using the values you have written down. Revisit directives, procedures and macros after the instruction trace.",
+        "effort": "standard",
+        "reason": "A short register trace is a good first drill, but the archived examples here are less consistent than those for 8086 addressing or cache. Use the notes for branches, procedures and macros as well.",
+        "essentials": [
+          "Trace data movement and register arithmetic",
+          "Distinguish a normal call from an interrupt"
+        ],
         "try": "Write a short sequence that adds two register values and stores the result elsewhere. Trace what each instruction changes before adding a branch.",
-        "questions": [
-          {"id": "CST207-P004-Q5", "focus": "Interpret what a MOV instruction does to the destination register in the paper’s objective item."},
-          {"id": "CST207-P005-Q3", "focus": "Choose the assembly steps that add two register values and keep the result in the requested register."}
+        "examples": [
+          {
+            "id": "CST207-P005-Q3",
+            "task": "Choose an assembly sequence that adds two registers and saves the result."
+          },
+          {
+            "id": "CST207-P004-Q17",
+            "task": "Write zero-address instructions to evaluate an arithmetic expression."
+          }
+        ],
+        "recall": [
+          "For 8086 Intel syntax, MOV destination, source copies the value into the destination.",
+          "Keep a register table. Add a row after each instruction that changes a register or flag."
+        ],
+        "patterns": [
+          {
+            "title": "Data movement instructions",
+            "prompt": "Identify what changes after a data transfer: which operand is read and which register or location receives the value. Use the instruction set in the paper.",
+            "refs": ["CST207-P001-Q11", "CST207-P004-Q5"]
+          },
+          {
+            "title": "Register arithmetic and result storage",
+            "prompt": "Trace an arithmetic instruction or write a short register-based addition sequence using the notation in the paper.",
+            "refs": ["CST207-P005-Q3", "CST207-P006-Q12"]
+          },
+          {
+            "title": "Stack-based instructions for expressions",
+            "prompt": "Translate an expression into zero-address operations and trace the intermediate values. This is a stack-machine exercise, not native 8086 syntax.",
+            "refs": ["CST207-P004-Q17"]
+          },
+          {
+            "title": "Calls and interrupts",
+            "prompt": "Compare a subroutine call with an interrupt service routine. Identify what initiates each transfer of control.",
+            "refs": ["CST207-P002-Q53"]
+          },
+          {
+            "title": "Input/output instructions",
+            "prompt": "Identify the instructions used for port input and output, and explain the direction of each transfer.",
+            "refs": ["CST207-P002-Q13"]
+          }
         ]
       },
       "5": {
         "title": "Keep cache, virtual memory and interfacing separate",
-        "focus": "Draw where an address goes in each case: to a cache location, through address translation, or to a selected memory device.",
+        "effort": "standard",
+        "reason": "Mapping comparisons and hit-ratio questions reuse similar worked examples. Add memory interfacing after you can distinguish cache and address translation.",
+        "essentials": [
+          "Cache mappings and hit/miss calculations",
+          "Virtual memory, TLB and where an address goes"
+        ],
         "try": "Sketch a direct-mapped cache lookup, then draw a separate RAM/ROM address-selection example from the notes.",
-        "questions": [
-          {"id": "CST207-P002-Q65", "focus": "Describe how RAM and ROM/EPROM are interfaced to the 8086."},
-          {"id": "CST207-P006-Q20", "focus": "Explain direct-mapped cache and define virtual memory."}
+        "examples": [
+          {
+            "id": "CST207-P004-Q19",
+            "task": "Explain the cache mappings and calculate average access time."
+          },
+          {
+            "id": "CST207-P006-Q20",
+            "task": "Explain direct mapping and define virtual memory."
+          }
+        ],
+        "recall": [
+          "Direct mapping assigns a block to one cache line; a set-associative cache offers ways within a set.",
+          "For average access time, distinguish the time of a hit from the total time of a miss."
+        ],
+        "patterns": [
+          {
+            "title": "Cache mapping",
+            "prompt": "Compare direct, associative and set-associative mapping. Use a small address example to explain a direct-mapped cache.",
+            "refs": ["CST207-P001-Q21", "CST207-P002-Q63", "CST207-P003-Q29", "CST207-P004-Q19", "CST207-P005-Q19", "CST207-P006-Q20"]
+          },
+          {
+            "title": "Hit ratio and effective access time",
+            "prompt": "Explain hit and miss ratio, then use the access times and assumptions in the question to set up the calculation.",
+            "refs": ["CST207-P002-Q1", "CST207-P003-Q28", "CST207-P004-Q19", "CST207-P005-Q6", "CST207-P006-Q8"]
+          },
+          {
+            "title": "Virtual memory and address translation",
+            "prompt": "Explain virtual memory and the TLB. Where asked, distinguish virtual addresses from physical memory or cache mapping.",
+            "refs": ["CST207-P001-Q21", "CST207-P002-Q64", "CST207-P003-Q33", "CST207-P004-Q20", "CST207-P005-Q2", "CST207-P006-Q20"]
+          },
+          {
+            "title": "Memory chip organisation and interfacing",
+            "prompt": "Sketch how the processor selects RAM or ROM/EPROM. Check capacity from the number of locations and the bits stored per location.",
+            "refs": ["CST207-P002-Q65", "CST207-P003-Q23", "CST207-P004-Q9"]
+          }
         ]
       }
     },
@@ -227,45 +990,216 @@
   },
   "CST209": {
     "topics": "Complexity, sorting, searching and graphs",
-    "studyOrder": [1, 2, 3, 4],
-    "start": "Start with a short complexity trace. Reuse the same small inputs to compare sorts and searches, then put graph algorithms on paper and label each intermediate choice.",
+    "studyOrder": [
+      3,
+      2,
+      1,
+      4
+    ],
+    "start": "Begin with binary search and hashing; both are quick to demonstrate on a small input. Next practise sorting passes. Read Unit 1 notation first only if you cannot yet label the time or space cost of a trace.",
     "units": {
       "1": {
         "title": "Count work before naming the growth rate",
-        "focus": "Identify the input size, the operation being counted and the case you are analysing. Compare divide and conquer, greedy and dynamic programming using examples.",
+        "effort": "quick",
+        "reason": "The definitions are quick, but search and sort traces give you more chances to practise a complete procedure. If you get stuck on the notation, use this unit as a warm-up.",
+        "essentials": [
+          "Properties of an algorithm and common bounds",
+          "Distinguish time, space and the case being analysed"
+        ],
         "try": "Count iterations for a loop that increments by one and one that doubles its index. Show your reasoning for both before writing the asymptotic bound.",
-        "questions": [
-          {"id": "CST209-P005-Q16", "focus": "Explain the characteristics of an algorithm and distinguish the asymptotic notations asked for."},
-          {"id": "CST209-P006-Q17", "focus": "Illustrate divide and conquer and compare it with dynamic programming."}
+        "examples": [
+          {
+            "id": "CST209-P005-Q16",
+            "task": "Explain algorithm characteristics and common asymptotic notations."
+          },
+          {
+            "id": "CST209-P003-Q27",
+            "task": "Count iterations in a loop whose index doubles."
+          }
+        ],
+        "recall": [
+          "O gives an upper bound; Ω gives a lower bound; Θ gives a tight bound.",
+          "Name what n measures and whether you are counting time or auxiliary space."
+        ],
+        "patterns": [
+          {
+            "title": "Define a good algorithm",
+            "prompt": "Define an algorithm and explain its characteristics with a small example or a counterexample.",
+            "refs": ["CST209-P001-Q54", "CST209-P003-Q26", "CST209-P004-Q16", "CST209-P005-Q16", "CST209-P006-Q16"]
+          },
+          {
+            "title": "Big O, Omega and Theta",
+            "prompt": "Explain the bounds with an example. Distinguish a tight bound from an upper or lower bound.",
+            "refs": ["CST209-P001-Q44", "CST209-P003-Q26", "CST209-P004-Q3", "CST209-P005-Q16", "CST209-P006-Q16"]
+          },
+          {
+            "title": "Time and space complexity",
+            "prompt": "Identify the input size and count the key operation in a short loop. Distinguish that cost from the extra memory used.",
+            "refs": ["CST209-P001-Q53", "CST209-P003-Q27", "CST209-P005-Q17", "CST209-P006-Q1"]
+          },
+          {
+            "title": "Divide and conquer",
+            "prompt": "Explain the split, solve and combine steps. Compare with dynamic programming or identify the design model used in a known algorithm.",
+            "refs": ["CST209-P001-Q59", "CST209-P003-Q27", "CST209-P004-Q5", "CST209-P005-Q17", "CST209-P006-Q17"]
+          },
+          {
+            "title": "Sets and multisets",
+            "prompt": "Explain how a set and multiset differ using a collection that contains the same value twice.",
+            "refs": ["CST209-P004-Q16"]
+          }
         ]
       },
       "2": {
         "title": "Show the intermediate sorting passes",
-        "focus": "Practise a simple in-place sort, a divide-and-conquer sort and a linear-time sort from the syllabus. Distinguish time cost from extra space.",
+        "effort": "standard",
+        "reason": "Simple sorts are quick to trace and frequently tested. Start with one array and reuse it before moving to pivot selection and non-comparison methods.",
+        "essentials": [
+          "Write one pass each for bubble, selection and insertion",
+          "Compare merge/quick/heap sorts, then practise radix"
+        ],
         "try": "Trace selection sort and merge sort on the same short list with a duplicate value. Write the array after each pass or merge.",
-        "questions": [
-          {"id": "CST209-P004-Q17", "focus": "Trace selection sort and explain its worst-case time complexity."},
-          {"id": "CST209-P006-Q19", "focus": "Compare merge, quick and heap sorts, then trace radix sort on the values given."}
+        "examples": [
+          {
+            "id": "CST209-P006-Q18",
+            "task": "Write bubble sort and show the array after each pass."
+          },
+          {
+            "id": "CST209-P004-Q17",
+            "task": "Trace selection sort and state its worst-case time complexity."
+          }
+        ],
+        "recall": [
+          "Selection sort picks a minimum; insertion sort puts the next item into a sorted prefix.",
+          "State the pivot and partition rule before tracing quicksort."
+        ],
+        "patterns": [
+          {
+            "title": "Bubble sort passes",
+            "prompt": "Write the bubble sort steps and trace the array after each pass. State when the version you use can stop.",
+            "refs": ["CST209-P001-Q55", "CST209-P003-Q17", "CST209-P005-Q18", "CST209-P006-Q18"]
+          },
+          {
+            "title": "Selection sort",
+            "prompt": "Trace which minimum is selected in each pass. State what the sorted prefix contains after each swap and give the worst-case time bound.",
+            "refs": ["CST209-P003-Q13", "CST209-P004-Q17", "CST209-P005-Q18", "CST209-P006-Q8"]
+          },
+          {
+            "title": "Insertion sort",
+            "prompt": "Trace the shifting and insertion steps as each new item is inserted into a sorted prefix. Compare the work for sorted and reverse-sorted input.",
+            "refs": ["CST209-P001-Q29", "CST209-P003-Q8", "CST209-P005-Q18"]
+          },
+          {
+            "title": "Merge sort and comparison-sort costs",
+            "prompt": "Show the split and merge steps. Compare merge, quick and heap sort on time and extra space when requested.",
+            "refs": ["CST209-P001-Q57", "CST209-P003-Q31", "CST209-P004-Q5", "CST209-P006-Q19"]
+          },
+          {
+            "title": "Quick sort and partitioning",
+            "prompt": "Show how the pivot partitions the input. Explain how different partitions affect best- and worst-case costs.",
+            "refs": ["CST209-P001-Q41", "CST209-P003-Q20", "CST209-P005-Q19", "CST209-P006-Q19"]
+          },
+          {
+            "title": "Linear-time sorts",
+            "prompt": "Explain what makes a non-comparison sort applicable. Trace bucket or radix sorting on the given input.",
+            "refs": ["CST209-P001-Q33", "CST209-P004-Q19", "CST209-P005-Q7", "CST209-P006-Q19"]
+          }
         ]
       },
       "3": {
         "title": "State the search assumptions",
-        "focus": "State whether the input is sorted. For trees, trace the search path, and for hashing, show where a collision lands and how it is resolved.",
+        "effort": "quick",
+        "reason": "Binary search and hash collisions have repeatable traces in written groups. Start with those before practising more involved tree updates.",
+        "essentials": [
+          "Binary search with a missing key and sorted input",
+          "One hash collision and a BST insertion/deletion"
+        ],
         "try": "Find a present key and an absent key with binary search. Then place two keys in a small hash table so you can demonstrate one collision.",
-        "questions": [
-          {"id": "CST209-P001-Q58", "focus": "Write and explain recursive binary search."},
-          {"id": "CST209-P003-Q32", "focus": "Define hashing and describe ways to resolve collisions."},
-          {"id": "CST209-P006-Q21", "focus": "Show insertion and deletion in a binary search tree and explain why balance matters."}
+        "examples": [
+          {
+            "id": "CST209-P004-Q20",
+            "task": "Write recursive binary search and explain why the input must be sorted."
+          },
+          {
+            "id": "CST209-P003-Q32",
+            "task": "Explain hashing and compare collision-resolution techniques."
+          }
+        ],
+        "recall": [
+          "Binary search discards half of a sorted search interval at each comparison.",
+          "Chaining stores colliding keys in a bucket; probing searches for another slot."
+        ],
+        "patterns": [
+          {
+            "title": "Binary search and when to use it",
+            "prompt": "Write binary search and show how the bounds change. State when linear search is appropriate and what binary search assumes.",
+            "refs": ["CST209-P001-Q58", "CST209-P003-Q28", "CST209-P004-Q20", "CST209-P005-Q20", "CST209-P006-Q20"]
+          },
+          {
+            "title": "Hashing and collision resolution",
+            "prompt": "Explain the hash function and trace one collision. Show chaining or the probing procedure requested in the paper.",
+            "refs": ["CST209-P003-Q32", "CST209-P004-Q21", "CST209-P005-Q20", "CST209-P006-Q22"]
+          },
+          {
+            "title": "Binary search tree operations",
+            "prompt": "Sketch a BST built from the input order. Trace an insert or delete and show how the ordering invariant is preserved.",
+            "refs": ["CST209-P003-Q29", "CST209-P004-Q14", "CST209-P006-Q21"]
+          },
+          {
+            "title": "Height-balanced search trees",
+            "prompt": "Explain why height balancing matters for search. Practise identifying the balance factor or the effect of a rotation.",
+            "refs": ["CST209-P001-Q25", "CST209-P003-Q29", "CST209-P004-Q13", "CST209-P006-Q21"]
+          }
         ]
       },
       "4": {
         "title": "Choose the graph algorithm for the goal",
-        "focus": "Keep shortest paths, minimum spanning trees and topological order distinct. Check the graph type and edge assumptions before choosing an algorithm.",
+        "effort": "extended",
+        "reason": "Graph questions provide written practice, but shortest paths, minimum spanning trees and topological order solve different problems. Keep a separate trace for each.",
+        "essentials": [
+          "Prim versus Kruskal on the same graph",
+          "Dijkstra, Bellman–Ford, Floyd–Warshall and DAG order"
+        ],
         "try": "Run Prim’s and Dijkstra’s algorithms on the same small undirected graph with positive weights. Record each chosen edge or updated distance and explain the different goals.",
-        "questions": [
-          {"id": "CST209-P003-Q30", "focus": "Explain Prim’s algorithm and construct a minimum spanning tree with Kruskal’s algorithm using the given graph."},
-          {"id": "CST209-P004-Q22", "focus": "Write Bellman–Ford and trace it on the graph supplied with the question."},
-          {"id": "CST209-P006-Q24", "focus": "Explain Dijkstra’s single-source shortest-path algorithm and write a short note on topological sorting."}
+        "examples": [
+          {
+            "id": "CST209-P004-Q18",
+            "task": "Explain and trace Prim’s algorithm for a minimum spanning tree."
+          },
+          {
+            "id": "CST209-P003-Q33",
+            "task": "Write Dijkstra’s algorithm and demonstrate the distance updates."
+          }
+        ],
+        "recall": [
+          "A minimum spanning tree minimizes total tree weight, not distance from a source.",
+          "Dijkstra needs non-negative edge weights. A topological order requires a directed acyclic graph."
+        ],
+        "patterns": [
+          {
+            "title": "Minimum spanning trees with Prim or Kruskal",
+            "prompt": "Construct a spanning tree on the given weighted graph. Show the order in which edges are chosen and when an edge is rejected.",
+            "refs": ["CST209-P001-Q62", "CST209-P003-Q30", "CST209-P004-Q18", "CST209-P005-Q21", "CST209-P006-Q23"]
+          },
+          {
+            "title": "Dijkstra’s shortest paths",
+            "prompt": "Trace distance updates from one source. State the required edge-weight assumption and show the final distances.",
+            "refs": ["CST209-P003-Q33", "CST209-P004-Q11", "CST209-P006-Q24"]
+          },
+          {
+            "title": "Bellman–Ford and negative weights",
+            "prompt": "Show how the supplied edges are relaxed over repeated passes and explain when the algorithm is appropriate.",
+            "refs": ["CST209-P004-Q22", "CST209-P005-Q9"]
+          },
+          {
+            "title": "Floyd–Warshall and all-pairs paths",
+            "prompt": "Set up the distance matrix for a small graph and show how considering an additional intermediate vertex changes it.",
+            "refs": ["CST209-P001-Q12", "CST209-P005-Q22"]
+          },
+          {
+            "title": "Directed acyclic graphs and topological order",
+            "prompt": "Recognise a DAG and explain how a topological order respects dependencies. Draw examples with and without a cycle.",
+            "refs": ["CST209-P001-Q60", "CST209-P004-Q8", "CST209-P005-Q22", "CST209-P006-Q24"]
+          }
         ]
       }
     },

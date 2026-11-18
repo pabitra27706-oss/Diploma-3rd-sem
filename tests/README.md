@@ -64,8 +64,11 @@ sourceCommit in `_data/pyq-integrity.json`; quiz-bank comparisons use the same
 revision (the 2026-11-17 explanation revision, where both pins now point). Both
 values must be in Git history; do not use a shallow clone
 for these checks. CI checks out full history. Phase 11 also checks static
-Suggestions generation, coverage of all syllabus units, exact archive routes
-and session labels, paired revision-guide links, and sitemap/search presence.
+Suggestions generation, the four-pattern minimum per unit, distinct sessions
+and derived star ratings, Easy Read rank/effort and exact source/marks labels,
+paired guide links, and sitemap/search presence. The nested-path
+`suggestions-browser.cjs` smoke exercises both layouts, source jumps, no-JS
+navigation and visited-guide offline caching without source prefetch.
 
 Node suites cover attempt persistence/migration/retries/mistakes, Leitner
 scheduling (ladder, local-midnight rollover, per-day new-card cap, clock clamps,

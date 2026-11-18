@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render static Suggestions pages from curated picks, the syllabus and the PYQ archive."""
+"""Render a syllabus question bank and a separate ranked revision route per subject."""
 from __future__ import annotations
 
 import argparse
@@ -21,6 +21,9 @@ SUBJECTS = {
 }
 CURATION = 'docs/suggestions/guides.json'
 SYLLABUS = 'docs/syllabus/syllabus.json'
+MIN_PATTERNS = 4
+MAX_STARS = 5
+EFFORT = {'quick': 'Quick win', 'standard': 'Build on the basics', 'extended': 'Longer practice'}
 
 
 def guide_paths():
@@ -41,7 +44,9 @@ def archived_questions(root, code):
     for entry in registry['papers']:
         path = directory / entry['fileName']
         paper = load(path)
-        if (paper['subject'], paper['fileName'], paper['examSession']) != (code, path.name, entry['examSession']):
+        if (paper['subject'], paper['fileName']) != (code, path.name) or any(
+            paper[key] != entry[key] for key in ('examSession', 'year', 'monthNumber')
+        ):
             raise ValueError(f'{path.name}: archive and registry do not agree on the subject, filename or session')
         for question in paper['questions']:
             ident = question['id']
@@ -57,7 +62,10 @@ def icon(name, prefix='../../'):
 
 def page(path, version, title, description, body):
     prefix = '../' * (len(path.parts) - 1)
-    guide_class = ' suggestions-main--guide' if len(path.parts) > 2 else ''
+    guide_class = {
+        'important-questions': ' suggestions-main--bank',
+        'easy-read': ' suggestions-main--easy',
+    }.get(path.stem, '')
     html = f'''<!doctype html>
 <html lang="en" data-theme="dark">
 <head>
@@ -122,12 +130,12 @@ def hub_body(authored):
                 <div class="suggestions-card-links">
                     <a href="{slug}/important-questions.html" aria-describedby="{slug}-subject">
                         {icon('file-text', '../')}
-                        <span><strong>Important Questions</strong><small>Past questions by unit</small></span>
+                        <span><strong>Important Questions</strong><small>Star-rated past questions</small></span>
                         {icon('arrow-right', '../')}
                     </a>
                     <a href="{slug}/easy-read.html" aria-describedby="{slug}-subject">
                         {icon('book', '../')}
-                        <span><strong>Easy Read</strong><small>What to revise first</small></span>
+                        <span><strong>Easy Read</strong><small>Quick-win revision order</small></span>
                         {icon('arrow-right', '../')}
                     </a>
                 </div>
@@ -156,110 +164,248 @@ def notes_url(code, unit=None):
 
 
 def guide_header(kind, code, name, subject, pdf_file):
-    other = 'easy-read' if kind == 'important-questions' else 'important-questions'
     if kind == 'important-questions':
-        lead = 'Practise selected past exam questions, grouped by syllabus unit.'
+        other = 'easy-read'
+        label = 'Past-paper question bank'
+        lead = 'Practise the recurring patterns first. Open any date for the original question.'
         glyph = 'file-text'
     else:
-        lead = 'Use this study order to plan your revision, then try each task without looking at the notes.'
-        glyph = 'book'
+        other = 'important-questions'
+        label = 'Quick-win revision plan'
+        lead = 'Start with short answers and traces you can reuse, then move on to the longer problems.'
+        glyph = 'map'
     return f'''    <nav class="suggestions-breadcrumb" aria-label="Suggestions navigation">
         <a href="../index.html">{icon('arrow-left')} All subjects</a>
-    </nav>
-{hero(f'{name}: {GUIDES[kind]}', 'Study Suggestions', lead, glyph, compact=True)}
-    <nav class="suggestions-guide-links" aria-label="Related study resources">
         <a href="{other}.html">{e(GUIDES[other])} {icon('arrow-right')}</a>
+    </nav>
+{hero(f'{name}: {GUIDES[kind]}', label, lead, glyph, compact=True)}
+    <nav class="suggestions-guide-links" aria-label="Subject resources">
         <a href="{notes_url(code)}">Subject notes</a>
         <a href="../../docs/syllabus/{e(pdf_file)}#page={subject['page']}">2022 syllabus</a>
     </nav>'''
 
 
-def citation(pick, archive, seen, context):
-    ident = pick['id']
-    if ident not in archive:
-        raise ValueError(f'{context}: unknown archived question {ident}')
-    if ident in seen:
-        raise ValueError(f'{context}: duplicate selection {ident}')
-    seen.add(ident)
-    paper_id, entry, question = archive[ident]
-    focus = text(pick['focus'], ident)
-    href = '../../pyq/answers.html?' + urlencode({'paper': paper_id, 'q': ident})
-    printed = str(question.get('sourceNumber') or '').strip()
-    number = f' · Q{e(printed)}' if printed.isdecimal() else f' · {e(printed)}' if printed else ''
-    date = f"{entry['year']:04d}-{entry['monthNumber']:02d}"
-    session = text(entry['examSession'], paper_id)
-    return f'''            <li>
-                <a class="suggestions-question" href="{e(href)}">
-                    <span><strong>{e(focus)}</strong><small>Past paper · <time datetime="{date}">{e(session)}</time>{number}</small></span>
-                    {icon('arrow-right')}
-                </a>
-            </li>'''
+def session_key(item):
+    _, entry, _ = item
+    return entry['year'], entry['monthNumber']
 
 
-def important_body(code, units, curated, archive):
+def cited_sessions(refs, archive, context):
+    if not isinstance(refs, list) or not refs:
+        raise ValueError(f'{context}: cite at least one archived question')
+    cites = []
     seen = set()
-    toc = []
-    groups = []
+    for ident in refs:
+        ident = text(ident, context)
+        if ident not in archive:
+            raise ValueError(f'{context}: unknown archived question {ident}')
+        item = archive[ident]
+        date = session_key(item)
+        if date in seen:
+            raise ValueError(f'{context}: more than one citation for {item[1]["examSession"]}')
+        seen.add(date)
+        cites.append(item)
+    return cites
+
+
+def unit_patterns(picks, archive, context):
+    if not isinstance(picks, list) or len(picks) < MIN_PATTERNS:
+        raise ValueError(f'{context}: expected at least {MIN_PATTERNS} question patterns')
+    patterns = []
+    seen = set()
+    for pick in picks:
+        title = text(pick['title'], context)
+        if title.casefold() in seen:
+            raise ValueError(f'{context}: duplicate pattern title {title}')
+        seen.add(title.casefold())
+        prompt = text(pick['prompt'], f'{context} {title}')
+        refs = cited_sessions(pick['refs'], archive, f'{context} {title}')
+        patterns.append((title, prompt, sorted(refs, key=session_key)))
+    return sorted(patterns, key=lambda pattern: -len(pattern[2]))
+
+
+def source(item):
+    paper_id, entry, question = item
+    href = '../../pyq/answers.html?' + urlencode({'paper': paper_id, 'q': question['id']})
+    printed = text(question['sourceNumber'], question['id'])
+    number = f'Q{printed}' if printed[0].isdecimal() else printed
+    year, month = session_key(item)
+    label = f'<time datetime="{year:04d}-{month:02d}">{e(entry["examSession"])}</time> <span>· {e(number)}</span>'
+    return e(href), label
+
+
+def pattern_row(unit, position, title, prompt, refs):
+    count = len(refs)
+    stars = min(count, MAX_STARS)
+    symbols = '★' * stars + '☆' * (MAX_STARS - stars)
+    label = f'{count} cited sessions' if count > 1 else '1 cited session · no repeat cited'
+    heading = f'unit-{unit}-pattern-{position}'
+    links = []
+    for item in refs:
+        href, date = source(item)
+        links.append(f'                        <li><a class="suggestions-question" href="{href}" aria-describedby="{heading}">{date}</a></li>')
+    link_list = '\n'.join(links)
+    return f'''                <li class="suggestions-pattern" data-session-count="{count}">
+                    <div class="suggestions-pattern-heading">
+                        <h3 id="{heading}">{e(title)}</h3>
+                        <p class="suggestions-rating">
+                            <span class="suggestions-stars" role="img" aria-label="{stars} out of {MAX_STARS} stars">{symbols}</span>
+                            <span>{label}</span>
+                        </p>
+                    </div>
+                    <p class="suggestions-prompt">{e(prompt)}</p>
+                    <ul class="suggestions-appearances" role="list" aria-label="Cited appearances">
+{link_list}
+                    </ul>
+                </li>'''
+
+
+def bullet_list(lines, context, indent):
+    if not isinstance(lines, list) or not lines:
+        raise ValueError(f'{context}: expected a non-empty list')
+    return '\n'.join(f'{indent}<li>{e(text(line, context))}</li>' for line in lines)
+
+
+def important_body(code, units, curated, patterns):
+    toc, groups = [], []
     for unit, title in units.items():
-        picks = curated[str(unit)]['questions']
-        if not picks:
-            raise ValueError(f'{code} Unit {unit}: expected at least one question selection')
-        links = '\n'.join(citation(pick, archive, seen, f'{code} Unit {unit}') for pick in picks)
+        rows = '\n'.join(pattern_row(unit, i, *row) for i, row in enumerate(patterns[unit], 1))
+        recall = bullet_list(curated[str(unit)]['recall'], f'{code} Unit {unit} recall cues', '                        ')
         toc.append(f'<a href="#unit-{unit}">Unit {unit}</a>')
-        groups.append(f'''    <section class="suggestions-panel" aria-labelledby="unit-{unit}">
+        groups.append(f'''    <section class="suggestions-bank-unit" aria-labelledby="unit-{unit}">
         <div class="suggestions-panel-heading">
             <h2 id="unit-{unit}"><span class="suggestions-unit">Unit {unit}</span> {e(title)}</h2>
             <a href="{notes_url(code, unit)}" aria-describedby="unit-{unit}">Unit notes</a>
         </div>
-        <ul class="suggestions-question-list">
-{links}
-        </ul>
+        <div class="suggestions-bank-grid">
+            <ol class="suggestions-patterns" role="list">
+{rows}
+            </ol>
+            <aside class="suggestions-recall" aria-label="Unit {unit} recall cues">
+                <p>{icon('lightbulb')} <strong>Quick recall</strong></p>
+                <ul>
+{recall}
+                </ul>
+            </aside>
+        </div>
     </section>''')
     question_groups = '\n'.join(groups)
-    return f'''    <p class="suggestions-scope">These prompts paraphrase past papers, sometimes only one subpart. Open an entry for the exact question. The selection is not an exam prediction, and linked model answers are not official keys.</p>
-    <nav class="suggestions-jump" aria-label="Jump to a syllabus unit">
-        {' '.join(toc)}
-    </nav>
+    total = sum(len(rows) for rows in patterns.values())
+    return f'''    <div class="suggestions-bank-tools">
+        <p class="suggestions-kicker">{total} patterns · {len(units)} syllabus units</p>
+        <nav class="suggestions-jump" aria-label="Jump to a syllabus unit">
+            {' '.join(toc)}
+        </nav>
+        <p class="suggestions-scale"><span class="suggestions-stars" aria-hidden="true">★★★★★</span>
+            <span><strong>Star ratings:</strong> One star per cited session, up to {MAX_STARS}. Most-cited patterns come first.</span>
+        </p>
+        <p class="suggestions-scope">Dates link to related questions or subparts, not necessarily exact repeats. Stars guide practice; they do not predict the exam.</p>
+    </div>
 {question_groups}
-    <p class="suggestions-end"><a href="../../pyq/index.html?subject={code}">Browse all archived papers for this subject</a></p>'''
+    <section class="suggestions-bank-end" aria-labelledby="how-to-practise">
+        <h2 id="how-to-practise">How to practise from the papers</h2>
+        <p>Try two dated versions without notes. Compare what each one asks you to show, then check the wording and fill in any missing steps. Linked model answers are not official keys.</p>
+        <p class="suggestions-end"><a href="../../pyq/index.html?subject={code}">Browse all archived papers for this subject</a></p>
+    </section>'''
 
 
-def easy_body(code, units, authored):
+def examples_for_unit(examples, patterns, archive, context):
+    if not isinstance(examples, list) or len(examples) != 2:
+        raise ValueError(f'{context}: give two past-paper practice examples')
+    ids = [example['id'] for example in examples]
+    sources = cited_sessions(ids, archive, f'{context} Easy Read examples')
+    unit_ids = {q['id'] for _, _, refs in patterns for _, _, q in refs}
+    if not set(ids) <= unit_ids:
+        raise ValueError(f'{context}: Easy Read examples must appear in this unit’s question patterns')
+    links = []
+    for example, item in zip(examples, sources):
+        href, date = source(item)
+        marks = item[2]['marks']
+        marks_label = f'{marks} {"mark" if marks == 1 else "marks"} total'
+        task = text(example['task'], f'{context} Easy Read example')
+        links.append(f'''                            <li>
+                                <a class="suggestions-example" href="{href}">
+                                    <span class="suggestions-example-source">{date} <span>· {marks_label}</span></span>
+                                    <span class="suggestions-example-task">{e(task)} {icon('arrow-right')}</span>
+                                </a>
+                            </li>''')
+    return '\n'.join(links)
+
+
+def easy_body(code, units, authored, patterns, archive):
     start = text(authored['start'], f'{code} starting advice')
-    steps = []
-    for step, unit in enumerate(authored['studyOrder'], start=1):
+    route, steps = [], []
+    order = authored['studyOrder']
+    for step, unit in enumerate(order, start=1):
         item = authored['units'][str(unit)]
-        title = text(item['title'], f'{code} Unit {unit} step title')
-        focus = text(item['focus'], f'{code} Unit {unit} focus')
-        task = text(item['try'], f'{code} Unit {unit} practice task')
-        steps.append(f'''            <li class="suggestions-step">
-                <span class="suggestions-step-number" aria-hidden="true">{step}</span>
-                <div>
-                    <p class="suggestions-unit">Unit {unit} · {e(units[unit])}</p>
-                    <h3 id="step-unit-{unit}">{e(title)}</h3>
-                    <p>{e(focus)}</p>
-                    <p class="suggestions-task"><strong>Try it:</strong> {e(task)}</p>
-                    <div class="suggestions-unit-links">
-                        <a href="{notes_url(code, unit)}" aria-describedby="step-unit-{unit}">Unit notes</a>
-                        <a href="important-questions.html#unit-{unit}" aria-describedby="step-unit-{unit}">Practice questions</a>
+        context = f'{code} Unit {unit}'
+        title = text(item['title'], f'{context} step title')
+        reason = text(item['reason'], f'{context} reason for rank')
+        task = text(item['try'], f'{context} practice task')
+        if item['effort'] not in EFFORT:
+            raise ValueError(f'{context}: unknown preparation effort {item["effort"]}')
+        effort = EFFORT[item['effort']]
+        essentials = bullet_list(item['essentials'], f'{context} first-pass topics', '                            ')
+        examples = examples_for_unit(item['examples'], patterns[unit], archive, context)
+        step_id = f'step-unit-{unit}'
+        route.append(f'            <li><a href="#{step_id}"><span>{step}</span> Unit {unit}</a></li>')
+        modifier = ' suggestions-step--first' if step == 1 else ''
+        badge = 'Start here · ' if step == 1 else ''
+        steps.append(f'''            <li class="suggestions-step{modifier}">
+                <div class="suggestions-step-heading" id="{step_id}">
+                    <span class="suggestions-step-number" aria-hidden="true">{step}</span>
+                    <div>
+                        <p class="suggestions-unit">{badge}Unit {unit} · {e(units[unit])}</p>
+                        <h3 id="step-title-{unit}">{e(title)}</h3>
+                    </div>
+                    <span class="suggestions-effort">{effort}</span>
+                </div>
+                <p class="suggestions-reason"><strong>Why here:</strong> {e(reason)}</p>
+                <div class="suggestions-step-grid">
+                    <div>
+                        <p class="suggestions-card-label"><strong>Read first</strong></p>
+                        <ul class="suggestions-essentials">
+{essentials}
+                        </ul>
+                        <p class="suggestions-task"><strong>Try it:</strong> {e(task)}</p>
+                    </div>
+                    <div>
+                        <p class="suggestions-card-label"><strong>Past-paper practice</strong></p>
+                        <ul class="suggestions-examples" role="list">
+{examples}
+                        </ul>
                     </div>
                 </div>
+                <div class="suggestions-unit-links">
+                    <a href="{notes_url(code, unit)}" aria-describedby="step-title-{unit}">Unit notes</a>
+                    <a href="important-questions.html#unit-{unit}" aria-describedby="step-title-{unit}">Practice questions {icon('arrow-right')}</a>
+                </div>
             </li>''')
+    route_links = '\n'.join(route)
     study_steps = '\n'.join(steps)
-    if not authored['checklist']:
-        raise ValueError(f'{code}: expected a revision checklist')
-    checks = '\n'.join(f'            <li>{icon("check")} {e(text(line, f"{code} checklist"))}</li>'
+    checks = '\n'.join(f'            <li>{icon("check")} <span>{e(text(line, f"{code} checklist"))}</span></li>'
                        for line in authored['checklist'])
+    if not checks:
+        raise ValueError(f'{code}: expected a revision checklist')
     return f'''    <section class="suggestions-plan" aria-labelledby="study-order">
-        <h2 id="study-order">What to study first</h2>
-        <p class="suggestions-scope">{e(start)} This is a suggested order, not a reason to skip a syllabus unit.</p>
-        <ol class="suggestions-steps">
+        <div class="suggestions-route">
+            <h2 id="study-order">What to study first</h2>
+            <nav aria-label="Suggested revision order">
+                <ol class="suggestions-route-links" role="list">
+{route_links}
+                </ol>
+            </nav>
+            <p>{e(start)}</p>
+            <p class="suggestions-scope">The order balances prep effort with past-paper practice. Marks are for the whole linked question, not its subparts or a future exam. Revise every unit.</p>
+        </div>
+        <ol class="suggestions-steps" role="list" aria-label="Ranked study steps">
 {study_steps}
         </ol>
     </section>
-    <section class="suggestions-panel suggestions-checklist" aria-labelledby="revision-checklist">
+    <section class="suggestions-checklist" aria-labelledby="revision-checklist">
         <h2 id="revision-checklist">Last-minute checklist</h2>
-        <ul>
+        <p>Close your notes and check that you can do each of these.</p>
+        <ul role="list">
 {checks}
         </ul>
     </section>'''
@@ -276,23 +422,29 @@ def build(root=ROOT):
     output = {hub: page(hub, version, 'Study Suggestions',
                         'Past exam questions and quick revision guides for the CST 3rd-semester theory subjects.',
                         hub_body(authored))}
-    for rel, code in guide_paths().items():
-        path = Path(rel)
-        kind = path.stem
+    for code, (slug, name, _) in SUBJECTS.items():
         subject, guide = subjects[code], authored[code]
         units = {u['unit']: u['title'] for u in subject['units']}
         order = guide['studyOrder']
         if set(guide['units']) != {str(u) for u in units} or sorted(order) != sorted(units):
             raise ValueError(f'{code}: the selected units and study order must cover the syllabus once each')
-        name = SUBJECTS[code][1]
-        header = guide_header(kind, code, name, subject, syllabus['source']['file'])
-        if kind == 'important-questions':
-            body = important_body(code, units, guide['units'], archived_questions(root, code))
-            desc = f'Practise selected {name} previous-year exam questions by syllabus unit, with links to the original archive.'
-        else:
-            body = easy_body(code, units, guide)
-            desc = f'A quick {name} revision guide: what to study first, small practice tasks and a last-minute checklist.'
-        output[path] = page(path, version, f'{name}: {GUIDES[kind]}', desc, f'{header}\n{body}')
+        archive = archived_questions(root, code)
+        patterns = {unit: unit_patterns(guide['units'][str(unit)]['patterns'], archive, f'{code} Unit {unit}')
+                    for unit in units}
+        pages = {
+            'important-questions': (
+                important_body(code, units, guide['units'], patterns),
+                f'Practise {name} question patterns by syllabus unit, with star ratings and links to dated past papers.',
+            ),
+            'easy-read': (
+                easy_body(code, units, guide, patterns, archive),
+                f'A quick-win {name} revision order with past-paper practice, small drills and a last-minute checklist.',
+            ),
+        }
+        for kind, (body, desc) in pages.items():
+            path = Path(f'suggestions/{slug}/{kind}.html')
+            header = guide_header(kind, code, name, subject, syllabus['source']['file'])
+            output[path] = page(path, version, f'{name}: {GUIDES[kind]}', desc, f'{header}\n{body}')
     return output
 
 

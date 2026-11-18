@@ -1,10 +1,10 @@
 # Phase 11 — Subject-wise Suggestions
 
-**Status:** 🚧 Implemented; pending owner acceptance, 2026-11-18 · **Parts:** 4
+**Status:** 🚧 Revision ready for owner review; not accepted, 2026-11-18 · **Parts:** 4
 
 Help 3rd-semester CST students decide what to practise and what to revise first.
-The existing `suggestions/index.html` is a Coming Soon placeholder and has no
-Home entry. The owner's [2nd-semester Suggestions dashboard](https://pabitra27706-oss.github.io/Diploma-2nd-sem/suggestions/index.html)
+On the base commit, `suggestions/index.html` was a Coming Soon placeholder with
+no Home entry. The owner's [2nd-semester Suggestions dashboard](https://pabitra27706-oss.github.io/Diploma-2nd-sem/suggestions/index.html)
 is the interaction reference: expand a subject card, then choose one of two guides.
 
 ## Scope
@@ -12,8 +12,9 @@ is the interaction reference: expand a subject card, then choose one of two guid
 - Replace the placeholder at the same URL with one expandable card each for C,
   Python, Data Structures, Computer System Organization and Algorithms.
 - Give each subject two separate pages: **Important Questions** (syllabus-grouped
-  picks with archived exam sessions and exact question links) and **Easy Read**
-  (a recommended study order, small practice tasks and a revision checklist).
+  question patterns with dated, source-linked appearances and a transparent star
+  scale) and **Easy Read** (a distinct, quick-win-first plan with scoring evidence,
+  practice tasks and a revision checklist).
 - Use the 3rd-semester design and theme, existing notes and PYQ routes, and
   native keyboard-operable disclosures. Add Home Quick Access and menu links;
   keep bottom navigation unchanged on Home.

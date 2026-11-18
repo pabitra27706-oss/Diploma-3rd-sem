@@ -36,7 +36,7 @@ Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 | 9 | Performance, measurement, launch | [`09-performance-launch`](phases/09-performance-launch/README.md) | 6 | ≤12 requests; one token file; cache policy; honest measurement; domain-ready; checklist green, still not deployed | Closed by owner direction; 9.4 no counter; Lighthouse/remaining checks SKIPPED |
 | 9B | UI reboost | [`09B-ui-reboost`](phases/09B-ui-reboost/record.md) | reviewed batches | Owner-approved direction and plan; phone/desktop review of each batch; token, a11y and weight gates | ✅* merged 2026-11-17 (no physical-device pass) |
 | 10 | Dedicated cross-device acceptance | [`10-device-acceptance`](phases/10-device-acceptance/README.md) | 5 | Observed device/browser matrix, defect retests, honest tested/untested report | Closed by owner direction; partial Galaxy A35 report retained; remaining matrix SKIPPED |
-| 11 | Subject-wise Suggestions | [`11-suggestions`](phases/11-suggestions/README.md) | 4 | Home opens a five-card Suggestions hub and ten static, syllabus-linked guides; question links resolve under the published base path; targeted checks and limits are recorded | 🚧 Implemented; owner acceptance pending |
+| 11 | Subject-wise Suggestions | [`11-suggestions`](phases/11-suggestions/README.md) | 4 | Home opens a five-card hub and ten guides: distinct-session evidence and ratings in Important Questions, a quick-win route in Easy Read; source links resolve under the deployed base path | 🚧 Revised; awaiting owner review (not accepted) |
 
 ## Owner-directed sequencing — 2026-11-09
 

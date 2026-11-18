@@ -54,8 +54,8 @@ class AccessibilityAuditTests(unittest.TestCase):
         self.assertEqual(failing, [])
         # The measurement must stay honest about how many pairs it covers.
         self.assertEqual(len(self.data['contrast']), self.baseline['contrast_measured'])
-        # Phase 11 adds six light/dark pairs for the links and source hints.
-        self.assertEqual(self.baseline['contrast_measured'], 66)
+        # Phase 11 adds checks for Suggestions links, hints, stars and priorities.
+        self.assertEqual(self.baseline['contrast_measured'], 74)
 
     def test_contrast_measurement_reads_real_tokens(self):
         rows = {row['label']: row for row in self.data['contrast']}

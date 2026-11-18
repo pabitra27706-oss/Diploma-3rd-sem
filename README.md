@@ -5,8 +5,8 @@ HTML, CSS, JavaScript and checked-in JSON can be served directly; no package
 installation or build is required to run the site.
 
 Phases 1–10 were administratively closed on 2026-11-18; any recorded skips
-remain unverified. **Phase 11 — Subject-wise Suggestions** is implemented on
-the working branch and is pending owner acceptance. See the [current status](docs/STATUS.md),
+remain unverified. **Phase 11 — Subject-wise Suggestions** has been revised on
+the working branch and remains open for owner review. See the [current status](docs/STATUS.md),
 [roadmap](docs/ROADMAP.md) and [closure record](docs/PROJECT-CLOSURE.md). This
 checkout does not confirm what is deployed.
 
@@ -14,10 +14,10 @@ checkout does not confirm what is deployed.
 
 - Five theory subjects, unit notes and source-linked previous-year papers.
 - [Study Suggestions](suggestions/index.html): five expandable subject cards,
-  each with **Important Questions** (51 selected archived questions across
-  the 23 syllabus units) and **Easy Read** (study order, practice tasks and a
-  revision checklist). Each question links to its real paper session; the
-  guides are study aids, not exam predictions or official answers.
+  each with **Important Questions** (104 patterns across 23 units, with stars
+  and links to dated past-paper appearances) and **Easy Read** (a quick-win-first
+  study order, past-paper examples, drills and a checklist). Stars count distinct
+  cited sessions, not predictions; the guides are not official answer keys.
 - **28 papers / 924 archived questions**; exact-content aliases retain their
   source IDs. Practice uses **923 unique questions** across ten derived days.
   (A duplicated Python March-2023 reprint was removed on 2026-11-17, and the
@@ -43,7 +43,7 @@ checkout does not confirm what is deployed.
   normalized-text candidate clusters / 32 records), canonical question deep
   links with Web Share / clipboard / input fallbacks across PYQ Answers,
   Practice, and Quiz Review, authored unit `#section` anchors, breadcrumbs, and
-  filtered-PYQ URL handoffs. Search indexes 2,518 items across 67 of 84 shipped
+  filtered-PYQ URL handoffs. Search indexes 2,523 items across 67 of 84 shipped
   HTML pages (question stems/topics, unit headings, subject/lab/internship hubs,
   coverage, exam-pattern, revision sheets, Suggestions, study, and info pages,
   plus this device's local section notes); the 17 excluded app/placeholder/fallback shells are listed in

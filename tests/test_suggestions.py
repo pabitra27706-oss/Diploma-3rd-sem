@@ -1,5 +1,6 @@
 """Phase 11: static guide coverage, provenance, routing and freshness."""
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -46,6 +47,9 @@ class Page(HTMLParser):
     def links(self):
         return [a['href'] for a in self.elements('a')]
 
+    def with_class(self, tag, name):
+        return [attrs for attrs in self.elements(tag) if name in attrs.get('class', '').split()]
+
 
 def read_json(path):
     return json.loads((ROOT / path).read_text(encoding='utf-8'))
@@ -75,49 +79,94 @@ class SuggestionsTests(unittest.TestCase):
         self.assertTrue(any('quick-card--suggestions' in classes for classes in links))
         self.assertTrue(any('menu-item' in classes for classes in links))
 
-    def test_each_question_cites_the_expected_archived_record(self):
-        subjects = read_json(guides.SYLLABUS)['subjects']
+    def assert_archive_links(self, page, expected, archived):
+        cites = [urlsplit(url) for url in page.links() if url.startswith('../../pyq/answers.html?')]
+        self.assertEqual(len(cites), len(expected))
+        self.assertEqual(len(page.times), len(expected))
+        for citation, shown_time, question_id in zip(cites, page.times, expected):
+            paper_id, date, session, _ = archived[question_id]
+            self.assertEqual(parse_qs(citation.query), {'paper': [paper_id], 'q': [question_id]})
+            self.assertEqual(shown_time, (date, session))
+
+    @staticmethod
+    def archive(code):
+        registry = read_json(f'_data/{code}/registry.json')['papers']
+        archived = {}
+        for entry in registry:
+            paper = read_json(f"_data/{code}/{entry['fileName']}")
+            date = f"{entry['year']:04d}-{entry['monthNumber']:02d}"
+            for q in paper['questions']:
+                archived[q['id']] = (Path(entry['fileName']).stem, date, entry['examSession'], q['marks'])
+        return archived
+
+    def test_question_patterns_are_ranked_and_cite_distinct_original_sessions(self):
         choices = read_json(guides.CURATION)
-        for subject in subjects:
+        for subject in read_json(guides.SYLLABUS)['subjects']:
             code = subject['code']
             slug = guides.SUBJECTS[code][0]
             with self.subTest(subject=code):
                 page = Page(f'suggestions/{slug}/important-questions.html')
+                self.assertTrue(page.with_class('main', 'suggestions-main--bank'))
+                self.assertFalse(page.with_class('li', 'suggestions-step'))
                 unit_links = [url for url in page.links() if url.startswith('#unit-')]
                 self.assertEqual(unit_links, [f"#unit-{u['unit']}" for u in subject['units']])
-                expected = [pick['id'] for u in subject['units'] for pick in choices[code]['units'][str(u['unit'])]['questions']]
-                self.assertEqual(len(set(expected)), len(expected))
-                registry = read_json(f'_data/{code}/registry.json')['papers']
-                archived = {}
-                for entry in registry:
-                    paper = read_json(f"_data/{code}/{entry['fileName']}")
-                    for q in paper['questions']:
-                        date = f"{entry['year']:04d}-{entry['monthNumber']:02d}"
-                        archived[q['id']] = (Path(entry['fileName']).stem, date, entry['examSession'])
-                cites = [urlsplit(url) for url in page.links() if url.startswith('../../pyq/answers.html?')]
-                self.assertEqual(len(cites), len(expected))
-                self.assertEqual(len(page.times), len(expected))
-                for citation, shown_time, question_id in zip(cites, page.times, expected):
-                    paper_id, date, session = archived[question_id]
-                    self.assertEqual(parse_qs(citation.query), {'paper': [paper_id], 'q': [question_id]})
-                    self.assertEqual(shown_time, (date, session))
+                archived = self.archive(code)
+                expected, counts = [], []
+                for u in subject['units']:
+                    items = choices[code]['units'][str(u['unit'])]['patterns']
+                    self.assertGreaterEqual(len(items), 4)
+                    for item in sorted(items, key=lambda item: -len(item['refs'])):
+                        dates = [archived[ref][1] for ref in item['refs']]
+                        self.assertEqual(len(set(dates)), len(dates))
+                        self.assertGreaterEqual(len(dates), 1)
+                        counts.append(len(dates))
+                        expected.extend(sorted(item['refs'], key=lambda ref: archived[ref][1]))
+                self.assertEqual([int(li['data-session-count']) for li in page.with_class('li', 'suggestions-pattern')], counts)
+                self.assertEqual([span['aria-label'] for span in page.with_class('span', 'suggestions-stars') if span.get('role') == 'img'],
+                                 [f'{min(n, 5)} out of 5 stars' for n in counts])
+                self.assertEqual(page.text.count('1 cited session · no repeat cited'), counts.count(1))
+                self.assertIn('not necessarily exact repeats', page.text)
+                self.assert_archive_links(page, expected, archived)
 
-    def test_easy_read_links_each_step_to_the_corresponding_unit(self):
+    def test_easy_read_prioritizes_quick_wins_with_dated_paper_examples(self):
         choices = read_json(guides.CURATION)
         for code, (slug, _, _) in guides.SUBJECTS.items():
             with self.subTest(subject=code):
                 easy = Page(f'suggestions/{slug}/easy-read.html')
                 important = Page(f'suggestions/{slug}/important-questions.html')
                 order = choices[code]['studyOrder']
+                units = choices[code]['units']
+                self.assertNotEqual(order, sorted(order))
+                self.assertEqual(units[str(order[0])]['effort'], 'quick')
+                self.assertTrue(easy.with_class('main', 'suggestions-main--easy'))
+                self.assertFalse(easy.with_class('li', 'suggestions-pattern'))
+                self.assertEqual(len(easy.with_class('li', 'suggestions-step--first')), 1)
                 self.assertIn('Last-minute checklist</h2>', easy.text)
+                self.assertIn('Marks are for the whole linked question', easy.text)
                 self.assertEqual(easy.text.count('<strong>Try it:</strong>'), len(order))
-                jump_links = [href for href in easy.links() if href.startswith('important-questions.html#')]
-                self.assertEqual(jump_links, [f'important-questions.html#unit-{unit}' for unit in order])
+                self.assertEqual(easy.text.count('<strong>Why here:</strong>'), len(order))
+                self.assertEqual([a for a in easy.links() if a.startswith('#step-unit-')],
+                                 [f'#step-unit-{unit}' for unit in order])
+                self.assertEqual([div['id'] for div in easy.with_class('div', 'suggestions-step-heading')],
+                                 [f'step-unit-{unit}' for unit in order])
+                self.assertEqual([href for href in easy.links() if href.startswith('important-questions.html#')],
+                                 [f'important-questions.html#unit-{unit}' for unit in order])
+                archived = self.archive(code)
+                expected = []
                 for unit in order:
-                    self.assertIn(f'unit-{unit}', {h['id'] for h in important.elements('h2')})
+                    self.assertIn(f'unit-{unit}', {h['id'] for h in important.elements('h2') if 'id' in h})
                     notes = f'subjects/{code}/units/unit-{unit}.html'
                     self.assertIn('../../' + notes, easy.links())
                     self.assertTrue((ROOT / notes).is_file())
+                    item = units[str(unit)]
+                    ids = [ex['id'] for ex in item['examples']]
+                    self.assertEqual(len(ids), 2)
+                    self.assertEqual(len({archived[ident][1] for ident in ids}), 2)
+                    self.assertLessEqual(set(ids), {ref for p in item['patterns'] for ref in p['refs']})
+                    expected.extend(ids)
+                self.assert_archive_links(easy, expected, archived)
+                self.assertEqual([int(n) for n in re.findall(r"· (\d+) marks? total", easy.text)],
+                                 [archived[ident][3] for ident in expected])
 
     def test_discovery_and_presence_include_all_suggestions_pages(self):
         expected = {guides.HUB: None, **guides.guide_paths()}
@@ -131,9 +180,18 @@ class SuggestionsTests(unittest.TestCase):
             self.assertNotIn('noindex', Page(path).text)
 
     def test_invalid_editorial_changes_fail_closed(self):
+        def unit_one(c):
+            return c['CST201']['units']['1']
+
         mutations = (
-            (lambda c: c['CST201']['units']['1']['questions'][0].update(id='CST203-P006-Q18'), 'unknown archived question'),
-            (lambda c: c['CST201']['units']['1']['questions'].append(c['CST201']['units']['1']['questions'][0]), 'duplicate selection'),
+            (lambda c: unit_one(c)['patterns'][0]['refs'].append('CST203-P006-Q18'), 'unknown archived question'),
+            # Different questions from March 2021 must not count as two appearances.
+            (lambda c: unit_one(c)['patterns'][0]['refs'].append('CST201-P001-Q7'), 'more than one citation for March 2021'),
+            (lambda c: unit_one(c)['patterns'][0].update(refs=[]), 'cite at least one archived question'),
+            (lambda c: unit_one(c)['patterns'].pop(), 'expected at least 4 question patterns'),
+            (lambda c: unit_one(c)['patterns'].append(unit_one(c)['patterns'][0]), 'duplicate pattern title'),
+            (lambda c: unit_one(c)['examples'][1].update(id='CST201-P006-Q22'), 'Easy Read examples must appear in this unit'),
+            (lambda c: unit_one(c).update(effort='unclassified'), 'unknown preparation effort'),
             (lambda c: c['CST201'].update(studyOrder=[1, 2, 3, 4, 4]), 'cover the syllabus once each'),
         )
         with tempfile.TemporaryDirectory() as tmp:
