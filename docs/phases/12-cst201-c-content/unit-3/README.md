@@ -114,3 +114,12 @@
 | `P003-Q31`, `P006-Q10`, `P006-Q20` | 8,2,8m | U4 `Strings`; U4 `String functions / palindromes` | Redirect → `#overview-*` | `#string-reverse-case-and-palindromes` — *String Functions, Reverse, Case Toggle and Palindromes* |
 
 > *Mode B note (owner-gated):* Retagging U4 array/string items (`P003-Q3,Q8,Q29,Q31`, `P004-Q5,Q18`, `P005-Q7,Q19`, `P006-Q7,Q10,Q11,Q12,Q20`) to `unit: 3` remains off unless explicitly approved.
+
+---
+
+## Delivery note (part 12.3, executed 2026-11-18)
+
+- **Shipped:** `subjects/CST201/units/unit-3.html` at **`5,932w`** on the calibrated metric (`5,848w` in, `5,400–6,000` band) — `16` sections, both `guides.json` anchors (`#2d-arrays`, `#strings`) live, `4` new Mode A `<h3 id>` anchors, `2` inline SVGs, `5` verified plain-`<a>` YouTube links, `8/8` programmes compiled clean with `gcc -std=c99 -Wall -Wextra -O2` and every embedded output reproduced.
+- **Anchors created:** `#arrays-initialization-memory-and-loops` (`#arrays-intro`), `#arrays-and-matrices` (`#2d-arrays`), `#strings-and-library-functions` (`#string-functions`), `#string-reverse-case-and-palindromes` (`#applications`). Note the second pair sits in the *later* section than the section name suggests — the `guides.json` anchor `#strings` owns the section, and the `<string.h>` heading lives in `#string-functions`, matching the routing table's target.
+- **Traded away to stay inside the band:** 1D bubble sort, the input/max-min demo, matrix addition, matrix multiplication, the four legacy `<string.h>` "Application 1–4" programmes, four duplicate MCQs and half of the revision list. `#multidim` was left untouched (`147w`, already ~4%).
+

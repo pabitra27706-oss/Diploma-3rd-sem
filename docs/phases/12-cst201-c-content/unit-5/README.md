@@ -111,3 +111,12 @@
 | `P004-Q20`, `P005-Q9` | 8m, 2m | U4 `Pointers / arrays`; U4 `Arrays / pointers` | Redirect → `U5#arrays` | `#pointers-and-one-dimensional-arrays` — *Accessing and Summing Arrays Using Pointers* |
 | `P005-Q11` | 2m | U4 `Unions / memory` | Redirect → `U5#dma` *(partial word match on `memory`)* | `#pointers-to-structures-and-unions` — *Pointers to Structures and Unions Memory Size* |
 | `P003-Q34`, `P004-Q21`, `P006-Q15`, `P006-Q23` | 8,8,2,8m | U5 `Dynamic memory allocation` / `Pointers / dynamic memory` | Same-unit → `U5#dma` | `#dynamic-memory-malloc-calloc-realloc-free` — *Dynamic Memory Allocation: `malloc`, `calloc`, `realloc` and `free`* |
+
+---
+
+## Delivery note (part 12.5, executed 2026-11-18)
+
+- **Shipped:** `subjects/CST201/units/unit-5.html` at **`5,572w`** on the recipe in `record.md` §1 — a **`−17.2%`** cut from the `6,732w` measured baseline. All `21` `<section id>`s and all `6` `overview-*` `<h3 id>`s intact, both `guides.json` anchors (`#declaration`, `#dma`) live, `7` `<h3 id>` anchors authored (`2` retired with the consolidation), `2` inline SVGs, `3` verified plain-`<a>` YouTube links, `16/16` programmes compiled clean with `gcc -std=c99 -Wall -Wextra -O2` and every embedded output reproduced from real stdout.
+- **Honest budget note:** the `5,000–5,600w` band implied a `26–34%` cut; delivery landed at `−17.2%`. The page is nonetheless right-sized by intent — it was the longest C unit at ~`1.9×` its mark share and is now the second-shortest. Cutting the final ~`500w` would have meant dropping the `#dma` comparisons the paper names or one of the two SVGs. Recorded in `record.md` §6.2.
+- **Consolidations (no content lost):** `#types` and `#arithmetic` survive as short sections that cross-link the new `#understanding-pointers-and-addresses` / `#pointers-type-checking-and-evaluation` anchors; `#comparisons` became a signpost to the four tables now printed beside the material they explain.
+
