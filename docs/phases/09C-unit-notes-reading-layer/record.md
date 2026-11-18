@@ -177,7 +177,7 @@ Other checks:
 **Not run / not verifiable here:**
 
 - No physical phone. The owner's earlier Android pass
-  ([`../../10-device-acceptance/matrix.md`](../../10-device-acceptance/matrix.md))
+  ([`../10-device-acceptance/matrix.md`](../10-device-acceptance/matrix.md))
   predates this layer, and a phone-scaled wide screenshot is not a desktop pass
   either — this sub-phase only had Chromium at emulated widths.
 - No Safari/iOS pass. `text-wrap: pretty`, `color-mix()` and `:has()` are used

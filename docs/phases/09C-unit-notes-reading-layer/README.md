@@ -2,13 +2,14 @@
 
 # Sub-phase 9C — Unit-notes reading layer (phone-first)
 
-- **Parent:** [Phase 9 — Performance and launch](../README.md). This is
+- **Parent:** [Phase 9 — Performance and launch](../09-performance-launch/README.md). This is
   owner-requested work that belongs to Phase 9's UI budget surface; it does not
   add a numbered part to Phase 9 and does not reopen Phases 1–10.
 - **Status:** ✅ shipped in `9c509f5`; awaiting owner review on a real phone.
 - **Date:** 2026-11-17 · **Branch:** `arena/f4b38ee3-diploma-3rd-sem`
-- **Roadmap row:** none (sub-phases never get one — see
-  [`docs/phases/README.md`](../../README.md)).
+- **Roadmap row:** `9C` on [`docs/ROADMAP.md`](../ROADMAP.md), following the
+  `9B` precedent for owner-requested UI work that sits beside Phase 9 rather
+  than inside its numbered parts. It adds no part to Phase 9.
 
 ## Goal
 
@@ -36,7 +37,7 @@ a YouTube video-link section added.
 - Shipping unverified `watch?v=` video URLs — see the video rules below.
 - Reopening the Phase 7 accessibility, Phase 9 budget or Phase 10 device
   decisions. The real-phone pass here is still the one recorded in
-  [`../../10-device-acceptance/matrix.md`](../../10-device-acceptance/matrix.md).
+  [`../10-device-acceptance/matrix.md`](../10-device-acceptance/matrix.md).
 
 ## Why now (evidence before the change)
 
