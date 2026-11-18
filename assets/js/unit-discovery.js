@@ -99,12 +99,34 @@
       }).filter((entry) => entry.title && entry.anchor && !/^section-\d+$/.test(entry.anchor));
     }
 
+    // A stored topic is often several sub-topics joined by "/" (for example
+    // "Switch / Armstrong numbers"). The learner only needs the heading for
+    // ONE of them, so each segment is scored on its own and the best wins.
+    // Terms are also singularised, because headings say "loop" and topics
+    // say "loops" -- an exact word match otherwise never fires.
+    const singular = (word) => (word.length > 3 && /s$/u.test(word) ? word.replace(/s$/u, '') : word);
+    const segments = needle.split(/[/,;]+/u).map((part) => part.trim()).filter(Boolean);
+    const needles = segments.length ? segments : [needle];
+    const termsFor = (text) => text.split(/[^\p{L}\p{N}]+/u)
+      .filter((word) => word.length > 2)
+      .map(singular);
+
+    function scoreAgainst(title, target, targetTerms) {
+      if (title === target) return 100;
+      if (title.includes(target)) return 90;
+      const titleWords = new Set(termsFor(title));
+      const matched = targetTerms.filter((term) => titleWords.has(term)).length;
+      return matched ? matched / targetTerms.length : 0;
+    }
+
     function scoreTitle(title) {
-      if (title === needle) return 100;
-      if (title.includes(needle)) return 90;
-      const titleWords = new Set(title.split(/[^\p{L}\p{N}]+/u).filter(Boolean));
-      const matched = terms.filter((term) => titleWords.has(term)).length;
-      return matched ? matched / terms.length : 0;
+      let best = 0;
+      for (const target of needles) {
+        const targetTerms = termsFor(target);
+        if (!targetTerms.length) continue;
+        best = Math.max(best, scoreAgainst(title, target, targetTerms));
+      }
+      return best;
     }
 
     let candidates = entriesFor(document, currentUnit);
