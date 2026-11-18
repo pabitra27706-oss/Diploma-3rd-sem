@@ -40,7 +40,10 @@
 | U2 | 6 | Loop dry-runs / solved problem | Tier A · sub-cluster | `#loops` | Neso Academy — Conditionals and Loops (Solved Problem 1) | `https://www.youtube.com/watch?v=SQCPZYAXoZs` | n/a | 2026-11-18 |
 | U2 | 7 | `switch-case` fall-through | Tier C · `7m` | `#switch` | Neso Academy — Conditionals (Switch) | `https://www.youtube.com/watch?v=-JMSaLRqsgo` | n/a | 2026-11-18 |
 | U2 | 8 | `break` / `continue` loop control | Tier B · `11m` | `#jump` | Neso Academy — Loop Control Statements: break and continue | `https://www.youtube.com/watch?v=obJcPlAtGVM` | n/a | 2026-11-18 |
-| U1, U3, U5 | 9–16 | _Outstanding — populate after live verification_ | — | — | — | _No URLs stored before live check_ | — | _TBD_ |
+| U1 | 9 | Precedence and associativity | Tier A · `43m` | `#operators` | Neso Academy — Precedence and Associativity of Operators | `https://www.youtube.com/watch?v=8H9G621pQq0` | n/a | 2026-11-18 |
+| U1 | 10 | Bitwise operators | Tier A · sub-cluster | `#operators` | Neso Academy — Bitwise Operators in C (Part 1) | `https://www.youtube.com/watch?v=jlQmeyce65Q` | n/a | 2026-11-18 |
+| U1 | 11 | Program structure and headers | Tier B · `13m` | `#history` | Self Study Tutorials — Basic Structure of C Program | `https://www.youtube.com/watch?v=fEqexgUuj9A` | n/a | 2026-11-18 |
+| U3, U5 | 12–16 | _Outstanding — populate after live verification_ | — | — | — | _No URLs stored before live check_ | — | _TBD_ |
 
 ---
 
@@ -50,6 +53,8 @@
 - **Baseline (`f52d2f6`):** `46` same-unit (`43.8%`) · `29` redirect (`27.6%`, incl. 5 wrong-unit collisions) · `30` unmatched (`28.6%`) · `0` out-of-unit
 - **After Unit 4 (part 12.4 only):** `48` same-unit (`45.7%`) · `35` redirect (`33.3%`) · `22` unmatched (`21.0%`).
 - **After Unit 2 (parts 12.4 + 12.2):** `54` same-unit (`51.4%`) · `33` redirect (`31.4%`) · `18` unmatched (`17.1%`) — up from `46 / 29 / 30` at baseline.
+- **After Unit 1 (parts 12.4 + 12.2 + 12.1):** **`66` same-unit (`62.9%`) · `35` redirect (`33.3%`) · `4` unmatched (`3.8%`)** — the remaining four are `P005-Q11`, `P005-Q20`, `P005-Q21` and `P004-Q23`.
+- **Fixed by the Unit 1 anchors:** every U1 item the blueprint listed now resolves — `P003-Q7`/`P006-Q16`→`#headers-and-library-files` (`90` / `0.667`), `P003-Q22`→`#compilation-process` (`90`), `P003-Q17`/`P005-Q2`→`#preprocessor-and-macros` (`90` / `1.0`), `P003-Q14`/`P004-Q2`/`P005-Q14`/`P006-Q1`→`#identifiers-and-keywords` (`90` / `1.0` / `90` / `90`), `P006-Q3`→`#modulo-and-arithmetic-operators` (`90`), `P005-Q4`→`#operator-precedence-and-parsing` (`0.5`), `P003-Q5`→`#escape-sequences-and-ascii` (`0.667`). `P006-Q9` (U2 `Operator parsing`) and `P004-Q10` (U2 `Conditional operator`) now redirect into Unit 1, and `P004-Q11` lands on `U4#return-type-and-return-values`.
 - **Fixed by the Unit 2 anchors:** all seven blueprint rows now resolve — `P003-Q26`→`#gcd-armstrong-and-divisibility` (`1.0`), `P005-Q17`→`#conditionals-and-flowchart` (`1.0`), `P003-Q21`/`P005-Q5`→`#loop-control-break-continue` (`1.0` / `90`), `P006-Q8`→`#loop-control-and-counting` (`90`), `P003-Q28`→`#series-and-nested-loops` (`0.667`), `P004-Q23`/`P006-Q17`→`#gcd-armstrong-and-divisibility` (`0.333`), `P006-Q24`→`#divisibility-grading-and-leap-year` (`0.4`), and `P004-Q22` now redirects `U3→U2#series-and-nested-loops` instead of `U2#overview-loops`.
 - **Fixed by the Unit 4 anchors:** `P004-Q1`, `P004-Q8`, `P004-Q16`, `P003-Q33` now resolve (previously unmatched); `P005-Q15` no longer lands on `U1#fundamentals`; `P003-Q30`, `P006-Q19` land on the parameter-passing heading.
 - **Still wrong-unit / unmatched (need U1, U2, U3 anchors):** `P003-Q8` (`Arrays / loops` → `U2#overview-loops`), `P005-Q11` (`Unions / memory` → `U5#dma`), the seven U1 items (`P003-Q7,Q14,Q17,Q22`, `P005-Q2,Q4,Q14`, `P006-Q1,Q3`), and the U2 items (`P003-Q21,Q28`, `P004-Q10,Q23`, `P005-Q17`, `P006-Q8,Q9,Q17`).
@@ -87,5 +92,12 @@
   4. **`unitAnchored` lock will move `548 → 559`** (11 new `<h3 id>` anchors: the 5 re-created `overview-*` ones plus the 6 Mode A anchors). **Deliberately not updated here** — parts 12.1, 12.3 and 12.5 add ~17 more anchors, so the lock is refreshed once, after 12.5, as planned.
   5. **Two fixed-recipe metric artefacts worth knowing:** a `<h4>` in the overview cards created a heading-order jump (`h2→h4`) that `audit_accessibility.py --fail` caught; the cards now use `h3` with a `.loop-card-title` class so the visual hierarchy is unchanged. And a duplicated `<!-- LOOPS -->` assembly comment was removed from the `#goto` part.
   6. **Same environment-only test failures as 12.4:** `test_data_pipeline.test_no_semantic_or_answer_changes` (shallow clone, no `664674b`) and `node tests/section-notes.cjs` (synthetic `MiniNode` fixture). Both predate this part and are untouched.
+- **Part 12.1 caveats:**
+  1. **Nine anchors, not eight.** The blueprint's §4 header listed 8 Mode A headings but its own §8 routing table needs `#implicit-and-explicit-conversions` for `P004-Q11`, so that one was created too — the totals match the routing table, which is the thing students feel.
+  2. **Unit 1 hit the band (`6,389w`) by trimming, not by thinning rules.** The first draft overshot at `6,996w` with inverted proportions (`#history` 25%, `#operators` 28%); the prose was re-cut so `#operators` now carries the largest share of concept prose and every pitfall the blueprint lists — `%` integer-only, truncation, `=`/`==`, short-circuit order, maximal munch, unsequenced UB, comma precedence — survives in a box or table.
+  3. **The shipped page's `#videos` section contained three `youtube.com/results?search_query=…` links**, not videos. Those were replaced with three oEmbed-verified video IDs; the remaining search links are in Unit 3 and Unit 5 and belong to parts 12.3 / 12.5.
+  4. **Only one inline SVG was authored** (`#compilation-process`). The blueprint's §5 checklist asks for one; Unit 1's other gaps are tables, not diagrams.
+  5. **`unitAnchored` will now move `548 → 568`** (11 from Unit 2, 9 from Unit 1). Still deferred to the single update after 12.5.
+  6. **Same two environment-only failures** as 12.4 and 12.2 (`test_data_pipeline` shallow clone, `node tests/section-notes.cjs` fixture).
 - **Owner decision (`rule.md` §4.7):** _Pending — this is part 12.4 only, not the phase gate._
 - **Standing caveats:** Real-device browser check remains owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`; legacy U3↔U4 tag order in `_data/CST201/` and `_quiz-data/CST201/` remains documented in `docs/data/validation-exceptions.json` unless Mode B is requested.

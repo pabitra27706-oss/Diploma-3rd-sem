@@ -56,6 +56,40 @@
     margin-bottom: 4px;
     color: var(--accent, var(--c-blue-royal));
   }
+  /* Inline diagrams. Tokens only: no literal colours, no external request. */
+  .unit-figure {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-radius);
+  }
+  .unit-figure > svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    color: var(--text-secondary);
+  }
+  .unit-figure > figcaption {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-tertiary);
+  }
+  .unit-figure > figcaption strong { color: var(--text-primary); }
+  .data-table td code, .data-table th code { white-space: nowrap; }
+  .data-table caption {
+    caption-side: top;
+    text-align: left;
+    padding: 0 0 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-tertiary);
+  }
+  @media (max-width: 768px) {
+    .unit-figure { padding: 0.75rem; }
+    .unit-figure > svg { font-size: 0.9rem; }
+  }
 </style>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST201/units/unit-1.html">
@@ -167,8 +201,7 @@
 
 <main class="container" id="study-main-content">
 
-  <!-- ======================== SECTION 1: OVERVIEW ======================== -->
-  <section class="section" id="overview">
+<section class="section" id="overview">
     <h2 class="section-title">
       <i class="fas fa-binoculars"></i> Unit Overview
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -214,8 +247,7 @@
     </div>
   </section>
 
-  <!-- ======================== SECTION 2: HISTORY ======================== -->
-  <section class="section" id="history">
+<section class="section" id="history">
     <h2 class="section-title">
       <i class="fas fa-history"></i> Introduction to C &amp; File Types
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -224,12 +256,7 @@
 
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> History and Evolution of C</div>
-        <p>C was developed by <strong>Dennis Ritchie</strong> at <strong>Bell Laboratories</strong>
-        between <strong>1969 and 1973</strong>. It was originally developed along with the UNIX
-        operating system. C evolved from the earlier language <strong>B</strong>, which in turn came
-        from <strong>BCPL</strong>. In 1989, the American National Standards Institute (ANSI)
-        standardized C, creating <strong>ANSI C (C89)</strong>. Later versions include C99, C11,
-        and C17.</p>
+        <p>C was developed by <strong>Dennis Ritchie</strong> at <strong>Bell Labs</strong> between 1969 and 1973, alongside UNIX. It evolved from <strong>B</strong>, which came from <strong>BCPL</strong>. ANSI standardized it in 1989 as <strong>C89</strong>; later standards are C99, C11 and C17.</p>
         <ul>
           <li><strong>1960s</strong> — BCPL created by Martin Richards</li>
           <li><strong>1970</strong> — B language created by Ken Thompson</li>
@@ -241,62 +268,13 @@
       </div>
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-star"></i> Advantages of Structured Programming</div>
-        <p>C is a <strong>structured programming language</strong>, which means programs are divided
-        into well-defined functions/blocks. Advantages include:</p>
-        <ul>
-          <li><strong>Modularity</strong> — Program is divided into functions/modules, each solving one task.</li>
-          <li><strong>Reusability</strong> — Functions can be called multiple times from different places.</li>
-          <li><strong>Easier Debugging</strong> — Each module can be tested independently.</li>
-          <li><strong>Easier Maintenance</strong> — Changes in one module do not affect others.</li>
-          <li><strong>Readability</strong> — Structured code is easier to understand and follow.</li>
-        </ul>
-      </div>
-
-      <div class="concept-box">
         <div class="box-title"><i class="fas fa-star"></i> Key Characteristics of C</div>
         <ul>
-          <li><strong>Middle-Level Language</strong> — Combines features of both high-level and low-level languages.</li>
-          <li><strong>Case-Sensitive</strong> — <code>main</code> and <code>Main</code> are different.</li>
-          <li><strong>Efficient and Fast</strong> — Compiled directly to machine code.</li>
-          <li><strong>Portable</strong> — Code written on one system can run on another with minimal changes.</li>
-          <li><strong>Rich in Operators</strong> — Provides a wide variety of operators for complex expressions.</li>
-          <li><strong>Structured</strong> — Supports functions, loops, and conditional statements.</li>
-          <li><strong>Extensible</strong> — Can be extended by adding new features through libraries.</li>
+          <li><strong>Middle-level</strong> — high-level syntax with low-level access.</li>
+          <li><strong>Case-sensitive</strong> — <code>main</code> and <code>Main</code> differ.</li>
+          <li><strong>Fast and portable</strong> — compiled to machine code, minimal changes across systems.</li>
+          <li><strong>Structured and extensible</strong> — functions, loops and libraries.</li>
         </ul>
-      </div>
-
-      <div class="definition-box">
-        <div class="box-title"><i class="fas fa-file-alt"></i> File Types Used in C Programming</div>
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr><th>File Type</th><th>Extension</th><th>Description</th><th>Example</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Source File</td><td>.c</td>
-                <td>Contains the actual C code written by the programmer</td>
-                <td>main.c, hello.c</td>
-              </tr>
-              <tr>
-                <td>Header File</td><td>.h</td>
-                <td>Contains function prototypes, macros, and constants; included with #include</td>
-                <td>stdio.h, math.h</td>
-              </tr>
-              <tr>
-                <td>Object File</td><td>.o / .obj</td>
-                <td>Intermediate file produced by the compiler from source code; not yet executable</td>
-                <td>main.o</td>
-              </tr>
-              <tr>
-                <td>Executable File</td><td>.exe / (none on Linux)</td>
-                <td>Final binary file produced by the linker; ready to run</td>
-                <td>program.exe</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
 
       <div class="algo-box">
@@ -310,11 +288,108 @@
         </ol>
       </div>
 
+      <h3 id="compilation-process"><i class="fas fa-project-diagram"></i> Compilation Process, Compiler and Linker</h3>
+
+      <figure class="unit-figure">
+        <svg viewBox="0 0 700 300" role="img" aria-label="The four build stages from source to executable. hello.c goes to the preprocessor, which produces hello.i. The compiler turns that into hello.s assembly, the assembler into hello.o object code, and the linker combines hello.o with the standard library printf to produce the runnable a.out file.">
+          <defs>
+            <marker id="u1arw" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"></path>
+            </marker>
+          </defs>
+          <g fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#u1arw)">
+            <line x1="112" y1="96" x2="140" y2="96"></line>
+            <line x1="252" y1="96" x2="280" y2="96"></line>
+            <line x1="392" y1="96" x2="420" y2="96"></line>
+            <line x1="532" y1="96" x2="560" y2="96"></line>
+            <line x1="350" y1="126" x2="350" y2="176"></line>
+            <line x1="350" y1="196" x2="350" y2="176"></line>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="16" y="66" width="96" height="60" rx="6"></rect>
+            <rect x="142" y="66" width="110" height="60" rx="6"></rect>
+            <rect x="282" y="66" width="110" height="60" rx="6"></rect>
+            <rect x="422" y="66" width="110" height="60" rx="6"></rect>
+            <rect x="562" y="66" width="122" height="60" rx="6"></rect>
+            <rect x="290" y="130" width="120" height="46" rx="6"></rect>
+          </g>
+          <g font-size="12" fill="currentColor" text-anchor="middle">
+            <text x="64" y="88" font-weight="600">hello.c</text>
+            <text x="64" y="106">source</text>
+            <text x="197" y="84" font-weight="600">preprocessor</text>
+            <text x="197" y="102">hello.i</text>
+            <text x="197" y="118">expanded</text>
+            <text x="337" y="84" font-weight="600">compiler</text>
+            <text x="337" y="102">hello.s</text>
+            <text x="337" y="118">assembly</text>
+            <text x="477" y="84" font-weight="600">assembler</text>
+            <text x="477" y="102">hello.o</text>
+            <text x="477" y="118">object code</text>
+            <text x="623" y="84" font-weight="600">linker</text>
+            <text x="623" y="102">a.out</text>
+            <text x="623" y="118">runnable</text>
+            <text x="350" y="158">libc: printf, scanf …</text>
+            <text x="350" y="204" font-size="11">gcc hello.c   runs all four stages</text>
+          </g>
+        </svg>
+        <figcaption><strong>One command, four programs.</strong> <code>gcc hello.c</code> runs all four stages. Only the linker pulls <code>printf</code> from the library — so a missing <code>; </code> is a compiler error while a missing <code>main</code> is caught by the linker.</figcaption>
+      </figure>
+
+      <h3 id="headers-and-library-files"><i class="fas fa-file-code"></i> Headers, Library Files and Comments in C</h3>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>A header file is not the code — it only promises that the code exists</caption>
+          <thead>
+            <tr><th>Point</th><th>Header file (<code>.h</code>)</th><th>Library file (<code>.a</code> / <code>.so</code> / <code>.lib</code>)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Contains</td><td>Declarations: prototypes, macros, type definitions</td><td>Compiled machine code of the functions</td></tr>
+            <tr><td>Read by</td><td>The preprocessor, textually, before compilation</td><td>The linker, at the last stage</td></tr>
+            <tr><td>Written by</td><td>You or the library author, as plain text</td><td>The compiler/archiver, as a binary</td></tr>
+            <tr><td>Needed because</td><td>The compiler must know a function's return type and parameter types</td><td>The finished program must contain the function's actual instructions</td></tr>
+            <tr><td>Exam phrasing</td><td>"Tells the compiler <em>what</em> exists"</td><td>"Provides <em>how</em> it works"</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-key"></i> Comments: Two Styles, One Rule</div>
+        <p><code>/* … */</code> is the original block comment and <strong>does not nest</strong> — it ends at the first <code>*/</code>. <code>//</code> is the C99 single-line form. Both are removed by the preprocessor, so a comment can never change what the program does.</p>
+      </div>
+
+      <h3 id="preprocessor-and-macros"><i class="fas fa-hashtag"></i> Preprocessor Directives and #define Macros</h3>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> What the <code>#</code> Line Really Does</div>
+        <p>A line beginning with <code>#</code> is handled <strong>before</strong> the compiler sees the file: <code>#include</code> pastes a header in, <code>#define</code> substitutes text. Nothing here is type-checked, because it is not C yet — and that is where the marks are lost.</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> The Unparenthesised Macro Trap</div>
+        <pre>#include &lt;stdio.h&gt;
+
+#define SQR(x)       x * x
+#define SAFE(x)      ((x) * (x))
+
+int main(void)
+{
+    printf("%d\n", SQR(3 + 2));       /* 3+2*3+2 = 11        */
+    printf("%d\n", SAFE(3 + 2));      /* 25                  */
+    printf("%d\n", 100 / SQR(5));     /* 100/5*5 = 100       */
+    return 0;
+}</pre>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Quote This Rule</div>
+        <p>Parenthesise <strong>every</strong> parameter <em>and</em> the whole body: <code>#define SQR(x) ((x)*(x))</code>.</p>
+      </div>
+
     </div>
   </section>
 
-  <!-- ======================== SECTION 3: FUNDAMENTALS ======================== -->
-  <section class="section" id="fundamentals">
+<section class="section" id="fundamentals">
     <h2 class="section-title">
       <i class="fas fa-font"></i> Fundamentals: Tokens, Data Types &amp; Keywords
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -356,21 +431,6 @@
           <span class="token-pill"><i class="fas fa-dot-circle"></i> Punctuators</span>
         </div>
         <br>
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr><th>Token Type</th><th>Description</th><th>Example</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Keyword</td><td>Reserved words with fixed meaning; cannot be used as identifiers</td><td>int, float, if, return, for</td></tr>
-              <tr><td>Identifier</td><td>User-defined names for variables, functions, arrays</td><td>myVar, sum, calculate</td></tr>
-              <tr><td>Constant</td><td>Fixed values that do not change during execution</td><td>25, 3.14, 'A', "Hello"</td></tr>
-              <tr><td>String Literal</td><td>Sequence of characters enclosed in double quotes</td><td>"Hello World"</td></tr>
-              <tr><td>Operator</td><td>Symbols that perform operations on operands</td><td>+, -, *, /, =, ==</td></tr>
-              <tr><td>Punctuator</td><td>Special symbols used for structure and syntax</td><td>; , ( ) { } [ ]</td></tr>
-            </tbody>
-          </table>
-        </div>
       </div>
 
       <div class="important-note">
@@ -382,6 +442,31 @@
           <li>Case-sensitive: <code>Count</code> and <code>count</code> are different.</li>
           <li>No spaces or special characters (except underscore) allowed.</li>
         </ul>
+      </div>
+
+      <h3 id="identifiers-and-keywords"><i class="fas fa-tag"></i> C Identifiers, Keywords and Variables</h3>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Identifier call-outs that appear in the paper — decide each in one second</caption>
+          <thead>
+            <tr><th>Identifier</th><th>Valid?</th><th>The rule it breaks or obeys</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>_count</code></td><td>Valid</td><td>May begin with an underscore</td></tr>
+            <tr><td><code>sum2</code></td><td>Valid</td><td>Digits are legal after the first character</td></tr>
+            <tr><td><code>1num</code></td><td>Invalid</td><td>Cannot begin with a digit</td></tr>
+            <tr><td><code>total-sum</code></td><td>Invalid</td><td>Only letters, digits and <code>_</code> — no operators</td></tr>
+            <tr><td><code>float</code></td><td>Invalid</td><td>A keyword is reserved</td></tr>
+            <tr><td><code>my var</code></td><td>Invalid</td><td>No spaces inside a name</td></tr>
+            <tr><td><code>Count</code> vs <code>count</code></td><td>Both valid</td><td>Different identifiers — C is case-sensitive</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Declaration Is Not Initialisation</div>
+        <p><code>int total;</code> creates the object but leaves <strong>indeterminate</strong> content — reading it before assigning is undefined behaviour, not zero. <code>int total = 0;</code> initialises it. Only objects with static storage duration (globals, <code>static</code> locals) start at zero automatically. If an exam question prints an uninitialised local, the expected answer is "garbage value, undefined", never 0.</p>
       </div>
 
       <div class="definition-box">
@@ -417,6 +502,26 @@ volatile  while</pre>
         </div>
       </div>
 
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>The same keywords, two generations of machine — quote both columns if the question does not say</caption>
+          <thead>
+            <tr><th>Type</th><th>Classic 16-bit Turbo C</th><th>Modern 32/64-bit gcc</th><th>Range on a modern machine</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>char</code></td><td>1 byte</td><td>1 byte</td><td>-128 to 127 (signed)</td></tr>
+            <tr><td><code>int</code></td><td><strong>2 bytes</strong></td><td><strong>4 bytes</strong></td><td>-2.1 × 10⁹ to 2.1 × 10⁹</td></tr>
+            <tr><td><code>float</code></td><td>4 bytes</td><td>4 bytes</td><td>6 significant digits</td></tr>
+            <tr><td><code>double</code></td><td>8 bytes</td><td>8 bytes</td><td>15 significant digits</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-key"></i> Why <code>sizeof</code> Is the Honest Answer</div>
+        <p>The C standard fixes only minimum ranges, not byte counts, so <code>int</code> is 2 bytes on the 16-bit compilers many polytechnic labs still use and 4 bytes on a modern PC. Whenever a question gives no machine, say "typically 4 bytes on a 32/64-bit system, 2 bytes on a 16-bit compiler" — and remember <code>sizeof</code> is evaluated by the compiler, so <code>sizeof(int)</code> is the portable way to ask.</p>
+      </div>
+
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-equals"></i> Variables: Declaration and Initialization</div>
         <div class="code-box">
@@ -448,8 +553,7 @@ const int MAX = 100;</pre>
     </div>
   </section>
 
-  <!-- ======================== SECTION 4: OPERATORS ======================== -->
-  <section class="section" id="operators">
+<section class="section" id="operators">
     <h2 class="section-title">
       <i class="fas fa-calculator"></i> Operators in C
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -458,7 +562,7 @@ const int MAX = 100;</pre>
 
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> What is an Operator?</div>
-        <p>An <strong>operator</strong> is a symbol that tells the compiler to perform a specific mathematical, relational, or logical operation and produce a result. The values that operators work on are called <strong>operands</strong>.</p>
+        <p>An <strong>operator</strong> is a symbol that asks the compiler to perform an operation; the values it works on are <strong>operands</strong>.</p>
       </div>
 
       <div class="definition-box">
@@ -482,6 +586,28 @@ const int MAX = 100;</pre>
         </div>
       </div>
 
+      <h3 id="modulo-and-arithmetic-operators"><i class="fas fa-percent"></i> Arithmetic and the Modulo Operator</h3>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Integer division and <code>%</code> — the four cases the paper actually asks</caption>
+          <thead>
+            <tr><th>Expression</th><th>Result</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>7 / 2</code></td><td><code>3</code></td><td>Both operands <code>int</code> → truncation toward zero</td></tr>
+            <tr><td><code>7 % 2</code></td><td><code>1</code></td><td>The remainder after that division</td></tr>
+            <tr><td><code>7.0 / 2</code></td><td><code>3.5</code></td><td>One <code>double</code> operand promotes the other</td></tr>
+            <tr><td><code>7 % 2.0</code></td><td><em>compile error</em></td><td><code>%</code> accepts <strong>integer types only</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> The Sign of <code>%</code> Follows the Dividend</div>
+        <p>In C99 <code>-7 % 2</code> is <code>-1</code> — the remainder takes the sign of the <strong>left</strong> operand, so <code>n % 2 == 1</code> is false for every negative odd number. Test <code>n % 2 != 0</code>.</p>
+      </div>
+
       <div class="definition-box">
         <div class="box-title"><i class="fas fa-not-equal"></i> 2. Relational Operators</div>
         <p>Used to compare two values. Always returns 0 (false) or 1 (true).</p>
@@ -498,6 +624,27 @@ const int MAX = 100;</pre>
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption><code>=</code> stores, <code>==</code> compares — the single most expensive confusion in the paper</caption>
+          <thead>
+            <tr><th>Expression</th><th>What happens</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>x = 5</code></td><td>Stores 5 in <code>x</code></td><td><code>5</code></td></tr>
+            <tr><td><code>x == 5</code></td><td>Compares, changes nothing</td><td><code>1</code> or <code>0</code></td></tr>
+            <tr><td><code>if (x = 5)</code></td><td>Assigns, then tests 5 — always true</td><td>branch always taken</td></tr>
+            <tr><td><code>if (x == 5)</code></td><td>Tests the stored value</td><td>branch taken only when equal</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-code-branch"></i> Short-Circuit: Why Order Matters</div>
+        <p><code>&amp;&amp;</code> stops at the first false operand and <code>||</code> at the first true one — a guarantee, not an optimisation, and it decides how a guard is written: <code>if (n != 0 &amp;&amp; 10 / n &gt; 2)</code> is safe, the reversed order divides by zero first.</p>
+        <p>A side effect can silently not happen: in <code>if (i &lt; 3 &amp;&amp; ++i)</code> the increment runs only while <code>i &lt; 3</code> holds.</p>
       </div>
 
       <div class="definition-box">
@@ -564,6 +711,8 @@ int main() {
         </div>
       </div>
 
+      <h3 id="conditional-ternary-operator"><i class="fas fa-question"></i> The Conditional (Ternary) Operator</h3>
+
       <div class="definition-box">
         <div class="box-title"><i class="fas fa-question"></i> 6. Conditional (Ternary) Operator</div>
         <p>The ternary operator is the only operator in C that takes <strong>three operands</strong>. It is a shorthand for an if-else statement.</p>
@@ -616,6 +765,8 @@ int main() {
         </div>
       </div>
 
+      <h3 id="operator-precedence-and-parsing"><i class="fas fa-sort-numeric-up"></i> Operator Precedence, Parsing and Evaluation Order</h3>
+
       <div class="important-note">
         <div class="box-title"><i class="fas fa-sort-numeric-up"></i> Operator Precedence Table (High to Low)</div>
         <div class="table-wrapper">
@@ -649,13 +800,14 @@ int main() {
     </div>
   </section>
 
-  <!-- ======================== SECTION 5: TYPE CONVERSION ======================== -->
-  <section class="section" id="typecasting">
+<section class="section" id="typecasting">
     <h2 class="section-title">
       <i class="fas fa-exchange-alt"></i> Type Conversion and Typecasting
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
+
+      <h3 id="implicit-and-explicit-conversions"><i class="fas fa-exchange-alt"></i> Implicit and Explicit Type Conversion</h3>
 
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-info-circle"></i> What is Type Conversion?</div>
@@ -726,8 +878,7 @@ int main() {
     </div>
   </section>
 
-  <!-- ======================== SECTION 6: I/O ======================== -->
-  <section class="section" id="io">
+<section class="section" id="io">
     <h2 class="section-title">
       <i class="fas fa-terminal"></i> Formatted Input / Output
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -811,6 +962,35 @@ int main() {
 }</pre>
       </div>
 
+      <h3 id="escape-sequences-and-ascii"><i class="fas fa-quote-right"></i> Escape Sequences and ASCII Values</h3>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Print a Character's ASCII Code</div>
+        <pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    char ch;
+
+    printf("Enter a character: ");
+    scanf("%c", &amp;ch);
+
+    printf("ASCII value of '%c' = %d\n", ch, ch);
+    printf("Character for code 65 = %c\n", 65);
+    printf("Size of a char = %zu byte\n", sizeof(char));
+    return 0;
+}
+/* Input: 5
+   ASCII value of '5' = 53
+   Character for code 65 = A
+   Size of a char = 1 byte           */</pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-key"></i> A <code>char</code> Is a Small Integer</div>
+        <p><code>'5'</code> is not <code>5</code>: the character constant holds the code <strong>53</strong>, so <code>'5' - '0'</code> gives 5. <code>'A'</code> is 65 and <code>'a'</code> is 97; the gap of <strong>32</strong> is what makes case conversion a simple <code>± 32</code>.</p>
+      </div>
+
       <div class="tip-box">
         <div class="box-title"><i class="fas fa-lightbulb"></i> Width and Precision in printf()</div>
         <pre>printf("%10d", 25);      /* Right-aligned in 10-char width: "        25" */
@@ -820,11 +1000,29 @@ printf("%.4f", 3.14);   /* 4 decimal places: "3.1400"      */
 printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
       </div>
 
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Unformatted console I/O — listed in the syllabus, never yet asked, worth one line each</caption>
+          <thead>
+            <tr><th>Function</th><th>Direction</th><th>Use it for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>getchar()</code></td><td>input</td><td>One character, including the newline</td></tr>
+            <tr><td><code>putchar(c)</code></td><td>output</td><td>One character</td></tr>
+            <tr><td><code>fgets(s, n, stdin)</code></td><td>input</td><td>A whole line, bounded by <code>n</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-key"></i> Why <code>gets()</code> Is Not on That List</div>
+        <p><code>gets()</code> cannot be told the buffer size, so it overflows on a long line; C11 removed it. Use <code>fgets()</code> — it keeps the newline.</p>
+      </div>
+
     </div>
   </section>
 
-  <!-- ======================== SECTION 7: FORMULAS ======================== -->
-  <section class="section" id="formulas">
+<section class="section" id="formulas">
     <h2 class="section-title">
       <i class="fas fa-square-root-alt"></i> Key Formulas and Syntax
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -864,8 +1062,7 @@ printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
     </div>
   </section>
 
-  <!-- ======================== SECTION 8: DEFINITIONS ======================== -->
-  <section class="section" id="definitions">
+<section class="section" id="definitions">
     <h2 class="section-title">
       <i class="fas fa-book"></i> Key Definitions
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -915,8 +1112,7 @@ printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
     </div>
   </section>
 
-  <!-- ======================== SECTION 9: COMPARISONS ======================== -->
-  <section class="section" id="comparisons">
+<section class="section" id="comparisons">
     <h2 class="section-title">
       <i class="fas fa-balance-scale"></i> Comparisons
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -976,8 +1172,7 @@ printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
     </div>
   </section>
 
-  <!-- ======================== SECTION 10: MCQs ======================== -->
-  <section class="section" id="mcqs">
+<section class="section" id="mcqs">
     <h2 class="section-title">
       <i class="fas fa-question-circle"></i> Multiple Choice Questions
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -1126,7 +1321,7 @@ printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
           <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq9">
             <strong>Answer: b. 20</strong>
-            <p>Left shift by n positions = multiply by 2ⁿ. So 5 &lt;&lt; 2 = 5 × 2² = 5 × 4 = 20. Binary: 101 becomes 10100 = 20.</p>
+            <p>Left shift by n = multiply by 2ⁿ: 5 × 4 = 20. Binary 101 becomes 10100.</p>
           </div>
         </div>
 
@@ -1142,7 +1337,39 @@ printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
           <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq10">
             <strong>Answer: c. .h file</strong>
-            <p>Header files (.h) contain function prototypes, macro definitions, and constants. They are included using the #include directive. For example, stdio.h contains the printf() and scanf() prototypes.</p>
+            <p>Headers hold prototypes, macros and constants, pulled in by <code>#include</code> — <code>stdio.h</code> declares <code>printf</code> and <code>scanf</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 11</p>
+          <p>What does <code>#define SQR(x) x * x</code> print for <code>SQR(3 + 2)</code>?</p>
+          <ul class="options">
+            <li>a. 25</li>
+            <li>b. 11</li>
+            <li>c. 13</li>
+            <li>d. A compile error</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: b. 11</strong>
+            <p>Text substitution gives <code>3 + 2 * 3 + 2</code> = 11. With <code>((x)*(x))</code> the answer is 25 — both pairs of parentheses matter.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 12</p>
+          <p>Which line is <em>undefined behaviour</em>?</p>
+          <ul class="options">
+            <li>a. <code>a = b + c;</code></li>
+            <li>b. <code>i = i++;</code></li>
+            <li>c. <code>x = (1, 2, 3);</code></li>
+            <li>d. <code>y = 5 &gt; 3 ? 1 : 0;</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: b. <code>i = i++;</code></strong>
+            <p><code>i</code> is modified twice between sequence points, so C does not define which wins. A warning is not guaranteed.</p>
           </div>
         </div>
 
@@ -1150,8 +1377,7 @@ printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
     </div>
   </section>
 
-  <!-- ======================== SECTION 11: SHORT QUESTIONS ======================== -->
-  <section class="section" id="short-questions">
+<section class="section" id="short-questions">
     <h2 class="section-title">
       <i class="fas fa-pencil-alt"></i> Short Answer Questions
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -1235,8 +1461,7 @@ printf("%8.2f", 3.14);  /* Width 8, 2 decimal places: "    3.14"  */</pre>
     </div>
   </section>
 
-  <!-- ======================== SECTION 12: LONG QUESTIONS ======================== -->
-  <section class="section" id="long-questions">
+<section class="section" id="long-questions">
     <h2 class="section-title">
       <i class="fas fa-file-alt"></i> Long Answer Questions (6 Marks)
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -1291,51 +1516,12 @@ int main() {
           </div>
         </div>
 
+
         <div class="mcq-item">
           <p class="card-title">Q 2</p>
-          <p>Explain the C compilation process from source code to executable. Describe each step with the file types involved. Also explain the different file types (.c, .h, .o, .exe) used in C programming.</p>
+          <p>Explain implicit and explicit type conversion in C with examples. What are the rules of type promotion in C? What are the risks of type mismatch?</p>
           <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq2">
-            <p>The compilation process in C involves <strong>four stages</strong>:</p>
-            <p><strong>Step 1: Preprocessing</strong><br>
-            The preprocessor handles all directives starting with #. It expands #include files, replaces #define macros, and removes comments. The output is an expanded source file with .i extension.</p>
-
-            <p><strong>Step 2: Compilation</strong><br>
-            The compiler converts preprocessed code into assembly language. This stage checks for syntax errors. Output: .s file (assembly code).</p>
-
-            <p><strong>Step 3: Assembly</strong><br>
-            The assembler converts assembly code into machine code (binary). Output: .o or .obj (object file). Object files are not yet executable.</p>
-
-            <p><strong>Step 4: Linking</strong><br>
-            The linker combines one or more object files with library files (like stdio library) to produce the final executable. Output: .exe (Windows) or no extension (Linux/Mac).</p>
-
-            <div class="table-wrapper">
-              <table class="data-table">
-                <thead><tr><th>Stage</th><th>Input</th><th>Output</th><th>Tool</th></tr></thead>
-                <tbody>
-                  <tr><td>Preprocessing</td><td>.c file</td><td>.i file</td><td>cpp (C Preprocessor)</td></tr>
-                  <tr><td>Compilation</td><td>.i file</td><td>.s file</td><td>cc1 (Compiler)</td></tr>
-                  <tr><td>Assembly</td><td>.s file</td><td>.o / .obj file</td><td>as (Assembler)</td></tr>
-                  <tr><td>Linking</td><td>.o + libraries</td><td>.exe file</td><td>ld (Linker)</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p><strong>File Types in C:</strong></p>
-            <ul>
-              <li><strong>.c (Source File)</strong> — Contains the actual C program written by the programmer.</li>
-              <li><strong>.h (Header File)</strong> — Contains function prototypes, macros, and type definitions. Included using #include.</li>
-              <li><strong>.o / .obj (Object File)</strong> — Machine code produced by the compiler. Not directly executable. Needs to be linked.</li>
-              <li><strong>.exe (Executable File)</strong> — The final ready-to-run program produced by the linker.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 3</p>
-          <p>Explain implicit and explicit type conversion in C with examples. What are the rules of type promotion in C? What are the risks of type mismatch?</p>
-          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="lq3">
             <p><strong>Type Conversion</strong> is the process of converting a value from one data type to another. C supports two types:</p>
 
             <p><strong>1. Implicit Type Conversion (Type Promotion)</strong>:<br>
@@ -1378,23 +1564,33 @@ int ascii = (int)c;           /* ASCII value: 65 */</pre>
             </ul>
           </div>
         </div>
+        <div class="mcq-item">
+          <p class="card-title">Q 3</p>
+          <p>Explain the compilation and linking process, and distinguish a header file from a library file.</p>
+          <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq3">
+            <p><strong>Answer structure:</strong> the four stages with the file each produces, then <code>.h</code> versus <code>.a</code>/<code>.so</code>, then why both are needed.</p>
+            <p><strong>Stages:</strong> preprocessor (<code>.c</code> → <code>.i</code>), compiler (<code>.i</code> → <code>.s</code>), assembler (<code>.s</code> → <code>.o</code>), linker (<code>.o</code> + library → executable).</p>
+            <p><strong>Header versus library:</strong> the header carries <em>declarations</em> so the compiler knows <code>printf</code>'s return and parameter types; the library carries the compiled <em>definitions</em>, added by the linker. Forgetting the header is a compile-time warning; forgetting <code>-lm</code> is a link-time "undefined reference".</p>
+          </div>
+        </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ======================== SECTION 13: PRACTICE ======================== -->
-  <section class="section" id="practice">
+<section class="section" id="practice">
     <h2 class="section-title">
       <i class="fas fa-dumbbell"></i> Practice Problems
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
+      <p class="unit-practice-intro">Write each answer on paper, then compile it. The matching lab drills are in areas 1–2 of <a href="../../CST211/index.html#practical-areas">Computer Programming Lab in C</a>.</p>
       <div class="mcq-grid">
 
         <div class="mcq-item">
           <p class="card-title">Q 1</p>
-          <p>Write a C program that takes two integers as input from the user, then displays: their sum, difference, product, quotient, and remainder. Also display the average as a float.</p>
+          <p>Read two integers and print their sum, difference, product, quotient, remainder and average.</p>
           <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp1">
             <div class="code-box">
@@ -1477,7 +1673,53 @@ int main() {
     return 0;
 }</pre>
             </div>
-            <p><strong>Concept:</strong> Nested ternary operator usage for multi-value comparison.</p>
+            <p><strong>Concept:</strong> a nested ternary for a three-way comparison.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 4</p>
+          <p>Write a program that reads a character and prints its ASCII code, then prints the character for code 97.</p>
+          <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp4">
+            <pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    char ch;
+
+    printf("Enter a character: ");
+    scanf("%c", &amp;ch);
+    printf("Code of '%c' = %d\n", ch, ch);
+    printf("Character 97 = %c\n", 97);
+    return 0;
+}
+/* Input: A  ->  Code of 'A' = 65
+                 Character 97 = a            */</pre>
+            <p><code>%c</code> and <code>%d</code> on the same variable print the character and its code — a <code>char</code> is a small integer.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 5</p>
+          <p>Demonstrate the bitwise operators on 12 and 10, and show the printed result of each.</p>
+          <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp5">
+            <pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a = 12, b = 10;          /* 1100 and 1010 in binary */
+
+    printf("a &amp; b  = %d\n", a &amp; b);    /* 1000  =  8  */
+    printf("a | b  = %d\n", a | b);    /* 1110  = 14  */
+    printf("a ^ b  = %d\n", a ^ b);    /* 0110  =  6  */
+    printf("~a     = %d\n", ~a);       /* ...10011 = -13 */
+    printf("a &lt;&lt; 1 = %d\n", a &lt;&lt; 1);  /* 11000 = 24  */
+    printf("a &gt;&gt; 2 = %d\n", a &gt;&gt; 2);  /* 11    =  3  */
+    return 0;
+}</pre>
+            <p>Write both 4-bit patterns before answering; bitwise marks are lost by working in decimal. <code>~a</code> is negative because every bit of a signed <code>int</code> is inverted.</p>
           </div>
         </div>
 
@@ -1485,8 +1727,7 @@ int main() {
     </div>
   </section>
 
-  <!-- ======================== SECTION 14: REVISION ======================== -->
-  <section class="section" id="revision">
+<section class="section" id="revision">
     <h2 class="section-title">
       <i class="fas fa-sync-alt"></i> Quick Revision
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -1496,21 +1737,18 @@ int main() {
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points — Unit 1</div>
         <ul>
-          <li>C was developed by <strong>Dennis Ritchie</strong> at Bell Labs in <strong>1972</strong>.</li>
-          <li>C is a <strong>middle-level</strong>, <strong>case-sensitive</strong>, <strong>structured</strong> programming language.</li>
-          <li>C has <strong>32 keywords</strong> — they cannot be used as identifiers.</li>
-          <li>A <strong>token</strong> is the smallest unit: keywords, identifiers, constants, operators, string literals, punctuators.</li>
-          <li>The four file types: <strong>.c</strong> (source), <strong>.h</strong> (header), <strong>.o/.obj</strong> (object), <strong>.exe</strong> (executable).</li>
-          <li>Compilation stages: <strong>Preprocessing → Compilation → Assembly → Linking</strong>.</li>
-          <li>Primary data types: <strong>int (4 bytes), float (4 bytes), double (8 bytes), char (1 byte)</strong>.</li>
-          <li>Format specifiers: <strong>%d</strong> (int), <strong>%f</strong> (float), <strong>%c</strong> (char), <strong>%s</strong> (string), <strong>%x</strong> (hex), <strong>%o</strong> (octal).</li>
-          <li><strong>Implicit conversion</strong> = automatic by compiler (lower to higher type).</li>
-          <li><strong>Explicit conversion</strong> = manual typecasting using <code>(type)</code>.</li>
-          <li><strong>Pre-increment (++a)</strong>: increment first, use later. <strong>Post-increment (a++)</strong>: use first, increment later.</li>
-          <li><strong>Ternary operator</strong>: <code>condition ? true_value : false_value</code>. Only 3-operand operator in C.</li>
-          <li><strong>Left shift &lt;&lt; n</strong> = multiply by 2ⁿ. <strong>Right shift &gt;&gt; n</strong> = divide by 2ⁿ.</li>
-          <li>scanf() <strong>requires &amp;</strong> before variable names (except arrays/strings).</li>
-          <li><strong>Modulus operator %</strong> works only with integers.</li>
+  <li>C was developed by <strong>Dennis Ritchie</strong> at Bell Labs in <strong>1972</strong>.</li>
+  <li>C is <strong>middle-level</strong>, <strong>case-sensitive</strong> and <strong>structured</strong>; 32 keywords.</li>
+  <li>Build order: <strong>.c → .i → .s → .o</strong> + library → executable. A header <strong>declares</strong>, the library <strong>defines</strong>.</li>
+  <li>Compilation stages: <strong>Preprocessing → Compilation → Assembly → Linking</strong>.</li>
+  <li>Primary types: <strong>char 1 B, int 4 B</strong> (2 B on 16-bit Turbo C), <strong>float 4 B, double 8 B</strong>.</li>
+  <li>Format specifiers: <strong>%d</strong> (int), <strong>%f</strong> (float), <strong>%c</strong> (char), <strong>%s</strong> (string), <strong>%x</strong> (hex), <strong>%o</strong> (octal).</li>
+  <li><strong>Implicit conversion</strong> promotes by rank; a cast <strong>truncates toward zero</strong> — <code>(int)3.99</code> is 3.</li>
+  <li><strong>Pre-increment (++a)</strong>: increment first, use later. <strong>Post-increment (a++)</strong>: use first, increment later.</li>
+  <li><strong>Ternary operator</strong>: <code>condition ? true_value : false_value</code>. Only 3-operand operator in C.</li>
+  <li><strong>Left shift &lt;&lt; n</strong> = multiply by 2ⁿ. <strong>Right shift &gt;&gt; n</strong> = divide by 2ⁿ.</li>
+  <li>scanf() <strong>requires &amp;</strong> before variable names (except arrays/strings).</li>
+  <li><strong>%</strong> is integer-only, and its sign follows the <strong>left</strong> operand.</li>
         </ul>
       </div>
 
@@ -1544,11 +1782,7 @@ int main() {
     </div>
   </section>
 
-  <!-- ======================== SECTION: VIDEO WATCH-LIST ========================
-       Plain external <a> links only (Phase 12 rule): no <iframe>, no thumbnail
-       CDN, no runtime third-party request. Links are hand-picked references,
-       not endorsed material, and carry no claim about exam importance. -->
-  <section class="section" id="videos">
+<section class="section" id="videos">
     <h2 class="section-title">
       <i class="fas fa-play-circle"></i> Watch &amp; Learn
       <i class="fas fa-chevron-up collapse-icon"></i>
@@ -1557,34 +1791,33 @@ int main() {
       <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
       <ul class="video-list">
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=C+programming+operators+precedence+associativity" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=8H9G621pQq0" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Operators, precedence and associativity in C</span>
-              <span class="video-link-meta">Covers &amp;, |, ^, ~, &lt;&lt;, &gt;&gt; and the ternary operator &middot; search on YouTube</span>
+              <span class="video-link-title">Precedence and Associativity of Operators in C</span>
+              <span class="video-link-meta">The full table with worked expression traces &middot; Neso Academy &middot; opens on YouTube</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=C+program+compilation+process+preprocessor+linker" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=jlQmeyce65Q" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">How a C program is compiled and linked</span>
-              <span class="video-link-meta">Follows .c to .i to .s to .o to the executable &middot; search on YouTube</span>
+              <span class="video-link-title">Bitwise Operators in C (Part 1)</span>
+              <span class="video-link-meta">&amp;, |, ^ and ~ on 8-bit patterns &middot; Neso Academy &middot; opens on YouTube</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=C+tokens+identifiers+data+types+sizeof" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=fEqexgUuj9A" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Tokens, identifiers and data types in C</span>
-              <span class="video-link-meta">Keywords, identifiers and sizeof &middot; search on YouTube</span>
+              <span class="video-link-title">Basic Structure of a C Program</span>
+              <span class="video-link-meta">Documentation, headers, <code>main()</code> and functions &middot; Self Study Tutorials &middot; opens on YouTube</span>
             </span>
           </a>
         </li>
       </ul>
     </div>
   </section>
-
-</main><!-- end container -->
+  </main><!-- end container -->
 
 <!-- FAB -->
 <div class="fab-container">

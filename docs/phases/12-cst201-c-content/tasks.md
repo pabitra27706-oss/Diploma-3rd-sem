@@ -9,13 +9,14 @@
 ## Part 12.1 — Unit 1: Introduction to C (`86m / 21.8%`, 5h, PDF p. 3)
 - **Target file:** `subjects/CST201/units/unit-1.html` (`5,418w → ~5,800–6,400w`) · Blueprint: [`unit-1/README.md`](unit-1/README.md)
 - **Implementation checklist:**
-  - [ ] Allocate ~48% of concept prose to **Tier A `#operators` (`43m`, 4/4 papers)**: all 8 operator groups, `%` integer-only rule, integer division truncation, `=` vs `==`, short-circuit `&&`/`||`, prefix/postfix `++/--`, max-munch `a+++b`, unsequenced `x++` UB warning, ternary `?:` + program, 8-bit bitwise traces, `sizeof`, comma operator, and ranked precedence/associativity table.
-  - [ ] Allocate ~25% to **Tier A `#fundamentals` (`21m`, 4/4 papers)**: character set, 6 token classes, valid/invalid identifiers (`$main`, `1st`, `int`), C89 32 keywords (+ C99/C11 note), primitive types with 16-bit (`2B`) vs 32/64-bit (`4B`) sizes, constants, `const` vs `#define`.
-  - [ ] Allocate ~15% to **Tier B `#history` (`13m`, 4/4 papers)** + badged **Tier E preprocessor callout (`3m`)**: annotated `Hello World`, inline SVG 4-stage build pipeline (`.c → .i → .s/.o → executable`), `.h` header vs library table, `/* */` & `//` comments, and `#define SQR(x) x*x` vs `((x)*(x))` trap (`SQR(3+2) = 11`).
-  - [ ] Keep **Tier C `#typecasting` (`2m`)** (~5%) and **Tier C + Tier S `#io` (`4m` + `0m`)** (~7%) crisp: implicit/explicit casts, C89 implicit-`int` historical note, `printf`/`scanf` specifiers, escapes, ASCII-value program, and compact `getchar`/`putchar`/`fgets`/`puts` table.
-  - [ ] Calibrate practice (`12` MCQs, `5` short, `4` worked 8m), add `8` Mode A `<h3 id>` anchors, cross-link `subjects/CST211/index.html` (Areas 1–2), and insert `3` live-verified plain-`<a>` YouTube links.
+  - [x] Allocate ~48% of concept prose to **Tier A `#operators` (`43m`, 4/4 papers)**: all 8 operator groups, `%` integer-only rule, integer division truncation, `=` vs `==`, short-circuit `&&`/`||`, prefix/postfix `++/--`, max-munch `a+++b`, unsequenced `x++` UB warning, ternary `?:` + program, 8-bit bitwise traces, `sizeof`, comma operator, and ranked precedence/associativity table.
+  - [x] Allocate ~25% to **Tier A `#fundamentals` (`21m`, 4/4 papers)**: character set, 6 token classes, valid/invalid identifiers (`$main`, `1st`, `int`), C89 32 keywords (+ C99/C11 note), primitive types with 16-bit (`2B`) vs 32/64-bit (`4B`) sizes, constants, `const` vs `#define`.
+  - [x] Allocate ~15% to **Tier B `#history` (`13m`, 4/4 papers)** + badged **Tier E preprocessor callout (`3m`)**: annotated `Hello World`, inline SVG 4-stage build pipeline (`.c → .i → .s/.o → executable`), `.h` header vs library table, `/* */` & `//` comments, and `#define SQR(x) x*x` vs `((x)*(x))` trap (`SQR(3+2) = 11`).
+  - [x] Keep **Tier C `#typecasting` (`2m`)** (~5%) and **Tier C + Tier S `#io` (`4m` + `0m`)** (~7%) crisp: implicit/explicit casts, C89 implicit-`int` historical note, `printf`/`scanf` specifiers, escapes, ASCII-value program, and compact `getchar`/`putchar`/`fgets`/`puts` table.
+  - [x] Calibrate practice (`12` MCQs, `5` short, `4` worked 8m), add `8` Mode A `<h3 id>` anchors, cross-link `subjects/CST211/index.html` (Areas 1–2), and insert `3` live-verified plain-`<a>` YouTube links.
 - **Acceptance & evidence:**
-  - [ ] Locked `#operators`, `#typecasting`, all `14` `<section id>`s, and `5` `overview-*` `h3` IDs intact; all snippets pass `gcc -std=c99 -Wall -Wextra -fsyntax-only`; 3 verified URLs logged in `record.md`.
+  - [x] Locked `#operators`, `#typecasting`, all `14` `<section id>`s intact **plus `#videos`** (`15` shipped) and the `5` `overview-*` `h3` IDs preserved; 6 programs compiled with `gcc -std=c99 -Wall -Wextra -O2` and every sample output verified; **3** verified URLs logged in `record.md`.
+  - [x] Delivered at **`6,389w`** on the calibrated metric — inside the `5,800–6,400` band. Nine Mode A anchors created (blueprint listed 8; `#implicit-and-explicit-conversions` was added because the routing table's `P004-Q11` row needs it).
 
 ---
 
