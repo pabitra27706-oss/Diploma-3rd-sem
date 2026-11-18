@@ -9,11 +9,20 @@ const assert = require('node:assert/strict');
   });
   try {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    page.setDefaultTimeout(60000);
+    page.setDefaultNavigationTimeout(60000);
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const base = process.env.TEST_BASE || 'http://127.0.0.1:8001/';
+    console.log('SMOKE: opening the paper viewer');
     await page.goto(`${base}pyq/viewer.html?subject=CST201&paper=CST201-P001`, { waitUntil: 'networkidle' });
-    await page.waitForFunction(() => !document.querySelector('#paperWrapper').classList.contains('hidden'));
+    await page.waitForFunction(() => {
+      const wrapper = document.querySelector('#paperWrapper');
+      const error = document.querySelector('#errorState');
+      return (wrapper && !wrapper.classList.contains('hidden')) || (error && !error.classList.contains('hidden'));
+    });
+    assert.equal(await page.locator('#errorState:not(.hidden)').count(), 0,
+      `paper viewer error: ${await page.locator('#errorMessage').textContent()}`);
 
     const geometry = await page.evaluate(() => {
       const paper = document.querySelector('#paper');
@@ -36,6 +45,7 @@ const assert = require('node:assert/strict');
 
     // An answer card's former copy-link action now opens its exact unit with
     // topic context, and the destination scrolls to/highlights related content.
+    console.log('SMOKE: checking answer-card topic link and authored anchor');
     await page.goto(`${base}pyq/answers.html?paper=CST203-P006-2026-01&q=CST203-P006-Q11`, { waitUntil: 'networkidle' });
     await page.waitForSelector('.question-share .unit-topic-link');
     const topic = await page.evaluate(() => questions[currentIndex].topic);
