@@ -129,6 +129,19 @@
       return best;
     }
 
+    // A unit overview heading is a broad summary, so a topic like
+    // "Arrays / loops" can tie with it at 90. A heading that covers MORE of
+    // the topic's segments is the better landing spot, so ties are broken on
+    // that count instead of on document order.
+    function segmentsCovered(title) {
+      let covered = 0;
+      for (const segment of needles) {
+        const targetTerms = termsFor(segment);
+        if (targetTerms.length && scoreAgainst(title, segment, targetTerms) > 0) covered += 1;
+      }
+      return covered;
+    }
+
     let candidates = entriesFor(document, currentUnit);
     // When a stored PYQ unit is stale, search the subject's authored section
     // headings instead of sending the learner to a vaguely related overview.
@@ -155,7 +168,11 @@
     let best = null;
     for (const entry of candidates) {
       const score = scoreTitle(entry.title);
-      if (!best || score > best.score) best = { ...entry, score };
+      const covered = segmentsCovered(entry.title);
+      if (!best || score > best.score
+          || (score === best.score && score > 0 && covered > best.covered)) {
+        best = { ...entry, score, covered };
+      }
     }
     if (!best || best.score < 0.5) return;
 

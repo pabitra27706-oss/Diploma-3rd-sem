@@ -32,7 +32,8 @@ LAB_PARENT = {'CST211': 'CST201', 'CST213': 'CST203', 'CST215': 'CST205'}
 
 # Recorded source-review findings that shift stored data away from the syllabus.
 # Read from docs/data/validation-exceptions.json; never re-tagged here.
-BANK_UNIT_REVERSAL = {'CST201': {3: 4, 4: 3}}  # stored bank unit -> syllabus unit
+# CST201 units 3/4 were once recorded as a reversed bank; the banks have since been
+# re-tagged to the syllabus (Unit 3 = Arrays, Unit 4 = Functions), so no reversal map exists.
 
 THIN_ITEM_FLOOR = 5
 
@@ -145,14 +146,6 @@ def build(root=ROOT):
         declared = [u['unit'] for u in subject['units']]
         syllabus_units += len(declared)
         by_unit = Counter(q.get('unit') for q in qs)
-        reversal = BANK_UNIT_REVERSAL.get(code, {})
-        # Bank items are attributed by their stored file unit; the recorded
-        # reversal is shown as a second, labelled count instead of a re-tag.
-        quiz_declared = Counter()
-        for _, bank in subject_banks:
-            stored_unit = bank.get('unit')
-            target = reversal.get(stored_unit, stored_unit)
-            quiz_declared[target] += len(bank['questions'])
         quiz = Counter()
         for _, bank in subject_banks:
             quiz[bank.get('unit')] += len(bank['questions'])
@@ -174,7 +167,9 @@ def build(root=ROOT):
                 unit_page_count += 1
             pyq = by_unit.get(n, 0)
             quiz_stored = quiz.get(n, 0)
-            quiz_syllabus = quiz_declared.get(n, 0)
+            # No second attribution: the banks now sit in their syllabus unit, so the
+            # stored count IS the syllabus-unit count.
+            quiz_syllabus = quiz_stored
             card = card_by_unit.get(n, 0)
             flags = []
             if not depth['present']:
@@ -183,8 +178,6 @@ def build(root=ROOT):
                 flags.append('thin notes')
             if pyq + quiz_stored < THIN_ITEM_FLOOR:
                 flags.append('thin question set')
-            if reversal and n in reversal:
-                flags.append('bank unit order recorded reversed (source gate)')
             row = {
                 'subject': code,
                 'subjectLabel': SHORT_LABEL.get(code),
@@ -387,7 +380,6 @@ def build(root=ROOT):
         '<tr><th scope="row">missing notes</th><td>No unit page is shipped for a unit the syllabus declares.</td></tr>'
         '<tr><th scope="row">thin notes</th><td>The unit page exists but carries two or fewer sections or under 400 words. One thin note is not coverage.</td></tr>'
         '<tr><th scope="row">thin question set</th><td>Fewer than five stored PYQ plus quiz items for the unit.</td></tr>'
-        '<tr><th scope="row">bank unit order recorded reversed</th><td>A recorded source-review finding: the stored quiz-bank topics for this unit belong to the other unit. Counts are shown both ways; nothing is re-tagged.</td></tr>'
         '<tr><th scope="row">out-of-syllabus stored unit</th><td>Records or pages exist for a unit the syllabus does not declare. Listed here, never hidden.</td></tr>'
         '</tbody></table>'
     )
@@ -398,7 +390,6 @@ def build(root=ROOT):
         anchor = SUBJECT_ANCHOR.get(code, f'subject-{code.lower()}')
         rows = [r for r in units_rows if r['subject'] == code]
         outside = next((o for o in outside_rows if o['subject'] == code), None)
-        reversal = BANK_UNIT_REVERSAL.get(code)
         body += (f'<h2 id="{e(anchor)}">{e(label(code, title))}</h2>'
                  f'<p>Syllabus reference: Revised 2022, p.{subject["page"]}. '
                  f'{len(subject["units"])} declared units, {subject.get("contactHours")} contact hours, '
@@ -408,10 +399,6 @@ def build(root=ROOT):
             quiz_bits = ', '.join(f'U{k}: {v}' for k, v in outside['quiz'].items()) or 'none'
             body += (f' Out-of-syllabus stored tags — PYQ ({e(pyq_bits)}); quiz ({e(quiz_bits)}); '
                      f'extra unit page: {"yes" if outside["unitPageBeyondSyllabus"] else "no"}.')
-        if reversal:
-            body += (' <strong>Recorded mapping finding:</strong> the stored quiz-bank topics for units 3 and 4 '
-                     'are reversed relative to the syllabus, so both the stored-unit count and the '
-                     'syllabus-implied count are shown. Source review is required; nothing is re-tagged.')
         body += ('</p><table><caption>'
                  f'{e(title)} — inventory by syllabus unit'
                  '</caption><thead><tr><th scope="col">Unit</th><th scope="col">Syllabus topics</th>'
@@ -429,11 +416,7 @@ def build(root=ROOT):
             notes = (f'{row["noteSections"]} sections, {row["noteWords"]} words'
                      if row['hasNotes'] else 'missing')
             quiz_cell = str(row['quizCount'])
-            if reversal and n in reversal:
-                quiz_cell = f'{row["quizCount"]} stored / {row["quizCountSyllabusUnit"]} syllabus unit'
             cards = str(row['cardCount'])
-            if reversal and n in reversal and row['cardCountFromQuiz']:
-                cards += f' ({row["cardCountFromQuiz"]} from the reversed bank)'
             body += (f'<tr><th scope="row">{head}</th><td>{row["syllabusTopicCount"]}</td>'
                      f'<td>{e(notes)}</td>'
                      f'<td><a href="pyq/index.html?subject={code}&amp;unit={n}">{row["pyqCount"]}</a></td>'

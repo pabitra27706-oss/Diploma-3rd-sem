@@ -77,15 +77,15 @@ Owner action needed: supply confirmed unit, or confirm out-of-syllabus/misfiled 
 
 - `CST201-U1-Q041` (_quiz-data/CST201/unit-1.json): normalized-text-only; candidates `CST201-P002-Q42` — C Programming, June 2022.pdf, p.2, Q3(xii)
 - `CST201-U1-Q053` (_quiz-data/CST201/unit-1.json): normalized-text-only; candidates `CST201-P002-Q48` — C Programming, June 2022.pdf, p.2, Q4(iii)
-- `CST201-U3-Q010` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q32` — C Programming, June 2022.pdf, p.2, Q3(ii)
-- `CST201-U3-Q011` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q33` — C Programming, June 2022.pdf, p.2, Q3(iii)
-- `CST201-U3-Q013` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q25` — C Programming, June 2022.pdf, p.2, Q2(x)
-- `CST201-U3-Q014` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q23` — C Programming, June 2022.pdf, p.2, Q2(viii), `CST201-P003-Q18` — C Programming, March 2023.pdf, p.2, Q1(xviii)
-- `CST201-U3-Q015` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q49` — C Programming, June 2022.pdf, p.2, Q4(iv)
-- `CST201-U4-Q011` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q18` — C Programming, June 2022.pdf, p.2, Q2(iii)
-- `CST201-U4-Q012` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q26` — C Programming, June 2022.pdf, p.2, Q2(xi)
-- `CST201-U4-Q013` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q55` — C Programming, June 2022.pdf, p.3, Q4(x)
-- `CST201-U4-Q024` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q62` — C Programming, June 2022.pdf, p.3
+- `CST201-U4-Q011` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q18` — C Programming, June 2022.pdf, p.2, Q2(iii)
+- `CST201-U4-Q012` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q26` — C Programming, June 2022.pdf, p.2, Q2(xi)
+- `CST201-U4-Q013` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q55` — C Programming, June 2022.pdf, p.3, Q4(x)
+- `CST201-U4-Q024` (_quiz-data/CST201/unit-3.json): normalized-text-only; candidates `CST201-P002-Q62` — C Programming, June 2022.pdf, p.3
+- `CST201-U3-Q010` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q32` — C Programming, June 2022.pdf, p.2, Q3(ii)
+- `CST201-U3-Q011` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q33` — C Programming, June 2022.pdf, p.2, Q3(iii)
+- `CST201-U3-Q013` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q25` — C Programming, June 2022.pdf, p.2, Q2(x)
+- `CST201-U3-Q014` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q23` — C Programming, June 2022.pdf, p.2, Q2(viii), `CST201-P003-Q18` — C Programming, March 2023.pdf, p.2, Q1(xviii)
+- `CST201-U3-Q015` (_quiz-data/CST201/unit-4.json): normalized-text-only; candidates `CST201-P002-Q49` — C Programming, June 2022.pdf, p.2, Q4(iv)
 - `CST201-U5-Q023` (_quiz-data/CST201/unit-5.json): normalized-text-only; candidates `CST201-P002-Q63` — C Programming, June 2022.pdf, p.3
 - `CST201-U5-Q024` (_quiz-data/CST201/unit-5.json): normalized-text-only; candidates `CST201-P002-Q65` — C Programming, June 2022.pdf, p.3
 - `CST203-U1-Q042` (_quiz-data/CST203/unit-1.json): normalized-text-only; candidates `CST203-P001-Q32` — Python, June 2022.pdf, p.2, Q3(ii)

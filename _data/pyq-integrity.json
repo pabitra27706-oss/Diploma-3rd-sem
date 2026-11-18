@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "policy": "Owner-authorized reconciliation: preserve main at sourceCommit byte-for-byte. No answer certification inferred. Future source changes require explicit approval; derived metadata lives outside these originals. 2026-11-17 owner instructions: (1) the duplicate CST209-P002-2023-03 reprint was removed because CST209 has no 2021 paper; (2) MCQ explanation prose was expanded across every subject and paper. No stored answer key, option, question stem or mark was changed.",
+  "policy": "Owner-authorized reconciliation: preserve main at sourceCommit byte-for-byte. No answer certification inferred. Future source changes require explicit approval; derived metadata lives outside these originals. 2026-11-17 owner instructions: (1) the duplicate CST209-P002-2023-03 reprint was removed because CST209 has no 2021 paper; (2) MCQ explanation prose was expanded across every subject and paper. No stored answer key, option, question stem or mark was changed. 2026-11-18 owner-approved reconciliation (Mode B, Phase 12 part 12.6): the `unit` field was corrected on 44 CST201 2023-2026 questions to match the Revised-2022 syllabus, where Unit 3 is Array/Strings and Unit 4 is Functions (the stored data had them reversed, recorded in docs/data/validation-exceptions.json). ONLY the `unit` integer changed: question stems, options, answers, marks, topics, tags and ids are byte-identical, verified by a field-by-field comparison. Four paper files (P003/P004/P005/P006) were re-hashed accordingly. No answer certification is inferred. Same pass: the two CST201 quiz banks recorded as a reversed unit order were swapped at source (_quiz-data/CST201/unit-3.json now holds the Arrays/Strings bank, unit-4.json the Functions bank) and their unit/unitTitle fields were corrected. Question ids were left unchanged because content moved with its id, so stored attempt history still resolves to the same question text. Both `unit-order` findings were removed from docs/data/validation-exceptions.json as RESOLVED, not waived.",
   "files": {
     "_data/CST201/CST201-P001-2021-03.json": "13ce8241bb09a88921d53a40f0c65edf73654a681c89b15f7694509d9637570a",
     "_data/CST201/CST201-P002-2022-06.json": "b7a5f88e4520bf62e9af01e7264464c3d1d3c9df9b9a09458aba17b3981a60d5",
-    "_data/CST201/CST201-P003-2023-03.json": "0d2843b991c8d2f3278209d849bce400358158dc9610fcef321504946debe83a",
-    "_data/CST201/CST201-P004-2024-01.json": "64393f4c0e8f88aeb177c2fe384fde7a5a5503c4a3207dfd6eee0582aed9c50b",
-    "_data/CST201/CST201-P005-2024-12.json": "883da55c3f88661b7b5c92bc0537b7c114ed0c672d3d2e3ecb6ac88647d604d1",
-    "_data/CST201/CST201-P006-2026-01.json": "809f2a944ffed351b00a1b4ae175a3ecc7a52bf9ea2a75da6cd29d922473a7b2",
+    "_data/CST201/CST201-P003-2023-03.json": "bfd167257dc8f70592bebf5715645d62531577009d0946b13ead7c27bc4e6d59",
+    "_data/CST201/CST201-P004-2024-01.json": "34685a23c6e68d3bc9fdc23099dd08a4b3621d44db28958cca76f534cde784fc",
+    "_data/CST201/CST201-P005-2024-12.json": "edec92b7ea62a865f1a110ec3a5ef2543bccad0941f49d193c3e0b08e0c6efac",
+    "_data/CST201/CST201-P006-2026-01.json": "c8124d8c8f4ff2de50657a0a4a83ce247696417dd421744fcffff9e2d6fb1c52",
     "_data/CST201/registry.json": "563f5728670699ab1076c295f13389a6fb8ceb89662490b0022f2a246bbe9297",
     "_data/CST203/CST203-P001-2022-06.json": "6fa1a006b4f2fd58f37062edf2d09f8772fbe3c85187b8452767b7744a30b57e",
     "_data/CST203/CST203-P003-2023-03.json": "3fbe9974f12e69d26b7c532b42bf70c8af60cb4826417e9fb5e606daf874eb80",
@@ -36,5 +36,209 @@
     "_data/CST209/CST209-P006-2026-01.json": "5694aefdae1ba8671ff00732cb23796b7f85add87a5007882e87e61f4c587079",
     "_data/CST209/registry.json": "83ab9e849ceeca17979f14e9954055893f47302d68c1cee651d4b7b46fbae319"
   },
-  "sourceCommit": "664674b"
+  "sourceCommit": "664674b",
+  "reconciledAt": "2026-11-18",
+  "reconciliation": {
+    "kind": "unit-retag",
+    "scope": "_data/CST201/CST201-P00{3,4,5,6}-*.json",
+    "questionsRetagged": 44,
+    "fieldsChanged": [
+      "unit"
+    ],
+    "fieldsVerifiedUnchanged": [
+      "id",
+      "topic",
+      "question",
+      "options",
+      "correct",
+      "answer",
+      "marks",
+      "markSplit",
+      "subparts",
+      "tags",
+      "difficulty",
+      "group",
+      "sourceNumber",
+      "unitTitle"
+    ],
+    "rationale": "stored U3/U4 reversed against Revised-2022 syllabus (Unit 3 Arrays & Strings, Unit 4 Functions)",
+    "unitMoves": {
+      "CST201-P003-Q1": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P003-Q11": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P003-Q12": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P003-Q18": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P003-Q23": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P003-Q29": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P003-Q3": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P003-Q30": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P003-Q31": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P003-Q32": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P003-Q33": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P003-Q4": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P003-Q6": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P003-Q8": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P004-Q11": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P004-Q16": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P004-Q17": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P004-Q18": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P004-Q19": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P004-Q20": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P004-Q22": {
+        "from": 3,
+        "to": 2
+      },
+      "CST201-P004-Q5": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P005-Q10": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P005-Q11": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P005-Q12": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P005-Q15": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P005-Q19": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P005-Q20": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P005-Q21": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P005-Q22": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P005-Q23": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P005-Q24": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P005-Q7": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P005-Q8": {
+        "from": 4,
+        "to": 5
+      },
+      "CST201-P005-Q9": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P006-Q10": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P006-Q12": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P006-Q14": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P006-Q19": {
+        "from": 3,
+        "to": 4
+      },
+      "CST201-P006-Q20": {
+        "from": 4,
+        "to": 3
+      },
+      "CST201-P006-Q21": {
+        "from": 2,
+        "to": 4
+      },
+      "CST201-P006-Q24": {
+        "from": 2,
+        "to": 1
+      },
+      "CST201-P006-Q6": {
+        "from": 2,
+        "to": 4
+      },
+      "CST201-P006-Q7": {
+        "from": 4,
+        "to": 3
+      }
+    }
+  }
 }

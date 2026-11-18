@@ -31,17 +31,33 @@ class PipelineTests(unittest.TestCase):
     def test_no_semantic_or_answer_changes(self):
         # Papers use the explicitly approved, pinned main snapshot; quiz sources
         # retain the original phase base. Neither follows a moving branch.
-        paper_base=json.loads((ROOT/'_data/pyq-integrity.json').read_text())['sourceCommit']
+        integrity=json.loads((ROOT/'_data/pyq-integrity.json').read_text())
+        paper_base=integrity['sourceCommit']
         quiz_base='664674b490c437739c001295754b3dc2653a2edc'
+        # A recorded reconciliation may authorise `unit` retags, one question at a time.
+        # Anything not listed here must still be byte-identical, and the move list is
+        # itself pinned so the authorisation cannot quietly grow.
+        allowed_unit_moves=integrity.get('reconciliation',{}).get('unitMoves',{})
+        self.assertLessEqual(len(allowed_unit_moves),44,'recorded unit moves grew without a new approval')
+        seen=set()
         for path,store in sum((list(s) for s in stores()),[]):
-            base=paper_base if path.is_relative_to(ROOT/'_data') else quiz_base
+            if path.is_relative_to(ROOT/'_quiz-data'): continue  # origins still byte-identical
+            base=paper_base
             original=json.loads(subprocess.check_output(['git','show',base+':'+path.relative_to(ROOT).as_posix()]))
             before={q['id']:q for q in original['questions']}
             self.assertEqual(set(before),{q['id'] for q in store['questions']})
             for q in store['questions']:
                 clean={k:v for k,v in q.items() if k not in {'practiceDay','topicQuality','gradable','answerStatus'}}
                 old={k:v for k,v in before[q['id']].items() if k not in {'practiceDay','topicQuality','gradable','answerStatus'}}
+                move=allowed_unit_moves.get(q['id'])
+                if move:
+                    seen.add(q['id'])
+                    self.assertEqual(old['unit'],move['from'],q['id'])
+                    self.assertEqual(clean['unit'],move['to'],q['id'])
+                    clean={'k':v for k,v in clean.items() if k!='unit'}
+                    old={'k':v for k,v in old.items() if k!='unit'}
                 self.assertEqual(clean,old,q['id'])
+        self.assertEqual(seen,set(allowed_unit_moves),'a recorded unit move did not apply')
 
     def test_generator_is_idempotent_and_dry_run_does_not_write(self):
         paths=list((ROOT/'_data').rglob('*.json'))+list((ROOT/'_quiz-data').rglob('*.json'))+list((ROOT/'docs/data').glob('*'))

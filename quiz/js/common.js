@@ -49,8 +49,8 @@ const UNIT_TITLES = {
   CST201: {
     1: 'Basics of C',
     2: 'Decision Control and Looping Statements',
-    3: 'User Defined Functions — mapping under review',
-    4: 'Arrays & Strings — mapping under review',
+    3: 'Subscripted Variables / Arrays',
+    4: 'User defined functions',
     5: 'Pointers in C'
   },
   CST203: {
@@ -96,7 +96,7 @@ async function loadQuizCatalog() {
     SUBJECTS[code].quizCount = meta.quizCount;
     SUBJECTS[code].available = meta.quizCount > 0;
     UNIT_TITLES[code] = Object.fromEntries(meta.banks.map(bank => [bank.unit,
-      bank.title + ((code === 'CST201' && [3,4].includes(bank.unit)) || bank.unit > meta.syllabusUnits ? ' — mapping under review' : '')]));
+      bank.title + (bank.unit > meta.syllabusUnits ? ' — outside syllabus' : '')]));
   });
   return catalog;
 }

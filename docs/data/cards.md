@@ -33,11 +33,11 @@ Per-subject breakdown: C quiz-not-mcq 84; Python alias 1, quiz-not-mcq 138; DS q
 
 | Subject | Unit | Cards |
 |---|---:|---:|
-| C | 1 | 159 |
-| C | 2 | 44 |
-| C | 3 | 47 |
+| C | 1 | 160 |
+| C | 2 | 42 |
+| C | 3 | 40 |
 | C | 4 | 44 |
-| C | 5 | 31 |
+| C | 5 | 39 |
 | Python | 1 | 145 |
 | Python | 2 | 33 |
 | Python | 3 | 40 |

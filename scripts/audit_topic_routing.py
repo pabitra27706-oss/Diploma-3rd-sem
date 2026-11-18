@@ -81,23 +81,36 @@ def load_units(subject):
             if (ROOT / f'subjects/{subject}/units/unit-{u}.html').exists()}
 
 
+def segments_covered(title, needle):
+    """How many of the topic's own segments this heading covers."""
+    covered = 0
+    for segment in (p.strip() for p in re.split(r'[/,;]+', needle) if p.strip()):
+        target_terms = terms_for(segment)
+        if target_terms and score_against(title, segment, target_terms) > 0:
+            covered += 1
+    return covered
+
+
+def _pick(entries, needle, home, best):
+    """Best entry, breaking equal scores on segment coverage rather than order."""
+    for title, anchor in entries:
+        score = score_title(title, needle)
+        covered = segments_covered(title, needle)
+        if score > best[0] or (score == best[0] and score > 0
+                               and covered > segments_covered(best[2] or '', needle)):
+            best = (score, anchor, title, home)
+    return best
+
+
 def route(units, unit, topic):
     needle = re.sub(r'\s+', ' ', str(topic or '')).strip().lower()
-    in_unit = [(t, a, unit) for t, a in units.get(unit, [])]
-    best = (0.0, None, None, unit)
-    for title, anchor, home in in_unit:
-        score = score_title(title, needle)
-        if score > best[0]:
-            best = (score, anchor, title, home)
+    best = _pick(units.get(unit, []), needle, unit, (0.0, None, None, unit))
     if best[0] >= FLOOR:
         return best
     for other, entries in units.items():
         if other == unit:
             continue
-        for title, anchor in entries:
-            score = score_title(title, needle)
-            if score > best[0]:
-                best = (score, anchor, title, other)
+        best = _pick(entries, needle, other, best)
     return best
 
 
