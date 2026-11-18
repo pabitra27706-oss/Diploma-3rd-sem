@@ -4,7 +4,8 @@
 > administratively closed; any remaining test or acceptance item is **SKIPPED**,
 > not passed. Use [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md) for the controlling
 > per-phase disposition. Earlier roadmap text below is historical where it
-> conflicts with that closeout.
+> conflicts with that closeout. Phase 11 is new work approved separately and
+> does not reopen the closed phases.
 
 Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 (10 original phases plus owner-requested device acceptance, one folder each)
@@ -33,9 +34,9 @@ Bootstrapped from WebFlow @ `4bc8b0b` on 2026-11-06 · replanned 2026-11-06
 | 7 | Inclusion and trust | [`07-inclusion-trust`](phases/07-inclusion-trust/README.md) | 5 | WCAG 2.2 AA measured; reading controls; en/bn UI layer; privacy matches code; LICENSE + true README | ✅* |
 | 8 | Content depth and syllabus coverage | [`08-content-depth`](phases/08-content-depth/README.md) | 6 | Coverage map from the syllabus; formula sheets with sources; clean print; lab/internship pages; exam pattern reconciled | Closed by owner direction; 8.2/8.6 verification SKIPPED (0/44, 0/924 certified) |
 | 9 | Performance, measurement, launch | [`09-performance-launch`](phases/09-performance-launch/README.md) | 6 | ≤12 requests; one token file; cache policy; honest measurement; domain-ready; checklist green, still not deployed | Closed by owner direction; 9.4 no counter; Lighthouse/remaining checks SKIPPED |
-
 | 9B | UI reboost | [`09B-ui-reboost`](phases/09B-ui-reboost/record.md) | reviewed batches | Owner-approved direction and plan; phone/desktop review of each batch; token, a11y and weight gates | ✅* merged 2026-11-17 (no physical-device pass) |
 | 10 | Dedicated cross-device acceptance | [`10-device-acceptance`](phases/10-device-acceptance/README.md) | 5 | Observed device/browser matrix, defect retests, honest tested/untested report | Closed by owner direction; partial Galaxy A35 report retained; remaining matrix SKIPPED |
+| 11 | Subject-wise Suggestions | [`11-suggestions`](phases/11-suggestions/README.md) | 4 | Home opens a five-card Suggestions hub and ten static, syllabus-linked guides; question links resolve under the published base path; targeted checks and limits are recorded | 🚧 Approved; implementation starting |
 
 ## Owner-directed sequencing — 2026-11-09
 
@@ -59,6 +60,7 @@ source gates remain visible; no unfinished phase is relabelled complete.
 | Readable, keyboard-usable, bilingual UI; true privacy page | 7 |
 | Coverage map, formula sheets, printables, lab pages | 8 |
 | Fast on a cheap phone; a launch that is actually ready | 9 |
+| Pick a subject, practise selected past questions, or open a quick revision guide | 11 |
 
 For the complete current remainder list and evidence limits, see
 [Current status](STATUS.md). Phase records contain historical and current
@@ -76,9 +78,8 @@ current action items.
 
 ## Held / cancelled (keep visible)
 
-- Bookmark system and Study Tips pages — currently "Coming Soon" with empty CSS
-  and JS files. Phase 1.4 removes the dead navigation entries; Phase 6 decides
-  whether bookmarks return as a real feature.
+- The standalone Bookmarks placeholder stays out of scope. The separate Study
+  Tips placeholder is now in scope for Phase 11.
 
 *Phase 1 platform implementation complete (2026-11-09). Full syllabus-strict subtask remains blocked by seven source-verification-gated PYQs; coverage stays advisory per the recorded Phase 2 decision. See `phases/01-platform/record.md`. Phone install/unfurl are still launch checks.
 

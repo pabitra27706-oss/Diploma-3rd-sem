@@ -8,6 +8,14 @@ pass: remaining requirements are explicitly skipped or left unverified in
 [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md). Phase 10's device report is partial;
 content remains uncertified; no new deploy is authorized.
 
+## Phase 11 — Subject-wise Suggestions (2026-11-18) — 🚧
+
+The owner approved a separate phase for the five theory subjects, with
+**Important Questions** and **Easy Read** guides, and asked to record the phase
+before writing site code. See the [phase plan](phases/11-suggestions/README.md)
+and [record](phases/11-suggestions/record.md). This work does not reopen Phases
+1–10 or authorize publishing.
+
 ## Phase 9B — UI reboost (2026-11-17) — `✅*`, merged
 
 Implemented on `arena/7e77489f-diploma-3rd-sem` (from `main` at `816ef84`) and

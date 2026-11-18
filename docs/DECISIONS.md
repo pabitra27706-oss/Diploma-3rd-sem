@@ -6,6 +6,11 @@
 
 ## Owner decisions
 
+- 2026-11-18 — 3rd-semester Suggestions? — **Approved as Phase 11.** Create the
+  phase entry before implementing. Use the 2nd-semester dashboard interaction
+  (expandable subjects, **Important Questions**, **Easy Read**) with 3rd-semester
+  styling and original, source-linked guidance. The approval does not amend
+  the Phases 1–10 closure or grant PR, merge or deployment permission.
 - 2026-11-06 — Playbook scope? — Build the reusable web playbook in
   `webflow/` **and** adopt it for this site (`rule.md`, `prompt.md`, `docs/`).
 - 2026-11-06 — Default web stack? — **Zero-build static + GitHub Pages.**
