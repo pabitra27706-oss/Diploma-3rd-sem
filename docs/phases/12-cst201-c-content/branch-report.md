@@ -143,6 +143,35 @@ Two independent defects had to be fixed together; fixing either alone still miss
    many of the topic's own segments the heading covers**. 17 anchors improve, none
    regress.
 
+### 3.2b How the three scoring rules depend on each other
+
+The rules are not independent, and measuring them by pass/fail totals hides that.
+Contribution of each stage on the **current** (already re-tagged) data:
+
+| Config | same-unit | redirect | unmatched |
+| :--- | ---: | ---: | ---: |
+| whole-string matching, no stemming | 96 | 6 | 3 |
+| **+ segment split** | 103 | 2 | 0 |
+| + singularisation | 103 | 2 | 0 |
+| + overview tie-break (shipped) | 103 | 2 | 0 |
+
+That table suggests singularisation contributes nothing. It is wrong, and the
+reason matters: the totals only count *pass/fail and same-unit*, not **which
+anchor** was chosen. Singularisation fires on exactly two stored topics —
+
+- `"Arrays / loops"` (`P003-Q8`): `loops` matches the heading word `loop` **only**
+  after singularisation.
+- `"Switch / Armstrong numbers"` (`P004-Q23`): `numbers` / `number`.
+
+Without singularisation, `#arrays-initialization-memory-and-loops` covers only
+`1/2` of the topic's segments instead of `2/2`, so it **ties** with the generic
+`#overview` and loses the tie-break — `P003-Q8` lands on the overview instead of
+the specific section. The tie-break therefore depends on the stemming rule to
+have anything to break. The original test for this
+(`test_plural_topic_matches_singular_heading`) only asserted "resolves somewhere
+in unit 2", which passed via an unrelated heading; it now asserts the score
+against the singular heading directly and the coverage counts that decide the tie.
+
 ### 3.3 Data — `_data/CST201/` (44 questions re-tagged)
 
 **Verified mechanically against the base commit:** 44 questions changed, and the

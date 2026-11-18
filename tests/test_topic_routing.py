@@ -29,10 +29,17 @@ class TopicRoutingTests(unittest.TestCase):
         self.assertEqual(anchor, 'switch')
 
     def test_plural_topic_matches_singular_heading(self):
-        # Headings say "loop"; stored topics say "loops".
-        score, _anchor, _title, unit = routing.route(self.units, 2, 'Conditionals / loops / GCD')
-        self.assertGreaterEqual(score, routing.FLOOR)
-        self.assertEqual(unit, 2)
+        # Headings say "loop"; stored topics say "loops". Assert the score against
+        # the singular heading directly -- the old version only checked "resolves
+        # somewhere in U2", which passed via an unrelated heading and would not
+        # have noticed if singularisation were removed.
+        singular_heading = 'loop control: counter, condition and update'
+        self.assertEqual(routing.score_title(singular_heading, 'loops'), 1.0)
+        # And the rule is load-bearing: without it, the tie-break that sends
+        # "Arrays / loops" to the specific section cannot fire.
+        self.assertEqual(routing.segments_covered(singular_heading, 'arrays / loops'), 1)
+        self.assertEqual(routing.segments_covered(
+            '1d arrays: initialization, memory layout and loop traversal', 'arrays / loops'), 2)
 
     def test_topic_spanning_three_subtopics_still_resolves(self):
         score, _a, _t, unit = routing.route(self.units, 2, 'Conditional operator / parameters / leap year')
