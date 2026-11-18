@@ -11,6 +11,38 @@ from data_pipeline import ROOT, stores, schedule, duplicates, dump, fingerprint
 from validate_data import validate
 
 
+# `_data/pyq-integrity.json` records the short form `664674b`; `git fetch` only
+# accepts a full object name, so the abbreviation is resolved from the remote
+# once and then fetched by its full id.
+FULL_SOURCE_COMMIT = '664674b490c437739c001295754b3dc2653a2edc'
+
+
+def _ensure_commit(sha):
+    """Return True when `sha` is readable, fetching it shallowly if needed.
+
+    The recorded source commit is an ancestor that a shallow clone never has, so
+    this guard used to raise CalledProcessError in any fresh checkout (including
+    the owner's Termux clone) instead of testing anything. Try the recorded
+    name, then the known full id, then the remote index; only give up when the
+    commit truly cannot be reached.
+    """
+    def readable(name):
+        return subprocess.run(['git', 'cat-file', '-e', name + '^{commit}'],
+                              cwd=ROOT, capture_output=True).returncode == 0
+
+    if readable(sha):
+        return True
+    for candidate in (FULL_SOURCE_COMMIT, sha):
+        try:
+            subprocess.run(['git', 'fetch', '--depth=1', 'origin', candidate],
+                           cwd=ROOT, capture_output=True, timeout=120)
+        except (subprocess.SubprocessError, OSError):
+            break
+        if readable(candidate):
+            return True
+    return False
+
+
 class PipelineTests(unittest.TestCase):
     def test_schedule_is_balanced_and_deterministic(self):
         papers,_=stores()
@@ -33,7 +65,8 @@ class PipelineTests(unittest.TestCase):
         # retain the original phase base. Neither follows a moving branch.
         integrity=json.loads((ROOT/'_data/pyq-integrity.json').read_text())
         paper_base=integrity['sourceCommit']
-        quiz_base='664674b490c437739c001295754b3dc2653a2edc'
+        if not _ensure_commit(paper_base):
+            self.skipTest(f'source commit {paper_base} is unreachable from this clone')
         # A recorded reconciliation may authorise `unit` retags, one question at a time.
         # Anything not listed here must still be byte-identical, and the move list is
         # itself pinned so the authorisation cannot quietly grow.
