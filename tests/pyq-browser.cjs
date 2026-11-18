@@ -65,6 +65,8 @@ const assert = require('node:assert/strict');
     await browser.close();
   }
 })().catch(error => {
+  const message = String(error && error.stack || error).replace(/[\r\n]+/g, ' ');
   console.error(error);
+  console.log(`::error title=PYQ browser smoke::${message}`);
   process.exitCode = 1;
 });
