@@ -7,12 +7,16 @@ Both assertions here began as findings recorded in
     match inside "shallow";
   * a landing must not depend on the order the author wrote the headings in.
 
-The second one currently FAILS and is expected to fail. That is deliberate:
-the defect is real, it moves roughly a third of the corpus, and it is filed
-for a dedicated cross-subject phase rather than patched blind (a word-boundary
-"fix" regresses two 8-mark Python questions -- see §4.1.3a). The test is
-marked with an explicit known-failure list so the number cannot drift silently
-and so removing the entry is a visible act, not a quiet one.
+The second one is a MEASURED ratchet, not a passing invariant. The tie-break
+defect is real. Phase 17 (2026-11-19) decided to keep it pinned, not to fix it:
+a tie-break that removes the order dependence (generic-preference, then shorter
+heading, then anchor) moves about 175 archived landings. Reading a 12-case
+sample against the stems: 3 clearly better, 2 clearly worse, 5 unclear, and 2
+placeholder landings that were nonsense either way. The reasoning, the measurements
+and the owner question are in docs/phases/17-topic-map-crosscheck/record.md
+§4.2. What Phase 17 DID establish is that the defect cannot reach the
+calibrated window at runtime, because every window question is routed by the
+authored map first. That is asserted below, not assumed.
 """
 import re
 import sys
@@ -27,6 +31,10 @@ import audit_topic_routing as routing  # noqa: E402
 
 SUBJECTS = ('CST201', 'CST203', 'CST205', 'CST207', 'CST209')
 PAPERS = 'P00[3-6]'
+# Full-corpus (archived P001-P006) order dependence of the matcher, measured
+# 2026-11-19 with the same reversal test. Archived questions and stale-anchor
+# fallbacks are the only runtime paths still exposed to it.
+ARCHIVED_ORDER_DEPENDENT = {'CST201': 50, 'CST203': 30, 'CST205': 45, 'CST207': 30, 'CST209': 49}
 
 # Measured 2026-11-19. Not a target -- a ratchet.
 # CST205 moved 35 -> 33 in Phase 14 (17 new <h3 id> anchors across the four
@@ -188,6 +196,36 @@ class DocumentOrderIndependenceTests(unittest.TestCase):
                          'tuples-and-sequences')
         self.assertEqual(routing.route(reverse, 1, topics['CST203-P003-Q29'])[1],
                          'dictionaries-keys-and-methods')
+
+
+class MapFirstRuntimeOrderTests(unittest.TestCase):
+    """Phase 17: what the browser actually does, for the calibrated window."""
+
+    def test_runtime_window_landings_do_not_depend_on_heading_order(self):
+        for subject in SUBJECTS:
+            mapping, no_jump = routing.load_register(subject)
+            forward = routing.runtime_units(subject)
+            reverse = {unit: (list(reversed(entries)), ids)
+                       for unit, (entries, ids) in forward.items()}
+            for q in routing.questions(subject, PAPERS):
+                home = q.get('unit') or 1
+                a = routing.route_runtime(forward, mapping, no_jump, home, q.get('topic'))
+                b = routing.route_runtime(reverse, mapping, no_jump, home, q.get('topic'))
+                self.assertEqual(a, b, f'{q["id"]} landing depends on heading order')
+
+    def test_archived_order_dependence_is_measured_and_ratcheted(self):
+        measured = {}
+        for subject in SUBJECTS:
+            forward = routing.load_units(subject)
+            reverse = {unit: list(reversed(entries)) for unit, entries in forward.items()}
+            moved = 0
+            for q in routing.questions(subject, 'P'):
+                home = q.get('unit') or 1
+                if routing.route(forward, home, q.get('topic'))[1] != routing.route(reverse, home, q.get('topic'))[1]:
+                    moved += 1
+            measured[subject] = moved
+        self.assertEqual(measured, ARCHIVED_ORDER_DEPENDENT,
+                         'Archived order dependence changed. Explain it in record.md §4.2 before re-pinning.')
 
 
 if __name__ == '__main__':

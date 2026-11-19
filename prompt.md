@@ -1,3 +1,18 @@
+> **Phase 17 — 2026-11-19 (built locally, awaiting owner review; NOT pushed):**
+> Topic-map cross-check across all five subjects. Branch
+> `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (verified ancestor). No
+> dedicated Phase 17 branch was created: Arena fixes the session branch.
+> Map entries unchanged (421/421 anchors resolve; zero rot). Added a `noJump`
+> register: the placeholder labels (321 archived questions, plus `short notes`)
+> open at the unit top with no jump. Tie-break kept pinned, with the measured
+> reason (record §7). Local evidence: 202 Python tests, 12 Node DOM cases, all
+> README gates exit 0, canonical rebuild byte-identical on a second pass.
+> Inherited: hosted "PYQ browser smoke" red on `main` (`44515857069`), same
+> named step as Phase 16; root cause not established. Frozen `_data/` and
+> `_quiz-data/` unchanged. **Record:** `docs/phases/17-topic-map-crosscheck/record.md`.
+> Owner decisions F1–F8 are open (record §11). Do not push, open a PR, merge or
+> deploy without explicit owner authorisation.
+
 # Diploma 3rd Sem Study Hub — continuation handoff
 
 > **Phase 16 closeout — 2026-11-19:** Owner reported “Everything looks good”

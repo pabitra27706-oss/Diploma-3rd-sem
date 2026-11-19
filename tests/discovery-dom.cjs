@@ -553,6 +553,65 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
   }
   console.log(`PASS topic map honoured first, matcher fallback intact, missing map tolerated, all ${anchorCount} anchors across every map present`);
 
+  /* Phase 17 (17.4): a placeholder label is a recorded "no jump, no topic".
+     The question must open at the unit top: no redirect, no highlight and no
+     dead synthetic fragment. The REAL unit headings are mounted, including the
+     heading the old matcher chose (CST201 #short-questions, CST203's
+     "match object" card via the word "group"), so this fails if the matcher is
+     consulted for a placeholder again. */
+  {
+    const mountRealHeadings = (doc, root, raw) => {
+      for (const [, tag, attrs, text] of raw.matchAll(/<(h[234])\b([^>]*)>([\s\S]*?)<\/\1>/gi)) {
+        const id = attrs.match(/\bid="([^"]+)"/)?.[1];
+        if (!id) continue;
+        const h = doc.createElement(tag);
+        h.id = id;
+        h.textContent = text.replace(/<[^>]+>/g, '').trim();
+        root.append(h);
+      }
+    };
+    async function noJumpOpen(subject, unit, topic) {
+      const slug = topic.normalize('NFKD').toLowerCase().replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const dom = createMiniDom(`${BASE}subjects/${subject}/units/unit-${unit}.html?topic=${encodeURIComponent(topic)}#${slug}`);
+      const { doc, win } = dom;
+      const main = doc.createElement('main');
+      doc.body.append(main);
+      const raw = fs.readFileSync(path.join(ROOT, `subjects/${subject}/units/unit-${unit}.html`), 'utf8');
+      mountRealHeadings(doc, main, raw);
+      const replaced = [];
+      win.location.replace = url => { replaced.push(String(url)); win.location.href = url; };
+      const repoFetch = createRepoFetch('/Diploma-3rd-sem/', null, () => win.location.href);
+      win.fetch = async input => repoFetch(input);
+      win.DOMParser = class {
+        parseFromString(text) {
+          const temp = createMiniDom(win.location.href).doc;
+          mountRealHeadings(temp, temp.body, text);
+          return temp;
+        }
+      };
+      runScriptIn(win, 'assets/js/subject-labels.js');
+      runScriptIn(win, 'assets/js/unit-discovery.js');
+      await flush(6);
+      return { dom, main, replaced };
+    }
+    const cases = [
+      ['CST203', 1, 'Group A / objective'],
+      ['CST201', 1, 'Short answer'],
+      ['CST201', 1, 'Group C / long answer'],
+    ];
+    /* Not a case: CST207 \"Short notes\" (P006-Q24, unit 3) was tried and
+       PASSES against the pre-Phase-17 JS too (the old matcher finds no heading
+       for it), so it does not guard the no-jump decision and is not counted. */
+    for (const [subject, unit, topic] of cases) {
+      const o = await noJumpOpen(subject, unit, topic);
+      assert.deepEqual(o.replaced, [], `${subject} "${topic}" was redirected: the matcher was consulted for a placeholder`);
+      assert.equal(o.dom.win.location.hash, '', `${subject} "${topic}" left a dead synthetic fragment: ${o.dom.win.location.hash}`);
+      assert.equal(o.main.querySelectorAll('.pyq-topic-target').length, 0, `${subject} "${topic}" highlighted a heading`);
+    }
+    console.log(`PASS placeholder labels open at the unit top with no jump, no redirect and no dead fragment (${cases.length} cases)`);
+  }
+
   /* CST207: exercise the real resolver for every question in the strict window. */
   {
     const unitDir = 'subjects/CST207/units/';

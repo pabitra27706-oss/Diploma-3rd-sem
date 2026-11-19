@@ -220,16 +220,19 @@ A **public launch** additionally needs every item in
   which branch/revision contains the changes and whether it has been pushed.
   Never suggest a destructive reset, overwrite local changes, or present an
   unpushed change as available through `git pull`.
-- **Phase 16 Termux preview (branch pushed with owner authorization).**
+- **Phase 17 Termux preview — branch NOT yet pushed.** Phase 17 is committed
+  locally on `arena/1e78bf15-diploma-3rd-sem` (base `9fda855`). A remote clone
+  **cannot fetch this branch** until the owner authorises a push; until then the
+  command below stops at the branch check. Do not present it as available.
   With Python and Git installed (`pkg install python git` if needed), use this
-  single command. It clones or updates a dedicated working directory and refuses
-  to update a checkout on the wrong branch. If a pull refuses local changes,
-  stop and keep those changes; do not reset the checkout.
+  single command after a push. It clones or updates a dedicated working directory
+  and refuses to update a checkout on the wrong branch. If a pull refuses local
+  changes, stop and keep those changes; do not reset the checkout.
 
   ```sh
-  cd ~ && mkdir -p ~/study-hub-algorithms-preview && cd ~/study-hub-algorithms-preview && (test -d Diploma-3rd-sem/.git || git clone --single-branch --branch arena/d7aa68ed-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && test "$(git branch --show-current)" = arena/d7aa68ed-diploma-3rd-sem && git pull --ff-only origin arena/d7aa68ed-diploma-3rd-sem && cd ~/study-hub-algorithms-preview && python3 -m http.server 8012 --bind 127.0.0.1
+  cd ~ && mkdir -p ~/study-hub-topicmap-preview && cd ~/study-hub-topicmap-preview && (test -d Diploma-3rd-sem/.git || git clone --single-branch --branch arena/1e78bf15-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && test "$(git branch --show-current)" = arena/1e78bf15-diploma-3rd-sem && git pull --ff-only origin arena/1e78bf15-diploma-3rd-sem && cd ~/study-hub-topicmap-preview && python3 -m http.server 8013 --bind 127.0.0.1
   ```
 
-  Open `http://127.0.0.1:8012/Diploma-3rd-sem/subjects/CST209/units/unit-4.html`.
-  Stop with Ctrl+C. Port 8012 isolates the preview from prior service workers.
+  Open `http://127.0.0.1:8013/Diploma-3rd-sem/subjects/CST203/units/unit-1.html?topic=Group%20A%20%2F%20objective`.
+  Stop with Ctrl+C. Port 8013 isolates this preview from earlier service workers.
   This is local testing, not production deployment.

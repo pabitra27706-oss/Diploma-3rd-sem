@@ -1,5 +1,34 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
+## Phase 17 — Topic-map cross-check — 🚧 built locally, awaiting owner review (2026-11-19, NOT pushed)
+
+Branch `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (PR #31 merge). Local
+commit only: no push, PR, merge or deploy. Full evidence:
+[Phase 17 record](phases/17-topic-map-crosscheck/record.md).
+
+- All five `assets/data/topic-map-<subject>.json` maps: entries unchanged;
+  **421/421 anchors resolve** to landable headings; zero raw paper-section
+  anchors; zero unmapped questions in the calibrated `P00[3-6]` window.
+- A `noJump` register: the placeholder labels (321 archived questions) and
+  CST207 `short notes` open at the unit top, with no redirect, no highlight and
+  no dead fragment. Guarded by 3 DOM cases (ablated: the old JS fails).
+- Tie-break **kept pinned**, with the reason measured: the candidate key turns
+  five clean fallbacks into nonsense landings (record §7).
+- Baseline reconciled: the matcher reproduces the 2026-11-18 baseline exactly on
+  the baseline-era pages. Today's pages differ, so the matcher-only gauge is not
+  like-for-like. The report now says so.
+- 50-entry spot-read: C 37, P 10, B 3, W 0. Three candidate re-points are
+  flagged for the owner, not applied (record §5.5).
+- Gates: 202 Python tests OK (0 skipped); 12 DOM cases; `check_pyq_integrity` 0
+  drift; all README gates exit 0; canonical rebuild byte-identical on a second
+  pass; `validate_data` and `validate_syllabus` output identical to `main`.
+- **Inherited CI red (unchanged):** `main` Web CI `44515857069` fails at
+  "PYQ browser smoke"; Pages green. Predecessor `44490460318` failed at the same
+  named step. Root cause not established; not claimed identical.
+- No browser, device or playback evidence. Owner-test URLs and the Termux block
+  are in record §12 and §14. **A remote clone cannot fetch this branch until a
+  push is authorised.**
+
 ## Phase 14 — Data Structures — ✅* owner-passed (Termux test), merge authorized (2026-11-19)
 
 Branch `arena/c5ca91cb-diploma-3rd-sem`, base `cdf001c` (Phase 16 PR #30

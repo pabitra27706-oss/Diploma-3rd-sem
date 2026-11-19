@@ -3,7 +3,7 @@
 import json
 from collections import Counter
 
-from audit_topic_routing import ROOT, load_units, questions
+from audit_topic_routing import ROOT, load_units, no_jump_register, questions
 
 SUBJECT = 'CST207'
 WINDOW = 'P00[3-6]'
@@ -98,7 +98,8 @@ def build():
             raise ValueError(f'Missing unequal-mark decision: {ref}')
     return {'schemaVersion': 1, 'subject': SUBJECT,
             'note': 'Mode A. Strict P003–P006 window. P006-Q24 is a choice pool with no single topic; no jump. See decisions for editorial choices.',
-            'map': dict(sorted(result.items())), 'decisions': DECISIONS}
+            'map': dict(sorted(result.items())),
+            'noJump': no_jump_register(SUBJECT), 'decisions': DECISIONS}
 
 
 if __name__ == '__main__':
