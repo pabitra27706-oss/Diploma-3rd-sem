@@ -557,8 +557,15 @@ hr {
    Replaces display:none with height animation   */
 .section-content {
   padding:        1.25rem 1.5rem;
-  max-height:     6000px;
-  overflow:       hidden;
+  /* An OPEN section must never be clipped. This used to be a 6000px cap, which
+     is shorter than a long unit section renders on a phone (#collections in
+     CST203 Unit 1 needs ~8,200px, long-questions ~8,300px), so the tail of the
+     section was cut off AND painted over the next section's text - 13 sections
+     across 4 subjects were affected. The collapse animation never relied on
+     this value: .collapsed sets 0 and common.js sets an explicit px height
+     during the transition, so the resting state can simply be unconstrained. */
+  max-height:     none;
+  overflow:       visible;
   opacity:        1;
   transition:
     max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -568,6 +575,9 @@ hr {
 
 .section-content.collapsed {
   max-height:     0;
+  /* A collapsed section must clip its own content, or the text shows through
+     the 0-height box while the opening animation plays. */
+  overflow:       hidden;
   opacity:        0;
   padding-top:    0;
   padding-bottom: 0;

@@ -721,6 +721,100 @@ belongs in a future phase**; noted rather than built here.
 new map test). Node **14 suites pass, 11 env-blocked** on missing `playwright-core`
 (pre-existing, not a regression). `unitAnchored` lock **632 &rarr; 634**.
 
+### 4.8 Owner-reported overlap on phone — a real bug that 151 tests did not catch
+
+**Report (2026-11-19).** Two phone screenshots of CST203 Unit 1: section body
+text rendered *on top of* neighbouring sections. The words of two sections were
+interleaved on one screen ("Unit 1 carries the largest single block..." overlapping
+the boxed list "Slicing: **start included, stop excluded**..."), and in one shot
+the word **"Operators"** appeared twice, once as a heading and once as body text.
+
+**Diagnosis (source-level; no browser is available in this environment).** Three
+rules combined:
+
+1. `.section-content { max-height: 6000px; overflow: hidden }` in
+   `subjects/units-com/common.css:558` — the *resting, open* state of every unit
+   section.
+2. On a 360px phone a long section renders far taller than 6000px:
+   `#collections` ~8,200px, `#long-questions` ~8,300px, `#operators` ~6,600px
+   (estimate below). Everything past 6000px was therefore cut off.
+3. `body[data-page="unit"] .section:has(.table-wrapper) { overflow: visible }`
+   — a rule added so a sticky table column could escape the section's rounded
+   corner clipping. **Both** affected sections contain a `.table-wrapper`, so the
+   section stopped clipping, and the already-overflowing content painted over the
+   following section instead of being hidden. That is the interleaving in the
+   screenshots.
+
+`#operators` contains 5 `<pre>` blocks and 9 paragraphs; two of its `<pre>` blocks
+open with the word "Operators", which is the duplicate the second screenshot shows.
+
+**Why the tests were blind.** Nothing in the suite asserted anything about
+section height or clipping. `check_site`, `audit_accessibility` and the DOM tests
+all read markup and computed styles that do not include layout. **151 green tests
+and 13 green gates coexisted with a layout bug a learner sees immediately.** The
+lesson is not "add more gates everywhere"; it is that this project has no
+layout assertion at all, and layout is where the owner keeps finding defects.
+
+**Blast radius (measured, not assumed).** 13 of 371 sections across 4 subjects
+exceed the old cap on a phone:
+
+| Subject | Unit | Section | Est. phone height |
+| :--- | ---: | :--- | ---: |
+| CST201 | 2 | `#loops` | 9,332px |
+| CST203 | 1 | `#long-questions` | 8,304px |
+| CST203 | 1 | `#collections` | 8,216px |
+| CST203 | 4 | `#fileio` | 8,036px |
+| CST203 | 3 | `#parameters` | 7,495px |
+| CST203 | 2 | `#loops` | 7,453px |
+| CST201 | 4 | `#scope` | 7,101px |
+| CST205 | 3 | `#practice` | 6,837px |
+| CST205 | 2 | `#stacks` | 6,813px |
+| CST203 | 1 | `#operators` | 6,632px |
+| CST207 | 5 | `#long-questions` | 6,337px |
+| CST205 | 3 | `#long-questions` | 6,180px |
+
+**This is not a Phase 13 regression.** `CST201 unit-2 #loops` is the worst case
+and predates Phase 13 entirely; the cap has been wrong since it was written. What
+Phase 13 did was make sections long enough for more of them to cross the line.
+
+**Fix 1 — the resting state must not be clipped.** `.section-content` now uses
+`max-height: none; overflow: visible`. The collapse animation never depended on
+the 6000px value: `.collapsed` sets `max-height: 0` and `common.js` sets an
+explicit pixel height during the transition, so an unconstrained resting state is
+correct. `.collapsed` keeps `overflow: hidden` (added) so a collapsed section
+genuinely clips rather than letting text show through a zero-height box. With the
+resting clip gone, the `:has(.table-wrapper)` escape hatch no longer has anything
+to leak, so that rule is left alone rather than churned.
+
+**Fix 2 — `expandSection` measured a clipped box.** `common.js` pinned
+`max-height` to `contentEl.scrollHeight` while `.collapsed` was still on the
+element, so the measurement described the *collapsed* box; with a cap in force it
+would describe the capped box. It now clears the inline cap, forces layout, then
+measures. Without this the CSS fix alone would still clip a long section the
+first time a learner expanded it.
+
+**The guard — `tests/test_section_clipping.py` (6 tests).** Asserts the open
+state has no fixed pixel cap, the open state does not clip, the collapsed state
+does clip and hide, `expandSection` clears the cap before measuring, and reports
+any section still estimated above the old cap. Ablation both ways:
+
+| Change | Result |
+| :--- | :--- |
+| restore `max-height: 6000px; overflow: hidden` | **2 tests FAIL** |
+| restore the old `expandSection` | **1 test FAILS** (ERROR) |
+| as shipped | 6 tests OK |
+
+The height estimate is documented as a tripwire, not pixel truth: it assumes a
+narrow phone and under-reports rather than over-reports.
+
+**State after the fix.** 157/157 unittest (was 151, +6), 13 script gates green,
+PYQ integrity 0 drift, 14 node suites pass (11 env-blocked).
+
+**Limits stated honestly.** There is no browser in this environment, so this is a
+source-level diagnosis plus an estimate, **not** a rendered before/after. The
+owner's post-fix screenshots are the only real verification, and until they
+arrive the fix is a hypothesis with a mechanism, not a proven cure.
+
 ### 4.1.4 Code verification
 
 Every `<pre>` block was machine-checked against Python 3.11.2 rather than eyeballed:

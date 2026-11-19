@@ -217,10 +217,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function expandSection(contentEl, iconEl) {
     contentEl.classList.remove("collapsed");
-    contentEl.style.maxHeight = contentEl.scrollHeight + "px";
+
+    /* Measure the full content height from a state that is NOT clipped. While
+       .collapsed is on, scrollHeight reports the collapsed box; and if a
+       max-height cap is still in force it reports the capped box. Either way
+       the pinned height comes out too short and the tail of a long section
+       gets clipped again. Clearing the inline cap and letting the browser
+       resolve the class change first makes the measurement honest. */
+    contentEl.style.maxHeight = "none";
+    void contentEl.offsetHeight; /* force layout before measuring */
+    var fullHeight = contentEl.scrollHeight;
+    contentEl.style.maxHeight = fullHeight + "px";
     if (iconEl) iconEl.classList.remove("rotated");
 
-    /* After transition, remove inline max-height for dynamic content */
+    /* After transition, remove inline max-height so dynamic content can grow */
     var onEnd = function () {
       contentEl.style.maxHeight = "";
       contentEl.removeEventListener("transitionend", onEnd);
