@@ -25,7 +25,16 @@
 | Unit 3 | `92m` (23.8%) | 4,340w | ~5,800–6,400w | _TBD_ | _TBD_ (plan: 6) | `#parameters`, `#modules` | 14 / 14 | _TBD_ |
 | Unit 4 | `49m` (12.7%) | 4,805w | ~4,800–5,300w | _TBD_ | _TBD_ (plan: 4) | `#fileio`, `#regex` | 12 / 12 | _TBD_ |
 | Unit 5 | `30m` (7.8%) | 5,657w | ~3,800–4,300w | _TBD_ | _TBD_ (plan: 4) | `#mvc`, `#urls-templates` | 13 / 13 | _TBD_ (`ast.parse`) |
-| **Total** | **`387m` (100%)** | **23,018w** | **~26.2–29.2kw** | _TBD_ | _TBD_ (plan: 28) | **10 / 10 preserved** | **65 / 65** | _TBD_ |
+| **Total** | **`387m` (100%)** | **23,018w** | **~26.2–29.2kw** | _TBD_ | _TBD_ (plan **31**, was 28) | **10 / 10 preserved** | **65 / 65** | _TBD_ |
+
+> **Anchor-count plan revised, 2026-11-19.** The blueprint planned **28** `<h3 id>`s
+> across the five units (9 for Unit 1). Unit 1 shipped **12**, because `#intro` and
+> `#operators` each needed two headings for their questions to reach a correct landing
+> — a single heading per section could not separate `Keywords` from `Built-in functions`,
+> or arithmetic operators from bitwise/precedence. Carry the same test into Units 2–5:
+> **author a heading when a stored topic has nowhere correct to land, not to hit a count.**
+> Whatever the final total, the `unitAnchored` lock in `tests/test_discovery.py` must be
+> bumped in the same commit (it moved `580 → 592` for Unit 1).
 
 ---
 
