@@ -1,6 +1,6 @@
 # Phase 13 — Scripting Languages (Python): Weight-Calibrated Content, Video Curation & PYQ Sync
 
-> **Status:** 📋 Planned (documentation blueprint — zero shipped files modified)  
+> **Status:** ✅ **Owner-passed 2026-11-19** — all six parts (13.1–13.6) shipped and merged to `main`. Owner words: *"All good. Ok then this phase is completed."* This blueprint's planning numbers (word budgets, 31-anchor plan, `42/7/55` routing baseline) are **history**, not targets: see [`record.md`](record.md) §4 and `docs/DECISIONS.md` for what actually shipped and why the plan moved.  
 > **Subject:** Scripting Languages (Python) (`CST203`, paired practical `CST213` Scripting Languages Lab)  
 > **Syllabus authority:** `docs/syllabus/syllabus.json` & `docs/syllabus/syllabus-3rd-sem-2022.pdf` **pp. 5–7** — **2 credits, L–T–P `2-0-0`, 30 contact hours (`7 + 5 + 6 + 6 + 6`)** across 5 official units  
 > **Paired practical:** `CST213` Scripting Languages Lab — **PDF pp. 16–18** (`2` credits, L–T–P `0-0-4`, 4 hrs/week, 8 practical areas; honest reference page at `subjects/CST213/index.html`)  
@@ -11,21 +11,24 @@
 
 ## 1. Goal & 2023–2026 Exam-Weight Baseline
 
-Eliminate the site's upside-down Python word-count distribution (where `7.8%`-weight Django Unit 5 at `5,657w` is currently **longer** than `39.3%`-weight Unit 1 at `5,304w` and nearly **double** `16.5%`-weight Unit 2 at `2,912w`) and fix the repository's highest PYQ topic-link miss rate (**55 / 104 = 52.9% unmatched** caused by **0** authored `<h3 id>` headings across all five Python pages):
+Eliminate the site's upside-down Python word-count distribution (where `7.8%`-weight Django Unit 5 at `5,657w` is currently **longer** than `39.3%`-weight Unit 1 at `5,304w` and nearly **double** `16.5%`-weight Unit 2 at `2,912w`) and fix the repository's coarsest PYQ topic-link resolution (**0** authored `<h3 id>` headings across all five Python pages, so **61 of 104** questions can only land on a chapter title such as `#collections` and **15** match nothing at all):
 
 | Unit | Official Title (`syllabus.json`, pp. 5–7) | Hrs | Stored PYQ Tag (Q / m) | True 2023–2026 Weight | Share | Avg / Paper | MCQ + Long | Papers | Current Words → Target | Unit Blueprint |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Unit 1** | Introduction | 7h | 51 Q / 131m | **152m** | **39.3%** | 38.0m | 64m + 88m | 4/4 | 5,304w → ~7,200–8,000w | [`unit-1/README.md`](unit-1/README.md) |
-| **Unit 2** | Control Statements | 5h | 19 Q / 92m | **64m** | **16.5%** | 16.0m | 20m + 44m | 4/4 | 2,912w → ~4,600–5,200w | [`unit-2/README.md`](unit-2/README.md) |
-| **Unit 3** | Functions, Modules and Packages | 6h | 17 Q / 70m | **92m** | **23.8%** | 23.0m | 17m + 75m | 4/4 | 4,340w → ~5,800–6,400w | [`unit-3/README.md`](unit-3/README.md) |
-| **Unit 4** | Files & Regular Expressions | 6h | 10 Q / 56m | **49m** | **12.7%** | 12.2m | 8m + 41m | 4/4 | 4,805w → ~4,800–5,300w | [`unit-4/README.md`](unit-4/README.md) |
-| **Unit 5** | Framework | 6h | 7 Q / 38m | **30m** | **7.8%** | 7.5m | 6m + 24m | 4/4 | 5,657w → ~3,800–4,300w | [`unit-5/README.md`](unit-5/README.md) |
-| **Total** | **5 Official Units** | **30h** | **104 Q / 387m** | **387m** | **100.0%** | **96.8m** | **115m + 272m** | **4/4** | **23,018w → ~26.2–29.2kw** | **5 unit folders** |
+| **Unit 1** | Introduction | 7h | 51 Q / 131m | **152m** | **39.3%** | 38.0m | 64m + 88m | 4/4 | 5,438w → **10,837w** ✅ 13.1 | [`unit-1/README.md`](unit-1/README.md) |
+| **Unit 2** | Control Statements | 5h | 19 Q / 92m | **64m** | **16.5%** | 16.0m | 20m + 44m | 4/4 | 2,912w → **6,024w** (budget ~4,600w) ✅ 13.2 | [`unit-2/README.md`](unit-2/README.md) |
+| **Unit 3** | Functions, Modules and Packages | 6h | 17 Q / 70m | **92m** | **23.8%** | 23.0m | 17m + 75m | 4/4 | 4,340w → **7,494w** (budget ~6,600w) ✅ 13.3 | [`unit-3/README.md`](unit-3/README.md) |
+| **Unit 4** | Files & Regular Expressions | 6h | 10 Q / 56m | **49m** | **12.7%** | 12.2m | 8m + 41m | 4/4 | 4,937w → **6,748w** ✅ 13.4 | [`unit-4/README.md`](unit-4/README.md) |
+| **Unit 5** | Framework | 6h | 7 Q / 38m | **30m** | **7.8%** | 7.5m | 6m + 24m | 4/4 | 5,780w → **5,763w** (rebalanced, not cut) ✅ 13.5 | [`unit-5/README.md`](unit-5/README.md) |
+| **Total** | **5 Official Units** | **30h** | **104 Q / 387m** | **387m** | **100.0%** | **96.8m** | **115m + 272m** | **4/4** | **23,018w → 36,982w shipped** ✅ 13.6 | **5 unit folders** |
 
-*Baseline `focusQuestionTopic()` routing across all 104 `2023–2026` Python questions:*
-- **42 same-unit hits (`40.4%`)**
-- **7 cross-unit redirects (`6.7%`)** — including `P005-Q12` (`Built-in functions` → `U3#functions` instead of U1 basics)
-- **55 unmatched questions (`52.9%`)** — because all 5 Python unit pages currently have **zero** `<h3 id>` subheadings (`Tuples`, `Lists`, `Dictionaries`, `Slicing`, `Keywords`, `Conditionals`, `Pass statement`, `Django static files`, etc. never hit `>= 0.5`)
+*Baseline `focusQuestionTopic()` routing across all 104 `2023–2026` Python questions — **re-measured 2026-11-19**, see `record.md` §3.1:*
+- **78 same-unit hits (`75.0%`)**
+- **11 cross-unit redirects (`10.6%`)** — including `P005-Q12` (`Built-in functions` → `U3#functions` instead of U1 basics)
+- **15 unmatched questions (`14.4%`)** — because all 5 Python unit pages currently have **zero** `<h3 id>` subheadings (`Tuples`, `Lists`, `Dictionaries`, `Slicing`, `Keywords`, `Conditionals`, `Pass statement`, `Django static files`, etc. never hit `>= 0.5`)
+- **41 questions land on a named `<h3 id>` heading** (36 of them in Unit 1, which is the only Python unit page that has any), **61 on one of the 15 coarse `<section id>` chapter titles**, and **2 on nothing**. The pass/fail triple above hides this: `#collections` alone absorbs 15 questions covering 56 marks. Note the split is not evenly spread — **U3, U4 and U5 land on a named heading 0 times out of 34 questions**, because those pages have no `<h3 id>` at all yet.
+- **A named landing is not automatically a correct landing.** Landing quality was checked question-by-question against the stems, not inferred from the anchor's shape: of Unit 1's **51** questions, **34** reach a heading that genuinely answers the question, **1** goes to the right answer via a section id (`P005-Q13`, sets), **3** land on a *named heading that does not answer the question* (`P003-Q29`, `P004-Q12`, `P004-Q17`), **11** stop on a coarse chapter title that does contain the answer, and **2** are unmatched. The three wrong-named landings are a matcher defect, not missing content — see `record.md` §4.1.3a.
+- **Correction, 2026-11-19.** An earlier version of this section said "14 coarse chapter titles" and attributed the 61 to `#collections`. The page has **15** `<section id>`s, and the 61 are spread across all of them (only 3 land on `#collections` after 13.1). The `15 questions / 56 marks` figure for `#collections` is the **pre-rewrite** measurement and was correct when taken.
 
 ### Key 2023–2026 Calibration & Syllabus-Fidelity Findings
 1. **Unit 1 alone carries nearly 40% of every Python exam (`152m = 39.3%`, #1 unit in the entire repository):** Lists, tuples, dictionaries, slicing, and shallow/deep copy alone earn **`54m` (`14.0%`, 22 hits across `4/4` papers)**, followed by strings & immutability (`25m`), syntax/indentation/features/keywords/built-ins (`23m`), operators & precedence (`23m`, incl. `P006-Q20b` 6m bitwise output trace), and built-in data types/mutability/conversion (`21m`).

@@ -5,7 +5,8 @@
 > **2023–2026 Exam Weight (`P003–P006` only):** **`92 / 387` marks (`23.8%`, #2 in Python)** · avg **`23.0m/paper`** · **`4/4` papers** · **`17m` MCQ + `75m` 8m-subparts** (`P001-2022-06` excluded)  
 > **Locked `guides.json` anchors (must preserve):** `#parameters`, `#modules`  
 > **Existing `<section id>`s to preserve (14):** `overview`, `functions`, `parameters`, `scope`, `modules`, `packages`, `formulas`, `definitions`, `comparisons`, `mcqs`, `short-questions`, `long-questions`, `practice`, `revision`  
-> **Existing `<h3 id>`s:** `0` (add `6` clean semantic `<h3 id>` anchors)
+> **Existing `<h3 id>`s at planning time:** `0`.
+> **Shipped 2026-11-19 (part 13.3) — `12`, not the planned `6`:** `#defining-and-calling-functions`, `#built-in-versus-user-defined-functions`, `#positional-keyword-and-default-arguments`, `#variable-length-arguments`, `#passing-a-list-and-mutating-it`, `#lambda-functions-and-recursion`, `#legb-local-global-and-nonlocal`, `#class-namespace-scope`, `#creating-and-importing-modules`, `#standard-library-math-random-and-sys-argv`, `#module-versus-package`, `#pip-and-installing-packages`. The extra headings were authored because stored PYQ topics had nowhere correct to land without them — the anchor count is a planning number, not a target. Page shipped at `7,494w`.
 
 ---
 

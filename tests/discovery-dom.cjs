@@ -481,6 +481,7 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     assert.equal(panel.querySelectorAll('script').length, 0);
   }
   /* ── 6b. Explicit topic map is consulted first, matcher stays the fallback ── */
+  let anchorCount = 0;
   {
     const topics = JSON.parse(fs.readFileSync(
       path.join(ROOT, 'assets/data/topic-map-CST201.json'), 'utf8')).map;
@@ -536,13 +537,21 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     assert(d.dom.win.location.hash.startsWith('#'), 'stale entry must fall back, not do nothing');
 
     // (e) Every mapped anchor really exists on its unit page, so the runtime
-    //     "verify then trust" step can never silently fall through.
-    for (const [topic, [unit, anchor]] of Object.entries(topics)) {
-      const html = fs.readFileSync(path.join(ROOT, `subjects/CST201/units/unit-${unit}.html`), 'utf8');
-      assert(html.includes(`id="${anchor}"`), `map entry "${topic}" -> U${unit} #${anchor} not in page`);
+    //     "verify then trust" step can never silently fall through. Covers every
+    //     authored map, so a new subject's map is checked the moment it lands.
+    for (const mapFile of fs.readdirSync(path.join(ROOT, 'assets/data'))
+      .filter(name => name.startsWith('topic-map-') && name.endsWith('.json'))) {
+      const subject = mapFile.replace('topic-map-', '').replace('.json', '');
+      const entries = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/data', mapFile), 'utf8')).map;
+      for (const [topic, [unit, anchor]] of Object.entries(entries)) {
+        const html = fs.readFileSync(path.join(ROOT, `subjects/${subject}/units/unit-${unit}.html`), 'utf8');
+        assert(html.includes(`id="${anchor}"`), `${subject} map entry "${topic}" -> U${unit} #${anchor} not in page`);
+        anchorCount += 1;
+      }
     }
+    assert(anchorCount >= 170, `only ${anchorCount} mapped anchors checked; a map is missing`);
   }
-  console.log('PASS topic map honoured first, matcher fallback intact, missing map tolerated, all 82 anchors present');
+  console.log(`PASS topic map honoured first, matcher fallback intact, missing map tolerated, all ${anchorCount} anchors across every map present`);
 
   console.log('PASS unit breadcrumbs, authored #section anchors, prev/next nav, subject hub jump list, and filtered-PYQ URL handoff');
 

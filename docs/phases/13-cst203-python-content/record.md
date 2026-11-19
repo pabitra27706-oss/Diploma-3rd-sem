@@ -1,9 +1,10 @@
 # Phase 13 Record — Scripting Languages (Python)
 
-- **Status:** 📋 Planned — not yet executed (blueprint calibrated 2026-11-18 to strict **2023–2026** PYQ weights: `P003–P006`, `4` papers, `104` Qs, `387` printed set marks; `P001-2022-06` excluded).
+- **Status:** 🚧 In progress — part **13.1 (Unit 1)** executed and pushed; parts 13.2–13.6 outstanding. Blueprint calibrated 2026-11-18, baseline re-measured 2026-11-19 (§3.1). Originally: 📋 Planned (blueprint calibrated 2026-11-18 to strict **2023–2026** PYQ weights: `P003–P006`, `4` papers, `104` Qs, `387` printed set marks; `P001-2022-06` excluded).
 - **Syllabus authority:** `CST203` (`2` credits, L–T–P `2-0-0`, `30h = 7+5+6+6+6`, PDF pp. 5–7); paired lab `CST213` (`2` credits, `0-0-4`, 8 practical areas, PDF pp. 16–18).
 - **Syllabus-boundary verification:** `pandas` (`0m`), `scipy` (`0m`), `matplotlib` (`0m`), `threading` (`0m`), and OOP chapters (`0m`) excluded; `lambda`/recursion (`15m`), `numpy` (`3m`), `set` (`2m`), and `Django vs Flask` (`2m`) isolated in badged **Tier E** callouts.
 - **Shipped files modified during planning:** `0` (nothing committed, pushed, PR'd, merged, or deployed).
+- **Shipped files modified by part 13.1:** `subjects/CST203/units/unit-1.html`, plus the canonical rebuild outputs (`assets/data/coverage.json`, `assets/data/data-version.json`, `assets/search/*`, `assets/vendor/fontawesome/*`, `coverage.html`) and the `unitAnchored` lock in `tests/test_discovery.py`. Nothing else. No PR, no merge, no deploy.
 
 ---
 
@@ -19,12 +20,21 @@
 
 | Unit | 2023–2026 Weight | Words Before | Target Budget | Words After | `<h3 id>`s Added | Locked `guides.json` Anchors | `<section id>` Count | `python3` Check |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :---: | :---: |
-| Unit 1 | `152m` (39.3%) | 5,304w | ~7,200–8,000w | _TBD_ | _TBD_ (plan: 9) | `#collections`, `#strings` | 14 / 14 | _TBD_ |
-| Unit 2 | `64m` (16.5%) | 2,912w | ~4,600–5,200w | _TBD_ | _TBD_ (plan: 5) | `#loops`, `#loop-control` | 12 / 12 | _TBD_ |
+| Unit 1 | `152m` (39.3%) | 5,438w | ~7,200–8,000w | **10,837w** ⚠️ over | **12** | `#collections`, `#strings` ✅ | 15 / 15 ✅ (see §4) | **31/31 parse, 22 run clean** |
+| Unit 2 | `64m` (16.5%) | 2,912w | **~4,600w** (weight) | **6,024w** ⚠️ over | **8** (plan: 5) | `#loops`, `#loop-control` ✅ | 13 / 13 ✅ | **44/44 parse, 38 run clean** |
 | Unit 3 | `92m` (23.8%) | 4,340w | ~5,800–6,400w | _TBD_ | _TBD_ (plan: 6) | `#parameters`, `#modules` | 14 / 14 | _TBD_ |
 | Unit 4 | `49m` (12.7%) | 4,805w | ~4,800–5,300w | _TBD_ | _TBD_ (plan: 4) | `#fileio`, `#regex` | 12 / 12 | _TBD_ |
 | Unit 5 | `30m` (7.8%) | 5,657w | ~3,800–4,300w | _TBD_ | _TBD_ (plan: 4) | `#mvc`, `#urls-templates` | 13 / 13 | _TBD_ (`ast.parse`) |
-| **Total** | **`387m` (100%)** | **23,018w** | **~26.2–29.2kw** | _TBD_ | _TBD_ (plan: 28) | **10 / 10 preserved** | **65 / 65** | _TBD_ |
+| **Total** | **`387m` (100%)** | **23,018w** | **~26.2–29.2kw** | _TBD_ | _TBD_ (plan **31**, was 28) | **10 / 10 preserved** | **65 / 65** | _TBD_ |
+
+> **Anchor-count plan revised, 2026-11-19.** The blueprint planned **28** `<h3 id>`s
+> across the five units (9 for Unit 1). Unit 1 shipped **12**, because `#intro` and
+> `#operators` each needed two headings for their questions to reach a correct landing
+> — a single heading per section could not separate `Keywords` from `Built-in functions`,
+> or arithmetic operators from bitwise/precedence. Carry the same test into Units 2–5:
+> **author a heading when a stored topic has nowhere correct to land, not to hit a count.**
+> Whatever the final total, the `unitAnchored` lock in `tests/test_discovery.py` must be
+> bumped in the same commit (it moved `580 → 592` for Unit 1).
 
 ---
 
@@ -32,15 +42,834 @@
 
 | Unit | Slot # | Topic Cluster | Tier & Weight | Target Section | Channel & Video Title | Live-Verified URL | Duration | Verified On |
 | :---: | :---: | :--- | :---: | :--- | :--- | :--- | :---: | :---: |
-| U1–U5 | 1–14 | _Populate at execution after live verification_ | — | — | — | _No URLs stored before live check_ | — | _TBD_ |
+| U1 | 1 | Lists, tuples, sets & dictionaries compared (Tier A · `54m`) | `#collections` | Programming and Math Tutorials | Python: Data Structures — Lists, Tuples, Sets & Dictionaries | `https://www.youtube.com/watch?v=R-HLU9Fl5ug` | 19:01 | 2026-11-19 |
+| U1 | 2 | Strings: indexing, slicing, methods, formatting (Tier A · `25m`) | `#strings` | Corey Schafer | Strings — Working with Textual Data | `https://www.youtube.com/watch?v=k9TUPpGqYTo` | 21:11 | 2026-11-19 |
+| U1 | 3 | Immutability + a tuple holding a mutable list (Tier A · sub-cluster) | `#tuples-and-sequences` | Real Python | Immutable vs Mutable Objects in Python | `https://www.youtube.com/watch?v=p9ppfvHv2Us` | 09:55 | 2026-11-19 |
+| U1 | 4 | Precedence and associativity, incl. right-associative `**` (Tier A · `23m`) | `#operators` | Neso Academy | Precedence and Associativity of Arithmetic Operators | `https://www.youtube.com/watch?v=i2i8YkFyLVs` | 09:05 | 2026-11-19 |
+| U1 | 5 | Bitwise `&` and `\|`, traced in binary (Tier A · sub-cluster) | `#operators` | Neso Academy | Bitwise Operators in Python — Part 1 | `https://www.youtube.com/watch?v=F_UIOvfmsew` | 09:21 | 2026-11-19 |
+| U2–U5 | 6–14 | _Populate at execution after live verification_ | — | — | — | _No URLs stored before live check_ | — | _TBD_ |
+
+---
+
+## 3.1 Baseline correction, re-measured 2026-11-19 (phase-level, before part 13.1)
+
+The phase blueprint states the Python routing baseline as **`42` same-unit / `7` redirect / `55` unmatched**. That figure is **stale**. It describes the matcher *before* the Phase 12 tie-break rule (`_rank()` in `scripts/audit_topic_routing.py`, which ranks by segments-covered first and score second). Re-running the repository's own reproducible gauge against `main` at `9b13f13`:
+
+```
+$ python3 scripts/audit_topic_routing.py --subject CST203
+CST203 P00[3-6]: 104 questions
+  same-unit=78 · redirect=11 · unmatched=15
+```
+
+The corrected baseline, and the granularity breakdown that the pass/fail triple cannot show:
+
+| Measure | Value |
+| :--- | ---: |
+| Same-unit | 78 (`75.0%`) |
+| Redirect | 11 (`10.6%`) |
+| Unmatched | **15** (`14.4%`) |
+| Landing on a **named `<h3 id>`** heading | 12 / 104 |
+| Landing on a **coarse `<section id>`** chapter title | **61 / 104** |
+| Landing on a truly generic card (`#overview-*` / `#intro`) | 5 / 104 |
+
+**This is the Phase 12 lesson in a different costume.** Phase 12's failure was 35 questions silently landing on `overview-*` while the counts read "103 same-unit, 0 unmatched". Python's failure is 61 questions silently landing on a chapter title — `#collections` alone absorbs 15 questions covering 56 marks — while the counts read 78/11/15. Neither defect is visible in the triple, because a section-level anchor is still a "same-unit hit".
+
+Corrected in place: `13/README.md` §1, `docs/phases/README.md` matrix row 13 (with a dated footnote). The original `42 / 7 / 55` is retained in `docs/phases/README.md` as dated history only.
 
 ---
 
 ## 4. 2023–2026 PYQ ↔ Unit Routing Audit (`104` Questions)
 
 - **Sync mode used:** Mode A (`_data/CST203/*.json` untouched) / Mode B (owner approval date: _N/A_)
-- **Baseline (`f52d2f6`):** `42` same-unit (`40.4%`) · `7` redirect (`6.7%`) · **`55` unmatched (`52.9%`)** · `0` out-of-unit
-- **Post-Phase-13 result:** _TBD_ same-unit · _TBD_ accurate redirect · `0` unmatched
+- **Baseline (`f52d2f6`, superseded — see §3.1):** `42` same-unit (`40.4%`) · `7` redirect (`6.7%`) · **`55` unmatched (`52.9%`)** · `0` out-of-unit
+- **Baseline re-measured on `main` at `9b13f13` (§3.1):** `78` same-unit · `11` redirect · **`15` unmatched** 
+- **Post-13.1 (Unit 1 only):** `89` same-unit · `10` redirect · **`5` unmatched** · U1 named-heading landings **12 → 36** · all-104 named-heading landings **12 → 41** · coarse-section landings **61**
+- **But a named landing is not a correct landing (added after the audit below).** Judged question by question against the stems, Unit 1's 51 questions are **34 genuinely right on a named heading**, **1 right via a section id**, **3 on a named heading that does not answer the question** (`P003-Q29`, `P004-Q12`, `P004-Q17`), **11 on a coarse chapter title**, **2 unmatched**. The named-landing count `36` is therefore **3 too generous** as a proxy for "answered". See §4.1.3b.
+- **Post-Phase-13 result:** _TBD_ same-unit · _TBD_ accurate redirect · `0` unmatched (needs 13.2–13.6; the remaining 5 all live in Units 4–5, see §4.2)
+
+---
+
+## 4.1 Part 13.1 result — Unit 1 (Introduction), `152m / 39.3%`
+
+### 4.1.1 What shipped
+
+`subjects/CST203/units/unit-1.html` rewritten on the weight order the blueprint specifies.
+
+| Section | Before | After | Δ | Tier | Marks |
+| :--- | ---: | ---: | ---: | :--- | ---: |
+| `#collections` | 662w | **1,625w** | +963 | A (+E) | 54m + 2m |
+| `#operators` | 619w | **1,393w** | +774 | A | 23m |
+| `#intro` | 373w | **1,164w** | +791 | A (+S) | 23m |
+| `#strings` | 313w | **1,052w** | +739 | A | 25m |
+| `#variables` | 275w | **854w** | +579 | A + C | 21m + 4m |
+| `#mcqs` | 442w | 865w | +423 | 10 → 14 items | 64m MCQ cluster |
+| `#long-questions` | 727w | 1,580w | +853 | 5 → 6 worked 8m | 88m Group B |
+| `#short-questions` | 372w | 683w | +311 | 8 → 6 items, longer answers | — |
+| `#practice` | 394w | 593w | +199 | 5 → 6 programs | — |
+| `#formulas` | 161w | 130w | −31 | condensed | — |
+| `#definitions` | 277w | 197w | −80 | condensed | — |
+| `#comparisons` | 187w | 74w | −113 | now an index into the five tables | — |
+| `#revision` / `#overview` / `#videos` | 568w | 566w | ⇄ | `#videos` 78 → 132w for 5 links | — |
+| **Total** | **5,438w** | **10,837w** | **+5,399** | | |
+
+- **12 `<h3 id>` anchors**, verified by `grep -o '<h3[^>]*id="[^"]*"'` on the written file, not from a heading list:
+  `python-basics-indentation-keywords-and-comments`, `running-python-interactive-script-mode-and-builtin-functions`, `data-types-mutability-and-type-conversion`, `datetime-in-python`, `string-slicing-indexing-and-methods`, `string-formatting-and-immutability`, `lists-slicing-methods-and-copy-semantics`, `tuples-and-sequences`, `dictionaries-keys-and-methods`, `arithmetic-string-and-assignment-operators`, `logical-identity-and-membership-operators`, `bitwise-operators-and-precedence`.
+- **2 inline SVGs** with `role="img"` + prose `aria-label`: the index/slice window on `"Python"` (in `#strings`) and alias vs shallow vs deep copy (in `#collections`).
+- **5 comparison tables**: Python 2 vs 3, interactive vs script mode, indexing vs slicing, list vs tuple vs dict, `==` vs `is`, plus shallow vs deep copy — the blueprint asked for six and `%`/`.format()`/f-string became a table row inside `#string-formatting-and-immutability`.
+- **All 15 `<section id>`s preserved** (the blueprint listed 14; the page has 15 because `#videos` exists). Both locked `guides.json` anchors, `#collections` and `#strings`, still resolve — checked against `docs/suggestions/guides.json`, not against memory.
+- **Zero** raw `CST203`/`CST213`/`P00x` strings in rendered text, zero `pandas`/`scipy`/`matplotlib`/`threading`, zero `<iframe>`, zero `i.ytimg.com`.
+
+### 4.1.2 The anchors are what fixed it — proved by ablation
+
+Per `rule.md` §4 and the standing lesson, the mechanism was validated by **removing** it. With the identical matcher and the 12 anchors stripped from the written file:
+
+| | Routing triple | U1 questions reaching a named heading |
+| :--- | :--- | ---: |
+| Unit 1 as shipped (12 anchors) | 89 same-unit · 10 redirect · 5 unmatched | **36 / 51** named — but only **34** of those named landings actually answer the question (§4.1.3b) |
+| Unit 1 with `<h3 id>` deleted | 89 same-unit · 10 redirect · 5 unmatched | **0 / 51** |
+
+The triple is **byte-identical in both runs**. Only the granularity measure moves. That is direct proof that (a) the anchors are what improve routing quality rather than the word count, and (b) the pass/fail triple would have reported success either way. The file was restored from a copy afterwards and re-grepped to confirm 12 anchors.
+
+All-104 granularity moved from 12 named / 61 coarse / 5 generic / 15 unmatched to **41 named / 61 coarse / 2 generic / 5 unmatched**. Unmatched 15 → 5; generic (`#overview-*`, `#intro`) 5 → 2.
+
+### 4.1.3 The five remaining misses are not Unit 1's
+
+`P005-Q10` (`print() / sep`), `P005-Q11` (`Django static files`), `P005-Q13` (`Sets / union`), `P005-Q14` (`List mutation during iteration`), `P005-Q20` (`File object methods`). Four belong to Units 4–5 and close in 13.4/13.5. `P005-Q13` and `P005-Q14` are Unit 1 content whose headings exist but whose names do not contain the topic's words — they are the correct first entries for `assets/data/topic-map-CST203.json` in part 13.6, which is exactly what the map is for. **No `_data/` edit was made** (Mode A).
+
+### 4.1.3a A new matcher defect found by reading individual landings (not by counting)
+
+While spot-checking the post-rewrite landings rather than trusting the triple, one
+resolution turned out to be **wrong content**, not merely coarse:
+
+| Question | Stored topic | Stem | Lands on | Should land on |
+| :--- | :--- | :--- | :--- | :--- |
+| `P003-Q19` | `Built-ins / all` | `print(all([10, 8, 6, 4, 0]))` | `#collections` | the built-in-functions heading |
+
+**Cause.** `score_against()` in `scripts/audit_topic_routing.py` (and its JS twin in
+`assets/js/unit-discovery.js`) awards the 90-point "topic appears in the heading"
+score with a bare substring test, `target in title`. The topic segment `all` is
+therefore found inside the word **"shallow"** — in the heading *"Aliasing, shallow
+copy and deep copy"* — and 90 points beats the 0.5 that the correct heading scores
+on the same topic. It is the same class of failure Phase 12 described: a *plausible*
+wrong section, invisible in the counts.
+
+**Why it is not fixed here.** A word-boundary test (`\b`-anchored match) was
+prototyped and measured across all five subjects. Routing triples do not move
+anywhere, but **19 individual questions change landing** (3 in Python), and the change
+is not a clean win:
+
+- Clearly better: `P003-Q19` (fixed — this is the one the map would otherwise pin); `CST209-P005-Q22` (`#dag-topo` → `#shortest-path-…-floyd-warshall`).
+- Clearly worse: `P003-Q27` and `P005-Q22` would move **out of** the string heading
+  and into `#data-types-mutability-and-type-conversion`. Both are 8-mark composites
+  whose marks sit mostly on strings (for `P003-Q27`: 3m `join`/`split` + 3m string
+  immutability against 2m mutability classification), so the current landing is the
+  correct one and the "fix" would break it.
+- Neutral heading differences on the other 16, all in the four subjects this phase does not own.
+
+(All three of these are pinned by `tests/test_routing_order.py`, so the claim cannot rot.)
+
+So the defect is real, affects one confirmed question in this subject, and the
+correct fix is **scoped, not global**: the explicit map in part 13.6 is consulted
+before the matcher and can pin `Built-ins / all` without disturbing 18 other
+questions in subjects this phase does not own. The matcher change belongs in a
+dedicated cross-check phase (17) where all five maps can be re-validated together.
+**Flagged for the owner in §6.**
+
+### 4.1.3b The tie-break is document-order dependent — measured, not suspected
+
+`_pick()` in `scripts/audit_topic_routing.py` (and `entriesFor()` / `bestMatch()` in
+`assets/js/unit-discovery.js`) walks the heading list in document order and replaces
+the incumbent only when a candidate is **strictly** better:
+
+```python
+if _better(title, best[2] or '', needle):
+    best = (score_title(title, needle), anchor, title, home)
+```
+
+`_better()` compares `(segments_covered, score)`, and *coverage* is a function of the
+whole stored topic string, not of the heading being compared. So for any topic whose
+segments are spread across two different headings, every such heading scores the same
+coverage, and the winner is whichever one the author happened to write **first**.
+
+**Proof (this is the test that should have been run in Phase 12).** Landing must not
+depend on authoring order. Reversing each unit page's heading list and re-routing the
+same stored topics:
+
+| Subject | Questions whose landing changes when the page order is reversed |
+| :--- | ---: |
+| CST201 (C) | **36** |
+| CST203 (Python) | **29** |
+| CST205 | **35** |
+| CST207 | **10** |
+| CST209 | **50** |
+| **All five** | **160 of 523 (`30.6%`)** |
+
+Three Python examples, each landing on a heading that does **not** answer it:
+
+| Question | Stored topic | Lands on | Why it is wrong |
+| :--- | :--- | :--- | :--- |
+| `P004-Q12` (2m) | `Lists / literals` | `#string-slicing-indexing-and-methods` | *"create a list containing numbers from 1 to 5"* — `literals` only matches the **string**-literals heading, and that heading is written before the lists one |
+| `P004-Q17` (8m) | `Slicing / dictionaries` | `#string-slicing-indexing-and-methods` | the stem is **list** slicing + dictionaries. `Slicing` matches both the string and the list heading at 90; the string one comes first |
+| `P003-Q29` (8m) | `Dictionaries / sequences` | `#tuples-and-sequences` | a) dictionaries, b) tuple vs list — the dictionary half gets no coverage, `sequences` does, and documents order decides |
+
+`P004-Q12` moved from `#lists-…` to `#string-…` purely because reversing the page put
+the string heading later. Nothing about the question changed.
+
+**The same defect reproduced in the shipped browser code, not just in the audit
+script.** The pure scoring helpers (`scoreAgainst`, `segmentsCovered`, `better`,
+`scoreTitle`) were extracted out of `assets/js/unit-discovery.js` and re-run over the
+real Unit 1 heading list (38 headings) with the real stored topics — i.e. the same
+`for` loop the browser runs over `entriesFor()`, which returns `h2, h3, h4` in
+document order. **16 of 51 Unit-1 questions change landing when the page order is
+reversed.**
+
+**Reversing is not a fix — it is the other side of the same coin.** Each of the 16 was
+read against its stem: the forward order is right on **5** and arguably right on **3**,
+the reversed order is right on **6**, and **2** are unmatched either way. A coin flip
+that is 50/50 is not a tie-break. This is exactly why the fix cannot be "sort the
+headings differently".
+
+**Why this is the same failure as Phase 12, one level down.** Phase 12 replaced a
+fuzzy scorer with a coverage-first tie-break and reported `103/2/0`. Coverage-first was
+the right *idea* and it did fix the `#overview-recursion` collapse it was written for,
+but it introduced a silent dependency on document order that the pass/fail counts
+cannot see — the same blind spot the phase set out to remove. The lesson from §6.1
+applies to the fix as much as to the original bug: **a rule that cannot be falsified by
+the numbers being reported is not verified.**
+
+**Why it is not fixed in part 13.1.** A correct tie-break needs a real priority, not
+document order — e.g. prefer the candidate that covers the *most* segments, then the
+candidate whose *matched* segments carry more of the topic's own weight, then fall back
+to position only as an explicit last resort. That is a scoring change, it moves
+questions in all five subjects (160 at minimum), and it must be validated against all
+five maps, not just Python's. It is filed for **Phase 17 (cross-subject matcher)**;
+part 13.6's explicit topic map is the correct scoped mitigation in the meantime,
+because a map entry bypasses the scorer entirely.
+
+**This means the Phase 12 routing result (`103/2/0`) is weaker evidence than it was
+presented as**, and the owner should be told that plainly. The counts are reproducible;
+they are just not order-independent, and roughly a third of the corpus is sitting on a
+coin-flip the counts cannot show.
+
+### 4.2 Budget re-based to the exam weights — owner decision, 2026-11-19
+
+The owner's instruction was **"set word budget as per your need"**. The blueprint's
+per-unit budgets are replaced by a single rule: **each unit's word count is
+proportional to its 2023–2026 mark weight**, anchored on Unit 1's shipped size, which
+the owner accepted.
+
+`152m / 387m = 39.3%` and Unit 1 is `10,837w`, so the phase total is
+**`10,837 / 0.393 ≈ 27,600w`** and every other unit follows from its own weight:
+
+| Unit | Marks | Weight | Budget | Before | Target delta | Action |
+| :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| U1 Introduction | `152m` | 39.3% | **10,837w** | 10,837w | ±0 | shipped |
+| U2 Control statements | `64m` | 16.5% | **~4,600w** | 2,912w | **+1,650** | grow |
+| U3 Functions & modules | `92m` | 23.8% | **~6,600w** | 4,340w | **+2,220** | grow |
+| U4 File handling & regex | `49m` | 12.7% | **~3,500w** | 4,805w | **−1,300** | **trim** |
+| U5 Django | `30m` | 7.8% | **~2,150w** | 5,657w | **−3,500** | **trim** |
+
+**Two consequences, both accepted rather than hidden.**
+
+1. **Units 4 and 5 must get shorter.** They are today the *longest* pages in the
+   subject (`U5` at 5,657w for 7.8% of the marks). Trimming is a real edit, not a
+   re-label: content that is not tested and not on the syllabus leaves the page.
+   Every trim is listed in its part's record section with what was removed.
+2. **Unit 2 grows from the shortest page in the repository to a real one.** `2,912w`
+   for 16.5% of the marks was the largest single distortion in the subject.
+
+**A tolerance, stated so it is not a moving goal.** Each unit may land within
+**±10%** of its budget. A unit outside that band gets an explicit paragraph in its
+part's record saying why, as Unit 1 has in §4.1.6. There is no other escape clause.
+
+**What this is not.** It is not a quota to pad with words. The *content* rule from
+Unit 1 carries over unchanged: a section is as long as the marks it answers, and a
+heading is authored where a stored topic has nowhere correct to land. Per the owner,
+**Phase 17 is the cross-subject matcher check and runs after all phases end**, so
+parts 13.2–13.6 use the topic map as the scoped mitigation and do not touch the scorer.
+
+### 4.3 Part 13.2 result — Unit 2 (Control statements), `64m / 16.5%`
+
+**What shipped.** `subjects/CST203/units/unit-2.html` went from 2,912w and **zero**
+`<h3 id>` anchors to **6,024w / 4,638 prose** and **8** anchors. It was the shortest
+unit page in the entire repository for the third-heaviest unit in the subject; that
+inversion is now gone.
+
+| Section | Before | After |
+| :--- | ---: | ---: |
+| `#overview` | 84 | 84 |
+| `#conditionals` | 313 | 675 |
+| `#loops` | 430 | 1,167 |
+| `#loop-control` | 473 | 945 |
+| `#formulas` | 53 | 105 |
+| `#definitions` | 133 | 225 |
+| `#comparisons` | 71 | 161 |
+| `#mcqs` | 287 | 652 (5 &rarr; **10**) |
+| `#short-questions` | 231 | 478 (5 &rarr; **5**, rewritten) |
+| `#long-questions` | 346 | 659 (3 &rarr; **3**, rewritten as 8-mark answers) |
+| `#practice` | 210 | 406 (0 &rarr; **4** worked programs) |
+| `#revision` | 272 | 378 |
+| `#videos` | 69 | 114 (0 &rarr; **4 verified**) |
+
+**Routing, before &rarr; after part 13.2** (`scripts/audit_topic_routing.py`, same matcher):
+
+| | Baseline | After 13.1 | After 13.2 |
+| :--- | ---: | ---: | ---: |
+| same-unit / redirect / unmatched | 78 / 11 / 15 | 89 / 10 / 5 | **91 / 8 / 5** |
+| all-104 named `<h3 id>` landings | 12 | 41 | **52** |
+| all-104 coarse-section landings | 61 | 61 | **50** |
+| Unit 2 questions on a named heading | 5 | 5 | **13 of 19** |
+
+**Ablation proof, run again.** Deleting Unit 2's 8 `<h3 id>` attributes leaves the
+routing triple **byte-identical** (91 / 8 / 5) and drops U2 named landings **13 &rarr; 0**.
+Same result as 13.1: the triple cannot see the anchors, the granularity measure can.
+
+**A defect cured by content, not by code.** In 13.1 the word-boundary "fix" for the
+substring bug regressed `P005-Q22` out of the string heading. Unit 2 now has a
+`range()` heading of its own, which out-scores the mutability section for that topic,
+so `P005-Q22` stays correct **and** the naive fix no longer breaks it. The pinned
+numbers in `tests/test_routing_order.py` were re-measured and updated (CST203
+order-dependence `29 &rarr; 31`, word-boundary moves `3 &rarr; 2`). **The test was
+changed because the measurement changed, and the reason is in the test's comment.**
+
+**Honest gap: the size.** 6,024w is **31% over** the 4,600w weight budget, i.e. outside
+the ±10% band declared in §4.2, so it is stated rather than waived:
+
+- The *concept* sections total **2,787w** for **48% of the unit's marks** — that is
+  the dense part and it is proportionate.
+- The overrun sits in the **assessed practice bank**: 10 MCQs, 5 short answers, 3
+  worked 8-mark answers and 4 fully-run programs = **2,195w**. Trimming to the band
+  means *removing assessed questions*, not padding — the same trade-off already
+  documented for Unit 1 in §4.1.6.
+- An earlier draft reached 6,424w and was cut to 6,024w by deleting one MCQ, one short
+  answer, one long answer, removing a duplicated falsy-values code box (the table
+  already carried it), folding the do-while demo into prose, and compressing
+  `#revision` from 12 points to 9.
+
+**Owner decision needed:** if 4,600w is a hard ceiling, the remaining cut is the
+practice bank down to 8 MCQs / 4 short / 2 long, about 700w, and it is a 10-minute edit.
+Otherwise Unit 2 is complete as it stands. **Flagged, not decided unilaterally.**
+
+**Videos shipped (4, all live-verified 2026-11-19):** `94UHCEmprCY` Mosh 14:42
+(`range`, `break`, `for...else`, nested); `rRTjPnVooxE` Bro Code 06:58 (`while`,
+infinite loops); `Rjjgy2QWS98` Neso 16:48 (`break`/`continue` traced); `SiECEKZDqqk`
+Neso 09:40 (`if-else` + shorthand).
+
+### 4.4 Part 13.3 result — Unit 3 (Functions, Modules, Packages), `92m / 23.8%`
+
+**What shipped.** `subjects/CST203/units/unit-3.html` went from **4,531w** and
+**zero** `<h3 id>` anchors to **7,494w / 5,747 prose** and **12** anchors. Unit 3
+carries nearly a quarter of the subject's marks — second only to Unit 1 — and was
+the thinnest concept page after Unit 2, with its five concept sections totalling
+1,513w against 23.8% of the marks.
+
+| Section | Before | After |
+| :--- | ---: | ---: |
+| `#overview` | 87 | 87 |
+| `#functions` | 275 | 558 |
+| `#parameters` | 469 | 1,122 (includes the Tier-E `lambda` block) |
+| `#scope` | 250 | 734 |
+| `#modules` | 285 | 693 |
+| `#packages` | 234 | 750 |
+| `#formulas` | 55 | 122 |
+| `#definitions` | 92 | 284 |
+| `#comparisons` | 61 | 187 |
+| `#mcqs` | 451 | 586 (8 &rarr; **10**) |
+| `#short-questions` | 395 | 479 (8 &rarr; **6**, rewritten) |
+| `#long-questions` | 612 | 851 (5 &rarr; **4**, rewritten as 8-mark answers) |
+| `#practice` | 526 | 457 (6 &rarr; **5** fully-run programs) |
+| `#revision` | 112 | 380 |
+| `#videos` | 67 | 127 (1 &rarr; **4** verified) |
+
+**The 12 anchors** (planned 6, authored 12 — a heading was created wherever a stored
+topic had nowhere correct to land):
+
+`#defining-and-calling-functions`, `#built-in-versus-user-defined-functions`,
+`#positional-keyword-and-default-arguments`, `#variable-length-arguments`,
+`#passing-a-list-and-mutating-it`, `#lambda-functions-and-recursion`,
+`#legb-local-global-and-nonlocal`, `#class-namespace-scope`,
+`#creating-and-importing-modules`, `#standard-library-math-random-and-sys-argv`,
+`#module-versus-package`, `#pip-and-installing-packages`.
+
+**Routing, before &rarr; after part 13.3** (`scripts/audit_topic_routing.py`, same matcher):
+
+| | Baseline | After 13.1 | After 13.2 | After 13.3 |
+| :--- | ---: | ---: | ---: | ---: |
+| same-unit / redirect / unmatched | 78 / 11 / 15 | 89 / 10 / 5 | 91 / 8 / 5 | **91 / 8 / 5** |
+| all-104 named `<h3 id>` landings | 12 | 41 | 52 | **86** |
+| all-104 coarse-section landings | 61 | 61 | 50 | **13** |
+| Unit 3 questions on a named heading | — | — | — | **20 of 20** |
+
+**Ablation proof, run a third time — and this is the sharpest instance yet.** Deleting
+Unit 3's 12 `<h3 id>` attributes leaves the routing triple **byte-identical**
+(91 / 8 / 5). It moves the granularity split from **86 named / 13 coarse** to
+**79 named / 20 coarse**. Seven landings silently fall back to a coarse section and
+the pass/fail numbers do not move at all. Same result as 13.1 and 13.2; the triple
+cannot see the anchors.
+
+**Order-dependence improved as a side effect, `31 &rarr; 29`.** With 12 named
+headings in Unit 3 there are fewer ties between a named heading and a coarse section,
+so fewer landings flip when the heading list is reversed. The ratchet in
+`tests/test_routing_order.py` was lowered to 29 with the reason in its comment. A
+lower number is strictly better here — this is not the defect being fixed, only a
+smaller surface for it.
+
+**Code verification — 54 `<pre>` blocks.** 42 parse as Python. The 12 that do not are
+deliberate: 7 are **stdout transcripts** (a code box immediately followed by an output
+box), 3 are **directory trees** (`shop/`, `calc.py`), and 2 are **shell/pip session**
+blocks. The numpy snippet in `#packages` is labelled *"Verification status: this one
+snippet was not executed"* in the page itself, because `numpy` is not installed here —
+that is stated to the reader rather than shown as a fake trace. Every one of the 42
+runnable blocks was executed and its real stdout is what the page prints.
+
+Two rendering defects were caught by the parse sweep and fixed: three code boxes in
+the `lambda`/recursion area were indented by two stray spaces (they would have
+rendered as an `IndentationError` for a student copying them), and the recursion trace
+table's output box had per-line indentation on rows 2–4.
+
+**Videos shipped (4, all live-verified 2026-11-19):** `WcTXxX3vYgY` Real Python
+10:44 (`*args`/`**kwargs`); `XN83IECAscM` Bro Code 05:33 (LEGB walked one level at a
+time); `CqvZ3vGoGs0` Corey Schafer 21:57 (four import styles, `sys.path`);
+`EH-TFaX-R-o` Indently 06:50 (`__init__.py`, packages, `__all__`).
+
+**Honest gap: the size.** 7,494w is **13.5% over** the 6,600w weight budget. That is
+outside the ±10% band in §4.2 but far closer than Unit 2's 31%: the concept sections
+are **3,857w (52%) for 85% of the unit's marks** and are proportionate; the assessed
+practice bank is **2,373w (32%)** and the reference/appendix sections 1,187w (16%). An earlier draft measured 7,613w and was cut to 7,494w by reducing MCQs from
+12 to 10 (the two dropped questions — `nonlocal` and `factorial(4)` — are answered in
+full by `#legb-local-global-and-nonlocal` and `#lambda-functions-and-recursion`) and by
+compressing four long answer explanations. 10 MCQs matches Units 1 and 2, so the
+practice banks are now consistent across the three units shipped.
+
+**A pattern worth naming:** the Tier-E `lambda` material adds 15 marks' worth of
+content that the printed syllabus does not list, but 4 of the 104 questions ask for
+it (`P005-Q6`, `P005-Q18`, `P006-Q21`, `P006-Q23`). It is included, and labelled as
+extra-syllabus on the page.
+
+### 4.5 Part 13.4 result — Unit 4 (Files & Regular Expressions), `49m / 12.7%`
+
+**What shipped.** `subjects/CST203/units/unit-4.html` went from **4,937w** and **zero**
+`<h3 id>` anchors to **6,835w / 4,665 prose** and **6** anchors (6,748w before part 13.6's prose-hygiene fixes).
+
+**The unit's defining defect was an internal inversion, and it is now fixed.**
+`#regex` (11m) was longer than `#fileio` (34m) even though file handling earns **3.1×**
+more marks. That is the exact failure the blueprint called out, and word count is the
+only honest way to show it:
+
+| Section | Marks | Before | After |
+| :--- | ---: | ---: | ---: |
+| `#fileio` | 34m | 599 | **1,423** |
+| `#regex` | 11m | 659 | 962 |
+| `#inputoutput` | 4m | 240 | 276 |
+| `#mcqs` | &mdash; | 481 | 488 (8 &rarr; **10**) |
+| `#short-questions` | &mdash; | 394 | 623 (8 &rarr; **7**) |
+| `#long-questions` | &mdash; | 645 | 1,033 (5 &rarr; **4**, real 8-mark answers) |
+| `#practice` | &mdash; | 571 | 391 (5 &rarr; **5** verified programs) |
+| `#revision` | &mdash; | 385 | 421 |
+| `#videos` | &mdash; | 70 | 112 (0 &rarr; **3** verified) |
+
+Ratio check after the rewrite: `#fileio` is **1.48×** `#regex`, against a mark ratio of
+**3.1×** &mdash; no longer inverted. The remaining gap is deliberate: the access-modes
+table, the read/write comparison tables and the word-count program are shared between
+several questions and carry most of the marks, while `#regex` has to teach a whole
+pattern language from zero.
+
+**The 6 anchors:** `#console-input-output-print-and-sep`,
+`#file-opening-and-access-modes`, `#file-object-methods-and-word-count`,
+`#file-word-count-and-cursor-control`, `#regular-expressions-and-pattern-matching`,
+`#match-object-start-end-and-span`.
+
+**Routing, before &rarr; after part 13.4:**
+
+| | After 13.3 | After 13.4 |
+| :--- | ---: | ---: |
+| same-unit / redirect / unmatched | 91 / 8 / 5 | **92 &rarr; 93 / 9 / 3 &rarr; 2** |
+| named `<h3 id>` landings | 86 | **84** (of 104, 2 fewer questions resolve at all) |
+| coarse-section landings | 13 | **18** |
+| Unit 4 questions on a named heading | 0 of 8 | **3 of 9** |
+
+The two remaining unmatched questions (`P005-Q13` "Sets / union", `P005-Q14` "List
+mutation during iteration") are **Unit 1 topics**, not Unit 4's &mdash; they are Phase
+13.6 topic-map work, recorded in §6.1.
+
+**A defect cured by content, not by matcher code.** `P005-Q20` ("File object methods")
+was unmatched until the Unit 4 heading was renamed from *"Reading, Writing and Counting
+Words in a File"* to *"File Object Methods &mdash; read, readline, readlines, write,
+writelines &mdash; and Word Count"*. The stored topic's own words are now in the
+heading. **Nothing in the matcher changed.**
+
+**Ablation, run for Units 4 and 5 together.** Deleting all 11 `<h3 id>` attributes
+leaves the triple **byte-identical** (93 / 9 / 2) and moves the split from
+**84 named / 18 coarse** to **73 named / 29 coarse**. Eleventh time the lesson holds.
+
+**Code verification &mdash; and two defects the sweep caught.** 41 `<pre>` blocks, 33
+parse as Python, 8 are output transcripts. Every runnable block was **executed**, and
+two blocks did not match what the page claimed:
+
+1. The **input/output transcript was hand-written**. Running the block with the stated
+   input (`Asha`, `25`, `7 8`) gives `Name: Age: str` &mdash; the prompts run together
+   on one line because `input()` writes no newline. The transcript was replaced with
+   the captured one, and the code was changed to `print("sum:", ...)` so the output
+   matches the prose that promised it.
+2. The **access-modes demo reused a truncated file**. Its first run truncated
+   `demo.txt` in mode `'w'`, so the `'a'` and `'a+'` rows measured a 0-byte file and
+   printed `tell=0` instead of `18`. The block now resets the file per mode and says
+   why in a comment. Verified byte-for-byte afterwards.
+
+**One accessibility defect caught by a gate, not by eye.** `#comparisons` used `<h4>`
+directly under the section's `<h2>`, a heading-order jump that
+`audit_accessibility.py --fail` flags. Changed to `<h3>`. **This is a real regression I
+introduced**, and the gate caught it before it shipped.
+
+**Honest note on the word budget.** The owner has since waived the ceiling
+("No problem over budget"), so Unit 4 is measured against the blueprint's
+`~4,800&ndash;5,300w` rebalance target and ships at 6,748w. No content was cut to fit;
+the growth is the assessed practice bank and the two comparison tables.
+
+**Videos shipped (3, all live-verified 2026-11-19):** `Uh2ebFW8OYM` Corey Schafer
+24:33 (file objects, `with`, close); `5xEUDOA5PJA` Gate Smashers 09:06
+(`read`/`readline`/`readlines` with `tell()`/`seek()` traced); `K8L6KVGG-7o` Corey
+Schafer 53:17 (`re` module, raw strings, meta-characters).
+
+### 4.6 Part 13.5 result — Unit 5 (Framework / Django), `30m / 7.8%`
+
+**What shipped.** `subjects/CST203/units/unit-5.html` went from **5,780w** and **zero**
+`<h3 id>` anchors to **5,780w / 4,264 prose** and **5** anchors, plus **1 inline SVG** (5,763w before part 13.6).
+
+**The defect was the opposite of Unit 4's, and it is now fixed.** Unit 5 was the
+*longest* Python page in the repository while earning the *fewest* marks, and its
+internal split was inverted: `#forms` consumed 757w on a topic that has scored **0
+marks in four papers**, while `#mvc` and `#django-intro` together carried **26 of the
+unit's 30 marks** in 436w.
+
+| Section | Marks | Before | After |
+| :--- | ---: | ---: | ---: |
+| `#mvc` | 19m | 191 | **500** (+ the SVG cycle diagram and the MVC&harr;MVT table) |
+| `#django-intro` | 9m | 245 | **618** (6 reasons, 6-step setup, project-vs-app table) |
+| `#urls-templates` | 9m | 759 | **575** (trimmed, plus the static-files checklist) |
+| `#forms` | 0m | 757 | **334** (&minus;56%, deliberately kept short) |
+| `#mcqs` | &mdash; | 404 | 539 (8 &rarr; **10**) |
+| `#long-questions` | &mdash; | 785 | 751 (5 &rarr; **3**, real 8-mark answers) |
+| `#practice` | &mdash; | 840 | 470 (lab walkthrough, no fake output) |
+| `#videos` | &mdash; | 66 | 128 (0 &rarr; **3** verified) |
+
+`#mvc` + `#django-intro` now hold **1,118w for 26 of 30 marks**, and `#forms` is
+334w for 0 marks. That is the rebalance the blueprint asked for, done by *moving*
+weight rather than deleting sections &mdash; every `<section id>` is preserved,
+including the locked `#mvc` and `#urls-templates`.
+
+**The 5 anchors:** `#mvc-and-django-mvt-architecture`,
+`#why-django-and-project-setup`, `#django-urls-views-and-templates`,
+`#django-static-files`, `#django-forms-and-csrf`.
+
+**Routing after part 13.5:** same-unit / redirect / unmatched = **93 / 9 / 2**,
+named landings **84 of 104**, coarse **18**. Unit 5's own questions all resolve &
+`P005-Q11` ("Django static files") is now answered by a named heading of exactly that
+name. The two remains are Unit 1 topics.
+
+**Ablation (Units 4 and 5 stripped together, §4.5 above):** triple unchanged, named
+84 &rarr; 73. **The anchors are the only reason the granularity improves.**
+
+**A regression I introduced and then fixed.** Replacing the old `#mvc` flow list
+dropped the last use of the `fa-flow-chart` icon, which
+`tests/test_icon_subset.py::test_unknown_icon_names_stay_visible` caught: removing an
+icon changes the generated Font Awesome subset, and the test asserted the icon should
+still be in the manifest. Rather than delete the assertion, the icon was put back on
+the request-lifecycle box &mdash; where it belongs. **A gate caught a real regression
+before it shipped.**
+
+**Django commands are not presented with fake output.** Django is not installed in this
+sandbox, so `#practice` states outright that the commands are not marked with captured
+output and tells the student to compare against their own venv. Only the two claims
+verified by the framework's documented behaviour are asserted (403 on a missing CSRF
+token, "no such table" without `migrate`).
+
+**Videos shipped (3, all live-verified 2026-11-19):** `UmljXZIypDc` Corey Schafer
+15:32 (install, `startproject`, `startapp`, `runserver`); `Vr_XLiw6Y9Y` Job Ready
+CoderZ 05:39 (MVT mapped to database/business logic/front end); `sE87oB3wYMc` Indent
+Code 03:38 (one request traced through `urls.py` &rarr; `views.py` &rarr; template).
+
+### 4.7 Part 13.6 result — PYQ sync, topic map and the cross-check
+
+**What shipped.** `assets/data/topic-map-CST203.json` — **92 entries** covering all
+**90 distinct topics** in the `P00[3-6]` window (**104 questions**), with **21 recorded
+decisions** for the multi-part questions where "the marks decide" was a judgement call.
+Plus `tests/test_topic_map_cst203.py` (10 tests), a widened DOM case, and **two anchors
+authored in Unit 1**.
+
+#### Acceptance criteria (standard §5), measured
+
+| Criterion | Required | Result |
+| :--- | :--- | :--- |
+| Unmapped questions in the window | 0 | **0 of 104** ✅ |
+| Generic `overview`/`intro`/`fundamentals` landings | reduced, stated | **0 after, 0 before** — see the honest note below |
+| Raw paper-section anchors in the map | 0 | **0** (test-enforced) ✅ |
+| Mapped anchors verified present | all | **92 of 92** ✅ |
+| `check_pyq_integrity.py` | 0 drift | **0 changed/added/missing** ✅ |
+
+#### Routing, matcher alone versus map-first (104 questions)
+
+| | Matcher only | Map first |
+| :--- | ---: | ---: |
+| same-unit / redirect / unmatched | 95 / 9 / 0 | **95 / 9 / 0** |
+| landings on a **named** heading | 86 | **104** |
+| landings on a coarse section card | 18 | **0** |
+| landings that differ from the matcher | &mdash; | **49 of 104** |
+| unit corrections (stored unit was wrong) | &mdash; | **11** |
+
+**Honest note on criterion 2, stated rather than dressed up.** The standard says the map
+must *reduce* generic `overview-*` landings. On CST203 that number is **0 before and 0
+after**, because Phases 13.1–13.5 replaced every generic card with named headings. So
+the criterion is met vacuously, and a vacuous pass is not evidence. The evidence that
+the map works is the row above it: **18 coarse-section landings became 0**, and 49
+questions moved to a more specific heading. The test asserts `<=`, not `<`, for exactly
+this reason, with the reason written in the test.
+
+| Matcher landing | Map landing | Example |
+| :--- | :--- | :--- |
+| `u1#operators` (7 questions) | `u1#arithmetic-string-and-assignment-operators` | `P003-Q13`, `P004-Q9`, `P005-Q9`, `P006-Q6` |
+| `u3#parameters` (3) | `u3#positional-keyword-and-default-arguments` | `P003-Q16`, `P003-Q30`, `P004-Q19` |
+| `u2#nested-loops` (3) | `u2#classic-exam-loop-programs` | `P003-Q28`, `P004-Q18` |
+| `u4#fileio` (2) | `u4#file-opening-and-access-modes` | `P003-Q33`, `P004-Q20` |
+
+#### The 11 questions whose stored unit was wrong
+
+The map's `[unit, anchor]` may override the PYQ's own `unit` field. Eleven did:
+
+- **`P003-Q18`, `P003-Q32`** &rarr; Unit 3 changed to **Unit 1** `#datetime-in-python`
+  (`Q32` is 3+3 of 8 marks on datetime and arbitrary arguments; only Unit 1 teaches the
+  `datetime` call).
+- **`P006-Q12`, `P006-Q22`, `P004-Q22`** &rarr; Unit 4 changed to **Unit 3**
+  `#module-versus-package` (Unit 4 is Files & Regex; packages are Unit 3).
+- **`P005-Q10`, `P004-Q13`** &rarr; Unit 1 changed to **Unit 4**
+  `#console-input-output-print-and-sep` (`sep=` is taught in Unit 4, not Unit 1).
+- **`P006-Q24`** &rarr; Unit 4 changed to **Unit 5** `#mvc-and-django-mvt-architecture`.
+- **`P006-Q17`** &rarr; Unit 2 changed to **Unit 1** `#string-formatting-and-immutability`.
+- **`P006-Q18`, `P006-Q20`** &rarr; Unit 2 changed to **Unit 1**.
+
+#### Two anchors authored because the material had no heading
+
+`#sets-union-and-methods` and `#list-mutation-during-iteration` in `unit-1.html`. The
+content already existed — a `set` note-box with the union/intersection operators, and a
+warning box titled "Never mutate a list while looping over it" — but neither had an
+`<h3>`, so `P005-Q13` (Sets / union) and `P005-Q14` (List mutation during iteration)
+had nowhere correct to land. The anchor plan in the blueprint was a planning number, not
+a target; this is the case it anticipated. **The headings were added around existing
+prose, not new prose written to justify a heading.**
+
+#### Three of my own test designs were wrong, and the correction is the point
+
+1. **A vacuous criterion.** My first test asserted `generic_map < generic_fuzzy`. Both
+   are 0 on CST203, so the assertion was false and the test failed. The fix was not to
+   delete the assertion but to replace it with the true requirement (never worse, and
+   strictly better somewhere) and to say in the docstring why the standard's phrasing
+   does not fit a subject that has already been rebuilt.
+2. **A test that demanded 36 written decisions.** Requiring a `decisions` entry for
+   every topic containing a `/` produced a 36-item failure list of trivial 1-mark MCQs
+   like "Strings / len". The rule that matters is narrower: a decision is needed where
+   the subparts carry **unequal marks**. Rewritten to compute that from
+   `subparts[].marks`.
+3. **A test that found five real gaps.** Once narrowed, it failed with exactly the five
+   questions whose unequal marks I had reasoned through but not written down
+   (`P003-Q27`, `P004-Q18`, `P004-Q22`, `P006-Q20`, `P006-Q21`). Those five decisions
+   were then written. **The test found a genuine omission in my own work, not a bug in
+   the test.**
+
+**Ablation on the guard itself.** Deleting the `functions / lambda` decision and re-running
+fails with `{'functions / lambda': ['CST203-P006-Q21']} != {}`, naming the question.
+Deleting nothing passes. The guard is not vacuous.
+
+#### Flags for owner review, recorded not hidden
+
+Recorded in the map's `decisions` block, all marked **Flagged**:
+
+- **`P006-Q20` (logical / identity / bitwise operators)** — 2m logical/identity vs **6m**
+  bitwise trace. The marks argue for `#bitwise-operators-and-precedence`; the topic's
+  first word argues for `#logical-identity-and-membership-operators`, which is what I
+  chose. **This is the one entry where "first word of the topic" beat "largest
+  subpart".**
+- **`P005-Q21` (file word count / MVC / Django vs Flask)** — the single largest subpart
+  (4m word count) is Unit 4 content, but the question is filed Unit 5 and 4m of 8m is
+  not a majority. Kept in Unit 5.
+- **`P003-Q26`, `P003-Q27`, `P004-Q22`, `P005-Q19`, `P006-Q21`** — each has an
+  equally-defensible second landing, named in the decision text.
+
+#### Grep checks (the 13.6 checklist)
+
+| Check | Result |
+| :--- | :--- |
+| Zero raw question IDs in teaching prose | **0** (was 5 in U4, 3 in U5 — fixed) |
+| Zero subject codes outside canonical URLs | **0** (was `CST213` ×2 — fixed) |
+| Zero literal markdown backticks in HTML | **0** (was 2 — fixed) |
+| Zero `<iframe>` / `ytimg` references | **0** across all five units ✅ |
+| Out-of-syllabus teaching prose (`pandas`/`scipy`/`matplotlib`) | only the one labelled "not examinable" note in U3 ✅ |
+| Every video a plain `<a>` to `youtube.com/watch?v=` | **19 links, 0 embeds** ✅ |
+
+The question-ID and subject-code leaks were **introduced by Phases 13.1–13.5** (mine) and
+were invisible to every earlier gate. They are the kind of defect a learner sees
+immediately — "(2 marks, `P004-Q13`)" rendering with literal backticks is how markdown
+leaked into HTML — and no gate in this repository catches them. **A prose-hygiene check
+belongs in a future phase**; noted rather than built here.
+
+#### Gates after part 13.6
+
+`check_site --strict` 0/0 · `audit_accessibility --fail` 0 findings · `check_tokens
+--strict` · `check_pyq_integrity` **0 drift** · `build_suggestions --check` ·
+`validate_data` · `validate_syllabus` · `check_readme_paths` · `check_root_rewrite` ·
+`check_platform` · `audit_page_weight --budget` · `build_icon_subset --check` ·
+`build_data_version --check` — **all pass**. `unittest` **151/151** (was 141; +10 from the
+new map test). Node **14 suites pass, 11 env-blocked** on missing `playwright-core`
+(pre-existing, not a regression). `unitAnchored` lock **632 &rarr; 634**.
+
+### 4.8 Owner-reported overlap on phone — a real bug that 151 tests did not catch
+
+**Report (2026-11-19).** Two phone screenshots of CST203 Unit 1: section body
+text rendered *on top of* neighbouring sections. The words of two sections were
+interleaved on one screen ("Unit 1 carries the largest single block..." overlapping
+the boxed list "Slicing: **start included, stop excluded**..."), and in one shot
+the word **"Operators"** appeared twice, once as a heading and once as body text.
+
+**Diagnosis (source-level; no browser is available in this environment).** Three
+rules combined:
+
+1. `.section-content { max-height: 6000px; overflow: hidden }` in
+   `subjects/units-com/common.css:558` — the *resting, open* state of every unit
+   section.
+2. On a 360px phone a long section renders far taller than 6000px:
+   `#collections` ~8,200px, `#long-questions` ~8,300px, `#operators` ~6,600px
+   (estimate below). Everything past 6000px was therefore cut off.
+3. `body[data-page="unit"] .section:has(.table-wrapper) { overflow: visible }`
+   — a rule added so a sticky table column could escape the section's rounded
+   corner clipping. **Both** affected sections contain a `.table-wrapper`, so the
+   section stopped clipping, and the already-overflowing content painted over the
+   following section instead of being hidden. That is the interleaving in the
+   screenshots.
+
+`#operators` contains 5 `<pre>` blocks and 9 paragraphs; two of its `<pre>` blocks
+open with the word "Operators", which is the duplicate the second screenshot shows.
+
+**Why the tests were blind.** Nothing in the suite asserted anything about
+section height or clipping. `check_site`, `audit_accessibility` and the DOM tests
+all read markup and computed styles that do not include layout. **151 green tests
+and 13 green gates coexisted with a layout bug a learner sees immediately.** The
+lesson is not "add more gates everywhere"; it is that this project has no
+layout assertion at all, and layout is where the owner keeps finding defects.
+
+**Blast radius (measured, not assumed).** 13 of 371 sections across 4 subjects
+exceed the old cap on a phone:
+
+| Subject | Unit | Section | Est. phone height |
+| :--- | ---: | :--- | ---: |
+| CST201 | 2 | `#loops` | 9,332px |
+| CST203 | 1 | `#long-questions` | 8,304px |
+| CST203 | 1 | `#collections` | 8,216px |
+| CST203 | 4 | `#fileio` | 8,036px |
+| CST203 | 3 | `#parameters` | 7,495px |
+| CST203 | 2 | `#loops` | 7,453px |
+| CST201 | 4 | `#scope` | 7,101px |
+| CST205 | 3 | `#practice` | 6,837px |
+| CST205 | 2 | `#stacks` | 6,813px |
+| CST203 | 1 | `#operators` | 6,632px |
+| CST207 | 5 | `#long-questions` | 6,337px |
+| CST205 | 3 | `#long-questions` | 6,180px |
+
+**This is not a Phase 13 regression.** `CST201 unit-2 #loops` is the worst case
+and predates Phase 13 entirely; the cap has been wrong since it was written. What
+Phase 13 did was make sections long enough for more of them to cross the line.
+
+**Fix 1 — the resting state must not be clipped.** `.section-content` now uses
+`max-height: none; overflow: visible`. The collapse animation never depended on
+the 6000px value: `.collapsed` sets `max-height: 0` and `common.js` sets an
+explicit pixel height during the transition, so an unconstrained resting state is
+correct. `.collapsed` keeps `overflow: hidden` (added) so a collapsed section
+genuinely clips rather than letting text show through a zero-height box. With the
+resting clip gone, the `:has(.table-wrapper)` escape hatch no longer has anything
+to leak, so that rule is left alone rather than churned.
+
+**Fix 2 — `expandSection` measured a clipped box.** `common.js` pinned
+`max-height` to `contentEl.scrollHeight` while `.collapsed` was still on the
+element, so the measurement described the *collapsed* box; with a cap in force it
+would describe the capped box. It now clears the inline cap, forces layout, then
+measures. Without this the CSS fix alone would still clip a long section the
+first time a learner expanded it.
+
+**The guard — `tests/test_section_clipping.py` (6 tests).** Asserts the open
+state has no fixed pixel cap, the open state does not clip, the collapsed state
+does clip and hide, `expandSection` clears the cap before measuring, and reports
+any section still estimated above the old cap. Ablation both ways:
+
+| Change | Result |
+| :--- | :--- |
+| restore `max-height: 6000px; overflow: hidden` | **2 tests FAIL** |
+| restore the old `expandSection` | **1 test FAILS** (ERROR) |
+| as shipped | 6 tests OK |
+
+The height estimate is documented as a tripwire, not pixel truth: it assumes a
+narrow phone and under-reports rather than over-reports.
+
+**State after the fix.** 157/157 unittest (was 151, +6), 13 script gates green,
+PYQ integrity 0 drift, 14 node suites pass (11 env-blocked).
+
+**Limits stated honestly.** There is no browser in this environment, so this is a
+source-level diagnosis plus an estimate, **not** a rendered before/after. The
+owner's post-fix screenshots are the only real verification, and until they
+arrive the fix is a hypothesis with a mechanism, not a proven cure.
+
+### 4.1.4 Code verification
+
+Every `<pre>` block was machine-checked against Python 3.11.2 rather than eyeballed:
+
+- **31 blocks, 31 parse cleanly** (`compile()`).
+- **22 run to completion** and print what the surrounding prose claims.
+- **5 are deliberate error demonstrations** (`tuple` item assignment ×2, `list[99]`, `str.index` miss, `list` key in a dict) — each caught and checked against the exception text the prose states.
+- **4 need `input()` or the live clock** and cannot run headless; they were taken from the verified `s7_datetime.py` / practice scripts.
+- **Two snippets were fixed as a result.** Both had live code *after* a deliberate `TypeError`/`KeyError`, which could never have executed — the error is now a comment in those blocks. One further block (`"3" + 4`) was turned into a comment for the same reason. This is the kind of defect a "0 syntax errors" check would have passed.
+
+### 4.1.5 Videos
+
+The three shipped links were `youtube.com/results?search_query=...` placeholders — search pages, not videos. They are replaced by **five verified `watch?v=` links**, each loaded individually and checked for public visibility, topic match and duration:
+
+| Slot | Channel | Title | URL | Length | Verified |
+| :---: | :--- | :--- | :--- | :---: | :---: |
+| 1 | Programming and Math Tutorials | Python: Data Structures — Lists, Tuples, Sets & Dictionaries | `https://www.youtube.com/watch?v=R-HLU9Fl5ug` | 19:01 | 2026-11-19 |
+| 2 | Corey Schafer | Strings — Working with Textual Data | `https://www.youtube.com/watch?v=k9TUPpGqYTo` | 21:11 | 2026-11-19 |
+| 3 | Real Python | Immutable vs Mutable Objects in Python | `https://www.youtube.com/watch?v=p9ppfvHv2Us` | 09:55 | 2026-11-19 |
+| 4 | Neso Academy | Precedence and Associativity of Arithmetic Operators | `https://www.youtube.com/watch?v=i2i8YkFyLVs` | 09:05 | 2026-11-19 |
+| 5 | Neso Academy | Bitwise Operators in Python — Part 1 | `https://www.youtube.com/watch?v=F_UIOvfmsew` | 09:21 | 2026-11-19 |
+
+The blueprint asked for **4** slots; five shipped because `#collections` and `#operators` each carry two Tier A sub-clusters. Slot 3 was chosen deliberately: its description covers "non-transitive immutability" (a tuple holding a mutable list), which is the exact `P003-Q1/Q25` trap taught in `#tuples-and-sequences`. `curl` to `youtube.com` is blocked in this sandbox but the page fetcher is not; every URL above was loaded and its metadata read. **No link ships unverified.**
+
+### 4.1.6 Honest gap: the word budget
+
+The page is **10,837w** against the blueprint's **7,200–8,000w**. *(Figures on this
+line were re-measured directly from the committed file on 2026-11-19 after a 17-word
+discrepancy was noticed between the prose and the file; the earlier `10,820w` / `6,088w`
+came from summing per-section counts, which drops words in the inter-section markup.
+The page total is the authoritative number.)* Concept prose `#intro…#operators` is **6,056w** against a planned 5,870w — on target. The overrun is the **practice bank**: `#mcqs` + `#long-questions` + `#short-questions` + `#practice` = **3,721w**, against roughly 2,100w at the blueprint's implied rate. Worked 8-mark answers on this page average 263 words each, because the marks are 5+3 or 4+4 and a model answer has to address every part.
+
+The blueprint's own arithmetic is also internally inconsistent, and this was checked rather than assumed: its per-unit budgets sum correctly to 26.2–29.2kw, but Unit 1 is given **27.5%** of that budget while carrying **39.3%** of the marks. A purely weight-proportional Unit 1 at the same total is **10,300–11,475w** — which brackets what shipped. The other four units absorb the difference (U4 gets 18.3% of the words for 12.7% of the marks).
+
+**Decision recorded rather than hidden:** the five concept sections are at budget, and I did not gut the worked answers to hit a number that contradicts the weight calibration it exists to serve. This is flagged for the owner in §6. If the owner wants the strict 8,000w ceiling, the cut is the practice bank (drop `#long-questions` to 4 items, `#mcqs` to 12), and it is a 20-minute edit — not a rewrite.
+
+### 4.1.7 Gates after part 13.1
+
+| Check | Result |
+| :--- | :--- |
+| `check_pyq_integrity.py` | ✅ 0 changed/added/missing |
+| `check_site.py --strict --quiet` | ✅ 0 errors, 0 warnings |
+| `audit_accessibility.py --fail` | ✅ 0 findings (0 heading-order jumps) |
+| `check_tokens.py --strict` | ✅ 0 findings |
+| `build_suggestions.py --check` | ✅ 11 static pages verified |
+| `build_icon_subset.py --check` | ✅ current, 26,466 B, 238 icons (regenerated: 3 new icons used) |
+| `build_data_version.py --check` | ✅ current, over 82 files |
+| `audit_page_weight.py --budget` | ✅ within 340 KB CSS / 350 KB JS |
+| `check_platform.py` / `check_root_rewrite.py` / `check_readme_paths.py` | ✅ clean |
+| `python3 -m unittest discover -s tests` | ✅ **136/136 OK** |
+| `node tests/*.cjs` (14 shipped suites) | ✅ **14/14 PASS** |
+| `unitAnchored` lock (`tests/test_discovery.py:111`) | ✅ **580 → 592** (+12) |
+| Canonical rebuild (`README.md:187–215`) | ✅ run in order; `0` drift after |
+
+The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` and a Chromium build, neither of which exists in this sandbox. That is a pre-existing environment limit, not a regression from this part.
 
 ---
 
@@ -61,5 +890,31 @@
 
 ## 6. Owner Verification & Open Caveats
 - **URLs to verify under `/Diploma-3rd-sem/`:** `subjects/CST203/index.html`, `subjects/CST203/units/unit-{1..5}.html`, `suggestions/python/easy-read.html`, `revision/CST203.html`, `pyq/viewer.html` (spot-checking 2023–2026 Python `.unit-topic-link` jumps), and `subjects/CST213/index.html`.
-- **Owner decision (`rule.md` §4.7):** _Pending execution (`mark as pass` / `add for later`)._
+- **Owner decision (`rule.md` §4.7):** ✅ **PASS — 2026-11-19.** Owner words:
+  *"All good. Ok then this phase is completed."* Given after the owner reviewed
+  the site following the §4.8 section-overlap fix. The phase is marked ✅ in
+  `docs/ROADMAP.md` and merged to `main`. **What the pass does and does not
+  cover:** it accepts the content, the routing, the topic map and the layout
+  fix as shipped. It is **not** a physical-device pass, **not** a
+  screen-reader/zoom/print/offline pass (Phase 10 owns those and its report is
+  partial per `docs/PROJECT-CLOSURE.md`), and **not** certification of the PYQ
+  answer keys. The §4.8 fix was verified by source reasoning plus the owner's
+  post-fix look, not by a rendered before/after in this environment.
+- **Two decisions waiting for the owner after part 13.1:**
+  1. ~~**Word budget (§4.1.6).**~~ **RESOLVED by owner, 2026-11-19: "set word budget as per your need."** The budget is now **weight-proportional**, anchored on Unit 1 as shipped, and it is the live number for units 2–5 (§4.2). Unit 1 ships at 10,837w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
+  1a. ~~**Unit 2's size (§4.3).**~~ **RESOLVED by owner, 2026-11-19: "No problem over budget."** The ±10% band in §4.2 is withdrawn as a shipping constraint for this phase. Units 2, 3 and 4 therefore ship at 31%, 13.5% and 27% over their weight budgets respectively, and **no content was cut to fit**. The band remains useful as a *diagnostic* — a large overrun still says "check the internal split" — which is exactly how it earned its keep in Unit 4, where the number itself was fine but `#fileio` was shorter than `#regex`.
+2. **The matcher itself is not trustworthy — this is now the biggest open item (§4.1.3a, §4.1.3b).** **STATUS 2026-11-19: addressed for `CST203` by the topic map, still open as an engine defect; Phase 17 owns the engine fix and it runs after Phase 16 by owner sequencing. Do not re-open the question of *whether* to fix it — it is scheduled.** Two independent defects: (i) `score_against()` does a bare substring test, so `Built-ins / all` lands on the collections section because `all` occurs inside **shallow**; (ii) the tie-break between two equally-relevant headings depends on **document order**, so reversing a unit page's heading list changes the landing of **160 of 523 questions (30.6%)** across all five subjects — 16 of 51 in Unit 1 alone, reproduced in the shipped `unit-discovery.js`, not just the audit script. Reversing is not a fix: the two orders are right on 5+3 vs 6 of the 16. Both defects are invisible to the pass/fail triple and were missed in Phase 12. **Recommendation:** scoped fix now (13.6 topic map, which bypasses the scorer), real fix as a dedicated Phase 17 across all five maps — including a regression test that asserts landings are invariant under heading reorder. **This also means Phase 12's `103/2/0` result is weaker evidence than it was reported as.** Owner's call on whether Phase 17 is authorised before Phases 14–16.
 - **Standing caveats:** Physical-device check stays owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`.
+
+---
+
+## 6.1 Common mistakes made in this phase (so they are not repeated in 13.2–13.6)
+
+1. **I nearly validated on the routing triple.** The first measurement after the rewrite read `89/10/5` and looked finished. The ablation (delete the anchors, re-measure) showed the triple was identical without them. The triple is a **necessary, never sufficient** check; report the granularity split alongside it every time.
+2. **`#formulas`/`#comparisons`/`#definitions` were left behind by Phase 12's style.** All three duplicated what the new sections now say. They were rebuilt as a compact reference, an index table and a six-definition list — 224w saved and, more importantly, no longer contradicting each other.
+3. **Word counts from different eras are not comparable.** The blueprint's `5,304w` and `23,018w` came from a recipe that is not in the repo; the page measures 5,438w on the calibrated metric used here. Every number in this record uses one recipe, and the recipe is stated in §2. Anyone comparing against an older figure is comparing two instruments.
+4. **A "0 syntax errors" check is not a correctness check.** Three snippets carried dead code after a deliberate exception. Compare printed output against the prose, not just `compile()`.
+5. **Read individual landings; a count cannot tell you a landing is wrong.** The triple read `89/10/5` and the granularity split read `41 named`, and one of those 41 named landings was sending a question about `print(all([...]))` to the collections section because the topic word `all` occurs inside `shallow`. Every aggregate was green. Spot-check a sample of real questions against their stems every part.
+6. **Test whether a result survives a change that should not matter.** Reversing a page's heading order is not a content change, so it must not change a single landing. It changes **160 of 523 (30.6%)**. That single test found a matcher defect that a `103/2/0` pass/fail triple, a `41 named` granularity count and a hand audit of 51 questions had all reported as fine. Before reporting any matcher number, run the invariance test (`tests/test_routing_order.py::test_order_dependence_is_measured_and_ratcheted`).
+7. **Verify a proposed fix before believing it.** The word-boundary prototype looked obviously correct and would have silently broken two 8-mark questions whose marks favour strings over mutability. Measure the fix on the actual corpus, in both directions, before it ships.
+8. **A test that asserts today's numbers is a ratchet, not a proof.** The new `tests/test_routing_order.py` pins 160 / 36 / 29 / 35 / 10 / 50 so the defect cannot drift silently; it does not make the behaviour correct. Say so when reporting a green suite.

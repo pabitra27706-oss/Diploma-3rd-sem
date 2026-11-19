@@ -7,6 +7,29 @@
 > `tests/home-roadmap-browser.cjs` for the focused regression. This bug fix
 > does not change any phase acceptance or deployment status.
 
+> **Phase 13 CLOSED — 2026-11-19, owner-passed and merged.** Owner words:
+> *"All good. Ok then this phase is completed."* Branch
+> `arena/c323dee5-diploma-3rd-sem` merged to `main`. All six parts shipped:
+> Units 1–5 rewritten to the 2023–2026 weights, `assets/data/topic-map-CST203.json`
+> (92 entries / 21 decisions), two anchors authored in Unit 1, and a phone
+> section-overlap fix. **157/157 unittest, 13/13 gates green.**
+>
+> **Read `docs/DECISIONS.md` §"Phase 13 accepted, and the decisions Phases 14–17
+> must inherit" before doing anything in a later phase.** It is the register
+> that stops the same questions being re-asked: word budgets are **waived**
+> ("No problem over budget"), the anchor plan is a planning number not a target,
+> the map lives in `assets/data/` and never `_data/<subject>/`, `_data/` is
+> byte-frozen in Mode A, videos are verified plain `<a>` links, and seven
+> repeating defects (prose hygiene, vacuous routing criteria, layout bugs
+> invisible to tests, …) are listed with how to prevent each.
+>
+> Do **not** trust this blueprint's planning numbers — the `31-anchor` plan, the
+> word budgets, and the `42 / 7 / 55` routing baseline are all history. Actual:
+> `95 / 9 / 0` same-unit routing with **104/104** named landings, `36,982w`.
+> Remaining open item: the matcher's substring and document-order defects stay
+> in the engine and belong to **Phase 17**, which runs after Phase 16.
+> Nothing else is authorized by this closure.
+
 > **Phase 11 handoff — 2026-11-18:** The owner closed Phases 1–10 with the
 > recorded skips in `docs/PROJECT-CLOSURE.md`, then approved **Phase 11 —
 > Subject-wise Suggestions** on `arena/b06d66f8-diploma-3rd-sem` (base
@@ -103,6 +126,51 @@ the same nine source-review findings remain open. Consult PR #7 for CI/merge
 result; do not treat earlier unpushed/blocked checkpoint notes as current state.
 
 ## Current implementation
+
+**Phase 13 — Scripting Languages (Python) is in progress on
+`arena/c323dee5-diploma-3rd-sem`, cut from `main` at `9b13f13`.** Part
+**13.1 (Unit 1)** shipped 2026-11-19; parts 13.2–13.6 are outstanding.
+
+- **Baseline correction, phase 13.** The blueprint's Python routing baseline
+  `42 / 7 / 55` is **stale** — it describes the matcher before Phase 12's
+  `_rank()` tie-break. Re-measured on `main`: **`78` same-unit / `11` redirect
+  / `15` unmatched**. The triple still hides the defect: **61 of 104** questions
+  could only land on a coarse `<section id>` chapter title (`#collections` alone
+  absorbed 15 questions / 56 marks) because all five Python unit pages shipped
+  **zero** `<h3 id>` anchors. See `docs/phases/13-cst203-python-content/record.md`
+  §3.1. `13/README.md` and the `docs/phases/README.md` matrix row were corrected
+  in place; the old figure survives only as dated history.
+- **13.1 delivered:** `subjects/CST203/units/unit-1.html` (152m / 39.3%, the
+  largest unit in the repository) went from 5,438w and 0 anchors to **10,837w
+  and 12 anchors**. Concept prose `#intro…#operators` is 6,056w, ordered by
+  marks (collections 1,625w / operators 1,393w / intro 1,164w / strings
+  1,052w / variables 854w). 2 inline SVGs, 5 comparison tables, practice bank
+  14 MCQ / 6 short / 6 worked 8m / 6 programs, and **5 verified YouTube links**
+  replacing 3 `search_query` placeholders. Routing: unmatched **15 → 5**, U1
+  named-heading landings **12 → 36**.
+- **Ablation proof (do this every part):** deleting the 12 anchors leaves the
+  routing triple **byte-identical** (89/10/5) while U1 named landings collapse
+  **36 → 0**. Counts alone would have reported success either way.
+- **Open gap, stated not hidden:** the page is **10,837w against a 7,200–8,000w
+  target**. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the
+  marks, so a weight-proportional U1 at the same total is 10,300–11,475w. The
+  overrun is the practice bank (3,721w; worked 8-mark answers average 263w).
+  The owner can demand the strict ceiling — the cut is 4 long answers and 2
+  MCQs, a 20-minute edit. Recorded in `record.md` §4.1.6 before it was asked for.
+- **New matcher defect found by reading landings, not counts:** `Built-ins / all`
+  lands on the collections section because `score_against()` uses a bare
+  substring test, so the topic word `all` is found inside `shallow`. A global
+  word-boundary fix moves **19** questions across all five subjects and
+  **regresses two** 8-mark Python questions, so it is not being shipped blind —
+  the scoped fix is the 13.6 map, the global fix needs Phase 17. Recorded in
+  `record.md` §4.1.3a with evidence.
+- **Two owner decisions are open:** the Unit 1 word-budget overrun (§4.1.6) and
+  the matcher fix above (§4.1.3a). Both are written up with options; neither has
+  been actioned unilaterally.
+- **Not done, not faked:** the 11 `tests/*-browser.cjs` suites need
+  `playwright-core` + Chromium and were not run (pre-existing sandbox limit).
+  `unitAnchored` moved `580 → 592`; 136/136 unit tests and 14/14 node suites pass.
+  No PR, no merge, no deploy.
 
 Phase 1 platform implementation is complete with deferred final hardware
 acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the complete

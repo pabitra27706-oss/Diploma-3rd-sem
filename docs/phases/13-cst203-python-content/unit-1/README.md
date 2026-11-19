@@ -107,16 +107,62 @@
 
 ---
 
-## 8. 2023–2026 PYQ ↔ Unit Anchor Routing Table (Mode A — resolves 35 misses)
+## 8. 2023–2026 PYQ ↔ Unit Anchor Routing Table
 
-| Question ID(s) | Marks | Stored Unit & `topic` | Baseline Status | Target Unit 1 `<h3 id>` & Authored Heading |
-| :--- | :---: | :--- | :--- | :--- |
-| `P003-Q19,Q24,Q26`, `P004-Q3,Q16`, `P005-Q12` | 1–8m | U1 `Built-ins / all`, `Keywords`, `Python basics / scope`, `Comments / docstrings`, `Basics / sequences / conditionals`, `Built-in functions` | 5 Unmatched + 1 wrong redirect (`P005-Q12→U3`) | `#python-basics-keywords-comments-and-builtins` — *Python Basics, Indentation, Keywords, Comments, Docstrings and Built-in Functions (`all`, `any`)* |
-| `P003-Q27`, `P005-Q22`, `P006-Q5` | 8,8,2m | U1/U2 `Strings / mutability`, `range() / string formatting / mutability`, `Mutability` | Unmatched | `#data-types-mutability-and-type-conversion` — *Built-in Data Types, Mutability and Type Conversion* |
-| `P003-Q18,Q32c` | 1m, 3m | U1/U3 `datetime` | Unmatched (`Q32`) | `#datetime-in-python` — *Date and Time Using `datetime`* |
-| `P003-Q3,Q10,Q20,Q22`, `P004-Q15`, `P006-Q17` | 1–8m | U1/U2 `Strings / slicing`, `Strings / methods`, `Strings / len`, `Strings / join`, `Strings / palindromes` | All Unmatched | `#strings-slicing-methods-join-and-palindromes` — *Strings: Slicing, `len`, `split`, `join` Methods, String Formatting and Palindromes* |
-| `P003-Q8,Q12,Q14,Q15,Q21`, `P004-Q4,Q7,Q8,Q12,Q17`, `P005-Q14`, `P006-Q18` | 1–8m | U1/U2 `Lists`, `Slicing`, `Lists / sort / reverse`, `Lists / methods`, `Lists / built-ins`, `Copy semantics`, `Lists / literals`, `List mutation during iteration` | 11 Unmatched + 1 redirect | `#lists-slicing-methods-and-copy-semantics` — *Lists: Literals, Slicing, Methods (`sort`, `reverse`), List Mutation During Iteration and Copy Semantics* |
-| `P003-Q1,Q25`, `P005-Q7` | 1,1,2m | U1 `Tuples`, `Lists / tuples` | All Unmatched | `#tuples-and-sequences` — *Tuples, Sequences and List vs Tuple Comparison* |
-| `P003-Q7,Q9,Q29`, `P004-Q6` | 1–8m | U1 `Dictionaries`, `Dictionaries / keys`, `Dictionaries / sequences` | All Unmatched | `#dictionaries-keys-and-methods` — *Dictionaries, Hashable Keys and Dictionary Methods* |
-| `P005-Q13` | 2m | U1 `Sets / union` | Unmatched | `#sets-and-union` — *Sets and Set Union Operations (Exam Note)* |
-| `P003-Q11`, `P006-Q7,Q20` | 1,2,8m | U1/U2 `Operator precedence`, `Logical / identity / bitwise operators` | All Unmatched | `#logical-identity-bitwise-and-operator-precedence` — *Logical, Identity, Bitwise Operators and Operator Precedence* |
+> **Rewritten after execution, 2026-11-19.** The blueprint's original table proposed 9
+> anchor slugs that were **never created** (`#python-basics-keywords-comments-and-builtins`,
+> `#sets-and-union`, `#strings-slicing-methods-join-and-palindromes`, …). The page ships
+> **12** anchors with different names. The table below lists the anchors that actually
+> exist (grep-verified from `subjects/CST203/units/unit-1.html`) and where the 51 Unit-1
+> questions really land — measured, not planned.
+
+### 8.1 The 12 shipped anchors
+
+| # | `<h3 id>` | Authored heading | Questions landing here |
+| :---: | :--- | :--- | ---: |
+| 1 | `python-basics-indentation-keywords-and-comments` | Python Basics, Indentation, Keywords and Comments | 9 |
+| 2 | `running-python-interactive-script-mode-and-builtin-functions` | Running Python: Interactive Mode, Script Mode and Built-in Functions | 2 |
+| 3 | `data-types-mutability-and-type-conversion` | Built-in Data Types, Mutability and Type Conversion | 2 |
+| 4 | `datetime-in-python` | Date and Time Using `datetime` | 0 |
+| 5 | `string-slicing-indexing-and-methods` | Strings: Indexing, Slicing and the Common Methods | 6 |
+| 6 | `string-formatting-and-immutability` | String Formatting and Why Strings Are Immutable | 1 |
+| 7 | `lists-slicing-methods-and-copy-semantics` | Lists: Slicing, In-place Methods and Copy Semantics | 9 |
+| 8 | `tuples-and-sequences` | Tuples and Sequences | 3 |
+| 9 | `dictionaries-keys-and-methods` | Dictionaries, Hashable Keys and Dictionary Methods | 3 |
+| 10 | `arithmetic-string-and-assignment-operators` | Arithmetic, String and Assignment Operators | 1 |
+| 11 | `logical-identity-and-membership-operators` | Logical, Identity and Membership Operators | 1 |
+| 12 | `bitwise-operators-and-precedence` | Bitwise Operators and Operator Precedence | 2 |
+
+The remaining Unit-1 questions stop on a coarse section id (`#collections` 3, `#operators` 5,
+`#strings` 2, `#variables` 2, `#inputoutput` 1) or are unmatched (2). `#datetime-in-python`
+absorbing **0** is expected and is correct: the two `datetime` questions (`P003-Q18`,
+`P003-Q32`) are stored under **Unit 3** (`topic` = `Modules / datetime` and
+`Modules / functions / datetime`), so they are not in this unit's 51. The anchor exists
+because the syllabus heading is Unit 1 and a learner looking up `datetime` should find it
+where it is taught, not where the paper happened to file it.
+
+### 8.2 Where the blueprint's plan was wrong
+
+| Blueprint claim | Reality after execution |
+| :--- | :--- |
+| 9 anchors, including `#sets-and-union` for `P005-Q13` | **12** anchors; **no** sets section. `P005-Q13` is **unmatched** and is the 13.6 map's first entry — a 2-mark set-union question did not justify a whole concept heading |
+| `#python-basics-keywords-comments-and-builtins` covers `all`/`any` | split across **two** anchors (basics vs built-in functions); `P003-Q19` (`print(all(...))`) still lands on `#collections` because of a substring defect, see `record.md` §4.1.3a |
+| `#strings-slicing-methods-join-and-palindromes` single anchor | **two** anchors (slicing/indexing/methods; formatting/immutability). Palindromes stayed in the practice bank rather than getting a heading |
+| `P003-Q18`, `P003-Q32` → `#datetime-in-python` | both are stored **Unit 3**; neither is among Unit 1's 51 questions, so the anchor correctly absorbs 0 landings |
+
+### 8.3 What part 13.6 must add to the map
+
+These eight stored topics cannot reach a correct named heading by scoring alone and
+need an explicit `assets/data/topic-map-CST203.json` entry:
+
+| Stored topic | Question(s) | Wanted anchor | Why the scorer fails |
+| :--- | :--- | :--- | :--- |
+| `Built-ins / all` | `P003-Q19` | `#running-python-…-builtin-functions` | `all` matches inside **shallow** (`record.md` §4.1.3a) |
+| `Sets / union` | `P005-Q13` | `#collections` | no sets heading exists |
+| `print() / sep` | `P005-Q10` | `#running-python-…-builtin-functions` | no heading contains `print` or `sep` |
+| `Lists / literals` | `P004-Q12` | `#lists-slicing-methods-and-copy-semantics` | `literals` only matches the **string**-literals heading (§4.1.3b) |
+| `Slicing / dictionaries` | `P004-Q17` | `#dictionaries-keys-and-methods` | document-order coin flip (§4.1.3b) |
+| `Dictionaries / sequences` | `P003-Q29` | `#dictionaries-keys-and-methods` | document-order coin flip (§4.1.3b) |
+| `List mutation during iteration` | `P005-Q14` | `#lists-slicing-methods-and-copy-semantics` | needs 3 of 4 terms to fire; only `list` and `iteration` exist |
+| `Strings / mutability` | `P003-Q27` | `#string-formatting-and-immutability` | currently correct, but by a 90-point tie the map should pin |
+

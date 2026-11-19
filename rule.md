@@ -6,12 +6,18 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
-> **Current session (2026-11-18):** `arena/08838a66-diploma-3rd-sem`, based on
-> `d9fe014` (the PR #26 merge). This branch carries **Phase 12 — Computer
-> Programming in C**: weight-calibrated rewrites of `CST201` units 1–5 plus
-> the PYQ↔unit sync gate. Parts 12.4, 12.2, 12.1, 12.3 and 12.5 are pushed;
-> part 12.6 (the phase gate) is outstanding. It does not change earlier phase
-> acceptance or authorize publication.
+> **Phase 13 CLOSED (2026-11-19):** `arena/c323dee5-diploma-3rd-sem` (based on
+> `9b13f13`, the PR #27 merge) carried **Phase 13 — Scripting Languages
+> (Python)**: weight-calibrated rewrites of `CST203` units 1–5, the PYQ↔unit
+> topic map, and a phone section-overlap fix. **All six parts are done,
+> owner-passed ("All good. Ok then this phase is completed") and merged to
+> `main`. 157/157 unittest, 13/13 gates green.** The next session starts from a
+> fresh Arena branch cut from that merge — **read the branch name from Git.**
+> Before planning anything, read `docs/DECISIONS.md`
+> §"Phase 13 accepted, and the decisions Phases 14–17 must inherit"; it is the
+> register that prevents re-asking the same questions. Phase 12 (C) is also
+> merged and owner-passed. Phases 14–16 (Data Structures, CSO, Algorithms) are
+> planned blueprints; Phase 17 (topic-map cross-check) runs after Phase 16.
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
@@ -41,7 +47,7 @@
 
 - Site: Diploma 3rd Semester — CST Study Hub
 - Repo: `pabitra27706-oss/Diploma-3rd-sem` · working branch:
-  `arena/08838a66-diploma-3rd-sem` (Phase 12, CST201 content). `main` is the
+  `arena/c323dee5-diploma-3rd-sem` (Phase 13, CST203 content). `main` is the
   Pages source; no merge or deploy without an explicit owner command.
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
@@ -213,7 +219,7 @@ A **public launch** additionally needs every item in
   ```sh
   mkdir -p ~/study-hub-fixes-preview
   cd ~/study-hub-fixes-preview
-  git clone --single-branch --branch arena/08838a66-diploma-3rd-sem \
+  git clone --single-branch --branch arena/c323dee5-diploma-3rd-sem \
     https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem
   python3 -m http.server 8010 --bind 127.0.0.1
   ```
@@ -223,3 +229,17 @@ A **public launch** additionally needs every item in
   `git pull --ff-only` inside `~/study-hub-fixes-preview/Diploma-3rd-sem`, then serve
   again from the parent directory. Use a fresh port if an older service worker
   controls the origin. This is branch testing, not production deployment.
+
+  **The owner gets ONE copy-pasteable block, never several, and it starts with
+  `cd ~`.** A single block that also refreshes an existing preview checkout, so
+  it is safe to paste whether or not the folder exists yet:
+
+  ```sh
+  cd ~ && mkdir -p ~/study-hub-fixes-preview && cd ~/study-hub-fixes-preview && (test -d Diploma-3rd-sem || git clone --single-branch --branch arena/c323dee5-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && git pull --ff-only && cd ~/study-hub-fixes-preview && python3 -m http.server 8011 --bind 127.0.0.1
+  ```
+
+  Open `http://127.0.0.1:8011/Diploma-3rd-sem/subjects/CST203/units/unit-1.html`.
+  Port `8011`, not `8010`, so a service worker from an earlier preview on `8010`
+  cannot serve stale files over the top. If `git pull` refuses because the local
+  checkout has edits, do not reset it — delete
+  `~/study-hub-fixes-preview/Diploma-3rd-sem` and paste the block again.

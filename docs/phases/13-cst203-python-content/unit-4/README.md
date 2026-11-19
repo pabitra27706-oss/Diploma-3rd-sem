@@ -5,7 +5,8 @@
 > **2023–2026 Exam Weight (`P003–P006` only):** **`49 / 387` marks (`12.7%`, #4 in Python)** · avg **`12.2m/paper`** · **`4/4` papers** · **`8m` MCQ + `41m` 8m-subparts** (`P001-2022-06` excluded)  
 > **Locked `guides.json` anchors (must preserve):** `#fileio`, `#regex`  
 > **Existing `<section id>`s to preserve (12):** `overview`, `inputoutput`, `fileio`, `regex`, `formulas`, `definitions`, `comparisons`, `mcqs`, `short-questions`, `long-questions`, `practice`, `revision`  
-> **Existing `<h3 id>`s:** `0` (add `4` clean semantic `<h3 id>` anchors)
+> **Existing `<h3 id>`s at planning time:** `0`.
+> **Shipped 2026-11-19 (part 13.4) — `6`, not the planned `4`:** `#console-input-output-print-and-sep`, `#file-opening-and-access-modes`, `#file-object-methods-and-word-count`, `#file-word-count-and-cursor-control`, `#regular-expressions-and-pattern-matching`, `#match-object-start-end-and-span`. Page shipped at `6,748w`; `#fileio` is now 1,423w against `#regex` at 962w, which fixes the inversion flagged in §2.
 
 ---
 

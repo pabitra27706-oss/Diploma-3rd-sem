@@ -17,6 +17,37 @@ pass: remaining requirements are explicitly skipped or left unverified in
 [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md). Phase 10's device report is partial;
 content remains uncertified; no new deploy is authorized.
 
+## Phase 13 — Python (CST203) — ✅ owner-passed 2026-11-19
+
+`arena/c323dee5-diploma-3rd-sem` (base `9b13f13`), merged to `main` on the
+owner's command. All six parts shipped: Units 1–5 rewritten to the 2023–2026
+exam weights, `assets/data/topic-map-CST203.json` (**92** entries, **21**
+recorded decisions), two anchors authored in Unit 1, and a phone layout fix.
+
+| Measure | Before Phase 13 | After |
+| :--- | ---: | ---: |
+| Python words (5 units) | 23,018w | **36,982w** |
+| Questions landing on a **named** heading | 86 / 104 | **104 / 104** |
+| Questions landing on a coarse chapter card | 18 / 104 | **0 / 104** |
+| Unmatched questions | 0 | **0** |
+| Stored PYQ units that were wrong | 11 undetected | **11 corrected at read time** |
+| `unitAnchored` lock | 632 | **634** |
+
+**Closed with these caveats, stated rather than buried:** word budgets were
+**waived by the owner** ("No problem over budget") and are now advisory
+everywhere; the topic-map standard's "reduce generic landings" criterion passed
+**vacuously** on `CST203` (0 → 0) and the substitute evidence is the 18 → 0
+coarse-card row; the matcher's own two defects (substring scoring, document-order
+tie-break) remain **open in the engine** and are Phase 17's job; the phone
+section-overlap fix is verified by source reasoning and the owner's look, **not**
+by a rendered before/after here. No physical-device, screen-reader, zoom, print
+or offline evidence was added.
+
+**Consumer note:** `docs/DECISIONS.md` §"Phase 13 accepted, and the decisions
+Phases 14–17 must inherit" is the register later phases read first. It records
+the waived budget, the tier/weight method, the anchor rule, the map contract,
+the seven repeating defects and the environment facts.
+
 ## Phases 12–16 — 2023–2026 PYQ Weight-Calibrated Content, Video Curation & PYQ Sync Blueprints (2026-11-18) — 📋 planned
 
 Five documentation-only subject blueprints are planned on

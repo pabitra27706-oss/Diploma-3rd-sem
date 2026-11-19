@@ -799,3 +799,143 @@ an integration.
 
 Merging is not a claim of device verification. Phase 10 owns physical-device,
 screen-reader, zoom, print and offline evidence, and none of it exists yet.
+
+## Phase 13 accepted, and the decisions Phases 14–17 must inherit — 2026-11-19
+
+**Owner command:** "All good. Ok then this phase is completed." Phase 13
+(`CST203`, Python) is therefore **owner-passed** and merged to `main`. This
+section is the register later phases read *first*; it exists so the same
+questions are not asked, and the same defects are not rediscovered at the same
+cost. Anything here is decided — re-asking is a defect, and changing one is a
+GATE.
+
+### Inherited law (applies to Phases 14, 15, 16, 17 without asking again)
+
+1. **Word budgets are advisory; the ceiling is waived.** 2026-11-19, verbatim:
+   *"No problem over budget."* Do not trim prose to hit a number, and do not ask
+   before exceeding one. Weight-proportional sizing is the guide, not a cap.
+   Phase 13 shipped 36,982w against a 23,018w baseline (+61%) and was passed as
+   is. State sizes as facts in the record; never present a budget overrun as a
+   defect to be fixed.
+2. **Calibrate to the 2023–2026 PYQ window only.** `P003`–`P006` per subject;
+   the `2021`–`2022` `P001`/`P002` papers stay archived and out of every weight
+   calculation. Rank every topic into **Tier A / B / C / S / E** before writing
+   a word; the tier ledger is the contract the record is judged against.
+3. **Every anchor plan is a planning number, not a target.** Write what the
+   material needs. If a topic has no heading to land on, **author the heading
+   around prose that already exists** — never write new prose just to justify a
+   heading, and never claim a heading count as coverage.
+4. **The topic map is authored data with a written reason per judgement call.**
+   `assets/data/topic-map-<subject>.json` under `assets/data/`, **never**
+   `_data/<subject>/` (that directory is scanned as PYQ papers and the data
+   pipeline breaks). Every multi-part topic whose subparts carry **unequal
+   marks** needs an entry in `decisions` stating what decided it.
+5. **`_data/` and `_quiz-data/` are byte-frozen in Mode A.** Any edit that
+   rewrites a stored PYQ unit tag needs explicit owner approval (Mode B).
+   Phase 13 shipped Mode A: the map overrides routing at read time, the paper
+   data was never touched.
+6. **Videos are inserted only after verification, and are plain `<a>` links.**
+   Zero `<iframe>`, zero `youtube-nocookie` embeds, zero `ytimg` thumbnails, no
+   runtime third-party request. Do not pre-fill a URL you have not opened.
+7. **No browser exists in this environment.** Every claim about rendering is a
+   source-level argument plus an estimate, and must say so. Owner screenshots
+   are the only rendered evidence. Phase 13's single most expensive mistake was
+   asserting layout correctness that no test could see (see §4.8 of the Phase 13
+   record and item 4 below).
+
+### Defects that repeat across subjects unless actively prevented
+
+These each cost real time in Phase 13. Phases 14–17 will meet them again.
+
+1. **Prose hygiene has no gate.** Raw question IDs (`P004-Q13`), subject codes
+   (`CST213`) and literal markdown backticks shipped into learner-facing HTML in
+   Phases 13.1–13.5 and were invisible to all 13 gates and 151 tests. Grep for
+   `P00[0-9]-Q`, the subject code, and a stray backtick **before** declaring any
+   content part done. Ten occurrences were found and fixed in 13.6.
+2. **Generic-landing regressions hide behind a green routing triple.** The
+   `same / redirect / unmatched` triple stayed `95 / 9 / 0` while **18** questions
+   were landing on coarse chapter cards instead of concept headings. Always
+   measure *specificity of landing*, not just same-unit correctness.
+3. **A "reduce generic landings" criterion can be met vacuously.** On `CST203`
+   it went 0 → 0 because earlier parts had already removed the generic cards. A
+   vacuous pass is not evidence: say so, and substitute a measured row that
+   actually moves. Phases 14–16 may still have real generic landings to reduce;
+   measure first, then claim.
+4. **A layout bug can pass every test.** `.section-content` carried
+   `max-height: 6000px; overflow: hidden` as the *resting* open state. Long
+   sections on a 360px phone exceeded it, and `.section:has(.table-wrapper)
+   { overflow: visible }` let the overflow paint over the next section's text —
+   body text visibly interleaved with another section. `CST201` unit-2 `#loops`
+   was the worst case (~9,332px) and had been wrong for months. **The repo had
+   no layout assertion at all.** There is now one:
+   `tests/test_section_clipping.py`. Before shipping long content, run it and
+   re-read it, and if new layout invariants appear, add a test rather than
+   trusting the gate chain. Never reintroduce a fixed pixel `max-height` on
+   `.section-content`; `.collapsed` owns clipping.
+5. **Test-writing is part of the work, and a failing test may be your own
+   reasoning.** Three of Phase 13.6's tests were wrong before they were right,
+   and the corrected version then exposed five genuine gaps in the agent's own
+   analysis. When a new guard fails, first ask whether the code is wrong or the
+   guard is; then fix whichever it is, and never loosen an assertion to make it
+   green. Ablate every new guard (break the code, watch it fail) before
+   claiming it protects anything.
+6. **Full-suite ordering artefacts.** `build_coverage` /
+   `build_data_version` / `build_icon_subset` tests mutate shared generated
+   files. Run the rebuild chain
+   (`build_search_index → build_coverage → build_icon_subset →
+   generate_presence ×2 → build_data_version`) **after** the suite, then
+   re-verify — never loosen the tests. `test_coverage_file_is_reproducible`
+   needs `generate_presence.py` twice to reach stable bytes.
+7. **Removing a `<pre>` or box that used a Font Awesome icon changes the
+   generated icon subset** and trips `test_unknown_icon_names_stay_visible`.
+   Restore the icon on equivalent content.
+
+### Engineering choices Phases 14–17 should copy
+
+- **Content parts order:** rewrite a unit end-to-end (heading anchors → prose →
+  executed-and-verified code → videos → practice bank), then measure. Do not
+  interleave units; the record's before/after only means something per unit.
+- **Every Python block must `ast.parse`,** or be explicitly labelled
+  non-Python / not-executed. Django is not installed here, so Unit 5's blocks
+  are labelled rather than faked. Apply the same honesty per subject.
+- **Locked anchors are law:** the `guides.json` anchors and every existing
+  `<section id>` are preserved; `unitAnchored` in `tests/test_discovery.py` and
+  `ORDER_DEPENDENT` in `tests/test_routing_order.py` are updated as counts, not
+  relaxed. Phase 13 ended at `unitAnchored` 634 / `ORDER_DEPENDENT['CST203']` 30.
+- **Regenerate deterministically.** Keep the generator script that produced any
+  authored data file so the file can be rebuilt and audited; Phase 13's map came
+  from a single script and was verified by re-running it.
+- **Doubt is recorded, not resolved silently.** Phase 13 flagged eight arguable
+  map entries in the data file's own `decisions` block and in the phase record.
+  Mark a judgement call "Flagged" where a reader will meet it; do not bury it.
+
+### Environment facts (do not re-derive)
+
+- No browser: `playwright-core` absent, no Chromium, no `weasyprint`. Both
+  `tests/*-browser.cjs` suites cannot run here and 11 node suites are
+  env-blocked; that is pre-existing, not a regression. Do not `curl` YouTube
+  (TLS exit 35) — use page fetch. Django, NumPy, SciPy, matplotlib and pandas
+  are **not installed**.
+- Gates that must be green before any part is called done: `check_site --strict`,
+  `audit_accessibility --fail`, `check_tokens --strict`, `check_pyq_integrity`,
+  `build_suggestions --check`, `validate_data`, `validate_syllabus`,
+  `check_readme_paths`, `check_root_rewrite`, `check_platform`,
+  `audit_page_weight --budget`, `build_icon_subset --check`,
+  `build_data_version --check` — plus the full `unittest` suite. Phase 13 closed
+  at **157/157 unittest** and 13/13 gates.
+- Phase 17 exists to catch anchor rot in the maps Phases 13–16 author. Its
+  scope is unchanged and it still runs last; do not move it earlier to "save a
+  pass".
+
+### Next phase — nothing pre-authorized
+
+Phase 13's pass accepts Phase 13 only. **No Phase 14–17 work, PR, deploy or
+publication is authorized by it.** When the owner starts the next phase, cut a
+fresh Arena branch from the merge commit and read the branch name from Git —
+`rule.md` and `prompt.md` are only as current as the last commit that touched
+them, and Git wins when they disagree.
+
+The recommended execution order remains **15 (CSO) → 16 (Algorithms) → 14 (Data
+Structures)**, by 2023–2026 weight-to-page gap, with Phase 17 last. That order is
+a recommendation recorded in the blueprints, not an owner decision — if the owner
+names a different subject, take the owner's.
