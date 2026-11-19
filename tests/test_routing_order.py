@@ -32,7 +32,7 @@ PAPERS = 'P00[3-6]'
 # matcher's behaviour moved and must be explained in a phase record.
 ORDER_DEPENDENT = {
     'CST201': 36,
-    'CST203': 29,
+    'CST203': 31,
     'CST205': 35,
     'CST207': 10,
     'CST209': 50,
@@ -102,25 +102,29 @@ class SubstringMatchingTests(unittest.TestCase):
         finally:
             routing.score_against = original
 
-        # The two 8-mark questions must have left the string heading under the
-        # naive fix. If they did not, the "fix is unsafe" claim in the record is
-        # wrong and must be retracted.
+        # P003-Q27 must leave the string heading under the naive fix. If it does
+        # not, the "fix is unsafe" claim in the record is wrong and must be
+        # retracted.
+        #
+        # P005-Q22 USED to regress too. Part 13.2 authored a `range()` heading in
+        # Unit 2, which now out-scores the mutability section for that topic, so
+        # the regression is cured -- by content, not by a matcher change. The test
+        # is updated because the measurement changed, not to make it pass.
         self.assertEqual(moved['CST203-P003-Q27'], 'data-types-mutability-and-type-conversion')
-        self.assertEqual(moved['CST203-P005-Q22'], 'data-types-mutability-and-type-conversion')
+        self.assertEqual(current['CST203-P005-Q22'], 'for-loops-while-loops-and-range')
+        self.assertEqual(moved['CST203-P005-Q22'], 'for-loops-while-loops-and-range')
 
-        # Exactly three Python landings move in total. One of them is the
-        # desired fix; the other two are stored in different units (U1 and U2)
-        # and are dragged into the mutability heading, losing the string half
-        # of an 8-mark answer. That is why the naive fix is not shipped.
+        # Exactly two Python landings move now. One is the desired fix; the other
+        # is the regression. (It was three until part 13.2 added the range()
+        # heading in Unit 2 -- see the note above.)
         self.assertEqual(sorted(k for k in current if current[k] != moved[k]),
-                         ['CST203-P003-Q19', 'CST203-P003-Q27', 'CST203-P005-Q22'])
+                         ['CST203-P003-Q19', 'CST203-P003-Q27'])
         # P003-Q19 is the good change -- keep it visible so a future reader does
         # not mistake the word-boundary test for a pure regression.
         self.assertEqual(current['CST203-P003-Q19'], 'collections')
         self.assertEqual(moved['CST203-P003-Q19'],
                          'running-python-interactive-script-mode-and-builtin-functions')
-        for qid in ('CST203-P003-Q27', 'CST203-P005-Q22'):
-            self.assertIn(moved[qid], FOREIGN_UNIT_ANCHORS)
+        self.assertIn(moved['CST203-P003-Q27'], FOREIGN_UNIT_ANCHORS)
 
 
 class DocumentOrderIndependenceTests(unittest.TestCase):

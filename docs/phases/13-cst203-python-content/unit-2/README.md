@@ -5,7 +5,7 @@
 > **2023–2026 Exam Weight (`P003–P006` only):** **`64 / 387` marks (`16.5%`, #3 in Python)** · avg **`16.0m/paper`** · **`4/4` papers** · **`20m` MCQ + `44m` 8m-subparts** (`P001-2022-06` excluded)  
 > **Locked `guides.json` anchors (must preserve):** `#loops`, `#loop-control`  
 > **Existing `<section id>`s to preserve (12):** `overview`, `conditionals`, `loops`, `loop-control`, `formulas`, `definitions`, `comparisons`, `mcqs`, `short-questions`, `long-questions`, `practice`, `revision`  
-> **Existing `<h3 id>`s:** `0` (add `5` clean semantic `<h3 id>` anchors)
+> **Existing `<h3 id>`s:** `0` → **`8` shipped** (13.2). Plan said 5; the `for`/`range` cluster needed four to separate `range()` semantics, nesting and the three set programs. See `../record.md` §4.3.
 
 ---
 

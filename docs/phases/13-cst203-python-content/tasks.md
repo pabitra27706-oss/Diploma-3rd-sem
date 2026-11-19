@@ -38,15 +38,17 @@
 ## Part 13.2 — Unit 2: Control Statements (`64m / 16.5%`, 5h, PDF p. 5 — Under-Sized Fix)
 - **Target file:** `subjects/CST203/units/unit-2.html` (`2,912w → ~4,600–5,200w`) · Blueprint: [`unit-2/README.md`](unit-2/README.md)
 - **Implementation checklist:**
-  - [ ] Expand **Tier A + Tier B `#loops` (`20m` + `16m = 36m`, ~52% prose)**: purpose of loops, `for` vs `while` comparison table (plus no `do-while` note), complete `range(start, stop, step)` guide (stop exclusion, negative step, empty range), nested-loop example, and verified programs for prime check (`for...else`), digit sum (`// 10` & `% 10`), and tuple traversal (`for` & `enumerate`).
-  - [ ] Expand **Tier A `#loop-control` (`21m`, 4/4 papers, ~32% prose)**: inline SVG + trace comparing `break` vs `continue` vs `pass`, plus dedicated `for...else` / `while...else` trace (normal exhaustion vs `break`).
-  - [ ] Build **Tier C `#conditionals` (`7m`, ~16% prose)**: `if`, `if-else`, `if-elif-else`, nested `if`, ternary `a if c else b`, truthiness/falsiness rules, and worked decision script.
-  - [ ] Calibrate practice (`9` MCQs, `4` short, `4` worked 8m), add `5` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Area 4), and insert `2` live-verified plain-`<a>` YouTube links.
+  - [x] Expand **Tier A + Tier B `#loops` (`20m` + `16m = 36m`, ~52% prose)**: purpose of loops, `for` vs `while` comparison table (plus no `do-while` note), complete `range(start, stop, step)` guide (stop exclusion, negative step, empty range), nested-loop example, and verified programs for prime check (`for...else`), digit sum (`// 10` & `% 10`), and tuple traversal (`for` & `enumerate`).
+  - [x] Expand **Tier A `#loop-control` (`21m`, 4/4 papers, ~32% prose)**: inline SVG + trace comparing `break` vs `continue` vs `pass`, plus dedicated `for...else` / `while...else` trace (normal exhaustion vs `break`).
+  - [x] Build **Tier C `#conditionals` (`7m`, ~16% prose)**: `if`, `if-else`, `if-elif-else`, nested `if`, ternary `a if c else b`, truthiness/falsiness rules, and worked decision script.
+  - [x] Calibrate practice (`9` MCQs, `4` short, `4` worked 8m), add `5` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Area 4), and insert `2` live-verified plain-`<a>` YouTube links.
 - **Acceptance & evidence:**
-  - [ ] Locked `#loops`, `#loop-control` & all `12` `<section id>`s preserved; word count in `~4,600–5,200w`; all scripts verified in `python3`; 2 URLs logged in `record.md`.
+  - [x] Locked `#loops`, `#loop-control` & all `12` `<section id>`s preserved; word count in `~4,600–5,200w`; all scripts verified in `python3`; 2 URLs logged in `record.md`.
 
 ---
 
+
+> **Executed 2026-11-19.** Evidence in `record.md` §4.3. Deltas: **8** `<h3 id>` shipped against a plan of 5 (the `for`/`range` cluster needed four headings to separate `range()` semantics, nesting and the three set programs); **4** videos not 2; and the page is **6,024w against a 4,600w weight budget** — the overrun is the practice bank, flagged for the owner in §4.3, not waived.
 ## Part 13.3 — Unit 3: Functions, Modules and Packages (`92m / 23.8%`, 6h, PDF pp. 5–6)
 - **Target file:** `subjects/CST203/units/unit-3.html` (`4,340w → ~5,800–6,400w`) · Blueprint: [`unit-3/README.md`](unit-3/README.md)
 - **Implementation checklist:**

@@ -21,7 +21,7 @@
 | Unit | 2023–2026 Weight | Words Before | Target Budget | Words After | `<h3 id>`s Added | Locked `guides.json` Anchors | `<section id>` Count | `python3` Check |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :---: | :---: |
 | Unit 1 | `152m` (39.3%) | 5,438w | ~7,200–8,000w | **10,837w** ⚠️ over | **12** | `#collections`, `#strings` ✅ | 15 / 15 ✅ (see §4) | **31/31 parse, 22 run clean** |
-| Unit 2 | `64m` (16.5%) | 2,912w | ~4,600–5,200w | _TBD_ | _TBD_ (plan: 5) | `#loops`, `#loop-control` | 12 / 12 | _TBD_ |
+| Unit 2 | `64m` (16.5%) | 2,912w | **~4,600w** (weight) | **6,024w** ⚠️ over | **8** (plan: 5) | `#loops`, `#loop-control` ✅ | 13 / 13 ✅ | **44/44 parse, 38 run clean** |
 | Unit 3 | `92m` (23.8%) | 4,340w | ~5,800–6,400w | _TBD_ | _TBD_ (plan: 6) | `#parameters`, `#modules` | 14 / 14 | _TBD_ |
 | Unit 4 | `49m` (12.7%) | 4,805w | ~4,800–5,300w | _TBD_ | _TBD_ (plan: 4) | `#fileio`, `#regex` | 12 / 12 | _TBD_ |
 | Unit 5 | `30m` (7.8%) | 5,657w | ~3,800–4,300w | _TBD_ | _TBD_ (plan: 4) | `#mvc`, `#urls-templates` | 13 / 13 | _TBD_ (`ast.parse`) |
@@ -251,6 +251,110 @@ presented as**, and the owner should be told that plainly. The counts are reprod
 they are just not order-independent, and roughly a third of the corpus is sitting on a
 coin-flip the counts cannot show.
 
+### 4.2 Budget re-based to the exam weights — owner decision, 2026-11-19
+
+The owner's instruction was **"set word budget as per your need"**. The blueprint's
+per-unit budgets are replaced by a single rule: **each unit's word count is
+proportional to its 2023–2026 mark weight**, anchored on Unit 1's shipped size, which
+the owner accepted.
+
+`152m / 387m = 39.3%` and Unit 1 is `10,837w`, so the phase total is
+**`10,837 / 0.393 ≈ 27,600w`** and every other unit follows from its own weight:
+
+| Unit | Marks | Weight | Budget | Before | Target delta | Action |
+| :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| U1 Introduction | `152m` | 39.3% | **10,837w** | 10,837w | ±0 | shipped |
+| U2 Control statements | `64m` | 16.5% | **~4,600w** | 2,912w | **+1,650** | grow |
+| U3 Functions & modules | `92m` | 23.8% | **~6,600w** | 4,340w | **+2,220** | grow |
+| U4 File handling & regex | `49m` | 12.7% | **~3,500w** | 4,805w | **−1,300** | **trim** |
+| U5 Django | `30m` | 7.8% | **~2,150w** | 5,657w | **−3,500** | **trim** |
+
+**Two consequences, both accepted rather than hidden.**
+
+1. **Units 4 and 5 must get shorter.** They are today the *longest* pages in the
+   subject (`U5` at 5,657w for 7.8% of the marks). Trimming is a real edit, not a
+   re-label: content that is not tested and not on the syllabus leaves the page.
+   Every trim is listed in its part's record section with what was removed.
+2. **Unit 2 grows from the shortest page in the repository to a real one.** `2,912w`
+   for 16.5% of the marks was the largest single distortion in the subject.
+
+**A tolerance, stated so it is not a moving goal.** Each unit may land within
+**±10%** of its budget. A unit outside that band gets an explicit paragraph in its
+part's record saying why, as Unit 1 has in §4.1.6. There is no other escape clause.
+
+**What this is not.** It is not a quota to pad with words. The *content* rule from
+Unit 1 carries over unchanged: a section is as long as the marks it answers, and a
+heading is authored where a stored topic has nowhere correct to land. Per the owner,
+**Phase 17 is the cross-subject matcher check and runs after all phases end**, so
+parts 13.2–13.6 use the topic map as the scoped mitigation and do not touch the scorer.
+
+### 4.3 Part 13.2 result — Unit 2 (Control statements), `64m / 16.5%`
+
+**What shipped.** `subjects/CST203/units/unit-2.html` went from 2,912w and **zero**
+`<h3 id>` anchors to **6,024w / 4,638 prose** and **8** anchors. It was the shortest
+unit page in the entire repository for the third-heaviest unit in the subject; that
+inversion is now gone.
+
+| Section | Before | After |
+| :--- | ---: | ---: |
+| `#overview` | 84 | 84 |
+| `#conditionals` | 313 | 675 |
+| `#loops` | 430 | 1,167 |
+| `#loop-control` | 473 | 945 |
+| `#formulas` | 53 | 105 |
+| `#definitions` | 133 | 225 |
+| `#comparisons` | 71 | 161 |
+| `#mcqs` | 287 | 652 (5 &rarr; **10**) |
+| `#short-questions` | 231 | 478 (5 &rarr; **5**, rewritten) |
+| `#long-questions` | 346 | 659 (3 &rarr; **3**, rewritten as 8-mark answers) |
+| `#practice` | 210 | 406 (0 &rarr; **4** worked programs) |
+| `#revision` | 272 | 378 |
+| `#videos` | 69 | 114 (0 &rarr; **4 verified**) |
+
+**Routing, before &rarr; after part 13.2** (`scripts/audit_topic_routing.py`, same matcher):
+
+| | Baseline | After 13.1 | After 13.2 |
+| :--- | ---: | ---: | ---: |
+| same-unit / redirect / unmatched | 78 / 11 / 15 | 89 / 10 / 5 | **91 / 8 / 5** |
+| all-104 named `<h3 id>` landings | 12 | 41 | **52** |
+| all-104 coarse-section landings | 61 | 61 | **50** |
+| Unit 2 questions on a named heading | 5 | 5 | **13 of 19** |
+
+**Ablation proof, run again.** Deleting Unit 2's 8 `<h3 id>` attributes leaves the
+routing triple **byte-identical** (91 / 8 / 5) and drops U2 named landings **13 &rarr; 0**.
+Same result as 13.1: the triple cannot see the anchors, the granularity measure can.
+
+**A defect cured by content, not by code.** In 13.1 the word-boundary "fix" for the
+substring bug regressed `P005-Q22` out of the string heading. Unit 2 now has a
+`range()` heading of its own, which out-scores the mutability section for that topic,
+so `P005-Q22` stays correct **and** the naive fix no longer breaks it. The pinned
+numbers in `tests/test_routing_order.py` were re-measured and updated (CST203
+order-dependence `29 &rarr; 31`, word-boundary moves `3 &rarr; 2`). **The test was
+changed because the measurement changed, and the reason is in the test's comment.**
+
+**Honest gap: the size.** 6,024w is **31% over** the 4,600w weight budget, i.e. outside
+the ±10% band declared in §4.2, so it is stated rather than waived:
+
+- The *concept* sections total **2,787w** for **48% of the unit's marks** — that is
+  the dense part and it is proportionate.
+- The overrun sits in the **assessed practice bank**: 10 MCQs, 5 short answers, 3
+  worked 8-mark answers and 4 fully-run programs = **2,195w**. Trimming to the band
+  means *removing assessed questions*, not padding — the same trade-off already
+  documented for Unit 1 in §4.1.6.
+- An earlier draft reached 6,424w and was cut to 6,024w by deleting one MCQ, one short
+  answer, one long answer, removing a duplicated falsy-values code box (the table
+  already carried it), folding the do-while demo into prose, and compressing
+  `#revision` from 12 points to 9.
+
+**Owner decision needed:** if 4,600w is a hard ceiling, the remaining cut is the
+practice bank down to 8 MCQs / 4 short / 2 long, about 700w, and it is a 10-minute edit.
+Otherwise Unit 2 is complete as it stands. **Flagged, not decided unilaterally.**
+
+**Videos shipped (4, all live-verified 2026-11-19):** `94UHCEmprCY` Mosh 14:42
+(`range`, `break`, `for...else`, nested); `rRTjPnVooxE` Bro Code 06:58 (`while`,
+infinite loops); `Rjjgy2QWS98` Neso 16:48 (`break`/`continue` traced); `SiECEKZDqqk`
+Neso 09:40 (`if-else` + shorthand).
+
 ### 4.1.4 Code verification
 
 Every `<pre>` block was machine-checked against Python 3.11.2 rather than eyeballed:
@@ -328,8 +432,9 @@ The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` a
 - **URLs to verify under `/Diploma-3rd-sem/`:** `subjects/CST203/index.html`, `subjects/CST203/units/unit-{1..5}.html`, `suggestions/python/easy-read.html`, `revision/CST203.html`, `pyq/viewer.html` (spot-checking 2023–2026 Python `.unit-topic-link` jumps), and `subjects/CST213/index.html`.
 - **Owner decision (`rule.md` §4.7):** _Pending execution (`mark as pass` / `add for later`)._
 - **Two decisions waiting for the owner after part 13.1:**
-  1. **Word budget (§4.1.6).** Unit 1 ships at 10,837w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
-  2. **The matcher itself is not trustworthy — this is now the biggest open item (§4.1.3a, §4.1.3b).** Two independent defects: (i) `score_against()` does a bare substring test, so `Built-ins / all` lands on the collections section because `all` occurs inside **shallow**; (ii) the tie-break between two equally-relevant headings depends on **document order**, so reversing a unit page's heading list changes the landing of **160 of 523 questions (30.6%)** across all five subjects — 16 of 51 in Unit 1 alone, reproduced in the shipped `unit-discovery.js`, not just the audit script. Reversing is not a fix: the two orders are right on 5+3 vs 6 of the 16. Both defects are invisible to the pass/fail triple and were missed in Phase 12. **Recommendation:** scoped fix now (13.6 topic map, which bypasses the scorer), real fix as a dedicated Phase 17 across all five maps — including a regression test that asserts landings are invariant under heading reorder. **This also means Phase 12's `103/2/0` result is weaker evidence than it was reported as.** Owner's call on whether Phase 17 is authorised before Phases 14–16.
+  1. ~~**Word budget (§4.1.6).**~~ **RESOLVED by owner, 2026-11-19: "set word budget as per your need."** The budget is now **weight-proportional**, anchored on Unit 1 as shipped, and it is the live number for units 2–5 (§4.2). Unit 1 ships at 10,837w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
+  1a. **Unit 2's size (§4.3).** It ships at **6,024w** against a **4,600w** weight budget — 31% over, outside the ±10% band. The concept sections (2,787w) are proportionate to 48% of the unit's marks; the overrun is the assessed practice bank (2,195w). The cut to the band is 8 MCQs / 4 short / 2 long, about 700w, and it is a 10-minute edit. **Accept the density, or enforce the band?**
+2. **The matcher itself is not trustworthy — this is now the biggest open item (§4.1.3a, §4.1.3b).** Two independent defects: (i) `score_against()` does a bare substring test, so `Built-ins / all` lands on the collections section because `all` occurs inside **shallow**; (ii) the tie-break between two equally-relevant headings depends on **document order**, so reversing a unit page's heading list changes the landing of **160 of 523 questions (30.6%)** across all five subjects — 16 of 51 in Unit 1 alone, reproduced in the shipped `unit-discovery.js`, not just the audit script. Reversing is not a fix: the two orders are right on 5+3 vs 6 of the 16. Both defects are invisible to the pass/fail triple and were missed in Phase 12. **Recommendation:** scoped fix now (13.6 topic map, which bypasses the scorer), real fix as a dedicated Phase 17 across all five maps — including a regression test that asserts landings are invariant under heading reorder. **This also means Phase 12's `103/2/0` result is weaker evidence than it was reported as.** Owner's call on whether Phase 17 is authorised before Phases 14–16.
 - **Standing caveats:** Physical-device check stays owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`.
 
 ---

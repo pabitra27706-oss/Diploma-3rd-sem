@@ -15,8 +15,8 @@ Eliminate the site's upside-down Python word-count distribution (where `7.8%`-we
 
 | Unit | Official Title (`syllabus.json`, pp. 5–7) | Hrs | Stored PYQ Tag (Q / m) | True 2023–2026 Weight | Share | Avg / Paper | MCQ + Long | Papers | Current Words → Target | Unit Blueprint |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Unit 1** | Introduction | 7h | 51 Q / 131m | **152m** | **39.3%** | 38.0m | 64m + 88m | 4/4 | 5,304w → ~7,200–8,000w | [`unit-1/README.md`](unit-1/README.md) |
-| **Unit 2** | Control Statements | 5h | 19 Q / 92m | **64m** | **16.5%** | 16.0m | 20m + 44m | 4/4 | 2,912w → ~4,600–5,200w | [`unit-2/README.md`](unit-2/README.md) |
+| **Unit 1** | Introduction | 7h | 51 Q / 131m | **152m** | **39.3%** | 38.0m | 64m + 88m | 4/4 | 5,438w → **10,837w** ✅ 13.1 | [`unit-1/README.md`](unit-1/README.md) |
+| **Unit 2** | Control Statements | 5h | 19 Q / 92m | **64m** | **16.5%** | 16.0m | 20m + 44m | 4/4 | 2,912w → **6,024w** (budget ~4,600w) ✅ 13.2 | [`unit-2/README.md`](unit-2/README.md) |
 | **Unit 3** | Functions, Modules and Packages | 6h | 17 Q / 70m | **92m** | **23.8%** | 23.0m | 17m + 75m | 4/4 | 4,340w → ~5,800–6,400w | [`unit-3/README.md`](unit-3/README.md) |
 | **Unit 4** | Files & Regular Expressions | 6h | 10 Q / 56m | **49m** | **12.7%** | 12.2m | 8m + 41m | 4/4 | 4,805w → ~4,800–5,300w | [`unit-4/README.md`](unit-4/README.md) |
 | **Unit 5** | Framework | 6h | 7 Q / 38m | **30m** | **7.8%** | 7.5m | 6m + 24m | 4/4 | 5,657w → ~3,800–4,300w | [`unit-5/README.md`](unit-5/README.md) |
