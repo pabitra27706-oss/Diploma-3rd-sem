@@ -126,6 +126,43 @@ All-104 granularity moved from 12 named / 61 coarse / 5 generic / 15 unmatched t
 
 `P005-Q10` (`print() / sep`), `P005-Q11` (`Django static files`), `P005-Q13` (`Sets / union`), `P005-Q14` (`List mutation during iteration`), `P005-Q20` (`File object methods`). Four belong to Units 4–5 and close in 13.4/13.5. `P005-Q13` and `P005-Q14` are Unit 1 content whose headings exist but whose names do not contain the topic's words — they are the correct first entries for `assets/data/topic-map-CST203.json` in part 13.6, which is exactly what the map is for. **No `_data/` edit was made** (Mode A).
 
+### 4.1.3a A new matcher defect found by reading individual landings (not by counting)
+
+While spot-checking the post-rewrite landings rather than trusting the triple, one
+resolution turned out to be **wrong content**, not merely coarse:
+
+| Question | Stored topic | Stem | Lands on | Should land on |
+| :--- | :--- | :--- | :--- | :--- |
+| `P003-Q19` | `Built-ins / all` | `print(all([10, 8, 6, 4, 0]))` | `#collections` | the built-in-functions heading |
+
+**Cause.** `score_against()` in `scripts/audit_topic_routing.py` (and its JS twin in
+`assets/js/unit-discovery.js`) awards the 90-point "topic appears in the heading"
+score with a bare substring test, `target in title`. The topic segment `all` is
+therefore found inside the word **"shallow"** — in the heading *"Aliasing, shallow
+copy and deep copy"* — and 90 points beats the 0.5 that the correct heading scores
+on the same topic. It is the same class of failure Phase 12 described: a *plausible*
+wrong section, invisible in the counts.
+
+**Why it is not fixed here.** A word-boundary test (`\b`-anchored match) was
+prototyped and measured across all five subjects. Routing triples do not move
+anywhere, but **19 individual questions change landing**, and the change is not a
+clean win:
+
+- Clearly better: `P003-Q19`; `CST209-P005-Q22` (`#dag-topo` → `#shortest-path-…-floyd-warshall`).
+- Clearly worse: `P003-Q27` and `P005-Q22` would move **out of** the string heading
+  and into `#data-types-mutability-and-type-conversion`. Both are 8-mark composites
+  whose marks sit mostly on strings (for `P003-Q27`: 3m `join`/`split` + 3m string
+  immutability against 2m mutability classification), so the current landing is the
+  correct one and the "fix" would break it.
+- Neutral anchor-name differences on the other 16.
+
+So the defect is real, affects one confirmed question in this subject, and the
+correct fix is **scoped, not global**: the explicit map in part 13.6 is consulted
+before the matcher and can pin `Built-ins / all` without disturbing 18 other
+questions in subjects this phase does not own. The matcher change belongs in a
+dedicated cross-check phase (17) where all five maps can be re-validated together.
+**Flagged for the owner in §6.**
+
 ### 4.1.4 Code verification
 
 Every `<pre>` block was machine-checked against Python 3.11.2 rather than eyeballed:
@@ -198,6 +235,9 @@ The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` a
 ## 6. Owner Verification & Open Caveats
 - **URLs to verify under `/Diploma-3rd-sem/`:** `subjects/CST203/index.html`, `subjects/CST203/units/unit-{1..5}.html`, `suggestions/python/easy-read.html`, `revision/CST203.html`, `pyq/viewer.html` (spot-checking 2023–2026 Python `.unit-topic-link` jumps), and `subjects/CST213/index.html`.
 - **Owner decision (`rule.md` §4.7):** _Pending execution (`mark as pass` / `add for later`)._
+- **Two decisions waiting for the owner after part 13.1:**
+  1. **Word budget (§4.1.6).** Unit 1 ships at 10,820w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
+  2. **Matcher substring defect (§4.1.3a).** `Built-ins / all` resolves to the collections section because `all` occurs inside `shallow`. A global word-boundary fix moves 19 questions across all five subjects and regresses two of them; the scoped fix is the 13.6 topic map. Recommend: map entry for CST203, matcher fix deferred to Phase 17 where all five maps can be re-validated. **Owner's call.**
 - **Standing caveats:** Physical-device check stays owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`.
 
 ---
@@ -210,3 +250,5 @@ The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` a
 2. **`#formulas`/`#comparisons`/`#definitions` were left behind by Phase 12's style.** All three duplicated what the new sections now say. They were rebuilt as a compact reference, an index table and a six-definition list — 224w saved and, more importantly, no longer contradicting each other.
 3. **Word counts from different eras are not comparable.** The blueprint's `5,304w` and `23,018w` came from a recipe that is not in the repo; the page measures 5,438w on the calibrated metric used here. Every number in this record uses one recipe, and the recipe is stated in §2. Anyone comparing against an older figure is comparing two instruments.
 4. **A "0 syntax errors" check is not a correctness check.** Three snippets carried dead code after a deliberate exception. Compare printed output against the prose, not just `compile()`.
+5. **Read individual landings; a count cannot tell you a landing is wrong.** The triple read `89/10/5` and the granularity split read `41 named`, and one of those 41 named landings was sending a question about `print(all([...]))` to the collections section because the topic word `all` occurs inside `shallow`. Every aggregate was green. Spot-check a sample of real questions against their stems every part.
+6. **Verify a proposed fix before believing it.** The word-boundary prototype looked obviously correct and would have silently broken two 8-mark questions whose marks favour strings over mutability. Measure the fix on the actual corpus, in both directions, before it ships.

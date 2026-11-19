@@ -142,6 +142,16 @@ result; do not treat earlier unpushed/blocked checkpoint notes as current state.
   overrun is the practice bank (3,721w; worked 8-mark answers average 263w).
   The owner can demand the strict ceiling — the cut is 4 long answers and 2
   MCQs, a 20-minute edit. Recorded in `record.md` §4.1.6 before it was asked for.
+- **New matcher defect found by reading landings, not counts:** `Built-ins / all`
+  lands on the collections section because `score_against()` uses a bare
+  substring test, so the topic word `all` is found inside `shallow`. A global
+  word-boundary fix moves **19** questions across all five subjects and
+  **regresses two** 8-mark Python questions, so it is not being shipped blind —
+  the scoped fix is the 13.6 map, the global fix needs Phase 17. Recorded in
+  `record.md` §4.1.3a with evidence.
+- **Two owner decisions are open:** the Unit 1 word-budget overrun (§4.1.6) and
+  the matcher fix above (§4.1.3a). Both are written up with options; neither has
+  been actioned unilaterally.
 - **Not done, not faked:** the 11 `tests/*-browser.cjs` suites need
   `playwright-core` + Chromium and were not run (pre-existing sandbox limit).
   `unitAnchored` moved `580 → 592`; 136/136 unit tests and 14/14 node suites pass.
