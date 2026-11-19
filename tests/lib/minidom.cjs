@@ -132,6 +132,10 @@ function createMiniDom(initialUrl) {
       throw new Error('Unexpected innerHTML sink invoked');
     }
 
+    hasAttribute(name) {
+      return this.attributes.has(String(name));
+    }
+
     setAttribute(name, value) {
       const k = String(name);
       const v = String(value);
@@ -335,10 +339,14 @@ function createMiniDom(initialUrl) {
   documentElement.appendChild(body);
   activeEl = body;
 
+  const head = new MiniNode(1, 'head');
+  documentElement.insertBefore ? documentElement.insertBefore(head, body) : documentElement.appendChild(head);
+
   const doc = {
     title: '',
     currentScript: null,
     documentElement,
+    head,
     body,
     get activeElement() { return activeEl; },
     createElement: tag => new MiniNode(1, tag),

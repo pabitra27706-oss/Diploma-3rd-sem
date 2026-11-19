@@ -79,6 +79,25 @@
     }
   }
 
+  // Explicit topic -> section map. Authored data (assets/data/topic-map-<subject>.json),
+  // consulted first because it is exact: a stored topic that appears here always
+  // lands on the section a human chose, instead of on whatever the scorer prefers.
+  // Missing entry, missing file or a failed fetch all fall through to the matcher.
+  const topicMapCache = new Map();
+  async function loadTopicMap(subject) {
+    if (topicMapCache.has(subject)) return topicMapCache.get(subject);
+    let map = null;
+    try {
+      const res = await fetch(new URL(`../../../assets/data/topic-map-${subject}.json`, window.location.href).href);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.map && typeof data.map === 'object') map = data.map;
+      }
+    } catch (_) { /* offline or absent: fall back to the matcher */ }
+    topicMapCache.set(subject, map);
+    return map;
+  }
+
   async function focusQuestionTopic(main, subject, currentUnit, maxUnits) {
     const topic = new URLSearchParams(window.location.search).get('topic');
     if (!topic || !topic.trim()) return;
@@ -86,6 +105,11 @@
     const needle = normalized(topic);
     const terms = needle.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 2);
     if (!terms.length) return;
+
+    // Exact lookup wins outright. Only the coarse "is this anchor on this page?"
+    // check can override it, and only by falling back to the matcher.
+    const topicMap = await loadTopicMap(subject);
+    const mapped = topicMap && Object.prototype.hasOwnProperty.call(topicMap, needle) ? topicMap[needle] : null;
 
     function entriesFor(doc, unit) {
       return Array.from(doc.querySelectorAll('h2, h3, h4')).map((heading) => {
@@ -154,33 +178,52 @@
       return scoreTitle(candidate) > scoreTitle(incumbent);
     }
 
-    let candidates = entriesFor(document, currentUnit);
+    const inThisUnit = entriesFor(document, currentUnit);
+
+    // The map names an exact section, so it is trusted over the scorer. It may
+    // also name a DIFFERENT unit than the stored one -- that is how a stale PYQ
+    // unit gets corrected. Either way the anchor must really exist on the page
+    // we intend to use, or a renamed heading would strand the learner; a miss
+    // falls through to the matcher instead of doing nothing.
+    async function fetchUnitEntries(unit) {
+      try {
+        const url = new URL(`unit-${unit}.html`, window.location.href);
+        url.search = '';
+        url.hash = '';
+        const response = await fetch(url.href);
+        if (!response.ok) return [];
+        return entriesFor(new DOMParser().parseFromString(await response.text(), 'text/html'), unit);
+      } catch (_) {
+        return [];
+      }
+    }
+
+    let mappedEntry = null;
+    if (mapped) {
+      const mappedUnit = Number(mapped[0]);
+      const mappedAnchor = mapped[1];
+      const pool = mappedUnit === Number(currentUnit) ? inThisUnit : await fetchUnitEntries(mappedUnit);
+      const entry = pool.find((candidate) => candidate.anchor === mappedAnchor);
+      if (entry) mappedEntry = { ...entry, score: 100, covered: terms.length };
+    }
+
+    let candidates = inThisUnit;
     // When a stored PYQ unit is stale, search the subject's authored section
     // headings instead of sending the learner to a vaguely related overview.
-    if (!candidates.some((entry) => scoreTitle(entry.title) >= 0.5)) {
+    if (!mappedEntry && !candidates.some((entry) => scoreTitle(entry.title) >= 0.5)) {
       const others = await Promise.all(Array.from({ length: maxUnits }, async (_, index) => {
         const unit = index + 1;
-        if (unit === currentUnit) return [];
-        try {
-          const url = new URL(`unit-${unit}.html`, window.location.href);
-          url.search = '';
-          url.hash = '';
-          const response = await fetch(url.href);
-          if (!response.ok) return [];
-          const html = await response.text();
-          const parsed = new DOMParser().parseFromString(html, 'text/html');
-          return entriesFor(parsed, unit);
-        } catch (_) {
-          return [];
-        }
+        return unit === currentUnit ? [] : fetchUnitEntries(unit);
       }));
       candidates = candidates.concat(...others);
     }
 
-    let best = null;
-    for (const entry of candidates) {
-      if (!better(entry.title, best && best.title)) continue;
-      best = { ...entry, score: scoreTitle(entry.title), covered: segmentsCovered(entry.title) };
+    let best = mappedEntry;
+    if (!best) {
+      for (const entry of candidates) {
+        if (!better(entry.title, best && best.title)) continue;
+        best = { ...entry, score: scoreTitle(entry.title), covered: segmentsCovered(entry.title) };
+      }
     }
     if (!best || best.score < 0.5) return;
 
