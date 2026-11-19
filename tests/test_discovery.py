@@ -108,7 +108,7 @@ class DiscoveryTests(unittest.TestCase):
         anchors = scope['headingAnchors']
         self.assertEqual(anchors['unitPageTopNoAnchor'], 24)
         self.assertEqual(anchors['unitDrawerChromeExcluded'], 24)
-        self.assertEqual(anchors['unitAnchored'], 632)
+        self.assertEqual(anchors['unitAnchored'], 634)
 
     def test_every_search_entry_and_anchor_resolves(self):
         from data_pipeline import stores

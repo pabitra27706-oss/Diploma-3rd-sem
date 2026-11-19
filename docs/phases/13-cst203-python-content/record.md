@@ -449,7 +449,7 @@ extra-syllabus on the page.
 ### 4.5 Part 13.4 result — Unit 4 (Files & Regular Expressions), `49m / 12.7%`
 
 **What shipped.** `subjects/CST203/units/unit-4.html` went from **4,937w** and **zero**
-`<h3 id>` anchors to **6,748w / 4,634 prose** and **6** anchors.
+`<h3 id>` anchors to **6,835w / 4,665 prose** and **6** anchors (6,748w before part 13.6's prose-hygiene fixes).
 
 **The unit's defining defect was an internal inversion, and it is now fixed.**
 `#regex` (11m) was longer than `#fileio` (34m) even though file handling earns **3.1×**
@@ -534,7 +534,7 @@ Schafer 53:17 (`re` module, raw strings, meta-characters).
 ### 4.6 Part 13.5 result — Unit 5 (Framework / Django), `30m / 7.8%`
 
 **What shipped.** `subjects/CST203/units/unit-5.html` went from **5,780w** and **zero**
-`<h3 id>` anchors to **5,763w / 4,247 prose** and **5** anchors, plus **1 inline SVG**.
+`<h3 id>` anchors to **5,780w / 4,264 prose** and **5** anchors, plus **1 inline SVG** (5,763w before part 13.6).
 
 **The defect was the opposite of Unit 4's, and it is now fixed.** Unit 5 was the
 *longest* Python page in the repository while earning the *fewest* marks, and its
@@ -588,6 +588,138 @@ token, "no such table" without `migrate`).
 15:32 (install, `startproject`, `startapp`, `runserver`); `Vr_XLiw6Y9Y` Job Ready
 CoderZ 05:39 (MVT mapped to database/business logic/front end); `sE87oB3wYMc` Indent
 Code 03:38 (one request traced through `urls.py` &rarr; `views.py` &rarr; template).
+
+### 4.7 Part 13.6 result — PYQ sync, topic map and the cross-check
+
+**What shipped.** `assets/data/topic-map-CST203.json` — **92 entries** covering all
+**90 distinct topics** in the `P00[3-6]` window (**104 questions**), with **21 recorded
+decisions** for the multi-part questions where "the marks decide" was a judgement call.
+Plus `tests/test_topic_map_cst203.py` (10 tests), a widened DOM case, and **two anchors
+authored in Unit 1**.
+
+#### Acceptance criteria (standard §5), measured
+
+| Criterion | Required | Result |
+| :--- | :--- | :--- |
+| Unmapped questions in the window | 0 | **0 of 104** ✅ |
+| Generic `overview`/`intro`/`fundamentals` landings | reduced, stated | **0 after, 0 before** — see the honest note below |
+| Raw paper-section anchors in the map | 0 | **0** (test-enforced) ✅ |
+| Mapped anchors verified present | all | **92 of 92** ✅ |
+| `check_pyq_integrity.py` | 0 drift | **0 changed/added/missing** ✅ |
+
+#### Routing, matcher alone versus map-first (104 questions)
+
+| | Matcher only | Map first |
+| :--- | ---: | ---: |
+| same-unit / redirect / unmatched | 95 / 9 / 0 | **95 / 9 / 0** |
+| landings on a **named** heading | 86 | **104** |
+| landings on a coarse section card | 18 | **0** |
+| landings that differ from the matcher | &mdash; | **49 of 104** |
+| unit corrections (stored unit was wrong) | &mdash; | **11** |
+
+**Honest note on criterion 2, stated rather than dressed up.** The standard says the map
+must *reduce* generic `overview-*` landings. On CST203 that number is **0 before and 0
+after**, because Phases 13.1–13.5 replaced every generic card with named headings. So
+the criterion is met vacuously, and a vacuous pass is not evidence. The evidence that
+the map works is the row above it: **18 coarse-section landings became 0**, and 49
+questions moved to a more specific heading. The test asserts `<=`, not `<`, for exactly
+this reason, with the reason written in the test.
+
+| Matcher landing | Map landing | Example |
+| :--- | :--- | :--- |
+| `u1#operators` (7 questions) | `u1#arithmetic-string-and-assignment-operators` | `P003-Q13`, `P004-Q9`, `P005-Q9`, `P006-Q6` |
+| `u3#parameters` (3) | `u3#positional-keyword-and-default-arguments` | `P003-Q16`, `P003-Q30`, `P004-Q19` |
+| `u2#nested-loops` (3) | `u2#classic-exam-loop-programs` | `P003-Q28`, `P004-Q18` |
+| `u4#fileio` (2) | `u4#file-opening-and-access-modes` | `P003-Q33`, `P004-Q20` |
+
+#### The 11 questions whose stored unit was wrong
+
+The map's `[unit, anchor]` may override the PYQ's own `unit` field. Eleven did:
+
+- **`P003-Q18`, `P003-Q32`** &rarr; Unit 3 changed to **Unit 1** `#datetime-in-python`
+  (`Q32` is 3+3 of 8 marks on datetime and arbitrary arguments; only Unit 1 teaches the
+  `datetime` call).
+- **`P006-Q12`, `P006-Q22`, `P004-Q22`** &rarr; Unit 4 changed to **Unit 3**
+  `#module-versus-package` (Unit 4 is Files & Regex; packages are Unit 3).
+- **`P005-Q10`, `P004-Q13`** &rarr; Unit 1 changed to **Unit 4**
+  `#console-input-output-print-and-sep` (`sep=` is taught in Unit 4, not Unit 1).
+- **`P006-Q24`** &rarr; Unit 4 changed to **Unit 5** `#mvc-and-django-mvt-architecture`.
+- **`P006-Q17`** &rarr; Unit 2 changed to **Unit 1** `#string-formatting-and-immutability`.
+- **`P006-Q18`, `P006-Q20`** &rarr; Unit 2 changed to **Unit 1**.
+
+#### Two anchors authored because the material had no heading
+
+`#sets-union-and-methods` and `#list-mutation-during-iteration` in `unit-1.html`. The
+content already existed — a `set` note-box with the union/intersection operators, and a
+warning box titled "Never mutate a list while looping over it" — but neither had an
+`<h3>`, so `P005-Q13` (Sets / union) and `P005-Q14` (List mutation during iteration)
+had nowhere correct to land. The anchor plan in the blueprint was a planning number, not
+a target; this is the case it anticipated. **The headings were added around existing
+prose, not new prose written to justify a heading.**
+
+#### Three of my own test designs were wrong, and the correction is the point
+
+1. **A vacuous criterion.** My first test asserted `generic_map < generic_fuzzy`. Both
+   are 0 on CST203, so the assertion was false and the test failed. The fix was not to
+   delete the assertion but to replace it with the true requirement (never worse, and
+   strictly better somewhere) and to say in the docstring why the standard's phrasing
+   does not fit a subject that has already been rebuilt.
+2. **A test that demanded 36 written decisions.** Requiring a `decisions` entry for
+   every topic containing a `/` produced a 36-item failure list of trivial 1-mark MCQs
+   like "Strings / len". The rule that matters is narrower: a decision is needed where
+   the subparts carry **unequal marks**. Rewritten to compute that from
+   `subparts[].marks`.
+3. **A test that found five real gaps.** Once narrowed, it failed with exactly the five
+   questions whose unequal marks I had reasoned through but not written down
+   (`P003-Q27`, `P004-Q18`, `P004-Q22`, `P006-Q20`, `P006-Q21`). Those five decisions
+   were then written. **The test found a genuine omission in my own work, not a bug in
+   the test.**
+
+**Ablation on the guard itself.** Deleting the `functions / lambda` decision and re-running
+fails with `{'functions / lambda': ['CST203-P006-Q21']} != {}`, naming the question.
+Deleting nothing passes. The guard is not vacuous.
+
+#### Flags for owner review, recorded not hidden
+
+Recorded in the map's `decisions` block, all marked **Flagged**:
+
+- **`P006-Q20` (logical / identity / bitwise operators)** — 2m logical/identity vs **6m**
+  bitwise trace. The marks argue for `#bitwise-operators-and-precedence`; the topic's
+  first word argues for `#logical-identity-and-membership-operators`, which is what I
+  chose. **This is the one entry where "first word of the topic" beat "largest
+  subpart".**
+- **`P005-Q21` (file word count / MVC / Django vs Flask)** — the single largest subpart
+  (4m word count) is Unit 4 content, but the question is filed Unit 5 and 4m of 8m is
+  not a majority. Kept in Unit 5.
+- **`P003-Q26`, `P003-Q27`, `P004-Q22`, `P005-Q19`, `P006-Q21`** — each has an
+  equally-defensible second landing, named in the decision text.
+
+#### Grep checks (the 13.6 checklist)
+
+| Check | Result |
+| :--- | :--- |
+| Zero raw question IDs in teaching prose | **0** (was 5 in U4, 3 in U5 — fixed) |
+| Zero subject codes outside canonical URLs | **0** (was `CST213` ×2 — fixed) |
+| Zero literal markdown backticks in HTML | **0** (was 2 — fixed) |
+| Zero `<iframe>` / `ytimg` references | **0** across all five units ✅ |
+| Out-of-syllabus teaching prose (`pandas`/`scipy`/`matplotlib`) | only the one labelled "not examinable" note in U3 ✅ |
+| Every video a plain `<a>` to `youtube.com/watch?v=` | **19 links, 0 embeds** ✅ |
+
+The question-ID and subject-code leaks were **introduced by Phases 13.1–13.5** (mine) and
+were invisible to every earlier gate. They are the kind of defect a learner sees
+immediately — "(2 marks, `P004-Q13`)" rendering with literal backticks is how markdown
+leaked into HTML — and no gate in this repository catches them. **A prose-hygiene check
+belongs in a future phase**; noted rather than built here.
+
+#### Gates after part 13.6
+
+`check_site --strict` 0/0 · `audit_accessibility --fail` 0 findings · `check_tokens
+--strict` · `check_pyq_integrity` **0 drift** · `build_suggestions --check` ·
+`validate_data` · `validate_syllabus` · `check_readme_paths` · `check_root_rewrite` ·
+`check_platform` · `audit_page_weight --budget` · `build_icon_subset --check` ·
+`build_data_version --check` — **all pass**. `unittest` **151/151** (was 141; +10 from the
+new map test). Node **14 suites pass, 11 env-blocked** on missing `playwright-core`
+(pre-existing, not a regression). `unitAnchored` lock **632 &rarr; 634**.
 
 ### 4.1.4 Code verification
 

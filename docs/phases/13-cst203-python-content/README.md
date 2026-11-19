@@ -20,7 +20,7 @@ Eliminate the site's upside-down Python word-count distribution (where `7.8%`-we
 | **Unit 3** | Functions, Modules and Packages | 6h | 17 Q / 70m | **92m** | **23.8%** | 23.0m | 17m + 75m | 4/4 | 4,340w → **7,494w** (budget ~6,600w) ✅ 13.3 | [`unit-3/README.md`](unit-3/README.md) |
 | **Unit 4** | Files & Regular Expressions | 6h | 10 Q / 56m | **49m** | **12.7%** | 12.2m | 8m + 41m | 4/4 | 4,937w → **6,748w** ✅ 13.4 | [`unit-4/README.md`](unit-4/README.md) |
 | **Unit 5** | Framework | 6h | 7 Q / 38m | **30m** | **7.8%** | 7.5m | 6m + 24m | 4/4 | 5,780w → **5,763w** (rebalanced, not cut) ✅ 13.5 | [`unit-5/README.md`](unit-5/README.md) |
-| **Total** | **5 Official Units** | **30h** | **104 Q / 387m** | **387m** | **100.0%** | **96.8m** | **115m + 272m** | **4/4** | **23,018w → ~26.2–29.2kw** | **5 unit folders** |
+| **Total** | **5 Official Units** | **30h** | **104 Q / 387m** | **387m** | **100.0%** | **96.8m** | **115m + 272m** | **4/4** | **23,018w → 36,982w shipped** ✅ 13.6 | **5 unit folders** |
 
 *Baseline `focusQuestionTopic()` routing across all 104 `2023–2026` Python questions — **re-measured 2026-11-19**, see `record.md` §3.1:*
 - **78 same-unit hits (`75.0%`)**

@@ -156,7 +156,7 @@
 
       <h3 id="console-input-output-print-and-sep">Console Input and Output: <code>input()</code>, <code>print()</code>, <code>sep</code> and <code>end</code></h3>
 
-      <p><code>input(prompt)</code> always returns a <strong>string</strong>, whatever the user types. This is the single most examined fact in this section (2 marks, `P004-Q13`): a program that asks for an age and then compares it to a number fails, because <code>"25" &gt; 18</code> raises <code>TypeError</code>. Convert first.</p>
+      <p><code>input(prompt)</code> always returns a <strong>string</strong>, whatever the user types. This is the single most examined fact in this section (2 marks): a program that asks for an age and then compares it to a number fails, because <code>"25" &gt; 18</code> raises <code>TypeError</code>. Convert first.</p>
 
       <div class="code-box">
         <div class="box-title"><i class="fas fa-code"></i> input() always gives you a str</div>
@@ -320,7 +320,7 @@ print(f.closed)    # True
 
       <h3 id="file-object-methods-and-word-count">File Object Methods &mdash; <code>read</code>, <code>readline</code>, <code>readlines</code>, <code>write</code>, <code>writelines</code> &mdash; and Word Count</h3>
 
-      <p>Three read methods, three different return <em>types</em> &mdash; and the type is what the 3-mark subpart marks (<code>P005-Q20i</code>). All three move the same cursor, so mixing them inside one <code>with</code> block continues where the previous call stopped.</p>
+      <p>Three read methods, three different return <em>types</em> &mdash; and the type is what the 3-mark subpart marks (3 marks). All three move the same cursor, so mixing them inside one <code>with</code> block continues where the previous call stopped.</p>
 
       <div class="table-wrapper">
         <table class="io-table">
@@ -372,7 +372,7 @@ print(len(lines), lines)
         </pre>
       </div>
 
-      <p>That third block is the trap in <code>P005-Q20i</code>: <code>readlines()</code> after two <code>readline()</code> calls returns a list of <strong>one</strong> item, not three. The cursor is shared.</p>
+      <p>That third block is the trap in that 3-mark subpart: <code>readlines()</code> after two <code>readline()</code> calls returns a list of <strong>one</strong> item, not three. The cursor is shared.</p>
 
       <p>Writing has its own pair of traps: <code>write()</code> returns the <em>number of characters</em> written (not the file), and neither method adds a newline.</p>
 
@@ -410,7 +410,7 @@ print(open("out4.txt").read())                    # abc
 
       <h3 id="file-word-count-and-cursor-control">The File Word-Count Program, <code>tell()</code> and <code>seek()</code></h3>
 
-      <p>A 4-mark subpart (<code>P005-Q21i</code>) asks for a program that counts the <strong>words in <code>file.txt</code></strong>. Two correct answers exist and both are expected: the short one that reads the whole file, and the streaming one that never holds the file in memory.</p>
+      <p>A 4-mark subpart asks for a program that counts the <strong>words in <code>file.txt</code></strong>. Two correct answers exist and both are expected: the short one that reads the whole file, and the streaming one that never holds the file in memory.</p>
 
       <div class="code-box">
         <div class="box-title"><i class="fas fa-code"></i> Count words in file.txt &mdash; both versions</div>
@@ -593,7 +593,7 @@ My number is # and 12345
 
       <h3 id="match-object-start-end-and-span">The Match Object: <code>group()</code>, <code>start()</code>, <code>end()</code> and <code>span()</code></h3>
 
-      <p>A <code>Match</code> object is not a string. It carries the matched text plus its position, and that position is a separate 2-mark question (<code>P005-Q23i</code>): <code>start()</code> and <code>end()</code> give a half-open slice, which is exactly what Python slicing wants.</p>
+      <p>A <code>Match</code> object is not a string. It carries the matched text plus its position, and that position is a separate 2-mark question: <code>start()</code> and <code>end()</code> give a half-open slice, which is exactly what Python slicing wants.</p>
 
       <div class="code-box">
         <div class="box-title"><i class="fas fa-code"></i> Reading a Match object</div>
@@ -657,7 +657,7 @@ print(re.findall(r"a.b", "a\nb", re.S))
         </table>
       </div>
 
-      <p>A worked use &mdash; a <code>grep</code>-style script that prints every line of a file matching a pattern. This is the practical-file script for CST213 Area 7 and it exercises <code>compile</code>, <code>search</code> and error handling together:</p>
+      <p>A worked use &mdash; a <code>grep</code>-style script that prints every line of a file matching a pattern. This is the practical-file script for the paired lab course and it exercises <code>compile</code>, <code>search</code> and error handling together:</p>
 
       <div class="code-box">
         <div class="box-title"><i class="fas fa-code"></i> grep.py &mdash; filter a file with a regex</div>
@@ -1068,7 +1068,7 @@ re.error: unterminated character set at position 0
           <button class="toggle-btn" data-target="mcq4_10">Show Answer</button>
           <div class="answer-reveal" id="mcq4_10">
             <strong>Answer: b. <code>str</code>, always</strong>
-            <p>Typing <code>25</code> gives the string <code>'25'</code>, so <code>int(input())</code> is needed before arithmetic. This is the 2-mark <code>P004-Q13</code>.</p>
+            <p>Typing <code>25</code> gives the string <code>'25'</code>, so <code>int(input())</code> is needed before arithmetic. This is the 2-mark MCQ the paper repeats.</p>
           </div>
         </div>
 
@@ -1331,7 +1331,7 @@ with open("file.txt", "r") as f:
     </h2>
     <div class="section-content">
 
-      <p>Five programs, each one a lab-style task from CST213 Areas 6&ndash;7. Every output shown was produced by running the code exactly as written.</p>
+      <p>Five programs, each one a lab-style task from the paired lab course (file processing, then regular expressions). Every output shown was produced by running the code exactly as written.</p>
 
       <div class="algo-box">
         <div class="box-title"><i class="fas fa-code"></i> 1. Count words in a file &mdash; two ways</div>
