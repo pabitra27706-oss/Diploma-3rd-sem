@@ -1,5 +1,36 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
+## Phase 17 — Topic-map cross-check — ✅* owner-passed (Termux test, 2026-11-19); branch pushed; merge NOT authorised
+
+Branch `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (PR #31 merge), head
+`8f37939`, pushed to origin at owner direction. No PR, merge or deploy. Full evidence:
+[Phase 17 record](phases/17-topic-map-crosscheck/record.md).
+
+- All five `assets/data/topic-map-<subject>.json` maps: entries unchanged;
+  **421/421 anchors resolve** to landable headings; zero raw paper-section
+  anchors; zero unmapped questions in the calibrated `P00[3-6]` window.
+- A `noJump` register: the placeholder labels (321 archived questions) and
+  CST207 `short notes` open at the unit top, with no redirect, no highlight and
+  no dead fragment. Guarded by 3 DOM cases (ablated: the old JS fails).
+- Tie-break **kept pinned**, with the reason measured: the candidate key turns
+  five clean fallbacks into nonsense landings (record §7).
+- Baseline reconciled: the matcher reproduces the 2026-11-18 baseline exactly on
+  the baseline-era pages. Today's pages differ, so the matcher-only gauge is not
+  like-for-like. The report now says so.
+- 50-entry spot-read: C 37, P 10, B 3, W 0. Three candidate re-points are
+  flagged for the owner, not applied (record §5.5).
+- Gates: 202 Python tests OK (0 skipped); 12 DOM cases; `check_pyq_integrity` 0
+  drift; all README gates exit 0; canonical rebuild byte-identical on a second
+  pass; `validate_data` and `validate_syllabus` output identical to `main`.
+- **Hosted CI red: cause found and fixed locally, not pushed.** The "PYQ browser
+  smoke" step fails on `main` `44515857069`, `44490460318` and `8f37939`. Cause:
+  a stale expectation at `tests/pyq-browser.cjs` line 61 (`#modules`), left behind
+  when Phase 13.6 (`c402c3f`) changed the reviewed landing. Fixed in a local
+  commit (record §17). Reproduced locally before the fix and passing after. The
+  hosted run needs a push, which the owner has not yet authorised.
+- No browser, device or playback evidence. Owner-test URLs and the Termux block
+  are in record §12 and §14. The owner reported "Test passed".
+
 ## Phase 14 — Data Structures — ✅* owner-passed (Termux test), merge authorized (2026-11-19)
 
 Branch `arena/c5ca91cb-diploma-3rd-sem`, base `cdf001c` (Phase 16 PR #30

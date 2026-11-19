@@ -8,7 +8,7 @@ import argparse
 import json
 from pathlib import Path
 
-from audit_topic_routing import ROOT, load_units, questions
+from audit_topic_routing import ROOT, SUPPLEMENTARY_NOTE, load_units, no_jump_register, questions
 
 # unit, concept anchor, then question numbers in P003, P004, P005, P006.
 GROUPS = (
@@ -103,7 +103,7 @@ def build():
                 if topic in result:assert result[topic]==[unit,anchor],topic
                 result[topic]=[unit,anchor]
     assert seen==set(by_id),(set(by_id)-seen,seen-set(by_id))
-    return {'schemaVersion':1,'subject':'CST209','window':'P003–P006 (2023–2026); P001 excluded','mode':'A — frozen paper and quiz bytes','map':dict(sorted(result.items())),'decisions':DECISIONS}
+    return {'schemaVersion':1,'subject':'CST209','window':'P003–P006 (2023–2026); P001 excluded','mode':'A — frozen paper and quiz bytes','map':dict(sorted(result.items())),'noJump':no_jump_register('CST209'),'supplementaryUnits':{'5':SUPPLEMENTARY_NOTE},'decisions':DECISIONS}
 
 
 if __name__=='__main__':

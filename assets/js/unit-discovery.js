@@ -89,16 +89,32 @@
   const topicMapCache = new Map();
   async function loadTopicMap(subject) {
     if (topicMapCache.has(subject)) return topicMapCache.get(subject);
-    let map = null;
+    let register = { map: null, noJump: [] };
     try {
       const res = await fetch(new URL(`../../../assets/data/topic-map-${subject}.json`, window.location.href).href);
       if (res.ok) {
         const data = await res.json();
-        if (data && data.map && typeof data.map === 'object') map = data.map;
+        if (data && data.map && typeof data.map === 'object') register.map = data.map;
+        // Phase 17: recorded "no jump, no topic" labels (keys are normalised).
+        if (data && data.noJump && typeof data.noJump === 'object' && !Array.isArray(data.noJump)) {
+          register.noJump = Object.keys(data.noJump)
+            .map((key) => key.replace(/\s+/g, ' ').trim().toLocaleLowerCase());
+        }
       }
     } catch (_) { /* offline or absent: fall back to the matcher */ }
-    topicMapCache.set(subject, map);
-    return map;
+    topicMapCache.set(subject, register);
+    return register;
+  }
+
+  // Remove a URL fragment that names no element on this page, such as the
+  // synthetic `#short-answer` the PYQ link adds, so no dead anchor is left behind.
+  function dropDeadFragment() {
+    if (!window.location.hash) return;
+    let hash = window.location.hash.slice(1);
+    try { hash = decodeURIComponent(hash); } catch (_) { /* keep literal */ }
+    if (!document.getElementById(hash)) {
+      history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+    }
   }
 
   async function focusQuestionTopic(main, subject, currentUnit, maxUnits) {
@@ -119,7 +135,15 @@
 
     // Exact lookup wins outright. Only the coarse "is this anchor on this page?"
     // check can override it, and only by falling back to the matcher.
-    const topicMap = await loadTopicMap(subject);
+    const register = await loadTopicMap(subject);
+    // Phase 17 (17.4): a recorded "no jump, no topic" label opens at the unit top.
+    // It is never handed to the matcher, which would land a paper-navigation
+    // heading or a coincidental word match ("group" inside "group()").
+    if (register.noJump.includes(needle)) {
+      dropDeadFragment();
+      return;
+    }
+    const topicMap = register.map;
     const mapped = topicMap && Object.prototype.hasOwnProperty.call(topicMap, needle) ? topicMap[needle] : null;
 
     function entriesFor(doc, unit) {
@@ -241,13 +265,7 @@
       // Answer links carry a synthetic topic fragment, which may not name any
       // authored heading. A failed Algorithms lookup must not leave that dead
       // fragment masquerading as a successful concept jump. Keep real anchors.
-      if (subject === 'CST209' && window.location.hash) {
-        let hash = window.location.hash.slice(1);
-        try { hash = decodeURIComponent(hash); } catch (_) { /* keep literal */ }
-        if (!document.getElementById(hash)) {
-          history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
-        }
-      }
+      if (subject === 'CST209') dropDeadFragment();
       return;
     }
 

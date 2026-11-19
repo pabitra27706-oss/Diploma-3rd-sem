@@ -10,7 +10,7 @@ import argparse
 import json
 from pathlib import Path
 
-from audit_topic_routing import ROOT, load_units, questions
+from audit_topic_routing import ROOT, load_units, no_jump_register, questions
 
 # normalized stored topic -> [true syllabus unit, concept anchor]
 MAP = {
@@ -148,6 +148,7 @@ def build():
         'window': 'P003–P006 (2023–2026); P001/P002 excluded',
         'mode': 'A — frozen paper and quiz bytes',
         'map': dict(sorted((k, list(v)) for k, v in MAP.items())),
+        'noJump': no_jump_register('CST205'),
         'decisions': DECISIONS,
     }
 

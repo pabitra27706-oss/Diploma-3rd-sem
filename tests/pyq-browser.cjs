@@ -58,7 +58,11 @@ const assert = require('node:assert/strict');
     await page.waitForFunction(() => document.querySelector('.pyq-topic-target'));
     assert.equal(new URL(page.url()).searchParams.get('topic'), topic);
     assert.match(new URL(page.url()).pathname, /subjects\/CST203\/units\/unit-3\.html$/);
-    assert.equal(new URL(page.url()).hash, '#modules');
+    // The landing is the reviewed Phase 13.6 map anchor for "Modules" (topic-map-CST203.json).
+    // The link's own #modules fragment is only a synthetic fallback and is replaced on arrival.
+    assert.equal(topic, 'Modules');
+    assert.equal(new URL(page.url()).hash, '#creating-and-importing-modules', 'the landing must be the reviewed map anchor');
+    assert.equal(await page.evaluate(() => Boolean(document.getElementById('creating-and-importing-modules'))), true, 'the reviewed destination must exist on the page');
     assert.deepEqual(errors, [], `browser page errors: ${errors.join('; ')}`);
     console.log(`PASS PYQ viewer at ${geometry.viewport}px: paper ${geometry.paperWidth}px, ${geometry.toolbarIcons} toolbar icons, one print control; answer-to-topic link verified`);
   } finally {
