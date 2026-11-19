@@ -28,14 +28,17 @@ import audit_topic_routing as routing  # noqa: E402
 SUBJECTS = ('CST201', 'CST203', 'CST205', 'CST207', 'CST209')
 PAPERS = 'P00[3-6]'
 
-# Measured 2026-11-19. Not a target -- a ratchet. CST203 fell 31 -> 29 in
-# part 13.3: Unit 3 now has 12 <h3 id> anchors, so fewer topics tie between a
-# named heading and a coarse section and fewer landings flip when the entry
-# list is reversed. A lower number is strictly better here. Any change here means the
+# Measured 2026-11-19. Not a target -- a ratchet.
+# CST203 moved 31 -> 29 in part 13.3 (Unit 3's 12 new <h3 id> anchors remove
+# ties between a named heading and a coarse section) and 29 -> 32 in part 13.4
+# (Unit 4's 6 anchors plus the extra section headings added more candidate
+# headings, hence more ties), then 32 -> 30 in part 13.5 (Unit 5's 5 anchors
+# removed two more ties). This number measures the SIZE of the unfixed
+# tie-break defect, not its correctness -- Phase 17 fixes the defect itself. Any change here means the
 # matcher's behaviour moved and must be explained in a phase record.
 ORDER_DEPENDENT = {
     'CST201': 36,
-    'CST203': 29,
+    'CST203': 30,
     'CST205': 35,
     'CST207': 10,
     'CST209': 50,

@@ -157,56 +157,107 @@
     </h2>
     <div class="section-content">
 
+      <p>MVC and Django's architecture carry <strong>19 of this unit's 30 marks (63%)</strong> and appear in all four papers. The question is almost always the same shape: name the three MVC components, then map them onto Django's MVT. Learn the mapping and you have the unit.</p>
+
+      <h3 id="mvc-and-django-mvt-architecture">MVC Framework and Django MVT (MTV) Architecture</h3>
+
       <div class="definition-box">
-        <div class="box-title"><i class="fas fa-book"></i> What is MVC?</div>
-        <p><strong>MVC (Model-View-Controller)</strong> is a software design pattern that separates an application into three interconnected components. This separation makes code organized, maintainable, and reusable. It is the foundation of most modern web frameworks.</p>
+        <div class="box-title">What is MVC?</div>
+        <p><strong>Model&ndash;View&ndash;Controller</strong> is an architectural pattern that splits an application into three parts with one job each, so that the data layer, the presentation layer and the input-handling layer can change independently. The purpose is <em>separation of concerns</em>: a designer can rewrite the HTML without touching the database queries.</p>
       </div>
 
-      <div class="mvc-grid">
-        <div class="mvc-card">
-          <div class="mvc-letter">M</div>
-          <p class="card-title">Model</p>
-          <p>Handles data and business logic. Communicates with the database. Defines data structure.</p>
-        </div>
-        <div class="mvc-card">
-          <div class="mvc-letter">V</div>
-          <p class="card-title">View</p>
-          <p>Handles presentation — what the user sees. Renders HTML. Displays data from the Model.</p>
-        </div>
-        <div class="mvc-card">
-          <div class="mvc-letter">C</div>
-          <p class="card-title">Controller</p>
-          <p>Handles user input. Coordinates between Model and View. Contains application logic.</p>
-        </div>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Part</th><th>Responsibility</th><th>In a shop application</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Model</strong></td><td>Data structure, business rules, database access. Knows nothing about HTML.</td><td>Product table: name, price, stock</td></tr>
+            <tr><td><strong>View</strong></td><td>Presentation &mdash; renders what the user sees. Displays data, holds no business logic.</td><td>The product listing page</td></tr>
+            <tr><td><strong>Controller</strong></td><td>Receives user input, decides what happens, fetches from the Model, picks a View.</td><td>&ldquo;Add to cart&rdquo; handler</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-flow-chart"></i> MVC Request-Response Flow</div>
-        <ol style="line-height:2;">
-          <li>User sends a <strong>request</strong> (e.g., clicks a link or submits a form).</li>
-          <li>The <strong>Controller</strong> receives the request and processes it.</li>
-          <li>The Controller queries the <strong>Model</strong> for data.</li>
-          <li>The Model returns data to the Controller.</li>
-          <li>The Controller passes data to the <strong>View</strong>.</li>
-          <li>The View renders the HTML and sends the <strong>response</strong> back to the user.</li>
-        </ol>
+      <p>Benefits to state explicitly in an answer: <strong>separation of concerns</strong>, <strong>reusability</strong> (one Model, many Views), <strong>parallel development</strong> (front-end and back-end teams work at once), and <strong>testability</strong> (business logic is testable without a browser).</p>
+
+      <figure>
+        <svg viewBox="0 0 470 250" role="img" aria-labelledby="u5mvc-t u5mvc-d" xmlns="http://www.w3.org/2000/svg">
+          <title id="u5mvc-t">The MVC cycle and how Django's MVT maps onto it</title>
+          <desc id="u5mvc-d">A browser sends a request to urls.py, which dispatches to a view. The view queries the model and database, then renders a template into an HTTP response sent back to the browser. In Django the template plays the role of MVC's view and the view plays the role of MVC's controller.</desc>
+          <rect x="4" y="4" width="462" height="242" rx="10" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+          <rect x="26" y="96" width="86" height="46" rx="7" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="69" y="117" font-size="12.5" font-weight="600" text-anchor="middle" fill="currentColor">Browser</text>
+          <text x="69" y="133" font-size="11" text-anchor="middle" fill="currentColor" opacity="0.8">request</text>
+
+          <rect x="150" y="96" width="96" height="46" rx="7" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="198" y="113" font-size="12.5" font-weight="600" text-anchor="middle" fill="currentColor">urls.py</text>
+          <text x="198" y="130" font-size="11" text-anchor="middle" fill="currentColor" opacity="0.8">URL dispatcher</text>
+
+          <rect x="284" y="96" width="96" height="46" rx="7" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="332" y="113" font-size="12.5" font-weight="600" text-anchor="middle" fill="currentColor">views.py</text>
+          <text x="332" y="130" font-size="11" text-anchor="middle" fill="currentColor" opacity="0.8">Controller</text>
+
+          <rect x="284" y="22" width="96" height="46" rx="7" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 3"/>
+          <text x="332" y="39" font-size="12.5" font-weight="600" text-anchor="middle" fill="currentColor">models.py</text>
+          <text x="332" y="56" font-size="11" text-anchor="middle" fill="currentColor" opacity="0.8">Model &rarr; DB</text>
+
+          <rect x="284" y="170" width="96" height="46" rx="7" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="332" y="187" font-size="12.5" font-weight="600" text-anchor="middle" fill="currentColor">template .html</text>
+          <text x="332" y="204" font-size="11" text-anchor="middle" fill="currentColor" opacity="0.8">View (DTL)</text>
+
+          <line x1="112" y1="119" x2="150" y2="119" stroke="currentColor" stroke-width="1.8" marker-end="url(#u5arr)"/>
+          <line x1="246" y1="119" x2="284" y2="119" stroke="currentColor" stroke-width="1.8" marker-end="url(#u5arr)"/>
+          <line x1="332" y1="96" x2="332" y2="68" stroke="currentColor" stroke-width="1.8" marker-end="url(#u5arr)"/>
+          <line x1="332" y1="142" x2="332" y2="170" stroke="currentColor" stroke-width="1.8" marker-end="url(#u5arr)"/>
+          <path d="M284 193 L69 193 L69 142" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#u5arr)"/>
+          <text x="176" y="188" font-size="10.5" fill="currentColor" opacity="0.75">HTTP response</text>
+          <defs>
+            <marker id="u5arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+        </svg>
+        <figcaption>The request&ndash;response cycle. Django's <em>view</em> does the job MVC calls the controller, and Django's <em>template</em> does the job MVC calls the view &mdash; that renaming is the whole point of the next table.</figcaption>
+      </figure>
+
+      <p>Django follows a renamed variant, <strong>MVT</strong> (also written MTV: Model&ndash;Template&ndash;View). Nothing is added or removed &mdash; only the names of two layers change, which is exactly what the exam asks you to explain.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Classic MVC</th><th>Django MVT</th><th>File in a Django project</th><th>Job</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Model</strong></td><td><strong>Model</strong></td><td><code>models.py</code></td><td>Schema and queries, via the ORM</td></tr>
+            <tr><td><strong>View</strong></td><td><strong>Template</strong></td><td><code>templates/*.html</code></td><td>HTML presentation, written in DTL</td></tr>
+            <tr><td><strong>Controller</strong></td><td><strong>View</strong></td><td><code>views.py</code> + <code>urls.py</code></td><td>Input handling, dispatch, choosing a template</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Django uses MVT — not MVC</div>
-        <p>Django follows a slight variation called <strong>MVT (Model-View-Template)</strong>:</p>
-        <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>MVC Component</th><th>Django Equivalent</th><th>Django File</th></tr></thead>
-            <tbody>
-              <tr><td>Model</td><td>Model</td><td><code>models.py</code></td></tr>
-              <tr><td>View (presentation)</td><td>Template</td><td><code>templates/*.html</code></td></tr>
-              <tr><td>Controller (logic)</td><td>View</td><td><code>views.py</code></td></tr>
-              <tr><td>URL routing</td><td>URL Conf</td><td><code>urls.py</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="margin-top:0.5rem;font-size:0.85rem;">In Django: <strong>View = business logic</strong> (like Controller). <strong>Template = HTML presentation</strong> (like View in MVC).</p>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> The one sentence that carries the marks</div>
+        <p>&ldquo;Django calls its controller a <strong>view</strong> and its view a <strong>template</strong>, and the URL dispatcher in <code>urls.py</code> performs the routing that a controller would otherwise do.&rdquo; Everything else in a 4-mark MVT answer is elaboration on this.</p>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> The three layers in six lines</div>
+        <pre>
+# models.py -- the Model
+class Product(models.Model):
+    name  = models.CharField(max_length=80)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+
+# views.py -- the Controller: fetch, then hand to a Template
+def product_list(request):
+    return render(request, "products.html", {"products": Product.objects.all()})
+
+# urls.py -- routing from URL to controller
+urlpatterns = [path("products/", views.product_list)]
+        </pre>
+      </div>
+
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-flow-chart"></i> The cycle in one line</div>
+        <p><strong>browser &rarr; <code>urls.py</code> &rarr; <code>views.py</code> &harr; <code>models.py</code>/database &rarr; template &rarr; <code>HttpResponse</code> &rarr; browser</strong></p>
+        <p>Quote this line verbatim in a 3-mark answer: it names every layer in the order the request touches them, and it is the sentence the examiner is looking for.</p>
       </div>
 
     </div>
@@ -215,77 +266,111 @@
   <!-- ========== DJANGO INTRO ========== -->
   <section class="section" id="django-intro">
     <h2 class="section-title">
-      <i class="fas fa-rocket"></i> Django Framework
+      <i class="fas fa-rocket"></i> Django Overview
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
 
-      <div class="definition-box">
-        <div class="box-title"><i class="fas fa-book"></i> What is Django?</div>
-        <p><strong>Django</strong> is a <em>high-level, open-source Python web framework</em> that encourages rapid development and clean, pragmatic design. It was created by Adrian Holovaty and Simon Willison and released in 2005. The motto is <em>"The web framework for perfectionists with deadlines."</em></p>
+      <p>This section answers the 5-mark &ldquo;What is Django and why would you use it?&rdquo; (<code>P004-Q21ii</code>) and the 5-mark &ldquo;steps to create and run a Django project&rdquo; (<code>P003-Q34b</code>). Between them and MVC, that is 19 of the unit's 30 marks.</p>
+
+      <h3 id="why-django-and-project-setup">What is Django, Why Use It, and the 6-Step Project Setup</h3>
+
+      <p><strong>Django</strong> is a free, open-source, high-level Python web framework that follows the MVT pattern. Its design philosophy is <em>&ldquo;batteries included&rdquo;</em>: features a web application normally needs are built in, so you write application code instead of plumbing.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Reason</th><th>What it means in practice</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Batteries included</strong></td><td>ORM, admin panel, authentication, sessions, forms and URL routing ship with the framework</td></tr>
+            <tr><td><strong>ORM</strong></td><td>Write Python classes instead of SQL; the same code runs on SQLite, PostgreSQL or MySQL</td></tr>
+            <tr><td><strong>Automatic admin</strong></td><td>An editable CRUD interface for your models appears with no extra code</td></tr>
+            <tr><td><strong>Security by default</strong></td><td>CSRF tokens, XSS escaping and SQL-injection protection are on unless you disable them</td></tr>
+            <tr><td><strong>DRY and rapid development</strong></td><td>Reusable apps and generic views cut boilerplate; scaffolding via <code>startproject</code></td></tr>
+            <tr><td><strong>Scalability and community</strong></td><td>Used by large sites; extensive documentation and third-party packages</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-star"></i> Why Use Django?</div>
+      <p>The setup question is marked on <strong>order and exact command names</strong>. Six steps, in this order:</p>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Create and run a Django project</div>
+        <pre>
+# 1. Create and activate a virtual environment (isolates dependencies)
+python -m venv venv
+venv\Scripts\activate           # Windows
+source venv/bin/activate        # Linux / macOS
+
+# 2. Install Django
+pip install django
+
+# 3. Create the project (creates manage.py and a mysite/ package)
+django-admin startproject mysite
+cd mysite
+
+# 4. Create the database tables Django itself needs
+python manage.py migrate
+
+# 5. Create an application inside the project, then register it
+python manage.py startapp core
+#    add 'core' to INSTALLED_APPS in settings.py
+
+# 6. Run the development server
+python manage.py runserver
+#    open http://127.0.0.1:8000/
+        </pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Three details that decide the marks</div>
+        <p><strong>Project vs application.</strong> <code>startproject</code> creates the <em>project</em> &mdash; settings and the top-level URLs. <code>startapp</code> creates an <em>application</em> &mdash; a self-contained feature. One project holds many apps.</p>
+        <p><strong>Register the app.</strong> <code>startapp</code> alone does nothing until <code>'core'</code> is added to <code>INSTALLED_APPS</code> in <code>settings.py</code>. This step is frequently forgotten and frequently marked.</p>
+        <p><strong><code>migrate</code> before <code>runserver</code>.</strong> Without it the built-in <code>auth</code> and <code>admin</code> tables do not exist and the admin page raises an error.</p>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>File / folder</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><code>manage.py</code></td><td>Command-line entry point: <code>runserver</code>, <code>migrate</code>, <code>startapp</code>, <code>createsuperuser</code></td></tr>
+            <tr><td><code>mysite/settings.py</code></td><td>Project configuration: <code>INSTALLED_APPS</code>, database, <code>STATIC_URL</code>, templates, middleware</td></tr>
+            <tr><td><code>mysite/urls.py</code></td><td>Root URLconf &mdash; maps URL patterns to views</td></tr>
+            <tr><td><code>mysite/wsgi.py</code>, <code>asgi.py</code></td><td>Entry points a production web server uses to talk to the app</td></tr>
+            <tr><td><code>core/models.py</code></td><td>Data schema for the app</td></tr>
+            <tr><td><code>core/views.py</code></td><td>Request handlers (Django's controllers)</td></tr>
+            <tr><td><code>core/admin.py</code></td><td>Registers models with the automatic admin interface</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Aspect</th><th>Django Project</th><th>Django Application</th></tr></thead>
+          <tbody>
+            <tr><td>Created by</td><td><code>django-admin startproject</code></td><td><code>python manage.py startapp</code></td></tr>
+            <tr><td>Is</td><td>the whole site: configuration and the top-level URLconf</td><td>one feature module: models, views, templates, admin</td></tr>
+            <tr><td>How many</td><td>exactly one per site</td><td>many per project</td></tr>
+            <tr><td>Reusable?</td><td>no &mdash; it is site-specific</td><td>yes &mdash; can be dropped into another project</td></tr>
+            <tr><td>Must be registered?</td><td>n/a</td><td>yes, in <code>INSTALLED_APPS</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <div class="box-title"><i class="fas fa-info-circle"></i> Tier E &mdash; Django vs Flask (2 marks, outside the printed syllabus)</div>
+        <p>Flask is not named in the CST203 syllabus, but <code>P005-Q21iii</code> asks &ldquo;Is Django better than Flask?&rdquo;. The correct answer is that neither is better; they suit different sizes of problem.</p>
         <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>Feature</th><th>Description</th></tr></thead>
+          <table class="data-table">
+            <thead><tr><th></th><th>Django</th><th>Flask</th></tr></thead>
             <tbody>
-              <tr><td><strong>Batteries Included</strong></td><td>Comes with built-in admin panel, authentication, ORM, forms, and more — ready to use out of the box.</td></tr>
-              <tr><td><strong>Secure</strong></td><td>Built-in protection against SQL injection, XSS, CSRF, and clickjacking.</td></tr>
-              <tr><td><strong>Scalable</strong></td><td>Used by Instagram, Pinterest, Disqus — handles millions of users.</td></tr>
-              <tr><td><strong>DRY Principle</strong></td><td>Don't Repeat Yourself — reduces code duplication.</td></tr>
-              <tr><td><strong>ORM</strong></td><td>Object-Relational Mapper — work with databases using Python, not SQL.</td></tr>
-              <tr><td><strong>Admin Interface</strong></td><td>Auto-generated admin panel to manage your data.</td></tr>
-              <tr><td><strong>REST ready</strong></td><td>Easily build APIs using Django REST Framework.</td></tr>
+              <tr><td>Type</td><td>full-stack framework</td><td>micro-framework</td></tr>
+              <tr><td>Ships with</td><td>ORM, admin, auth, forms</td><td>almost nothing &mdash; add extensions</td></tr>
+              <tr><td>Best for</td><td>database-backed sites, large teams</td><td>small services, APIs, prototypes</td></tr>
+              <tr><td>Learning curve</td><td>steeper, more structure imposed</td><td>gentler, you choose the structure</td></tr>
             </tbody>
           </table>
         </div>
-      </div>
-
-      <div class="algo-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-terminal"></i> Setting Up Django</div>
-        <div class="code-box">
-          <div class="box-title"><i class="fas fa-code"></i> Installation and Project Setup</div>
-          <pre>
-# Install Django
-pip install django
-
-# Check version
-python -m django --version
-
-# Create a new project
-django-admin startproject myproject
-
-# Project structure created:
-# myproject/
-# ├── manage.py
-# └── myproject/
-#     ├── __init__.py
-#     ├── settings.py    ← Project settings
-#     ├── urls.py        ← Root URL config
-#     ├── asgi.py
-#     └── wsgi.py
-
-# Create an app inside the project
-cd myproject
-python manage.py startapp myapp
-
-# App structure:
-# myapp/
-# ├── __init__.py
-# ├── admin.py
-# ├── apps.py
-# ├── models.py    ← Database models
-# ├── tests.py
-# ├── views.py     ← Business logic
-# └── migrations/
-
-# Run development server
-python manage.py runserver
-# Visit: http://127.0.0.1:8000/
-          </pre>
-        </div>
+        <p>Answer in one sentence: <em>&ldquo;Django gives you more out of the box and suits larger database-driven projects; Flask is minimal and lets you choose components, so it suits small services and APIs.&rdquo;</em></p>
       </div>
 
     </div>
@@ -294,222 +379,125 @@ python manage.py runserver
   <!-- ========== URLs AND TEMPLATES ========== -->
   <section class="section" id="urls-templates">
     <h2 class="section-title">
-      <i class="fas fa-link"></i> URLs and Templates
+      <i class="fas fa-link"></i> URLs, Views &amp; Templates
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
 
-      <!-- URL Patterns -->
-      <div class="definition-box">
-        <div class="box-title"><i class="fas fa-route"></i> URL Patterns in urls.py</div>
-        <p>Django uses <code>urls.py</code> to map URL paths to view functions. When a request comes in, Django checks the URL patterns in order and calls the matching view.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> urls.py Examples</div>
+      <p>9 marks live here &mdash; the URL&rarr;view&rarr;template slice, Django Template Language, and static files. The 2-mark static-files question (<code>P005-Q11</code>) is the one that goes wrong, so its checklist is below in full.</p>
+
+      <h3 id="django-urls-views-and-templates">Django URLs, Views and Templates</h3>
+
+      <p>Three files make the smallest working page. Trace one request through them: a URL arrives, <code>urls.py</code> matches it to a view function, the view builds a context dictionary and calls <code>render()</code>, and the template turns that context into HTML.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> urls.py &rarr; views.py &rarr; home.html</div>
         <pre>
-# myproject/urls.py (Root URL config)
-from django.contrib import admin
-from django.urls import path, include
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('myapp.urls')),    # Include app URLs
-]
-
-# myapp/urls.py (App-level URL config)
+# myapp/urls.py -- URL patterns to views
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('about/', views.about, name='about'),
-    path('student/<int:id>/', views.student_detail, name='student_detail'),
-    path('search/', views.search, name='search'),
+    path("", views.home, name="home"),
+    path("product/&lt;int:pk&gt;/", views.detail, name="detail"),
 ]
 
-# Path converters:
-# <int:id>   → integer
-# <str:name> → string
-# <slug:s>   → slug (letters, numbers, hyphens)
-        </pre>
-      </div>
+# myapp/views.py -- the controller
+from django.shortcuts import render, get_object_or_404
+from .models import Product
 
-      <!-- Views -->
-      <div class="definition-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Views in views.py</div>
-        <p>A <strong>view</strong> in Django is a Python function (or class) that receives an HTTP request and returns an HTTP response. It contains the business logic — fetching data, processing it, and passing it to a template.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> views.py Examples</div>
-        <pre>
-# myapp/views.py
-from django.shortcuts import render
-from django.http import HttpResponse
-
-# Simple view — returns plain text
 def home(request):
-    return HttpResponse("Hello, Django!")
+    context = {"title": "Shop", "products": Product.objects.all()}
+    return render(request, "home.html", context)
 
-# View with template rendering
-def about(request):
-    context = {
-        "title": "About Us",
-        "description": "This is a Django demo."
-    }
-    return render(request, "myapp/about.html", context)
-
-# View with URL parameter
-def student_detail(request, id):
-    # In real app, fetch from database
-    student = {"id": id, "name": "Alice", "grade": "A"}
-    return render(request, "myapp/student.html", {"student": student})
-
-# View with query parameters (?q=search_term)
-def search(request):
-    query = request.GET.get("q", "")
-    return render(request, "myapp/search.html", {"query": query})
+def detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, "detail.html", {"product": product})
         </pre>
       </div>
 
-      <!-- Templates -->
-      <div class="definition-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-file-code"></i> Django Templates</div>
-        <p>Templates are HTML files with special <strong>Django Template Language (DTL)</strong> tags. They are stored in a <code>templates/</code> directory. Django fills in the data passed from views and renders the final HTML.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Django Template Language (DTL) Syntax</div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> templates/home.html &mdash; DTL syntax</div>
         <pre>
-&lt;!-- Variable output --&gt;
-&lt;h1&gt;{{ title }}&lt;/h1&gt;
-&lt;p&gt;Student: {{ student.name }}&lt;/p&gt;
-
-&lt;!-- if tag --&gt;
-{% if user.is_authenticated %}
-    &lt;p&gt;Welcome, {{ user.username }}!&lt;/p&gt;
-{% else %}
-    &lt;p&gt;Please log in.&lt;/p&gt;
-{% endif %}
-
-&lt;!-- for tag — iterating a list --&gt;
-&lt;ul&gt;
-{% for student in students %}
-    &lt;li&gt;{{ student.name }} — {{ student.grade }}&lt;/li&gt;
-{% empty %}
-    &lt;li&gt;No students found.&lt;/li&gt;
-{% endfor %}
-&lt;/ul&gt;
-
-&lt;!-- Filters --&gt;
-&lt;p&gt;{{ title|upper }}&lt;/p&gt;           &lt;!-- Uppercase --&gt;
-&lt;p&gt;{{ title|lower }}&lt;/p&gt;           &lt;!-- Lowercase --&gt;
-&lt;p&gt;{{ date_field|date:"d/m/Y" }}&lt;/p&gt; &lt;!-- Format date --&gt;
-&lt;p&gt;{{ text|truncatewords:10 }}&lt;/p&gt;  &lt;!-- Truncate to 10 words --&gt;
-&lt;p&gt;{{ price|floatformat:2 }}&lt;/p&gt;    &lt;!-- 2 decimal places --&gt;
-&lt;p&gt;{{ items|length }}&lt;/p&gt;           &lt;!-- Count items --&gt;
-
-&lt;!-- URL tag --&gt;
-&lt;a href="{% url 'home' %}"&gt;Home&lt;/a&gt;
-&lt;a href="{% url 'student_detail' id=5 %}"&gt;Student 5&lt;/a&gt;
-
-&lt;!-- Comment --&gt;
-{# This is a template comment — not visible in HTML #}
-        </pre>
-      </div>
-
-      <!-- Template Inheritance -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-layer-group"></i> Template Inheritance</div>
-        <p>Template inheritance allows you to define a <strong>base template</strong> with the common layout (header, navbar, footer) and <strong>extend</strong> it in child templates. This avoids repeating the same HTML in every page.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Base Template and Child Template</div>
-        <pre>
-&lt;!-- templates/base.html — Base template --&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;{% block title %}My Site{% endblock %}&lt;/title&gt;
-    {% load static %}
-    &lt;link rel="stylesheet" href="{% static 'css/style.css' %}"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;nav&gt;
-        &lt;a href="{% url 'home' %}"&gt;Home&lt;/a&gt;
-        &lt;a href="{% url 'about' %}"&gt;About&lt;/a&gt;
-    &lt;/nav&gt;
-
-    &lt;main&gt;
-        {% block content %}
-        &lt;!-- Child templates fill this block --&gt;
-        {% endblock %}
-    &lt;/main&gt;
-
-    &lt;footer&gt;
-        &lt;p&gt;Copyright 2024&lt;/p&gt;
-    &lt;/footer&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-
-&lt;!-- templates/myapp/about.html — Child template --&gt;
 {% extends "base.html" %}
 
-{% block title %}About Us{% endblock %}
-
 {% block content %}
-    &lt;h1&gt;{{ title }}&lt;/h1&gt;
-    &lt;p&gt;{{ description }}&lt;/p&gt;
+  &lt;h1&gt;{{ title }}&lt;/h1&gt;
+
+  {% if products %}
+    &lt;ul&gt;
+      {% for p in products %}
+        &lt;li&gt;
+          &lt;a href="{% url 'detail' p.pk %}"&gt;{{ p.name }}&lt;/a&gt;
+          &ndash; {{ p.price }}
+        &lt;/li&gt;
+      {% empty %}
+        &lt;li&gt;No products yet.&lt;/li&gt;
+      {% endfor %}
+    &lt;/ul&gt;
+  {% else %}
+    &lt;p&gt;Nothing to show.&lt;/p&gt;
+  {% endif %}
 {% endblock %}
         </pre>
       </div>
 
-      <!-- Static Files -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-images"></i> Static Files (CSS, JS, Images)</div>
-        <p>Static files (CSS, JavaScript, images) are served from the <code>static/</code> directory. Use the <code>{% load static %}</code> tag and <code>{% static 'path' %}</code> to reference them in templates.</p>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Piece of DTL</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>{{ variable }}</code></td><td>Output a value, HTML-escaped by default</td></tr>
+            <tr><td><code>{% tag %}</code></td><td>A template tag: control flow, inheritance, URL reversing</td></tr>
+            <tr><td><code>{# comment #}</code></td><td>A template comment &mdash; not rendered, not sent to the browser</td></tr>
+            <tr><td><code>{% if %} {% elif %} {% else %}</code></td><td>Conditional rendering</td></tr>
+            <tr><td><code>{% for x in list %}</code> &hellip; <code>{% empty %}</code></td><td>Loop, with a branch for the empty case</td></tr>
+            <tr><td><code>{% extends "base.html" %}</code></td><td>Inherit a parent template &mdash; template inheritance</td></tr>
+            <tr><td><code>{% block content %}</code></td><td>A named region the child template fills in</td></tr>
+            <tr><td><code>{% url 'name' arg %}</code></td><td>Reverse a URL by its <code>name=</code>, instead of hard-coding paths</td></tr>
+            <tr><td><code>{% csrf_token %}</code></td><td>Insert the hidden CSRF token into a form</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Static Files in Templates</div>
+
+      <h3 id="django-static-files">Django Static Files</h3>
+
+      <p><strong>Static files</strong> are assets the server sends unchanged: CSS, JavaScript, images, fonts. Django refuses to serve them from the app folder until you configure where they live and how templates may refer to them. The 2-mark answer is a short checklist, and it is the checklist that is marked.</p>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-check-square"></i> The static files checklist</div>
+        <ol>
+          <li><code>'django.contrib.staticfiles'</code> is present in <code>INSTALLED_APPS</code> (it is by default).</li>
+          <li><code>STATIC_URL = "static/"</code> is set in <code>settings.py</code> &mdash; the URL prefix, not a folder path.</li>
+          <li>The assets live in <code>myapp/static/myapp/css/style.css</code>. Namespacing by app name avoids collisions.</li>
+          <li>The template starts with <code>{% load static %}</code>.</li>
+          <li>The link uses <code>{% static 'myapp/css/style.css' %}</code>, never a hard-coded <code>/static/...</code>.</li>
+          <li>For deployment, run <code>python manage.py collectstatic</code> to copy everything into <code>STATIC_ROOT</code> so the web server can serve it.</li>
+        </ol>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Using a static file in a template</div>
         <pre>
-&lt;!-- At top of template --&gt;
 {% load static %}
-
-&lt;!-- Link CSS file --&gt;
-&lt;link rel="stylesheet" href="{% static 'css/style.css' %}"&gt;
-
-&lt;!-- Link JavaScript file --&gt;
-&lt;script src="{% static 'js/main.js' %}"&gt;&lt;/script&gt;
-
-&lt;!-- Display image --&gt;
-&lt;img src="{% static 'images/logo.png' %}" alt="Logo"&gt;
-
-&lt;!-- settings.py configuration for static files --&gt;
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [BASE_DIR / 'static']
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="{% static 'myapp/css/style.css' %}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;img src="{% static 'myapp/img/logo.png' %}" alt="Logo"&gt;
+&lt;/body&gt;
+&lt;/html&gt;
         </pre>
       </div>
 
-      <!-- Filters -->
-      <div class="algo-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-filter"></i> Django Template Filters</div>
-        <p>Filters modify the display of variables. Applied using the pipe <code>|</code> character: <code>{{ variable|filter }}</code></p>
-        <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>Filter</th><th>Description</th><th>Example</th><th>Output</th></tr></thead>
-            <tbody>
-              <tr><td><code>|upper</code></td><td>Convert to uppercase</td><td><code>{{ "hello"|upper }}</code></td><td>HELLO</td></tr>
-              <tr><td><code>|lower</code></td><td>Convert to lowercase</td><td><code>{{ "HELLO"|lower }}</code></td><td>hello</td></tr>
-              <tr><td><code>|date:"d/m/Y"</code></td><td>Format date</td><td><code>{{ pub_date|date:"d/m/Y" }}</code></td><td>15/01/2024</td></tr>
-              <tr><td><code>|truncatewords:n</code></td><td>Truncate to n words</td><td><code>{{ text|truncatewords:5 }}</code></td><td>First five words ...</td></tr>
-              <tr><td><code>|length</code></td><td>Count items or characters</td><td><code>{{ items|length }}</code></td><td>5</td></tr>
-              <tr><td><code>|floatformat:2</code></td><td>Format float to n decimals</td><td><code>{{ 3.14159|floatformat:2 }}</code></td><td>3.14</td></tr>
-              <tr><td><code>|capfirst</code></td><td>Capitalize first character</td><td><code>{{ "hello"|capfirst }}</code></td><td>Hello</td></tr>
-              <tr><td><code>|default:"N/A"</code></td><td>Default if value is falsy</td><td><code>{{ name|default:"Unknown" }}</code></td><td>Unknown</td></tr>
-              <tr><td><code>|add:n</code></td><td>Add a number</td><td><code>{{ 5|add:3 }}</code></td><td>8</td></tr>
-              <tr><td><code>|safe</code></td><td>Mark HTML as safe (no escaping)</td><td><code>{{ html_content|safe }}</code></td><td>Raw HTML rendered</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> The two static-file mistakes</div>
+        <p><strong>Forgetting <code>{% load static %}</code>.</strong> Without it, <code>{% static %}</code> is an unknown tag and the page raises <code>TemplateSyntaxError</code>.</p>
+        <p><strong>Hard-coding the path.</strong> <code>href="/static/css/style.css"</code> breaks the moment <code>STATIC_URL</code> changes. The tag exists precisely so this never appears in a template.</p>
       </div>
+
+      <p><code>DEBUG = True</code> is what makes <code>runserver</code> serve static files during development. In production <code>DEBUG</code> must be <code>False</code>, and the web server (or <code>whitenoise</code>) serves <code>STATIC_ROOT</code> instead &mdash; worth one sentence in a long answer.</p>
 
     </div>
   </section>
@@ -517,307 +505,69 @@ def search(request):
   <!-- ========== DJANGO FORMS ========== -->
   <section class="section" id="forms">
     <h2 class="section-title">
-      <i class="fas fa-wpforms"></i> Django Forms
+      <i class="fas fa-edit"></i> Django Forms
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
 
-      <!-- HTML Form Manually -->
+      <p>Forms are in the syllabus but have carried <strong>0 marks</strong> in 2023&ndash;2026. This section is deliberately short &mdash; enough to answer a 2-mark question if one appears, not a page of boilerplate.</p>
+
+      <h3 id="django-forms-and-csrf">Working with Django Forms and CSRF Protection</h3>
+
+      <p>A Django <code>Form</code> declares its fields once in Python and then gives you three things for free: HTML rendering of the inputs, server-side <strong>validation</strong> of what came back, and <strong>cleaned data</strong> with the right types.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> A form, its view, and the template tag</div>
+        <pre>
+# forms.py
+from django import forms
+
+class FeedbackForm(forms.Form):
+    name    = forms.CharField(max_length=40)
+    email   = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)
+
+# views.py
+def feedback(request):
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():                       # validation happens here
+            name = form.cleaned_data["name"]      # typed, validated values
+            return HttpResponse(f"Thanks, {name}")
+    else:
+        form = FeedbackForm()                    # empty form for a GET
+    return render(request, "feedback.html", {"form": form})
+
+# feedback.html
+&lt;form method="post"&gt;
+  {% csrf_token %}
+  {{ form.as_p }}
+  &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;
+        </pre>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Element</th><th>Why it is there</th></tr></thead>
+          <tbody>
+            <tr><td><code>forms.Form</code></td><td>Base class for a plain HTML form; <code>ModelForm</code> builds one directly from a model</td></tr>
+            <tr><td><code>request.method == "POST"</code></td><td>Distinguishes a submission from the initial page load</td></tr>
+            <tr><td><code>form.is_valid()</code></td><td>Runs every field's validation; returns <code>True</code> or <code>False</code></td></tr>
+            <tr><td><code>form.cleaned_data</code></td><td>Dictionary of validated values &mdash; only available after <code>is_valid()</code></td></tr>
+            <tr><td><code>{% csrf_token %}</code></td><td>Inserts a hidden, per-session token that proves the POST came from your own page</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="definition-box">
-        <div class="box-title"><i class="fas fa-code"></i> HTML Form and request.POST</div>
-        <p>The simplest way to handle forms is to write plain HTML forms and process the submitted data in a view using <code>request.POST</code>.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Manual HTML Form</div>
-        <pre>
-&lt;!-- templates/myapp/contact.html --&gt;
-&lt;form method="POST" action="{% url 'contact' %}"&gt;
-    {% csrf_token %}
-    &lt;label&gt;Name:&lt;/label&gt;
-    &lt;input type="text" name="name" required&gt;
-
-    &lt;label&gt;Email:&lt;/label&gt;
-    &lt;input type="email" name="email" required&gt;
-
-    &lt;label&gt;Message:&lt;/label&gt;
-    &lt;textarea name="message"&gt;&lt;/textarea&gt;
-
-    &lt;button type="submit"&gt;Send&lt;/button&gt;
-&lt;/form&gt;
-        </pre>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Processing in views.py</div>
-        <pre>
-# myapp/views.py
-from django.shortcuts import render, redirect
-
-def contact(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
-        # Process the data (save to DB, send email, etc.)
-        print(f"From: {name} &lt;{email}&gt;: {message}")
-        return redirect("success")
-    return render(request, "myapp/contact.html")
-        </pre>
+        <div class="box-title">What CSRF is, in two sentences</div>
+        <p><strong>Cross-Site Request Forgery</strong> tricks a logged-in user's browser into submitting a request to your site from an attacker's page &mdash; the browser attaches the user's session cookie automatically, so the request looks genuine. Django's <code>CsrfViewMiddleware</code> rejects any POST that lacks the matching <code>csrfmiddlewaretoken</code>, which the attacker's page cannot read because of the same-origin policy.</p>
       </div>
 
-      <div class="important-note" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-shield-alt"></i> CSRF Protection</div>
-        <p>Every POST form in Django must include <code>{% csrf_token %}</code> inside the <code>&lt;form&gt;</code> tag. This is a security token that prevents Cross-Site Request Forgery attacks. Without it, Django will reject the form submission with a 403 error.</p>
-      </div>
-
-      <!-- Django Form Class -->
-      <div class="definition-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-file-code"></i> Django Form Class (forms.Form)</div>
-        <p>Django provides a <code>Form</code> class to define forms in Python code. This is cleaner, more reusable, and provides automatic validation.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> forms.py — Creating a Form Class</div>
-        <pre>
-# myapp/forms.py
-from django import forms
-
-class ContactForm(forms.Form):
-    name = forms.CharField(
-        max_length=100,
-        label="Your Name",
-        widget=forms.TextInput(attrs={"placeholder": "Enter name"})
-    )
-    email = forms.EmailField(
-        label="Email Address"
-    )
-    age = forms.IntegerField(
-        min_value=1,
-        max_value=120,
-        required=False
-    )
-    message = forms.CharField(
-        widget=forms.Textarea(attrs={"rows": 4}),
-        label="Your Message"
-    )
-    subject = forms.ChoiceField(
-        choices=[
-            ("general", "General Inquiry"),
-            ("support", "Technical Support"),
-            ("billing", "Billing")
-        ]
-    )
-        </pre>
-      </div>
-
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> views.py — Using the Form Class</div>
-        <pre>
-# myapp/views.py
-from django.shortcuts import render, redirect
-from .forms import ContactForm
-
-def contact(request):
-    if request.method == "POST":
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            # Access cleaned data
-            name = form.cleaned_data["name"]
-            email = form.cleaned_data["email"]
-            message = form.cleaned_data["message"]
-
-            # Process data here
-            print(f"Valid form from {name}")
-            return redirect("success")
-        # If invalid, form with errors is returned
-    else:
-        form = ContactForm()   # Empty form for GET request
-
-    return render(request, "myapp/contact.html", {"form": form})
-        </pre>
-      </div>
-
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Template — Rendering a Django Form</div>
-        <pre>
-&lt;!-- templates/myapp/contact.html --&gt;
-{% extends "base.html" %}
-
-{% block content %}
-&lt;h2&gt;Contact Us&lt;/h2&gt;
-
-&lt;form method="POST"&gt;
-    {% csrf_token %}
-
-    &lt;!-- Render all fields automatically --&gt;
-    {{ form.as_p }}
-
-    &lt;!-- OR render individually --&gt;
-    &lt;div&gt;
-        {{ form.name.label_tag }}
-        {{ form.name }}
-        {{ form.name.errors }}
-    &lt;/div&gt;
-    &lt;div&gt;
-        {{ form.email.label_tag }}
-        {{ form.email }}
-        {{ form.email.errors }}
-    &lt;/div&gt;
-
-    &lt;!-- Display all errors at top --&gt;
-    {% if form.errors %}
-        &lt;div class="error"&gt;
-            {{ form.errors }}
-        &lt;/div&gt;
-    {% endif %}
-
-    &lt;button type="submit"&gt;Submit&lt;/button&gt;
-&lt;/form&gt;
-{% endblock %}
-        </pre>
-      </div>
-
-      <!-- Validation and cleaned_data -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-check-circle"></i> Form Validation and cleaned_data</div>
-        <p>When <code>form.is_valid()</code> is called, Django validates all fields. If valid, <code>form.cleaned_data</code> contains the cleaned (validated and converted) data as Python types.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Custom Validation in forms.py</div>
-        <pre>
-# myapp/forms.py
-from django import forms
-
-class RegistrationForm(forms.Form):
-    username = forms.CharField(max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-    age = forms.IntegerField()
-
-    # Custom field-level validation
-    def clean_username(self):
-        username = self.cleaned_data.get("username")
-        if " " in username:
-            raise forms.ValidationError("Username cannot contain spaces.")
-        return username
-
-    def clean_age(self):
-        age = self.cleaned_data.get("age")
-        if age < 18:
-            raise forms.ValidationError("You must be at least 18 years old.")
-        return age
-
-    # Cross-field validation
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm = cleaned_data.get("confirm_password")
-        if password and confirm and password != confirm:
-            raise forms.ValidationError("Passwords do not match.")
-        return cleaned_data
-        </pre>
-      </div>
-
-      <!-- ModelForm -->
-      <div class="definition-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-database"></i> ModelForm (forms.ModelForm)</div>
-        <p>A <strong>ModelForm</strong> automatically generates form fields from a Django Model. This avoids duplicate field definitions — the model defines the data structure and the ModelForm creates the form from it.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> ModelForm Example</div>
-        <pre>
-# myapp/models.py
-from django.db import models
-
-class Student(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    age = models.IntegerField()
-    grade = models.CharField(max_length=2)
-    enrolled = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
-# myapp/forms.py
-from django import forms
-from .models import Student
-
-class StudentForm(forms.ModelForm):
-    class Meta:
-        model = Student
-        fields = ["name", "email", "age", "grade"]
-        # OR: fields = "__all__"  (include all fields)
-        # OR: exclude = ["enrolled"]  (exclude specific fields)
-
-        widgets = {
-            "name": forms.TextInput(attrs={
-                "class": "form-control",
-                "placeholder": "Enter student name"
-            }),
-            "email": forms.EmailInput(attrs={
-                "class": "form-control"
-            }),
-            "age": forms.NumberInput(attrs={
-                "min": 1, "max": 100
-            }),
-        }
-        error_messages = {
-            "name": {
-                "required": "Please enter the student name.",
-                "max_length": "Name cannot exceed 100 characters."
-            },
-            "email": {
-                "unique": "This email is already registered."
-            }
-        }
-
-# myapp/views.py
-from django.shortcuts import render, redirect
-from .forms import StudentForm
-
-def add_student(request):
-    if request.method == "POST":
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            form.save()   # Saves directly to database
-            return redirect("student_list")
-    else:
-        form = StudentForm()
-    return render(request, "myapp/add_student.html", {"form": form})
-
-def edit_student(request, id):
-    student = Student.objects.get(id=id)
-    if request.method == "POST":
-        form = StudentForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()   # Updates existing record
-            return redirect("student_list")
-    else:
-        form = StudentForm(instance=student)  # Pre-fill with existing data
-    return render(request, "myapp/edit_student.html", {"form": form})
-        </pre>
-      </div>
-
-      <!-- Widgets -->
-      <div class="algo-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-puzzle-piece"></i> Common Django Form Widgets</div>
-        <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>Widget</th><th>HTML Output</th><th>Use for</th></tr></thead>
-            <tbody>
-              <tr><td><code>TextInput</code></td><td><code>&lt;input type="text"&gt;</code></td><td>Single-line text</td></tr>
-              <tr><td><code>Textarea</code></td><td><code>&lt;textarea&gt;</code></td><td>Multi-line text</td></tr>
-              <tr><td><code>PasswordInput</code></td><td><code>&lt;input type="password"&gt;</code></td><td>Password fields</td></tr>
-              <tr><td><code>EmailInput</code></td><td><code>&lt;input type="email"&gt;</code></td><td>Email addresses</td></tr>
-              <tr><td><code>NumberInput</code></td><td><code>&lt;input type="number"&gt;</code></td><td>Numeric input</td></tr>
-              <tr><td><code>CheckboxInput</code></td><td><code>&lt;input type="checkbox"&gt;</code></td><td>Boolean yes/no</td></tr>
-              <tr><td><code>Select</code></td><td><code>&lt;select&gt;</code></td><td>Dropdown choices</td></tr>
-              <tr><td><code>RadioSelect</code></td><td>Radio buttons</td><td>Single choice from list</td></tr>
-              <tr><td><code>DateInput</code></td><td><code>&lt;input type="date"&gt;</code></td><td>Date picker</td></tr>
-              <tr><td><code>FileInput</code></td><td><code>&lt;input type="file"&gt;</code></td><td>File upload</td></tr>
-              <tr><td><code>HiddenInput</code></td><td><code>&lt;input type="hidden"&gt;</code></td><td>Hidden form data</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> The 2-mark answer</div>
+        <p>&ldquo;<code>{% csrf_token %}</code> inserts a hidden token generated per session. On POST, Django checks that the submitted token matches the one in the user's cookie; a request forged from another site cannot supply it, so it is rejected with 403. This protects against Cross-Site Request Forgery.&rdquo;</p>
       </div>
 
     </div>
@@ -825,61 +575,65 @@ def edit_student(request, id):
     <!-- ========== FORMULAS ========== -->
   <section class="section" id="formulas">
     <h2 class="section-title">
-      <i class="fas fa-square-root-alt"></i> Syntax Reference
+      <i class="fas fa-square-root-alt"></i> Command &amp; Syntax Reference
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
 
       <div class="formula-box">
-        <div class="box-title"><i class="fas fa-code"></i> URL Pattern Syntax</div>
-        <div class="formula">path('route/', views.view_name, name='url_name')</div>
-        <div class="formula">path('item/&lt;int:id&gt;/', views.detail, name='detail')</div>
-        <div class="formula">path('', include('myapp.urls'))</div>
+        <div class="box-title"><i class="fas fa-terminal"></i> Project commands</div>
+        <div class="formula">python -m venv venv&nbsp;&nbsp;&nbsp;# create a virtual environment</div>
+        <div class="formula">pip install django&nbsp;&nbsp;&nbsp;# install the framework</div>
+        <div class="formula">django-admin startproject mysite</div>
+        <div class="formula">python manage.py startapp core</div>
+        <div class="formula">python manage.py migrate</div>
+        <div class="formula">python manage.py makemigrations core</div>
+        <div class="formula">python manage.py runserver&nbsp;&nbsp;&nbsp;# port 8000</div>
+        <div class="formula">python manage.py createsuperuser</div>
+        <div class="formula">python manage.py collectstatic</div>
       </div>
 
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> View Function Syntax</div>
-        <div class="formula">def view_name(request):</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;return render(request, "template.html", context_dict)</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;return HttpResponse("text")</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;return redirect("url_name")</div>
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-sitemap"></i> MVC &harr; MVT mapping</div>
+        <div class="formula">Model&nbsp;&nbsp;&nbsp;&rarr; Model &nbsp;(<code>models.py</code>)</div>
+        <div class="formula">View&nbsp;&nbsp;&nbsp;&rarr; Template &nbsp;(<code>templates/*.html</code>)</div>
+        <div class="formula">Controller&nbsp;&nbsp;&nbsp;&rarr; View &nbsp;(<code>views.py</code> + <code>urls.py</code>)</div>
       </div>
 
-      <div class="formula-box" style="margin-top:1rem;">
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-link"></i> URLs and views</div>
+        <div class="formula">path("product/&lt;int:pk&gt;/", views.detail, name="detail")</div>
+        <div class="formula">return render(request, "detail.html", {"product": p})</div>
+        <div class="formula">return HttpResponse("text")</div>
+        <div class="formula">get_object_or_404(Product, pk=pk)</div>
+      </div>
+
+      <div class="formula-box">
         <div class="box-title"><i class="fas fa-code"></i> Django Template Language</div>
-        <div class="formula">{{ variable }}           → output variable</div>
-        <div class="formula">{{ var|filter }}         → apply filter</div>
-        <div class="formula">{% tag %}...{% endtag %} → template tag</div>
-        <div class="formula">{% if x %}...{% endif %} → conditional</div>
-        <div class="formula">{% for i in list %}...{% endfor %} → loop</div>
-        <div class="formula">{% extends "base.html" %} → inherit template</div>
-        <div class="formula">{% block name %}...{% endblock %} → define block</div>
-        <div class="formula">{% load static %}         → load static tag</div>
-        <div class="formula">{% static 'path/file' %}  → static file URL</div>
-        <div class="formula">{% url 'name' %}          → reverse URL</div>
-        <div class="formula">{% csrf_token %}          → CSRF security token</div>
+        <div class="formula">{{ variable }}&nbsp;&nbsp;&nbsp;# output a value</div>
+        <div class="formula">{% tag %}&nbsp;&nbsp;&nbsp;# a template tag</div>
+        <div class="formula">{# comment #}&nbsp;&nbsp;&nbsp;# not rendered</div>
+        <div class="formula">{% if %}{% elif %}{% else %}{% endif %}</div>
+        <div class="formula">{% for x in items %}{% empty %}{% endfor %}</div>
+        <div class="formula">{% extends "base.html" %} + {% block content %}</div>
+        <div class="formula">{% url 'detail' p.pk %}</div>
+        <div class="formula">{% csrf_token %}</div>
       </div>
 
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Django Form Handling Pattern</div>
-        <div class="formula">if request.method == "POST":</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;form = MyForm(request.POST)</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;if form.is_valid():</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = form.cleaned_data["field"]</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return redirect("success")</div>
-        <div class="formula">else:</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;form = MyForm()</div>
-        <div class="formula">return render(request, "template.html", {"form": form})</div>
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-image"></i> Static files</div>
+        <div class="formula">STATIC_URL = "static/"</div>
+        <div class="formula">{% load static %}</div>
+        <div class="formula">{% static 'myapp/css/style.css' %}</div>
+        <div class="formula">myapp/static/myapp/css/style.css&nbsp;&nbsp;&nbsp;# on disk</div>
       </div>
 
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> ModelForm Meta Class</div>
-        <div class="formula">class MyForm(forms.ModelForm):</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;class Meta:</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model = MyModel</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields = ["field1", "field2"]</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;widgets = {field: Widget(attrs={})}</div>
-        <div class="formula">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_messages = {field: {rule: "msg"}}</div>
+      <div class="formula-box">
+        <div class="box-title"><i class="fas fa-edit"></i> Forms</div>
+        <div class="formula">class FeedbackForm(forms.Form):</div>
+        <div class="formula">form = FeedbackForm(request.POST)</div>
+        <div class="formula">if form.is_valid(): ... form.cleaned_data["field"]</div>
+        <div class="formula">{{ form.as_p }}&nbsp;&nbsp;&nbsp;# render all fields</div>
       </div>
 
     </div>
@@ -894,58 +648,63 @@ def edit_student(request, id):
     <div class="section-content">
 
       <div class="definition-box">
-        <div class="box-title"><i class="fas fa-bookmark"></i> MVC (Model-View-Controller)</div>
-        <p>A software architectural pattern that separates an application into three components — Model (data and logic), View (presentation/UI), and Controller (handles user input and coordinates Model and View).</p>
+        <div class="box-title">MVC</div>
+        <p><strong>Model&ndash;View&ndash;Controller</strong> &mdash; an architectural pattern that separates an application into data (Model), presentation (View) and input handling (Controller), so each can be modified independently. The benefit is separation of concerns.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Django</div>
-        <p>A high-level, open-source Python web framework that follows the MVT (Model-View-Template) pattern. Known for its "batteries included" approach, built-in admin, ORM, and security features. Released in 2005.</p>
+      <div class="definition-box">
+        <div class="box-title">MVT / MTV</div>
+        <p><strong>Model&ndash;Template&ndash;View</strong> &mdash; Django's renaming of MVC. The Model is unchanged; MVC's View becomes the Template and MVC's Controller becomes the View. The two names refer to the same three responsibilities.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> urls.py</div>
-        <p>The URL configuration file in Django that maps URL patterns to view functions. Django checks patterns in order and calls the first matching view when a request arrives.</p>
+      <div class="definition-box">
+        <div class="box-title">Django</div>
+        <p>A free, open-source, high-level Python web framework following the MVT pattern, whose "batteries included" philosophy provides an ORM, an automatic admin interface, authentication, forms, URL routing and a template engine out of the box.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> View (Django)</div>
-        <p>A Python function or class in <code>views.py</code> that receives an HTTP request, processes it (fetches data, applies logic), and returns an HTTP response. Equivalent to the Controller in traditional MVC.</p>
+      <div class="definition-box">
+        <div class="box-title">Project vs Application</div>
+        <p>A <strong>project</strong> is the whole Django site &mdash; configuration plus the root URLconf, one per site. An <strong>application</strong> is a reusable feature module inside it with its own models, views and templates, registered in <code>INSTALLED_APPS</code>.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Django Template Language (DTL)</div>
-        <p>Django's built-in template engine that allows embedding dynamic data into HTML files using special tags (<code>{% %}</code>), variables (<code>{{ }}</code>), and filters (<code>|</code>).</p>
+      <div class="definition-box">
+        <div class="box-title">URLconf</div>
+        <p>The URL configuration: a list of <code>path()</code> entries in <code>urls.py</code> that maps URL patterns to view functions, optionally naming each route so it can be reversed with <code>{% url %}</code>.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Template Inheritance</div>
-        <p>A Django feature where a base template defines the common layout using <code>{% block %}</code> tags, and child templates extend it using <code>{% extends %}</code> and fill in the blocks. Avoids repeating common HTML.</p>
+      <div class="definition-box">
+        <div class="box-title">View Function</div>
+        <p>A Python function that takes an <code>HttpRequest</code>, performs the required logic, and returns an <code>HttpResponse</code> &mdash; usually produced by <code>render()</code> from a template plus a context dictionary. It plays MVC's Controller role.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> CSRF Token</div>
-        <p>Cross-Site Request Forgery protection token. Django requires <code>{% csrf_token %}</code> in every POST form to verify that the request originates from the same site. Without it, Django returns a 403 Forbidden error.</p>
+      <div class="definition-box">
+        <div class="box-title">Template (DTL)</div>
+        <p>An HTML file with Django Template Language placeholders. <code>{{ var }}</code> outputs a value, <code>{% tag %}</code> is a control tag, and <code>{# #}</code> is a comment. Templates are output-only; they contain no business logic.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> cleaned_data</div>
-        <p>A dictionary available on a validated Django form object (<code>form.cleaned_data</code>). Contains the validated and type-converted field values. Only accessible after <code>form.is_valid()</code> returns True.</p>
+      <div class="definition-box">
+        <div class="box-title">Static Files</div>
+        <p>Assets sent to the browser unchanged: CSS, JavaScript, images and fonts. Served from an app's <code>static/&lt;app&gt;/</code> folder, referenced through <code>{% static %}</code>, and gathered by <code>collectstatic</code> for production.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> ModelForm</div>
-        <p>A Django form class that automatically generates form fields from a database model. Defined by specifying the model and fields in an inner <code>Meta</code> class. <code>form.save()</code> directly creates or updates database records.</p>
+      <div class="definition-box">
+        <div class="box-title">STATIC_URL vs STATIC_ROOT</div>
+        <p><code>STATIC_URL</code> is the <strong>URL prefix</strong> under which static files are requested (<code>"static/"</code>). <code>STATIC_ROOT</code> is the <strong>filesystem directory</strong> into which <code>collectstatic</code> copies them for the production web server.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Widget</div>
-        <p>A Django component that determines the HTML input element rendered for a form field. For example, <code>Textarea</code> renders <code>&lt;textarea&gt;</code>, <code>PasswordInput</code> renders <code>&lt;input type="password"&gt;</code>. Widgets can be customized with HTML attributes.</p>
+      <div class="definition-box">
+        <div class="box-title">CSRF</div>
+        <p><strong>Cross-Site Request Forgery</strong> &mdash; an attack where another site makes the user's browser submit an authenticated request to your application. Django blocks it by requiring a per-session token, inserted with <code>{% csrf_token %}</code>, on every POST.</p>
       </div>
 
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Static Files</div>
-        <p>Files that do not change dynamically — CSS stylesheets, JavaScript files, images. Stored in the <code>static/</code> directory. Referenced in templates using <code>{% load static %}</code> and <code>{% static 'path' %}</code>.</p>
+      <div class="definition-box">
+        <div class="box-title">ORM</div>
+        <p><strong>Object&ndash;Relational Mapper</strong> &mdash; the layer that lets you query the database with Python classes and methods instead of SQL. In Django a model class maps to a table and each instance to a row.</p>
+      </div>
+
+      <div class="definition-box">
+        <div class="box-title">Migration</div>
+        <p>A generated file describing a change to the database schema. <code>makemigrations</code> creates it from your models; <code>migrate</code> applies it, keeping the schema in step with the code.</p>
       </div>
 
     </div>
@@ -954,72 +713,79 @@ def edit_student(request, id):
   <!-- ========== COMPARISONS ========== -->
   <section class="section" id="comparisons">
     <h2 class="section-title">
-      <i class="fas fa-balance-scale"></i> Comparisons
+      <i class="fas fa-columns"></i> Comparison Tables
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
 
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> MVC vs MVT (Django)</div>
-        <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>MVC Component</th><th>Responsibility</th><th>Django Equivalent</th><th>Django File</th></tr></thead>
-            <tbody>
-              <tr><td>Model</td><td>Data and database</td><td>Model</td><td><code>models.py</code></td></tr>
-              <tr><td>View</td><td>Presentation / HTML</td><td>Template</td><td><code>templates/*.html</code></td></tr>
-              <tr><td>Controller</td><td>Business logic / request handling</td><td>View</td><td><code>views.py</code></td></tr>
-              <tr><td>(Router)</td><td>URL mapping</td><td>URL Conf</td><td><code>urls.py</code></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <h3>Classic MVC vs Django MVT</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Layer</th><th>Classic MVC</th><th>Django MVT</th><th>Django file</th></tr></thead>
+          <tbody>
+            <tr><td>Data</td><td>Model</td><td>Model</td><td><code>models.py</code></td></tr>
+            <tr><td>Presentation</td><td>View</td><td>Template</td><td><code>templates/*.html</code></td></tr>
+            <tr><td>Input handling</td><td>Controller</td><td>View</td><td><code>views.py</code>, <code>urls.py</code></td></tr>
+            <tr><td>Routing</td><td>Controller's job</td><td>URL dispatcher</td><td><code>urls.py</code></td></tr>
+            <tr><td>Renamed?</td><td colspan="2">Two of three layers &mdash; the Model keeps its name</td><td>&mdash;</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> forms.Form vs forms.ModelForm</div>
-        <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>Feature</th><th>forms.Form</th><th>forms.ModelForm</th></tr></thead>
-            <tbody>
-              <tr><td>Fields defined by</td><td>Manually in form class</td><td>Automatically from model</td></tr>
-              <tr><td>Saves to database</td><td>No — manually handle saving</td><td>Yes — <code>form.save()</code></td></tr>
-              <tr><td>Requires a model</td><td>No</td><td>Yes — specified in <code>Meta</code></td></tr>
-              <tr><td>Use case</td><td>Contact forms, search, login</td><td>Create/edit database records</td></tr>
-              <tr><td>Inner Meta class</td><td>Not required</td><td>Required (model, fields)</td></tr>
-              <tr><td>Edit existing record</td><td>Manual</td><td><code>form = Form(instance=obj)</code></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <h3>Django Project vs Django Application</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Aspect</th><th>Project</th><th>Application</th></tr></thead>
+          <tbody>
+            <tr><td>Created by</td><td><code>django-admin startproject</code></td><td><code>manage.py startapp</code></td></tr>
+            <tr><td>Scope</td><td>the whole site</td><td>one feature module</td></tr>
+            <tr><td>Contains</td><td><code>settings.py</code>, root <code>urls.py</code>, <code>wsgi.py</code></td><td><code>models.py</code>, <code>views.py</code>, templates, <code>admin.py</code></td></tr>
+            <tr><td>How many</td><td>exactly one</td><td>many</td></tr>
+            <tr><td>Reusable</td><td>no</td><td>yes</td></tr>
+            <tr><td>Registration</td><td>n/a</td><td>in <code>INSTALLED_APPS</code></td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> GET vs POST in Django Views</div>
-        <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>Feature</th><th>GET</th><th>POST</th></tr></thead>
-            <tbody>
-              <tr><td>Purpose</td><td>Retrieve data / display form</td><td>Submit form data / create/update</td></tr>
-              <tr><td>Data location</td><td>URL query string (?key=val)</td><td>Request body (hidden from URL)</td></tr>
-              <tr><td>Access in Django</td><td><code>request.GET.get("key")</code></td><td><code>request.POST.get("key")</code></td></tr>
-              <tr><td>Requires CSRF</td><td>No</td><td>Yes — <code>{% csrf_token %}</code></td></tr>
-              <tr><td>Safe to bookmark</td><td>Yes</td><td>No</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <h3>Django vs Flask (Tier E &mdash; extra-syllabus, 2 marks)</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Aspect</th><th>Django</th><th>Flask</th></tr></thead>
+          <tbody>
+            <tr><td>Type</td><td>full-stack framework</td><td>micro-framework</td></tr>
+            <tr><td>Included</td><td>ORM, admin, auth, forms, templating</td><td>routing and templating only</td></tr>
+            <tr><td>Flexibility</td><td>prescribes structure</td><td>you choose every component</td></tr>
+            <tr><td>Best for</td><td>database-backed sites, big teams</td><td>small services, APIs, prototypes</td></tr>
+            <tr><td>Learning curve</td><td>steeper</td><td>gentler</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><em>Note:</em> Flask is not in the printed CST203 syllabus; it appears only because <code>P005-Q21iii</code> asks the comparison. Answer "neither is better &mdash; different sizes of problem".</p>
+
+      <h3>STATIC_URL vs STATIC_ROOT</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Aspect</th><th><code>STATIC_URL</code></th><th><code>STATIC_ROOT</code></th></tr></thead>
+          <tbody>
+            <tr><td>Is</td><td>a URL prefix</td><td>a filesystem path</td></tr>
+            <tr><td>Typical value</td><td><code>"static/"</code></td><td><code>BASE_DIR / "staticfiles"</code></td></tr>
+            <tr><td>Used by</td><td>templates and the browser</td><td><code>collectstatic</code> and the production web server</td></tr>
+            <tr><td>Needed in</td><td>development and production</td><td>production deployment</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> Template Tags vs Filters</div>
-        <div class="table-wrapper">
-          <table class="dj-table">
-            <thead><tr><th>Feature</th><th>Template Tags {% %}</th><th>Filters {{ var|filter }}</th></tr></thead>
-            <tbody>
-              <tr><td>Purpose</td><td>Control logic (if, for, block, extends)</td><td>Modify display of a variable</td></tr>
-              <tr><td>Syntax</td><td><code>{% tag %}...{% endtag %}</code></td><td><code>{{ variable|filter:arg }}</code></td></tr>
-              <tr><td>Example</td><td><code>{% if user %}...{% endif %}</code></td><td><code>{{ name|upper }}</code></td></tr>
-              <tr><td>Can chain?</td><td>No chaining</td><td>Yes: <code>{{ val|lower|truncatewords:5 }}</code></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <h3>GET vs POST in a Django view</h3>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Aspect</th><th>GET</th><th>POST</th></tr></thead>
+          <tbody>
+            <tr><td>Purpose</td><td>request a page</td><td>submit data</td></tr>
+            <tr><td>Data in</td><td>URL query string</td><td>request body</td></tr>
+            <tr><td>View code</td><td>else branch: empty form</td><td><code>Form(request.POST)</code> then <code>is_valid()</code></td></tr>
+            <tr><td>CSRF token</td><td>not required</td><td><strong>required</strong></td></tr>
+          </tbody>
+        </table>
       </div>
 
     </div>
@@ -1034,131 +800,153 @@ def edit_student(request, id):
     <div class="section-content">
       <div class="mcq-grid">
 
-        <div class="mcq-item">
-          <p class="card-title">Q 1</p>
-          <p>What does MVC stand for?</p>
-          <ul class="options">
-            <li>a. Model-View-Controller</li>
-            <li>b. Module-View-Component</li>
-            <li>c. Model-Variable-Controller</li>
-            <li>d. Main-View-Class</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_1"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 1</span> In MVC, which component holds the business logic and data rules?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. Model</div>
+            <div class="mcq-option">b. View</div>
+            <div class="mcq-option">c. Controller</div>
+            <div class="mcq-option">d. Template</div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_1">Show Answer</button>
           <div class="answer-reveal" id="mcq5_1">
-            <strong>Answer: a. Model-View-Controller</strong>
-            <p>MVC is a software design pattern that separates an application into Model (data), View (presentation), and Controller (logic/input handling).</p>
+            <strong>Answer: a. Model</strong>
+            <p>The Model defines the schema and the rules for the data. It knows nothing about HTML.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 2</p>
-          <p>In Django's MVT pattern, which file contains the business logic (equivalent to Controller in MVC)?</p>
-          <ul class="options">
-            <li>a. models.py</li>
-            <li>b. urls.py</li>
-            <li>c. views.py</li>
-            <li>d. templates/*.html</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_2"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 2</span> Django's MVT pattern is also called &hellip;</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. Model&ndash;View&ndash;Controller</div>
+            <div class="mcq-option">b. Model&ndash;Template&ndash;View (MTV)</div>
+            <div class="mcq-option">c. Module&ndash;View&ndash;Table</div>
+            <div class="mcq-option">d. Model&ndash;Validator&ndash;Template</div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_2">Show Answer</button>
           <div class="answer-reveal" id="mcq5_2">
-            <strong>Answer: c. views.py</strong>
-            <p>In Django's MVT, the <strong>View</strong> (views.py) acts as the Controller — it handles requests, processes data, and returns responses. The Template handles presentation.</p>
+            <strong>Answer: b. Model&ndash;Template&ndash;View (MTV)</strong>
+            <p>Same three roles, two renamed: MVC's <em>view</em> is Django's <em>template</em>, and MVC's <em>controller</em> is Django's <em>view</em>.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 3</p>
-          <p>Which Django template tag is used to include a CSRF token in a form?</p>
-          <ul class="options">
-            <li>a. <code>{% csrf %}</code></li>
-            <li>b. <code>{{ csrf_token }}</code></li>
-            <li>c. <code>{% csrf_token %}</code></li>
-            <li>d. <code>{% token %}</code></li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_3"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 3</span> Which file plays the Controller's role in a Django app?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. <code>models.py</code></div>
+            <div class="mcq-option">b. <code>settings.py</code></div>
+            <div class="mcq-option">c. <code>views.py</code></div>
+            <div class="mcq-option">d. <code>admin.py</code></div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_3">Show Answer</button>
           <div class="answer-reveal" id="mcq5_3">
-            <strong>Answer: c. {% csrf_token %}</strong>
-            <p><code>{% csrf_token %}</code> must be placed inside every POST form in Django. It is a template tag (uses <code>{% %}</code>), not a variable (not <code>{{ }}</code>).</p>
+            <strong>Answer: c. <code>views.py</code></strong>
+            <p>A view function receives the request, queries models, and returns a rendered template &mdash; exactly the controller's job. <code>urls.py</code> dispatches to it.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 4</p>
-          <p>Which method is used to save a ModelForm directly to the database?</p>
-          <ul class="options">
-            <li>a. <code>form.write()</code></li>
-            <li>b. <code>form.commit()</code></li>
-            <li>c. <code>form.save()</code></li>
-            <li>d. <code>form.store()</code></li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_4"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 4</span> Which command creates a new Django project?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. <code>python manage.py startproject mysite</code></div>
+            <div class="mcq-option">b. <code>django-admin startproject mysite</code></div>
+            <div class="mcq-option">c. <code>django-admin startapp mysite</code></div>
+            <div class="mcq-option">d. <code>pip install django-project</code></div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_4">Show Answer</button>
           <div class="answer-reveal" id="mcq5_4">
-            <strong>Answer: c. form.save()</strong>
-            <p><code>form.save()</code> is called after <code>form.is_valid()</code> returns True. It creates a new database record (or updates an existing one if <code>instance</code> was provided).</p>
+            <strong>Answer: b. <code>django-admin startproject mysite</code></strong>
+            <p><code>manage.py</code> does not exist yet at this point &mdash; it is what <code>startproject</code> creates. <code>startapp</code> makes an application, not a project.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 5</p>
-          <p>Which Django template tag is used to extend a base template?</p>
-          <ul class="options">
-            <li>a. <code>{% include "base.html" %}</code></li>
-            <li>b. <code>{% extends "base.html" %}</code></li>
-            <li>c. <code>{% base "base.html" %}</code></li>
-            <li>d. <code>{% inherit "base.html" %}</code></li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_5"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 5</span> What does <code>python manage.py runserver</code> do?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. Compiles the Python files</div>
+            <div class="mcq-option">b. Creates the database tables</div>
+            <div class="mcq-option">c. Starts the development web server on port 8000</div>
+            <div class="mcq-option">d. Deploys the site to production</div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_5">Show Answer</button>
           <div class="answer-reveal" id="mcq5_5">
-            <strong>Answer: b. {% extends "base.html" %}</strong>
-            <p><code>{% extends "base.html" %}</code> must be the first tag in a child template. It tells Django that this template inherits from the base template.</p>
+            <strong>Answer: c. starts the development server on port 8000</strong>
+            <p>It serves <code>http://127.0.0.1:8000/</code> and auto-reloads on code changes. It is <strong>not</strong> for production. Creating tables is <code>migrate</code>.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 6</p>
-          <p>Where is validated form data accessible after <code>form.is_valid()</code> returns True?</p>
-          <ul class="options">
-            <li>a. <code>form.data</code></li>
-            <li>b. <code>form.fields</code></li>
-            <li>c. <code>form.cleaned_data</code></li>
-            <li>d. <code>form.validated</code></li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_6"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 6</span> Where must a new app be registered for Django to use it?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. <code>urls.py</code></div>
+            <div class="mcq-option">b. <code>INSTALLED_APPS</code> in <code>settings.py</code></div>
+            <div class="mcq-option">c. <code>manage.py</code></div>
+            <div class="mcq-option">d. <code>wsgi.py</code></div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_6">Show Answer</button>
           <div class="answer-reveal" id="mcq5_6">
-            <strong>Answer: c. form.cleaned_data</strong>
-            <p>After successful validation, <code>form.cleaned_data</code> is a dictionary containing the validated, type-converted form field values.</p>
+            <strong>Answer: b. <code>INSTALLED_APPS</code> in <code>settings.py</code></strong>
+            <p><code>startapp</code> creates the folder; without the <code>INSTALLED_APPS</code> entry Django ignores its models and templates.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 7</p>
-          <p>Which Django template filter converts a string to uppercase?</p>
-          <ul class="options">
-            <li>a. <code>|caps</code></li>
-            <li>b. <code>|uppercase</code></li>
-            <li>c. <code>|upper</code></li>
-            <li>d. <code>|toUpper</code></li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_7"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 7</span> Which template tag is required before <code>{% static 'css/style.css' %}</code> will work?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. <code>{% load static %}</code></div>
+            <div class="mcq-option">b. <code>{% import static %}</code></div>
+            <div class="mcq-option">c. <code>{% include static %}</code></div>
+            <div class="mcq-option">d. nothing &mdash; it works by default</div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_7">Show Answer</button>
           <div class="answer-reveal" id="mcq5_7">
-            <strong>Answer: c. |upper</strong>
-            <p>The <code>|upper</code> filter converts the variable's value to uppercase. Example: <code>{{ "hello"|upper }}</code> renders as <code>HELLO</code>.</p>
+            <strong>Answer: a. <code>{% load static %}</code></strong>
+            <p>Without it, <code>{% static %}</code> is an unknown tag and the template raises <code>TemplateSyntaxError</code>.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 8</p>
-          <p>Which file in a Django app is used to define URL patterns for that app?</p>
-          <ul class="options">
-            <li>a. views.py</li>
-            <li>b. models.py</li>
-            <li>c. settings.py</li>
-            <li>d. urls.py</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq5_8"><i class="fas fa-eye"></i> Show Answer</button>
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 8</span> What is <code>STATIC_URL</code>?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. the absolute path of the static folder on disk</div>
+            <div class="mcq-option">b. the URL prefix under which static files are served</div>
+            <div class="mcq-option">c. a list of static file names</div>
+            <div class="mcq-option">d. a template variable</div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_8">Show Answer</button>
           <div class="answer-reveal" id="mcq5_8">
-            <strong>Answer: d. urls.py</strong>
-            <p><code>urls.py</code> contains the URL configuration — a list of <code>path()</code> patterns that map URL routes to view functions.</p>
+            <strong>Answer: b. the URL prefix</strong>
+            <p><code>STATIC_URL = "static/"</code> means a file at <code>myapp/static/myapp/css/style.css</code> is served at <code>/static/myapp/css/style.css</code>. The on-disk destination for deployment is <code>STATIC_ROOT</code>.</p>
+          </div>
+        </div>
+
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 9</span> Which tag outputs a variable in Django Template Language?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. <code>{% varname %}</code></div>
+            <div class="mcq-option">b. <code>{{ varname }}</code></div>
+            <div class="mcq-option">c. <code>{# varname #}</code></div>
+            <div class="mcq-option">d. <code>$varname</code></div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_9">Show Answer</button>
+          <div class="answer-reveal" id="mcq5_9">
+            <strong>Answer: b. <code>{{ varname }}</code></strong>
+            <p>Double braces output a value (HTML-escaped); <code>{% %}</code> is a tag, and <code>{# #}</code> is a comment.</p>
+          </div>
+        </div>
+
+        <div class="mcq-card">
+          <div class="mcq-question"><span class="mcq-number">Q 10</span> Why is <code>{% csrf_token %}</code> added inside a <code>&lt;form&gt;</code>?</div>
+          <div class="mcq-options">
+            <div class="mcq-option">a. It styles the form</div>
+            <div class="mcq-option">b. It validates the email field</div>
+            <div class="mcq-option">c. It stops the form being submitted from another site</div>
+            <div class="mcq-option">d. It encrypts the form data</div>
+          </div>
+          <button class="toggle-btn" data-target="mcq5_10">Show Answer</button>
+          <div class="answer-reveal" id="mcq5_10">
+            <strong>Answer: c. it defends against cross-site request forgery</strong>
+            <p>It inserts a per-session hidden token that a foreign page cannot know. A POST without a matching token is rejected with 403.</p>
           </div>
         </div>
 
@@ -1169,81 +957,62 @@ def edit_student(request, id):
   <!-- ========== SHORT QUESTIONS ========== -->
   <section class="section" id="short-questions">
     <h2 class="section-title">
-      <i class="fas fa-pen"></i> Short Answer Questions
+      <i class="fas fa-pen-fancy"></i> Short Answer Questions
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-      <div class="mcq-grid">
+      <div class="qa-list">
 
-        <div class="mcq-item">
-          <p class="card-title">Q 1</p>
-          <p>What is the MVC architecture? Name its three components.</p>
-          <button class="toggle-btn" data-target="sq5_1"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_1">
-            <p>MVC (Model-View-Controller) is a software design pattern that separates an application into three components: <strong>Model</strong> (handles data and database), <strong>View</strong> (handles presentation/UI), and <strong>Controller</strong> (handles user input and coordinates Model and View).</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 1</span> What is MVC? Name its three components and their roles.</div>
+          <button class="toggle-btn" data-target="sa5_1">Show Answer</button>
+          <div class="answer-reveal" id="sa5_1">
+            <p><strong>MVC (Model&ndash;View&ndash;Controller)</strong> is an architectural pattern that separates an application into three components so each can change independently.</p>
+            <p><strong>Model</strong> &mdash; the data and business rules; talks to the database. <strong>View</strong> &mdash; the presentation layer; renders what the user sees. <strong>Controller</strong> &mdash; receives user input, coordinates the Model and View, and decides what happens next.</p>
+            <p>The benefit is <strong>separation of concerns</strong>: presentation can be redesigned without touching data logic, and the business logic is testable without a browser.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 2</p>
-          <p>What is the difference between Django's MVT and the traditional MVC pattern?</p>
-          <button class="toggle-btn" data-target="sq5_2"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_2">
-            <p>In MVC: Model = data, View = presentation, Controller = logic. In Django's MVT: Model = data (<code>models.py</code>), Template = presentation (<code>.html</code> files), View = logic (<code>views.py</code>). Django's "View" is equivalent to MVC's "Controller", and Django's "Template" is equivalent to MVC's "View".</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 2</span> How does Django's MVT differ from classic MVC?</div>
+          <button class="toggle-btn" data-target="sa5_2">Show Answer</button>
+          <div class="answer-reveal" id="sa5_2">
+            <p>The three roles are identical; two are renamed. Django's <strong>Template</strong> does what MVC calls the <strong>View</strong>, and Django's <strong>View</strong> does what MVC calls the <strong>Controller</strong>. The <strong>Model</strong> keeps its name.</p>
+            <p>This means <code>models.py</code> &harr; Model, <code>templates/*.html</code> &harr; View, and <code>views.py</code> plus the <code>urls.py</code> dispatcher &harr; Controller. Django also calls the pattern <strong>MTV</strong> for the same reason.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 3</p>
-          <p>What is the purpose of <code>{% csrf_token %}</code> in Django forms?</p>
-          <button class="toggle-btn" data-target="sq5_3"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_3">
-            <p><code>{% csrf_token %}</code> adds a hidden security token to POST forms to protect against Cross-Site Request Forgery (CSRF) attacks. Django verifies this token when the form is submitted. Without it, Django returns a 403 Forbidden error.</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 3</span> Why is Django called a "batteries included" framework?</div>
+          <button class="toggle-btn" data-target="sa5_3">Show Answer</button>
+          <div class="answer-reveal" id="sa5_3">
+            <p>Because features that a web application normally has to be assembled from separate libraries ship with the framework itself: an <strong>ORM</strong>, an automatic <strong>admin</strong> interface, <strong>authentication</strong> and sessions, <strong>forms</strong> with validation, URL routing, template engine, and built-in protection against CSRF, XSS and SQL injection. You write application code rather than assembling infrastructure.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 4</p>
-          <p>What is template inheritance in Django? Name the two tags used.</p>
-          <button class="toggle-btn" data-target="sq5_4"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_4">
-            <p>Template inheritance allows child templates to reuse the layout of a base template. The base template defines <strong>blocks</strong> using <code>{% block name %}{% endblock %}</code>. Child templates extend the base using <code>{% extends "base.html" %}</code> and override the blocks with their own content.</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 4</span> Differentiate a Django project from a Django application.</div>
+          <button class="toggle-btn" data-target="sa5_4">Show Answer</button>
+          <div class="answer-reveal" id="sa5_4">
+            <p>A <strong>project</strong> is the whole site: it is created with <code>django-admin startproject</code> and holds <code>settings.py</code>, the root <code>urls.py</code> and the WSGI/ASGI entry points. There is exactly one per site.</p>
+            <p>An <strong>application</strong> is a self-contained feature module created with <code>python manage.py startapp</code>, containing its own <code>models.py</code>, <code>views.py</code>, templates and admin registration. A project can contain many apps, and an app is reusable across projects &mdash; but only after it is added to <code>INSTALLED_APPS</code>.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 5</p>
-          <p>What is the difference between <code>forms.Form</code> and <code>forms.ModelForm</code>?</p>
-          <button class="toggle-btn" data-target="sq5_5"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_5">
-            <p><code>forms.Form</code> requires you to define all fields manually and handle database saving yourself. <code>forms.ModelForm</code> automatically generates fields from a database model and provides <code>form.save()</code> to directly create or update database records.</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 5</span> What are static files and how are they configured in Django?</div>
+          <button class="toggle-btn" data-target="sa5_5">Show Answer</button>
+          <div class="answer-reveal" id="sa5_5">
+            <p>Static files are assets served to the browser without modification: CSS, JavaScript, images and fonts. They are configured by four steps: <code>'django.contrib.staticfiles'</code> in <code>INSTALLED_APPS</code>; <code>STATIC_URL = "static/"</code> in <code>settings.py</code>; the assets placed in an app's <code>static/</code> folder; and <code>{% load static %}</code> followed by <code>{% static 'path' %}</code> in the template. For deployment, <code>collectstatic</code> gathers everything into <code>STATIC_ROOT</code>.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 6</p>
-          <p>What is a Django widget? Give two examples.</p>
-          <button class="toggle-btn" data-target="sq5_6"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_6">
-            <p>A widget determines the HTML input element rendered for a form field. It controls the visual appearance of the field. Examples: <code>Textarea</code> renders a multi-line text area (<code>&lt;textarea&gt;</code>), and <code>PasswordInput</code> renders a password field (<code>&lt;input type="password"&gt;</code>).</p>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 7</p>
-          <p>How do you include static files (CSS) in a Django template?</p>
-          <button class="toggle-btn" data-target="sq5_7"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_7">
-            <p>Add <code>{% load static %}</code> at the top of the template, then use <code>{% static 'path/file' %}</code> tag to generate the URL. Example: <code>&lt;link rel="stylesheet" href="{% static 'css/style.css' %}"&gt;</code>. Static files are stored in the <code>static/</code> directory.</p>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 8</p>
-          <p>What does <code>form.cleaned_data</code> contain and when is it available?</p>
-          <button class="toggle-btn" data-target="sq5_8"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5_8">
-            <p><code>form.cleaned_data</code> is a dictionary containing the validated and type-converted values of all form fields. It is only available after <code>form.is_valid()</code> returns <code>True</code>. Each key is a field name and each value is the cleaned Python object (e.g., integer, string, date).</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 6</span> What is CSRF and how does Django prevent it?</div>
+          <button class="toggle-btn" data-target="sa5_6">Show Answer</button>
+          <div class="answer-reveal" id="sa5_6">
+            <p><strong>Cross-Site Request Forgery</strong> is an attack in which a page on another site causes the user's browser to submit a request to your application. The browser attaches the user's session cookie automatically, so the request looks authenticated.</p>
+            <p>Django's <code>CsrfViewMiddleware</code> requires every POST to carry a hidden <code>csrfmiddlewaretoken</code>, inserted by <code>{% csrf_token %}</code>. The token is per session and the attacking page cannot read it because of the same-origin policy, so the request is rejected with 403.</p>
           </div>
         </div>
 
@@ -1254,199 +1023,116 @@ def edit_student(request, id):
   <!-- ========== LONG QUESTIONS ========== -->
   <section class="section" id="long-questions">
     <h2 class="section-title">
-      <i class="fas fa-file-alt"></i> Long Answer Questions
+      <i class="fas fa-file-signature"></i> Long Answer Questions
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-      <div class="mcq-grid">
+      <div class="qa-list">
 
-        <div class="mcq-item">
-          <p class="card-title">Q 1</p>
-          <p>Explain the MVC architecture and how Django implements it as MVT with a diagram description and examples.</p>
-          <button class="toggle-btn" data-target="lq5_1"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="lq5_1">
-            <p><strong>MVC (Model-View-Controller)</strong> is a design pattern that separates concerns:</p>
-            <ul>
-              <li><strong>Model:</strong> Manages data, database operations, business rules.</li>
-              <li><strong>View:</strong> Handles presentation — the HTML shown to users.</li>
-              <li><strong>Controller:</strong> Receives user input, calls Model, selects View.</li>
-            </ul>
-            <p><strong>Request flow:</strong> User → Controller → Model → Controller → View → User</p>
-            <p><strong>Django's MVT implementation:</strong></p>
-            <ul>
-              <li><strong>Model</strong> (<code>models.py</code>) — defines database structure using Python classes.</li>
-              <li><strong>View</strong> (<code>views.py</code>) — acts as Controller. Receives request, queries model, returns response.</li>
-              <li><strong>Template</strong> (<code>.html</code> files) — acts as View. Presents data using DTL tags.</li>
-              <li><strong>URL conf</strong> (<code>urls.py</code>) — routes URLs to correct view functions.</li>
-            </ul>
-            <p><strong>Django request flow:</strong></p>
-            <p>Browser Request → urls.py (routing) → views.py (logic) → models.py (data) → template (HTML) → Browser Response</p>
-            <p>Key difference: In Django, <em>View = Controller</em> and <em>Template = View</em>. The naming is swapped compared to traditional MVC.</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 1 (8 marks)</span> a) Explain the MVC architecture and the role of each component. b) Explain how to create and run a Django project.</div>
+          <button class="toggle-btn" data-target="la5_1">Show Answer</button>
+          <div class="answer-reveal" id="la5_1">
+            <p><strong>a) MVC</strong> is a design pattern that divides an application into three components with one responsibility each, so that the data layer, the presentation layer and the input layer evolve independently. The driver is <em>separation of concerns</em>.</p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Component</th><th>Responsibility</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td>Model</td><td>Data schema, business rules, database access</td><td>A <code>Product</code> table</td></tr>
+                  <tr><td>View</td><td>Presentation; renders the interface</td><td>The product listing page</td></tr>
+                  <tr><td>Controller</td><td>Handles input, coordinates Model and View</td><td>The "add to cart" handler</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Request flow: user &rarr; Controller &rarr; Model (data) &rarr; Controller &rarr; View &rarr; response to the user. Benefits: maintainability, reusability of the Model across several Views, parallel development, and testable business logic.</p>
+
+            <p><strong>b) Creating and running a project</strong> &mdash; six steps in order:</p>
+            <pre>
+python -m venv venv              # 1. virtual environment
+source venv/bin/activate         #    (venv\Scripts\activate on Windows)
+pip install django               # 2. install
+django-admin startproject mysite # 3. create the project
+cd mysite
+python manage.py migrate         # 4. create Django's own tables
+python manage.py startapp core   # 5. create an app
+#    add 'core' to INSTALLED_APPS in settings.py
+python manage.py runserver       # 6. serve on http://127.0.0.1:8000/
+            </pre>
+            <p>Name the artefacts it produces: <code>manage.py</code> (the command-line tool), <code>settings.py</code> (configuration), <code>urls.py</code> (root URLconf), and <code>wsgi.py</code>/<code>asgi.py</code> (server entry points). State that <code>runserver</code> is for development only.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 2</p>
-          <p>Explain Django URL routing and views with examples of URL patterns, view functions, and passing data to templates.</p>
-          <button class="toggle-btn" data-target="lq5_2"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="lq5_2">
-            <p><strong>URL Routing:</strong> Django maps URLs to view functions in <code>urls.py</code>.</p>
-            <p>Root <code>urls.py</code>: <code>path('', include('myapp.urls'))</code></p>
-            <p>App <code>urls.py</code>:</p>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 2 (8 marks)</span> a) What is Django and why is it used? b) Explain Django's MVT architecture and how it maps onto MVC.</div>
+          <button class="toggle-btn" data-target="la5_2">Show Answer</button>
+          <div class="answer-reveal" id="la5_2">
+            <p><strong>a) What and why.</strong> Django is a free, open-source, high-level Python web framework that follows the MVT pattern. Its philosophy is "batteries included": it provides, out of the box, an ORM, an automatic admin interface, authentication and sessions, forms with validation, URL routing and a template engine.</p>
             <ul>
-              <li><code>path('', views.home, name='home')</code> → maps / to home view</li>
-              <li><code>path('student/&lt;int:id&gt;/', views.detail, name='detail')</code> → URL parameter</li>
+              <li><strong>Rapid development</strong> &mdash; scaffolding and reusable apps remove boilerplate.</li>
+              <li><strong>ORM</strong> &mdash; Python classes instead of SQL, portable across SQLite, PostgreSQL and MySQL.</li>
+              <li><strong>Automatic admin</strong> &mdash; a working CRUD interface for the models with no extra code.</li>
+              <li><strong>Security by default</strong> &mdash; CSRF tokens, XSS escaping and SQL-injection protection are enabled unless disabled.</li>
+              <li><strong>Scalability and community</strong> &mdash; used by large production sites, with extensive documentation.</li>
+              <li><strong>DRY principle</strong> &mdash; one definition of a model serves the database, the forms and the admin.</li>
             </ul>
-            <p><strong>View function:</strong></p>
-            <p><code>def home(request): return render(request, "home.html", {"title": "Home"})</code></p>
-            <p><strong>Passing data to template:</strong> Pass a context dictionary as the third argument to <code>render()</code>. In the template, access values using <code>{{ key }}</code>.</p>
-            <p><strong>Template rendering:</strong> Django loads the template, substitutes <code>{{ variables }}</code> with context values, and returns the final HTML.</p>
-            <p><strong>URL parameter example:</strong> <code>def detail(request, id): student = get_object_or_404(Student, id=id); return render(request, "detail.html", {"student": student})</code></p>
+
+            <p><strong>b) MVT and its mapping.</strong> Django renames two of MVC's three layers:</p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>MVC</th><th>Django MVT</th><th>File</th><th>Job</th></tr></thead>
+                <tbody>
+                  <tr><td>Model</td><td>Model</td><td><code>models.py</code></td><td>Schema and queries via the ORM</td></tr>
+                  <tr><td>View</td><td>Template</td><td><code>templates/*.html</code></td><td>HTML presentation in DTL</td></tr>
+                  <tr><td>Controller</td><td>View</td><td><code>views.py</code>, <code>urls.py</code></td><td>Input handling and dispatch</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <pre>
+def product_list(request):                 # views.py -- the Controller
+    products = Product.objects.all()       # Model
+    return render(request, "products.html", {"products": products})
+                #                 Template
+            </pre>
+            <p>Request lifecycle: browser &rarr; <code>urls.py</code> &rarr; <code>views.py</code> &harr; <code>models.py</code>/database &rarr; template &rarr; <code>HttpResponse</code> &rarr; browser. The sentence that earns the mapping mark: <em>"Django calls its controller a view and its view a template."</em></p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 3</p>
-          <p>Explain Django template inheritance with base templates, blocks, extends, static files, and filters with examples.</p>
-          <button class="toggle-btn" data-target="lq5_3"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="lq5_3">
-            <p><strong>Template inheritance</strong> avoids repeating HTML in every page.</p>
-            <p><strong>Base template (base.html):</strong> Contains the common layout — header, navbar, footer. Uses <code>{% block name %}{% endblock %}</code> to define regions that child templates can fill.</p>
-            <p><strong>Child template:</strong> Uses <code>{% extends "base.html" %}</code> as the first line. Overrides blocks with <code>{% block name %}...{% endblock %}</code>.</p>
-            <p><strong>Static files:</strong> <code>{% load static %}</code> at top, then <code>{% static 'css/style.css' %}</code> in href/src attributes.</p>
-            <p><strong>Filters:</strong> Modify variable display using pipe <code>|</code>:</p>
-            <ul>
-              <li><code>{{ name|upper }}</code> → Uppercase</li>
-              <li><code>{{ date|date:"d/m/Y" }}</code> → Format date</li>
-              <li><code>{{ text|truncatewords:10 }}</code> → Truncate</li>
-              <li><code>{{ price|floatformat:2 }}</code> → 2 decimal places</li>
-              <li><code>{{ val|lower|capfirst }}</code> → Chain filters</li>
-            </ul>
-            <p><strong>Benefits:</strong> Single point of change for common layout. DRY principle. Easy maintenance.</p>
-          </div>
-        </div>
+        <div class="qa-item">
+          <div class="qa-question"><span class="qa-number">Q 3 (8 marks)</span> a) Explain URLs, views and templates in Django with an example. b) Explain static files and how they are configured.</div>
+          <button class="toggle-btn" data-target="la5_3">Show Answer</button>
+          <div class="answer-reveal" id="la5_3">
+            <p><strong>a) The three layers.</strong> <code>urls.py</code> maps a URL pattern to a view function using <code>path()</code>; the view receives the request, obtains data, and calls <code>render(request, template, context)</code>; the template turns the context dictionary into HTML using Django Template Language.</p>
+            <pre>
+# urls.py
+from django.urls import path
+from . import views
+urlpatterns = [path("product/&lt;int:pk&gt;/", views.detail, name="detail")]
 
-        <div class="mcq-item">
-          <p class="card-title">Q 4</p>
-          <p>Explain Django Forms — forms.Form class, validation, cleaned_data, and ModelForm with complete examples.</p>
-          <button class="toggle-btn" data-target="lq5_4"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="lq5_4">
-            <p><strong>forms.Form:</strong> Define form fields as class attributes in <code>forms.py</code>.</p>
-            <p>Example fields: <code>name = forms.CharField(max_length=100)</code>, <code>email = forms.EmailField()</code>, <code>age = forms.IntegerField(min_value=1)</code></p>
-            <p><strong>In views.py — Standard pattern:</strong></p>
-            <ul>
-              <li>GET request → <code>form = MyForm()</code> (empty form)</li>
-              <li>POST request → <code>form = MyForm(request.POST)</code></li>
-              <li><code>form.is_valid()</code> → runs all validators</li>
-              <li><code>form.cleaned_data["field"]</code> → get validated value</li>
-            </ul>
-            <p><strong>Custom validation:</strong> Define <code>clean_fieldname()</code> methods in the form class. Raise <code>forms.ValidationError("message")</code> on failure.</p>
-            <p><strong>Cross-field validation:</strong> Override <code>clean()</code> method.</p>
-            <p><strong>ModelForm:</strong> Inherits from <code>forms.ModelForm</code>. Inner <code>Meta</code> class specifies <code>model</code> and <code>fields</code>. <code>form.save()</code> writes to database. <code>form = MyForm(instance=obj)</code> pre-fills for editing.</p>
-            <p><strong>Template rendering:</strong> <code>{{ form.as_p }}</code> renders all fields wrapped in <code>&lt;p&gt;</code> tags. Individual field: <code>{{ form.name }}</code> + <code>{{ form.name.errors }}</code>.</p>
-          </div>
-        </div>
+# views.py
+def detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, "detail.html", {"product": product})
 
-        <div class="mcq-item">
-          <p class="card-title">Q 5</p>
-          <p>Write a complete Django example showing a Student registration form using ModelForm with custom validation, widgets, and error messages.</p>
-          <button class="toggle-btn" data-target="lq5_5"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="lq5_5">
-            <div class="code-box">
-              <div class="box-title"><i class="fas fa-code"></i> models.py</div>
-              <pre>
-from django.db import models
+# templates/detail.html
+&lt;h1&gt;{{ product.name }}&lt;/h1&gt;
+{% if product.in_stock %}&lt;p&gt;In stock&lt;/p&gt;{% endif %}
+            </pre>
+            <p>DTL: <code>{{ var }}</code> outputs a value (escaped); <code>{% tag %}</code> is a tag; <code>{# comment #}</code> is a comment. Key tags are <code>{% for %}</code> with <code>{% empty %}</code>, <code>{% if %}</code>, <code>{% extends %}</code> and <code>{% block %}</code> for template inheritance, and <code>{% url %}</code> to reverse a named route.</p>
 
-class Student(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    age = models.IntegerField()
-    course = models.CharField(max_length=50)
+            <p><strong>b) Static files.</strong> CSS, JavaScript, images and fonts served unchanged. Configuration:</p>
+            <pre>
+# settings.py
+INSTALLED_APPS = [..., "django.contrib.staticfiles"]
+STATIC_URL = "static/"
 
-    def __str__(self):
-        return self.name
-              </pre>
-            </div>
-            <div class="code-box" style="margin-top:0.75rem;">
-              <div class="box-title"><i class="fas fa-code"></i> forms.py</div>
-              <pre>
-from django import forms
-from .models import Student
+# template
+{% load static %}
+&lt;link rel="stylesheet" href="{% static 'myapp/css/style.css' %}"&gt;
 
-class StudentForm(forms.ModelForm):
-    class Meta:
-        model = Student
-        fields = ["name", "email", "age", "course"]
-        widgets = {
-            "name": forms.TextInput(attrs={
-                "placeholder": "Full Name",
-                "class": "form-input"
-            }),
-            "email": forms.EmailInput(attrs={
-                "placeholder": "email@example.com"
-            }),
-            "age": forms.NumberInput(attrs={
-                "min": 15, "max": 60
-            }),
-            "course": forms.Select(choices=[
-                ("CST", "Computer Science"),
-                ("EE", "Electrical Engineering"),
-                ("ME", "Mechanical Engineering"),
-            ]),
-        }
-        error_messages = {
-            "name": {"required": "Please enter student name."},
-            "email": {"unique": "This email is already registered."},
-        }
-
-    def clean_age(self):
-        age = self.cleaned_data.get("age")
-        if age and age &lt; 15:
-            raise forms.ValidationError(
-                "Age must be at least 15."
-            )
-        return age
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name")
-        if name and len(name) &lt; 3:
-            raise forms.ValidationError(
-                "Name must be at least 3 characters."
-            )
-        return name.title()   # Capitalize each word
-              </pre>
-            </div>
-            <div class="code-box" style="margin-top:0.75rem;">
-              <div class="box-title"><i class="fas fa-code"></i> views.py</div>
-              <pre>
-from django.shortcuts import render, redirect
-from .forms import StudentForm
-
-def register_student(request):
-    if request.method == "POST":
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("success")
-    else:
-        form = StudentForm()
-    return render(request, "register.html", {"form": form})
-              </pre>
-            </div>
-            <div class="code-box" style="margin-top:0.75rem;">
-              <div class="box-title"><i class="fas fa-code"></i> register.html</div>
-              <pre>
-{% extends "base.html" %}
-{% block content %}
-&lt;h2&gt;Student Registration&lt;/h2&gt;
-&lt;form method="POST"&gt;
-    {% csrf_token %}
-    {{ form.as_p }}
-    &lt;button type="submit"&gt;Register&lt;/button&gt;
-&lt;/form&gt;
-{% endblock %}
-              </pre>
-            </div>
+# deployment
+python manage.py collectstatic
+            </pre>
+            <p>Files live in <code>myapp/static/myapp/...</code>, namespaced by app to avoid collisions. <code>STATIC_URL</code> is the URL prefix, not a disk path; <code>STATIC_ROOT</code> is where <code>collectstatic</code> gathers files for the web server. In development <code>DEBUG = True</code> lets <code>runserver</code> serve them; in production <code>DEBUG</code> is <code>False</code> and the web server serves them. Two common errors: forgetting <code>{% load static %}</code> (a <code>TemplateSyntaxError</code>) and hard-coding <code>/static/...</code> instead of using the tag.</p>
           </div>
         </div>
 
@@ -1457,359 +1143,205 @@ def register_student(request):
   <!-- ========== PRACTICE ========== -->
   <section class="section" id="practice">
     <h2 class="section-title">
-      <i class="fas fa-dumbbell"></i> Practice Problems
+      <i class="fas fa-laptop-code"></i> Practice &amp; Lab Walkthrough
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-      <div class="mcq-grid">
 
-        <div class="mcq-item">
-          <p class="card-title">Q 1</p>
-          <p>Write a Django view and URL pattern that displays a list of items passed from the view to the template. Show the template with a for loop.</p>
-          <button class="toggle-btn" data-target="pp5_1"><i class="fas fa-eye"></i> Show Solution</button>
-          <div class="answer-reveal" id="pp5_1">
-            <div class="code-box">
-              <div class="box-title"><i class="fas fa-code"></i> urls.py</div>
-              <pre>
-from django.urls import path
-from . import views
+      <p>Unit 5's practical is CST213 Area 8 &mdash; "developing a simple web application". These are the blocks you will type, in the order you will type them. Django is not installed in the environment this page was built in, so the <strong>commands are not marked with captured output</strong>; run them in your own venv and compare against the notes.</p>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-code"></i> 1. Scaffold the project and the app</div>
+        <pre>
+python -m venv venv
+source venv/bin/activate
+pip install django
+django-admin startproject mysite
+cd mysite
+python manage.py migrate
+python manage.py startapp core
+python manage.py runserver
+        </pre>
+        <p>Expected: the browser at <code>http://127.0.0.1:8000/</code> shows the Django rocket page, and the terminal prints the system check and the server address. If <code>migrate</code> is skipped, the admin login page raises <code>no such table: auth_user</code>.</p>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-code"></i> 2. Register the app and define a model</div>
+        <pre>
+# mysite/settings.py
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "core",                      # <- the app you just created
+]
+
+# core/models.py
+from django.db import models
+
+class Product(models.Model):
+    name  = models.CharField(max_length=80)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    stock = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+        </pre>
+        <p>Then create the table and a login for the admin page:</p>
+        <pre>
+python manage.py makemigrations core
+python manage.py migrate
+python manage.py createsuperuser
+        </pre>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-code"></i> 3. View, URL and template &mdash; the three-file slice</div>
+        <pre>
+# core/views.py
+from django.shortcuts import render
+from .models import Product
+
+def home(request):
+    context = {"title": "Shop", "products": Product.objects.all()}
+    return render(request, "home.html", context)
+
+# mysite/urls.py
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path('fruits/', views.fruit_list, name='fruit_list'),
+    path("admin/", admin.site.urls),
+    path("", include("core.urls")),
 ]
-              </pre>
-            </div>
-            <div class="code-box" style="margin-top:0.75rem;">
-              <div class="box-title"><i class="fas fa-code"></i> views.py</div>
-              <pre>
-from django.shortcuts import render
 
-def fruit_list(request):
-    fruits = [
-        {"name": "Apple",  "color": "Red",    "price": 120},
-        {"name": "Banana", "color": "Yellow", "price": 40},
-        {"name": "Mango",  "color": "Yellow", "price": 80},
-        {"name": "Grapes", "color": "Purple", "price": 150},
-    ]
-    return render(request, "fruits.html", {"fruits": fruits})
-              </pre>
-            </div>
-            <div class="code-box" style="margin-top:0.75rem;">
-              <div class="box-title"><i class="fas fa-code"></i> fruits.html</div>
-              <pre>
-{% extends "base.html" %}
-{% block title %}Fruit List{% endblock %}
-{% block content %}
-&lt;h2&gt;Available Fruits ({{ fruits|length }})&lt;/h2&gt;
-&lt;table border="1"&gt;
-    &lt;tr&gt;
-        &lt;th&gt;Name&lt;/th&gt;
-        &lt;th&gt;Color&lt;/th&gt;
-        &lt;th&gt;Price (₹/kg)&lt;/th&gt;
-    &lt;/tr&gt;
-    {% for fruit in fruits %}
-    &lt;tr&gt;
-        &lt;td&gt;{{ fruit.name|capfirst }}&lt;/td&gt;
-        &lt;td&gt;{{ fruit.color }}&lt;/td&gt;
-        &lt;td&gt;₹{{ fruit.price }}&lt;/td&gt;
-    &lt;/tr&gt;
-    {% empty %}
-    &lt;tr&gt;&lt;td colspan="3"&gt;No fruits available.&lt;/td&gt;&lt;/tr&gt;
-    {% endfor %}
-&lt;/table&gt;
-{% endblock %}
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 2</p>
-          <p>Write a Django base template with navigation links and a child template that extends it for an "About" page.</p>
-          <button class="toggle-btn" data-target="pp5_2"><i class="fas fa-eye"></i> Show Solution</button>
-          <div class="answer-reveal" id="pp5_2">
-            <div class="code-box">
-              <div class="box-title"><i class="fas fa-code"></i> base.html</div>
-              <pre>
+# core/urls.py
+from django.urls import path
+from . import views
+urlpatterns = [path("", views.home, name="home")]
+        </pre>
+        <pre>
+&lt;!-- core/templates/home.html --&gt;
 {% load static %}
 &lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
+&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;{% block title %}My Website{% endblock %}&lt;/title&gt;
-    &lt;link rel="stylesheet" href="{% static 'css/style.css' %}"&gt;
+  &lt;link rel="stylesheet" href="{% static 'core/css/style.css' %}"&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;nav&gt;
-        &lt;a href="{% url 'home' %}"&gt;Home&lt;/a&gt; |
-        &lt;a href="{% url 'about' %}"&gt;About&lt;/a&gt; |
-        &lt;a href="{% url 'contact' %}"&gt;Contact&lt;/a&gt;
-    &lt;/nav&gt;
-    &lt;main&gt;
-        {% block content %}{% endblock %}
-    &lt;/main&gt;
-    &lt;footer&gt;&lt;p&gt;© 2024 My Website&lt;/p&gt;&lt;/footer&gt;
-    &lt;script src="{% static 'js/main.js' %}"&gt;&lt;/script&gt;
+  &lt;h1&gt;{{ title }}&lt;/h1&gt;
+  {% for p in products %}
+    &lt;p&gt;{{ p.name }} &ndash; {{ p.price }}&lt;/p&gt;
+  {% empty %}
+    &lt;p&gt;No products yet.&lt;/p&gt;
+  {% endfor %}
 &lt;/body&gt;
 &lt;/html&gt;
-              </pre>
-            </div>
-            <div class="code-box" style="margin-top:0.75rem;">
-              <div class="box-title"><i class="fas fa-code"></i> about.html (child template)</div>
-              <pre>
-{% extends "base.html" %}
+        </pre>
+        <p>Put the CSS at <code>core/static/core/css/style.css</code>. The doubled <code>core/</code> is deliberate namespacing, and it is the part candidates lose marks for: the folder must be <code>static/&lt;app_name&gt;/</code>, not <code>static/</code>.</p>
+      </div>
 
-{% block title %}About Us — My Website{% endblock %}
-
-{% block content %}
-&lt;h1&gt;About Us&lt;/h1&gt;
-&lt;p&gt;{{ description }}&lt;/p&gt;
-&lt;h3&gt;Our Team&lt;/h3&gt;
-&lt;ul&gt;
-    {% for member in team %}
-    &lt;li&gt;{{ member.name }} — {{ member.role }}&lt;/li&gt;
-    {% endfor %}
-&lt;/ul&gt;
-{% endblock %}
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 3</p>
-          <p>Write a Django forms.Form for a login page with username and password fields, with custom validation that checks the username is not empty and has at least 4 characters.</p>
-          <button class="toggle-btn" data-target="pp5_3"><i class="fas fa-eye"></i> Show Solution</button>
-          <div class="answer-reveal" id="pp5_3">
-            <div class="code-box">
-              <div class="box-title"><i class="fas fa-code"></i> forms.py</div>
-              <pre>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-code"></i> 4. A form with CSRF protection</div>
+        <pre>
+# core/forms.py
 from django import forms
 
-class LoginForm(forms.Form):
-    username = forms.CharField(
-        max_length=50,
-        widget=forms.TextInput(attrs={
-            "placeholder": "Enter username",
-            "autofocus": True
-        })
-    )
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={
-            "placeholder": "Enter password"
-        })
-    )
-    remember_me = forms.BooleanField(required=False)
+class FeedbackForm(forms.Form):
+    name    = forms.CharField(max_length=40)
+    email   = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)
 
-    def clean_username(self):
-        username = self.cleaned_data.get("username", "").strip()
-        if len(username) &lt; 4:
-            raise forms.ValidationError(
-                "Username must be at least 4 characters long."
-            )
-        return username
+# core/views.py
+from django.http import HttpResponse
 
-    def clean_password(self):
-        password = self.cleaned_data.get("password", "")
-        if len(password) &lt; 6:
-            raise forms.ValidationError(
-                "Password must be at least 6 characters."
-            )
-        return password
-              </pre>
-            </div>
-            <div class="code-box" style="margin-top:0.75rem;">
-              <div class="box-title"><i class="fas fa-code"></i> views.py + login.html</div>
-              <pre>
-# views.py
-from django.shortcuts import render, redirect
-from .forms import LoginForm
-
-def login_view(request):
+def feedback(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
+        form = FeedbackForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            # Authenticate user here
-            print(f"Login attempt: {username}")
-            return redirect("home")
+            return HttpResponse("Thanks, " + form.cleaned_data["name"])
     else:
-        form = LoginForm()
-    return render(request, "login.html", {"form": form})
-
-# login.html
-# {% extends "base.html" %}
-# {% block content %}
-# &lt;h2&gt;Login&lt;/h2&gt;
-# &lt;form method="POST"&gt;
-#     {% csrf_token %}
-#     {{ form.as_p }}
-#     &lt;button type="submit"&gt;Login&lt;/button&gt;
-# &lt;/form&gt;
-# {% endblock %}
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 4</p>
-          <p>Describe and write the complete Django URL-View-Template chain for a simple "Hello, [name]!" page where the name comes from the URL.</p>
-          <button class="toggle-btn" data-target="pp5_4"><i class="fas fa-eye"></i> Show Solution</button>
-          <div class="answer-reveal" id="pp5_4">
-            <div class="code-box">
-              <div class="box-title"><i class="fas fa-code"></i> Complete URL-View-Template Chain</div>
-              <pre>
-# urls.py
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('hello/&lt;str:name&gt;/', views.hello, name='hello'),
-]
-# URL: /hello/Alice/ → passes name="Alice" to view
-
-# views.py
-from django.shortcuts import render
-
-def hello(request, name):
-    context = {
-        "name": name.title(),   # Capitalize
-        "length": len(name),
-        "greeting": f"Hello, {name.title()}! Welcome to Django."
-    }
-    return render(request, "hello.html", context)
-
-# hello.html
-# {% extends "base.html" %}
-# {% block title %}Hello {{ name }}{% endblock %}
-# {% block content %}
-# &lt;h1&gt;{{ greeting }}&lt;/h1&gt;
-# &lt;p&gt;Your name has {{ length }} characters.&lt;/p&gt;
-# &lt;p&gt;Name in uppercase: {{ name|upper }}&lt;/p&gt;
-# &lt;a href="{% url 'home' %}"&gt;← Back to Home&lt;/a&gt;
-# {% endblock %}
-
-# Access at: http://127.0.0.1:8000/hello/alice/
-# Output: Hello, Alice! Welcome to Django.
-#         Your name has 5 characters.
-#         Name in uppercase: ALICE
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 5</p>
-          <p>List and explain any 6 Django template filters with syntax and examples.</p>
-          <button class="toggle-btn" data-target="pp5_5"><i class="fas fa-eye"></i> Show Solution</button>
-          <div class="answer-reveal" id="pp5_5">
-            <div class="code-box">
-              <div class="box-title"><i class="fas fa-code"></i> Django Template Filters</div>
-              <pre>
-{# 1. upper — converts to uppercase #}
-{{ "hello world"|upper }}
-{# Output: HELLO WORLD #}
-
-{# 2. lower — converts to lowercase #}
-{{ "HELLO WORLD"|lower }}
-{# Output: hello world #}
-
-{# 3. date — formats a date object #}
-{{ publication_date|date:"d F Y" }}
-{# Output: 15 January 2024 #}
-
-{# 4. truncatewords — truncates to N words #}
-{{ "Python is a great language for everyone"|truncatewords:4 }}
-{# Output: Python is a great ... #}
-
-{# 5. length — returns count of items or characters #}
-{{ students|length }}    {# number of students in list #}
-{{ "hello"|length }}     {# Output: 5 #}
-
-{# 6. default — use default if variable is empty/falsy #}
-{{ user_bio|default:"No biography available." }}
-{# If user_bio is empty, shows: No biography available. #}
-
-{# 7. floatformat — format float to N decimal places #}
-{{ 3.14159265|floatformat:3 }}
-{# Output: 3.142 #}
-
-{# 8. capfirst — capitalize first character only #}
-{{ "hello world"|capfirst }}
-{# Output: Hello world #}
-
-{# Chaining filters #}
-{{ "  hello world  "|lower|capfirst }}
-{# Output: Hello world #}
-              </pre>
-            </div>
-          </div>
-        </div>
-
+        form = FeedbackForm()
+    return render(request, "feedback.html", {"form": form})
+        </pre>
+        <pre>
+&lt;form method="post"&gt;
+  {% csrf_token %}
+  {{ form.as_p }}
+  &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;
+        </pre>
+        <p>Remove <code>{% csrf_token %}</code> and submit: Django returns <strong>403 Forbidden</strong> with "CSRF verification failed". That failure is the demonstration to show in the viva &mdash; it proves the middleware is doing the work.</p>
       </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-code"></i> 5. Register the model with the admin</div>
+        <pre>
+# core/admin.py
+from django.contrib import admin
+from .models import Product
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ("name", "price", "stock")
+    search_fields = ("name",)
+        </pre>
+        <p>Visit <code>/admin/</code> and the Product table appears with add, edit and delete &mdash; no further code needed. This is the "automatic admin" claim from the 5-mark question, demonstrated rather than asserted.</p>
+      </div>
+
     </div>
   </section>
 
   <!-- ========== REVISION ========== -->
   <section class="section" id="revision">
     <h2 class="section-title">
-      <i class="fas fa-sync-alt"></i> Revision
+      <i class="fas fa-clipboard-check"></i> Quick Revision
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-list-ul"></i> Quick Revision Points</div>
+        <div class="box-title"><i class="fas fa-list-ul"></i> The unit in 10 points</div>
         <ul>
-          <li><strong>MVC:</strong> Model (data), View (UI), Controller (logic). Django uses MVT.</li>
-          <li><strong>Django MVT:</strong> Model (<code>models.py</code>), View (<code>views.py</code> = Controller), Template (<code>.html</code> = View).</li>
-          <li>Django is high-level, batteries-included, secure, scalable. Released 2005.</li>
-          <li><code>urls.py</code> maps URL patterns to view functions using <code>path()</code>.</li>
-          <li>Views receive <code>request</code> object and return <code>render()</code>, <code>HttpResponse()</code>, or <code>redirect()</code>.</li>
-          <li>Context dict passed to <code>render()</code> is accessible in template as <code>{{ key }}</code>.</li>
-          <li><strong>DTL tags:</strong> <code>{% if %}</code>, <code>{% for %}</code>, <code>{% extends %}</code>, <code>{% block %}</code>, <code>{% url %}</code>, <code>{% csrf_token %}</code>, <code>{% load static %}</code>.</li>
-          <li><strong>DTL filters:</strong> <code>|upper</code>, <code>|lower</code>, <code>|date</code>, <code>|truncatewords</code>, <code>|length</code>, <code>|default</code>, <code>|floatformat</code>.</li>
-          <li>Template inheritance: base uses <code>{% block %}</code>, child uses <code>{% extends %}</code> + <code>{% block %}</code>.</li>
-          <li>Static files: <code>{% load static %}</code> + <code>{% static 'path' %}</code>. Stored in <code>static/</code> directory.</li>
-          <li>Every POST form needs <code>{% csrf_token %}</code> — prevents CSRF attacks.</li>
-          <li><strong>forms.Form:</strong> manual fields. <strong>forms.ModelForm:</strong> auto-generated from model.</li>
-          <li>Form pattern: POST → <code>Form(request.POST)</code> → <code>is_valid()</code> → <code>cleaned_data</code> → process.</li>
-          <li><code>form.save()</code> — ModelForm only. Saves to DB. Use <code>instance=obj</code> to edit.</li>
-          <li>Custom validation: <code>clean_fieldname()</code> or <code>clean()</code> methods. Raise <code>forms.ValidationError</code>.</li>
-          <li>Widgets control HTML input rendering. Customize with <code>attrs={}</code>.</li>
-          <li><code>error_messages</code> in Meta class customizes validation error text.</li>
+          <li><strong>MVC</strong> splits an application into Model (data), View (presentation) and Controller (input). The driver is separation of concerns.</li>
+          <li><strong>Django uses MVT.</strong> Model stays; MVC's View becomes Django's <em>Template</em>; MVC's Controller becomes Django's <em>View</em>.</li>
+          <li><code>models.py</code> &harr; Model, <code>templates/*.html</code> &harr; View, <code>views.py</code> + <code>urls.py</code> &harr; Controller.</li>
+          <li>Request lifecycle: browser &rarr; <code>urls.py</code> &rarr; <code>views.py</code> &harr; <code>models.py</code>/DB &rarr; template &rarr; <code>HttpResponse</code>.</li>
+          <li>Six setup steps: venv &rarr; <code>pip install django</code> &rarr; <code>startproject</code> &rarr; <code>migrate</code> &rarr; <code>startapp</code> (+ <code>INSTALLED_APPS</code>) &rarr; <code>runserver</code>.</li>
+          <li>A <strong>project</strong> is the site; an <strong>app</strong> is a reusable feature module inside it. One project, many apps.</li>
+          <li>DTL: <code>{{ var }}</code> outputs, <code>{% tag %}</code> controls, <code>{# #}</code> comments. <code>{% extends %}</code> and <code>{% block %}</code> give template inheritance.</li>
+          <li>Static files need four things: the <code>staticfiles</code> app, <code>STATIC_URL</code>, the app's <code>static/&lt;app&gt;/</code> folder, and <code>{% load static %}</code> + <code>{% static %}</code>.</li>
+          <li><code>STATIC_URL</code> is a URL prefix; <code>STATIC_ROOT</code> is the disk folder <code>collectstatic</code> fills for production.</li>
+          <li><code>{% csrf_token %}</code> is mandatory in every POST form; without it Django returns <strong>403</strong>.</li>
         </ul>
       </div>
 
-      <div class="important-note" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Must Remember for Exam</div>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Facts examiners award marks for</div>
         <ul>
-          <li>In Django: <strong>View = Controller</strong>, <strong>Template = View</strong> (opposite of MVC naming).</li>
-          <li><code>{% csrf_token %}</code> — required in every POST form. Without it → 403 error.</li>
-          <li><code>{% extends %}</code> must be the <strong>very first line</strong> of a child template.</li>
-          <li><code>form.cleaned_data</code> only available after <code>form.is_valid()</code> returns <strong>True</strong>.</li>
-          <li><code>form.save()</code> works only with <strong>ModelForm</strong>, not forms.Form.</li>
-          <li><code>{{ form.as_p }}</code> renders all form fields wrapped in <code>&lt;p&gt;</code> tags.</li>
-          <li>Static files need <code>{% load static %}</code> at top of template.</li>
-          <li>URL parameter syntax: <code>&lt;int:id&gt;</code>, <code>&lt;str:name&gt;</code> in <code>path()</code>.</li>
-          <li>Filters use <code>|</code> pipe: <code>{{ var|upper }}</code>. Tags use <code>{% %}</code>.</li>
-          <li>Django released in <strong>2005</strong>. Motto: "The web framework for perfectionists with deadlines."</li>
+          <li>Django's claim to MVC is the <strong>mapping</strong>, not the acronym &mdash; name the two renamed layers explicitly.</li>
+          <li>Django's <strong>view</strong> is the controller and its <strong>template</strong> is the view. Most candidates invert this.</li>
+          <li>An app does nothing until it is added to <code>INSTALLED_APPS</code>.</li>
+          <li><code>django-admin startproject</code> comes <em>before</em> <code>manage.py</code> exists; <code>manage.py startapp</code> comes after.</li>
+          <li><code>migrate</code> creates Django's own tables. Without it, <code>/admin/</code> fails with "no such table".</li>
+          <li><code>runserver</code> is development-only; production uses WSGI/ASGI (<code>gunicorn</code>, <code>uwsgi</code>) with <code>DEBUG = False</code>.</li>
+          <li>CSRF protects against <em>forged requests</em>, not against weak passwords or injected script (that is XSS).</li>
         </ul>
       </div>
 
-      <div class="warning-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Exams</div>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Where marks are commonly lost</div>
         <ul>
-          <li>Forgetting <code>{% csrf_token %}</code> in POST forms — very commonly asked.</li>
-          <li>Confusing Django's <strong>View</strong> with MVC's <strong>View</strong> — they are different things.</li>
-          <li>Placing <code>{% extends %}</code> anywhere other than the first line of the template.</li>
-          <li>Accessing <code>form.cleaned_data</code> before calling <code>form.is_valid()</code>.</li>
-          <li>Using <code>form.save()</code> with a regular <code>forms.Form</code> — only ModelForm has this.</li>
-          <li>Writing <code>{{ csrf_token }}</code> (variable syntax) instead of <code>{% csrf_token %}</code> (tag syntax).</li>
-          <li>Forgetting <code>{% load static %}</code> before using <code>{% static %}</code> — causes TemplateSyntaxError.</li>
-          <li>Not ending template tags: <code>{% if %}...{% endif %}</code>, <code>{% for %}...{% endfor %}</code>, <code>{% block %}...{% endblock %}</code>.</li>
+          <li>Saying "Django's View is MVC's View". It is not &mdash; Django's View is the Controller.</li>
+          <li>Writing "Django is a programming language" or "a database". It is a web <em>framework</em>.</li>
+          <li>Listing the six steps out of order, or omitting <code>migrate</code>.</li>
+          <li>Hard-coding <code>/static/css/style.css</code> in a template instead of <code>{% static %}</code>.</li>
+          <li>Forgetting <code>{% load static %}</code>, which is a <code>TemplateSyntaxError</code>.</li>
+          <li>Calling <code>STATIC_URL</code> a folder path. It is the URL prefix.</li>
+          <li>Answering "Is Django better than Flask?" with "yes" &mdash; the marked answer is the trade-off.</li>
         </ul>
       </div>
 
@@ -1825,26 +1357,26 @@ def hello(request, name):
       <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
       <ul class="video-list">
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=Python+web+frameworks+Django+Flask+FastAPI" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=UmljXZIypDc" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Python web frameworks compared</span>
-              <span class="video-link-meta">Django, Flask and FastAPI in overview &middot; search on YouTube</span>
+              <span class="video-link-title">Python Django Tutorial: Full-Featured Web App Part 1 &mdash; Getting Started</span>
+              <span class="video-link-meta">Corey Schafer &middot; 15:32 &middot; <code>pip install django</code>, <code>django-admin startproject</code>, <code>startapp</code>, <code>runserver</code> &mdash; the six setup steps performed on screen</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=Flask+tutorial+first+app+routes" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=Vr_XLiw6Y9Y" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Flask in twenty minutes</span>
-              <span class="video-link-meta">Routes, templates and a first app &middot; search on YouTube</span>
+              <span class="video-link-title">Django MVT Architecture Explained &mdash; Model&ndash;View&ndash;Template for Beginners</span>
+              <span class="video-link-meta">Job Ready CoderZ &middot; 05:39 &middot; M/V/T mapped to database, business logic and front end, then walked through a login request end to end</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=Django+project+structure+models+views" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=sE87oB3wYMc" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Django project structure</span>
-              <span class="video-link-meta">Models, views, templates and migrations &middot; search on YouTube</span>
+              <span class="video-link-title">What is MVT Architecture in Django and How it Works with an Example</span>
+              <span class="video-link-meta">Indent Code &middot; 03:38 &middot; short &mdash; follows one request through <code>urls.py</code>, <code>views.py</code>, <code>models.py</code> and a template on a real project</span>
             </span>
           </a>
         </li>

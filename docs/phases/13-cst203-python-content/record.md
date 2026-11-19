@@ -446,6 +446,149 @@ content that the printed syllabus does not list, but 4 of the 104 questions ask 
 it (`P005-Q6`, `P005-Q18`, `P006-Q21`, `P006-Q23`). It is included, and labelled as
 extra-syllabus on the page.
 
+### 4.5 Part 13.4 result — Unit 4 (Files & Regular Expressions), `49m / 12.7%`
+
+**What shipped.** `subjects/CST203/units/unit-4.html` went from **4,937w** and **zero**
+`<h3 id>` anchors to **6,748w / 4,634 prose** and **6** anchors.
+
+**The unit's defining defect was an internal inversion, and it is now fixed.**
+`#regex` (11m) was longer than `#fileio` (34m) even though file handling earns **3.1×**
+more marks. That is the exact failure the blueprint called out, and word count is the
+only honest way to show it:
+
+| Section | Marks | Before | After |
+| :--- | ---: | ---: | ---: |
+| `#fileio` | 34m | 599 | **1,423** |
+| `#regex` | 11m | 659 | 962 |
+| `#inputoutput` | 4m | 240 | 276 |
+| `#mcqs` | &mdash; | 481 | 488 (8 &rarr; **10**) |
+| `#short-questions` | &mdash; | 394 | 623 (8 &rarr; **7**) |
+| `#long-questions` | &mdash; | 645 | 1,033 (5 &rarr; **4**, real 8-mark answers) |
+| `#practice` | &mdash; | 571 | 391 (5 &rarr; **5** verified programs) |
+| `#revision` | &mdash; | 385 | 421 |
+| `#videos` | &mdash; | 70 | 112 (0 &rarr; **3** verified) |
+
+Ratio check after the rewrite: `#fileio` is **1.48×** `#regex`, against a mark ratio of
+**3.1×** &mdash; no longer inverted. The remaining gap is deliberate: the access-modes
+table, the read/write comparison tables and the word-count program are shared between
+several questions and carry most of the marks, while `#regex` has to teach a whole
+pattern language from zero.
+
+**The 6 anchors:** `#console-input-output-print-and-sep`,
+`#file-opening-and-access-modes`, `#file-object-methods-and-word-count`,
+`#file-word-count-and-cursor-control`, `#regular-expressions-and-pattern-matching`,
+`#match-object-start-end-and-span`.
+
+**Routing, before &rarr; after part 13.4:**
+
+| | After 13.3 | After 13.4 |
+| :--- | ---: | ---: |
+| same-unit / redirect / unmatched | 91 / 8 / 5 | **92 &rarr; 93 / 9 / 3 &rarr; 2** |
+| named `<h3 id>` landings | 86 | **84** (of 104, 2 fewer questions resolve at all) |
+| coarse-section landings | 13 | **18** |
+| Unit 4 questions on a named heading | 0 of 8 | **3 of 9** |
+
+The two remaining unmatched questions (`P005-Q13` "Sets / union", `P005-Q14` "List
+mutation during iteration") are **Unit 1 topics**, not Unit 4's &mdash; they are Phase
+13.6 topic-map work, recorded in §6.1.
+
+**A defect cured by content, not by matcher code.** `P005-Q20` ("File object methods")
+was unmatched until the Unit 4 heading was renamed from *"Reading, Writing and Counting
+Words in a File"* to *"File Object Methods &mdash; read, readline, readlines, write,
+writelines &mdash; and Word Count"*. The stored topic's own words are now in the
+heading. **Nothing in the matcher changed.**
+
+**Ablation, run for Units 4 and 5 together.** Deleting all 11 `<h3 id>` attributes
+leaves the triple **byte-identical** (93 / 9 / 2) and moves the split from
+**84 named / 18 coarse** to **73 named / 29 coarse**. Eleventh time the lesson holds.
+
+**Code verification &mdash; and two defects the sweep caught.** 41 `<pre>` blocks, 33
+parse as Python, 8 are output transcripts. Every runnable block was **executed**, and
+two blocks did not match what the page claimed:
+
+1. The **input/output transcript was hand-written**. Running the block with the stated
+   input (`Asha`, `25`, `7 8`) gives `Name: Age: str` &mdash; the prompts run together
+   on one line because `input()` writes no newline. The transcript was replaced with
+   the captured one, and the code was changed to `print("sum:", ...)` so the output
+   matches the prose that promised it.
+2. The **access-modes demo reused a truncated file**. Its first run truncated
+   `demo.txt` in mode `'w'`, so the `'a'` and `'a+'` rows measured a 0-byte file and
+   printed `tell=0` instead of `18`. The block now resets the file per mode and says
+   why in a comment. Verified byte-for-byte afterwards.
+
+**One accessibility defect caught by a gate, not by eye.** `#comparisons` used `<h4>`
+directly under the section's `<h2>`, a heading-order jump that
+`audit_accessibility.py --fail` flags. Changed to `<h3>`. **This is a real regression I
+introduced**, and the gate caught it before it shipped.
+
+**Honest note on the word budget.** The owner has since waived the ceiling
+("No problem over budget"), so Unit 4 is measured against the blueprint's
+`~4,800&ndash;5,300w` rebalance target and ships at 6,748w. No content was cut to fit;
+the growth is the assessed practice bank and the two comparison tables.
+
+**Videos shipped (3, all live-verified 2026-11-19):** `Uh2ebFW8OYM` Corey Schafer
+24:33 (file objects, `with`, close); `5xEUDOA5PJA` Gate Smashers 09:06
+(`read`/`readline`/`readlines` with `tell()`/`seek()` traced); `K8L6KVGG-7o` Corey
+Schafer 53:17 (`re` module, raw strings, meta-characters).
+
+### 4.6 Part 13.5 result — Unit 5 (Framework / Django), `30m / 7.8%`
+
+**What shipped.** `subjects/CST203/units/unit-5.html` went from **5,780w** and **zero**
+`<h3 id>` anchors to **5,763w / 4,247 prose** and **5** anchors, plus **1 inline SVG**.
+
+**The defect was the opposite of Unit 4's, and it is now fixed.** Unit 5 was the
+*longest* Python page in the repository while earning the *fewest* marks, and its
+internal split was inverted: `#forms` consumed 757w on a topic that has scored **0
+marks in four papers**, while `#mvc` and `#django-intro` together carried **26 of the
+unit's 30 marks** in 436w.
+
+| Section | Marks | Before | After |
+| :--- | ---: | ---: | ---: |
+| `#mvc` | 19m | 191 | **500** (+ the SVG cycle diagram and the MVC&harr;MVT table) |
+| `#django-intro` | 9m | 245 | **618** (6 reasons, 6-step setup, project-vs-app table) |
+| `#urls-templates` | 9m | 759 | **575** (trimmed, plus the static-files checklist) |
+| `#forms` | 0m | 757 | **334** (&minus;56%, deliberately kept short) |
+| `#mcqs` | &mdash; | 404 | 539 (8 &rarr; **10**) |
+| `#long-questions` | &mdash; | 785 | 751 (5 &rarr; **3**, real 8-mark answers) |
+| `#practice` | &mdash; | 840 | 470 (lab walkthrough, no fake output) |
+| `#videos` | &mdash; | 66 | 128 (0 &rarr; **3** verified) |
+
+`#mvc` + `#django-intro` now hold **1,118w for 26 of 30 marks**, and `#forms` is
+334w for 0 marks. That is the rebalance the blueprint asked for, done by *moving*
+weight rather than deleting sections &mdash; every `<section id>` is preserved,
+including the locked `#mvc` and `#urls-templates`.
+
+**The 5 anchors:** `#mvc-and-django-mvt-architecture`,
+`#why-django-and-project-setup`, `#django-urls-views-and-templates`,
+`#django-static-files`, `#django-forms-and-csrf`.
+
+**Routing after part 13.5:** same-unit / redirect / unmatched = **93 / 9 / 2**,
+named landings **84 of 104**, coarse **18**. Unit 5's own questions all resolve &
+`P005-Q11` ("Django static files") is now answered by a named heading of exactly that
+name. The two remains are Unit 1 topics.
+
+**Ablation (Units 4 and 5 stripped together, §4.5 above):** triple unchanged, named
+84 &rarr; 73. **The anchors are the only reason the granularity improves.**
+
+**A regression I introduced and then fixed.** Replacing the old `#mvc` flow list
+dropped the last use of the `fa-flow-chart` icon, which
+`tests/test_icon_subset.py::test_unknown_icon_names_stay_visible` caught: removing an
+icon changes the generated Font Awesome subset, and the test asserted the icon should
+still be in the manifest. Rather than delete the assertion, the icon was put back on
+the request-lifecycle box &mdash; where it belongs. **A gate caught a real regression
+before it shipped.**
+
+**Django commands are not presented with fake output.** Django is not installed in this
+sandbox, so `#practice` states outright that the commands are not marked with captured
+output and tells the student to compare against their own venv. Only the two claims
+verified by the framework's documented behaviour are asserted (403 on a missing CSRF
+token, "no such table" without `migrate`).
+
+**Videos shipped (3, all live-verified 2026-11-19):** `UmljXZIypDc` Corey Schafer
+15:32 (install, `startproject`, `startapp`, `runserver`); `Vr_XLiw6Y9Y` Job Ready
+CoderZ 05:39 (MVT mapped to database/business logic/front end); `sE87oB3wYMc` Indent
+Code 03:38 (one request traced through `urls.py` &rarr; `views.py` &rarr; template).
+
 ### 4.1.4 Code verification
 
 Every `<pre>` block was machine-checked against Python 3.11.2 rather than eyeballed:
@@ -524,7 +667,7 @@ The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` a
 - **Owner decision (`rule.md` §4.7):** _Pending execution (`mark as pass` / `add for later`)._
 - **Two decisions waiting for the owner after part 13.1:**
   1. ~~**Word budget (§4.1.6).**~~ **RESOLVED by owner, 2026-11-19: "set word budget as per your need."** The budget is now **weight-proportional**, anchored on Unit 1 as shipped, and it is the live number for units 2–5 (§4.2). Unit 1 ships at 10,837w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
-  1a. **Unit 2's size (§4.3).** It ships at **6,024w** against a **4,600w** weight budget — 31% over, outside the ±10% band. The concept sections (2,787w) are proportionate to 48% of the unit's marks; the overrun is the assessed practice bank (2,195w). The cut to the band is 8 MCQs / 4 short / 2 long, about 700w, and it is a 10-minute edit. **Accept the density, or enforce the band?**
+  1a. ~~**Unit 2's size (§4.3).**~~ **RESOLVED by owner, 2026-11-19: "No problem over budget."** The ±10% band in §4.2 is withdrawn as a shipping constraint for this phase. Units 2, 3 and 4 therefore ship at 31%, 13.5% and 27% over their weight budgets respectively, and **no content was cut to fit**. The band remains useful as a *diagnostic* — a large overrun still says "check the internal split" — which is exactly how it earned its keep in Unit 4, where the number itself was fine but `#fileio` was shorter than `#regex`.
 2. **The matcher itself is not trustworthy — this is now the biggest open item (§4.1.3a, §4.1.3b).** Two independent defects: (i) `score_against()` does a bare substring test, so `Built-ins / all` lands on the collections section because `all` occurs inside **shallow**; (ii) the tie-break between two equally-relevant headings depends on **document order**, so reversing a unit page's heading list changes the landing of **160 of 523 questions (30.6%)** across all five subjects — 16 of 51 in Unit 1 alone, reproduced in the shipped `unit-discovery.js`, not just the audit script. Reversing is not a fix: the two orders are right on 5+3 vs 6 of the 16. Both defects are invisible to the pass/fail triple and were missed in Phase 12. **Recommendation:** scoped fix now (13.6 topic map, which bypasses the scorer), real fix as a dedicated Phase 17 across all five maps — including a regression test that asserts landings are invariant under heading reorder. **This also means Phase 12's `103/2/0` result is weaker evidence than it was reported as.** Owner's call on whether Phase 17 is authorised before Phases 14–16.
 - **Standing caveats:** Physical-device check stays owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`.
 

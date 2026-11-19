@@ -64,27 +64,29 @@
 ---
 
 ## Part 13.4 — Unit 4: Files & Regular Expressions (`49m / 12.7%`, 6h, PDF p. 6)
-- **Target file:** `subjects/CST203/units/unit-4.html` (`4,805w → ~4,800–5,300w`) · Blueprint: [`unit-4/README.md`](unit-4/README.md)
+- **Target file:** `subjects/CST203/units/unit-4.html` (`4,937w → 6,748w` (shipped)) · Blueprint: [`unit-4/README.md`](unit-4/README.md)
 - **Implementation checklist:**
-  - [ ] Build **Tier A + Tier B + Tier S `#fileio` (`20m` + `14m = 34m`, ~60% prose)**: complete access-modes table (`r, w, a, x, r+, w+, a+, t, b`), `open`/`close`/`with` context manager + `.name`/`.mode`/`.closed`, side-by-side `read`/`readline`/`readlines` and `write`/`writelines` demos, `file.txt` word-count script, and compact ~180w **Tier S** `tell()`/`seek()` + `os.rename()`/`os.remove()`.
-  - [ ] Build **Tier B + Tier S `#regex` (`11m`, ~28% prose)**: pattern matching + raw strings `r"..."`, metacharacter/quantifier table, `re.match` vs `re.search`, `re.findall`, `re.split`, `Match.group/start/end/span`, and compact ~120w **Tier S** `re.sub()` + flags (`IGNORECASE`, `MULTILINE`, `DOTALL`).
-  - [ ] Keep **Tier C + Tier S `#inputoutput` (`4m`, ~12% prose)** concise: `input()` returning `str` + type casts, `print(..., sep, end)`, and 3-line Python 2 `raw_input()` historical note.
-  - [ ] Calibrate practice (`8` MCQs, `4` short, `4` worked 8m), add `4` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Areas 6–7), and insert `3` live-verified plain-`<a>` YouTube links.
+  - [x] Build **Tier A + Tier B + Tier S `#fileio` (`20m` + `14m = 34m`, ~60% prose)**: complete access-modes table (`r, w, a, x, r+, w+, a+, t, b`), `open`/`close`/`with` context manager + `.name`/`.mode`/`.closed`, side-by-side `read`/`readline`/`readlines` and `write`/`writelines` demos, `file.txt` word-count script, and compact ~180w **Tier S** `tell()`/`seek()` + `os.rename()`/`os.remove()`.
+  - [x] Build **Tier B + Tier S `#regex` (`11m`, ~28% prose)**: pattern matching + raw strings `r"..."`, metacharacter/quantifier table, `re.match` vs `re.search`, `re.findall`, `re.split`, `Match.group/start/end/span`, and compact ~120w **Tier S** `re.sub()` + flags (`IGNORECASE`, `MULTILINE`, `DOTALL`).
+  - [x] Keep **Tier C + Tier S `#inputoutput` (`4m`, ~12% prose)** concise: `input()` returning `str` + type casts, `print(..., sep, end)`, and 3-line Python 2 `raw_input()` historical note.
+  - [x] Calibrate practice (`8` MCQs, `4` short, `4` worked 8m), add `4` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Areas 6–7), and insert `3` live-verified plain-`<a>` YouTube links.
 - **Acceptance & evidence:**
-  - [ ] Locked `#fileio`, `#regex` & all `12` `<section id>`s preserved; file & regex scripts tested under `python3` in `/tmp`; 3 URLs logged in `record.md`.
+  - [x] Locked `#fileio`, `#regex` & all `12` `<section id>`s preserved; file & regex scripts tested under `python3` in `/tmp`; 3 URLs logged in `record.md`.
+  - **Done 2026-11-19 — deviations noted:** `4` anchors planned, **6** shipped. `#fileio` 599w &rarr; **1,423w** and `#regex` 659w &rarr; **962w**, which fixes the blueprint's headline defect (the 34m section was shorter than the 11m one). Two hand-written transcripts were caught being wrong by execution and replaced with captured output (`input()` prompts run together on one line; the access-modes demo reused a truncated file). `#comparisons` `<h4>` &rarr; `<h3>` fixed an accessibility heading-order jump the gate caught. Videos planned `3`, shipped `3`.
 
 ---
 
 ## Part 13.5 — Unit 5: Framework (`30m / 7.8%`, 6h, PDF p. 6 — Right-Sizing Pass)
 - **Target file:** `subjects/CST203/units/unit-5.html` (`5,657w → ~3,800–4,300w`) · Blueprint: [`unit-5/README.md`](unit-5/README.md)
 - **Implementation checklist:**
-  - [ ] Sharpen **Tier A `#mvc` (~32% prose)**: MVC concepts + inline SVG request cycle + MVC vs Django MVT (MTV) mapping table (`Model ↔ models.py`, `View ↔ template`, `Controller ↔ views.py + urls.py`).
-  - [ ] Sharpen **Tier A + Tier C + Tier E `#django-intro` (~32% prose)**: what Django is & 6 batteries-included advantages, numbered 6-step create/run checklist (`venv → pip install django → startproject → migrate → startapp → runserver`), minimal project tree, Project vs App table, and badged ~110w **Tier E Django vs Flask** table.
-  - [ ] Keep **Tier C `#urls-templates` (~24% prose)** focused: minimal `urls.py` + `views.py` + DTL (`{{ var }}`, `{% for %}`, `{% if %}`, `{% extends %}`) + static files (`STATIC_URL`, `{% load static %}`, `{% static %}`).
-  - [ ] Condense **Tier S `#forms` (`0m`, `757w → ~250w`, ~12% prose)**: preserve `<section id="forms">`, keep one 8-line `forms.Form`, `is_valid()`/`cleaned_data`, and `{% csrf_token %}`.
-  - [ ] Calibrate practice (`6` MCQs, `4` short, `3` worked 8m), add `4` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Area 8), and insert `2` live-verified plain-`<a>` YouTube links.
+  - [x] Sharpen **Tier A `#mvc` (~32% prose)**: MVC concepts + inline SVG request cycle + MVC vs Django MVT (MTV) mapping table (`Model ↔ models.py`, `View ↔ template`, `Controller ↔ views.py + urls.py`).
+  - [x] Sharpen **Tier A + Tier C + Tier E `#django-intro` (~32% prose)**: what Django is & 6 batteries-included advantages, numbered 6-step create/run checklist (`venv → pip install django → startproject → migrate → startapp → runserver`), minimal project tree, Project vs App table, and badged ~110w **Tier E Django vs Flask** table.
+  - [x] Keep **Tier C `#urls-templates` (~24% prose)** focused: minimal `urls.py` + `views.py` + DTL (`{{ var }}`, `{% for %}`, `{% if %}`, `{% extends %}`) + static files (`STATIC_URL`, `{% load static %}`, `{% static %}`).
+  - [x] Condense **Tier S `#forms` (`0m`, `757w → ~250w`, ~12% prose)**: preserve `<section id="forms">`, keep one 8-line `forms.Form`, `is_valid()`/`cleaned_data`, and `{% csrf_token %}`.
+  - [x] Calibrate practice (`6` MCQs, `4` short, `3` worked 8m), add `4` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Area 8), and insert `2` live-verified plain-`<a>` YouTube links.
 - **Acceptance & evidence:**
-  - [ ] Locked `#mvc`, `#urls-templates` & all `13` `<section id>`s preserved; word count reduced into `~3,800–4,300w`; Python files pass `ast.parse`; 2 URLs logged in `record.md`.
+  - [x] Locked `#mvc`, `#urls-templates` & all `13` `<section id>`s preserved; Python files pass `ast.parse`; 3 URLs logged in `record.md`.
+  - **Done 2026-11-19 — deviation on the cut, by owner decision:** the plan was to cut Unit 5 to `~3,800–4,300w` because it was the longest Python page for the fewest marks. The owner then waived the word ceiling ("No problem over budget"), so the section was **rebalanced instead of shrunk**: `#forms` 757w &rarr; **334w** (0 marks) while `#mvc` 191w &rarr; **500w** and `#django-intro` 245w &rarr; **618w** (26 of 30 marks). Page total is 5,763w, essentially unchanged, with the weight moved to where the marks are. Anti-pattern called out in the blueprint is in the URL heading; `{% load static %}` and the `INSTALLED_APPS` registration are named explicitly. `5` anchors shipped vs `4` planned; `3` videos vs `2`. Django is absent from the build environment, so the lab commands are explicitly marked as not-output-captured rather than shown with invented output.
 
 ---
 

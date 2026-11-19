@@ -5,7 +5,8 @@
 > **2023–2026 Exam Weight (`P003–P006` only):** **`30 / 387` marks (`7.8%`, #5 in Python)** · avg **`7.5m/paper`** · **`4/4` papers** · **`6m` MCQ + `24m` 8m-subparts** (`P001-2022-06` excluded)  
 > **Locked `guides.json` anchors (must preserve):** `#mvc`, `#urls-templates`  
 > **Existing `<section id>`s to preserve (13):** `overview`, `mvc`, `django-intro`, `urls-templates`, `forms`, `formulas`, `definitions`, `comparisons`, `mcqs`, `short-questions`, `long-questions`, `practice`, `revision`  
-> **Existing `<h3 id>`s:** `0` (add `4` clean semantic `<h3 id>` anchors)
+> **Existing `<h3 id>`s at planning time:** `0`.
+> **Shipped 2026-11-19 (part 13.5) — `5`:** `#mvc-and-django-mvt-architecture`, `#why-django-and-project-setup`, `#django-urls-views-and-templates`, `#django-static-files`, `#django-forms-and-csrf`. Page shipped at `5,763w` — **rebalanced, not cut**, by owner decision that the word ceiling no longer applies: `#forms` 757w &rarr; 334w (0 marks) while `#mvc` 191w &rarr; 500w and `#django-intro` 245w &rarr; 618w (26 of 30 marks). Every `<section id>` preserved.
 
 ---
 
