@@ -102,8 +102,9 @@ Two pre-existing ratchets moved because content legitimately changed, and were r
 
 ## 6. Owner Verification & Open Caveats
 
-- **Owner decision (`rule.md` §4.7):** _Pending — awaiting owner review (`mark as pass` / `add for later`)._
-- **Branch state:** `arena/c5ca91cb-diploma-3rd-sem` is committed **locally only**. Until the owner authorizes a push, a Termux/phone clone cannot fetch this branch; the commands below work (a) in this checkout now, or (b) on the owner's device after an authorized push + `git pull` of the branch.
+- **Owner decision (`rule.md` §4.7):** ✅ **Pass** — the owner ran the Termux check below and reported "Test passed" on 2026-11-19, and authorized merging (PR #31). Acceptance carries the standing caveats in §5–§6: video playback/captions remain unverified, and the inherited Web CI browser-smoke red is unchanged.
+- **Branch state:** `arena/c5ca91cb-diploma-3rd-sem` was pushed to origin at owner direction (`5148564`, remote-verified) and opened as PR #31 for the authorized merge. The Termux commands below were the ones the owner tested with.
+- **Post-merge continuation:** Phase 17 — Topic-map cross-check (only if separately authorized). Phases 15/16 remain closed/accepted; nothing else is started by this merge.
 - **Exact owner-test URLs** (serve the repo's *parent* folder so the `/Diploma-3rd-sem/` prefix exists, exactly as on GitHub Pages):
   ```sh
   # Termux / desktop, from the folder CONTAINING the Diploma-3rd-sem checkout:
