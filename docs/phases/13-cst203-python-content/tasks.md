@@ -22,6 +22,19 @@
 
 
 > **Executed 2026-11-19.** Result and evidence in `record.md` §4.1. Two deltas from this checklist, both recorded there: **12** `<h3 id>` anchors shipped instead of 9 (`#intro` and `#operators` each needed two headings, and the locked-anchor count is unchanged); the word target is **missed** — 10,820w against 7,200–8,000w, because the practice bank's worked 8-mark answers cost ~263w each. The five concept sections are at 6,088w against a planned 5,870w. Videos: 5 verified instead of 4.
+### New work created by part 13.1's findings
+
+- [ ] **Phase 17 (proposed): cross-subject matcher.** Fix the two defects in
+      `scripts/audit_topic_routing.py` + `assets/js/unit-discovery.js`:
+      whole-word segment matching, and an order-independent tie-break. Requires
+      re-validating all five topic maps. 160/523 landings are order-dependent today.
+      `tests/test_routing_order.py` is the ratchet; delete its `ORDER_DEPENDENT`
+      table only when the real numbers reach 0. **Needs owner authorisation** —
+      do not start it inside Phase 13.
+- [x] **`tests/test_routing_order.py`** — 5 tests pinning the substring misfire,
+      the unsafe word-boundary variant, the order dependence and the fact that
+      reversing is not a fix. Added 2026-11-19; suite is now 141 tests.
+
 ## Part 13.2 — Unit 2: Control Statements (`64m / 16.5%`, 5h, PDF p. 5 — Under-Sized Fix)
 - **Target file:** `subjects/CST203/units/unit-2.html` (`2,912w → ~4,600–5,200w`) · Blueprint: [`unit-2/README.md`](unit-2/README.md)
 - **Implementation checklist:**

@@ -75,6 +75,7 @@ Corrected in place: `13/README.md` §1, `docs/phases/README.md` matrix row 13 (w
 - **Baseline (`f52d2f6`, superseded — see §3.1):** `42` same-unit (`40.4%`) · `7` redirect (`6.7%`) · **`55` unmatched (`52.9%`)** · `0` out-of-unit
 - **Baseline re-measured on `main` at `9b13f13` (§3.1):** `78` same-unit · `11` redirect · **`15` unmatched** 
 - **Post-13.1 (Unit 1 only):** `89` same-unit · `10` redirect · **`5` unmatched** · U1 named-heading landings **12 → 36** · all-104 named-heading landings **12 → 41** · coarse-section landings **61**
+- **But a named landing is not a correct landing (added after the audit below).** Judged question by question against the stems, Unit 1's 51 questions are **34 genuinely right on a named heading**, **1 right via a section id**, **3 on a named heading that does not answer the question** (`P003-Q29`, `P004-Q12`, `P004-Q17`), **11 on a coarse chapter title**, **2 unmatched**. The named-landing count `36` is therefore **3 too generous** as a proxy for "answered". See §4.1.3b.
 - **Post-Phase-13 result:** _TBD_ same-unit · _TBD_ accurate redirect · `0` unmatched (needs 13.2–13.6; the remaining 5 all live in Units 4–5, see §4.2)
 
 ---
@@ -115,7 +116,7 @@ Per `rule.md` §4 and the standing lesson, the mechanism was validated by **remo
 
 | | Routing triple | U1 questions reaching a named heading |
 | :--- | :--- | ---: |
-| Unit 1 as shipped (12 anchors) | 89 same-unit · 10 redirect · 5 unmatched | **36 / 51** |
+| Unit 1 as shipped (12 anchors) | 89 same-unit · 10 redirect · 5 unmatched | **36 / 51** named — but only **34** of those named landings actually answer the question (§4.1.3b) |
 | Unit 1 with `<h3 id>` deleted | 89 same-unit · 10 redirect · 5 unmatched | **0 / 51** |
 
 The triple is **byte-identical in both runs**. Only the granularity measure moves. That is direct proof that (a) the anchors are what improve routing quality rather than the word count, and (b) the pass/fail triple would have reported success either way. The file was restored from a copy afterwards and re-grepped to confirm 12 anchors.
@@ -145,16 +146,18 @@ wrong section, invisible in the counts.
 
 **Why it is not fixed here.** A word-boundary test (`\b`-anchored match) was
 prototyped and measured across all five subjects. Routing triples do not move
-anywhere, but **19 individual questions change landing**, and the change is not a
-clean win:
+anywhere, but **19 individual questions change landing** (3 in Python), and the change
+is not a clean win:
 
-- Clearly better: `P003-Q19`; `CST209-P005-Q22` (`#dag-topo` → `#shortest-path-…-floyd-warshall`).
+- Clearly better: `P003-Q19` (fixed — this is the one the map would otherwise pin); `CST209-P005-Q22` (`#dag-topo` → `#shortest-path-…-floyd-warshall`).
 - Clearly worse: `P003-Q27` and `P005-Q22` would move **out of** the string heading
   and into `#data-types-mutability-and-type-conversion`. Both are 8-mark composites
   whose marks sit mostly on strings (for `P003-Q27`: 3m `join`/`split` + 3m string
   immutability against 2m mutability classification), so the current landing is the
   correct one and the "fix" would break it.
-- Neutral anchor-name differences on the other 16.
+- Neutral heading differences on the other 16, all in the four subjects this phase does not own.
+
+(All three of these are pinned by `tests/test_routing_order.py`, so the claim cannot rot.)
 
 So the defect is real, affects one confirmed question in this subject, and the
 correct fix is **scoped, not global**: the explicit map in part 13.6 is consulted
@@ -162,6 +165,82 @@ before the matcher and can pin `Built-ins / all` without disturbing 18 other
 questions in subjects this phase does not own. The matcher change belongs in a
 dedicated cross-check phase (17) where all five maps can be re-validated together.
 **Flagged for the owner in §6.**
+
+### 4.1.3b The tie-break is document-order dependent — measured, not suspected
+
+`_pick()` in `scripts/audit_topic_routing.py` (and `entriesFor()` / `bestMatch()` in
+`assets/js/unit-discovery.js`) walks the heading list in document order and replaces
+the incumbent only when a candidate is **strictly** better:
+
+```python
+if _better(title, best[2] or '', needle):
+    best = (score_title(title, needle), anchor, title, home)
+```
+
+`_better()` compares `(segments_covered, score)`, and *coverage* is a function of the
+whole stored topic string, not of the heading being compared. So for any topic whose
+segments are spread across two different headings, every such heading scores the same
+coverage, and the winner is whichever one the author happened to write **first**.
+
+**Proof (this is the test that should have been run in Phase 12).** Landing must not
+depend on authoring order. Reversing each unit page's heading list and re-routing the
+same stored topics:
+
+| Subject | Questions whose landing changes when the page order is reversed |
+| :--- | ---: |
+| CST201 (C) | **36** |
+| CST203 (Python) | **29** |
+| CST205 | **35** |
+| CST207 | **10** |
+| CST209 | **50** |
+| **All five** | **160 of 523 (`30.6%`)** |
+
+Three Python examples, each landing on a heading that does **not** answer it:
+
+| Question | Stored topic | Lands on | Why it is wrong |
+| :--- | :--- | :--- | :--- |
+| `P004-Q12` (2m) | `Lists / literals` | `#string-slicing-indexing-and-methods` | *"create a list containing numbers from 1 to 5"* — `literals` only matches the **string**-literals heading, and that heading is written before the lists one |
+| `P004-Q17` (8m) | `Slicing / dictionaries` | `#string-slicing-indexing-and-methods` | the stem is **list** slicing + dictionaries. `Slicing` matches both the string and the list heading at 90; the string one comes first |
+| `P003-Q29` (8m) | `Dictionaries / sequences` | `#tuples-and-sequences` | a) dictionaries, b) tuple vs list — the dictionary half gets no coverage, `sequences` does, and documents order decides |
+
+`P004-Q12` moved from `#lists-…` to `#string-…` purely because reversing the page put
+the string heading later. Nothing about the question changed.
+
+**The same defect reproduced in the shipped browser code, not just in the audit
+script.** The pure scoring helpers (`scoreAgainst`, `segmentsCovered`, `better`,
+`scoreTitle`) were extracted out of `assets/js/unit-discovery.js` and re-run over the
+real Unit 1 heading list (38 headings) with the real stored topics — i.e. the same
+`for` loop the browser runs over `entriesFor()`, which returns `h2, h3, h4` in
+document order. **16 of 51 Unit-1 questions change landing when the page order is
+reversed.**
+
+**Reversing is not a fix — it is the other side of the same coin.** Each of the 16 was
+read against its stem: the forward order is right on **5** and arguably right on **3**,
+the reversed order is right on **6**, and **2** are unmatched either way. A coin flip
+that is 50/50 is not a tie-break. This is exactly why the fix cannot be "sort the
+headings differently".
+
+**Why this is the same failure as Phase 12, one level down.** Phase 12 replaced a
+fuzzy scorer with a coverage-first tie-break and reported `103/2/0`. Coverage-first was
+the right *idea* and it did fix the `#overview-recursion` collapse it was written for,
+but it introduced a silent dependency on document order that the pass/fail counts
+cannot see — the same blind spot the phase set out to remove. The lesson from §6.1
+applies to the fix as much as to the original bug: **a rule that cannot be falsified by
+the numbers being reported is not verified.**
+
+**Why it is not fixed in part 13.1.** A correct tie-break needs a real priority, not
+document order — e.g. prefer the candidate that covers the *most* segments, then the
+candidate whose *matched* segments carry more of the topic's own weight, then fall back
+to position only as an explicit last resort. That is a scoring change, it moves
+questions in all five subjects (160 at minimum), and it must be validated against all
+five maps, not just Python's. It is filed for **Phase 17 (cross-subject matcher)**;
+part 13.6's explicit topic map is the correct scoped mitigation in the meantime,
+because a map entry bypasses the scorer entirely.
+
+**This means the Phase 12 routing result (`103/2/0`) is weaker evidence than it was
+presented as**, and the owner should be told that plainly. The counts are reproducible;
+they are just not order-independent, and roughly a third of the corpus is sitting on a
+coin-flip the counts cannot show.
 
 ### 4.1.4 Code verification
 
@@ -241,10 +320,8 @@ The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` a
 - **Owner decision (`rule.md` §4.7):** _Pending execution (`mark as pass` / `add for later`)._
 - **Two decisions waiting for the owner after part 13.1:**
   1. **Word budget (§4.1.6).** Unit 1 ships at 10,837w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
-  2. **Matcher substring defect (§4.1.3a).** `Built-ins / all` resolves to the collections section because `all` occurs inside `shallow`. A global word-boundary fix moves 19 questions across all five subjects and regresses two of them; the scoped fix is the 13.6 topic map. Recommend: map entry for CST203, matcher fix deferred to Phase 17 where all five maps can be re-validated. **Owner's call.**
+  2. **The matcher itself is not trustworthy — this is now the biggest open item (§4.1.3a, §4.1.3b).** Two independent defects: (i) `score_against()` does a bare substring test, so `Built-ins / all` lands on the collections section because `all` occurs inside **shallow**; (ii) the tie-break between two equally-relevant headings depends on **document order**, so reversing a unit page's heading list changes the landing of **160 of 523 questions (30.6%)** across all five subjects — 16 of 51 in Unit 1 alone, reproduced in the shipped `unit-discovery.js`, not just the audit script. Reversing is not a fix: the two orders are right on 5+3 vs 6 of the 16. Both defects are invisible to the pass/fail triple and were missed in Phase 12. **Recommendation:** scoped fix now (13.6 topic map, which bypasses the scorer), real fix as a dedicated Phase 17 across all five maps — including a regression test that asserts landings are invariant under heading reorder. **This also means Phase 12's `103/2/0` result is weaker evidence than it was reported as.** Owner's call on whether Phase 17 is authorised before Phases 14–16.
 - **Standing caveats:** Physical-device check stays owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`.
-
----
 
 ---
 
@@ -255,4 +332,6 @@ The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` a
 3. **Word counts from different eras are not comparable.** The blueprint's `5,304w` and `23,018w` came from a recipe that is not in the repo; the page measures 5,438w on the calibrated metric used here. Every number in this record uses one recipe, and the recipe is stated in §2. Anyone comparing against an older figure is comparing two instruments.
 4. **A "0 syntax errors" check is not a correctness check.** Three snippets carried dead code after a deliberate exception. Compare printed output against the prose, not just `compile()`.
 5. **Read individual landings; a count cannot tell you a landing is wrong.** The triple read `89/10/5` and the granularity split read `41 named`, and one of those 41 named landings was sending a question about `print(all([...]))` to the collections section because the topic word `all` occurs inside `shallow`. Every aggregate was green. Spot-check a sample of real questions against their stems every part.
-6. **Verify a proposed fix before believing it.** The word-boundary prototype looked obviously correct and would have silently broken two 8-mark questions whose marks favour strings over mutability. Measure the fix on the actual corpus, in both directions, before it ships.
+6. **Test whether a result survives a change that should not matter.** Reversing a page's heading order is not a content change, so it must not change a single landing. It changes **160 of 523 (30.6%)**. That single test found a matcher defect that a `103/2/0` pass/fail triple, a `41 named` granularity count and a hand audit of 51 questions had all reported as fine. Before reporting any matcher number, run the invariance test (`tests/test_routing_order.py::test_order_dependence_is_measured_and_ratcheted`).
+7. **Verify a proposed fix before believing it.** The word-boundary prototype looked obviously correct and would have silently broken two 8-mark questions whose marks favour strings over mutability. Measure the fix on the actual corpus, in both directions, before it ships.
+8. **A test that asserts today's numbers is a ratchet, not a proof.** The new `tests/test_routing_order.py` pins 160 / 36 / 29 / 35 / 10 / 50 so the defect cannot drift silently; it does not make the behaviour correct. Say so when reporting a green suite.
