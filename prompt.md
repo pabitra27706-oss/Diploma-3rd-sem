@@ -130,7 +130,17 @@ per-phase remainder table and the source/rights gates.
   specific authored heading. The deferred decision is **C2**
   (`subparts[].unit`): the blueprint's mark split is per subpart while `_data`
   stores one `unit` per question, so no whole-question re-tag can reproduce it.
-  Gates: **130/130** Python, **14/14** Node, `check_site`/`check_tokens`/
+  **Topic map (added after the routing audit):** a scorer was the wrong tool —
+  **35% of the 924 questions have no topic at all** (`"Short answer"` ×207) and the
+  remaining 484 distinct topic strings average 1.06 uses each. `assets/data/topic-map-CST201.json`
+  now maps all **82** distinct topics in the window and is consulted **before** the
+  matcher (which stays as fallback). Generic `overview-*` landings fell
+  **35/105 → 3/105**. Runtime rules, each pinned in `tests/discovery-dom.cjs`: verify
+  the anchor before trusting it, allow cross-unit corrections, fall through on a
+  stale anchor, tolerate a missing map file. Phases 13–16 each author their own map
+  per [`docs/phases/topic-map-standard.md`](docs/phases/topic-map-standard.md);
+  **Phase 17** re-audits all five and fixes rot in place.
+  Gates: **136/136** Python, **8/8** discovery-dom, `check_site`/`check_tokens`/
   `check_pyq_integrity`/`validate_syllabus`/`validate_pyq`/`check_platform`
   all `0`, canonical rebuild run in the documented order. Details and every
   caveat: `docs/phases/12-cst201-c-content/record.md` §4–§6.

@@ -261,7 +261,28 @@ ledger"* — the first time in Phase 12.
 
 ---
 
-## 4. Verification at `99942c0`
+## 3.8 Topic map — explicit routing (added after this report was first written)
+
+`assets/data/topic-map-CST201.json`: 82 distinct topics → `(unit, anchor)`, consulted
+by `focusQuestionTopic()` before the matcher. Generic `overview-*` landings
+**35/105 → 3/105**; 59 questions gained a more specific section.
+
+Why a map rather than a better scorer: **35% of the 924 questions have no topic**
+(`"Short answer"` ×207, `"Group A / objective"` ×69, `"Group C / long answer"` ×45)
+and the remaining 484 distinct strings average **1.06 uses each**.
+
+Two entries resolved on evidence, both reversing the initial call:
+`type qualifiers` → U1 `#typecasting` (`const` is a Unit-1 constant; U4's
+"Qualifiers" heading has no matching body) and
+`comments / conditionals / modular programming` → U4
+`#modular-programming-and-functions` (the 2+3+3 mark split favours modular
+programming over comments). Both decisions are stored inside the map file.
+
+Harness gaps this exposed, both pre-existing and both previously blocking real
+assertions: `tests/lib/minidom.cjs` had no `hasAttribute()` and no `document.head`,
+so the highlight path had **never** been exercised by a DOM test.
+
+## 4. Verification at the branch tip
 
 | Gate | Result |
 | :--- | :--- |

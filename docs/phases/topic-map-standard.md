@@ -65,9 +65,13 @@ JSON all fall back to the matcher silently.
 1. **Map every question in the calibrated window** (`P00[3-6]`), not just the
    distinct topics you find interesting. Zero unmapped is an acceptance criterion.
 2. **Read the question stem before mapping an ambiguous topic.** Multi-part topics
-   are the trap. Use the Phase 12 rule: *take the most specific sub-topic; generic
-   words like "Functions" or "Operators" carry no routing information; if all are
-   equally specific, take the first.*
+   are the trap. Two rules, in order:
+   - *Single-part or equally-weighted:* take the most specific sub-topic; generic
+     words like "Functions" or "Operators" carry no routing information.
+   - *Multi-part with unequal marks:* **the marks decide**. Phase 12 initially used
+     "most specific" and got `comments / conditionals / modular programming` wrong —
+     it picked "comments" when the 8-mark question was weighted 2+3+3 toward
+     modular programming. Read `subparts[].marks` before deciding.
 3. **Prefer a named section over an `overview-*` card.** The cards are unit
    introductions; they answer nothing specific.
 4. **Never map to a paper-section anchor** (`mcqs`, `short-questions`, `practice`,

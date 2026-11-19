@@ -113,6 +113,57 @@
 
 ---
 
+### 4.4 Topic map — explicit routing (added after the routing audit)
+
+The matcher was improved three times in this phase and still sent **35 of 105**
+questions to a generic `overview-*` card. Audit of the corpus explains why a scorer
+was the wrong tool:
+
+- **35% of all 924 questions have no topic at all** — `"Short answer"` appears
+  **207** times, `"Group A / objective"` 69, `"Group C / long answer"` 45. Nothing
+  to score.
+- Of what remains, **484 distinct topic strings average 1.06 uses each**. You cannot
+  tune a scorer to be right on ~500 things used once each; that is a lookup table.
+
+**Delivered:** `assets/data/topic-map-CST201.json` — all **82** distinct topics in
+the `P00[3-6]` window mapped to `(unit, anchor)`, consulted **before** the matcher
+by `focusQuestionTopic()`. The matcher is retained as the fallback.
+
+| | Matcher only | Map first |
+| :--- | ---: | ---: |
+| Generic `overview-*` / `intro` landings | 35 / 105 | **3 / 105** |
+| Questions with a more specific section | — | 59 / 105 |
+
+Runtime safety rules (each is a test in `tests/discovery-dom.cjs`): map names the
+current unit → verify anchor then jump; map names another unit → fetch, verify,
+redirect; **stale anchor falls through to the matcher rather than stranding**;
+missing/503/malformed map falls back silently. `sw.js` needed no change —
+`assets/data/` already routes through the data-versioned cache.
+
+**Location matters:** the map lives in `assets/data/`, **not** `_data/<subject>/`.
+`scripts/data_pipeline.py` globs `_data/*/*.json` as PYQ papers, so a subfolder
+there made every paper parse as malformed (19 test errors — caught by the suite).
+
+#### Two entries the owner delegated, resolved on evidence
+
+1. **`type qualifiers` → U1 `#typecasting`** (was U4 `#storage-classes-in-c`). The
+   question asks which keyword makes a variable unchangeable — answer `const`, a
+   *constant* in syllabus Unit 1, taught there (15 mentions). Unit 4's heading says
+   "Qualifiers" but its body is a storage-class table (auto/register/static/extern)
+   with **no** `const` or `volatile` teaching: a heading-level match with no body.
+2. **`comments / conditionals / modular programming` → U4
+   `#modular-programming-and-functions`** (was U1 `#headers-and-library-files`). The
+   8-mark question splits 2+3+3: comments (2), if-else (3), modular programming (3).
+   Modular programming is the only sub-topic with a dedicated section and carries
+   the equal-largest share of marks.
+
+**Rule amended by (2):** the earlier "take the most specific sub-topic" rule was too
+crude — it picked "comments" without looking at marks. For multi-part questions,
+sub-topic **marks** decide. Both decisions are stored in the map file itself under
+`decisions`, so they travel with the data.
+
+---
+
 ## 5. Quality-Gate & Rebuild Evidence (fill at execution)
 
 | Check / Command | Expected | Result |
@@ -184,6 +235,6 @@
   - **12.1 (Unit 1):** accepted.
   - **12.3 (Unit 3):** accepted.
   - **12.5 (Unit 5):** **passed by the owner on 2026-11-18** after a Termux local-browser check of the branch — the `−17.2%` right-sizing was accepted **without** requiring the full `26–34%` cut, so `5,572w` stands as the final Unit 5 figure. The `P005-Q11` anchor fix and the two inline SVGs were confirmed rendering.
-  - **12.6 (the phase gate):** **submitted for sign-off 2026-11-18.** Two decisions were taken with owner authorisation rather than on my own judgement: (a) **Mode B** was used, overriding the brief's "Mode A" wording, because the residual misses were wrong data; (b) the **C1-vs-C2** choice was explicitly delegated ("do what will be best") and C1 was chosen with C2 recorded as scoped follow-up. Both are disclosed above rather than presented as the original plan.
+  - **12.6 (the phase gate):** **submitted for sign-off 2026-11-18.** Scope grew once more after the routing audit: an **explicit topic map** (`assets/data/topic-map-CST201.json`) now runs before the matcher, because 35% of questions have no topic and the rest average 1.06 uses per string (§4.4). The owner delegated the two uncertain entries and both were resolved on evidence, not preference. Two decisions were taken with owner authorisation rather than on my own judgement: (a) **Mode B** was used, overriding the brief's "Mode A" wording, because the residual misses were wrong data; (b) the **C1-vs-C2** choice was explicitly delegated ("do what will be best") and C1 was chosen with C2 recorded as scoped follow-up. Both are disclosed above rather than presented as the original plan.
   - **Phase 12 as a whole:** _awaiting the 12.6 verdict_ — every gate above is green, and the only remaining work is owner-side device verification.
 - **Standing caveats:** Real-device browser check remains owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md` (`0/924` certified — a scan check is not a certification). The legacy U3↔U4 tag order in `_data/CST201/` and `_quiz-data/CST201/` is **no longer open**: Mode B was authorised and both were corrected on 2026-11-18 (§4.1, §4.2). What remains open in `docs/data/validation-exceptions.json` is the pre-existing out-of-syllabus unit-5 content for `CST205` and `CST209`, untouched by this phase.
