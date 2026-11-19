@@ -9,7 +9,6 @@
 
 var APP_CONFIG = {
   version: '1.0.0',
-  examDate: new Date(2026, 12, 15),
   toastDuration: 3500,
   skeletonDelay: 600
 };
@@ -1014,6 +1013,9 @@ function initApp() {
   refreshRoadmap();
   RoadmapProgress.onChange(refreshRoadmap);
   document.addEventListener('visibilitychange', refreshHomeClock);
+  window.addEventListener('storage', function(event) {
+    if (event.key === 'd3s:prefs' || event.key === null) refreshHomeClock();
+  });
   window.addEventListener('focus', refreshHomeClock);
   window.addEventListener('pageshow', function(event) {
     if (event.persisted) refreshHomeClock();
@@ -1106,33 +1108,39 @@ function calculateExamCountdown(now) {
   var examCountdown = document.getElementById('examCountdown');
   if (!examCountdown) return;
 
-  var today    = new Date(now);
-  var examDate = new Date(APP_CONFIG.examDate);
-  today.setHours(0, 0, 0, 0);
-  examDate.setHours(0, 0, 0, 0);
+  var examDay;
+  try { examDay = StudyStorage.examDay(StudyStorage.prefs().examDate); } catch (_) {}
+  if (!Number.isFinite(examDay)) {
+    examCountdown.textContent = 'Set exam date';
+    examCountdown.parentElement.style.background = '';
+    return;
+  }
 
-  var diffDays = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+  // Compare calendar days, not elapsed hours (which can vary at DST changes).
+  var today = new Date(0);
+  today.setUTCFullYear(now.getFullYear(), now.getMonth(), now.getDate());
+  var diffDays = (examDay - today.getTime()) / 86400000;
 
   if (diffDays > 30) {
     examCountdown.innerHTML =
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#calendar"></use></svg> ' +
       diffDays + 'd to exams';
-    examCountdown.style.background = '';
+    examCountdown.parentElement.style.background = '';
   } else if (diffDays > 0) {
     examCountdown.innerHTML =
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#clock"></use></svg> ' +
       diffDays + 'd left!';
-    examCountdown.style.background = 'linear-gradient(135deg, var(--c-red-500), var(--c-red-600))';
+    examCountdown.parentElement.style.background = 'linear-gradient(135deg, var(--c-red-500), var(--c-red-600))';
   } else if (diffDays === 0) {
     examCountdown.innerHTML =
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#target"></use></svg> ' +
       'Exam today!';
-    examCountdown.style.background = 'linear-gradient(135deg, var(--c-red-500), var(--c-red-600))';
+    examCountdown.parentElement.style.background = 'linear-gradient(135deg, var(--c-red-500), var(--c-red-600))';
   } else {
     examCountdown.innerHTML =
       '<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#check"></use></svg> ' +
       'Exams done!';
-    examCountdown.style.background = 'linear-gradient(135deg, var(--c-emerald-500), var(--c-emerald-600))';
+    examCountdown.parentElement.style.background = 'linear-gradient(135deg, var(--c-emerald-500), var(--c-emerald-600))';
   }
 }
 

@@ -99,11 +99,18 @@
    if(value.config!==undefined)requireValue(plain(value.config),'attempt configuration must be an object');
    if(value.flags!==undefined)requireValue(plain(value.flags)&&Object.values(value.flags).every(v=>typeof v==='boolean'),'marked flags must be booleans');
  }
+ // Treat a calendar date as UTC midnight for validation and day arithmetic.
+ function examDay(value){
+   if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||value.startsWith('0000-'))return NaN;
+   const day=Date.parse(value+'T00:00:00Z');
+   return Number.isFinite(day)&&new Date(day).toISOString().slice(0,10)===value?day:NaN;
+ }
  function validateRecord(key,value){
    validateTree(value);const name=key.slice(PREFIX.length);
    if(name==='schema'){requireValue(plain(value)&&value.version===1&&value.migratedTo===PREFIX,'unsupported storage schema');}
    else if(name==='prefs'){
      requireValue(plain(value),'preferences must be an object');
+     requireValue(value.examDate===undefined||value.examDate===''||Number.isFinite(examDay(value.examDate)),'Choose a valid exam date.');
      const choices={theme:['system','light','dark'],fontScale:[90,100,115,130],lineHeight:['normal','relaxed'],contrast:['normal','high'],lang:['en','bn'],reduceMotion:['system','reduced']};
      for(const [field,allowed]of Object.entries(choices))requireValue(allowed.includes(value[field]),'unknown preference '+field);
    }else if(name==='quiz-history'){
@@ -286,7 +293,7 @@
  }
  globalThis.addEventListener?.('load',bootMirror,{once:true});
  const legacy=new Proxy({getItem:getRaw,setItem:setRaw,removeItem:removeRaw,clear:()=>clearGroup('everything'),key:i=>keys()[i]??null}, {get:(target,key)=>key==='length'?keys().length:target[key],ownKeys:()=>keys(),getOwnPropertyDescriptor:()=>({enumerable:true,configurable:true})});
- globalThis.StudyStorage={get,set,remove:removeRaw,keys,clearAll:()=>clearGroup('everything'),clearGroup,estimate,migrate,prefs,theme,setTheme,appVersion,idbStatus,hydrate,clearMirror,setPrefs:value=>{assertReady();const next={...prefs(),...value};validateRecord(PREFS,next);rawSet(PREFS,JSON.stringify(next));applyPreferences();globalThis.dispatchEvent?.(new CustomEvent('study-preferences-change'));},backup,validate,restore,recover,sessionOnce,legacy};
+ globalThis.StudyStorage={get,set,remove:removeRaw,keys,clearAll:()=>clearGroup('everything'),clearGroup,estimate,migrate,prefs,examDay,theme,setTheme,appVersion,idbStatus,hydrate,clearMirror,setPrefs:value=>{assertReady();const next={...prefs(),...value};validateRecord(PREFS,next);rawSet(PREFS,JSON.stringify(next));applyPreferences();globalThis.dispatchEvent?.(new CustomEvent('study-preferences-change'));},backup,validate,restore,recover,sessionOnce,legacy};
  function applyPreferences(){const p=prefs(),root=globalThis.document?.documentElement;if(root){root.style.fontSize=p.fontScale+'%';root.style.setProperty('--reading-line-height',p.lineHeight==='relaxed'?'1.9':'1.6');root.dataset.contrast=p.contrast;root.dataset.motion=p.reduceMotion;root.dataset.language=p.lang;}const theme=p.theme==='system'?(globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light'):p.theme;globalThis.document?.documentElement.setAttribute('data-theme',theme);}
  try{recover();adoptLegacyTheme();applyPreferences();globalThis.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(prefs().theme==='system')applyPreferences();});}catch{ /* preference read failure must not blank the page */ }
 })();

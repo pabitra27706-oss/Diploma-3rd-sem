@@ -261,3 +261,7 @@ Read [rule.md](rule.md), [prompt.md](prompt.md),
 is implementation phases 1–9 first, then
 [Phase 10 cross-device acceptance](docs/phases/10-device-acceptance/README.md).
 Focused safety/regression checks continue during implementation.
+
+## Recent changes handoff
+
+See [Recent branch handoff](docs/RECENT-BRANCH-HANDOFF.md) for the YouTube lesson review and user-selectable exam countdown.
