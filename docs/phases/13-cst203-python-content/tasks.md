@@ -9,17 +9,19 @@
 ## Part 13.1 — Unit 1: Introduction (`152m / 39.3%`, 7h, PDF p. 5 — #1 Unit in Repo)
 - **Target file:** `subjects/CST203/units/unit-1.html` (`5,304w → ~7,200–8,000w`) · Blueprint: [`unit-1/README.md`](unit-1/README.md)
 - **Implementation checklist:**
-  - [ ] Expand **Tier A `#collections` (`54m` + `2m` Tier E `set`, ~36% prose)**: lists (indexing vs slicing `[start:stop:step]`, negative steps, `append`/`extend`/`insert`/`remove`/`pop`/`sort`/`reverse`, built-ins, aliasing vs shallow vs `deepcopy` SVG, loop-mutation trap), tuples (`(42,)`, packing/unpacking, immutability), dictionaries (hashable-key rule, `get`/`keys`/`values`/`items`/`update`/`pop`/`clear`), master 3-way List vs Tuple vs Dict table, and badged ~100w **Tier E `set` & `|` union box**.
-  - [ ] Expand **Tier A `#strings` (`25m`, ~18% prose)**: quotes/raw strings, slicing, immutability proof & diagram, `split`/`join`/`strip`/`lower`/`upper`/`replace`/`find`/`count`, all 3 formatting styles (`%`, `.format()`, f-strings), and palindrome program.
-  - [ ] Expand **Tier A `#operators` (`23m`, ~16% prose)**: all 7 operator groups, `-7 // 2 == -4`, right-associative `**`, `and`/`or`/`not`, `is` vs `==`, `in`, full bitwise output trace on `a, b = 5, 3` (`& | ^ ~ << >>`), and precedence table.
-  - [ ] Expand **Tier A + Tier C `#variables` (`21m` + `4m`, ~16% prose)**: built-in types, Mutable vs Immutable table with `id()`, implicit coercion vs explicit conversions, and `datetime.now()` / `strftime()`.
-  - [ ] Build **Tier A + Tier S `#intro` (`23m`, ~14% prose)**: history, features, `.py` CLI run, indentation rules & `IndentationError`, `#` comments vs `__doc__` docstrings, identifiers/keywords (`True`/`False`/`None`), `all()`/`any()`, and compact ~120w **Tier S** installation/`PATH`/traceback note.
-  - [ ] Calibrate practice (`14` MCQs, `6` short, `6` worked 8m), add `9` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Areas 1–3), and insert `4` live-verified plain-`<a>` YouTube links.
+  - [x] Expand **Tier A `#collections` (`54m` + `2m` Tier E `set`, ~36% prose)**: lists (indexing vs slicing `[start:stop:step]`, negative steps, `append`/`extend`/`insert`/`remove`/`pop`/`sort`/`reverse`, built-ins, aliasing vs shallow vs `deepcopy` SVG, loop-mutation trap), tuples (`(42,)`, packing/unpacking, immutability), dictionaries (hashable-key rule, `get`/`keys`/`values`/`items`/`update`/`pop`/`clear`), master 3-way List vs Tuple vs Dict table, and badged ~100w **Tier E `set` & `|` union box**.
+  - [x] Expand **Tier A `#strings` (`25m`, ~18% prose)**: quotes/raw strings, slicing, immutability proof & diagram, `split`/`join`/`strip`/`lower`/`upper`/`replace`/`find`/`count`, all 3 formatting styles (`%`, `.format()`, f-strings), and palindrome program.
+  - [x] Expand **Tier A `#operators` (`23m`, ~16% prose)**: all 7 operator groups, `-7 // 2 == -4`, right-associative `**`, `and`/`or`/`not`, `is` vs `==`, `in`, full bitwise output trace on `a, b = 5, 3` (`& | ^ ~ << >>`), and precedence table.
+  - [x] Expand **Tier A + Tier C `#variables` (`21m` + `4m`, ~16% prose)**: built-in types, Mutable vs Immutable table with `id()`, implicit coercion vs explicit conversions, and `datetime.now()` / `strftime()`.
+  - [x] Build **Tier A + Tier S `#intro` (`23m`, ~14% prose)**: history, features, `.py` CLI run, indentation rules & `IndentationError`, `#` comments vs `__doc__` docstrings, identifiers/keywords (`True`/`False`/`None`), `all()`/`any()`, and compact ~120w **Tier S** installation/`PATH`/traceback note.
+  - [x] Calibrate practice (`14` MCQs, `6` short, `6` worked 8m), add `9` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Areas 1–3), and insert `4` live-verified plain-`<a>` YouTube links.
 - **Acceptance & evidence:**
-  - [ ] Locked `#collections`, `#strings` & all `14` `<section id>`s preserved; every snippet runs cleanly in `python3`; 4 verified URLs logged in `record.md`.
+  - [x] Locked `#collections`, `#strings` & all `14` `<section id>`s preserved; every snippet runs cleanly in `python3`; 4 verified URLs logged in `record.md`.
 
 ---
 
+
+> **Executed 2026-11-19.** Result and evidence in `record.md` §4.1. Two deltas from this checklist, both recorded there: **12** `<h3 id>` anchors shipped instead of 9 (`#intro` and `#operators` each needed two headings, and the locked-anchor count is unchanged); the word target is **missed** — 10,820w against 7,200–8,000w, because the practice bank's worked 8-mark answers cost ~263w each. The five concept sections are at 6,088w against a planned 5,870w. Videos: 5 verified instead of 4.
 ## Part 13.2 — Unit 2: Control Statements (`64m / 16.5%`, 5h, PDF p. 5 — Under-Sized Fix)
 - **Target file:** `subjects/CST203/units/unit-2.html` (`2,912w → ~4,600–5,200w`) · Blueprint: [`unit-2/README.md`](unit-2/README.md)
 - **Implementation checklist:**

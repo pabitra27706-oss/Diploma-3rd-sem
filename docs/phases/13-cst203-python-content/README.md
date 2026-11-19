@@ -11,7 +11,7 @@
 
 ## 1. Goal & 2023–2026 Exam-Weight Baseline
 
-Eliminate the site's upside-down Python word-count distribution (where `7.8%`-weight Django Unit 5 at `5,657w` is currently **longer** than `39.3%`-weight Unit 1 at `5,304w` and nearly **double** `16.5%`-weight Unit 2 at `2,912w`) and fix the repository's highest PYQ topic-link miss rate (**55 / 104 = 52.9% unmatched** caused by **0** authored `<h3 id>` headings across all five Python pages):
+Eliminate the site's upside-down Python word-count distribution (where `7.8%`-weight Django Unit 5 at `5,657w` is currently **longer** than `39.3%`-weight Unit 1 at `5,304w` and nearly **double** `16.5%`-weight Unit 2 at `2,912w`) and fix the repository's coarsest PYQ topic-link resolution (**0** authored `<h3 id>` headings across all five Python pages, so **61 of 104** questions can only land on a chapter title such as `#collections` and **15** match nothing at all):
 
 | Unit | Official Title (`syllabus.json`, pp. 5–7) | Hrs | Stored PYQ Tag (Q / m) | True 2023–2026 Weight | Share | Avg / Paper | MCQ + Long | Papers | Current Words → Target | Unit Blueprint |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
@@ -22,10 +22,11 @@ Eliminate the site's upside-down Python word-count distribution (where `7.8%`-we
 | **Unit 5** | Framework | 6h | 7 Q / 38m | **30m** | **7.8%** | 7.5m | 6m + 24m | 4/4 | 5,657w → ~3,800–4,300w | [`unit-5/README.md`](unit-5/README.md) |
 | **Total** | **5 Official Units** | **30h** | **104 Q / 387m** | **387m** | **100.0%** | **96.8m** | **115m + 272m** | **4/4** | **23,018w → ~26.2–29.2kw** | **5 unit folders** |
 
-*Baseline `focusQuestionTopic()` routing across all 104 `2023–2026` Python questions:*
-- **42 same-unit hits (`40.4%`)**
-- **7 cross-unit redirects (`6.7%`)** — including `P005-Q12` (`Built-in functions` → `U3#functions` instead of U1 basics)
-- **55 unmatched questions (`52.9%`)** — because all 5 Python unit pages currently have **zero** `<h3 id>` subheadings (`Tuples`, `Lists`, `Dictionaries`, `Slicing`, `Keywords`, `Conditionals`, `Pass statement`, `Django static files`, etc. never hit `>= 0.5`)
+*Baseline `focusQuestionTopic()` routing across all 104 `2023–2026` Python questions — **re-measured 2026-11-19**, see `record.md` §3.1:*
+- **78 same-unit hits (`75.0%`)**
+- **11 cross-unit redirects (`10.6%`)** — including `P005-Q12` (`Built-in functions` → `U3#functions` instead of U1 basics)
+- **15 unmatched questions (`14.4%`)** — because all 5 Python unit pages currently have **zero** `<h3 id>` subheadings (`Tuples`, `Lists`, `Dictionaries`, `Slicing`, `Keywords`, `Conditionals`, `Pass statement`, `Django static files`, etc. never hit `>= 0.5`)
+- **61 questions land on one of 14 coarse `<section id>` chapter titles**, 41 on a named heading and 2 on nothing. The pass/fail triple above hides this: `#collections` alone absorbs 15 questions covering 56 marks.
 
 ### Key 2023–2026 Calibration & Syllabus-Fidelity Findings
 1. **Unit 1 alone carries nearly 40% of every Python exam (`152m = 39.3%`, #1 unit in the entire repository):** Lists, tuples, dictionaries, slicing, and shallow/deep copy alone earn **`54m` (`14.0%`, 22 hits across `4/4` papers)**, followed by strings & immutability (`25m`), syntax/indentation/features/keywords/built-ins (`23m`), operators & precedence (`23m`, incl. `P006-Q20b` 6m bitwise output trace), and built-in data types/mutability/conversion (`21m`).

@@ -7,6 +7,14 @@
 > `tests/home-roadmap-browser.cjs` for the focused regression. This bug fix
 > does not change any phase acceptance or deployment status.
 
+> **Phase 13 handoff — 2026-11-19:** in progress on
+> `arena/c323dee5-diploma-3rd-sem`, cut from `main` at `9b13f13`. Part 13.1
+> (Unit 1) shipped; 13.2–13.6 outstanding. The Python routing baseline is
+> **not** `42 / 7 / 55` — it is `78 / 11 / 15`, and 61 of 104 questions can
+> only reach a coarse chapter title. Read
+> `docs/phases/13-cst203-python-content/record.md` §3.1 and §4.1 before
+> touching Unit 2. Nothing is PR'd, merged or deployed.
+
 > **Phase 11 handoff — 2026-11-18:** The owner closed Phases 1–10 with the
 > recorded skips in `docs/PROJECT-CLOSURE.md`, then approved **Phase 11 —
 > Subject-wise Suggestions** on `arena/b06d66f8-diploma-3rd-sem` (base
@@ -103,6 +111,41 @@ the same nine source-review findings remain open. Consult PR #7 for CI/merge
 result; do not treat earlier unpushed/blocked checkpoint notes as current state.
 
 ## Current implementation
+
+**Phase 13 — Scripting Languages (Python) is in progress on
+`arena/c323dee5-diploma-3rd-sem`, cut from `main` at `9b13f13`.** Part
+**13.1 (Unit 1)** shipped 2026-11-19; parts 13.2–13.6 are outstanding.
+
+- **Baseline correction, phase 13.** The blueprint's Python routing baseline
+  `42 / 7 / 55` is **stale** — it describes the matcher before Phase 12's
+  `_rank()` tie-break. Re-measured on `main`: **`78` same-unit / `11` redirect
+  / `15` unmatched**. The triple still hides the defect: **61 of 104** questions
+  could only land on a coarse `<section id>` chapter title (`#collections` alone
+  absorbed 15 questions / 56 marks) because all five Python unit pages shipped
+  **zero** `<h3 id>` anchors. See `docs/phases/13-cst203-python-content/record.md`
+  §3.1. `13/README.md` and the `docs/phases/README.md` matrix row were corrected
+  in place; the old figure survives only as dated history.
+- **13.1 delivered:** `subjects/CST203/units/unit-1.html` (152m / 39.3%, the
+  largest unit in the repository) went from 5,438w and 0 anchors to **10,820w
+  and 12 anchors**. Concept prose `#intro…#operators` is 6,088w, ordered by
+  marks (collections 1,625w / operators 1,393w / intro 1,164w / strings
+  1,052w / variables 854w). 2 inline SVGs, 5 comparison tables, practice bank
+  14 MCQ / 6 short / 6 worked 8m / 6 programs, and **5 verified YouTube links**
+  replacing 3 `search_query` placeholders. Routing: unmatched **15 → 5**, U1
+  named-heading landings **12 → 36**.
+- **Ablation proof (do this every part):** deleting the 12 anchors leaves the
+  routing triple **byte-identical** (89/10/5) while U1 named landings collapse
+  **36 → 0**. Counts alone would have reported success either way.
+- **Open gap, stated not hidden:** the page is **10,820w against a 7,200–8,000w
+  target**. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the
+  marks, so a weight-proportional U1 at the same total is 10,300–11,475w. The
+  overrun is the practice bank (3,721w; worked 8-mark answers average 263w).
+  The owner can demand the strict ceiling — the cut is 4 long answers and 2
+  MCQs, a 20-minute edit. Recorded in `record.md` §4.1.6 before it was asked for.
+- **Not done, not faked:** the 11 `tests/*-browser.cjs` suites need
+  `playwright-core` + Chromium and were not run (pre-existing sandbox limit).
+  `unitAnchored` moved `580 → 592`; 136/136 unit tests and 14/14 node suites pass.
+  No PR, no merge, no deploy.
 
 Phase 1 platform implementation is complete with deferred final hardware
 acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the complete

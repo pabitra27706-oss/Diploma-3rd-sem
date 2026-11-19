@@ -116,9 +116,12 @@ record links to it.
 | Phase | Subject (Syllabus Ref) | Companion Lab | Parts | 2023–26 Qs / Marks | Unit Weight Split (True Syllabus Order) | Baseline → Target Words | PYQ Route Baseline (Same / Redir / Miss) | YT Slots |
 | :---: | :--- | :--- | :---: | :---: | :--- | :---: | :---: | :---: |
 | [`12`](12-cst201-c-content/README.md) | C (`CST201` · 2cr, 30h, p. 3) | `CST211` (p. 14) | 6 | `105 Q / 395m` | U1 `86` · U2 `95` · U3 `66` · U4 `97` · U5 `51` | `30,979w → ~28.9–32.0kw` | `46 / 29 / 30` → **`103 / 2 / 0`** | `16` |
-| [`13`](13-cst203-python-content/README.md) | Python (`CST203` · 2cr, 30h, pp. 5–7) | `CST213` (pp. 16–18) | 6 | `104 Q / 387m` | U1 `152` · U2 `64` · U3 `92` · U4 `49` · U5 `30` | `23,018w → ~26.2–29.2kw` | `42 / 7 / 55` | `14` |
+| [`13`](13-cst203-python-content/README.md) | Python (`CST203` · 2cr, 30h, pp. 5–7) | `CST213` (pp. 16–18) | 6 | `104 Q / 387m` | U1 `152` · U2 `64` · U3 `92` · U4 `49` · U5 `30` | `23,018w → ~26.2–29.2kw` | `78 / 11 / 15` † | `14` |
 | [`14`](14-cst205-ds-content/README.md) | DS (`CST205` · 3cr, 45h, p. 7) | `CST215` (p. 19) | 5 | `106 Q / 403m` | U1 `40` · U2 `143` · U3 `75` · U4 `145` | `26,651w → ~25.4–28.1kw` | `40 / 55 / 11` | `13` |
 | [`15`](15-cst207-cso-content/README.md) | CSO (`CST207` · 4cr, 60h, p. 10) | _theory-only_ | 6 | `103 Q / 385m` | U1 `81` · U2 `112` · U3 `78` · U4 `4` · U5 `110` | `32,228w → ~30.6–33.9kw` | `17 / 35 / 50` (+1 fp) | `15` |
 | [`16`](16-cst209-algorithms-content/README.md) | Algorithms (`CST209` · 4cr, 60h, p. 12) | _theory-only_ | 6 | `105 Q / 395m` | U1 `89` · U2 `79` · U3 `92` · U4 `93` · CO5 U5 `42` | `29,724w → ~30.0–33.1kw` | `56 / 22 / 26` (+1 oou) | `15` |
-| **All** | **23 Official + 1 CO5 Supp.** | **3 Labs + `SI201`** | **29** | **`523 Q / 1,965m`** | **100% syllabus + badged Tier E items** | **`142,600w → ~141.1–156.3kw`** | **`201 / 148 / 172` (+2)** | **`73`** |
+
+† Re-measured 2026-11-19 during Phase 13.1. The earlier `42 / 7 / 55` figure describes the matcher **before** the Phase 12 tie-break rule in `scripts/audit_topic_routing.py`; it is retained here only as history. The current triple still hides the real defect, because 61 of those 104 questions resolve to a coarse `<section id>` chapter title rather than a concept heading — see `docs/phases/13-cst203-python-content/record.md` §3.1.
+
+| **All** | **23 Official + 1 CO5 Supp.** **3 Labs + `SI201`** | **29** | **`523 Q / 1,965m`** | **100% syllabus + badged Tier E items** | **`142,600w → ~141.1–156.3kw`** | **`201 / 148 / 172` (+2)** | **`73`** |
 
