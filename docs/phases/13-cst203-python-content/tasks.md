@@ -70,11 +70,16 @@
 
 ---
 
-## Part 13.6 — PYQ ↔ Unit Sync, Canonical Rebuild & Gate Verification
+## Part 13.6 — PYQ ↔ Unit Sync, Topic Map, Canonical Rebuild & Gate Verification
+
+> **Topic map required.** Follow [`docs/phases/topic-map-standard.md`](../topic-map-standard.md)
+> — the Phase 12 CST201 map is the worked example. Because this phase rewrites the
+> unit pages, author the map **last**, after the `<h3 id>` anchors exist.
 - **Target files:** `subjects/CST203/units/unit-{1..5}.html`, `docs/revision-sheets/CST203.json` (if needed), `tests/test_discovery.py`, generated search/presence/SW indices, `record.md`, `docs/ROADMAP.md`, `docs/STATUS.md`, `prompt.md`.
 - **Verification & rebuild checklist:**
   - [ ] Run `focusQuestionTopic()` simulation across all **104 `2023–2026` Python PYQs**: verify all `55` baseline unmatched items (`42 → ~96+` same-unit + clean redirects, `0` unmatched) resolve to exact authored headings with `0` `_data/CST203/*.json` edits.
   - [ ] Grep-check zero `CST203`/`CST213`/`P00\d`, zero `pandas`/`scipy`/`matplotlib` teaching prose, and zero `<iframe>`/`ytimg` references.
+  - [ ] Author `assets/data/topic-map-CST203.json` per the standard: every question in the `P00[3-6]` window mapped, zero raw paper-section anchors, every anchor verified present in its unit page, and `tests/test_topic_map.py` repointed at this subject passing. Record before/after generic-landing counts in `record.md` (baseline: 5 of 170 questions land on a generic card today).
   - [ ] Execute `README.md:187–215` canonical rebuild (`generate_presence.py` twice, `build_data_version.py` last), update `unitAnchored` in `tests/test_discovery.py:111`, and pass all 13 Python gates + `unittest` + `node tests/discovery-dom.cjs`.
   - [ ] Record evidence in `record.md`, update `docs/ROADMAP.md`, `docs/STATUS.md`, `prompt.md`, print **"What to test on the website"** + `rule.md` §7 Termux block, and wait for owner sign-off.
 - **Acceptance & evidence:**

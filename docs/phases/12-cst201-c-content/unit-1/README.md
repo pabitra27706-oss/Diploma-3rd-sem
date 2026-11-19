@@ -1,6 +1,6 @@
 # CST201 Unit 1 — Introduction to C
 
-> **Target file:** `subjects/CST201/units/unit-1.html` (current: `5,418w` → target: **`~5,800–6,400w`**)  
+> **Target file:** `subjects/CST201/units/unit-1.html` (shipped: **`6,389w`**, inside the `~5,800–6,400w` band — see `record.md` §6)  
 > **Syllabus (`syllabus.json`, PDF p. 3):** **5 contact hours** (of `30h`, `2` credits, L–T–P `2-0-0`)  
 > **2023–2026 Exam Weight (`P003–P006` only):** **`86 / 395` marks (`21.8%`, #3 in C — #1 in Group A MCQs at `62m`!)** · avg **`21.5m/paper`** · **`4/4` papers** · **`62m` MCQ + `24m` 8m-subparts** (`2021–2022` `P001`/`P002` excluded)  
 > **Locked `guides.json` anchors (must preserve):** `#operators`, `#typecasting`  
@@ -83,9 +83,9 @@
 ---
 
 ## 5. Programs, Diagrams & Comparison Tables Checklist
-- [ ] **Inline SVG:** 4-stage C compilation & linking pipeline (`hello.c → .i → .s → .o + libc → a.out`) using CSS theme tokens.
-- [ ] **Programs (`gcc -std=c99 -Wall -Wextra`):** annotated `Hello World`; ASCII code of input char (`P003-Q33a`); ternary max program (`P006-Q24a`); bitwise operators demo (`P006-Q16b`); precedence/comma/cast demo; `#define SQR` safe vs unsafe demo.
-- [ ] **Comparison tables:** Header (`.h`) vs Library file; `const` vs `#define`; `=` vs `==`; `++x` vs `x++`; Logical (`&&`,`||`) vs Bitwise (`&`,`|`); Formatted vs Unformatted I/O; 16-bit vs 32/64-bit type sizes.
+- [x] **Inline SVG:** 4-stage C compilation & linking pipeline (`hello.c → .i → .s → .o + libc → a.out`) using CSS theme tokens.
+- [x] **Programs (`gcc -std=c99 -Wall -Wextra`):** annotated `Hello World`; ASCII code of input char (`P003-Q33a`); ternary max program (`P006-Q24a`); bitwise operators demo (`P006-Q16b`); precedence/comma/cast demo; `#define SQR` safe vs unsafe demo.
+- [x] **Comparison tables:** Header (`.h`) vs Library file; `const` vs `#define`; `=` vs `==`; `++x` vs `x++`; Logical (`&&`,`||`) vs Bitwise (`&`,`|`); Formatted vs Unformatted I/O; 16-bit vs 32/64-bit type sizes.
 
 ---
 

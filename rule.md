@@ -6,10 +6,12 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
-> **Current session (2026-11-18):** `arena/eec36cd0-diploma-3rd-sem`, based on
-> `a2bb413` (the Phase 11 Suggestions merge). This maintenance branch fixes
-> manual roadmap progress, local greetings and the Study Hub icon. It does
-> not change earlier phase acceptance or authorize publication.
+> **Current session (2026-11-18):** `arena/08838a66-diploma-3rd-sem`, based on
+> `d9fe014` (the PR #26 merge). This branch carries **Phase 12 — Computer
+> Programming in C**: weight-calibrated rewrites of `CST201` units 1–5 plus
+> the PYQ↔unit sync gate. Parts 12.4, 12.2, 12.1, 12.3 and 12.5 are pushed;
+> part 12.6 (the phase gate) is outstanding. It does not change earlier phase
+> acceptance or authorize publication.
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and
@@ -39,8 +41,8 @@
 
 - Site: Diploma 3rd Semester — CST Study Hub
 - Repo: `pabitra27706-oss/Diploma-3rd-sem` · working branch:
-  `arena/eec36cd0-diploma-3rd-sem` (Home maintenance). `main` is the Pages source;
-  no merge or deploy without an explicit owner command.
+  `arena/08838a66-diploma-3rd-sem` (Phase 12, CST201 content). `main` is the
+  Pages source; no merge or deploy without an explicit owner command.
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
 - Stack: zero-build static HTML/CSS/JS, JSON data, service worker, no bundler
@@ -211,7 +213,7 @@ A **public launch** additionally needs every item in
   ```sh
   mkdir -p ~/study-hub-fixes-preview
   cd ~/study-hub-fixes-preview
-  git clone --single-branch --branch arena/eec36cd0-diploma-3rd-sem \
+  git clone --single-branch --branch arena/08838a66-diploma-3rd-sem \
     https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem
   python3 -m http.server 8010 --bind 127.0.0.1
   ```

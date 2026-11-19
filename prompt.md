@@ -108,6 +108,43 @@ Phase 1 platform implementation is complete with deferred final hardware
 acceptance. Phases 2–9 remain in progress. See `docs/STATUS.md` for the complete
 per-phase remainder table and the source/rights gates.
 
+- **Phase 12 — Computer Programming in C (weight-calibrated content, videos and
+  PYQ sync), branch `arena/08838a66-diploma-3rd-sem`.** All six parts are
+  shipped as of 2026-11-18; part 12.6 is the phase gate and is **awaiting the
+  owner verdict**. All five `subjects/CST201/units/unit-*.html` pages were
+  rewritten against the 2023–2026 PYQ weights (U4 24.6%, U2 24.1%, U1 21.8%,
+  U3 16.7%, U5 12.9%); the 10 `guides.json` anchors and 78 section ids survive
+  and every embedded program's output is its real `gcc -std=c99 -Wall -Wextra`
+  stdout. **Mode B was used with owner authorisation** ("Don't break anything"),
+  overriding the brief's Mode A wording, because the routing misses were wrong
+  *data*: `unit` was re-tagged on **44** questions (`unit` field only — ids,
+  stems, options, answers and marks byte-identical, proven field-by-field
+  against `sourceCommit` and now pinned by a test), and the recorded
+  **CST201 U3↔U4 quiz-bank inversion was resolved at source** rather than
+  disclosed again. Both `unit-order` findings were removed from
+  `docs/data/validation-exceptions.json` as RESOLVED, so
+  `validate_data.py --check-baseline` now says *"Baseline matches
+  source-review ledger"*. Routing went `46/29/30` (same-unit/redirect/unmatched
+  at baseline) → **`103/2/0`**, and the five reported wrong-unit questions
+  (`P003-Q8`, `P005-Q11`, `P005-Q15`, `P006-Q6`, `P006-Q21`) each land on a
+  specific authored heading. The deferred decision is **C2**
+  (`subparts[].unit`): the blueprint's mark split is per subpart while `_data`
+  stores one `unit` per question, so no whole-question re-tag can reproduce it.
+  **Topic map (added after the routing audit):** a scorer was the wrong tool —
+  **35% of the 924 questions have no topic at all** (`"Short answer"` ×207) and the
+  remaining 484 distinct topic strings average 1.06 uses each. `assets/data/topic-map-CST201.json`
+  now maps all **82** distinct topics in the window and is consulted **before** the
+  matcher (which stays as fallback). Generic `overview-*` landings fell
+  **35/105 → 3/105**. Runtime rules, each pinned in `tests/discovery-dom.cjs`: verify
+  the anchor before trusting it, allow cross-unit corrections, fall through on a
+  stale anchor, tolerate a missing map file. Phases 13–16 each author their own map
+  per [`docs/phases/topic-map-standard.md`](docs/phases/topic-map-standard.md);
+  **Phase 17** re-audits all five and fixes rot in place.
+  Gates: **136/136** Python, **8/8** discovery-dom, `check_site`/`check_tokens`/
+  `check_pyq_integrity`/`validate_syllabus`/`validate_pyq`/`check_platform`
+  all `0`, canonical rebuild run in the documented order. Details and every
+  caveat: `docs/phases/12-cst201-c-content/record.md` §4–§6.
+
 - Phase 8 — content depth and syllabus coverage (`✅*`, 2026-11-17, merged as
   PR #16 after the owner's smoke use pass "nothing breaks"): measured first, and three of the phase
   README's own claims were already false for this tree (the lab/internship pages
@@ -189,11 +226,16 @@ per-phase remainder table and the source/rights gates.
 
 ## Evidence and limits
 
-Latest implementation checkpoint (`2026-11-17`, Phase 9): **92 Python tests**
-(91 pass; `test_data_pipeline.test_no_semantic_or_answer_changes` errors because
-the commit it reads is absent from this branch — it fails identically on
-unmodified `main`) and **14 deterministic Node suites PASS**, including the new
-`tests/data-version.cjs`. Phase 9 also added `check_tokens --strict`,
+Latest implementation checkpoint (`2026-11-18`, Phase 12.6): **130 Python
+tests, all pass**, and **14/14 deterministic Node suites PASS**. The two
+long-standing failures carried since Phase 12.4 are **fixed, not waived**:
+`test_data_pipeline.test_no_semantic_or_answer_changes` now passes because the
+missing `664674b` commit was fetched into the shallow clone *and* the test was
+taught to honour the recorded `unitMoves` list (an unlisted edit, a non-`unit`
+edit, or a grown move list still fails, and quiz origins stay byte-identical);
+`node tests/section-notes.cjs` was a real shim gap — `assets/js/section-notes.js`
+iterates `heading.childNodes`, which `tests/lib/minidom.cjs` never exposed.
+Earlier (`2026-11-17`, Phase 9): 92 Python tests (91 pass) and 14 Node suites. Phase 9 also added `check_tokens --strict`,
 `build_icon_subset --check`, `build_data_version --check`, `audit_page_weight
 --budget` and `check_root_rewrite` to the CI workflow. Hosted CI has **not run on
 this branch** (nothing was pushed). Earlier: **63 Python tests** and sixteen

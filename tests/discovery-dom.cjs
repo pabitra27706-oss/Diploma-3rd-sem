@@ -480,6 +480,70 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     assert.equal(panel.querySelectorAll('img').length, 0);
     assert.equal(panel.querySelectorAll('script').length, 0);
   }
+  /* ── 6b. Explicit topic map is consulted first, matcher stays the fallback ── */
+  {
+    const topics = JSON.parse(fs.readFileSync(
+      path.join(ROOT, 'assets/data/topic-map-CST201.json'), 'utf8')).map;
+
+    // The shim builds an empty document, so each fixture gets authored headings.
+    async function unitFixture(unit, topic, headings, failOnceFor) {
+      const dom = createMiniDom(`${BASE}subjects/CST201/units/unit-${unit}.html?topic=${encodeURIComponent(topic)}`);
+      dom.win.fetch = createRepoFetch('/Diploma-3rd-sem/', failOnceFor || null, () => dom.win.location.href);
+      const main = dom.doc.createElement('main');
+      dom.doc.body.appendChild(main);
+      for (const [id, text] of headings) {
+        const h = dom.doc.createElement('h3');
+        h.setAttribute('id', id);
+        h.textContent = text;
+        main.appendChild(h);
+      }
+      runScriptIn(dom.win, 'assets/js/subject-labels.js');
+      runScriptIn(dom.win, 'assets/js/unit-discovery.js');
+      await flush(20);
+      return { dom, main };
+    }
+
+    // (a) A mapped topic lands on the mapped anchor and gets highlighted. The
+    //     old matcher sent this to the generic #overview-parameter-passing card.
+    const target = topics['storage classes / parameter passing'][1];
+    const a = await unitFixture(4, 'Storage classes / parameter passing', [
+      ['overview-parameter-passing', 'Parameter Passing'],
+      [target, 'Parameter Passing and Storage Classes: Call by Value versus Call by Address'],
+    ]);
+    assert.equal(a.dom.win.location.hash, '#' + target, `map entry not honoured (hash=${a.dom.win.location.hash})`);
+    assert.equal(a.main.querySelectorAll('.pyq-topic-target').length, 1, 'mapped heading must be highlighted');
+
+    // (b) No map entry -> the matcher still routes (fallback intact).
+    const b = await unitFixture(2, 'Switch / Armstrong numbers', [
+      ['overview', 'Overview'],
+      ['switch', 'Switch-case: multi-way branching'],
+    ]);
+    assert(b.dom.win.location.hash.startsWith('#'), 'matcher fallback did not fire');
+    assert.notEqual(b.dom.win.location.hash, '', 'matcher fallback produced no anchor');
+
+    // (c) Map file unreachable -> must not throw, must still route.
+    const c = await unitFixture(3, 'Strings', [
+      ['overview', 'Arrays and strings — unit overview'],
+      ['strings', 'Strings (character arrays)'],
+    ], 'topic-map-CST201.json');
+    assert(c.dom.win.location.hash.startsWith('#'), 'missing map file broke routing');
+
+    // (d) A stale entry (anchor not on the page) falls through instead of stranding.
+    const d = await unitFixture(4, 'Storage classes / parameter passing', [
+      ['some-other-heading', 'Parameter Passing and Storage Classes'],
+    ]);
+    assert(d.dom.win.location.hash !== '#' + target, 'stale map anchor must not be trusted blindly');
+    assert(d.dom.win.location.hash.startsWith('#'), 'stale entry must fall back, not do nothing');
+
+    // (e) Every mapped anchor really exists on its unit page, so the runtime
+    //     "verify then trust" step can never silently fall through.
+    for (const [topic, [unit, anchor]] of Object.entries(topics)) {
+      const html = fs.readFileSync(path.join(ROOT, `subjects/CST201/units/unit-${unit}.html`), 'utf8');
+      assert(html.includes(`id="${anchor}"`), `map entry "${topic}" -> U${unit} #${anchor} not in page`);
+    }
+  }
+  console.log('PASS topic map honoured first, matcher fallback intact, missing map tolerated, all 82 anchors present');
+
   console.log('PASS unit breadcrumbs, authored #section anchors, prev/next nav, subject hub jump list, and filtered-PYQ URL handoff');
 
   /* ── 7. Service worker offline simulation (precache + WARM_SEARCH + offline fetch) ── */

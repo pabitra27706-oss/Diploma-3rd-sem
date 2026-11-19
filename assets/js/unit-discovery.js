@@ -79,6 +79,25 @@
     }
   }
 
+  // Explicit topic -> section map. Authored data (assets/data/topic-map-<subject>.json),
+  // consulted first because it is exact: a stored topic that appears here always
+  // lands on the section a human chose, instead of on whatever the scorer prefers.
+  // Missing entry, missing file or a failed fetch all fall through to the matcher.
+  const topicMapCache = new Map();
+  async function loadTopicMap(subject) {
+    if (topicMapCache.has(subject)) return topicMapCache.get(subject);
+    let map = null;
+    try {
+      const res = await fetch(new URL(`../../../assets/data/topic-map-${subject}.json`, window.location.href).href);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.map && typeof data.map === 'object') map = data.map;
+      }
+    } catch (_) { /* offline or absent: fall back to the matcher */ }
+    topicMapCache.set(subject, map);
+    return map;
+  }
+
   async function focusQuestionTopic(main, subject, currentUnit, maxUnits) {
     const topic = new URLSearchParams(window.location.search).get('topic');
     if (!topic || !topic.trim()) return;
@@ -86,6 +105,11 @@
     const needle = normalized(topic);
     const terms = needle.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 2);
     if (!terms.length) return;
+
+    // Exact lookup wins outright. Only the coarse "is this anchor on this page?"
+    // check can override it, and only by falling back to the matcher.
+    const topicMap = await loadTopicMap(subject);
+    const mapped = topicMap && Object.prototype.hasOwnProperty.call(topicMap, needle) ? topicMap[needle] : null;
 
     function entriesFor(doc, unit) {
       return Array.from(doc.querySelectorAll('h2, h3, h4')).map((heading) => {
@@ -99,41 +123,107 @@
       }).filter((entry) => entry.title && entry.anchor && !/^section-\d+$/.test(entry.anchor));
     }
 
-    function scoreTitle(title) {
-      if (title === needle) return 100;
-      if (title.includes(needle)) return 90;
-      const titleWords = new Set(title.split(/[^\p{L}\p{N}]+/u).filter(Boolean));
-      const matched = terms.filter((term) => titleWords.has(term)).length;
-      return matched ? matched / terms.length : 0;
+    // A stored topic is often several sub-topics joined by "/" (for example
+    // "Switch / Armstrong numbers"). The learner only needs the heading for
+    // ONE of them, so each segment is scored on its own and the best wins.
+    // Terms are also singularised, because headings say "loop" and topics
+    // say "loops" -- an exact word match otherwise never fires.
+    const singular = (word) => (word.length > 3 && /s$/u.test(word) ? word.replace(/s$/u, '') : word);
+    const segments = needle.split(/[/,;]+/u).map((part) => part.trim()).filter(Boolean);
+    const needles = segments.length ? segments : [needle];
+    const termsFor = (text) => text.split(/[^\p{L}\p{N}]+/u)
+      .filter((word) => word.length > 2)
+      .map(singular);
+
+    function scoreAgainst(title, target, targetTerms) {
+      if (title === target) return 100;
+      if (title.includes(target)) return 90;
+      const titleWords = new Set(termsFor(title));
+      const matched = targetTerms.filter((term) => titleWords.has(term)).length;
+      return matched ? matched / targetTerms.length : 0;
     }
 
-    let candidates = entriesFor(document, currentUnit);
+    function scoreTitle(title) {
+      let best = 0;
+      for (const target of needles) {
+        const targetTerms = termsFor(target);
+        if (!targetTerms.length) continue;
+        best = Math.max(best, scoreAgainst(title, target, targetTerms));
+      }
+      return best;
+    }
+
+    // A unit overview heading is a broad summary, so a topic like
+    // "Arrays / loops" can tie with it at 90. A heading that covers MORE of
+    // the topic's segments is the better landing spot.
+    function segmentsCovered(title) {
+      let covered = 0;
+      for (const segment of needles) {
+        const targetTerms = termsFor(segment);
+        if (targetTerms.length && scoreAgainst(title, segment, targetTerms) > 0) covered += 1;
+      }
+      return covered;
+    }
+
+    // Coverage must OUTRANK the score, not merely break ties. Scoring each
+    // segment separately and taking the best means one exact segment match
+    // (100) beats a heading that covers BOTH segments at 90 -- so
+    // "Recursion / stack" landed on the one-line `#overview-recursion` card
+    // instead of the full `#functions-and-recursion` section that answers it.
+    function better(candidate, incumbent) {
+      if (!incumbent) return true;
+      const candidateCovered = segmentsCovered(candidate);
+      const incumbentCovered = segmentsCovered(incumbent);
+      if (candidateCovered !== incumbentCovered) return candidateCovered > incumbentCovered;
+      return scoreTitle(candidate) > scoreTitle(incumbent);
+    }
+
+    const inThisUnit = entriesFor(document, currentUnit);
+
+    // The map names an exact section, so it is trusted over the scorer. It may
+    // also name a DIFFERENT unit than the stored one -- that is how a stale PYQ
+    // unit gets corrected. Either way the anchor must really exist on the page
+    // we intend to use, or a renamed heading would strand the learner; a miss
+    // falls through to the matcher instead of doing nothing.
+    async function fetchUnitEntries(unit) {
+      try {
+        const url = new URL(`unit-${unit}.html`, window.location.href);
+        url.search = '';
+        url.hash = '';
+        const response = await fetch(url.href);
+        if (!response.ok) return [];
+        return entriesFor(new DOMParser().parseFromString(await response.text(), 'text/html'), unit);
+      } catch (_) {
+        return [];
+      }
+    }
+
+    let mappedEntry = null;
+    if (mapped) {
+      const mappedUnit = Number(mapped[0]);
+      const mappedAnchor = mapped[1];
+      const pool = mappedUnit === Number(currentUnit) ? inThisUnit : await fetchUnitEntries(mappedUnit);
+      const entry = pool.find((candidate) => candidate.anchor === mappedAnchor);
+      if (entry) mappedEntry = { ...entry, score: 100, covered: terms.length };
+    }
+
+    let candidates = inThisUnit;
     // When a stored PYQ unit is stale, search the subject's authored section
     // headings instead of sending the learner to a vaguely related overview.
-    if (!candidates.some((entry) => scoreTitle(entry.title) >= 0.5)) {
+    if (!mappedEntry && !candidates.some((entry) => scoreTitle(entry.title) >= 0.5)) {
       const others = await Promise.all(Array.from({ length: maxUnits }, async (_, index) => {
         const unit = index + 1;
-        if (unit === currentUnit) return [];
-        try {
-          const url = new URL(`unit-${unit}.html`, window.location.href);
-          url.search = '';
-          url.hash = '';
-          const response = await fetch(url.href);
-          if (!response.ok) return [];
-          const html = await response.text();
-          const parsed = new DOMParser().parseFromString(html, 'text/html');
-          return entriesFor(parsed, unit);
-        } catch (_) {
-          return [];
-        }
+        return unit === currentUnit ? [] : fetchUnitEntries(unit);
       }));
       candidates = candidates.concat(...others);
     }
 
-    let best = null;
-    for (const entry of candidates) {
-      const score = scoreTitle(entry.title);
-      if (!best || score > best.score) best = { ...entry, score };
+    let best = mappedEntry;
+    if (!best) {
+      for (const entry of candidates) {
+        if (!better(entry.title, best && best.title)) continue;
+        best = { ...entry, score: scoreTitle(entry.title), covered: segmentsCovered(entry.title) };
+      }
     }
     if (!best || best.score < 0.5) return;
 

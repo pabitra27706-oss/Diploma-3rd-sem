@@ -125,14 +125,23 @@ class CoverageMapTests(unittest.TestCase):
             self.assertIsNone(RAW_CODE_RE.search(text), f'{name} prints a raw course code')
             self.assertIsNone(RAW_QID_RE.search(text), f'{name} prints a raw question id')
 
-    def test_quiz_bank_reversal_is_disclosed_on_both_units(self):
+    def test_cst201_quiz_banks_sit_in_their_syllabus_unit(self):
+        # The recorded reversal (Arrays U3 / Functions U4 swapped) is resolved at source.
+        # Pin the resolution: each bank is in its syllabus unit, the stored count equals
+        # the syllabus-unit count, and no row still carries the old disclosure flag.
         rows = {row['unit']: row for row in self.data['units'] if row['subject'] == 'CST201'}
         for unit in (3, 4):
-            self.assertTrue(any('reversed' in flag for flag in rows[unit]['flags']), f'CST201 U{unit}')
-            self.assertNotEqual(rows[unit]['quizCount'], rows[unit]['quizCountSyllabusUnit'])
-        # The counts must be swaps of each other, not invented numbers.
-        self.assertEqual(rows[3]['quizCountSyllabusUnit'], rows[4]['quizCount'])
-        self.assertEqual(rows[4]['quizCountSyllabusUnit'], rows[3]['quizCount'])
+            self.assertFalse(any('reversed' in flag for flag in rows[unit]['flags']), f'CST201 U{unit}')
+            self.assertEqual(rows[unit]['quizCount'], rows[unit]['quizCountSyllabusUnit'],
+                             f'CST201 U{unit} still carries two attributions')
+        # Unit 3 must hold the arrays bank and Unit 4 the functions bank.
+        root = Path(__file__).resolve().parents[1]
+        titles = {u: json.loads((root / f'_quiz-data/CST201/unit-{u}.json').read_text())['unitTitle']
+                  for u in (3, 4)}
+        self.assertIn('Arrays', titles[3])
+        self.assertIn('unction', titles[4])
+        self.assertEqual(rows[3]['quizCount'], 38)
+        self.assertEqual(rows[4]['quizCount'], 42)
 
 
 class PracticalPagesTests(unittest.TestCase):

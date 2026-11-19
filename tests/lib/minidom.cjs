@@ -105,6 +105,11 @@ function createMiniDom(initialUrl) {
     get className() { return this.attributes.get('class') || ''; }
     set className(v) { this.attributes.set('class', String(v || '')); }
 
+    // Real DOM: childNodes contains text nodes too, and unlike `children` it has
+    // no attribute nodes. Callers that walk it to read a heading's own words
+    // (assets/js/section-notes.js:labelFor) therefore need this alias.
+    get childNodes() { return this.children; }
+
     get href() { return this.attributes.get('href') || ''; }
     set href(v) { this.attributes.set('href', String(v)); }
 
@@ -125,6 +130,10 @@ function createMiniDom(initialUrl) {
 
     set innerHTML(_v) {
       throw new Error('Unexpected innerHTML sink invoked');
+    }
+
+    hasAttribute(name) {
+      return this.attributes.has(String(name));
     }
 
     setAttribute(name, value) {
@@ -330,10 +339,14 @@ function createMiniDom(initialUrl) {
   documentElement.appendChild(body);
   activeEl = body;
 
+  const head = new MiniNode(1, 'head');
+  documentElement.insertBefore ? documentElement.insertBefore(head, body) : documentElement.appendChild(head);
+
   const doc = {
     title: '',
     currentScript: null,
     documentElement,
+    head,
     body,
     get activeElement() { return activeEl; },
     createElement: tag => new MiniNode(1, tag),

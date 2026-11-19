@@ -1,908 +1,875 @@
 {
   "subject": "CST201",
   "unit": 3,
-  "unitTitle": "User Defined Functions",
-  "totalQuestions": 42,
+  "unitTitle": "Subscripted Variables / Arrays",
+  "totalQuestions": 38,
   "questions": [
     {
-      "id": "CST201-U3-Q001",
+      "id": "CST201-U4-Q001",
       "type": "mcq",
-      "topic": "Function Characteristics",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": 2023,
-      "source": "PYQ",
-      "tags": [
-        "functions",
-        "input",
-        "return-value",
-        "characteristics"
-      ],
-      "question": "A function -",
-      "options": {
-        "A": "may or may not need input data",
-        "B": "may or may not return a value",
-        "C": "Both a and b",
-        "D": "None of these"
-      },
-      "correct": "C",
-      "explanation": "A C function may take no arguments or several, and may return a value or be void, so neither input nor output is compulsory. Both statements hold, making C correct.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q002",
-      "type": "mcq",
-      "topic": "Return Values",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": 2023,
-      "source": "PYQ",
-      "tags": [
-        "void-function",
-        "return-type",
-        "functions"
-      ],
-      "question": "If the function returns no value then it is called -",
-      "options": {
-        "A": "Data type function",
-        "B": "Calling function",
-        "C": "Main function",
-        "D": "Void function"
-      },
-      "correct": "D",
-      "explanation": "A function declared with void return type sends nothing back to the caller; you either omit return or write a bare return;. Example: void display(void).",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q003",
-      "type": "mcq",
-      "topic": "Function Limits",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": 2022,
-      "source": "PYQ",
-      "tags": [
-        "functions",
-        "limit",
-        "c-programming"
-      ],
-      "question": "What is the limit for number of functions in a C Program?",
-      "options": {
-        "A": "16",
-        "B": "31",
-        "C": "32",
-        "D": "No Limit"
-      },
-      "correct": "D",
-      "explanation": "The C standard sets no limit on the number of functions a program may define, only practical limits of memory and linker capacity. Hence 'no limit'.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q004",
-      "type": "mcq",
-      "topic": "Storage Classes",
+      "topic": "Array Memory Allocation",
       "difficulty": "medium",
       "marks": 1,
       "year": 2024,
       "source": "PYQ",
       "tags": [
-        "storage-class",
-        "keywords",
-        "auto-extern-static-register"
+        "arrays",
+        "memory-allocation",
+        "2d-array",
+        "sizeof"
       ],
-      "question": "Which of the following is NOT a storage class?",
+      "question": "If an int element requires 2-byte memory, How many bytes will be allocated to int arr[5][5]?",
       "options": {
-        "A": "auto",
-        "B": "extern",
-        "C": "dynamic",
-        "D": "static"
+        "A": "5",
+        "B": "50",
+        "C": "25",
+        "D": "10"
       },
-      "correct": "C",
-      "explanation": "The four storage classes are auto, register, static and extern. dynamic is not a C storage class at all, so it is the odd one out.",
-      "topicQuality": "specific"
+      "correct": "B",
+      "explanation": "int arr[5][5] holds 5 × 5 = 25 elements, and with 2 bytes per int the whole array needs 25 × 2 = 50 bytes of contiguous memory.",
+      "topicQuality": "specific",
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q005",
+      "id": "CST201-U4-Q002",
       "type": "mcq",
-      "topic": "Storage Classes",
-      "difficulty": "medium",
+      "topic": "Array Initialization",
+      "difficulty": "easy",
       "marks": 1,
       "year": 2023,
       "source": "PYQ",
       "tags": [
-        "storage-class",
-        "typedef",
-        "keywords"
+        "arrays",
+        "initialization",
+        "declaration",
+        "syntax"
       ],
-      "question": "Which of the following is not a storage class specifier in C?",
+      "question": "How is an array initialized in C language?",
       "options": {
-        "A": "volatile",
-        "B": "extern",
-        "C": "typedef",
-        "D": "static"
-      },
-      "correct": "C",
-      "explanation": "typedef defines a new type name; it is not a storage class. The storage class specifiers are auto, register, static and extern, while volatile is a type qualifier.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q006",
-      "type": "mcq",
-      "topic": "Storage Classes",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": 2022,
-      "source": "PYQ",
-      "tags": [
-        "storage-class",
-        "register",
-        "static-variables",
-        "machine-registers"
-      ],
-      "question": "The machine registers are sometimes called -",
-      "options": {
-        "A": "local variables",
-        "B": "global variables",
-        "C": "accumulators",
-        "D": "static variables"
-      },
-      "correct": "C",
-      "explanation": "CPU registers that hold arithmetic operands are traditionally called accumulators. The register storage class asks the compiler to keep a variable in such a register for speed.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q007",
-      "type": "mcq",
-      "topic": "Storage Classes",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": 2021,
-      "source": "PYQ",
-      "tags": [
-        "storage-class",
-        "auto",
-        "local-variables",
-        "default"
-      ],
-      "question": "The default storage class of a local variable is -",
-      "options": {
-        "A": "auto",
-        "B": "static",
-        "C": "register",
-        "D": "extern"
+        "A": "int a[3] = {1, 2, 3};",
+        "B": "int a = {1, 2, 3};",
+        "C": "int a[] = new int[3];",
+        "D": "int a(3) = {1, 2, 3};"
       },
       "correct": "A",
-      "explanation": "A local variable with no storage class specifier is auto by default: it is created on block entry, destroyed on exit and never initialised automatically.",
-      "topicQuality": "specific"
+      "explanation": "An array is initialised with a size in square brackets and a brace-enclosed list: int a[3] = {1, 2, 3};. new is C++ syntax and parentheses are not valid here.",
+      "topicQuality": "specific",
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q008",
+      "id": "CST201-U4-Q003",
       "type": "mcq",
-      "topic": "Recursion Output",
-      "difficulty": "medium",
+      "topic": "Array Sum Output",
+      "difficulty": "easy",
       "marks": 1,
-      "year": 2021,
+      "year": 2023,
       "source": "PYQ",
       "tags": [
-        "recursion",
-        "function-calls",
-        "output",
-        "static-storage"
-      ],
-      "question": "What will be the output of the following codes?\nint func();\nmain() {\n    printf(\"%d\", func());\n    printf(\"%d\", func());\n    printf(\"%d\", func());\n}\nint func() {\n    int counter = 5;\n    counter++;\n    return(counter);\n}",
-      "options": {
-        "A": "6 6 6",
-        "B": "6 7 8",
-        "C": "5 6 7",
-        "D": "5 5 5"
-      },
-      "correct": "A",
-      "explanation": "counter is automatic, so each call starts again from 5 and returns 6 after the increment. The three calls print 6 6 6: 6 7 8 would need a static local.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q009",
-      "type": "mcq",
-      "topic": "Function Calls and Return Values",
-      "difficulty": "medium",
-      "marks": 1,
-      "year": 2021,
-      "source": "PYQ",
-      "tags": [
-        "function-calls",
-        "nested-functions",
-        "return-values",
+        "arrays",
+        "for-loop",
+        "sum",
         "output"
       ],
-      "question": "What will be the output?\nint f2(int a) {\n    return(a * a);\n}\nint f1(int a, int b) {\n    return(f2(a * b));\n}\nmain() {\n    int x;\n    x = f1(2, 4);\n    printf(\"%d\", x);\n}",
+      "question": "What is the output of the following code snippet?\n#include <stdio.h>\nint main() {\n    int a[] = {1, 2, 3, 4};\n    int sum = 0;\n    for(int i = 0; i < 4; i++) {\n        sum += a[i];\n    }\n    printf(\"%d\", sum);\n    return 0;\n}",
       "options": {
-        "A": "8",
-        "B": "16",
-        "C": "64",
-        "D": "32"
+        "A": "1",
+        "B": "4",
+        "C": "20",
+        "D": "10"
+      },
+      "correct": "D",
+      "explanation": "The loop adds every element of {1, 2, 3, 4}, giving 1 + 2 + 3 + 4 = 10. Option 20 would require each value to be counted twice.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q004",
+      "type": "mcq",
+      "topic": "Array sizeof",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": [
+        "arrays",
+        "sizeof",
+        "data-types",
+        "elements"
+      ],
+      "question": "If an array is declared as arr[] = {1, 2, 5, 7, 9}; then what is the value of sizeof(arr[3])?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "3",
+        "D": "8"
+      },
+      "correct": "B",
+      "explanation": "sizeof(arr[3]) reports the size of one int element, not its value 7, and with 2-byte ints that is 2 bytes. sizeof(arr) would instead give the whole array.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q005",
+      "type": "mcq",
+      "topic": "String Concatenation",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": [
+        "strings",
+        "strcat",
+        "string-functions",
+        "concatenation"
+      ],
+      "question": "s1 = \"H1\", s2 = \"HELLO\", s3 = \"BYE\". How can we concatenate the three strings?",
+      "options": {
+        "A": "strcat(s1, s2, s3)",
+        "B": "strcat(s1, strcat(s2, s3))",
+        "C": "strcpy(s1, s2, s3)",
+        "D": "strcpy(s1, strcpy(s2, s3))"
+      },
+      "correct": "B",
+      "explanation": "strcat takes exactly two arguments, so three strings are joined by nesting: strcat(s2, s3) appends s3 to s2, then strcat(s1, ...) appends the result to s1.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q006",
+      "type": "mcq",
+      "topic": "Null Character",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": [
+        "strings",
+        "null-character",
+        "string-terminator"
+      ],
+      "question": "A string is terminated by a -",
+      "options": {
+        "A": "\\0",
+        "B": "\\n",
+        "C": "0",
+        "D": "\\"
+      },
+      "correct": "A",
+      "explanation": "A string literal is stored with a '\\0' (null) byte after the last character, and the library functions stop there. So '\\0' marks the end of every C string.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q007",
+      "type": "mcq",
+      "topic": "ASCII Values",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": [
+        "ascii",
+        "character-set",
+        "strings",
+        "range"
+      ],
+      "question": "ASCII code for a - z ranges from -",
+      "options": {
+        "A": "0 - 26",
+        "B": "35 - 81",
+        "C": "97 - 123",
+        "D": "none of the above"
       },
       "correct": "C",
-      "explanation": "f1(2, 4) multiplies its arguments and passes 8 to f2, which squares it. So f2(8) returns 64, which is option C.",
-      "topicQuality": "specific"
+      "explanation": "In ASCII, 'a' is 97 and 'z' is 122, so the range is 97–122 and option C (97–123) is the closest printed choice. Uppercase 'A'–'Z' is 65–90.",
+      "topicQuality": "specific",
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q010",
-      "type": "short",
-      "topic": "Function Prototype",
-      "difficulty": "easy",
+      "id": "CST201-U4-Q008",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
       "marks": 1,
-      "year": 2022,
+      "year": 2024,
       "source": "PYQ",
       "tags": [
-        "function-prototype",
-        "declaration",
-        "functions"
+        "strcpy",
+        "string-functions",
+        "copy"
       ],
-      "question": "What is prototype declaration of a function?",
+      "question": "The function strcpy(s1, s2) -",
+      "options": {
+        "A": "copies s1 into s2",
+        "B": "copies s2 into s1",
+        "C": "append s2 after s1",
+        "D": "replace s1 with s2"
+      },
+      "correct": "B",
+      "explanation": "strcpy(destination, source) copies the source into the destination, so strcpy(s1, s2) copies s2 into s1. It neither appends nor swaps the two strings.",
       "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q011",
-      "type": "short",
-      "topic": "Library Functions",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": 2022,
-      "source": "PYQ",
-      "tags": [
-        "library-functions",
-        "predefined-functions",
-        "header-files"
-      ],
-      "question": "What do you mean by library function in C program?",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q012",
-      "type": "short",
-      "topic": "Scope and Lifetime",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": 2022,
-      "source": "PYQ",
-      "tags": [
-        "global-variables",
-        "scope",
-        "lifetime"
-      ],
-      "question": "What is global variable?",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q013",
-      "type": "short",
-      "topic": "Storage Classes",
+      "id": "CST201-U4-Q009",
+      "type": "mcq",
+      "topic": "String Handling Functions",
       "difficulty": "medium",
       "marks": 1,
       "year": 2022,
       "source": "PYQ",
       "tags": [
-        "storage-class",
-        "static",
-        "default-value",
-        "initialization"
+        "strcpy",
+        "string-functions",
+        "copy"
       ],
-      "question": "By default a variable is assigned with ______ in static storage class.",
+      "question": "The function strcpy(s1, s2) call means -",
+      "options": {
+        "A": "copies s1 string into s2",
+        "B": "copies s2 string into s1",
+        "C": "copies both s1 and s2",
+        "D": "None of these"
+      },
+      "correct": "B",
+      "explanation": "The first argument of strcpy is the destination and the second the source, so s2 is copied into s1. Appending would be strcat, not strcpy.",
       "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q014",
+      "id": "CST201-U4-Q010",
       "type": "short",
-      "topic": "Return Values",
+      "topic": "Null Character",
       "difficulty": "easy",
       "marks": 1,
       "year": 2022,
       "source": "PYQ",
       "tags": [
-        "void-function",
-        "return-type",
-        "functions"
+        "null-character",
+        "string-terminator",
+        "strings"
       ],
-      "question": "If the function returns no value then it is called ______.",
+      "question": "What is the use of a '\\0' character?",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q015",
+      "id": "CST201-U4-Q011",
       "type": "short",
-      "topic": "Function Types",
-      "difficulty": "medium",
+      "topic": "Null Character",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": [
+        "null-character",
+        "string-terminator",
+        "strings"
+      ],
+      "question": "Each string is terminated with a ______ character.",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q012",
+      "type": "short",
+      "topic": "Array Subscript",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": [
+        "arrays",
+        "subscript",
+        "index",
+        "zero-based"
+      ],
+      "question": "Array subscripts in C always start at ______.",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q013",
+      "type": "short",
+      "topic": "Types of Arrays",
+      "difficulty": "easy",
       "marks": 2,
       "year": 2022,
       "source": "PYQ",
       "tags": [
-        "user-defined-functions",
-        "function-types",
-        "classification"
+        "arrays",
+        "types",
+        "1d-array",
+        "2d-array",
+        "multidimensional"
       ],
-      "question": "State the types of User-Defined Functions.",
+      "question": "Name the types of Arrays.",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q016",
+      "id": "CST201-U4-Q014",
       "type": "theory",
-      "topic": "Modular Programming and Functions",
-      "difficulty": "medium",
-      "marks": 3,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "modular-programming",
-        "functions",
-        "advantages"
-      ],
-      "question": "What is modular programming? How functions help in modular programming? (3)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q017",
-      "type": "theory",
-      "topic": "Function Advantages and Parameters",
+      "topic": "Array Definition and Matrix",
       "difficulty": "medium",
       "marks": 8,
       "year": 2024,
       "source": "PYQ",
       "tags": [
-        "functions",
-        "advantages",
-        "declaration-vs-definition",
-        "parameters"
+        "arrays",
+        "2d-array",
+        "matrix",
+        "diagonal-sum"
       ],
-      "question": "What are the advantages of user-defined function? Write the difference between function declaration and function definition. Explain actual parameter and formal parameter with example. (3 + 2 + 3)",
+      "question": "What do you mean by array? Write a C program to read a 4×4 integer matrix and find the sum of its diagonal elements. (2 + 6)",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q018",
-      "type": "program",
-      "topic": "Return Statement and Functions",
-      "difficulty": "medium",
-      "marks": 8,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "return-statement",
-        "factorial",
-        "series",
-        "functions"
-      ],
-      "question": "What is the use of 'return' statement? Write a C program which calculate the following sum:\nsum = 1/1! + 1/2! + 1/3! + ... + 1/n!\n[The value of n is taken as input] (2 + 6)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q019",
+      "id": "CST201-U4-Q015",
       "type": "theory",
-      "topic": "Recursion",
-      "difficulty": "medium",
-      "marks": 8,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "recursion",
-        "gcd",
-        "recursive-function",
-        "examples"
-      ],
-      "question": "What do you understand by recursion? Explain with example. Write recursive function with two integer parameters and calculate their greatest common divisor. (3 + 5)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q020",
-      "type": "theory",
-      "topic": "Storage Classes",
-      "difficulty": "medium",
-      "marks": 8,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "storage-class",
-        "auto-extern-static-register",
-        "scope-lifetime"
-      ],
-      "question": "What do you understand by storage class? Explain different storage class in C with example. (2 + 6)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q021",
-      "type": "program",
-      "topic": "GCD Using Recursion",
-      "difficulty": "medium",
-      "marks": 4,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "gcd",
-        "recursion",
-        "euclidean-algorithm"
-      ],
-      "question": "Write a program to calculate GCD of two numbers. (4)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q022",
-      "type": "theory",
-      "topic": "Storage Classes",
-      "difficulty": "medium",
-      "marks": 4,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "storage-class",
-        "auto-extern-static-register",
-        "scope-lifetime"
-      ],
-      "question": "Discuss different storage classes with examples. (4)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q023",
-      "type": "theory",
-      "topic": "Recursion vs Iteration",
-      "difficulty": "medium",
-      "marks": 2,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "recursion",
-        "iteration",
-        "comparison",
-        "loops"
-      ],
-      "question": "Explain the differences between recursion and iteration. (2)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q024",
-      "type": "theory",
-      "topic": "Hello World Program",
+      "topic": "String Definition",
       "difficulty": "easy",
-      "marks": 3,
+      "marks": 1,
       "year": 2024,
       "source": "PYQ",
       "tags": [
-        "hello-world",
-        "header-files",
-        "stdio",
-        "basic-program"
+        "strings",
+        "definition",
+        "character-array"
       ],
-      "question": "Write a complete \"Hello World\" program in C and explain used header files with their purpose. (3)",
+      "question": "What is a string in C? (1)",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q025",
-      "type": "program",
-      "topic": "Recursion - Fibonacci Series",
-      "difficulty": "medium",
-      "marks": 8,
-      "year": 2024,
-      "source": "PYQ",
-      "tags": [
-        "recursion",
-        "fibonacci",
-        "iteration",
-        "loops"
-      ],
-      "question": "Write programs to generate Fibonacci series using recursion and loop. (4 + 4)",
-      "topicQuality": "specific",
-      "answerStatus": "missing",
-      "gradable": false
-    },
-    {
-      "id": "CST201-U3-Q026",
+      "id": "CST201-U4-Q016",
       "type": "theory",
-      "topic": "Storage Classes",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 7,
+      "year": 2024,
+      "source": "PYQ",
+      "tags": [
+        "string-functions",
+        "strlen",
+        "strcpy",
+        "strcat",
+        "strcmp"
+      ],
+      "question": "Discuss any four string handling library functions with example. (7)",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q017",
+      "type": "program",
+      "topic": "String Reversal",
       "difficulty": "medium",
       "marks": 4,
-      "year": 2023,
+      "year": 2024,
       "source": "PYQ",
       "tags": [
-        "storage-class",
-        "auto-extern-static-register",
-        "scope-lifetime"
+        "strings",
+        "reverse",
+        "without-library",
+        "string-manipulation"
       ],
-      "question": "Discuss various storage classes used in C. (4)",
+      "question": "Write a C program to reverse a string without using any string handling library function. (4)",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q027",
+      "id": "CST201-U4-Q018",
       "type": "program",
-      "topic": "Functions - Prime Numbers",
+      "topic": "Identity Matrix",
       "difficulty": "medium",
       "marks": 5,
       "year": 2023,
       "source": "PYQ",
       "tags": [
-        "functions",
-        "prime-numbers",
-        "user-defined-functions"
+        "2d-array",
+        "matrix",
+        "identity-matrix",
+        "arrays"
       ],
-      "question": "Write a program in C to find all prime numbers between given interval using functions. (5)",
+      "question": "Write a program in C to check whether a given matrix is an identity matrix. (5)",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q028",
+      "id": "CST201-U4-Q019",
       "type": "theory",
-      "topic": "Parameter Passing",
-      "difficulty": "medium",
-      "marks": 10,
-      "year": 2021,
+      "topic": "Array Definition and Advantages",
+      "difficulty": "easy",
+      "marks": 3,
+      "year": 2023,
       "source": "PYQ",
       "tags": [
-        "parameter-passing",
-        "call-by-value",
-        "call-by-reference",
-        "functions"
+        "arrays",
+        "definition",
+        "advantages",
+        "subscript-variables"
       ],
-      "question": "a) What do you mean by parameter passing in C? (3)\nb) Explain different types of parameter passing supported by C using suitable examples. (7)",
+      "question": "What is an array? State advantages of an array. (1 + 2)",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q029",
+      "id": "CST201-U4-Q020",
+      "type": "theory",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": [
+        "strcmp",
+        "strcat",
+        "string-functions",
+        "comparison"
+      ],
+      "question": "Explain the following string operations used in C: (i) strcmp() (ii) strcat() (3)",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q021",
       "type": "program",
-      "topic": "Recursion - Sum of Natural Numbers",
+      "topic": "Case Conversion",
+      "difficulty": "hard",
+      "marks": 5,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": [
+        "strings",
+        "case-conversion",
+        "lowercase",
+        "uppercase",
+        "without-library"
+      ],
+      "question": "Write a C program to convert lowercase string to uppercase and vice versa. [Do Not use string.h] (5)",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q022",
+      "type": "program",
+      "topic": "ASCII Value",
+      "difficulty": "easy",
+      "marks": 3,
+      "year": 2023,
+      "source": "PYQ",
+      "tags": [
+        "ascii",
+        "character",
+        "strings",
+        "input-output"
+      ],
+      "question": "Write a program in C to find ASCII value of a character. (3)",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q023",
+      "type": "theory",
+      "topic": "String Handling Functions",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2022,
+      "source": "PYQ",
+      "tags": [
+        "string-functions",
+        "strlen",
+        "strcpy",
+        "strcat",
+        "strcmp"
+      ],
+      "question": "Discuss with programming examples the different types of String Handling Function in C.",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q024",
+      "type": "program",
+      "topic": "String Reversal",
       "difficulty": "medium",
       "marks": 4,
       "year": 2022,
       "source": "PYQ",
       "tags": [
-        "recursion",
-        "recursive-function",
-        "sum",
-        "natural-numbers"
+        "strings",
+        "reverse",
+        "string-manipulation"
       ],
-      "question": "Write a recursive function to obtain the returning sum of first 25 natural numbers.",
+      "question": "Write a C program to find reverse of a string.",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q030",
+      "id": "CST201-U4-Q025",
       "type": "program",
-      "topic": "Recursion - Fibonacci Series",
+      "topic": "Two Dimensional Array",
       "difficulty": "medium",
       "marks": 6,
       "year": 2021,
       "source": "PYQ",
       "tags": [
-        "recursion",
-        "fibonacci",
-        "iteration",
-        "loops"
+        "2d-array",
+        "matrix",
+        "maximum",
+        "minimum",
+        "location"
       ],
-      "question": "Write programs to generate Fibonacci series using recursion and loop. (6)",
+      "question": "Create a two dimensional integer array to insert some integers randomly into it. Now find the greatest and smallest integer from the array and also find their corresponding locations. (6)",
       "topicQuality": "specific",
       "answerStatus": "missing",
-      "gradable": false
+      "gradable": false,
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q031",
+      "id": "CST201-U4-Q026",
+      "type": "program",
+      "topic": "String Abbreviation",
+      "difficulty": "hard",
+      "marks": 7,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": [
+        "strings",
+        "abbreviation",
+        "string-manipulation",
+        "multiword"
+      ],
+      "question": "Write down a program in C to express any multiword string into its equivalent abbreviated form separated by a dot (.) i.e. SWAPAN KUMAR SEN will be written as S.K.S. (7)",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q027",
+      "type": "program",
+      "topic": "String Functions Implementation",
+      "difficulty": "medium",
+      "marks": 6,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": [
+        "strcpy",
+        "strlen",
+        "implementation",
+        "without-library"
+      ],
+      "question": "Write C programs to implement: i) strcpy(), ii) strlen() library function by yourself. (3×2)",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q028",
+      "type": "theory",
+      "topic": "Null Character",
+      "difficulty": "easy",
+      "marks": 4,
+      "year": 2021,
+      "source": "PYQ",
+      "tags": [
+        "null-character",
+        "string-terminator",
+        "string-manipulation"
+      ],
+      "question": "What do you mean by null character? Describe its uses in string manipulation. (1 + 3)",
+      "topicQuality": "specific",
+      "answerStatus": "missing",
+      "gradable": false,
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q029",
       "type": "mcq",
-      "topic": "Function Prototype",
+      "topic": "Array Declaration",
       "difficulty": "easy",
       "marks": 1,
       "year": null,
       "source": "original",
       "tags": [
-        "function-prototype",
+        "arrays",
         "declaration",
-        "syntax"
+        "syntax",
+        "size"
       ],
-      "question": "What is the purpose of a function prototype in C?",
+      "question": "Which of the following correctly declares a one-dimensional array of 10 integers?",
       "options": {
-        "A": "To define the function body",
-        "B": "To inform the compiler about function signature before definition",
-        "C": "To allocate memory for the function",
-        "D": "To execute the function"
+        "A": "int arr(10);",
+        "B": "int arr[10];",
+        "C": "array int[10];",
+        "D": "int[10] arr;"
       },
       "correct": "B",
-      "explanation": "A prototype gives the compiler the return type, name and parameter types before the definition, so calls can be type-checked and can appear earlier. It allocates no memory.",
-      "topicQuality": "specific"
+      "explanation": "An array declaration needs the type, the name and the size in square brackets: int arr[10];. The other forms use parentheses or put the brackets in the wrong place.",
+      "topicQuality": "specific",
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q032",
+      "id": "CST201-U4-Q030",
       "type": "mcq",
-      "topic": "Recursion",
+      "topic": "Array Accessing",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": [
+        "arrays",
+        "indexing",
+        "access",
+        "zero-based"
+      ],
+      "question": "If an array is declared as int arr[5] = {10, 20, 30, 40, 50}; what is the value of arr[2]?",
+      "options": {
+        "A": "10",
+        "B": "20",
+        "C": "30",
+        "D": "40"
+      },
+      "correct": "C",
+      "explanation": "Indexing starts at 0, so arr[0] = 10, arr[1] = 20 and arr[2] = 30. Off-by-one errors usually come from assuming the first element has index 1.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q031",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": [
+        "strlen",
+        "string-functions",
+        "string-length"
+      ],
+      "question": "What does the strlen() function return?",
+      "options": {
+        "A": "The size of the character array including null character",
+        "B": "The number of characters in the string excluding the null character",
+        "C": "The ASCII sum of all characters",
+        "D": "The memory address of the string"
+      },
+      "correct": "B",
+      "explanation": "strlen counts the characters before the terminating '\\0', so strlen(\"HELLO\") is 5. The null byte is not counted, although it must still be stored.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q032",
+      "type": "mcq",
+      "topic": "String Handling Functions",
       "difficulty": "medium",
       "marks": 1,
       "year": null,
       "source": "original",
       "tags": [
-        "recursion",
-        "stack",
-        "memory"
+        "strcmp",
+        "string-functions",
+        "comparison"
       ],
-      "question": "Which data structure is used by the compiler to manage function calls during recursion?",
+      "question": "What does strcmp(s1, s2) return when s1 and s2 are identical strings?",
       "options": {
-        "A": "Queue",
-        "B": "Stack",
-        "C": "Tree",
-        "D": "Linked List"
+        "A": "1",
+        "B": "-1",
+        "C": "0",
+        "D": "The length of the string"
       },
-      "correct": "B",
-      "explanation": "Each call pushes an activation record (parameters, locals, return address) onto the run-time stack, and recursion simply pushes more. A queue would give the wrong order.",
-      "topicQuality": "specific"
+      "correct": "C",
+      "explanation": "strcmp returns 0 when both strings are identical, a negative value when the first is lexicographically smaller and a positive value when it is larger.",
+      "topicQuality": "specific",
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q033",
+      "id": "CST201-U4-Q033",
       "type": "mcq",
-      "topic": "Storage Classes",
+      "topic": "Two Dimensional Array",
       "difficulty": "medium",
       "marks": 1,
       "year": null,
       "source": "original",
       "tags": [
-        "storage-class",
-        "static",
-        "scope",
-        "lifetime"
+        "2d-array",
+        "declaration",
+        "rows-columns",
+        "matrix"
       ],
-      "question": "What is the scope and lifetime of a static local variable?",
+      "question": "In a 2D array declared as int a[3][4], how many elements can it store?",
       "options": {
-        "A": "Scope: Function; Lifetime: Entire program execution",
-        "B": "Scope: Global; Lifetime: Function execution",
-        "C": "Scope: Global; Lifetime: Entire program execution",
-        "D": "Scope: Function; Lifetime: Function execution"
+        "A": "3",
+        "B": "4",
+        "C": "7",
+        "D": "12"
+      },
+      "correct": "D",
+      "explanation": "int a[3][4] has 3 rows of 4 columns, so it stores 3 × 4 = 12 ints laid out row by row. The two numbers are multiplied, not added.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q034",
+      "type": "mcq",
+      "topic": "Character Arrays",
+      "difficulty": "medium",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": [
+        "character-arrays",
+        "strings",
+        "declaration",
+        "null-character"
+      ],
+      "question": "What is the minimum size of character array needed to store the string \"HELLO\"?",
+      "options": {
+        "A": "4",
+        "B": "5",
+        "C": "6",
+        "D": "7"
+      },
+      "correct": "C",
+      "explanation": "\"HELLO\" has five characters plus the terminating null byte, so the array must hold at least 6 characters. A size of 5 leaves no room for '\\0'.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q035",
+      "type": "mcq",
+      "topic": "String Handling Functions",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": [
+        "string-functions",
+        "header-file",
+        "string-h"
+      ],
+      "question": "Which header file must be included to use string handling functions like strlen(), strcpy(), strcat(), strcmp()?",
+      "options": {
+        "A": "stdio.h",
+        "B": "stdlib.h",
+        "C": "string.h",
+        "D": "ctype.h"
+      },
+      "correct": "C",
+      "explanation": "strlen, strcpy, strcat, strcmp and strncpy are all declared in string.h. stdio.h handles I/O, stdlib.h utilities and ctype.h character tests.",
+      "topicQuality": "specific",
+      "unit": 3
+    },
+    {
+      "id": "CST201-U4-Q036",
+      "type": "mcq",
+      "topic": "Multidimensional Arrays",
+      "difficulty": "easy",
+      "marks": 1,
+      "year": null,
+      "source": "original",
+      "tags": [
+        "multidimensional-array",
+        "3d-array",
+        "declaration"
+      ],
+      "question": "Which of the following correctly declares a 3-dimensional array in C?",
+      "options": {
+        "A": "int arr[2][3][4];",
+        "B": "int arr[2,3,4];",
+        "C": "int arr(2)(3)(4);",
+        "D": "int arr{2}{3}{4};"
       },
       "correct": "A",
-      "explanation": "static gives a local variable function scope but static storage duration: it is invisible outside the function yet keeps its value between calls for the whole program run.",
-      "topicQuality": "specific"
+      "explanation": "Each dimension needs its own pair of brackets: int arr[2][3][4]; holds 2 × 3 × 4 = 24 elements. Commas, parentheses and braces are invalid in a declaration.",
+      "topicQuality": "specific",
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q034",
+      "id": "CST201-U4-Q037",
       "type": "mcq",
-      "topic": "Parameter Passing",
+      "topic": "String Substring Extraction",
       "difficulty": "medium",
       "marks": 1,
       "year": null,
       "source": "original",
       "tags": [
-        "call-by-value",
-        "call-by-reference",
-        "parameter-passing"
+        "strings",
+        "substring",
+        "string-manipulation",
+        "applications"
       ],
-      "question": "In call by value parameter passing, what is passed to the function?",
+      "question": "Which standard C library function can be used directly to extract a substring from a string?",
       "options": {
-        "A": "Address of the variable",
-        "B": "Copy of the variable's value",
-        "C": "Reference to the variable",
-        "D": "Pointer to the variable"
+        "A": "strstr()",
+        "B": "substr()",
+        "C": "strtok()",
+        "D": "There is no direct standard function for substring extraction"
       },
-      "correct": "B",
-      "explanation": "Call by value copies the argument into the parameter, so the function works on its own copy and the caller's variable is unchanged. Pointers are needed to modify the original.",
-      "topicQuality": "specific"
+      "correct": "D",
+      "explanation": "Standard C has no substr() function, so a range is copied with strncpy or a loop over pointers. strstr only locates a substring; it does not extract it.",
+      "topicQuality": "specific",
+      "unit": 3
     },
     {
-      "id": "CST201-U3-Q035",
+      "id": "CST201-U4-Q038",
       "type": "mcq",
-      "topic": "Return Values",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": null,
-      "source": "original",
-      "tags": [
-        "return-statement",
-        "return-type",
-        "functions"
-      ],
-      "question": "How many values can a function return using the return statement in C?",
-      "options": {
-        "A": "0",
-        "B": "1",
-        "C": "Multiple values",
-        "D": "Unlimited"
-      },
-      "correct": "B",
-      "explanation": "The return statement carries exactly one value back, converted to the declared return type. Several results require pointers, a structure or a global variable.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q036",
-      "type": "mcq",
-      "topic": "Recursion",
+      "topic": "Array Passing to Function",
       "difficulty": "medium",
       "marks": 1,
       "year": null,
       "source": "original",
       "tags": [
-        "recursion",
-        "base-case",
-        "termination"
+        "arrays",
+        "functions",
+        "pass-by-reference",
+        "base-address"
       ],
-      "question": "What is essential for a recursive function to avoid infinite recursion?",
+      "question": "When an array is passed to a function in C, what is actually passed?",
       "options": {
-        "A": "A loop statement",
-        "B": "A base case (termination condition)",
-        "C": "A global variable",
-        "D": "A static variable"
+        "A": "A copy of the entire array",
+        "B": "The base address (pointer to the first element)",
+        "C": "The size of the array",
+        "D": "The last element of the array"
       },
       "correct": "B",
-      "explanation": "Every recursion must move toward a base case that stops further calls; without it the stack fills and the program crashes. A loop or a global does not provide that stopping test.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q037",
-      "type": "mcq",
-      "topic": "Storage Classes",
-      "difficulty": "medium",
-      "marks": 1,
-      "year": null,
-      "source": "original",
-      "tags": [
-        "storage-class",
-        "extern",
-        "global-variables"
-      ],
-      "question": "What is the purpose of the extern storage class?",
-      "options": {
-        "A": "To store variables in CPU registers",
-        "B": "To declare a global variable defined in another file",
-        "C": "To make variables persist between function calls",
-        "D": "To limit variable scope to a function"
-      },
-      "correct": "B",
-      "explanation": "extern declares an object or function that is defined in another translation unit and asks the linker to resolve it. It creates no new storage of its own.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q038",
-      "type": "mcq",
-      "topic": "Storage Classes",
-      "difficulty": "medium",
-      "marks": 1,
-      "year": null,
-      "source": "original",
-      "tags": [
-        "storage-class",
-        "register",
-        "cpu-registers"
-      ],
-      "question": "What is the advantage of using register storage class?",
-      "options": {
-        "A": "Variables persist between function calls",
-        "B": "Faster access as variables are stored in CPU registers",
-        "C": "Variables become global",
-        "D": "Memory is saved"
-      },
-      "correct": "B",
-      "explanation": "register asks the compiler to keep the variable in a CPU register to avoid memory access, but it is only a hint that may be ignored, and you cannot take its address.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q039",
-      "type": "mcq",
-      "topic": "Function Signature",
-      "difficulty": "medium",
-      "marks": 1,
-      "year": null,
-      "source": "original",
-      "tags": [
-        "function-signature",
-        "function-overloading",
-        "c-language"
-      ],
-      "question": "Does C support function overloading (multiple functions with the same name)?",
-      "options": {
-        "A": "Yes, based on different parameter types",
-        "B": "Yes, based on different return types",
-        "C": "No, C does not support function overloading",
-        "D": "Yes, but only in C99 standard"
-      },
-      "correct": "C",
-      "explanation": "C has no name mangling, so two functions cannot share a name even with different parameters. Overloading is a C++ feature, not standard C.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q040",
-      "type": "mcq",
-      "topic": "Recursion vs Iteration",
-      "difficulty": "medium",
-      "marks": 1,
-      "year": null,
-      "source": "original",
-      "tags": [
-        "recursion",
-        "iteration",
-        "performance",
-        "memory"
-      ],
-      "question": "Which of the following is a disadvantage of recursion compared to iteration?",
-      "options": {
-        "A": "Code is harder to understand",
-        "B": "More memory consumption due to stack usage",
-        "C": "Cannot solve complex problems",
-        "D": "Slower compilation time"
-      },
-      "correct": "B",
-      "explanation": "Each recursive call keeps its own frame on the stack, so recursion needs more memory than an equivalent loop and can overflow on deep input. Iteration reuses one frame.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q041",
-      "type": "mcq",
-      "topic": "Scope and Lifetime",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": null,
-      "source": "original",
-      "tags": [
-        "scope",
-        "lifetime",
-        "auto-variables",
-        "local-variables"
-      ],
-      "question": "What is the default initial value of an auto (local) variable in C?",
-      "options": {
-        "A": "0",
-        "B": "NULL",
-        "C": "Garbage value",
-        "D": "-1"
-      },
-      "correct": "C",
-      "explanation": "Automatic variables are not initialised; they hold whatever bytes were left in that stack slot, so the value is garbage. Only static and global objects start at zero.",
-      "topicQuality": "specific"
-    },
-    {
-      "id": "CST201-U3-Q042",
-      "type": "mcq",
-      "topic": "Library Functions",
-      "difficulty": "easy",
-      "marks": 1,
-      "year": null,
-      "source": "original",
-      "tags": [
-        "library-functions",
-        "header-files",
-        "predefined-functions"
-      ],
-      "question": "Which header file contains the prototype for the printf() function?",
-      "options": {
-        "A": "stdlib.h",
-        "B": "stdio.h",
-        "C": "conio.h",
-        "D": "string.h"
-      },
-      "correct": "B",
-      "explanation": "printf() and scanf() are declared in stdio.h, which must be included to use them. stdlib.h, conio.h and string.h declare other families of functions.",
-      "topicQuality": "specific"
+      "explanation": "The array name decays to a pointer to its first element, so only that address is passed and the function can modify the caller's elements. The size is not passed along.",
+      "topicQuality": "specific",
+      "unit": 3
     }
   ]
 }
