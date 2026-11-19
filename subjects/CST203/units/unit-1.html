@@ -168,128 +168,168 @@
     </h2>
     <div class="section-content">
 
-      <!-- History -->
-      <div class="definition-box">
-        <div class="box-title"><i class="fas fa-history"></i> History of Python</div>
-        <p>Python was created by <strong>Guido van Rossum</strong> and first released in <strong>1991</strong>. It was designed to be easy to read and write, with a focus on code readability and simplicity. The name "Python" was inspired by the British comedy show <em>Monty Python's Flying Circus</em>.</p>
-        <ul>
-          <li><strong>Python 1.0</strong> — Released in 1994.</li>
-          <li><strong>Python 2.0</strong> — Released in 2000. Added list comprehensions, garbage collection.</li>
-          <li><strong>Python 3.0</strong> — Released in 2008. Not backward compatible with Python 2. Current standard.</li>
-        </ul>
+      <h3 id="python-basics-indentation-keywords-and-comments"><i class="fas fa-history"></i> Python Basics: History, Features, Indentation, Keywords and Comments</h3>
+
+      <p>Python is a high-level, interpreted, dynamically typed language created by <strong>Guido van Rossum</strong> and first released in <strong>1991</strong>. It was designed for readability: the language uses indentation instead of braces, and its standard library ships with the language rather than as an add-on. The name comes from the British comedy series <em>Monty Python's Flying Circus</em>, not from the snake.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Python 2 vs Python 3 — the differences the paper asks about</caption>
+          <thead>
+            <tr><th>Feature</th><th>Python 2 (retired)</th><th>Python 3 (current)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>print</code></td><td>Statement: <code>print "hi"</code></td><td>Function: <code>print("hi")</code></td></tr>
+            <tr><td>Division <code>/</code></td><td>Integer division on two ints: <code>7/2 == 3</code></td><td>Always float: <code>7/2 == 3.5</code></td></tr>
+            <tr><td>Text input</td><td><code>raw_input()</code> returns a string</td><td><code>input()</code> returns a string</td></tr>
+            <tr><td>Strings</td><td>ASCII <code>str</code> plus separate <code>unicode</code></td><td><code>str</code> is Unicode; bytes are a separate type</td></tr>
+            <tr><td>Integer type</td><td><code>int</code> and <code>long</code></td><td>One unbounded <code>int</code></td></tr>
+            <tr><td>Status</td><td>No updates since 2020</td><td>The version every course and library targets</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Features -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-star"></i> Key Features of Python</div>
-        <div class="type-grid">
-          <div class="type-card">
-            <div class="type-icon"><i class="fas fa-play-circle"></i></div>
-            <p class="card-title">Interpreted</p>
-            <p>Code is executed line by line. No separate compilation step needed.</p>
-          </div>
-          <div class="type-card">
-            <div class="type-icon"><i class="fas fa-layer-group"></i></div>
-            <p class="card-title">High-Level</p>
-            <p>Abstracts away hardware details. Programmer focuses on logic.</p>
-          </div>
-          <div class="type-card">
-            <div class="type-icon"><i class="fas fa-tags"></i></div>
-            <p class="card-title">Dynamically Typed</p>
-            <p>Variable types are determined at runtime. No need to declare types.</p>
-          </div>
-          <div class="type-card">
-            <div class="type-icon"><i class="fas fa-cube"></i></div>
-            <p class="card-title">Object-Oriented</p>
-            <p>Supports classes, objects, inheritance, and polymorphism.</p>
-          </div>
-          <div class="type-card">
-            <div class="type-icon"><i class="fas fa-boxes"></i></div>
-            <p class="card-title">Extensive Libraries</p>
-            <p>Rich standard library + PyPI with thousands of third-party packages.</p>
-          </div>
-          <div class="type-card">
-            <div class="type-icon"><i class="fas fa-laptop-code"></i></div>
-            <p class="card-title">Cross-Platform</p>
-            <p>Runs on Windows, Linux, macOS without modification.</p>
-          </div>
+      <p>Eight features carry most of the marks when the question says <em>"explain the features of Python"</em>:</p>
+      <div class="type-grid">
+        <div class="type-card">
+          <p class="card-title">Interpreted</p>
+          <p>Executed by the interpreter statement by statement. No separate compile-and-link step like C.</p>
+        </div>
+        <div class="type-card">
+          <p class="card-title">High-level</p>
+          <p>Memory is managed for you — no <code>malloc</code>, no pointers, no manual <code>free</code>.</p>
+        </div>
+        <div class="type-card">
+          <p class="card-title">Dynamically typed</p>
+          <p>A name is bound to whatever object you assign. No type declaration, and the type can change later.</p>
+        </div>
+        <div class="type-card">
+          <p class="card-title">Object-oriented</p>
+          <p>Everything is an object, including <code>int</code> and functions. Classes and inheritance are built in.</p>
+        </div>
+        <div class="type-card">
+          <p class="card-title">Free and open source</p>
+          <p>Usable and redistributable at no cost, with source available.</p>
+        </div>
+        <div class="type-card">
+          <p class="card-title">Extensive library</p>
+          <p>A large standard library plus third-party packages installed with <code>pip</code>.</p>
+        </div>
+        <div class="type-card">
+          <p class="card-title">Cross-platform</p>
+          <p>The same source runs on Windows, Linux and macOS without modification.</p>
+        </div>
+        <div class="type-card">
+          <p class="card-title">Readable</p>
+          <p>Indentation makes block structure visible; English-like keywords keep conditions short.</p>
         </div>
       </div>
 
-      <!-- Installation -->
-      <div class="algo-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-download"></i> Installation and Setup</div>
-        <p><strong>Windows:</strong></p>
-        <ol>
-          <li>Download installer from <code>python.org</code>.</li>
-          <li>Run the installer — check <em>"Add Python to PATH"</em>.</li>
-          <li>Verify with <code>python --version</code> in Command Prompt.</li>
-        </ol>
-        <p><strong>Linux/Mac:</strong></p>
-        <ol>
-          <li>Linux: <code>sudo apt install python3</code></li>
-          <li>Mac: Use Homebrew — <code>brew install python3</code></li>
-          <li>Verify: <code>python3 --version</code></li>
-        </ol>
-      </div>
+      <h4>Indentation is syntax, not decoration</h4>
+      <p>Python groups statements into a <strong>block</strong> purely by their leading whitespace. Every line of a block must share the same indent; the block ends when the indent drops back. The convention — and what every paper expects you to say — is <strong>four spaces per level</strong>. There is no <code>{ }</code> and no <code>end</code> keyword, so the whitespace <em>is</em> the syntax.</p>
 
-      <!-- Interactive vs Script -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-terminal"></i> Interactive Interpreter vs Script Mode</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead>
-              <tr><th>Feature</th><th>Interactive Interpreter</th><th>Script Mode</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>How to start</td><td>Type <code>python</code> in terminal</td><td>Write code in a <code>.py</code> file</td></tr>
-              <tr><td>Execution</td><td>Line by line immediately</td><td>Entire file at once</td></tr>
-              <tr><td>Use case</td><td>Testing, exploring, quick calculations</td><td>Building real programs</td></tr>
-              <tr><td>Output</td><td>Shows result of each expression</td><td>Only explicit print() shows output</td></tr>
-              <tr><td>Prompt</td><td><code>&gt;&gt;&gt;</code></td><td>No prompt — run with <code>python file.py</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Basic Syntax -->
-      <div class="syntax-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Basic Python Syntax</div>
-        <p><strong>1. Indentation:</strong> Python uses indentation (spaces/tabs) to define code blocks. No curly braces.</p>
-        <p><strong>2. Comments:</strong> Single-line comments use <code>#</code>. Multi-line use triple quotes <code>"""..."""</code>.</p>
-        <p><strong>3. Print Statement:</strong> <code>print()</code> function outputs to screen.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Syntax Examples</div>
-        <pre>
-# This is a single-line comment
-
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Indentation, comments and docstrings</div>
+<pre>
+# Single-line comment: Python ignores everything after #
 """
-This is a
-multi-line comment
+A triple-quoted string. When it is the first statement in a
+module, function or class it becomes that object's __doc__.
 """
 
-# Indentation example
+def greet():
+    """Returned by greet.__doc__ -- not printed anywhere."""
+    return "hi"
+
 if True:
-    print("Indented block")   # 4 spaces indent
-    print("Still in block")
+    print("Indented 4 spaces -> inside the if block")
+    print("Same indent -> still the same block")
+print("Dedented -> outside the block")
 
-print("Outside block")
-
-# Print statement
-print("Hello, World!")
-print("Sum:", 5 + 3)
-print("Name:", "Alice", "Age:", 20)
-        </pre>
+print(greet())
+print(repr(greet.__doc__))
+</pre>
       </div>
 
-      <div class="important-note" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Exam Important</div>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Two errors that come straight from whitespace</div>
         <ul>
-          <li>Python was created by <strong>Guido van Rossum in 1991</strong>.</li>
-          <li>Python uses <strong>indentation</strong> instead of curly braces for code blocks.</li>
-          <li>Python is <strong>interpreted</strong> — code runs line by line.</li>
-          <li>Interactive mode uses <code>&gt;&gt;&gt;</code> prompt. Script mode runs <code>.py</code> files.</li>
+          <li><strong><code>IndentationError</code></strong> — the block is empty, over-indented, or the first line under a colon is not indented. A colon at the end of <code>if</code>, <code>for</code>, <code>while</code>, <code>def</code> or <code>else</code> promises a block, so the next line must be indented one level deeper.</li>
+          <li><strong><code>TabError</code></strong> — the same block is indented with a mixture of tabs and spaces. Python 3 forbids the mixture outright rather than guessing which you meant. Pick one and never mix.</li>
+        </ul>
+        <p>A comment is stripped before execution and is not part of the program. A docstring is a real string expression that survives as metadata, so <code>help()</code> can print it. That difference is exactly what a "comments vs docstrings" question is testing.</p>
+      </div>
+
+      <h4>Identifiers and keywords</h4>
+      <p>An <strong>identifier</strong> is a name you invent: a variable, function, class or module. A <strong>keyword</strong> is a name the language has already reserved, and you may not reuse it. Python 3 has <strong>35 keywords</strong>, and three of them are case-sensitive surprises — <code>True</code>, <code>False</code> and <code>None</code> are capitalised, so <code>true</code> and <code>none</code> are ordinary (undefined) names.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Identifier rules — decide each name in one second</caption>
+          <thead>
+            <tr><th>Name</th><th>Valid?</th><th>The rule it breaks or obeys</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>total_2</code></td><td>Valid</td><td>Letters, digits and underscore; does not start with a digit</td></tr>
+            <tr><td><code>_temp</code></td><td>Valid</td><td>A leading underscore is allowed</td></tr>
+            <tr><td><code>2total</code></td><td>Invalid</td><td>Cannot begin with a digit</td></tr>
+            <tr><td><code>total-sum</code></td><td>Invalid</td><td><code>-</code> is an operator, not a name character</td></tr>
+            <tr><td><code>my var</code></td><td>Invalid</td><td>No spaces inside a name</td></tr>
+            <tr><td><code>class</code></td><td>Invalid</td><td>A keyword is reserved</td></tr>
+            <tr><td><code>True</code></td><td>Invalid</td><td>Keyword — and note the capital <code>T</code></td></tr>
+            <tr><td><code>print</code></td><td>Valid (but avoid)</td><td>Not a keyword in Python 3 — it is a built-in function, and rebinding it hides the function</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="running-python-interactive-script-mode-and-builtin-functions"><i class="fas fa-terminal"></i> Running Python: Interactive Mode, Script Mode and Built-in Functions</h3>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Interactive interpreter vs script mode</caption>
+          <thead>
+            <tr><th>Aspect</th><th>Interactive interpreter</th><th>Script mode</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Start it</td><td>Type <code>python</code> (or <code>python3</code>) in a terminal</td><td>Write a <code>.py</code> file and run <code>python3 file.py</code></td></tr>
+            <tr><td>Prompt</td><td><code>&gt;&gt;&gt;</code> — continuation lines use <code>...</code></td><td>No prompt at all</td></tr>
+            <tr><td>When code runs</td><td>Each statement as you press Enter</td><td>The whole file, top to bottom</td></tr>
+            <tr><td>Expression output</td><td>Every bare expression is echoed automatically</td><td>Only <code>print()</code> produces output</td></tr>
+            <tr><td>Kept anywhere?</td><td>No — closing the session loses it</td><td>Yes, the file is the program</td></tr>
+            <tr><td>Good for</td><td>Checking one behaviour quickly</td><td>Anything you want to run again</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Both modes use the same interpreter, so the same statement behaves identically — the difference is only <em>who prints the result</em>. In the interactive prompt the interpreter echoes it; in a script you must call <code>print()</code> yourself.</p>
+
+      <h4>Built-in functions the paper names</h4>
+      <p>A <strong>built-in function</strong> is already available when the interpreter starts — it needs no import. The ones that recur in objective questions are <code>len()</code>, <code>type()</code>, <code>id()</code>, <code>int()</code>, <code>str()</code>, <code>range()</code>, <code>all()</code>, <code>any()</code>, <code>max()</code>, <code>min()</code> and <code>sum()</code>. <code>all()</code> returns <code>True</code> only if every element is truthy; <code>any()</code> returns <code>True</code> if at least one is. Both return <code>True</code> for an empty sequence, which is the detail that catches people out.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> all(), any(), len() and type()</div>
+<pre>
+print(all([True, True, False]))   # False -- one falsy element is enough
+print(any([False, False, True]))  # True  -- one truthy element is enough
+print(all([]), any([]))           # True False -- vacuous truth on empty
+print(len("Python"), "Python"[0], "Python"[-1])   # 6 P n
+print(type(10).__name__)          # int
+</pre>
+      </div>
+
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-download"></i> Setup and PATH (syllabus topic, not yet examined)</div>
+        <p>Install from <code>python.org</code> (tick <em>Add Python to PATH</em>) or <code>sudo apt install python3</code>; verify with <code>python3 --version</code>. <strong><code>PATH</code></strong> is where the shell looks for a command, so "python3: not found" means the install folder is missing from it. <strong><code>PYTHONPATH</code></strong> is unrelated: it lists folders that <code>import</code> searches for <em>your</em> modules. Read a traceback bottom-up — the last line names the exception (<code>SyntaxError</code>, <code>IndentationError</code>, <code>NameError</code>, <code>TypeError</code>, <code>IndexError</code>, <code>KeyError</code>), the lines above it name the file and line number.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Exam important</div>
+        <ul>
+          <li>Guido van Rossum, <strong>1991</strong>; Python 3 (2008) is not backward compatible with Python 2.</li>
+          <li>Blocks are defined by <strong>indentation</strong> — four spaces, never mixed with tabs.</li>
+          <li><code>#</code> is a comment and is discarded; a triple-quoted docstring is a live string kept in <code>__doc__</code>.</li>
+          <li>35 keywords; <code>True</code>, <code>False</code>, <code>None</code> are capitalised. <code>print</code> is a built-in function, not a keyword.</li>
+          <li>Interactive mode echoes expressions; script mode needs an explicit <code>print()</code>.</li>
         </ul>
       </div>
 
@@ -304,98 +344,121 @@ print("Name:", "Alice", "Age:", 20)
     </h2>
     <div class="section-content">
 
-      <!-- Dynamic Typing -->
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-tags"></i> Python Variables — Dynamic Typing</div>
-        <p>In Python, you do <strong>not need to declare</strong> the type of a variable. The type is automatically assigned based on the value given. This is called <strong>dynamic typing</strong>.</p>
-        <p>A variable is a name that refers to a value stored in memory. You create a variable by simply assigning a value using <code>=</code>.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Variable Examples</div>
-        <pre>
-x = 10          # int
-y = 3.14        # float
-name = "Alice"  # str
-flag = True     # bool
+      <h3 id="data-types-mutability-and-type-conversion"><i class="fas fa-tags"></i> Built-in Data Types, Mutability and Type Conversion</h3>
 
-# Type can change dynamically
-x = "Now I am a string"
-print(type(x))  # &lt;class 'str'&gt;
+      <p>A Python name is not a typed box; it is a <strong>label tied to an object</strong>. <code>x = 10</code> builds the integer object <code>10</code> and binds the name <code>x</code> to it. Assign a string to <code>x</code> later and the name is simply re-pointed at a different object — nothing about <code>x</code> was ever declared. That is what <strong>dynamic typing</strong> means, and it is why <code>type()</code> has to be asked at runtime rather than read from a declaration.</p>
 
-# Check type using type()
-print(type(10))     # &lt;class 'int'&gt;
-print(type(3.14))   # &lt;class 'float'&gt;
-print(type(2+3j))   # &lt;class 'complex'&gt;
-        </pre>
-      </div>
-
-      <!-- Numeric Types -->
-      <div class="definition-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-hashtag"></i> Numeric Data Types</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead>
-              <tr><th>Type</th><th>Description</th><th>Example</th><th>Notes</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><code>int</code></td><td>Integer values</td><td><code>10, -5, 0</code></td><td>No size limit in Python 3</td></tr>
-              <tr><td><code>float</code></td><td>Decimal numbers</td><td><code>3.14, -2.5, 1.0</code></td><td>64-bit IEEE 754</td></tr>
-              <tr><td><code>complex</code></td><td>Complex numbers</td><td><code>2+3j, -1j</code></td><td>Real + imaginary part</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Numeric Type Examples</div>
-        <pre>
-# Integer
-a = 100
-b = -45
-print(type(a))   # &lt;class 'int'&gt;
-
-# Float
-pi = 3.14159
-print(type(pi))  # &lt;class 'float'&gt;
-
-# Complex
-c = 2 + 3j
-print(c.real)    # 2.0
-print(c.imag)    # 3.0
-print(type(c))   # &lt;class 'complex'&gt;
-
-# Type conversion
-print(int(3.7))   # 3  (truncates)
-print(float(5))   # 5.0
-print(complex(2)) # (2+0j)
-        </pre>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>The built-in types you must be able to name and classify</caption>
+          <thead>
+            <tr><th>Type</th><th>Example</th><th>Mutable?</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>int</code></td><td><code>42</code>, <code>-7</code></td><td>No</td><td>Unbounded in Python 3 — no separate <code>long</code></td></tr>
+            <tr><td><code>float</code></td><td><code>3.14</code>, <code>2.0</code></td><td>No</td><td>IEEE-754 double, so <code>0.1 + 0.2 != 0.3</code> exactly</td></tr>
+            <tr><td><code>complex</code></td><td><code>2 + 3j</code></td><td>No</td><td>Read parts with <code>.real</code> and <code>.imag</code></td></tr>
+            <tr><td><code>bool</code></td><td><code>True</code>, <code>False</code></td><td>No</td><td>Subclass of <code>int</code>, so <code>True + 1 == 2</code></td></tr>
+            <tr><td><code>str</code></td><td><code>"text"</code></td><td>No</td><td>Immutable sequence of characters</td></tr>
+            <tr><td><code>list</code></td><td><code>[1, 2]</code></td><td><strong>Yes</strong></td><td>Ordered, indexable, duplicates allowed</td></tr>
+            <tr><td><code>tuple</code></td><td><code>(1, 2)</code></td><td>No</td><td>Ordered, indexable, hashable if its contents are</td></tr>
+            <tr><td><code>dict</code></td><td><code>{"a": 1}</code></td><td><strong>Yes</strong></td><td>Key → value; keys must be hashable</td></tr>
+            <tr><td><code>set</code></td><td><code>{1, 2}</code></td><td><strong>Yes</strong></td><td>Unordered, no duplicates</td></tr>
+            <tr><td><code>NoneType</code></td><td><code>None</code></td><td>No</td><td>One object, used as "no value"</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Date and Time -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-calendar-alt"></i> Date and Time — datetime Module</div>
-        <p>Python provides the <code>datetime</code> module to work with dates and times.</p>
+      <h4>Mutable vs immutable — proved, not asserted</h4>
+      <p>An object is <strong>immutable</strong> when no operation can change it in place. Every "change" you write actually builds a new object and re-binds the name. <code>id()</code> returns the identity of an object and makes the difference visible: after <code>s += "d"</code> the id changes (a new string was built), while <code>lst.append(3)</code> leaves the id alone (the same list was modified).</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> The id() proof</div>
+<pre>
+s = "abc"
+print(id(s) == id("abc"))     # True  -- same object, strings are shared
+s += "d"                      # rebinds: a NEW string object
+print(s, id(s) == id("abc"))  # abcd False
+
+lst = [1, 2]
+before = id(lst)
+lst.append(3)                 # in-place: SAME object
+print(lst, id(lst) == before) # [1, 2, 3] True
+
+t = (1, 2)
+t[0] = 99                     # TypeError: 'tuple' object does not support item assignment
+</pre>
       </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> datetime Examples</div>
-        <pre>
+
+      <p><strong>Why mutability is worth marks:</strong> immutable objects are hashable, so they can be dictionary keys and set members; they are safe to share between parts of a program because nothing can change them behind your back. Mutable objects are cheaper to grow, which is why <code>append()</code> exists at all. Try <code>d[[1, 2]] = "x"</code> and Python raises <code>TypeError: unhashable type: 'list'</code> — that single line is the standard objective question on dictionary keys.</p>
+
+      <h4>Implicit coercion vs explicit conversion</h4>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Two different things that both get called "type conversion"</caption>
+          <thead>
+            <tr><th></th><th>Implicit (coercion)</th><th>Explicit (casting)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Who decides</td><td>The interpreter, automatically</td><td>You, by calling a function</td></tr>
+            <tr><td>Direction</td><td>Only widening: <code>int</code> → <code>float</code> → <code>complex</code></td><td>Any direction the value allows</td></tr>
+            <tr><td>Example</td><td><code>3 + 4.5</code> → <code>7.5</code>; <code>10 / 4</code> → <code>2.5</code></td><td><code>int("42")</code> → <code>42</code></td></tr>
+            <tr><td>Loses data?</td><td>No</td><td>Yes for <code>int(3.99)</code> → <code>3</code> (truncates toward zero)</td></tr>
+            <tr><td>Fails when</td><td>The types cannot be reconciled, e.g. <code>"3" + 4</code></td><td>The text is not a number, e.g. <code>int("3.5")</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Conversion in action</div>
+<pre>
+print(3 + 4.5)        # 7.5     implicit: int widened to float
+print(True + 1)       # 2       bool is an int subclass
+print(10 / 4)         # 2.5     / always returns float
+# "3" + 4 would raise TypeError: can only concatenate str (not "int") to str
+
+print(int(3.99), int("42"), int(" 7 "))          # 3 42 7   (truncates)
+print(float("3.5"), str(99), bool(0), bool(""))  # 3.5 99 False False
+print(bool("0"))                                 # True -- non-empty string
+print(list("abc"), tuple([1, 2]), dict([("a", 1)]))
+print(ord("A"), chr(97))                          # 65 a
+</pre>
+      </div>
+
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Watch the return type</div>
+        <p><code>/</code> always returns a float, even when both operands divide exactly: <code>10 / 2</code> is <code>5.0</code>, not <code>5</code>. For an integer quotient use <code>//</code>. And <code>bool</code> is caught by both traps at once — <code>True</code> is a real <code>int</code> worth 1, so <code>sum([True, True, False])</code> returns <code>2</code>.</p>
+      </div>
+
+      <h3 id="datetime-in-python"><i class="fas fa-calendar-alt"></i> Date and Time Using the datetime Module</h3>
+
+      <p>The <code>datetime</code> module supplies <code>date</code> (a calendar day), <code>time</code> (a clock time), <code>datetime</code> (both) and <code>timedelta</code> (a duration). <code>datetime.now()</code> gives the current local date and time; <code>strftime()</code> turns it into formatted text. Subtract two <code>date</code> or <code>datetime</code> objects and you get a <code>timedelta</code>; add a <code>timedelta</code> to a date and you get a new date.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Current date, formatting and arithmetic</div>
+<pre>
 from datetime import datetime, date, timedelta
 
-# Current date and time
 now = datetime.now()
-print(now)                    # 2024-01-15 10:30:00.123456
+print(now.strftime("%Y-%m-%d %H:%M:%S"))   # 2026-11-19 05:57:57
+print(now.strftime("%d/%m/%Y"))            # 19/11/2026
+print(now.year, now.month, now.day)        # 2026 11 19
 
-# Specific date
 d = date(2024, 1, 15)
-print(d)                      # 2024-01-15
+print(d, d.strftime("%d-%b-%Y"))           # 2024-01-15 15-Jan-2024
+print(date.today() + timedelta(days=1))    # tomorrow
+print(date(2024, 1, 15) - date(2024, 1, 1))  # 14 days, 0:00:00
 
-# Formatting
-print(now.strftime("%d/%m/%Y"))  # 15/01/2024
-print(now.strftime("%H:%M:%S"))  # 10:30:00
+stamp = datetime(2024, 1, 15, 10, 30, 0)
+print(stamp.strftime("%I:%M %p"))          # 10:30 AM
+delta = datetime(2024, 1, 16, 10, 30) - stamp
+print(delta, delta.total_seconds(), delta.days)  # 1 day, 0:00:00 86400.0 1
+</pre>
+      </div>
 
-# Timedelta (date arithmetic)
-tomorrow = date.today() + timedelta(days=1)
-print(tomorrow)
-        </pre>
+      <div class="tip-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> strftime codes worth memorising</div>
+        <p><code>%Y</code> four-digit year · <code>%m</code> month 01–12 · <code>%d</code> day 01–31 · <code>%H</code> hour 00–23 · <code>%M</code> minute · <code>%S</code> second · <code>%I</code> hour 01–12 · <code>%p</code> AM/PM · <code>%b</code> abbreviated month name · <code>%A</code> full weekday name. Lower-case <code>%y</code> gives a two-digit year and <code>%m</code> versus <code>%M</code> is month versus minute — those two swaps cause most lost marks.</p>
       </div>
 
     </div>
@@ -409,94 +472,228 @@ print(tomorrow)
     </h2>
     <div class="section-content">
 
-      <div class="definition-box">
-        <div class="box-title"><i class="fas fa-book"></i> What is a String?</div>
-        <p>A <strong>string</strong> is a sequence of characters enclosed in quotes. Python supports single quotes <code>'...'</code>, double quotes <code>"..."</code>, and triple quotes <code>"""..."""</code> or <code>'''...'''</code>.</p>
-        <p>Strings in Python are <strong>immutable</strong> — once created, they cannot be changed.</p>
-        <p>Each character has an <strong>index</strong> starting from 0 (left) or -1 (right, going backwards).</p>
+      <h3 id="string-slicing-indexing-and-methods"><i class="fas fa-scissors"></i> String Literals, Indexing, Slicing and Methods</h3>
+
+      <p>A <strong>string</strong> is an ordered, <strong>immutable</strong> sequence of characters. Ordered means every character has a fixed position; immutable means no character can ever be replaced in place. Single and double quotes are interchangeable — you switch style only so that a quote inside the text does not close the string early. Triple quotes are the one genuinely different form, because they preserve line breaks.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Four literal forms</div>
+<pre>
+print('He said "hi"')      # double quotes inside single quotes
+print("It's fine")         # apostrophe inside double quotes
+print('''multi
+line''')                  # triple quotes keep the newline
+print(repr(r"C:\new\test"))  # raw string: r"..." keeps backslashes literal
+</pre>
       </div>
 
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> String Literals and Indexing</div>
-        <pre>
-# String literals
-s1 = 'Hello'
-s2 = "World"
-s3 = """This is a
-multi-line string"""
+      <figure class="unit-figure">
+        <svg viewBox="0 0 700 260" role="img" aria-label="Indexing and slicing diagram for the string Python. Positive indexes 0 to 5 run left to right above the characters P y t h o n, negative indexes -6 to -1 run below, and the slice 1:4 selects y t h because the start index 1 is included while the stop index 4 is excluded.">
+          <g font-size="12" fill="currentColor">
+            <text x="30" y="34" font-weight="600">Positive index</text>
+            <text x="30" y="206" font-weight="600">Negative index</text>
+            <text x="470" y="34" font-weight="600">Slice 1:4</text>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="150" y="66" width="60" height="60" rx="4"></rect>
+            <rect x="210" y="66" width="60" height="60" rx="4"></rect>
+            <rect x="270" y="66" width="60" height="60" rx="4"></rect>
+            <rect x="330" y="66" width="60" height="60" rx="4"></rect>
+            <rect x="390" y="66" width="60" height="60" rx="4"></rect>
+            <rect x="450" y="66" width="60" height="60" rx="4"></rect>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="2.4">
+            <rect x="210" y="66" width="180" height="60" rx="4"></rect>
+          </g>
+          <g font-size="16" fill="currentColor" text-anchor="middle" font-weight="600">
+            <text x="180" y="104">P</text>
+            <text x="240" y="104">y</text>
+            <text x="300" y="104">t</text>
+            <text x="360" y="104">h</text>
+            <text x="420" y="104">o</text>
+            <text x="480" y="104">n</text>
+          </g>
+          <g font-size="12" fill="currentColor" text-anchor="middle">
+            <text x="180" y="56">0</text>
+            <text x="240" y="56">1</text>
+            <text x="300" y="56">2</text>
+            <text x="360" y="56">3</text>
+            <text x="420" y="56">4</text>
+            <text x="480" y="56">5</text>
+            <text x="180" y="148">-6</text>
+            <text x="240" y="148">-5</text>
+            <text x="300" y="148">-4</text>
+            <text x="360" y="148">-3</text>
+            <text x="420" y="148">-2</text>
+            <text x="480" y="148">-1</text>
+          </g>
+          <g font-size="12" fill="currentColor">
+            <text x="150" y="186" font-weight="600">s[0]</text>
+            <text x="212" y="186">P</text>
+            <text x="150" y="222" font-weight="600">s[-1]</text>
+            <text x="212" y="222">n</text>
+          </g>
+          <g font-size="12" fill="currentColor">
+            <text x="486" y="72">start 1 included</text>
+            <text x="486" y="92">stop 4 excluded</text>
+            <text x="486" y="112">result: "yth"</text>
+            <text x="486" y="150" font-weight="600">s[::-1]</text>
+            <text x="486" y="170">"nohtyP"</text>
+          </g>
+        </svg>
+        <figcaption><strong>An index picks one character; a slice returns a new string.</strong> The stop index is always excluded, so <code>s[1:4]</code> is three characters. A negative step walks backwards, which is why <code>s[::-1]</code> reverses the whole string without a loop.</figcaption>
+      </figure>
 
-# Indexing
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Indexing versus slicing — the difference the objective section tests</caption>
+          <thead>
+            <tr><th></th><th>Index <code>s[i]</code></th><th>Slice <code>s[i:j:k]</code></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Returns</td><td>One character (<code>str</code> of length 1)</td><td>A new string, possibly empty</td></tr>
+            <tr><td>Out of range</td><td><code>IndexError</code></td><td>Clamped silently, no error</td></tr>
+            <tr><td>Stop position</td><td>n/a</td><td>Excluded</td></tr>
+            <tr><td>Defaults</td><td>Index is required</td><td><code>start=0</code>, <code>stop=len</code>, <code>step=1</code></td></tr>
+            <tr><td>Negatives</td><td>Count from the end: <code>-1</code> is last</td><td>Allowed anywhere, including the step</td></tr>
+            <tr><td>Example on <code>"Python"</code></td><td><code>s[1]</code> → <code>y</code></td><td><code>s[1:4]</code> → <code>yth</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Every slice form you can be asked for</div>
+<pre>
 s = "Python"
-print(s[0])    # P  (first char)
-print(s[-1])   # n  (last char)
-print(s[2])    # t
-
-# Slicing: s[start:stop:step]
-print(s[1:4])  # yth  (index 1,2,3)
-print(s[:3])   # Pyt  (from start)
-print(s[3:])   # hon  (to end)
-print(s[::-1]) # nohtyP  (reversed)
-
-# Concatenation and Repetition
-print("Hello" + " " + "World")  # Hello World
-print("Ha" * 3)                  # HaHaHa
-        </pre>
+print(s[0], s[-1])      # P n
+print(s[1:4], s[:3], s[3:])   # yth Pyt hon
+print(s[::-1])          # nohtyP   reverse
+print(s[::2])           # Pto      every second character
+print(s[-3:])           # hon      last three
+print(s[:-2])           # Pyth     all but the last two
+print(s[1:100])         # ython    out-of-range stop is safe
+print(s[4:1])           # ''       empty, still no error
+</pre>
       </div>
 
-      <!-- String Formatting -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-magic"></i> String Formatting</div>
-        <p>Python provides two modern ways to format strings:</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> .format() and f-strings</div>
-        <pre>
-name = "Alice"
-age = 20
-score = 95.5
+      <h4>Methods: the string is never changed</h4>
+      <p>Because strings are immutable, every method <strong>returns a new string</strong> and leaves the original untouched. Writing <code>s.upper()</code> and expecting <code>s</code> to change is the single most common beginner error — you have to assign the result back. These are <em>methods</em>, called with a dot on the string; <code>len()</code> by contrast is a <em>built-in function</em> called around it.</p>
 
-# .format() method
-print("Hello, {}! You are {} years old.".format(name, age))
-print("Score: {:.2f}".format(score))  # 2 decimal places
-
-# f-strings (Python 3.6+) — Preferred modern way
-print(f"Hello, {name}! You are {age} years old.")
-print(f"Score: {score:.2f}")
-print(f"Next year you will be {age + 1}")
-
-# Unicode strings
-u_str = u"Caf\u00e9"  # Unicode literal
-print(u_str)           # Café
-
-# Comparing strings
-print("apple" == "apple")  # True
-print("apple" != "mango")  # True
-print("apple" < "banana")  # True (alphabetical)
-        </pre>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Methods that appear in the papers, with exact output</caption>
+          <thead>
+            <tr><th>Call</th><th>Returns</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>"  hi  ".strip()</code></td><td>Copy without leading/trailing whitespace</td><td><code>"hi"</code></td></tr>
+            <tr><td><code>"Hello".upper()</code> / <code>.lower()</code></td><td>Copy case-changed</td><td><code>"HELLO"</code> / <code>"hello"</code></td></tr>
+            <tr><td><code>"hello".find("l")</code></td><td>First index, or <code>-1</code></td><td><code>2</code></td></tr>
+            <tr><td><code>"hello".index("l")</code></td><td>First index, or <code>ValueError</code></td><td><code>2</code></td></tr>
+            <tr><td><code>"hello".count("l")</code></td><td>Number of non-overlapping occurrences</td><td><code>2</code></td></tr>
+            <tr><td><code>"banana".count("an")</code></td><td>Occurrences are counted without overlap</td><td><code>2</code></td></tr>
+            <tr><td><code>"hello".replace("l", "r")</code></td><td>Copy with every occurrence replaced</td><td><code>"herro"</code></td></tr>
+            <tr><td><code>"a,b,c".split(",")</code></td><td>List of pieces around the separator</td><td><code>['a', 'b', 'c']</code></td></tr>
+            <tr><td><code>"a b  c".split()</code></td><td>Splits on runs of whitespace when no separator is given</td><td><code>['a', 'b', 'c']</code></td></tr>
+            <tr><td><code>"-".join(["a", "b"])</code></td><td>One string, separator between elements</td><td><code>"a-b"</code></td></tr>
+            <tr><td><code>"hello".startswith("he")</code></td><td>Prefix test</td><td><code>True</code></td></tr>
+            <tr><td><code>"hello".title()</code></td><td>Copy with each word capitalised</td><td><code>"Hello"</code></td></tr>
+            <tr><td><code>len("hello")</code></td><td>Not a method — a built-in function</td><td><code>5</code></td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- String Methods -->
-      <div class="algo-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-tools"></i> Common String Methods</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead>
-              <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><code>.upper()</code></td><td>Convert to uppercase</td><td><code>"hello".upper()</code></td><td><code>"HELLO"</code></td></tr>
-              <tr><td><code>.lower()</code></td><td>Convert to lowercase</td><td><code>"HELLO".lower()</code></td><td><code>"hello"</code></td></tr>
-              <tr><td><code>.strip()</code></td><td>Remove leading/trailing whitespace</td><td><code>"  hi  ".strip()</code></td><td><code>"hi"</code></td></tr>
-              <tr><td><code>.find(sub)</code></td><td>Returns index of first occurrence (-1 if not found)</td><td><code>"hello".find("l")</code></td><td><code>2</code></td></tr>
-              <tr><td><code>.replace(a,b)</code></td><td>Replace all occurrences of a with b</td><td><code>"hello".replace("l","r")</code></td><td><code>"herro"</code></td></tr>
-              <tr><td><code>.split(sep)</code></td><td>Split string into list</td><td><code>"a,b,c".split(",")</code></td><td><code>['a','b','c']</code></td></tr>
-              <tr><td><code>.join(iterable)</code></td><td>Join list into string</td><td><code>",".join(["a","b","c"])</code></td><td><code>"a,b,c"</code></td></tr>
-              <tr><td><code>.startswith(s)</code></td><td>Check if starts with s</td><td><code>"hello".startswith("he")</code></td><td><code>True</code></td></tr>
-              <tr><td><code>.endswith(s)</code></td><td>Check if ends with s</td><td><code>"hello".endswith("lo")</code></td><td><code>True</code></td></tr>
-              <tr><td><code>len(s)</code></td><td>Length of string</td><td><code>len("hello")</code></td><td><code>5</code></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <p><code>split()</code> and <code>join()</code> are exact inverses, which is why papers pair them in one sub-question: <code>",".join("a,b,c".split(",")) == "a,b,c"</code>. Note the direction — <code>join</code> is called <em>on the separator</em>, and its argument is the sequence.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> split / join round-trip on one line of text</div>
+<pre>
+line = "  id:42 , name:Alice  "
+parts = line.split(",")                       # ['  id:42 ', ' name:Alice  ']
+print([p.strip() for p in parts])             # ['id:42', 'name:Alice']
+print(", ".join(p.strip() for p in parts))    # id:42, name:Alice
+
+print("hello".find("z"))   # -1        find never raises
+print("hello".index("z"))  # ValueError: substring not found
+</pre>
+      </div>
+
+      <h3 id="string-formatting-and-immutability"><i class="fas fa-magic"></i> String Formatting and Immutability</h3>
+
+      <p>Python has three formatting styles, all still valid, and a question asking for "three ways" wants exactly these in order: the <code>%</code> operator (oldest), <code>str.format()</code> (Python 2.6+), and f-strings (Python 3.6+, and the one to prefer today).</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>The same output, three ways — with <code>name = "Alice"</code> and <code>score = 95.4567</code></caption>
+          <thead>
+            <tr><th>Style</th><th>Code</th><th>Output</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>%</code> operator</td><td><code>"%s scored %.2f" % (name, score)</code></td><td><code>Alice scored 95.46</code></td><td>Positional; needs a matching tuple</td></tr>
+            <tr><td><code>.format()</code></td><td><code>"{} scored {:.2f}".format(name, score)</code></td><td><code>Alice scored 95.46</code></td><td>Can reuse and name fields: <code>{0}</code>, <code>{n}</code></td></tr>
+            <tr><td>f-string</td><td><code>f"{name} scored {score:.2f}"</code></td><td><code>Alice scored 95.46</code></td><td>Expressions inline: <code>f"{len(name)}"</code>, <code>f"{name!r}"</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><code>%.2f</code>, <code>{:.2f}</code> and <code>f"{x:.2f}"</code> all mean "two digits after the decimal point, rounded". The format spec after the colon is the same in all three, which is why learning it once covers every style.</p>
+
+      <h4>Immutability, in full</h4>
+      <p>Assigning to a position raises <code>TypeError: 'str' object does not support item assignment</code>. Every apparent edit is really <em>build a new string, then rebind the name</em> — the pattern is <em>slice, glue, reassign</em>. That is what the "why are strings immutable" question is asking for, and the reason is worth stating: an immutable object cannot be changed by a function you passed it to, its hash cannot go stale, and it is therefore safe as a dictionary key.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Three formatting styles, then immutability</div>
+<pre>
+name, score = "Alice", 95.4567
+print("%s scored %.2f" % (name, score))
+print("{} scored {:.2f}".format(name, score))
+print(f"{name} scored {score:.2f}")
+print(f"{name!r} is {len(name)} chars")    # 'Alice' is 5 chars
+
+s = "cat"
+s = "b" + s[1:]     # slice, glue, reassign -> a new object
+print(s)            # bat
+# s[0] = "b" would raise TypeError: 'str' object does not support item assignment
+</pre>
+      </div>
+
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-check-double"></i> Palindrome check — the standard 5-mark program</div>
+        <p>Normalise first (drop everything that is not a letter or digit, then lower-case it), and only then compare. Skipping the normalise step is why a candidate answers "No 'x' in Nixon" from memory instead of from code.</p>
+<pre>
+def normalise(text):
+    """Keep letters and digits only, lower-cased."""
+    return "".join(ch.lower() for ch in text if ch.isalnum())
+
+def is_palindrome_slice(text):
+    clean = normalise(text)
+    return clean == clean[::-1]
+
+def is_palindrome_loop(text):
+    clean = normalise(text)
+    i, j = 0, len(clean) - 1
+    while i < j:
+        if clean[i] != clean[j]:
+            return False
+        i += 1
+        j -= 1
+    return True
+
+for sample in ["Madam", "Racecar", "No 'x' in Nixon", "Python"]:
+    print(f"{sample!r:22} slice={is_palindrome_slice(sample)} loop={is_palindrome_loop(sample)}")
+</pre>
+        <p>The slice version runs in one line and is what most examiners accept; the two-index loop is the version to show when the question says "without using slicing" or asks you to explain the pointer logic.</p>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Exam important</div>
+        <ul>
+          <li>Slicing: <strong>start included, stop excluded</strong>; <code>s[::-1]</code> reverses; out-of-range slices never raise.</li>
+          <li>Methods return a <strong>new</strong> string — reassign the result, or nothing changes.</li>
+          <li><code>find()</code> returns <code>-1</code>; <code>index()</code> raises <code>ValueError</code>.</li>
+          <li>Three formatting styles: <code>%</code>, <code>.format()</code>, f-string. The format spec is the same in all three.</li>
+          <li>Strings are immutable: no item assignment, and <code>+</code> or a method builds a new object.</li>
+        </ul>
       </div>
 
     </div>
@@ -510,194 +707,266 @@ print("apple" < "banana")  # True (alphabetical)
     </h2>
     <div class="section-content">
 
-      <!-- Lists -->
-      <div class="definition-box">
-        <div class="box-title"><i class="fas fa-list"></i> Lists</div>
-        <p>A <strong>list</strong> is a <em>mutable, ordered</em> sequence of elements. Lists can hold elements of different types. Defined using square brackets <code>[]</code>.</p>
+      <p>Unit 1 carries the largest single block of Python marks, and almost all of it is here: lists, tuples and dictionaries with slicing and copying account for the biggest cluster in the exam. Each of the three gets its own heading below, and the three-way comparison table at the end is the shape most 5- and 8-mark questions ask you to reproduce.</p>
+
+      <h3 id="lists-slicing-methods-and-copy-semantics"><i class="fas fa-list"></i> Lists: Slicing, In-place Methods and Copy Semantics</h3>
+
+      <p>A <strong>list</strong> is an ordered, <strong>mutable</strong> sequence written in square brackets. It may hold mixed types, allows duplicates, and every element is reachable by integer index. Slicing behaves exactly as it does for strings — <strong>start included, stop excluded</strong>, negatives count from the end, and an out-of-range stop is clamped instead of raising.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Indexing, slicing and the methods that return None</div>
+<pre>
+nums = [10, 20, 30, 40, 50]
+print(nums[1], nums[-1])           # 20 50
+print(nums[1:3], nums[:2], nums[3:], nums[:])   # [20, 30] [10, 20] [40, 50] [10..50]
+print(nums[::-1], nums[::2], nums[1:4:2])       # [50..10] [10, 30, 50] [20, 40]
+print(nums[1:100])                 # [20, 30, 40, 50]  -- clamped
+print(nums[99])                    # IndexError: list index out of range
+
+a = [3, 1]
+print(a.append(2))                 # None  <- the method returns None
+print(a)                           # [3, 1, 2]
+print(a.sort())                    # None  <- sorts IN PLACE
+print(a)                           # [1, 2, 3]
+</pre>
       </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> List Operations</div>
-        <pre>
-# Defining a list
-fruits = ["apple", "banana", "cherry"]
-numbers = [1, 2, 3, 4, 5]
-mixed = [1, "hello", 3.14, True]
 
-# Indexing and Slicing
-print(fruits[0])     # apple
-print(fruits[-1])    # cherry
-print(numbers[1:4])  # [2, 3, 4]
-print(numbers[::-1]) # [5, 4, 3, 2, 1]
+      <p>The single most examined detail here is that <strong>mutating methods return <code>None</code></strong>. <code>append</code>, <code>extend</code>, <code>insert</code>, <code>remove</code>, <code>sort</code>, <code>reverse</code> and <code>clear</code> all modify the list and hand back nothing. So <code>x = list.append(4)</code> makes <code>x</code> the value <code>None</code>, not the list. The built-in <code>sorted()</code> is the mirror image: it returns a <em>new</em> sorted list and leaves the original alone.</p>
 
-# Modifying lists (mutable)
-fruits.append("mango")         # Add to end
-fruits.insert(1, "grape")      # Insert at index 1
-fruits.remove("banana")        # Remove by value
-popped = fruits.pop()          # Remove and return last
-popped2 = fruits.pop(0)        # Remove at index 0
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>List operations — note which ones change the list and which return a new object</caption>
+          <thead>
+            <tr><th>Operation</th><th>Effect</th><th>Returns</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>a.append(x)</code></td><td>Adds <code>x</code> as <strong>one</strong> element at the end</td><td><code>None</code></td></tr>
+            <tr><td><code>a.extend(seq)</code></td><td>Adds each element of <code>seq</code> separately</td><td><code>None</code></td></tr>
+            <tr><td><code>a.insert(i, x)</code></td><td>Inserts <code>x</code> before index <code>i</code></td><td><code>None</code></td></tr>
+            <tr><td><code>a.remove(x)</code></td><td>Removes the first element equal to <code>x</code></td><td><code>None</code> / <code>ValueError</code></td></tr>
+            <tr><td><code>a.pop(i)</code></td><td>Removes and returns element at <code>i</code> (last by default)</td><td>The removed element</td></tr>
+            <tr><td><code>a.sort()</code> / <code>a.reverse()</code></td><td>Reorders in place</td><td><code>None</code></td></tr>
+            <tr><td><code>sorted(a)</code></td><td>Builds a new sorted list</td><td>A new list</td></tr>
+            <tr><td><code>len / min / max / sum</code></td><td>Built-in functions, not methods</td><td>A number</td></tr>
+            <tr><td><code>a.count(x)</code> / <code>a.index(x)</code></td><td>Counts or locates a value</td><td>An integer</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-# Other methods
-numbers.sort()                 # Sort in place
-numbers.reverse()              # Reverse in place
-print(len(numbers))            # Length
-print(numbers.index(3))        # Index of value 3
-print(numbers.count(2))        # Count occurrences
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> append vs extend, and the None trap</div>
+<pre>
+a = [1, 2]
+a.append([3, 4])    # a becomes [1, 2, [3, 4]]  -- one nested list
+a = [1, 2]
+a.extend([3, 4])    # a becomes [1, 2, 3, 4]    -- two new elements
 
-# Copying Lists
+b = [3, 1]
+b = b.append(2)     # b becomes None -- the list was changed, but append returns None
+</pre>
+      </div>
+
+      <h4>Aliasing, shallow copy and deep copy</h4>
+      <p>Assignment never copies. <code>b = a</code> gives one list object with two names, so a change through either name is visible through the other. A <strong>shallow copy</strong> (<code>a.copy()</code>, <code>a[:]</code>, <code>list(a)</code>) makes a new outer list but keeps references to the same inner objects, so editing a nested list still shows up in both. A <strong>deep copy</strong> (<code>copy.deepcopy(a)</code>) rebuilds the whole tree, so nothing is shared.</p>
+
+      <figure class="unit-figure">
+        <svg viewBox="0 0 700 300" role="img" aria-label="Three lists compared after mutating the original. The alias name points to the very same list object as the original, so it shows both changes. The shallow copy has its own outer list but still shares the inner list, so it shows only the nested change. The deep copy has independent outer and inner lists and shows neither change.">
+          <g font-size="12" fill="currentColor">
+            <text x="18" y="26" font-weight="600">original = [1, [2, 3], 4]</text>
+            <text x="18" y="46">then: original[0] = 99 and original[1][0] = 777</text>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="18" y="70" width="196" height="52" rx="6"></rect>
+            <rect x="18" y="150" width="196" height="52" rx="6"></rect>
+            <rect x="18" y="230" width="196" height="52" rx="6"></rect>
+          </g>
+          <g font-size="12" fill="currentColor">
+            <text x="30" y="90" font-weight="600">alias = original</text>
+            <text x="30" y="110">same object, no copy</text>
+            <text x="30" y="170" font-weight="600">shallow = original.copy()</text>
+            <text x="30" y="190">new outer list</text>
+            <text x="30" y="250" font-weight="600">deep = copy.deepcopy()</text>
+            <text x="30" y="270">new outer + new inner</text>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="330" y="70" width="310" height="52" rx="6"></rect>
+            <rect x="330" y="150" width="310" height="52" rx="6"></rect>
+            <rect x="330" y="230" width="310" height="52" rx="6"></rect>
+          </g>
+          <g font-size="13" fill="currentColor">
+            <text x="342" y="100" font-weight="600">[99, [777, 3], 4]</text>
+            <text x="342" y="180" font-weight="600">[1, [777, 3], 4]</text>
+            <text x="342" y="260" font-weight="600">[1, [2, 3], 4]</text>
+          </g>
+          <g font-size="11" fill="currentColor">
+            <text x="452" y="100">both changes visible</text>
+            <text x="452" y="180">only the nested change</text>
+            <text x="452" y="260">no change at all</text>
+          </g>
+        </svg>
+        <figcaption><strong>Assignment is not copying.</strong> The shallow copy looks independent until you edit something nested — that is the whole trap. Only <code>deepcopy</code> survives a mutation two levels down.</figcaption>
+      </figure>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> The three copies, run</div>
+<pre>
 import copy
 original = [1, [2, 3], 4]
-
-# Shallow copy — inner list is shared
-shallow = original.copy()      # or original[:]
-
-# Deep copy — completely independent
+alias = original
+shallow = original.copy()      # same as original[:] or list(original)
 deep = copy.deepcopy(original)
 
-original[1][0] = 99
-print(shallow[1][0])  # 99 (affected — shallow)
-print(deep[1][0])     # 2  (not affected — deep)
-        </pre>
+original[0] = 99
+original[1][0] = 777
+print("alias  ", alias)        # [99, [777, 3], 4]
+print("shallow", shallow)      # [1, [777, 3], 4]   nested list shared
+print("deep   ", deep)         # [1, [2, 3], 4]     fully independent
+</pre>
       </div>
 
-      <div class="important-note" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Shallow vs Deep Copy</div>
-        <ul>
-          <li><strong>Shallow copy:</strong> Copies the list but nested objects (inner lists) are still shared references.</li>
-          <li><strong>Deep copy:</strong> Creates a fully independent copy including all nested objects.</li>
-          <li>Use <code>copy.deepcopy()</code> from the <code>copy</code> module for deep copy.</li>
-        </ul>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Never mutate a list while looping over it</div>
+        <p>Adding to a list inside a <code>for</code> loop over that same list makes the loop chase its own tail, because the iterator keeps finding new elements:</p>
+<pre>
+x = [1, 2, 3]
+for s in x:
+    if len(x) < 6:
+        x.append(s * 10)
+print(x)        # [1, 2, 3, 10, 20, 30] -- grew while being read
+</pre>
+        <p>The safe form is to build a new list (<code>x = [s * 10 for s in x]</code>) or to loop over a copy (<code>for s in x[:]</code>). Removing elements during iteration has the mirror problem: the surviving elements slide down and the next one is skipped.</p>
       </div>
 
-      <!-- Tuples -->
-      <div class="definition-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-lock"></i> Tuples</div>
-        <p>A <strong>tuple</strong> is an <em>immutable, ordered</em> sequence. Once created, elements cannot be changed. Defined using parentheses <code>()</code>.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Tuple Examples</div>
-        <pre>
-# Defining tuples
-t1 = (1, 2, 3)
-t2 = ("a", "b", "c")
-single = (42,)      # Single element tuple needs comma!
-empty = ()
+      <h3 id="tuples-and-sequences"><i class="fas fa-lock"></i> Tuples and Sequences</h3>
 
-# Accessing
-print(t1[0])        # 1
-print(t2[-1])       # c
-print(t1[1:3])      # (2, 3)
+      <p>A <strong>tuple</strong> is an ordered, <strong>immutable</strong> sequence written in parentheses. Because it cannot change, it is the right container for fixed records (a coordinate, a date, a returned pair) and it is <strong>hashable</strong>, so it can be a dictionary key. Everything you learned about indexing and slicing transfers unchanged from strings and lists.</p>
 
-# Tuples are immutable
-# t1[0] = 99   # TypeError!
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Singles, packing, unpacking and swapping</div>
+<pre>
+t = (1, 2, 3)
+print(t[0], t[-1], t[1:], t.count(2), t.index(3), len(t))   # 1 3 (2, 3) 1 2 3
 
-# Tuple packing and unpacking
-packed = 1, 2, 3           # Packing
-a, b, c = packed           # Unpacking
-print(a, b, c)             # 1 2 3
+single = (42,)      # the comma makes it a tuple
+not_tuple = (42)    # just the integer 42 in parentheses
+print(type(single).__name__, type(not_tuple).__name__)      # tuple int
 
-# Swap using tuple unpacking
+packed = 1, 2, 3    # packing
+a, b, c = packed    # unpacking
 x, y = 10, 20
-x, y = y, x
-print(x, y)                # 20 10
+x, y = y, x         # swap via tuple unpacking -- no temporary variable
+print(a, b, c, x, y)   # 1 2 3 20 10
 
-# Tuple methods
-print(t1.count(2))   # 1
-print(t1.index(3))   # 2
-print(len(t1))       # 3
-        </pre>
+t[0] = 99           # TypeError: 'tuple' object does not support item assignment
+</pre>
       </div>
 
-      <!-- Dictionaries -->
-      <div class="definition-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-key"></i> Dictionaries</div>
-        <p>A <strong>dictionary</strong> stores data as <em>key-value pairs</em>. It is <em>mutable</em> and <em>unordered</em> (in Python 3.7+ insertion order is maintained). Keys must be unique and immutable. Defined using curly braces <code>{}</code>.</p>
-      </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Dictionary Operations</div>
-        <pre>
-# Defining a dictionary
-student = {
-    "name": "Alice",
-    "age": 20,
-    "grade": "A"
-}
-
-# Accessing
-print(student["name"])          # Alice
-print(student.get("age"))       # 20
-print(student.get("marks", 0))  # 0 (default if not found)
-
-# Adding and updating
-student["email"] = "alice@mail.com"  # Add new key
-student["age"] = 21                  # Update existing key
-
-# Deleting
-del student["grade"]           # Delete by key
-popped = student.pop("email")  # Remove and return
-
-# Iterating
-for key in student:
-    print(key, ":", student[key])
-
-for key, value in student.items():
-    print(f"{key} = {value}")
-
-# Dictionary methods
-print(student.keys())    # dict_keys(['name', 'age'])
-print(student.values())  # dict_values(['Alice', 21])
-print(len(student))      # 2
-        </pre>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Tuple immutability is not transitive</div>
+        <p>The tuple itself cannot be reassigned, but an object <em>inside</em> it can still be mutated. This is the detail that separates a full-mark answer from a half-mark one:</p>
+<pre>
+inner = (1, [2, 3])
+inner[1].append(4)    # allowed: the tuple is unchanged, the list inside it is not
+print(inner)          # (1, [2, 3, 4])
+</pre>
       </div>
 
-      <!-- Arrays -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-th"></i> Arrays — array Module</div>
-        <p>Python's built-in <code>array</code> module provides typed arrays — more memory-efficient than lists for large numeric data. All elements must be of the same type. The type is specified using a <strong>type code</strong>.</p>
+      <h3 id="dictionaries-keys-and-methods"><i class="fas fa-key"></i> Dictionaries, Hashable Keys and Dictionary Methods</h3>
+
+      <p>A <strong>dictionary</strong> stores data as key → value pairs in curly braces. It is <strong>mutable</strong> and, since Python 3.7, it remembers <strong>insertion order</strong> — so "unordered" answers written years ago are now only half true and should be qualified. Lookup by key is a hash lookup, not a scan, which is why it stays fast as the dictionary grows.</p>
+
+      <p>The key rule is the one that gets examined: <strong>keys must be hashable, i.e. immutable</strong>. Numbers, strings and tuples of immutables qualify. A list does not, and <code>d[[1, 2]] = "x"</code> raises <code>TypeError: unhashable type: 'list'</code>. Values may be absolutely anything, including lists and other dictionaries.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Access, update, delete and iterate</div>
+<pre>
+student = {"name": "Alice", "age": 20}
+print(student["name"])            # Alice
+print(student.get("age"))         # 20
+print(student.get("marks", 0))    # 0     -- no KeyError, default returned
+# student["marks"] would raise KeyError: 'marks'
+
+student["age"] = 21               # update existing key
+student["email"] = "a@mail.com"   # add new key
+print(student.pop("email"))       # a@mail.com
+print("email" in student)         # False
+del student["age"]                # delete by key
+print(student)                    # {'name': 'Alice'}
+
+for k, v in student.items():
+    print(k, "=", v)
+print(list(student.keys()), list(student.values()), len(student))
+
+d = {(1, 2): "tuple key works"}   # tuple key is fine
+print(d[(1, 2)])
+d[[1, 2]] = "x"                   # TypeError: unhashable type: 'list'
+</pre>
       </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Array Examples</div>
-        <pre>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Dictionary methods — and the one difference that decides most questions</caption>
+          <thead>
+            <tr><th>Call</th><th>Returns</th><th>Use it when</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>d[k]</code></td><td>The value, or <strong><code>KeyError</code></strong></td><td>The key must exist</td></tr>
+            <tr><td><code>d.get(k)</code></td><td>The value, or <strong><code>None</code></strong></td><td>The key may be missing</td></tr>
+            <tr><td><code>d.get(k, default)</code></td><td>The value, or <code>default</code></td><td>You want a fallback value</td></tr>
+            <tr><td><code>d.setdefault(k, default)</code></td><td>Existing value, else inserts and returns <code>default</code></td><td>Building grouped data</td></tr>
+            <tr><td><code>d.keys()</code> / <code>.values()</code> / <code>.items()</code></td><td>Views over keys / values / pairs</td><td>Iterating or converting to a list</td></tr>
+            <tr><td><code>d.update(other)</code></td><td><code>None</code></td><td>Merging another mapping in</td></tr>
+            <tr><td><code>d.pop(k)</code></td><td>The removed value, or <code>KeyError</code></td><td>Removing and using the value</td></tr>
+            <tr><td><code>d.popitem()</code></td><td>The last inserted pair (LIFO)</td><td>Undo-style stacks</td></tr>
+            <tr><td><code>d.clear()</code></td><td><code>None</code></td><td>Emptying in place</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Master comparison: list vs tuple vs dictionary</h4>
+      <p>This table is the answer to the most repeated 5-mark question in the unit. Learn the rows, not just the words.</p>
+
+      <div class="table-wrapper">
+        <table class="class-table">
+          <caption>List vs Tuple vs Dictionary — the three-way comparison</caption>
+          <thead>
+            <tr><th>Property</th><th>List</th><th>Tuple</th><th>Dictionary</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Syntax</td><td><code>[1, 2, 3]</code></td><td><code>(1, 2, 3)</code></td><td><code>{"a": 1}</code></td></tr>
+            <tr><td>Mutable</td><td>Yes</td><td><strong>No</strong></td><td>Yes (values, keys added/removed)</td></tr>
+            <tr><td>Ordered</td><td>Yes</td><td>Yes</td><td>Insertion order kept in 3.7+</td></tr>
+            <tr><td>Accessed by</td><td>Integer index</td><td>Integer index</td><td>Key</td></tr>
+            <tr><td>Duplicates</td><td>Allowed</td><td>Allowed</td><td>Keys unique, values may repeat</td></tr>
+            <tr><td>Hashable (usable as a key)</td><td>No</td><td>Yes, if contents are</td><td>No</td></tr>
+            <tr><td>Lookup cost</td><td>O(n) to search by value, O(1) by index</td><td>O(n) to search by value</td><td>O(1) average by key</td></tr>
+            <tr><td>Typical use</td><td>Data that changes</td><td>Fixed record / returned pair</td><td>Lookup table, counts, records by id</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Exam note — beyond the printed unit list: <code>set</code></div>
+        <p><code>set</code> is not named in the printed Unit 1 topics, but a paper has asked for the union of two sets, so it is covered here for completeness and must not be presented as part of the unit's listed syllabus.</p>
+<pre>
+s1, s2 = {1, 2, 3}, {3, 4}
+print(s1 | s2, s1 &amp; s2, s1 - s2, s1 ^ s2)   # {1, 2, 3, 4} {3} {1, 2} {1, 2, 4}
+print(set([1, 1, 2, 2, 3]))                # {1, 2, 3}  -- duplicates collapse
+print(type(set()).__name__, type({}).__name__)   # set dict
+</pre>
+        <p>A set removes duplicates but is <strong>unordered</strong> and cannot be indexed. Note the two literal traps: <code>set()</code> is the empty set because <code>{}</code> is already taken by the empty dictionary.</p>
+      </div>
+
+      <h4>Arrays from the array module</h4>
+      <p>The standard library also offers <code>array</code>: one numeric type per element, named by a <em>type code</em>, and more compact than a list of the same numbers. It carries a fraction of this unit's marks, so one example is enough.</p>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> array('i', ...) — typed, memory-efficient</div>
+<pre>
 from array import array
-
-# Type codes: 'i' = int, 'f' = float, 'd' = double
-arr = array('i', [1, 2, 3, 4, 5])
-print(arr[0])        # 1
-print(arr[1:3])      # array('i', [2, 3])
-
-arr.append(6)        # Add element
-arr.remove(3)        # Remove value
-print(len(arr))      # 5
-
-# Float array
-farr = array('f', [1.1, 2.2, 3.3])
-print(farr[0])       # 1.100000023841858 (float precision)
-
-# Common type codes
-# 'b' - signed char, 'B' - unsigned char
-# 'i' - signed int,  'I' - unsigned int
-# 'f' - float,       'd' - double
-        </pre>
-      </div>
-
-      <!-- Comparison table -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> Collections Comparison</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead>
-              <tr><th>Feature</th><th>List</th><th>Tuple</th><th>Dictionary</th><th>Array</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Syntax</td><td><code>[1,2,3]</code></td><td><code>(1,2,3)</code></td><td><code>{"k":"v"}</code></td><td><code>array('i',[1,2])</code></td></tr>
-              <tr><td>Mutable</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>Ordered</td><td>Yes</td><td>Yes</td><td>Yes (3.7+)</td><td>Yes</td></tr>
-              <tr><td>Indexed</td><td>Yes (int)</td><td>Yes (int)</td><td>Yes (key)</td><td>Yes (int)</td></tr>
-              <tr><td>Duplicates</td><td>Allowed</td><td>Allowed</td><td>Keys: No, Values: Yes</td><td>Allowed</td></tr>
-              <tr><td>Types</td><td>Any</td><td>Any</td><td>Any</td><td>Single type</td></tr>
-              <tr><td>Use case</td><td>General purpose</td><td>Fixed data</td><td>Key-value mapping</td><td>Numeric data</td></tr>
-            </tbody>
-          </table>
-        </div>
+arr = array('i', [1, 2, 3])         # 'i' = signed int
+print(arr[0], arr[1:3], len(arr))   # 1 array('i', [2, 3]) 3
+# Type codes: 'b' char, 'i' int, 'f' float, 'd' double
+</pre>
       </div>
 
     </div>
@@ -711,177 +980,206 @@ print(farr[0])       # 1.100000023841858 (float precision)
     </h2>
     <div class="section-content">
 
-      <!-- Arithmetic -->
-      <div class="formula-box">
-        <div class="box-title"><i class="fas fa-plus-minus"></i> Arithmetic Operators</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Operator</th><th>Name</th><th>Example</th><th>Result</th></tr></thead>
-            <tbody>
-              <tr><td><code>+</code></td><td>Addition</td><td><code>10 + 3</code></td><td><code>13</code></td></tr>
-              <tr><td><code>-</code></td><td>Subtraction</td><td><code>10 - 3</code></td><td><code>7</code></td></tr>
-              <tr><td><code>*</code></td><td>Multiplication</td><td><code>10 * 3</code></td><td><code>30</code></td></tr>
-              <tr><td><code>/</code></td><td>Division (float)</td><td><code>10 / 3</code></td><td><code>3.333...</code></td></tr>
-              <tr><td><code>//</code></td><td>Floor Division</td><td><code>10 // 3</code></td><td><code>3</code></td></tr>
-              <tr><td><code>%</code></td><td>Modulus</td><td><code>10 % 3</code></td><td><code>1</code></td></tr>
-              <tr><td><code>**</code></td><td>Exponentiation</td><td><code>2 ** 8</code></td><td><code>256</code></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <h3 id="arithmetic-string-and-assignment-operators"><i class="fas fa-plus-minus"></i> Arithmetic, String and Assignment Operators</h3>
+
+      <p>Seven arithmetic operators, and three of them behave in ways that a C programmer will get wrong on the first try: <code>/</code> always produces a float, <code>//</code> <strong>floors</strong> rather than truncating, and <code>**</code> associates <strong>right to left</strong>.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Arithmetic operators, including the negative cases the paper asks for</caption>
+          <thead>
+            <tr><th>Operator</th><th>Name</th><th>Example</th><th>Result</th><th>The catch</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>Addition</td><td><code>10 + 3</code></td><td><code>13</code></td><td>Also concatenates strings and lists</td></tr>
+            <tr><td><code>-</code></td><td>Subtraction</td><td><code>10 - 3</code></td><td><code>7</code></td><td>—</td></tr>
+            <tr><td><code>*</code></td><td>Multiplication</td><td><code>10 * 3</code></td><td><code>30</code></td><td>Also repeats a sequence</td></tr>
+            <tr><td><code>/</code></td><td>True division</td><td><code>10 / 4</code></td><td><code>2.5</code></td><td>Always a float, even <code>10 / 2</code> → <code>5.0</code></td></tr>
+            <tr><td><code>//</code></td><td>Floor division</td><td><code>10 // 3</code></td><td><code>3</code></td><td>Rounds toward −∞, not toward zero</td></tr>
+            <tr><td><code>%</code></td><td>Modulus</td><td><code>10 % 3</code></td><td><code>1</code></td><td>Takes the sign of the divisor</td></tr>
+            <tr><td><code>**</code></td><td>Exponentiation</td><td><code>2 ** 8</code></td><td><code>256</code></td><td>Right-associative</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Relational -->
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-not-equal"></i> Relational (Comparison) Operators</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr></thead>
-            <tbody>
-              <tr><td><code>==</code></td><td>Equal to</td><td><code>5 == 5</code></td><td><code>True</code></td></tr>
-              <tr><td><code>!=</code></td><td>Not equal to</td><td><code>5 != 3</code></td><td><code>True</code></td></tr>
-              <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>5 &gt; 3</code></td><td><code>True</code></td></tr>
-              <tr><td><code>&lt;</code></td><td>Less than</td><td><code>5 &lt; 3</code></td><td><code>False</code></td></tr>
-              <tr><td><code>&gt;=</code></td><td>Greater or equal</td><td><code>5 &gt;= 5</code></td><td><code>True</code></td></tr>
-              <tr><td><code>&lt;=</code></td><td>Less or equal</td><td><code>5 &lt;= 3</code></td><td><code>False</code></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> The three results people get wrong</div>
+<pre>
+print(-7 // 2)     # -4   floor(-3.5) is -4, NOT -3
+print(-7 % 2)      #  1   remainder keeps the divisor's sign
+print(divmod(-7, 2))   # (-4, 1)  -- quotient and remainder together
+
+print(2 ** 3 ** 2)     # 512  -> 2 ** (3 ** 2), not (2 ** 3) ** 2 == 64
+print(-2 ** 2)         # -4   ** binds tighter than unary minus
+
+print(7 // 2, 7 % 2)   # 3 1
+print(7.0 // 2)        # 3.0  floor division of a float still returns a float
+</pre>
       </div>
 
-      <!-- Assignment -->
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-equals"></i> Assignment Operators</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Operator</th><th>Equivalent</th><th>Example</th></tr></thead>
-            <tbody>
-              <tr><td><code>=</code></td><td>Simple assignment</td><td><code>x = 10</code></td></tr>
-              <tr><td><code>+=</code></td><td><code>x = x + n</code></td><td><code>x += 5</code></td></tr>
-              <tr><td><code>-=</code></td><td><code>x = x - n</code></td><td><code>x -= 3</code></td></tr>
-              <tr><td><code>*=</code></td><td><code>x = x * n</code></td><td><code>x *= 2</code></td></tr>
-              <tr><td><code>/=</code></td><td><code>x = x / n</code></td><td><code>x /= 4</code></td></tr>
-              <tr><td><code>//=</code></td><td><code>x = x // n</code></td><td><code>x //= 2</code></td></tr>
-              <tr><td><code>%=</code></td><td><code>x = x % n</code></td><td><code>x %= 3</code></td></tr>
-              <tr><td><code>**=</code></td><td><code>x = x ** n</code></td><td><code>x **= 2</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="margin-top:0.75rem;"><strong>Multiple Assignment:</strong></p>
-        <pre style="background:var(--code-bg,var(--c-grey-75));padding:0.75rem;border-radius:6px;font-size:0.85rem;">
-a, b = 5, 10       # Multiple assignment (tuple unpacking)
-a = b = c = 0      # Chain assignment
-x, y = y, x        # Swap values
-        </pre>
+      <p><code>//</code> and <code>%</code> are a matched pair: for any two numbers, <code>a == (a // b) * b + (a % b)</code>. Check it on the negative case — <code>-4 * 2 + 1 == -7</code>. <code>divmod(a, b)</code> returns both at once, which is exactly what digit-extraction programs need.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Assignment operators — every compound form means "apply, then store"</caption>
+          <thead>
+            <tr><th>Operator</th><th>Equivalent to</th><th>Example (<code>x = 10</code>)</th><th><code>x</code> becomes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>=</code></td><td>bind the name</td><td><code>x = 10</code></td><td><code>10</code></td></tr>
+            <tr><td><code>+=</code></td><td><code>x = x + n</code></td><td><code>x += 5</code></td><td><code>15</code></td></tr>
+            <tr><td><code>-=</code></td><td><code>x = x - n</code></td><td><code>x -= 3</code></td><td><code>7</code></td></tr>
+            <tr><td><code>*=</code></td><td><code>x = x * n</code></td><td><code>x *= 2</code></td><td><code>20</code></td></tr>
+            <tr><td><code>/=</code></td><td><code>x = x / n</code></td><td><code>x /= 4</code></td><td><code>2.5</code></td></tr>
+            <tr><td><code>//=</code></td><td><code>x = x // n</code></td><td><code>x //= 3</code></td><td><code>3</code></td></tr>
+            <tr><td><code>%=</code></td><td><code>x = x % n</code></td><td><code>x %= 3</code></td><td><code>1</code></td></tr>
+            <tr><td><code>**=</code></td><td><code>x = x ** n</code></td><td><code>x **= 2</code></td><td><code>100</code></td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Logical -->
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-project-diagram"></i> Logical Operators</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Operator</th><th>Description</th><th>Example</th><th>Result</th></tr></thead>
-            <tbody>
-              <tr><td><code>and</code></td><td>True if both are True</td><td><code>True and False</code></td><td><code>False</code></td></tr>
-              <tr><td><code>or</code></td><td>True if at least one is True</td><td><code>True or False</code></td><td><code>True</code></td></tr>
-              <tr><td><code>not</code></td><td>Inverts the boolean</td><td><code>not True</code></td><td><code>False</code></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <p>Two shorthands ride along with assignment: <strong>multiple assignment</strong> <code>a, b = 5, 10</code> (tuple unpacking) and <strong>chained assignment</strong> <code>a = b = c = 0</code>. <code>x, y = y, x</code> swaps without a temporary because the right-hand tuple is built first.</p>
+
+      <h3 id="logical-identity-and-membership-operators"><i class="fas fa-project-diagram"></i> Logical, Identity and Membership Operators</h3>
+
+      <p><code>and</code>, <code>or</code> and <code>not</code> do <strong>not</strong> return <code>True</code> or <code>False</code>; they return one of their <em>operands</em>. <code>x or y</code> evaluates <code>x</code> first and returns it if it is truthy, otherwise it returns <code>y</code>. <code>x and y</code> returns <code>x</code> if it is falsy, otherwise <code>y</code>. That is why <code>0 or "fallback"</code> gives <code>"fallback"</code> and <code>3 and 4</code> gives <code>4</code> — and it is why they are called short-circuit operators: the right side is not even evaluated when the left already decides the answer.</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Logical operators return operands</div>
+<pre>
+print(0 or "fallback")   # fallback
+print("x" and "y")       # y
+print(not 0)             # True
+print(3 and 4)           # 4
+print(0 and 4)           # 0     -- short-circuits, 4 never evaluated
+print(1 &lt; 7 &lt; 10)        # True  -- chained comparison, not two separate tests
+</pre>
       </div>
 
-      <!-- Bitwise -->
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-microchip"></i> Bitwise Operators</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Operator</th><th>Name</th><th>Example (a=5, b=3)</th><th>Result</th></tr></thead>
-            <tbody>
-              <tr><td><code>&amp;</code></td><td>AND</td><td><code>5 &amp; 3</code></td><td><code>1</code> (0101 &amp; 0011 = 0001)</td></tr>
-              <tr><td><code>|</code></td><td>OR</td><td><code>5 | 3</code></td><td><code>7</code> (0101 | 0011 = 0111)</td></tr>
-              <tr><td><code>^</code></td><td>XOR</td><td><code>5 ^ 3</code></td><td><code>6</code> (0101 ^ 0011 = 0110)</td></tr>
-              <tr><td><code>~</code></td><td>NOT (complement)</td><td><code>~5</code></td><td><code>-6</code> (inverts bits)</td></tr>
-              <tr><td><code>&lt;&lt;</code></td><td>Left shift</td><td><code>5 &lt;&lt; 1</code></td><td><code>10</code> (shift left by 1)</td></tr>
-              <tr><td><code>&gt;&gt;</code></td><td>Right shift</td><td><code>5 &gt;&gt; 1</code></td><td><code>2</code> (shift right by 1)</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <p><strong>Identity</strong> (<code>is</code>, <code>is not</code>) asks whether two names refer to the <em>same object</em> — it compares <code>id()</code>. <strong>Equality</strong> (<code>==</code>) asks whether two objects have the <em>same value</em>. <code>a = [1, 2]</code> and <code>b = [1, 2]</code> are equal but not identical; <code>b = a</code> makes them both. Only <code>None</code> should be tested with <code>is</code> by convention, because there is exactly one <code>None</code> object.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>== versus is — the pair that decides identity questions</caption>
+          <thead>
+            <tr><th>Expression</th><th>Result</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>[1, 2] == [1, 2]</code></td><td><code>True</code></td><td>Same values</td></tr>
+            <tr><td><code>[1, 2] is [1, 2]</code></td><td><code>False</code></td><td>Two separate objects</td></tr>
+            <tr><td><code>a = [1, 2]; b = a; a is b</code></td><td><code>True</code></td><td>One object, two names</td></tr>
+            <tr><td><code>x = None; x is None</code></td><td><code>True</code></td><td>There is only one <code>None</code></td></tr>
+            <tr><td><code>"ab" is "ab"</code></td><td>Implementation detail</td><td>Small strings are cached; never rely on it</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Membership and Identity -->
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-search"></i> Membership and Identity Operators</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Operator</th><th>Type</th><th>Description</th><th>Example</th><th>Result</th></tr></thead>
-            <tbody>
-              <tr><td><code>in</code></td><td>Membership</td><td>True if value found in sequence</td><td><code>"a" in "cat"</code></td><td><code>True</code></td></tr>
-              <tr><td><code>not in</code></td><td>Membership</td><td>True if value NOT in sequence</td><td><code>"z" not in "cat"</code></td><td><code>True</code></td></tr>
-              <tr><td><code>is</code></td><td>Identity</td><td>True if same object in memory</td><td><code>x is y</code></td><td>Depends</td></tr>
-              <tr><td><code>is not</code></td><td>Identity</td><td>True if NOT same object</td><td><code>x is not y</code></td><td>Depends</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="warning-box" style="margin-top:0.75rem;">
-          <div class="box-title"><i class="fas fa-exclamation-triangle"></i> is vs ==</div>
-          <p><code>==</code> checks if <em>values</em> are equal. <code>is</code> checks if they are the <em>same object</em> in memory. These are different!</p>
-          <pre style="background:var(--code-bg,var(--c-grey-75));padding:0.5rem;border-radius:6px;font-size:0.84rem;">
-a = [1, 2, 3]
-b = [1, 2, 3]
-print(a == b)   # True  (same values)
-print(a is b)   # False (different objects)
-          </pre>
-        </div>
+      <p><strong>Membership</strong> operators ask whether a value occurs in a sequence: <code>in</code> returns <code>True</code> if it does, <code>not in</code> the reverse. They work on strings (substring test), lists, tuples, sets and dictionaries (where the test is against the <em>keys</em>, not the values).</p>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Identity and membership</div>
+<pre>
+p = [1, 2]
+q = [1, 2]
+print(p == q, p is q, p is not q)   # True False True
+r = p
+print(p is r)                       # True  -- same object
+
+print("a" in "cat")                 # True  -- substring
+print("z" not in "cat")             # True
+print(3 in [1, 2, 3])               # True
+print("name" in {"name": "Alice"})  # True  -- dictionary tests its KEYS
+print("Alice" in {"name": "Alice"}) # False -- not its values
+</pre>
       </div>
 
-      <!-- Operator Precedence -->
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-sort-numeric-down"></i> Operator Precedence (Highest to Lowest)</div>
-        <div class="table-wrapper">
-          <table class="prec-table">
-            <thead><tr><th>Priority</th><th>Operator(s)</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>1 (Highest)</td><td><code>()</code></td><td>Parentheses</td></tr>
-              <tr><td>2</td><td><code>**</code></td><td>Exponentiation</td></tr>
-              <tr><td>3</td><td><code>~x, +x, -x</code></td><td>Unary (bitwise NOT, unary plus/minus)</td></tr>
-              <tr><td>4</td><td><code>*, /, //, %</code></td><td>Multiplication, Division, Floor, Modulus</td></tr>
-              <tr><td>5</td><td><code>+, -</code></td><td>Addition, Subtraction</td></tr>
-              <tr><td>6</td><td><code>&lt;&lt;, &gt;&gt;</code></td><td>Bitwise Shift</td></tr>
-              <tr><td>7</td><td><code>&amp;</code></td><td>Bitwise AND</td></tr>
-              <tr><td>8</td><td><code>^</code></td><td>Bitwise XOR</td></tr>
-              <tr><td>9</td><td><code>|</code></td><td>Bitwise OR</td></tr>
-              <tr><td>10</td><td><code>==, !=, &lt;, &gt;, &lt;=, &gt;=, is, is not, in, not in</code></td><td>Comparison &amp; Membership</td></tr>
-              <tr><td>11</td><td><code>not x</code></td><td>Logical NOT</td></tr>
-              <tr><td>12</td><td><code>and</code></td><td>Logical AND</td></tr>
-              <tr><td>13 (Lowest)</td><td><code>or</code></td><td>Logical OR</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <h3 id="bitwise-operators-and-precedence"><i class="fas fa-microchip"></i> Bitwise Operators and Operator Precedence</h3>
+
+      <p>Bitwise operators work on the binary representation of integers. A full dry-run of all six on the same two numbers is a standard 6-mark question, so the trace below is worth memorising step by step rather than as a result table.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Complete bitwise trace with <code>a, b = 5, 3</code></caption>
+          <thead>
+            <tr><th>Expression</th><th>Binary working</th><th>Result</th><th>Rule</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>a &amp; b</code></td><td><code>101 &amp; 011 = 001</code></td><td><code>1</code></td><td>1 only where <em>both</em> bits are 1</td></tr>
+            <tr><td><code>a | b</code></td><td><code>101 | 011 = 111</code></td><td><code>7</code></td><td>1 where <em>either</em> bit is 1</td></tr>
+            <tr><td><code>a ^ b</code></td><td><code>101 ^ 011 = 110</code></td><td><code>6</code></td><td>1 where the bits <em>differ</em></td></tr>
+            <tr><td><code>~a</code></td><td><code>~101 = ...11111010</code></td><td><code>-6</code></td><td><code>~x</code> is always <code>-(x + 1)</code></td></tr>
+            <tr><td><code>a &lt;&lt; 1</code></td><td><code>101</code> shifted left → <code>1010</code></td><td><code>10</code></td><td>Multiply by 2 per shift</td></tr>
+            <tr><td><code>a &gt;&gt; 1</code></td><td><code>101</code> shifted right → <code>10</code></td><td><code>2</code></td><td>Floor-divide by 2 per shift</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- Coding Blocks -->
-      <div class="syntax-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-indent"></i> Coding Blocks and Indentation</div>
-        <p>Python uses <strong>indentation</strong> (whitespace at the beginning of a line) to define a block of code. All lines in the same block must have the same indentation level. The standard is <strong>4 spaces</strong>.</p>
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> The trace, printed by Python itself</div>
+<pre>
+a, b = 5, 3
+print(bin(a), bin(b))     # 0b101 0b11
+print(a &amp; b, bin(a &amp; b))  # 1  0b1
+print(a | b, bin(a | b))  # 7  0b111
+print(a ^ b, bin(a ^ b))  # 6  0b110
+print(~a)                 # -6   == -(5 + 1)
+print(a &lt;&lt; 1, a &gt;&gt; 1)     # 10 2
+</pre>
       </div>
-      <div class="code-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Indentation Example</div>
-        <pre>
-# Correct indentation
-x = 10
-if x > 5:
-    print("x is greater than 5")    # block starts
-    y = x * 2
-    print("y =", y)                 # still in block
-print("This is outside the block")  # block ends
 
-# Wrong indentation — causes IndentationError
-if x > 5:
-print("Wrong!")  # IndentationError!
-        </pre>
+      <div class="warning-box">
+        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Why <code>~5</code> is <code>-6</code> and not <code>2</code></div>
+        <p>Python integers have no fixed width and use two's complement semantics, so <code>~x</code> is defined as <code>-(x + 1)</code> rather than as "flip four bits". Writing <code>2</code> (as if the number were a 3-bit pattern) is the error the question is testing for.</p>
       </div>
-      <div class="warning-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistake</div>
-        <p>Mixing spaces and tabs in the same file causes <strong>IndentationError</strong> or <strong>TabError</strong>. Always use 4 spaces consistently. Never mix tabs and spaces.</p>
+
+      <h4>Precedence and associativity</h4>
+      <p><strong>Precedence</strong> decides which operator is applied first when several compete. <strong>Associativity</strong> only matters when two operators share the same precedence, and it decides whether they group left-to-right or right-to-left. In Python every operator associates left to right <strong>except <code>**</code></strong>, which is right-associative — the single exception that gets examined.</p>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Precedence, highest first</caption>
+          <thead>
+            <tr><th>Level</th><th>Operators</th><th>Associativity</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 (highest)</td><td><code>( )</code> <code>[ ]</code> <code>{ }</code> — grouping, subscripts, literals</td><td>left to right</td></tr>
+            <tr><td>2</td><td><code>**</code></td><td><strong>right to left</strong></td></tr>
+            <tr><td>3</td><td><code>+x</code> <code>-x</code> <code>~x</code> — unary</td><td>right to left</td></tr>
+            <tr><td>4</td><td><code>*</code> <code>/</code> <code>//</code> <code>%</code></td><td>left to right</td></tr>
+            <tr><td>5</td><td><code>+</code> <code>-</code></td><td>left to right</td></tr>
+            <tr><td>6</td><td><code>&lt;&lt;</code> <code>&gt;&gt;</code></td><td>left to right</td></tr>
+            <tr><td>7</td><td><code>&amp;</code></td><td>left to right</td></tr>
+            <tr><td>8</td><td><code>^</code></td><td>left to right</td></tr>
+            <tr><td>9</td><td><code>|</code></td><td>left to right</td></tr>
+            <tr><td>10</td><td><code>==</code> <code>!=</code> <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code> <code>is</code> <code>in</code> <code>not in</code></td><td>left to right (comparisons chain)</td></tr>
+            <tr><td>11</td><td><code>not x</code></td><td>right to left</td></tr>
+            <tr><td>12</td><td><code>and</code></td><td>left to right</td></tr>
+            <tr><td>13 (lowest)</td><td><code>or</code></td><td>left to right</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-box">
+        <div class="box-title"><i class="fas fa-code"></i> Precedence worked on real expressions</div>
+<pre>
+print(2 + 3 * 4)         # 14   * before +
+print((2 + 3) * 4)       # 20   () overrides
+print(2 + 3 * 4 ** 2)    # 50   ** then * then +
+print(not True and False)  # False  -> (not True) and False
+print(True or False and False)  # True  -> and binds tighter than or
+</pre>
+      </div>
+
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-exclamation-circle"></i> Exam important</div>
+        <ul>
+          <li><code>/</code> → float always; <code>//</code> floors (<code>-7 // 2 == -4</code>); <code>%</code> takes the divisor's sign.</li>
+          <li><code>2 ** 3 ** 2 == 512</code> — <code>**</code> is the only right-associative operator.</li>
+          <li><code>and</code> / <code>or</code> return an operand, not a boolean, and short-circuit.</li>
+          <li><code>is</code> compares identity (<code>id()</code>); <code>==</code> compares value.</li>
+          <li>Bitwise on <code>5, 3</code>: <code>&amp;</code> → 1, <code>|</code> → 7, <code>^</code> → 6, <code>~5</code> → −6, <code>&lt;&lt;1</code> → 10, <code>&gt;&gt;1</code> → 2.</li>
+          <li><code>in</code> on a dictionary tests its <strong>keys</strong>.</li>
+        </ul>
       </div>
 
     </div>
@@ -893,59 +1191,24 @@ print("Wrong!")  # IndentationError!
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-
+      <p>One-line shapes to reproduce on the answer sheet. Each is explained in full in the section named beside it.</p>
       <div class="formula-box">
-        <div class="box-title"><i class="fas fa-code"></i> Variable Assignment</div>
-        <div class="formula">variable_name = value</div>
-        <div class="formula">a, b, c = val1, val2, val3</div>
-        <div class="formula">a = b = c = 0</div>
+        <div class="box-title"><i class="fas fa-code"></i> The six you are most likely to write</div>
+        <div class="formula">s[start : stop : step]        &rarr; slice; stop excluded; s[::-1] reverses</div>
+        <div class="formula">seq[i]                        &rarr; one element; negative counts from the end</div>
+        <div class="formula">a // b , a % b , divmod(a, b) &rarr; quotient floors; remainder takes b's sign</div>
+        <div class="formula">a == (a // b) * b + (a % b)   &rarr; the identity linking the pair</div>
+        <div class="formula">~x                            &rarr; -(x + 1)</div>
+        <div class="formula">copy.deepcopy(x)              &rarr; independent at every nesting level</div>
       </div>
-
       <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> String Slicing</div>
-        <div class="formula">string[start : stop : step]</div>
-        <div class="formula">string[1:4]   → characters at index 1, 2, 3</div>
-        <div class="formula">string[::-1]  → reversed string</div>
+        <div class="box-title"><i class="fas fa-code"></i> Formatting and dates</div>
+        <div class="formula">"%s : %.2f" % (name, score)   &rarr; % style</div>
+        <div class="formula">"{} : {:.2f}".format(name, score) &rarr; .format() style</div>
+        <div class="formula">f"{name} : {score:.2f}"       &rarr; f-string style</div>
+        <div class="formula">datetime.now().strftime("%Y-%m-%d %H:%M:%S")</div>
+        <div class="formula">date.today() + timedelta(days=7) &rarr; date arithmetic</div>
       </div>
-
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> List Operations Syntax</div>
-        <div class="formula">list.append(item)         → add to end</div>
-        <div class="formula">list.insert(index, item)  → add at index</div>
-        <div class="formula">list.remove(value)        → remove by value</div>
-        <div class="formula">list.pop(index)           → remove by index and return</div>
-        <div class="formula">list[start:stop]          → slicing</div>
-      </div>
-
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Floor Division and Modulus</div>
-        <div class="formula">a // b  →  quotient (floor)</div>
-        <div class="formula">a % b   →  remainder</div>
-        <div class="formula answer">Example: 17 // 5 = 3,  17 % 5 = 2</div>
-      </div>
-
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> Bitwise Shift</div>
-        <div class="formula">x &lt;&lt; n  →  x multiplied by 2^n</div>
-        <div class="formula">x &gt;&gt; n  →  x divided by 2^n (floor)</div>
-        <div class="formula answer">Example: 5 &lt;&lt; 1 = 10,  5 &gt;&gt; 1 = 2</div>
-      </div>
-
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> f-string Syntax</div>
-        <div class="formula">f"text {variable} text"</div>
-        <div class="formula">f"Value: {expression:.2f}"</div>
-        <div class="formula answer">Example: f"Hello {name}, age {age+1}"</div>
-      </div>
-
-      <div class="formula-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-code"></i> datetime Syntax</div>
-        <div class="formula">from datetime import datetime</div>
-        <div class="formula">datetime.now()               → current date and time</div>
-        <div class="formula">datetime(year, month, day)   → specific date</div>
-        <div class="formula">date.strftime("%d/%m/%Y")    → formatted string</div>
-      </div>
-
     </div>
   </section>
 
@@ -956,57 +1219,31 @@ print("Wrong!")  # IndentationError!
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-
+      <p>One-sentence definitions for the terms a paper asks you to <em>define</em>. Type comparisons and copy semantics are tabulated in their own sections.</p>
       <div class="definition-box">
         <div class="box-title"><i class="fas fa-bookmark"></i> Python</div>
-        <p>A high-level, interpreted, dynamically typed, object-oriented programming language created by Guido van Rossum in 1991. Known for readable syntax and extensive standard libraries.</p>
+        <p>A high-level, interpreted, dynamically typed, object-oriented programming language created by Guido van Rossum in 1991, with automatic memory management and a large standard library.</p>
       </div>
-
       <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Dynamic Typing</div>
-        <p>A language feature where the type of a variable is determined at runtime based on the value assigned, not at compile time. In Python, the same variable can hold different types at different times.</p>
+        <div class="box-title"><i class="fas fa-bookmark"></i> Dynamic typing</div>
+        <p>The type of a value is established at runtime from the object a name is bound to, not declared in advance, so one name may refer to objects of different types over its lifetime.</p>
       </div>
-
       <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Interpreted Language</div>
-        <p>A language where the source code is executed line by line by an interpreter at runtime, without a separate compilation step into machine code.</p>
+        <div class="box-title"><i class="fas fa-bookmark"></i> Interpreted language</div>
+        <p>A language whose source is executed statement by statement by an interpreter at runtime, instead of being compiled and linked into a machine-code executable first.</p>
       </div>
-
       <div class="definition-box" style="margin-top:0.75rem;">
         <div class="box-title"><i class="fas fa-bookmark"></i> Indentation</div>
-        <p>The use of whitespace (spaces or tabs) at the beginning of a line to define a block of code in Python. Python uses indentation instead of curly braces <code>{}</code>.</p>
+        <p>The leading whitespace that defines a block of statements in Python, replacing the braces of C-like languages; four spaces per level is the convention.</p>
       </div>
-
       <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> List</div>
-        <p>A mutable, ordered collection of elements in Python, defined using square brackets <code>[]</code>. Lists allow duplicate values and elements of different types.</p>
+        <div class="box-title"><i class="fas fa-bookmark"></i> Mutability</div>
+        <p>The property of an object whose contents can be changed in place after creation. Immutable objects cannot be changed; any apparent change binds the name to a new object instead.</p>
       </div>
-
       <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Tuple</div>
-        <p>An immutable, ordered collection of elements in Python, defined using parentheses <code>()</code>. Once created, its elements cannot be modified.</p>
+        <div class="box-title"><i class="fas fa-bookmark"></i> Operator precedence</div>
+        <p>The rule fixing which operator is applied first when an expression contains several of different rank. Associativity then decides the order among operators of equal rank.</p>
       </div>
-
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Dictionary</div>
-        <p>A mutable, unordered collection of key-value pairs in Python, defined using curly braces <code>{}</code>. Keys must be unique and immutable. Values can be of any type.</p>
-      </div>
-
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Operator Precedence</div>
-        <p>The order in which operators are evaluated in an expression. Higher precedence operators are evaluated before lower precedence ones. Parentheses have the highest precedence and can override default order.</p>
-      </div>
-
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Shallow Copy</div>
-        <p>A copy of a collection where only the top-level structure is duplicated. Nested objects (like inner lists) still share the same reference as the original.</p>
-      </div>
-
-      <div class="definition-box" style="margin-top:0.75rem;">
-        <div class="box-title"><i class="fas fa-bookmark"></i> Deep Copy</div>
-        <p>A completely independent copy of a collection, including all nested objects. Modifications to the deep copy do not affect the original. Created using <code>copy.deepcopy()</code>.</p>
-      </div>
-
     </div>
   </section>
 
@@ -1017,71 +1254,22 @@ print("Wrong!")  # IndentationError!
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> Interactive Mode vs Script Mode</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Aspect</th><th>Interactive Mode</th><th>Script Mode</th></tr></thead>
-            <tbody>
-              <tr><td>Start</td><td>Type <code>python</code> in terminal</td><td>Write <code>.py</code> file, run with <code>python file.py</code></td></tr>
-              <tr><td>Execution</td><td>Line by line immediately</td><td>Whole file at once</td></tr>
-              <tr><td>Best for</td><td>Quick tests, learning, exploring</td><td>Real programs, projects</td></tr>
-              <tr><td>Output</td><td>Shows expression values automatically</td><td>Only <code>print()</code> shows output</td></tr>
-              <tr><td>Saving</td><td>Code is not saved</td><td>Code saved in file</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <p>The four side-by-side tables for this unit are kept where they are used, next to the explanation that justifies each row, rather than repeated here:</p>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <caption>Where each comparison table lives</caption>
+          <thead>
+            <tr><th>Comparison</th><th>Find it in</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Interactive mode vs script mode</td><td><a href="#running-python-interactive-script-mode-and-builtin-functions">Running Python</a></td></tr>
+            <tr><td>List vs tuple vs dictionary</td><td><a href="#tuples-and-sequences">Tuples and sequences</a></td></tr>
+            <tr><td><code>==</code> vs <code>is</code></td><td><a href="#logical-identity-and-membership-operators">Logical, identity and membership operators</a></td></tr>
+            <tr><td>Shallow copy vs deep copy</td><td><a href="#lists-slicing-methods-and-copy-semantics">Lists and copy semantics</a></td></tr>
+            <tr><td><code>%</code> vs <code>.format()</code> vs f-string</td><td><a href="#string-formatting-and-immutability">String formatting</a></td></tr>
+          </tbody>
+        </table>
       </div>
-
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> List vs Tuple vs Dictionary</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Property</th><th>List</th><th>Tuple</th><th>Dictionary</th></tr></thead>
-            <tbody>
-              <tr><td>Mutability</td><td>Mutable</td><td>Immutable</td><td>Mutable</td></tr>
-              <tr><td>Syntax</td><td><code>[1, 2, 3]</code></td><td><code>(1, 2, 3)</code></td><td><code>{"a": 1}</code></td></tr>
-              <tr><td>Ordered</td><td>Yes</td><td>Yes</td><td>Yes (3.7+)</td></tr>
-              <tr><td>Indexed by</td><td>Integer index</td><td>Integer index</td><td>Key</td></tr>
-              <tr><td>Duplicates</td><td>Yes</td><td>Yes</td><td>Keys: No</td></tr>
-              <tr><td>Performance</td><td>Slightly slower</td><td>Faster (immutable)</td><td>O(1) key lookup</td></tr>
-              <tr><td>Use case</td><td>Changeable data</td><td>Fixed/constant data</td><td>Key-value mapping</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> == (Equality) vs is (Identity)</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Operator</th><th>Checks</th><th>Example</th><th>Result</th></tr></thead>
-            <tbody>
-              <tr><td><code>==</code></td><td>Value equality</td><td><code>[1,2] == [1,2]</code></td><td><code>True</code></td></tr>
-              <tr><td><code>is</code></td><td>Same object in memory</td><td><code>[1,2] is [1,2]</code></td><td><code>False</code></td></tr>
-              <tr><td><code>is</code></td><td>Same object in memory</td><td><code>x = y = [1,2]; x is y</code></td><td><code>True</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-balance-scale"></i> Shallow Copy vs Deep Copy</div>
-        <div class="table-wrapper">
-          <table class="op-table">
-            <thead><tr><th>Property</th><th>Shallow Copy</th><th>Deep Copy</th></tr></thead>
-            <tbody>
-              <tr><td>Method</td><td><code>list.copy()</code> or <code>list[:]</code></td><td><code>copy.deepcopy(list)</code></td></tr>
-              <tr><td>Top-level elements</td><td>Independent</td><td>Independent</td></tr>
-              <tr><td>Nested objects</td><td>Shared (same reference)</td><td>Independent copies</td></tr>
-              <tr><td>Performance</td><td>Faster</td><td>Slower</td></tr>
-              <tr><td>Safe for nested?</td><td>No</td><td>Yes</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -1122,135 +1310,199 @@ print("Wrong!")  # IndentationError!
           <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq2">
             <strong>Answer: c. t = (42,)</strong>
-            <p>A single-element tuple requires a trailing comma. Without it, <code>(42)</code> is just an integer in parentheses.</p>
+            <p>A single-element tuple requires a trailing comma. Without it, <code>(42)</code> is just an integer in parentheses, and <code>type((42))</code> returns <code>int</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 3</p>
-          <p>What is the output of <code>10 // 3</code> in Python?</p>
+          <p>What is the output of <code>print(-7 // 2)</code>?</p>
           <ul class="options">
-            <li>a. 3.33</li>
-            <li>b. 1</li>
-            <li>c. 3</li>
-            <li>d. 4</li>
+            <li>a. <code>-3</code></li>
+            <li>b. <code>-4</code></li>
+            <li>c. <code>-3.5</code></li>
+            <li>d. <code>3</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq3"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq3">
-            <strong>Answer: c. 3</strong>
-            <p><code>//</code> is the floor division operator. It divides and returns the integer quotient, discarding the remainder. 10 ÷ 3 = 3 remainder 1, so result is 3.</p>
+            <strong>Answer: b. -4</strong>
+            <p>Floor division rounds toward negative infinity, not toward zero. <code>-7 / 2</code> is <code>-3.5</code>, and the floor of that is <code>-4</code>. This is the difference from C, where integer division truncates to <code>-3</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 4</p>
-          <p>Which data type is immutable in Python?</p>
+          <p>What is the value of <code>2 ** 3 ** 2</code>?</p>
           <ul class="options">
-            <li>a. List</li>
-            <li>b. Dictionary</li>
-            <li>c. Set</li>
-            <li>d. Tuple</li>
+            <li>a. <code>64</code></li>
+            <li>b. <code>512</code></li>
+            <li>c. <code>12</code></li>
+            <li>d. <code>36</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq4"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq4">
-            <strong>Answer: d. Tuple</strong>
-            <p>Tuples are immutable — once created, their elements cannot be changed. Lists, Dictionaries, and Sets are all mutable.</p>
+            <strong>Answer: b. 512</strong>
+            <p><code>**</code> is the only right-associative operator, so the expression groups as <code>2 ** (3 ** 2)</code> = <code>2 ** 9</code> = <code>512</code>. Grouping it left to right would give <code>64</code>, which is the trap distractor.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 5</p>
-          <p>What does the <code>**</code> operator do in Python?</p>
+          <p><code>a = [1, 2, 3]</code>. What does <code>a.append(4)</code> return?</p>
           <ul class="options">
-            <li>a. Multiply two numbers</li>
-            <li>b. Floor division</li>
-            <li>c. Exponentiation (power)</li>
-            <li>d. Bitwise AND</li>
+            <li>a. <code>[1, 2, 3, 4]</code></li>
+            <li>b. <code>True</code></li>
+            <li>c. <code>None</code></li>
+            <li>d. <code>4</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq5"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq5">
-            <strong>Answer: c. Exponentiation (power)</strong>
-            <p><code>**</code> raises the left operand to the power of the right. For example, <code>2 ** 8 = 256</code>.</p>
+            <strong>Answer: c. None</strong>
+            <p>All in-place mutating methods — <code>append</code>, <code>extend</code>, <code>insert</code>, <code>remove</code>, <code>sort</code>, <code>reverse</code>, <code>clear</code> — return <code>None</code>. The list itself becomes <code>[1, 2, 3, 4]</code>, but the call's value is <code>None</code>, so <code>a = a.append(4)</code> destroys the list.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 6</p>
-          <p>What will <code>"Python"[::-1]</code> return?</p>
+          <p>What is the result of <code>"Python"[1:4]</code>?</p>
           <ul class="options">
-            <li>a. <code>"Pytho"</code></li>
-            <li>b. <code>"nohtyP"</code></li>
-            <li>c. <code>"Python"</code></li>
-            <li>d. Error</li>
+            <li>a. <code>"yth"</code></li>
+            <li>b. <code>"ytho"</code></li>
+            <li>c. <code>"Pyt"</code></li>
+            <li>d. <code>"tho"</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq6"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq6">
-            <strong>Answer: b. "nohtyP"</strong>
-            <p>Slicing with step <code>-1</code> reverses the string. <code>"Python"[::-1]</code> = <code>"nohtyP"</code>.</p>
+            <strong>Answer: a. "yth"</strong>
+            <p>The start index 1 is included and the stop index 4 is excluded, so the characters at positions 1, 2 and 3 are taken: <code>y</code>, <code>t</code>, <code>h</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 7</p>
-          <p>Which operator checks if two variables point to the same object in memory?</p>
+          <p>Which of these can be used as a dictionary key?</p>
           <ul class="options">
-            <li>a. <code>==</code></li>
-            <li>b. <code>!=</code></li>
-            <li>c. <code>is</code></li>
-            <li>d. <code>in</code></li>
+            <li>a. <code>[1, 2]</code></li>
+            <li>b. <code>(1, 2)</code></li>
+            <li>c. <code>{1, 2}</code></li>
+            <li>d. <code>{"a": 1}</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq7"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq7">
-            <strong>Answer: c. is</strong>
-            <p>The <code>is</code> operator checks identity — whether two variables refer to the same object in memory. <code>==</code> checks value equality.</p>
+            <strong>Answer: b. (1, 2)</strong>
+            <p>Keys must be hashable, which in practice means immutable. A tuple of immutables is hashable; a list, a set and a dictionary are all mutable, so using any of them raises <code>TypeError: unhashable type</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 8</p>
-          <p>What is the result of <code>5 &amp; 3</code> in Python?</p>
+          <p><code>a = [1, 2]</code> and <code>b = a</code>. Now <code>b.append(3)</code>. What is <code>a</code>?</p>
           <ul class="options">
-            <li>a. 8</li>
-            <li>b. 7</li>
-            <li>c. 1</li>
-            <li>d. 15</li>
+            <li>a. <code>[1, 2]</code></li>
+            <li>b. <code>[1, 2, 3]</code></li>
+            <li>c. <code>[3]</code></li>
+            <li>d. <code>None</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq8">
-            <strong>Answer: c. 1</strong>
-            <p>Bitwise AND: 5 = 0101, 3 = 0011. AND: 0001 = 1.</p>
+            <strong>Answer: b. [1, 2, 3]</strong>
+            <p>Assignment does not copy. Both names refer to one list object, so a change made through <code>b</code> is visible through <code>a</code>. To get an independent list you need <code>b = a.copy()</code> at the top level, or <code>copy.deepcopy(a)</code> for nested data.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 9</p>
-          <p>Which method is used to add an element to the end of a list?</p>
+          <p>What is the output of <code>print(0 or "fallback")</code>?</p>
           <ul class="options">
-            <li>a. <code>.insert()</code></li>
-            <li>b. <code>.add()</code></li>
-            <li>c. <code>.append()</code></li>
-            <li>d. <code>.push()</code></li>
+            <li>a. <code>False</code></li>
+            <li>b. <code>0</code></li>
+            <li>c. <code>"fallback"</code></li>
+            <li>d. <code>True</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq9">
-            <strong>Answer: c. .append()</strong>
-            <p><code>list.append(item)</code> adds an element to the end of the list. <code>.insert(index, item)</code> adds at a specific position.</p>
+            <strong>Answer: c. "fallback"</strong>
+            <p><code>or</code> returns one of its operands, not a boolean. Since <code>0</code> is falsy, the left operand is rejected and the right one is returned. Similarly <code>3 and 4</code> returns <code>4</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 10</p>
-          <p>What type does Python assign to the value <code>3.14</code>?</p>
+          <p>With <code>a, b = 5, 3</code>, what is the value of <code>a ^ b</code>?</p>
           <ul class="options">
-            <li>a. int</li>
-            <li>b. double</li>
-            <li>c. decimal</li>
-            <li>d. float</li>
+            <li>a. <code>1</code></li>
+            <li>b. <code>7</code></li>
+            <li>c. <code>6</code></li>
+            <li>d. <code>2</code></li>
           </ul>
           <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="mcq10">
-            <strong>Answer: d. float</strong>
-            <p>In Python, decimal numbers like <code>3.14</code> are of type <code>float</code>. Python has no separate <code>double</code> type.</p>
+            <strong>Answer: c. 6</strong>
+            <p>XOR gives 1 only where the bits differ: <code>101 ^ 011 = 110</code>, which is 6. For reference on the same pair, <code>&amp;</code> gives 1 and <code>|</code> gives 7.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 11</p>
+          <p>Which statement about Python strings is <strong>true</strong>?</p>
+          <ul class="options">
+            <li>a. They are mutable, so <code>s[0] = "X"</code> works</li>
+            <li>b. They are immutable, so a method such as <code>upper()</code> returns a new string</li>
+            <li>c. They can only be written with double quotes</li>
+            <li>d. <code>s[::-1]</code> sorts the characters</li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq11"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq11">
+            <strong>Answer: b</strong>
+            <p>Strings are immutable: item assignment raises <code>TypeError</code>, and every method returns a new string that you must assign back. Single, double and triple quotes all produce strings, and <code>s[::-1]</code> reverses rather than sorts.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 12</p>
+          <p>What does <code>"hello".index("z")</code> do?</p>
+          <ul class="options">
+            <li>a. Returns <code>-1</code></li>
+            <li>b. Returns <code>None</code></li>
+            <li>c. Raises <code>ValueError</code></li>
+            <li>d. Returns <code>0</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq12">
+            <strong>Answer: c. Raises ValueError</strong>
+            <p><code>index()</code> raises when the substring is absent, while <code>find()</code> returns <code>-1</code>. That is the whole difference between the two methods, and it is a favourite one-mark question.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 13</p>
+          <p>What is the output of <code>print(type((42)))</code>?</p>
+          <ul class="options">
+            <li>a. <code>&lt;class 'tuple'&gt;</code></li>
+            <li>b. <code>&lt;class 'int'&gt;</code></li>
+            <li>c. <code>&lt;class 'list'&gt;</code></li>
+            <li>d. <code>&lt;class 'set'&gt;</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq13"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq13">
+            <strong>Answer: b. &lt;class 'int'&gt;</strong>
+            <p>Parentheses alone only group; it is the <strong>comma</strong> that makes a tuple. <code>(42,)</code> is a tuple, <code>(42)</code> is the integer 42.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 14</p>
+          <p>Which of the following is <strong>not</strong> a Python keyword?</p>
+          <ul class="options">
+            <li>a. <code>None</code></li>
+            <li>b. <code>lambda</code></li>
+            <li>c. <code>True</code></li>
+            <li>d. <code>print</code></li>
+          </ul>
+          <button class="toggle-btn" data-target="mcq14"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="mcq14">
+            <strong>Answer: d. print</strong>
+            <p><code>print</code> is a built-in <em>function</em> in Python 3, not a reserved word — which is why you can rebind it (and why doing so hides the function). <code>None</code>, <code>True</code> and <code>lambda</code> are all among the 35 keywords, and note the capital <code>T</code> and <code>N</code>.</p>
           </div>
         </div>
 
@@ -1272,7 +1524,7 @@ print("Wrong!")  # IndentationError!
           <p>What is dynamic typing in Python?</p>
           <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq1">
-            <p>Dynamic typing means that the type of a variable is determined at runtime based on the value assigned. You do not need to declare the type explicitly. The same variable can hold different types at different times.</p>
+            <p>Dynamic typing means the type of the value is decided at runtime, from the object the name is bound to, instead of being fixed by a declaration at compile time. You do not declare <code>int x</code>; you write <code>x = 10</code> and Python records that <code>x</code> now refers to an <code>int</code>. Rebind the same name to <code>"ten"</code> and it now refers to a <code>str</code> — the name itself never had a type. <code>type(x)</code> reveals the current type.</p>
           </div>
         </div>
 
@@ -1281,7 +1533,7 @@ print("Wrong!")  # IndentationError!
           <p>What is the difference between <code>/</code> and <code>//</code> in Python?</p>
           <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq2">
-            <p><code>/</code> performs regular division and always returns a float (e.g., <code>10/3 = 3.333...</code>). <code>//</code> performs floor division and returns the integer quotient (e.g., <code>10//3 = 3</code>).</p>
+            <p><code>/</code> is true division and <strong>always</strong> returns a float, even when the division is exact: <code>10 / 4</code> is <code>2.5</code> and <code>10 / 2</code> is <code>5.0</code>. <code>//</code> is floor division: it divides and then rounds <strong>down toward negative infinity</strong>, so <code>10 // 3</code> is <code>3</code> but <code>-7 // 2</code> is <code>-4</code>, not <code>-3</code>. Its result keeps the operand type, so <code>7.0 // 2</code> is <code>3.0</code>.</p>
           </div>
         </div>
 
@@ -1290,7 +1542,7 @@ print("Wrong!")  # IndentationError!
           <p>What is an f-string in Python? Give an example.</p>
           <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq3">
-            <p>An f-string (formatted string literal) is a string prefixed with <code>f</code> that allows embedding expressions directly inside curly braces. Example: <code>name = "Alice"; print(f"Hello {name}")</code> outputs <code>Hello Alice</code>.</p>
+            <p>An f-string is a string literal prefixed with <code>f</code> or <code>F</code> in which any expression inside braces is evaluated and inserted at runtime (Python 3.6+). Example: <code>name = "Alice"; score = 95.4567; print(f"{name} scored {score:.2f}")</code> outputs <code>Alice scored 95.46</code>. It can hold arbitrary expressions (<code>f"{age + 1}"</code>) and a format spec after a colon (<code>:.2f</code>).</p>
           </div>
         </div>
 
@@ -1299,25 +1551,25 @@ print("Wrong!")  # IndentationError!
           <p>What is the difference between a list and a tuple?</p>
           <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq4">
-            <p>A list is <strong>mutable</strong> (can be changed after creation) and uses square brackets <code>[]</code>. A tuple is <strong>immutable</strong> (cannot be changed) and uses parentheses <code>()</code>. Tuples are faster than lists.</p>
+            <p>A list (<code>[1, 2]</code>) is mutable and a tuple (<code>(1, 2)</code>) is immutable, so a tuple cannot be appended to or have an item reassigned. Both are ordered and indexable. Because a tuple cannot change it is hashable and can be a dictionary key, while a list cannot. Tuples use less memory and are the natural choice for a fixed record or a returned set of values. A one-element tuple needs a trailing comma: <code>(42,)</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 5</p>
-          <p>What does the <code>%</code> operator do in Python?</p>
+          <p>What does the <code>%</code> operator do, and what sign does its result carry?</p>
           <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq5">
-            <p>The <code>%</code> operator is the modulus operator. It returns the remainder when the left operand is divided by the right operand. Example: <code>10 % 3 = 1</code> because 10 = 3×3 + 1.</p>
+            <p><code>%</code> is the modulus operator: it returns the remainder left after floor division, so that <code>a == (a // b) * b + (a % b)</code>. The result takes the <strong>sign of the divisor</strong>, not of the dividend — <code>7 % 3</code> is <code>1</code>, <code>-7 % 3</code> is <code>2</code> and <code>7 % -3</code> is <code>-2</code>. It is commonly used for divisibility tests (<code>n % 2 == 0</code>) and for digit extraction (<code>n % 10</code> is the last digit).</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 6</p>
-          <p>What is the purpose of indentation in Python?</p>
+          <p>Why does Python need indentation, and what error appears when it is wrong?</p>
           <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq6">
-            <p>In Python, indentation defines code blocks. All lines belonging to the same block (e.g., inside an if statement or loop) must be indented by the same amount. Python uses indentation instead of curly braces <code>{}</code>.</p>
+            <p>Python has no braces or <code>end</code> keyword, so indentation <em>is</em> the block syntax: statements sharing an indent form one block, and dedenting closes it. The convention is four spaces per level. A missing, extra or inconsistent indent raises <code>IndentationError</code>; mixing tabs and spaces in the same block raises <code>TabError</code>, because Python 3 refuses to guess which you meant.</p>
           </div>
         </div>
 
@@ -1326,21 +1578,16 @@ print("Wrong!")  # IndentationError!
           <p>What is the difference between <code>is</code> and <code>==</code> in Python?</p>
           <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq7">
-            <p><code>==</code> checks if two values are equal (value comparison). <code>is</code> checks if two variables point to the same object in memory (identity comparison). Two different lists with the same values will give <code>== True</code> but <code>is False</code>.</p>
+            <p><code>==</code> compares <strong>values</strong>, using the type's equality rules. <code>is</code> compares <strong>identity</strong> — whether both names refer to the very same object, which is what <code>id()</code> reports. So <code>[1, 2] == [1, 2]</code> is <code>True</code> but <code>[1, 2] is [1, 2]</code> is <code>False</code>, because they are two distinct objects; after <code>b = a</code> the two names <em>are</em> identical. By convention <code>is</code> is used only for <code>None</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 8</p>
-          <p>Name any four string methods in Python with their purpose.</p>
+          <p>Name any four string methods and state what each returns.</p>
           <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq8">
-            <p>
-              1. <code>.upper()</code> — Converts string to uppercase.<br>
-              2. <code>.lower()</code> — Converts string to lowercase.<br>
-              3. <code>.strip()</code> — Removes leading and trailing whitespace.<br>
-              4. <code>.split(sep)</code> — Splits string into a list based on separator.
-            </p>
+            <p><code>upper()</code> returns a copy in capitals (<code>"hi".upper()</code> → <code>"HI"</code>). <code>strip()</code> returns a copy without leading and trailing whitespace (<code>"  hi  ".strip()</code> → <code>"hi"</code>). <code>split(",")</code> returns a <strong>list</strong> of pieces around the separator (<code>"a,b".split(",")</code> → <code>['a', 'b']</code>). <code>replace("l", "r")</code> returns a copy with every occurrence replaced (<code>"hello"</code> → <code>"herro"</code>). All four return <em>new</em> strings because strings are immutable.</p>
           </div>
         </div>
 
@@ -1359,125 +1606,109 @@ print("Wrong!")  # IndentationError!
 
         <div class="mcq-item">
           <p class="card-title">Q 1</p>
-          <p>What is Python? Discuss its history, features, and the difference between interactive mode and script mode.</p>
+          <p>What is Python? Discuss its history and features, and distinguish interactive mode from script mode.</p>
           <button class="toggle-btn" data-target="lq1"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq1">
-            <p><strong>Python</strong> is a high-level, interpreted, dynamically typed, object-oriented programming language.</p>
-            <p><strong>History:</strong> Created by Guido van Rossum in 1991. Python 2.0 released in 2000, Python 3.0 in 2008.</p>
-            <p><strong>Features:</strong></p>
+            <p><strong>Definition (1).</strong> Python is a high-level, interpreted, dynamically typed, object-oriented programming language with automatic memory management and a large standard library.</p>
+            <p><strong>History (2).</strong> Created by Guido van Rossum; published in 1991. Python 2.0 arrived in 2000 (list comprehensions, garbage collection) and Python 3.0 in 2008, which was deliberately <em>not</em> backward compatible — most visibly by turning <code>print</code> into a function. Python 2 reached end of life in 2020, so Python 3 is the only supported line.</p>
+            <p><strong>Features (3 — state any six).</strong></p>
             <ul>
-              <li><strong>Interpreted:</strong> Code runs line by line without compilation.</li>
-              <li><strong>High-Level:</strong> Abstracts hardware complexity.</li>
-              <li><strong>Dynamically Typed:</strong> Types assigned at runtime.</li>
-              <li><strong>Object-Oriented:</strong> Supports classes and objects.</li>
-              <li><strong>Extensive Libraries:</strong> Rich standard library and PyPI packages.</li>
-              <li><strong>Cross-Platform:</strong> Runs on Windows, Linux, macOS.</li>
+              <li><strong>Interpreted</strong> — executed statement by statement, with no separate compile-and-link step.</li>
+              <li><strong>High-level</strong> — memory is managed for you; no pointers and no manual allocation.</li>
+              <li><strong>Dynamically typed</strong> — the type comes from the assigned object, so no declaration is needed.</li>
+              <li><strong>Object-oriented</strong> — everything is an object, including integers and functions.</li>
+              <li><strong>Free and open source</strong>, and <strong>cross-platform</strong> — one source file runs on Windows, Linux and macOS.</li>
+              <li><strong>Extensive library</strong> plus third-party packages via <code>pip</code>; <strong>readable</strong>, because indentation exposes block structure.</li>
             </ul>
-            <p><strong>Interactive Mode:</strong> Started by typing <code>python</code> in terminal. Shows <code>&gt;&gt;&gt;</code> prompt. Executes each line immediately. Used for quick testing.</p>
-            <p><strong>Script Mode:</strong> Write code in a <code>.py</code> file. Run using <code>python filename.py</code>. Full program runs at once. Used for real applications.</p>
+            <p><strong>Interactive vs script mode (2).</strong> Interactive mode is started by typing <code>python3</code> and presents the <code>&gt;&gt;&gt;</code> prompt; each statement executes as soon as it is entered and every bare expression is echoed automatically, which makes it ideal for testing one behaviour — but the session is lost when it closes. Script mode means writing a <code>.py</code> file and running <code>python3 file.py</code>: the whole file executes top to bottom, only <code>print()</code> produces output, and the program is saved and re-runnable. Both use the same interpreter, so behaviour is identical; only the echoing differs.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 2</p>
-          <p>Explain all Python operators with examples — arithmetic, relational, logical, bitwise, membership, and identity operators.</p>
+          <p>Explain the categories of Python operators with one example of each, including a complete bitwise trace for <code>a, b = 5, 3</code>.</p>
           <button class="toggle-btn" data-target="lq2"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq2">
-            <p><strong>1. Arithmetic Operators:</strong> Perform mathematical calculations.</p>
-            <p><code>+</code> addition, <code>-</code> subtraction, <code>*</code> multiplication, <code>/</code> division, <code>//</code> floor division, <code>%</code> modulus, <code>**</code> exponentiation.</p>
-            <p>Example: <code>2 ** 8 = 256</code>, <code>10 % 3 = 1</code></p>
-            <p><strong>2. Relational Operators:</strong> Compare two values and return True or False.</p>
-            <p><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></p>
-            <p>Example: <code>5 &gt; 3</code> → <code>True</code></p>
-            <p><strong>3. Logical Operators:</strong> Combine boolean values.</p>
-            <p><code>and</code>, <code>or</code>, <code>not</code></p>
-            <p>Example: <code>True and False</code> → <code>False</code></p>
-            <p><strong>4. Bitwise Operators:</strong> Operate on binary bits.</p>
-            <p><code>&amp;</code> AND, <code>|</code> OR, <code>^</code> XOR, <code>~</code> NOT, <code>&lt;&lt;</code> left shift, <code>&gt;&gt;</code> right shift.</p>
-            <p>Example: <code>5 &amp; 3</code> → <code>1</code> (0101 AND 0011 = 0001)</p>
-            <p><strong>5. Membership Operators:</strong> Check if a value exists in a sequence.</p>
-            <p><code>in</code>, <code>not in</code></p>
-            <p>Example: <code>"a" in "cat"</code> → <code>True</code></p>
-            <p><strong>6. Identity Operators:</strong> Check if variables point to the same object.</p>
-            <p><code>is</code>, <code>is not</code></p>
-            <p>Example: <code>x = [1,2]; y = x; x is y</code> → <code>True</code></p>
+            <p><strong>1. Arithmetic (1).</strong> <code>+ - * / // % **</code>. Note that <code>/</code> always yields a float, <code>//</code> floors (<code>-7 // 2 == -4</code>) and <code>**</code> is right-associative (<code>2 ** 3 ** 2 == 512</code>).</p>
+            <p><strong>2. Relational / comparison (1).</strong> <code>== != &lt; &gt; &lt;= &gt;=</code>, returning a <code>bool</code>. They chain: <code>1 &lt; x &lt; 10</code> means both comparisons must hold.</p>
+            <p><strong>3. Assignment (1).</strong> <code>=</code> plus the compound forms <code>+= -= *= /= //= %= **=</code>, and the shorthands <code>a, b = 1, 2</code> and <code>a = b = 0</code>.</p>
+            <p><strong>4. Logical (1).</strong> <code>and</code>, <code>or</code>, <code>not</code>. They short-circuit and return an <em>operand</em>: <code>0 or "fallback"</code> is <code>"fallback"</code>; <code>3 and 4</code> is <code>4</code>.</p>
+            <p><strong>5. Bitwise (2).</strong> Work on binary digits. With <code>a, b = 5, 3</code>, i.e. <code>101</code> and <code>011</code>:</p>
+            <ul>
+              <li><code>a &amp; b</code> = <code>101 &amp; 011</code> = <code>001</code> → <strong>1</strong></li>
+              <li><code>a | b</code> = <code>101 | 011</code> = <code>111</code> → <strong>7</strong></li>
+              <li><code>a ^ b</code> = <code>101 ^ 011</code> = <code>110</code> → <strong>6</strong></li>
+              <li><code>~a</code> → <strong>−6</strong>, because <code>~x</code> is defined as <code>-(x + 1)</code></li>
+              <li><code>a &lt;&lt; 1</code> = <code>1010</code> → <strong>10</strong> (×2 per shift)</li>
+              <li><code>a &gt;&gt; 1</code> = <code>10</code> → <strong>2</strong> (floor ÷2 per shift)</li>
+            </ul>
+            <p><strong>6. Membership (1).</strong> <code>in</code> and <code>not in</code> test a sequence: <code>"a" in "cat"</code> is <code>True</code>. Applied to a dictionary they test the <em>keys</em>.</p>
+            <p><strong>7. Identity (1).</strong> <code>is</code> and <code>is not</code> compare object identity, not value: <code>[1, 2] == [1, 2]</code> is <code>True</code> while <code>[1, 2] is [1, 2]</code> is <code>False</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 3</p>
-          <p>Describe Python's collection data types — List, Tuple, and Dictionary — with their properties, operations, and examples.</p>
+          <p>Compare lists, tuples and dictionaries, giving the properties, common operations and one suitable use for each.</p>
           <button class="toggle-btn" data-target="lq3"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq3">
-            <p><strong>List:</strong> Mutable, ordered. Defined with <code>[]</code>.</p>
-            <p>Supports: <code>append()</code>, <code>insert()</code>, <code>remove()</code>, <code>pop()</code>, slicing.</p>
-            <p>Example: <code>fruits = ["apple", "banana"]; fruits.append("mango")</code></p>
-            <p><strong>Tuple:</strong> Immutable, ordered. Defined with <code>()</code>.</p>
-            <p>Cannot be modified after creation. Faster than lists.</p>
-            <p>Supports: indexing, slicing, <code>count()</code>, <code>index()</code>.</p>
-            <p>Example: <code>coords = (10, 20); x, y = coords</code></p>
-            <p><strong>Dictionary:</strong> Mutable, key-value pairs. Defined with <code>{}</code>.</p>
-            <p>Keys must be unique and immutable. Values can be any type.</p>
-            <p>Supports: <code>keys()</code>, <code>values()</code>, <code>items()</code>, <code>get()</code>, <code>pop()</code>.</p>
-            <p>Example: <code>student = {"name": "Alice", "age": 20}</code></p>
-            <p><strong>Key difference:</strong> Lists use integer indices, tuples are immutable, dictionaries use keys for access.</p>
+            <p><strong>List (2).</strong> Ordered, mutable, written <code>[1, 2, 3]</code>, indexed by integer, duplicates allowed, may mix types. Operations: <code>append</code>, <code>extend</code>, <code>insert</code>, <code>remove</code>, <code>pop</code>, <code>sort</code>, <code>reverse</code>, plus <code>len/min/max/sum</code> and slicing. Because it is mutable it cannot be a dictionary key. <em>Use:</em> a collection that grows and changes — a shopping list, a queue of pending jobs.</p>
+            <p><strong>Tuple (2).</strong> Ordered, <strong>immutable</strong>, written <code>(1, 2, 3)</code>, indexed by integer, indexed and sliced like a list but with no mutating methods. Supports packing, unpacking and swapping (<code>x, y = y, x</code>). Only <code>count()</code> and <code>index()</code> are available. Immutability makes it hashable, so it can be a dictionary key. A single element needs a comma: <code>(42,)</code>. <em>Use:</em> a fixed record or a function returning several values, e.g. <code>(quotient, remainder)</code>.</p>
+            <p><strong>Dictionary (2).</strong> Mutable mapping of unique keys to values, written <code>{"a": 1}</code>, accessed by key rather than position. Keys must be hashable; values may be anything. Lookup is O(1) on average. Operations: <code>d[k]</code> (raises <code>KeyError</code>), <code>get(k, default)</code> (does not), <code>keys/values/items</code>, <code>update</code>, <code>pop</code>, <code>setdefault</code>, <code>del</code>, and <code>in</code> which tests the keys. Insertion order is preserved from Python 3.7. <em>Use:</em> a lookup table — a student record keyed by roll number, or a frequency count of words.</p>
+            <p><strong>Summary (2).</strong> Choose a list when order matters and content changes; a tuple when the content is fixed or must be hashable; a dictionary when you look values up by a name or id instead of a position. A list of tuples is a common pairing: ordered records that cannot be edited in place.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 4</p>
-          <p>Explain string manipulation in Python. Cover indexing, slicing, string methods, and string formatting with examples.</p>
+          <p>Explain string indexing, slicing and immutability, and show three ways to format a string. Include a palindrome program.</p>
           <button class="toggle-btn" data-target="lq4"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq4">
-            <p><strong>Strings</strong> in Python are immutable sequences of characters. They can be defined using single, double, or triple quotes.</p>
-            <p><strong>Indexing:</strong> Each character has a position starting from 0. Negative indices count from the end.</p>
-            <p><code>s = "Python"; s[0] = 'P'; s[-1] = 'n'</code></p>
-            <p><strong>Slicing:</strong> Extract a substring using <code>s[start:stop:step]</code>.</p>
-            <p><code>s[1:4] = "yth"</code>, <code>s[::-1] = "nohtyP"</code></p>
-            <p><strong>Concatenation and Repetition:</strong></p>
-            <p><code>"Hello" + " World" = "Hello World"</code></p>
-            <p><code>"Ha" * 3 = "HaHaHa"</code></p>
-            <p><strong>String Methods:</strong></p>
-            <ul>
-              <li><code>.upper()</code> → Uppercase</li>
-              <li><code>.lower()</code> → Lowercase</li>
-              <li><code>.strip()</code> → Remove whitespace</li>
-              <li><code>.split(",")</code> → Split to list</li>
-              <li><code>",".join(list)</code> → Join list to string</li>
-              <li><code>.replace("a","b")</code> → Replace characters</li>
-              <li><code>.find("sub")</code> → Find index of substring</li>
-            </ul>
-            <p><strong>String Formatting:</strong></p>
-            <p><code>"Hello {}".format(name)</code> — .format() method</p>
-            <p><code>f"Hello {name}, age {age}"</code> — f-string (modern, preferred)</p>
+            <p><strong>Indexing (1).</strong> Each character has a position: non-negative from the left starting at <code>0</code>, negative from the right starting at <code>-1</code> for the last. <code>s[0]</code> is the first character, <code>s[-1]</code> the last. An out-of-range index raises <code>IndexError</code>.</p>
+            <p><strong>Slicing (2).</strong> <code>s[start:stop:step]</code> returns a <em>new</em> string. <code>start</code> is included and <code>stop</code> is excluded; defaults are <code>0</code>, <code>len(s)</code> and <code>1</code>. <code>"Python"[1:4]</code> is <code>"yth"</code>; <code>[:3]</code> is <code>"Pyt"</code>; <code>[3:]</code> is <code>"hon"</code>; <code>[::-1]</code> reverses to <code>"nohtyP"</code>; an out-of-range stop is clamped rather than raising.</p>
+            <p><strong>Immutability (2).</strong> No character can be replaced in place: <code>s[0] = "J"</code> raises <code>TypeError: 'str' object does not support item assignment</code>. Every apparent edit builds a new object and rebinds the name — <code>s = "J" + s[1:]</code>. Because the object cannot change, it is hashable (so a valid dictionary key) and safe to share.</p>
+            <p><strong>Three formatting styles (1).</strong> <code>"%s scored %.2f" % (name, score)</code>, <code>"{} scored {:.2f}".format(name, score)</code>, and <code>f"{name} scored {score:.2f}"</code> — the last being the modern preference.</p>
+            <p><strong>Palindrome program (2).</strong> Normalise before comparing, because case and punctuation are not part of the test:</p>
+<pre>
+def is_palindrome(text):
+    clean = "".join(ch.lower() for ch in text if ch.isalnum())
+    return clean == clean[::-1]
+
+print(is_palindrome("Madam"))            # True
+print(is_palindrome("No 'x' in Nixon"))  # True
+print(is_palindrome("Python"))           # False
+</pre>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 5</p>
-          <p>Explain operator precedence in Python with the complete precedence table and examples.</p>
+          <p>Explain the built-in data types of Python and classify each as mutable or immutable. Illustrate the distinction with <code>id()</code>, and explain implicit versus explicit conversion.</p>
           <button class="toggle-btn" data-target="lq5"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="lq5">
-            <p><strong>Operator Precedence</strong> defines the order in which operators are evaluated in an expression. Higher precedence operators are evaluated first.</p>
-            <p><strong>Order (Highest to Lowest):</strong></p>
-            <ol>
-              <li><code>()</code> — Parentheses (highest)</li>
-              <li><code>**</code> — Exponentiation</li>
-              <li><code>~x, +x, -x</code> — Unary operators</li>
-              <li><code>*, /, //, %</code> — Multiplication group</li>
-              <li><code>+, -</code> — Addition/Subtraction</li>
-              <li><code>&lt;&lt;, &gt;&gt;</code> — Bitwise shift</li>
-              <li><code>&amp;</code> — Bitwise AND</li>
-              <li><code>^</code> — Bitwise XOR</li>
-              <li><code>|</code> — Bitwise OR</li>
-              <li>Comparison operators (<code>==, !=, &lt;, &gt;</code>, etc.)</li>
-              <li><code>not</code> — Logical NOT</li>
-              <li><code>and</code> — Logical AND</li>
-              <li><code>or</code> — Logical OR (lowest)</li>
-            </ol>
-            <p><strong>Example:</strong> <code>2 + 3 * 4</code> → <code>3 * 4 = 12</code> first (higher precedence), then <code>2 + 12 = 14</code>.</p>
-            <p><strong>Example:</strong> <code>(2 + 3) * 4</code> → Parentheses first: <code>5 * 4 = 20</code>.</p>
-            <p>When operators have equal precedence, they are evaluated <strong>left to right</strong> (except <code>**</code> which is right to left).</p>
+            <p><strong>Types (3).</strong> Numeric: <code>int</code> (unbounded integer), <code>float</code> (IEEE-754 double), <code>complex</code> (<code>2+3j</code>, with <code>.real</code> and <code>.imag</code>), and <code>bool</code>, which is a subclass of <code>int</code> so <code>True + 1 == 2</code>. Sequence: <code>str</code> and <code>bytes</code>. Collections: <code>list</code>, <code>tuple</code>, <code>dict</code>, <code>set</code>, plus <code>array</code> from the standard library. Special: <code>NoneType</code>, whose only value is <code>None</code>.</p>
+            <p><strong>Mutability (2).</strong> Immutable: <code>int</code>, <code>float</code>, <code>complex</code>, <code>bool</code>, <code>str</code>, <code>tuple</code>, <code>NoneType</code>. Mutable: <code>list</code>, <code>dict</code>, <code>set</code>, and <code>array</code>.</p>
+            <p><strong>The <code>id()</code> proof (1).</strong> <code>id()</code> returns an object's identity. After <code>s += "d"</code> the id changes, because a new string was built; after <code>lst.append(3)</code> the id is unchanged, because the same list was modified in place. That single comparison is the whole idea: immutability means every "change" is really a rebinding.</p>
+            <p><strong>Implicit vs explicit conversion (2).</strong> Implicit (coercion) is automatic and only widens: <code>3 + 4.5</code> → <code>7.5</code>, and <code>10 / 4</code> → <code>2.5</code>. It never loses data and fails when the types cannot be reconciled — <code>"3" + 4</code> raises <code>TypeError</code>. Explicit conversion is a function you call: <code>int("42")</code> → <code>42</code>, <code>int(3.99)</code> → <code>3</code> (truncation <em>does</em> lose data), <code>float("3.5")</code>, <code>str(99)</code>, <code>bool("0")</code> → <code>True</code> (any non-empty string is truthy), <code>list("abc")</code>, and <code>ord("A")</code>/<code>chr(97)</code> for characters.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 6</p>
+          <p>Explain operator precedence and associativity with the full precedence order, and evaluate <code>12 + 3 * 4 ** 2 // 8 - 5 % 3</code> step by step.</p>
+          <button class="toggle-btn" data-target="lq6"><i class="fas fa-eye"></i> Show Answer</button>
+          <div class="answer-reveal" id="lq6">
+            <p><strong>Definitions (2).</strong> <em>Precedence</em> decides which of several competing operators is applied first. <em>Associativity</em> only matters when two operators share the same precedence, and it decides the grouping: left to right, or right to left. In Python every operator associates left to right except <code>**</code>, which associates right to left.</p>
+            <p><strong>Precedence, highest first (3).</strong> <code>()</code> grouping → <code>**</code> → unary <code>+x -x ~x</code> → <code>* / // %</code> → <code>+ -</code> → <code>&lt;&lt; &gt;&gt;</code> → <code>&amp;</code> → <code>^</code> → <code>|</code> → comparisons and membership (<code>== &lt; is in</code> …) → <code>not</code> → <code>and</code> → <code>or</code> (lowest).</p>
+            <p><strong>Step-by-step evaluation (3).</strong></p>
+            <ul>
+              <li><code>4 ** 2</code> = <code>16</code> (highest after parentheses)</li>
+              <li><code>3 * 16</code> = <code>48</code> (same level as <code>//</code>, left to right)</li>
+              <li><code>48 // 8</code> = <code>6</code></li>
+              <li><code>5 % 3</code> = <code>2</code> (same level, evaluated before the additions)</li>
+              <li><code>12 + 6</code> = <code>18</code>, then <code>18 - 2</code> = <strong><code>16</code></strong></li>
+            </ul>
+            <p>Note the classic traps inside this one expression: the exponent is applied before the multiplication, and <code>//</code> and <code>%</code> bind tighter than <code>+</code> and <code>-</code>. Had the expression been <code>2 ** 3 ** 2</code>, right-associativity would give <code>2 ** 9 = 512</code>, not <code>64</code>.</p>
           </div>
         </div>
 
@@ -1496,25 +1727,26 @@ print("Wrong!")  # IndentationError!
 
         <div class="mcq-item">
           <p class="card-title">Q 1</p>
-          <p>Write a Python program to accept a name and age from the user and print a formatted greeting using an f-string.</p>
+          <p>Write a program that greets a user using an f-string, reading the name and age with <code>input()</code> and converting the age to an integer.</p>
           <button class="toggle-btn" data-target="pp1"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp1">
             <div class="code-box">
               <div class="box-title"><i class="fas fa-code"></i> Solution</div>
               <pre>
 name = input("Enter your name: ")
-age = int(input("Enter your age: "))
+age = int(input("Enter your age: "))   # input() returns a str
 
 print(f"Hello, {name}! You are {age} years old.")
 print(f"Next year, you will be {age + 1} years old.")
               </pre>
             </div>
+            <p>The cast is the point of the exercise: <code>input()</code> always returns a string, so without <code>int()</code> the <code>age + 1</code> would raise <code>TypeError</code>.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 2</p>
-          <p>Write a Python program to demonstrate all arithmetic operators using two numbers entered by the user.</p>
+          <p>Take two numbers and print the result of every arithmetic operator on them, including floor division and modulus.</p>
           <button class="toggle-btn" data-target="pp2"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp2">
             <div class="code-box">
@@ -1523,79 +1755,70 @@ print(f"Next year, you will be {age + 1} years old.")
 a = float(input("Enter first number: "))
 b = float(input("Enter second number: "))
 
-print(f"Addition:       {a} + {b} = {a + b}")
-print(f"Subtraction:    {a} - {b} = {a - b}")
-print(f"Multiplication: {a} * {b} = {a * b}")
-print(f"Division:       {a} / {b} = {a / b:.4f}")
-print(f"Floor Division: {a} // {b} = {a // b}")
-print(f"Modulus:        {a} % {b} = {a % b}")
-print(f"Exponent:       {a} ** {b} = {a ** b}")
+print(f"{a} + {b}  = {a + b}")
+print(f"{a} - {b}  = {a - b}")
+print(f"{a} * {b}  = {a * b}")
+print(f"{a} / {b}  = {a / b:.4f}")
+print(f"{a} // {b} = {a // b}")
+print(f"{a} % {b}  = {a % b}")
+print(f"{a} ** {b} = {a ** b}")
               </pre>
             </div>
+            <p>Note that <code>/</code> and <code>//</code> disagree even on exact values, and that division by zero raises <code>ZeroDivisionError</code> — worth a guard if the question mentions robustness.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 3</p>
-          <p>Write a Python program to create a list of 5 student names. Then: add a new name, remove the second name, and print the final list with its length.</p>
+          <p>Create a list of five names. Append a sixth, insert one at position 2, remove one by value, sort it, and print the length, the reversed list and a slice.</p>
           <button class="toggle-btn" data-target="pp3"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp3">
             <div class="code-box">
               <div class="box-title"><i class="fas fa-code"></i> Solution</div>
               <pre>
-students = ["Alice", "Bob", "Charlie", "Diana", "Eve"]
-print("Original list:", students)
+names = ["Ravi", "Sita", "Amit", "Neha", "John"]
+names.append("Priya")        # add one at the end
+names.insert(2, "Kiran")     # insert before index 2
+names.remove("Amit")         # remove by value
+names.sort()                 # in place -- returns None
 
-# Add a new name
-students.append("Frank")
-print("After append:", students)
-
-# Remove the second name (index 1)
-students.pop(1)
-print("After removing Bob:", students)
-
-# Final list and length
-print("Final list:", students)
-print("Total students:", len(students))
+print(len(names))
+print(names[::-1])           # reversed copy, original untouched
+print(names[1:4])
               </pre>
             </div>
+            <p>The trap: <code>names = names.sort()</code> would make <code>names</code> the value <code>None</code>. Call <code>sort()</code> as a statement, or use <code>sorted(names)</code> when you want a new list.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 4</p>
-          <p>Write a Python program to demonstrate string slicing, reversal, and at least 4 string methods.</p>
+          <p>Demonstrate string slicing and reversal, then apply at least four string methods to the same string, showing that the original is unchanged.</p>
           <button class="toggle-btn" data-target="pp4"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp4">
             <div class="code-box">
               <div class="box-title"><i class="fas fa-code"></i> Solution</div>
               <pre>
-s = "  Hello, Python World!  "
+s = "  Hello Python  "
+print(repr(s[2:7]))     # 'Hello'
+print(repr(s[::-1]))    # '  nohtyP olleH  '
 
-# Slicing
-print(s[2:7])         # Hello
-print(s[9:15])        # Python
+print(repr(s.strip()))          # 'Hello Python'
+print(repr(s.strip().upper()))  # 'HELLO PYTHON'
+print(repr(s.strip().replace("Python", "World")))  # 'Hello World'
+print(s.strip().split())        # ['Hello', 'Python']
+print(repr(" ".join(s.strip().split())))  # 'Hello Python'
 
-# Reversal
-stripped = s.strip()
-print(stripped[::-1]) # !dlroW nohtyP ,olleH
-
-# String methods
-print(s.strip())              # Remove whitespace
-print(s.upper())              # Uppercase
-print(s.lower())              # Lowercase
-print(s.replace("Python","Programming"))  # Replace
-print(s.strip().split(","))   # Split by comma
-print(s.find("Python"))       # Find index
-print(s.strip().startswith("Hello"))  # True
+print(repr(s))          # unchanged: '  Hello Python  '
               </pre>
             </div>
+            <p>Every method returned a new string and the last line proves the original survived. Methods chain because each one hands back a string.</p>
           </div>
         </div>
 
         <div class="mcq-item">
           <p class="card-title">Q 5</p>
-          <p>Write a Python program to demonstrate shallow copy vs deep copy using a nested list.</p>
+          <p>Demonstrate the difference between aliasing, a shallow copy and a deep copy using a nested list, and explain each printed line.</p>
           <button class="toggle-btn" data-target="pp5"><i class="fas fa-eye"></i> Show Solution</button>
           <div class="answer-reveal" id="pp5">
             <div class="code-box">
@@ -1604,25 +1827,41 @@ print(s.strip().startswith("Hello"))  # True
 import copy
 
 original = [1, [2, 3], 4]
-
-# Shallow copy
+alias = original
 shallow = original.copy()
-
-# Deep copy
 deep = copy.deepcopy(original)
 
-# Modify inner list of original
-original[1][0] = 99
+original[0] = 99          # replace a TOP-LEVEL element
+original[1][0] = 777      # mutate a NESTED element
 
-print("Original:", original)   # [1, [99, 3], 4]
-print("Shallow:", shallow)     # [1, [99, 3], 4] — affected!
-print("Deep:", deep)           # [1, [2, 3], 4]  — not affected
-
-# Conclusion
-print("\nShallow copy shares inner objects — NOT safe for nested data.")
-print("Deep copy is fully independent — SAFE for nested data.")
+print(alias)      # [99, [777, 3], 4]  same object -- sees both
+print(shallow)    # [1, [777, 3], 4]   own outer list, shared inner list
+print(deep)       # [1, [2, 3], 4]     independent at every level
               </pre>
             </div>
+            <p><code>alias</code> shares the whole object. The shallow copy duplicated only the outer container, so the nested list is still one object in two places. <code>deepcopy</code> rebuilt the tree, which is why it shows neither change.</p>
+          </div>
+        </div>
+
+        <div class="mcq-item">
+          <p class="card-title">Q 6</p>
+          <p>Print the current date and time in three formats, and print the date exactly one week from today.</p>
+          <button class="toggle-btn" data-target="pp6"><i class="fas fa-eye"></i> Show Solution</button>
+          <div class="answer-reveal" id="pp6">
+            <div class="code-box">
+              <div class="box-title"><i class="fas fa-code"></i> Solution</div>
+              <pre>
+from datetime import datetime, date, timedelta
+
+now = datetime.now()
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
+print(now.strftime("%d/%m/%Y"))
+print(now.strftime("%d-%b-%Y %I:%M %p"))
+
+print(date.today() + timedelta(days=7))
+              </pre>
+            </div>
+            <p><code>timedelta</code> is the only supported way to do date arithmetic — you cannot add an integer to a <code>date</code>. Note <code>%m</code> is the month and <code>%M</code> is the minute.</p>
           </div>
         </div>
 
@@ -1646,19 +1885,16 @@ print("Deep copy is fully independent — SAFE for nested data.")
           <li>Python is <strong>interpreted, high-level, dynamically typed, and object-oriented</strong>.</li>
           <li>Python uses <strong>indentation</strong> (4 spaces) to define code blocks — no curly braces.</li>
           <li>Interactive mode uses <code>&gt;&gt;&gt;</code> prompt. Script mode runs <code>.py</code> files.</li>
-          <li>Variables are <strong>dynamically typed</strong> — no declaration needed.</li>
-          <li>Numeric types: <code>int</code>, <code>float</code>, <code>complex</code>.</li>
           <li>Strings are <strong>immutable</strong>. Indexed from 0 (left) or -1 (right).</li>
           <li>Slicing syntax: <code>s[start:stop:step]</code>. <code>s[::-1]</code> reverses a string.</li>
           <li>f-strings (Python 3.6+): <code>f"Hello {name}"</code> — modern way to format strings.</li>
           <li><strong>List</strong> = mutable, ordered, <code>[]</code>. <strong>Tuple</strong> = immutable, ordered, <code>()</code>.</li>
           <li><strong>Dictionary</strong> = key-value pairs, mutable, <code>{}</code>. Keys must be unique.</li>
-          <li><strong>array</strong> module provides typed arrays — all elements must be same type.</li>
           <li><code>//</code> = floor division. <code>%</code> = modulus. <code>**</code> = exponentiation.</li>
           <li><code>is</code> checks identity (same object). <code>==</code> checks value equality.</li>
           <li><strong>Shallow copy</strong>: inner objects shared. <strong>Deep copy</strong>: fully independent.</li>
           <li>Operator precedence: <code>()</code> → <code>**</code> → unary → <code>*/%//</code> → <code>+-</code> → comparisons → <code>not</code> → <code>and</code> → <code>or</code>.</li>
-          <li><code>datetime</code> module handles dates and times. <code>datetime.now()</code> for current time.</li>
+          <li><code>datetime.now()</code> for the current time; <code>timedelta</code> for date arithmetic.</li>
         </ul>
       </div>
 
@@ -1708,26 +1944,42 @@ print("Deep copy is fully independent — SAFE for nested data.")
       <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
       <ul class="video-list">
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=Python+beginners+setup+first+program" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=R-HLU9Fl5ug" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Python for beginners: setup and first program</span>
-              <span class="video-link-meta">Installing Python and running a script &middot; search on YouTube</span>
+              <span class="video-link-title">Python: Data Structures — Lists, Tuples, Sets &amp; Dictionaries</span>
+              <span class="video-link-meta">Programming and Math Tutorials &middot; 19:01 &middot; the three collections compared, with slicing and copying</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=Python+variables+data+types+tutorial" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=k9TUPpGqYTo" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Variables and data types in Python</span>
-              <span class="video-link-meta">int, float, str, bool and type() &middot; search on YouTube</span>
+              <span class="video-link-title">Strings — Working with Textual Data</span>
+              <span class="video-link-meta">Corey Schafer &middot; 21:11 &middot; indexing, slicing, string methods and formatting</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=Python+strings+lists+tuples+difference" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=p9ppfvHv2Us" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Strings, lists and tuples</span>
-              <span class="video-link-meta">Indexing, slicing and mutability &middot; search on YouTube</span>
+              <span class="video-link-title">Immutable vs Mutable Objects in Python</span>
+              <span class="video-link-meta">Real Python &middot; 09:55 &middot; including why a tuple holding a list can still change</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="video-link" href="https://www.youtube.com/watch?v=i2i8YkFyLVs" target="_blank" rel="noopener noreferrer">
+            <span class="video-link-text">
+              <span class="video-link-title">Precedence and Associativity of Arithmetic Operators</span>
+              <span class="video-link-meta">Neso Academy &middot; 09:05 &middot; why <code>**</code> groups right to left</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="video-link" href="https://www.youtube.com/watch?v=F_UIOvfmsew" target="_blank" rel="noopener noreferrer">
+            <span class="video-link-text">
+              <span class="video-link-title">Bitwise Operators in Python — Part 1</span>
+              <span class="video-link-meta">Neso Academy &middot; 09:21 &middot; binary working for <code>&amp;</code> and <code>|</code>, verified in the interpreter</span>
             </span>
           </a>
         </li>
