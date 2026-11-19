@@ -355,6 +355,97 @@ Otherwise Unit 2 is complete as it stands. **Flagged, not decided unilaterally.*
 infinite loops); `Rjjgy2QWS98` Neso 16:48 (`break`/`continue` traced); `SiECEKZDqqk`
 Neso 09:40 (`if-else` + shorthand).
 
+### 4.4 Part 13.3 result — Unit 3 (Functions, Modules, Packages), `92m / 23.8%`
+
+**What shipped.** `subjects/CST203/units/unit-3.html` went from **4,531w** and
+**zero** `<h3 id>` anchors to **7,494w / 5,747 prose** and **12** anchors. Unit 3
+carries nearly a quarter of the subject's marks — second only to Unit 1 — and was
+the thinnest concept page after Unit 2, with its five concept sections totalling
+1,513w against 23.8% of the marks.
+
+| Section | Before | After |
+| :--- | ---: | ---: |
+| `#overview` | 87 | 87 |
+| `#functions` | 275 | 558 |
+| `#parameters` | 469 | 1,122 (includes the Tier-E `lambda` block) |
+| `#scope` | 250 | 734 |
+| `#modules` | 285 | 693 |
+| `#packages` | 234 | 750 |
+| `#formulas` | 55 | 122 |
+| `#definitions` | 92 | 284 |
+| `#comparisons` | 61 | 187 |
+| `#mcqs` | 451 | 586 (8 &rarr; **10**) |
+| `#short-questions` | 395 | 479 (8 &rarr; **6**, rewritten) |
+| `#long-questions` | 612 | 851 (5 &rarr; **4**, rewritten as 8-mark answers) |
+| `#practice` | 526 | 457 (6 &rarr; **5** fully-run programs) |
+| `#revision` | 112 | 380 |
+| `#videos` | 67 | 127 (1 &rarr; **4** verified) |
+
+**The 12 anchors** (planned 6, authored 12 — a heading was created wherever a stored
+topic had nowhere correct to land):
+
+`#defining-and-calling-functions`, `#built-in-versus-user-defined-functions`,
+`#positional-keyword-and-default-arguments`, `#variable-length-arguments`,
+`#passing-a-list-and-mutating-it`, `#lambda-functions-and-recursion`,
+`#legb-local-global-and-nonlocal`, `#class-namespace-scope`,
+`#creating-and-importing-modules`, `#standard-library-math-random-and-sys-argv`,
+`#module-versus-package`, `#pip-and-installing-packages`.
+
+**Routing, before &rarr; after part 13.3** (`scripts/audit_topic_routing.py`, same matcher):
+
+| | Baseline | After 13.1 | After 13.2 | After 13.3 |
+| :--- | ---: | ---: | ---: | ---: |
+| same-unit / redirect / unmatched | 78 / 11 / 15 | 89 / 10 / 5 | 91 / 8 / 5 | **91 / 8 / 5** |
+| all-104 named `<h3 id>` landings | 12 | 41 | 52 | **86** |
+| all-104 coarse-section landings | 61 | 61 | 50 | **13** |
+| Unit 3 questions on a named heading | — | — | — | **20 of 20** |
+
+**Ablation proof, run a third time — and this is the sharpest instance yet.** Deleting
+Unit 3's 12 `<h3 id>` attributes leaves the routing triple **byte-identical**
+(91 / 8 / 5). It moves the granularity split from **86 named / 13 coarse** to
+**79 named / 20 coarse**. Seven landings silently fall back to a coarse section and
+the pass/fail numbers do not move at all. Same result as 13.1 and 13.2; the triple
+cannot see the anchors.
+
+**Order-dependence improved as a side effect, `31 &rarr; 29`.** With 12 named
+headings in Unit 3 there are fewer ties between a named heading and a coarse section,
+so fewer landings flip when the heading list is reversed. The ratchet in
+`tests/test_routing_order.py` was lowered to 29 with the reason in its comment. A
+lower number is strictly better here — this is not the defect being fixed, only a
+smaller surface for it.
+
+**Code verification — 54 `<pre>` blocks.** 42 parse as Python. The 12 that do not are
+deliberate: 7 are **stdout transcripts** (a code box immediately followed by an output
+box), 3 are **directory trees** (`shop/`, `calc.py`), and 2 are **shell/pip session**
+blocks. The numpy snippet in `#packages` is labelled *"Verification status: this one
+snippet was not executed"* in the page itself, because `numpy` is not installed here —
+that is stated to the reader rather than shown as a fake trace. Every one of the 42
+runnable blocks was executed and its real stdout is what the page prints.
+
+Two rendering defects were caught by the parse sweep and fixed: three code boxes in
+the `lambda`/recursion area were indented by two stray spaces (they would have
+rendered as an `IndentationError` for a student copying them), and the recursion trace
+table's output box had per-line indentation on rows 2–4.
+
+**Videos shipped (4, all live-verified 2026-11-19):** `WcTXxX3vYgY` Real Python
+10:44 (`*args`/`**kwargs`); `XN83IECAscM` Bro Code 05:33 (LEGB walked one level at a
+time); `CqvZ3vGoGs0` Corey Schafer 21:57 (four import styles, `sys.path`);
+`EH-TFaX-R-o` Indently 06:50 (`__init__.py`, packages, `__all__`).
+
+**Honest gap: the size.** 7,494w is **13.5% over** the 6,600w weight budget. That is
+outside the ±10% band in §4.2 but far closer than Unit 2's 31%: the concept sections
+are **3,857w (52%) for 85% of the unit's marks** and are proportionate; the assessed
+practice bank is **2,373w (32%)** and the reference/appendix sections 1,187w (16%). An earlier draft measured 7,613w and was cut to 7,494w by reducing MCQs from
+12 to 10 (the two dropped questions — `nonlocal` and `factorial(4)` — are answered in
+full by `#legb-local-global-and-nonlocal` and `#lambda-functions-and-recursion`) and by
+compressing four long answer explanations. 10 MCQs matches Units 1 and 2, so the
+practice banks are now consistent across the three units shipped.
+
+**A pattern worth naming:** the Tier-E `lambda` material adds 15 marks' worth of
+content that the printed syllabus does not list, but 4 of the 104 questions ask for
+it (`P005-Q6`, `P005-Q18`, `P006-Q21`, `P006-Q23`). It is included, and labelled as
+extra-syllabus on the page.
+
 ### 4.1.4 Code verification
 
 Every `<pre>` block was machine-checked against Python 3.11.2 rather than eyeballed:

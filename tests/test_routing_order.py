@@ -28,11 +28,14 @@ import audit_topic_routing as routing  # noqa: E402
 SUBJECTS = ('CST201', 'CST203', 'CST205', 'CST207', 'CST209')
 PAPERS = 'P00[3-6]'
 
-# Measured 2026-11-19. Not a target -- a ratchet. Any change here means the
+# Measured 2026-11-19. Not a target -- a ratchet. CST203 fell 31 -> 29 in
+# part 13.3: Unit 3 now has 12 <h3 id> anchors, so fewer topics tie between a
+# named heading and a coarse section and fewer landings flip when the entry
+# list is reversed. A lower number is strictly better here. Any change here means the
 # matcher's behaviour moved and must be explained in a phase record.
 ORDER_DEPENDENT = {
     'CST201': 36,
-    'CST203': 31,
+    'CST203': 29,
     'CST205': 35,
     'CST207': 10,
     'CST209': 50,

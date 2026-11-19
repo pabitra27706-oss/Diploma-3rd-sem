@@ -50,15 +50,16 @@
 
 > **Executed 2026-11-19.** Evidence in `record.md` §4.3. Deltas: **8** `<h3 id>` shipped against a plan of 5 (the `for`/`range` cluster needed four headings to separate `range()` semantics, nesting and the three set programs); **4** videos not 2; and the page is **6,024w against a 4,600w weight budget** — the overrun is the practice bank, flagged for the owner in §4.3, not waived.
 ## Part 13.3 — Unit 3: Functions, Modules and Packages (`92m / 23.8%`, 6h, PDF pp. 5–6)
-- **Target file:** `subjects/CST203/units/unit-3.html` (`4,340w → ~5,800–6,400w`) · Blueprint: [`unit-3/README.md`](unit-3/README.md)
+- **Target file:** `subjects/CST203/units/unit-3.html` (`4,340w → 7,494w` (shipped)) · Blueprint: [`unit-3/README.md`](unit-3/README.md)
 - **Implementation checklist:**
-  - [ ] Expand **Tier A + Tier E `#functions` & `#parameters` (`34m` + `15m = 49m`, ~48% prose)**: `def`, docstrings, built-in vs user-defined table, `return` (single, tuple, implicit `None`), all 4 argument types (positional, keyword, default + mutable-default trap, `*args` & `**kwargs`), passing a list to a function, plus badged **Tier E** subsection on `lambda` (`def` vs `lambda` + `sorted`/`map`/`filter`) and recursive `factorial(n)`.
-  - [ ] Expand **Tier B + Tier S + Tier E `#packages` (`17m` + `3m`, ~20% prose)**: package tree (`__init__.py`), Module vs Package table + demo, `pip` CLI commands, 4-line **Tier S** `pyproject.toml` editable install note, and badged ~120w **Tier E `NumPy` callout** (`numpy.fft.fft` + `np.add(a, b)` for `P005-Q23iii`; zero `pandas`/`scipy`/`matplotlib`).
-  - [ ] Expand **Tier B `#modules` (`12m`, ~17% prose)**: custom `.py` module, 4 `import` styles, `__name__ == "__main__"`, `dir()`, `sys.path`, and `math`, `random`, `sys.argv` quick-reference.
-  - [ ] Expand **Tier B `#scope` (`11m`, ~15% prose)**: inline SVG LEGB diagram, Local vs Global table + `global` / `UnboundLocalError`, `nonlocal`, and concise class-attribute scope note (`P005-Q19ii`).
-  - [ ] Calibrate practice (`10` MCQs, `5` short, `5` worked 8m), add `6` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Area 5), and insert `3` live-verified plain-`<a>` YouTube links.
+  - [x] Expand **Tier A + Tier E `#functions` & `#parameters` (`34m` + `15m = 49m`, ~48% prose)**: `def`, docstrings, built-in vs user-defined table, `return` (single, tuple, implicit `None`), all 4 argument types (positional, keyword, default + mutable-default trap, `*args` & `**kwargs`), passing a list to a function, plus badged **Tier E** subsection on `lambda` (`def` vs `lambda` + `sorted`/`map`/`filter`) and recursive `factorial(n)`.
+  - [x] Expand **Tier B + Tier S + Tier E `#packages` (`17m` + `3m`, ~20% prose)**: package tree (`__init__.py`), Module vs Package table + demo, `pip` CLI commands, 4-line **Tier S** `pyproject.toml` editable install note, and badged ~120w **Tier E `NumPy` callout** (`numpy.fft.fft` + `np.add(a, b)` for `P005-Q23iii`; zero `pandas`/`scipy`/`matplotlib`).
+  - [x] Expand **Tier B `#modules` (`12m`, ~17% prose)**: custom `.py` module, 4 `import` styles, `__name__ == "__main__"`, `dir()`, `sys.path`, and `math`, `random`, `sys.argv` quick-reference.
+  - [x] Expand **Tier B `#scope` (`11m`, ~15% prose)**: inline SVG LEGB diagram, Local vs Global table + `global` / `UnboundLocalError`, `nonlocal`, and concise class-attribute scope note (`P005-Q19ii`).
+  - [x] Calibrate practice (`10` MCQs, `5` short, `5` worked 8m), add `6` `<h3 id>` anchors, cross-link `subjects/CST213/index.html` (Area 5), and insert `3` live-verified plain-`<a>` YouTube links.
 - **Acceptance & evidence:**
-  - [ ] Locked `#parameters`, `#modules` & all `14` `<section id>`s preserved; zero `pandas`/`scipy`/`matplotlib` content; all snippets verified via `python3` / `ast.parse`; 3 URLs logged in `record.md`.
+  - [x] Locked `#parameters`, `#modules` & all `15` `<section id>`s preserved; zero `pandas`/`scipy`/`matplotlib` content; all snippets verified via `python3` / `ast.parse`; 4 URLs logged in `record.md`.
+  - **Done 2026-11-19 — deviation noted, not hidden:** `6` anchors planned, **12** shipped (a heading was authored wherever a stored topic had nowhere correct to land); `3` video slots planned, **4** shipped; MCQs shipped **10**, not 12 — the two dropped (`nonlocal`, `factorial(4)`) are answered in full by their concept sections, and 10 matches Units 1 and 2. Size is **7,494w**, 13.5% over the 6,600w budget (outside the ±10% band, closer than Unit 2's 31%). The numpy snippet is labelled *not executed* on the page because `numpy` is absent from the build environment. Routing triple did not move (91/8/5) — ablation in `record.md` §4.4 proves the anchors moved the granularity split 79→86 named instead.
 
 ---
 
