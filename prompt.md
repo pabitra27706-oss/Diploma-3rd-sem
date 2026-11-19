@@ -1,4 +1,4 @@
-> **Phase 17 — 2026-11-19 (built locally, awaiting owner review; NOT pushed):**
+> **Phase 17 — 2026-11-19 (owner-passed: "Test passed"; branch pushed; merge NOT authorised):**
 > Topic-map cross-check across all five subjects. Branch
 > `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (verified ancestor). No
 > dedicated Phase 17 branch was created: Arena fixes the session branch.
@@ -10,7 +10,7 @@
 > Inherited: hosted "PYQ browser smoke" red on `main` (`44515857069`), same
 > named step as Phase 16; root cause not established. Frozen `_data/` and
 > `_quiz-data/` unchanged. **Record:** `docs/phases/17-topic-map-crosscheck/record.md`.
-> Owner decisions F1–F8 are open (record §11). Do not push, open a PR, merge or
+> Owner decisions F1–F8 are open (record §11). Do not open a PR, merge or
 > deploy without explicit owner authorisation.
 
 # Diploma 3rd Sem Study Hub — continuation handoff

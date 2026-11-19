@@ -1,9 +1,9 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
-## Phase 17 — Topic-map cross-check — 🚧 built locally, awaiting owner review (2026-11-19, NOT pushed)
+## Phase 17 — Topic-map cross-check — ✅* owner-passed (Termux test, 2026-11-19); branch pushed; merge NOT authorised
 
-Branch `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (PR #31 merge). Local
-commit only: no push, PR, merge or deploy. Full evidence:
+Branch `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (PR #31 merge), head
+`8f37939`, pushed to origin at owner direction. No PR, merge or deploy. Full evidence:
 [Phase 17 record](phases/17-topic-map-crosscheck/record.md).
 
 - All five `assets/data/topic-map-<subject>.json` maps: entries unchanged;
@@ -26,8 +26,7 @@ commit only: no push, PR, merge or deploy. Full evidence:
   "PYQ browser smoke"; Pages green. Predecessor `44490460318` failed at the same
   named step. Root cause not established; not claimed identical.
 - No browser, device or playback evidence. Owner-test URLs and the Termux block
-  are in record §12 and §14. **A remote clone cannot fetch this branch until a
-  push is authorised.**
+  are in record §12 and §14. The owner reported "Test passed".
 
 ## Phase 14 — Data Structures — ✅* owner-passed (Termux test), merge authorized (2026-11-19)
 

@@ -1,6 +1,6 @@
 # Phase 17 Record — Topic-map cross-check (all five subjects)
 
-**Status: built and committed locally on the session branch. Not pushed, no PR, no merge, no deploy. Awaiting owner review.**
+**Status: ✅* owner-passed (Termux test, reported 2026-11-19: "Test passed"). Pushed to `origin/arena/1e78bf15-diploma-3rd-sem` at owner direction. No PR, no merge, no deploy authorised.**
 Local automated results are not browser, device or playback tests. No browser is available in this environment.
 
 ## 0. Branch and base
@@ -258,9 +258,9 @@ Serve the checkout locally (section 14) and open these, in a phone-width window 
 - Accept the tie-break pin (section 7), or ask for a score-floor fix plus re-measurement.
 - Decide F1–F8 (section 11).
 
-## 14. Termux preview — branch NOT yet pushed
+## 14. Termux preview — branch pushed (owner-authorised)
 
-**A remote clone cannot fetch this branch yet.** `arena/1e78bf15-diploma-3rd-sem` exists only in this sandbox. The block below is ready for after the owner authorises a push. Until then, it fails at the branch check.
+The branch is on `origin` (commit `8f37939`). A fresh clone was checked after the push. The block below is the command the owner ran; the first attempt failed only because the branch had not yet been pushed.
 
 ```sh
 cd ~ && mkdir -p ~/study-hub-topicmap-preview && cd ~/study-hub-topicmap-preview && (test -d Diploma-3rd-sem/.git || git clone --single-branch --branch arena/1e78bf15-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && test "$(git branch --show-current)" = arena/1e78bf15-diploma-3rd-sem && git pull --ff-only origin arena/1e78bf15-diploma-3rd-sem && cd ~/study-hub-topicmap-preview && python3 -m http.server 8013 --bind 127.0.0.1
@@ -270,4 +270,10 @@ Open `http://127.0.0.1:8013/Diploma-3rd-sem/subjects/CST203/units/unit-1.html?to
 
 ## 15. Push, PR, merge, deploy
 
-- **Push: not pushed.** **PR: none.** **Merge: none.** **Deploy: none.** The commit is local only, for owner review.
+- **Push: pushed** to `origin/arena/1e78bf15-diploma-3rd-sem` (new branch, no force), owner-authorised. **PR: none.** **Merge: none.** **Deploy: none.**
+
+## 16. Owner verification
+
+- Owner reported "Test passed" after the Termux check (2026-11-19). Treated as the `rule.md` §4 step 7 pass for Phase 17.
+- The owner's report does not list which URLs or steps were exercised. The pass covers what the owner reported, nothing wider. No browser, device or playback evidence was produced in this environment.
+- Acceptance remains subject to the inherited hosted browser-smoke red on `main` (section 9) and the open owner flags F1–F8 (section 11). Merge is not authorised; a separate instruction is needed.
