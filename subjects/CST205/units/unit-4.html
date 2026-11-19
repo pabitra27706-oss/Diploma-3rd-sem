@@ -594,6 +594,51 @@ struct TreeNode* deleteNode(struct TreeNode* root, int key) {
 }</code></pre>
       </div>
 
+
+      <h3 id="binary-trees-array-and-linked-representation"><i class="fas fa-angle-right"></i> Binary Trees: Array Representation and Linked Representation</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Two Index Conventions — State Which One You Use</div>
+        <p>WBSCTE papers mix conventions, so write yours down before calculating. For a node stored at index <strong>i</strong>:</p>
+        <div class="table-wrapper"><table class="data-table">
+          <thead><tr><th>Convention</th><th>Left child</th><th>Right child</th><th>Parent</th><th>Root index</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1-based</strong> (textbook)</td><td>2i</td><td>2i + 1</td><td>floor(i / 2)</td><td>1</td></tr>
+            <tr><td><strong>0-based</strong> (C arrays)</td><td>2i + 1</td><td>2i + 2</td><td>floor((i - 1) / 2)</td><td>0</td></tr>
+          </tbody></table></div>
+        <p><strong>Worked check:</strong> if a child sits at index 6, its parent is at floor(6/2) = <strong>3</strong> in 1-based indexing, but at floor((6-1)/2) = <strong>2</strong> in 0-based indexing. Both answers are correct under their own convention — an answer that does not state the convention cannot be marked reliably.</p>
+        <p><strong>Which representation when?</strong> The array form is compact and gives O(1) parent/child jumps, but a skewed tree of height h wastes most of its 2<sup>h+1</sup> - 1 slots. The linked form (<code>data | left | right</code> per node) uses memory only for nodes that exist and supports insert/delete without shifting, so it is preferred for general, changing trees; the array form suits complete trees such as heaps.</p>
+      </div>
+
+      <h3 id="binary-tree-properties-proofs-and-catalan-counts"><i class="fas fa-angle-right"></i> Binary Tree Properties: the n0 = n2 + 1 Proof and Counting Trees</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Notation and Level Formulas</div>
+        <p>Let n<sub>0</sub> be the number of leaves (degree 0), n<sub>1</sub> the number of nodes with one child, and n<sub>2</sub> the number with two children. With the root at level 0, level <em>l</em> holds at most 2<sup>l</sup> nodes and a tree of edge-height h holds at most 2<sup>h+1</sup> - 1 nodes. If your book counts the root as level 1, the same facts read 2<sup>k-1</sup> nodes on level <em>k</em> and at most 2<sup>h</sup> - 1 nodes when height counts nodes on the longest path. The tree does not change; only the numbering does.</p>
+      </div>
+      <div class="algo-box">
+        <div class="box-title"><i class="fas fa-list-ol"></i> Proof that n0 = n2 + 1 (non-empty binary tree)</div>
+        <pre>Count nodes:        N = n0 + n1 + n2          ... (1)
+Count edges:  every node except the root has exactly one
+              incoming edge, so E = N - 1.
+              Also each 1-child node contributes 1 edge
+              and each 2-child node contributes 2:
+                    E = n1 + 2*n2             ... (2)
+From (1) and (2):  n0 + n1 + n2 - 1 = n1 + 2*n2
+Cancel n1:         n0 - 1 = n2
+Therefore:         n0 = n2 + 1.  Leaves always exceed
+                   two-child nodes by exactly one.</pre>
+        <p>Quick use: a full binary tree with 10 internal two-child nodes has 11 leaves without drawing anything.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> How Many Different Binary Trees? (Catalan Numbers)</div>
+        <p>The number of structurally different (unlabelled) binary trees with n nodes is the Catalan number C<sub>n</sub> = (1/(n+1)) * (2n choose n). So C<sub>3</sub> = 5 and <strong>C<sub>4</sub> = 14</strong>: there are exactly 14 different shapes of 4-node binary tree. If the nodes carry distinct labels, multiply by n! labellings; exam questions asking for &ldquo;number of binary trees with 4 nodes&rdquo; expect 14 unless labels are stated.</p>
+      </div>
+
+      <h3 id="threaded-binary-trees-exam-note"><i class="fas fa-angle-right"></i> Threaded Binary Trees and Stack-Free Traversal (Exam Note)</h3>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Exam Extension — Threaded Binary Tree</div>
+        <p>In an ordinary linked binary tree, n + 1 of the 2n link fields are NULL. A <strong>threaded binary tree</strong> reuses those empty links as <em>threads</em>: an empty right link points to the node&rsquo;s in-order successor and an empty left link to its in-order predecessor. Extra tag bits distinguish a thread from a real child link. The payoff is in-order traversal with <strong>no stack and no recursion</strong> — start at the leftmost node, then follow right threads and right children in turn. This is a short-note topic: definition, what a thread replaces, and the stack-free traversal benefit are what earn marks.</p>
+      </div>
+
     </div>
   </section>
 
@@ -836,6 +881,28 @@ Result: 4 5 2 6 7 3 1</pre>
         </div>
       </div>
 
+
+      <h3 id="binary-tree-reconstruction"><i class="fas fa-angle-right"></i> Binary Tree Reconstruction from In-Order, Pre-Order and Post-Order</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> The Rule, and When Reconstruction Is Possible</div>
+        <p><strong>In-order + Pre-order</strong> and <strong>In-order + Post-order</strong> each rebuild exactly one tree (for distinct keys): pre-order gives the root first, post-order gives it last, and in-order splits into left subtree | root | right subtree. <strong>Pre-order + Post-order alone do not</strong> determine a unique tree in general, so a question giving only a post-order sequence is under-specified unless more is stated — say so rather than inventing a shape.</p>
+        <ol>
+          <li>Take the root: first of pre-order (or last of post-order).</li>
+          <li>Find that root in in-order; everything left of it is the left subtree, everything right is the right subtree.</li>
+          <li>Repeat inside each side, always consuming the root from the correct end of the other sequence.</li>
+        </ol>
+      </div>
+      <figure><svg width="100%" viewBox="0 0 560 240" role="img" aria-labelledby="ds-recon2-title ds-recon2-desc"><title id="ds-recon2-title">Reconstructed binary tree</title><desc id="ds-recon2-desc">Root A with left child B and right child C. B has left child D and right child E; D has right child I; E has left child J. C has left child F and right child G; G has left child K.</desc><circle cx="280" cy="30" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="35" text-anchor="middle" fill="currentColor">A</text><line x1="268" y1="42" x2="150" y2="78" stroke="currentColor"/><line x1="292" y1="42" x2="410" y2="78" stroke="currentColor"/><circle cx="140" cy="90" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="140" y="95" text-anchor="middle" fill="currentColor">B</text><circle cx="420" cy="90" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="420" y="95" text-anchor="middle" fill="currentColor">C</text><line x1="130" y1="102" x2="80" y2="138" stroke="currentColor"/><line x1="150" y1="102" x2="200" y2="138" stroke="currentColor"/><line x1="410" y1="102" x2="360" y2="138" stroke="currentColor"/><line x1="430" y1="102" x2="480" y2="138" stroke="currentColor"/><circle cx="70" cy="150" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="70" y="155" text-anchor="middle" fill="currentColor">D</text><circle cx="210" cy="150" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="210" y="155" text-anchor="middle" fill="currentColor">E</text><circle cx="350" cy="150" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="350" y="155" text-anchor="middle" fill="currentColor">F</text><circle cx="490" cy="150" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="490" y="155" text-anchor="middle" fill="currentColor">G</text><line x1="80" y1="162" x2="105" y2="196" stroke="currentColor"/><line x1="200" y1="162" x2="180" y2="196" stroke="currentColor"/><line x1="480" y1="162" x2="455" y2="196" stroke="currentColor"/><circle cx="110" cy="208" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="110" y="213" text-anchor="middle" fill="currentColor">I</text><circle cx="175" cy="208" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="175" y="213" text-anchor="middle" fill="currentColor">J</text><circle cx="450" cy="208" r="16" fill="var(--card-bg)" stroke="currentColor"/><text x="450" y="213" text-anchor="middle" fill="currentColor">K</text></svg><figcaption>Tree rebuilt below from Pre-order A B D I E J C F G K and In-order D I B E J A F C K G.</figcaption></figure>
+      <div class="table-wrapper"><table class="data-table"><caption>Three exam reconstructions, each recomputed and checked by re-traversing the result</caption>
+        <thead><tr><th>Given</th><th>Root-by-root result</th><th>Check (third traversal)</th></tr></thead>
+        <tbody>
+          <tr><td>Pre: A B D I E J C F G K<br>In: D I B E J A F C K G</td><td>A root; B left, C right; D under B with right child I; E with left child J; F left of C; G right of C with left child K (figure above)</td><td>Post-order: I D J E B F K G C A</td></tr>
+          <tr><td>Pre: 1 2 4 7 9 5 3 6 8<br>In: 7 9 4 2 5 1 3 6 8</td><td>1 root; 2 left (4 with left child 7, and 7 with right child 9; 5 right of 2); 3 right with right child 6, and 6 with right child 8</td><td>Post-order: 9 7 4 5 2 8 6 3 1</td></tr>
+          <tr><td>Pre: F A E K C D H G B<br>In: E A C K F H D B G</td><td>F root; A left (E left, K right, C left of K); D right (H left, G right, B left of G)</td><td>Post-order: E C K A H B G D F</td></tr>
+          <tr><td>In: D B E A F C<br>Post: D E B F C A</td><td>A root; B left (D, E); C right (F left). Left subtree has <strong>3 nodes</strong> (B, D, E)</td><td>Pre-order: A B D E C F</td></tr>
+        </tbody></table></div>
+      <p>Always verify a reconstruction by writing the third traversal from your drawing and comparing the two given orders node by node. A single misplaced node breaks exactly one of them, which tells you where to fix it.</p>
+
     </div>
   </section>
 
@@ -1051,6 +1118,76 @@ Result: 4 5 2 6 7 3 1</pre>
           </table>
         </div>
       </div>
+
+
+      <h3 id="binary-search-tree-bst-property-and-operations"><i class="fas fa-angle-right"></i> Binary Search Tree (BST): BST Property, Search and Insertion</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Property and Consequences</div>
+        <p>For every node, all keys in its <strong>left subtree are smaller</strong> and all keys in its <strong>right subtree are larger</strong>. Three consequences earn marks: an <strong>in-order traversal prints keys in ascending order</strong>; search follows one root-to-leaf path, so it costs O(log n) on a balanced tree but degrades to O(n) on a skewed one; and insertion always creates a new leaf — find the empty slot by searching, then attach there.</p>
+      </div>
+      <div class="table-wrapper"><table class="data-table"><caption>Inserting 10, 25, 2, 4, 7, 13, 11, 22 in that order (recomputed)</caption>
+        <thead><tr><th>Insert</th><th>Search path</th><th>Attached as</th></tr></thead>
+        <tbody>
+          <tr><td>10</td><td>—</td><td>root</td></tr>
+          <tr><td>25</td><td>10 → right (empty)</td><td>right child of 10</td></tr>
+          <tr><td>2</td><td>10 → left (empty)</td><td>left child of 10</td></tr>
+          <tr><td>4</td><td>10 → 2 → right (empty)</td><td>right child of 2</td></tr>
+          <tr><td>7</td><td>10 → 2 → 4 → right (empty)</td><td>right child of 4</td></tr>
+          <tr><td>13</td><td>10 → 25 → left (empty)</td><td>left child of 25</td></tr>
+          <tr><td>11</td><td>10 → 25 → 13 → left (empty)</td><td>left child of 13</td></tr>
+          <tr><td>22</td><td>10 → 25 → 13 → right (empty)</td><td>right child of 13</td></tr>
+        </tbody></table></div>
+      <p>Final shape: 10 at the root; 2 and 25 below it; 4 right of 2 with 7 right of 4; 13 left of 25 with 11 and 22 as its children. Height is <strong>3 edges (4 nodes)</strong> on the path 10–2–4–7. In-order check: 2, 4, 7, 10, 11, 13, 22, 25 — sorted, as the property promises.</p>
+      <div class="algo-box"><div class="box-title"><i class="fas fa-list-ol"></i> Deletion in Three Cases (Compact Rule)</div>
+      <pre>Leaf node:        detach it.
+One child:        splice the child into the deleted node's place.
+Two children:     copy the in-order successor (smallest key in
+                  the right subtree), then delete that successor,
+                  which has at most one (right) child.</pre></div>
+
+      <h3 id="avl-trees-balance-factor-and-rotations"><i class="fas fa-angle-right"></i> AVL Trees: Balance Factor, LL/RR/LR/RL Rotations and Insertion</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Balance Factor and the Four Cases</div>
+        <p>BF(node) = height(left) − height(right) must stay in {−1, 0, +1}. After an insertion, walk back up; the first node with |BF| = 2 is rebalanced. The case is named by the two heavy steps from that node: <strong>LL</strong> → one right rotation; <strong>RR</strong> → one left rotation; <strong>LR</strong> → left rotation on the left child, then right rotation; <strong>RL</strong> → mirror of LR.</p>
+      </div>
+      <figure><svg width="100%" viewBox="0 0 560 190" role="img" aria-labelledby="ds-avl-rot-title ds-avl-rot-desc"><title id="ds-avl-rot-title">The four AVL rotations</title><desc id="ds-avl-rot-desc">Four panels. LL: chain C left of B left of A rotates right to B with A and C as children. RR: mirror left rotation. LR: left rotation on the left child then right rotation. RL: mirror of LR.</desc><text x="70" y="18" text-anchor="middle" fill="currentColor">LL → right rot.</text><circle cx="40" cy="50" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="40" y="55" text-anchor="middle" fill="currentColor">A</text><circle cx="40" cy="95" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="40" y="100" text-anchor="middle" fill="currentColor">B</text><circle cx="40" cy="140" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="40" y="145" text-anchor="middle" fill="currentColor">C</text><line x1="40" y1="63" x2="40" y2="82" stroke="currentColor"/><line x1="40" y1="108" x2="40" y2="127" stroke="currentColor"/><text x="70" y="100" fill="currentColor">⇒</text><circle cx="105" cy="70" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="105" y="75" text-anchor="middle" fill="currentColor">B</text><circle cx="85" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="85" y="115" text-anchor="middle" fill="currentColor">C</text><circle cx="125" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="125" y="115" text-anchor="middle" fill="currentColor">A</text><line x1="98" y1="80" x2="90" y2="97" stroke="currentColor"/><line x1="112" y1="80" x2="120" y2="97" stroke="currentColor"/><text x="210" y="18" text-anchor="middle" fill="currentColor">RR → left rot.</text><circle cx="180" cy="50" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="180" y="55" text-anchor="middle" fill="currentColor">A</text><circle cx="180" cy="95" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="180" y="100" text-anchor="middle" fill="currentColor">B</text><circle cx="180" cy="140" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="180" y="145" text-anchor="middle" fill="currentColor">C</text><line x1="180" y1="63" x2="180" y2="82" stroke="currentColor"/><line x1="180" y1="108" x2="180" y2="127" stroke="currentColor"/><text x="210" y="100" fill="currentColor">⇒</text><circle cx="245" cy="70" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="245" y="75" text-anchor="middle" fill="currentColor">B</text><circle cx="225" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="225" y="115" text-anchor="middle" fill="currentColor">A</text><circle cx="265" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="265" y="115" text-anchor="middle" fill="currentColor">C</text><line x1="238" y1="80" x2="230" y2="97" stroke="currentColor"/><line x1="252" y1="80" x2="260" y2="97" stroke="currentColor"/><text x="350" y="18" text-anchor="middle" fill="currentColor">LR → left, then right</text><circle cx="320" cy="50" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="320" y="55" text-anchor="middle" fill="currentColor">A</text><circle cx="300" cy="95" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="300" y="100" text-anchor="middle" fill="currentColor">B</text><circle cx="330" cy="140" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="330" y="145" text-anchor="middle" fill="currentColor">C</text><line x1="313" y1="60" x2="303" y2="82" stroke="currentColor"/><line x1="307" y1="105" x2="325" y2="127" stroke="currentColor"/><text x="350" y="100" fill="currentColor">⇒</text><circle cx="390" cy="70" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="390" y="75" text-anchor="middle" fill="currentColor">C</text><circle cx="370" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="370" y="115" text-anchor="middle" fill="currentColor">B</text><circle cx="410" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="410" y="115" text-anchor="middle" fill="currentColor">A</text><line x1="383" y1="80" x2="375" y2="97" stroke="currentColor"/><line x1="397" y1="80" x2="405" y2="97" stroke="currentColor"/><text x="490" y="18" text-anchor="middle" fill="currentColor">RL → right, then left</text><circle cx="460" cy="50" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="460" y="55" text-anchor="middle" fill="currentColor">A</text><circle cx="480" cy="95" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="480" y="100" text-anchor="middle" fill="currentColor">B</text><circle cx="450" cy="140" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="450" y="145" text-anchor="middle" fill="currentColor">C</text><line x1="467" y1="60" x2="477" y2="82" stroke="currentColor"/><line x1="473" y1="105" x2="455" y2="127" stroke="currentColor"/><text x="490" y="100" fill="currentColor">⇒</text><circle cx="525" cy="70" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="525" y="75" text-anchor="middle" fill="currentColor">C</text><circle cx="508" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="508" y="115" text-anchor="middle" fill="currentColor">A</text><circle cx="542" cy="110" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="542" y="115" text-anchor="middle" fill="currentColor">B</text><line x1="518" y1="80" x2="511" y2="97" stroke="currentColor"/><line x1="532" y1="80" x2="539" y2="97" stroke="currentColor"/></svg><figcaption>Read each panel as &ldquo;heavy chain → balanced triple&rdquo;. A is the first unbalanced node; B is its heavy child; C is the heavy grandchild that decides single vs double rotation.</figcaption></figure>
+      <div class="table-wrapper"><table class="data-table"><caption>Two exam insertions, recomputed rotation by rotation</caption>
+        <thead><tr><th>Sequence</th><th>Rotations needed</th><th>Final root and shape check</th></tr></thead>
+        <tbody>
+          <tr><td>54, 2345, 6172, 5918, 1077, 3422, 44</td><td>Insert 6172: RR at 54 → left rotation (2345 becomes root). Insert 3422: LL at 6172 → right rotation (5918 drops under 2345 with 3422 as its left child). No other insertion unbalances the tree.</td><td>Root 2345; left subtree 54 (44, 1077); right subtree 5918 (3422, 6172). In-order: 44, 54, 1077, 2345, 3422, 5918, 6172.</td></tr>
+          <tr><td>March, May, November, August, April, January, December, July (alphabetical order)</td><td>Insert November: RR at March → left rotation (May becomes root). Insert April: LL at March → right rotation. Insert January: LR at May → left rotation on March, then right rotation on May.</td><td>Root March; left subtree August (April; January with December and July); right subtree May with right child November. In-order is alphabetical: April, August, December, January, July, March, May, November.</td></tr>
+        </tbody></table></div>
+      <p>Exam method that avoids most errors: insert as a BST, recompute heights bottom-up only along the insertion path, name the case from the two heavy steps, rotate, then continue upward — an ancestor can still be unbalanced after a lower rotation.</p>
+
+      <h3 id="b-trees-order-m-and-construction"><i class="fas fa-angle-right"></i> B-Trees of Order m: Properties and Construction</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Order-m Properties (Knuth&rsquo;s Definition)</div>
+        <ul>
+          <li>Every node has at most <strong>m children</strong> and at most <strong>m − 1 keys</strong>.</li>
+          <li>Every non-root internal node has at least <strong>ceil(m/2) children</strong> (at least ceil(m/2) − 1 keys); the root has at least 2 children unless it is a leaf.</li>
+          <li>A node with k children stores exactly k − 1 sorted keys, and keys route searches between children.</li>
+          <li>All leaves sit at the <strong>same depth</strong> — the tree grows at the root, never at a leaf.</li>
+          <li>When a node overflows (m keys), it splits around its median key, which is promoted into the parent.</li>
+        </ul>
+        <p>Why disks like it: a node is sized to one disk block, so a shallow, fat tree touches very few blocks per search — the reason B-trees index databases and filesystems.</p>
+      </div>
+      <figure><svg width="100%" viewBox="0 0 560 170" role="img" aria-labelledby="ds-btree-title ds-btree-desc"><title id="ds-btree-title">Order-3 B-tree split</title><desc id="ds-btree-desc">A leaf holding 40, 50, 60 overflows; the median 50 is promoted to a new root with left child 40 and right child 60.</desc><rect x="60" y="60" width="150" height="34" fill="var(--card-bg)" stroke="currentColor"/><text x="135" y="82" text-anchor="middle" fill="currentColor">40 | 50 | 60 (overflow)</text><text x="250" y="82" fill="currentColor">⇒ promote 50</text><rect x="360" y="20" width="80" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="400" y="40" text-anchor="middle" fill="currentColor">50</text><rect x="320" y="90" width="60" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="350" y="110" text-anchor="middle" fill="currentColor">40</text><rect x="420" y="90" width="60" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="450" y="110" text-anchor="middle" fill="currentColor">60</text><line x1="385" y1="50" x2="355" y2="90" stroke="currentColor"/><line x1="415" y1="50" x2="445" y2="90" stroke="currentColor"/></svg><figcaption>One order-3 split: an overfull node (3 keys) promotes its median; both halves stay at the same depth.</figcaption></figure>
+      <div class="table-wrapper"><table class="data-table"><caption>Order-3 B-tree for 50, 40, 60, 30, 70, 20, 80, 10, 90, 9, 99 — state after each insertion (recomputed)</caption>
+        <thead><tr><th>Insert</th><th>Tree (levels, root first)</th><th>What happened</th></tr></thead>
+        <tbody>
+          <tr><td>50</td><td>[50]</td><td>root leaf</td></tr>
+          <tr><td>40</td><td>[40, 50]</td><td>sorted in root</td></tr>
+          <tr><td>60</td><td>[50] / [40] [60]</td><td>split [40,50,60], promote 50</td></tr>
+          <tr><td>30</td><td>[50] / [30, 40] [60]</td><td>left leaf</td></tr>
+          <tr><td>70</td><td>[50] / [30, 40] [60, 70]</td><td>right leaf</td></tr>
+          <tr><td>20</td><td>[30, 50] / [20] [40] [60, 70]</td><td>split [20,30,40], promote 30</td></tr>
+          <tr><td>80</td><td>[50] / [30] [70] / [20] [40] [60] [80]</td><td>split [60,70,80], promote 70, then root [30,50,70] splits, promote 50</td></tr>
+          <tr><td>10</td><td>[50] / [30] [70] / [10, 20] [40] [60] [80]</td><td>leftmost leaf</td></tr>
+          <tr><td>90</td><td>[50] / [30] [70] / [10, 20] [40] [60] [80, 90]</td><td>rightmost leaf</td></tr>
+          <tr><td>9</td><td>[50] / [10, 30] [70] / [9] [20] [40] [60] [80, 90]</td><td>split [9,10,20], promote 10</td></tr>
+          <tr><td>99</td><td>[50] / [10, 30] [70, 90] / [9] [20] [40] [60] [80] [99]</td><td>split [80,90,99], promote 90</td></tr>
+        </tbody></table></div>
+      <p>Final check: leaves [9] [20] [40] [60] [80] [99] all sit at depth 3 and read in sorted order around the internal keys — the two properties to verify before leaving any B-tree construction.</p>
 
     </div>
   </section>
@@ -1564,6 +1701,20 @@ int main() {
           </table>
         </div>
       </div>
+
+
+      <h3 id="bfs-and-dfs-worked-trace"><i class="fas fa-angle-right"></i> BFS and DFS Worked Trace on One Graph</h3>
+      <figure><svg width="100%" viewBox="0 0 560 220" role="img" aria-labelledby="ds-graph-title ds-graph-desc"><title id="ds-graph-title">Sample graph and the complete graph K5</title><desc id="ds-graph-desc">Left: sample graph with vertices A to F and edges A-B, A-C, B-D, B-E, C-F, E-F. Right: complete graph K5, five vertices each joined to the other four, ten edges in total.</desc><circle cx="80" cy="40" r="15" fill="var(--card-bg)" stroke="currentColor"/><text x="80" y="45" text-anchor="middle" fill="currentColor">A</text><circle cx="40" cy="110" r="15" fill="var(--card-bg)" stroke="currentColor"/><text x="40" y="115" text-anchor="middle" fill="currentColor">B</text><circle cx="140" cy="110" r="15" fill="var(--card-bg)" stroke="currentColor"/><text x="140" y="115" text-anchor="middle" fill="currentColor">C</text><circle cx="20" cy="180" r="15" fill="var(--card-bg)" stroke="currentColor"/><text x="20" y="185" text-anchor="middle" fill="currentColor">D</text><circle cx="90" cy="180" r="15" fill="var(--card-bg)" stroke="currentColor"/><text x="90" y="185" text-anchor="middle" fill="currentColor">E</text><circle cx="160" cy="180" r="15" fill="var(--card-bg)" stroke="currentColor"/><text x="160" y="185" text-anchor="middle" fill="currentColor">F</text><line x1="68" y1="52" x2="48" y2="95" stroke="currentColor"/><line x1="92" y1="52" x2="132" y2="95" stroke="currentColor"/><line x1="35" y1="125" x2="25" y2="165" stroke="currentColor"/><line x1="52" y1="122" x2="80" y2="165" stroke="currentColor"/><line x1="145" y1="125" x2="155" y2="165" stroke="currentColor"/><line x1="105" y1="180" x2="145" y2="180" stroke="currentColor"/><text x="300" y="30" text-anchor="middle" fill="currentColor">K5: 5 vertices, 10 edges</text><circle cx="300" cy="60" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="300" y="65" text-anchor="middle" fill="currentColor">1</text><circle cx="240" cy="105" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="240" y="110" text-anchor="middle" fill="currentColor">2</text><circle cx="360" cy="105" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="360" y="110" text-anchor="middle" fill="currentColor">3</text><circle cx="265" cy="165" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="265" y="170" text-anchor="middle" fill="currentColor">4</text><circle cx="335" cy="165" r="13" fill="var(--card-bg)" stroke="currentColor"/><text x="335" y="170" text-anchor="middle" fill="currentColor">5</text><line x1="290" y1="68" x2="250" y2="95" stroke="currentColor"/><line x1="310" y1="68" x2="350" y2="95" stroke="currentColor"/><line x1="253" y1="105" x2="347" y2="105" stroke="currentColor"/><line x1="245" y1="115" x2="260" y2="152" stroke="currentColor"/><line x1="355" y1="115" x2="340" y2="152" stroke="currentColor"/><line x1="278" y1="165" x2="322" y2="165" stroke="currentColor"/><line x1="295" y1="72" x2="270" y2="152" stroke="currentColor"/><line x1="305" y1="72" x2="330" y2="152" stroke="currentColor"/><line x1="248" y1="95" x2="328" y2="155" stroke="currentColor"/><line x1="352" y1="95" x2="272" y2="155" stroke="currentColor"/></svg><figcaption>Left: the worked sample graph (edges A–B, A–C, B–D, B–E, C–F, E–F). Right: K<sub>5</sub> — every pair joined, n(n−1)/2 = 5×4/2 = 10 edges.</figcaption></figure>
+      <div class="table-wrapper"><table class="data-table"><caption>Same graph, same start (A), neighbours taken alphabetically (recomputed)</caption>
+        <thead><tr><th>Method</th><th>Order visited</th><th>Memory that drives it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>BFS</strong></td><td>A, B, C, D, E, F</td><td>Queue: A enters; B and C queue behind it; D and E follow from B; F is found from C (already queued when E is explored)</td></tr>
+          <tr><td><strong>DFS</strong></td><td>A, B, D, E, F, C</td><td>Stack/recursion: dive A→B→D, backtrack, B→E→F, backtrack to A, then C (F already visited)</td></tr>
+        </tbody></table></div>
+      <p>Both cost O(V + E) with an adjacency list and O(V<sup>2</sup>) with an adjacency matrix. A traversal answer is only checkable if it names the <strong>start vertex and neighbour order</strong> — without those, several orders are equally correct. BFS additionally guarantees fewest-edge paths in an unweighted graph; DFS uses less frontier memory and exposes back edges for cycle detection.</p>
+
+      <h3 id="graph-traversal-bfs-vs-dfs"><i class="fas fa-angle-right"></i> Graph Traversal Algorithms: BFS vs DFS and Complexity</h3>
+      <p>Use the comparison in the Comparisons section together with the trace above: queue versus stack, level order versus depth-first, O(V + E) on lists versus O(V<sup>2</sup>) on matrices. In an exam answer, write the algorithm (mark visited on enqueue for BFS, on first reach for DFS), show the queue/stack after each step on a small graph, and finish with the complexity sentence — that sequence is what the long-answer marking looks for.</p>
 
     </div>
   </section>
@@ -3136,29 +3287,37 @@ Vertex 4: → 2 → 3 → NULL</pre>
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
+      <p class="video-note">Optional external lessons, checked on 19 November 2026. Nothing loads from YouTube until you choose a link. Watch-page title, channel and duration were checked; playback, captions and device availability were not tested. Not official course material.</p>
       <ul class="video-list">
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=binary+tree+traversals+inorder+preorder+postorder" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=PoBGyrIWisE" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Binary trees and traversals</span>
-              <span class="video-link-meta">Inorder, preorder and postorder &middot; search on YouTube</span>
+              <span class="video-link-title">Construct Binary Tree from Preorder and Inorder Traversal | Example — Jenny's Lectures CS IT · 9:44</span>
+              <span class="video-link-meta">Focused reconstruction lesson; pair it with the three worked reconstructions above, which also cover in-order + post-order</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=binary+search+tree+insert+delete" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=YWqla0UX-38" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Binary search trees</span>
-              <span class="video-link-meta">Insert, search and delete cases &middot; search on YouTube</span>
+              <span class="video-link-title">AVL Tree - Insertion, Rotations (LL, RR, LR, RL) with Example — Jenny's Lectures CS IT · 24:30</span>
+              <span class="video-link-meta">All four rotations with insertion examples; recompute balance factors alongside the numeric and month-name traces above</span>
             </span>
           </a>
         </li>
         <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=graph+bfs+dfs+traversal+tutorial" target="_blank" rel="noopener noreferrer">
+          <a class="video-link" href="https://www.youtube.com/watch?v=Ay2AbTk_QEg" target="_blank" rel="noopener noreferrer">
             <span class="video-link-text">
-              <span class="video-link-title">Graphs, BFS and DFS</span>
-              <span class="video-link-meta">Adjacency lists and traversal order &middot; search on YouTube</span>
+              <span class="video-link-title">Insertion in B-tree of Order 3 | B-Tree Example — Jenny's Lectures CS IT · 9:51</span>
+              <span class="video-link-meta">Exactly the order-3 construction the papers ask for; the order-m property list above supplies the definition half</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="video-link" href="https://www.youtube.com/watch?v=vf-cxgUXcMk" target="_blank" rel="noopener noreferrer">
+            <span class="video-link-text">
+              <span class="video-link-title">BFS and DFS Graph Traversals — Jenny's Lectures CS IT · 20:26</span>
+              <span class="video-link-meta">Queue-based BFS and stack-based DFS with complexity; check your order against the worked trace above (start vertex and neighbour order matter)</span>
             </span>
           </a>
         </li>

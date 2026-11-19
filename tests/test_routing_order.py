@@ -29,6 +29,10 @@ SUBJECTS = ('CST201', 'CST203', 'CST205', 'CST207', 'CST209')
 PAPERS = 'P00[3-6]'
 
 # Measured 2026-11-19. Not a target -- a ratchet.
+# CST205 moved 35 -> 33 in Phase 14 (17 new <h3 id> anchors across the four
+# units removed two ties the coarse sections used to win by position; the
+# authored topic map now routes CST205, so this measures fuzzy fallback debt
+# only). Matcher unchanged.
 # CST203 moved 31 -> 29 in part 13.3 (Unit 3's 12 new <h3 id> anchors remove
 # ties between a named heading and a coarse section) and 29 -> 32 in part 13.4
 # (Unit 4's 6 anchors plus the extra section headings added more candidate
@@ -39,7 +43,7 @@ PAPERS = 'P00[3-6]'
 ORDER_DEPENDENT = {
     'CST201': 36,
     'CST203': 30,
-    'CST205': 35,
+    'CST205': 33,
     'CST207': 25,
     'CST209': 49,  # Phase 16 content anchors: 50→48→47→50→49→49; matcher unchanged.
 }

@@ -1,6 +1,6 @@
 # Phase 14 — Data Structures: Weight-Calibrated Content, Video Curation & PYQ Sync
 
-> **Status:** 📋 Planned (documentation blueprint — zero shipped files modified)  
+> **Status:** ✅ Owner-passed 2026-11-19 (Termux: "Test passed"); merge authorized via PR #31. Evidence: [`record.md`](record.md)  
 > **Subject:** Data Structures (`CST205`, paired practical `CST215` Data Structures Lab)  
 > **Syllabus authority:** `docs/syllabus/syllabus.json` & `docs/syllabus/syllabus-3rd-sem-2022.pdf` **p. 7** — **3 credits, L–T–P `2-1-0`, 45 contact hours (`3 + 12 + 15 + 15`)** across **4 official units**  
 > **Paired practical:** `CST215` Data Structures Lab — **PDF p. 19** (`2` credits, L–T–P `0-0-4`, `60` contact hours, 9 practical areas; honest reference page at `subjects/CST215/index.html`)  

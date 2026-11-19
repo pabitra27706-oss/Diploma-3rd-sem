@@ -735,6 +735,100 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
     console.log('PASS CST209 105/105 concept routes, 8/8 CO5, revealed highlights, stale/missing/malformed/failed-page fallbacks');
   }
 
+  /* CST205: exercise the real resolver for every question in the strict window. */
+  {
+    const unitDir = 'subjects/CST205/units/';
+    const units = Array.from({ length: 4 }, (_, i) => fs.readFileSync(path.join(ROOT, unitDir, `unit-${i + 1}.html`), 'utf8'));
+    const sectionBlocks = raw => raw.matchAll(/<section\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/section>/g);
+    function mountHeadings(doc, root, raw, omit) {
+      for (const [, sectionId, inner] of sectionBlocks(raw)) {
+        const sec = doc.createElement('section');
+        sec.id = sectionId;
+        sec.className = 'section';
+        root.append(sec);
+        const content = doc.createElement('div');
+        content.className = 'section-content collapsed';
+        content.style.maxHeight = '0';
+        sec.append(content);
+        for (const [, tag, attrs, text] of inner.matchAll(/<(h[234])\b([^>]*)>([\s\S]*?)<\/\1>/gi)) {
+          const id = attrs.match(/\bid="([^"]+)"/)?.[1];
+          if (id && id === omit) continue;
+          const h = doc.createElement(tag);
+          if (id) h.id = id;
+          h.textContent = text.replace(/<[^>]*>/g, ' ').trim();
+          if (tag === 'h2') {
+            h.className = 'section-title';
+            h.setAttribute('aria-expanded', 'false');
+            sec.append(h);
+          } else content.append(h);
+        }
+      }
+    }
+    async function openTopic(unit, topic, omit, mode) {
+      const dom = createMiniDom(`${BASE}${unitDir}unit-${unit}.html?topic=${encodeURIComponent(topic)}`);
+      const { doc, win } = dom;
+      const main = doc.createElement('main');
+      doc.body.append(main);
+      mountHeadings(doc, main, units[unit - 1], omit);
+      win.location.replace = url => { win.location.href = url; };
+      const repoFetch = createRepoFetch('/Diploma-3rd-sem/', null, () => win.location.href);
+      win.fetch = async input => {
+        const url = String(input);
+        if (mode === 'missing' && url.includes('topic-map-CST205')) return { ok: false, status: 404 };
+        if (mode === 'malformed' && url.includes('topic-map-CST205')) return { ok: true, json: async () => { throw new SyntaxError('bad JSON'); } };
+        return repoFetch(input);
+      };
+      win.DOMParser = class {
+        parseFromString(raw) {
+          const temp = createMiniDom(win.location.href).doc;
+          mountHeadings(temp, temp.body, raw);
+          return temp;
+        }
+      };
+      runScriptIn(win, 'assets/js/subject-labels.js');
+      runScriptIn(win, 'assets/js/unit-discovery.js');
+      await flush(4);
+      return dom;
+    }
+    const dsMap = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/data/topic-map-CST205.json'), 'utf8')).map;
+    const paperDir = path.join(ROOT, '_data/CST205');
+    const questions = fs.readdirSync(paperDir).filter(p => /-P00[3-6]-.*\.json$/.test(p))
+      .flatMap(p => JSON.parse(fs.readFileSync(path.join(paperDir, p), 'utf8')).questions);
+    assert.equal(questions.length, 106, 'CST205 strict window must hold 106 questions');
+    let resolved = 0;
+    let crossUnit = 0;
+    for (const q of questions) {
+      const initial = await openTopic(q.unit, q.topic);
+      const [unit, anchor] = dsMap[q.topic.toLowerCase().trim().replace(/\s+/g, ' ')];
+      assert(initial.win.location.pathname.endsWith(`/unit-${unit}.html`), q.id);
+      assert.equal(initial.win.location.hash, '#' + anchor, q.id);
+      const { doc } = unit === q.unit ? initial : await openTopic(unit, q.topic);
+      const node = doc.getElementById(anchor);
+      assert(node?.classList.contains('pyq-topic-target'), `${q.id} must highlight the mapped heading`);
+      const content = node.closest('.section-content') || node.querySelector('.section-content');
+      assert(content && !content.classList.contains('collapsed'), `${q.id} landing is hidden`);
+      assert.equal(content.style.maxHeight, '', `${q.id} retains a height cap`);
+      if (unit !== q.unit) crossUnit += 1;
+      resolved += 1;
+    }
+    assert.equal(resolved, 106);
+    assert(crossUnit >= 40, `only ${crossUnit} stored-unit corrections; the map is not correcting CST205's shifted tags`);
+    // Stale map anchor: the resolver must never strand the learner on the
+    // missing anchor. With the deque heading omitted, no remaining heading
+    // clears the match threshold, so CST205 takes the resolver's deliberate
+    // no-jump fallback (same philosophy as the CST209 dead-fragment guard):
+    // no hash, no highlight, page left intact.
+    const stale = await openTopic(2, 'Deques', 'circular-queues-deques-and-priority-queues');
+    assert.notEqual(stale.win.location.hash, '#circular-queues-deques-and-priority-queues');
+    assert.equal(stale.win.location.hash, '', 'stale anchor must not masquerade as a concept jump');
+    assert.equal(stale.doc.querySelectorAll('.pyq-topic-target').length, 0, 'stale anchor must not highlight anything');
+    for (const mode of ['missing', 'malformed']) {
+      const fallback = await openTopic(2, 'Circular queues', null, mode);
+      assert(fallback.win.location.hash.startsWith('#'), `${mode} map must still route via the matcher`);
+    }
+    console.log(`PASS CST205 106/106 concept landings (${crossUnit} stored-unit corrections), revealed highlights, stale/missing/malformed fallbacks`);
+  }
+
   console.log('PASS unit breadcrumbs, authored #section anchors, prev/next nav, subject hub jump list, and filtered-PYQ URL handoff');
 
   /* ── 7. Service worker offline simulation (precache + WARM_SEARCH + offline fetch) ── */

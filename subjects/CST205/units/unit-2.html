@@ -537,6 +537,57 @@ int main() {
 }</code></pre>
       </div>
 
+
+      <h3 id="infix-postfix-and-prefix-conversion"><i class="fas fa-angle-right"></i> Infix, Postfix and Prefix Conversion Using Stacks</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Rules That Decide Every Conversion</div>
+        <p>Precedence: <strong>^</strong> (right-associative) &gt; <strong>* /</strong> (left-associative) &gt; <strong>+ −</strong> (left-associative). Postfix (Reverse Polish) and prefix (Polish) need no parentheses because the operator position fixes the grouping. For infix → postfix: operands go straight to output; an operator pops higher-or-equal-precedence operators (strictly higher for ^) before pushing itself; &ldquo;(&rdquo; pushes, &ldquo;)&rdquo; pops to its match.</p>
+      </div>
+      <div class="table-wrapper"><table class="data-table"><caption>Infix A * B + C / D → Postfix AB*CD/+ (recomputed step by step)</caption>
+        <thead><tr><th>Read</th><th>Stack after</th><th>Output after</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>—</td><td>A</td><td>operand → output</td></tr>
+          <tr><td>*</td><td>*</td><td>A</td><td>push operator</td></tr>
+          <tr><td>B</td><td>*</td><td>AB</td><td>operand → output</td></tr>
+          <tr><td>+</td><td>+</td><td>AB*</td><td>* outranks +, so * pops first</td></tr>
+          <tr><td>C</td><td>+</td><td>AB*C</td><td>operand → output</td></tr>
+          <tr><td>/</td><td>+ /</td><td>AB*C</td><td>/ outranks +, so / pushes</td></tr>
+          <tr><td>D</td><td>+ /</td><td>AB*CD</td><td>operand → output</td></tr>
+          <tr><td>(end)</td><td>—</td><td><strong>AB*CD/+</strong></td><td>pop / then +</td></tr>
+        </tbody></table></div>
+      <div class="algo-box"><div class="box-title"><i class="fas fa-list-ol"></i> Infix → Prefix, Worked on an Exam Expression</div>
+      <pre>Convert (A - D/C) * (D + E - F) to prefix.
+Method: reverse, swap ( with ), convert to postfix, reverse.
+  D/C  groups first  ->  /DC
+  A - /DC            ->  -A/DC
+  D + E - F = (D+E)-F ->  -+DEF
+Join with * in front:  *-A/DC-+DEF
+Check with A=10, D=6, C=2, E=1, F=3:
+  infix  = (10 - 3) * (6 + 1 - 3) = 7 * 4 = 28
+  prefix evaluates to the same 28.</pre></div>
+
+      <h3 id="postfix-evaluation-using-stack"><i class="fas fa-angle-right"></i> Postfix Expression Evaluation Using Stack</h3>
+      <div class="algo-box"><div class="box-title"><i class="fas fa-list-ol"></i> Algorithm</div>
+      <pre>Scan left to right.
+  Operand  -> push it.
+  Operator -> pop b (right operand), pop a (left operand),
+              push (a operator b).  Order matters for - and /.
+At the end, the single remaining value is the answer.</pre></div>
+      <div class="table-wrapper"><table class="data-table"><caption>Evaluating 5, 6, 2, +, 8, +, 4, /, − (recomputed)</caption>
+        <thead><tr><th>Token</th><th>Action</th><th>Stack (bottom → top)</th></tr></thead>
+        <tbody>
+          <tr><td>5</td><td>push</td><td>5</td></tr>
+          <tr><td>6</td><td>push</td><td>5, 6</td></tr>
+          <tr><td>2</td><td>push</td><td>5, 6, 2</td></tr>
+          <tr><td>+</td><td>6 + 2 = 8</td><td>5, 8</td></tr>
+          <tr><td>8</td><td>push</td><td>5, 8, 8</td></tr>
+          <tr><td>+</td><td>8 + 8 = 16</td><td>5, 16</td></tr>
+          <tr><td>4</td><td>push</td><td>5, 16, 4</td></tr>
+          <tr><td>/</td><td>16 / 4 = 4</td><td>5, 4</td></tr>
+          <tr><td>−</td><td>5 − 4 = <strong>1</strong></td><td>1</td></tr>
+        </tbody></table></div>
+      <p>The classic mark-loser is the last step: the first value popped (4) is the <em>right</em> operand, so the operation is 5 − 4, never 4 − 5. Say &ldquo;pop b, pop a, push a op b&rdquo; in every evaluation answer.</p>
+
     </div>
   </section>
 
@@ -794,6 +845,47 @@ int rear = -1;</code></pre>
         </div>
       </div>
 
+
+      <h3 id="circular-queues-deques-and-priority-queues"><i class="fas fa-angle-right"></i> Circular Queues, Deques (Input/Output Restricted) and Priority Queues</h3>
+      <div class="algo-box"><div class="box-title"><i class="fas fa-list-ol"></i> Textbook Algorithms: CQINSERT and CQDELETE</div>
+      <pre>CQINSERT(Q, MAX, front, rear, item):
+  if front != -1 and (rear + 1) % MAX == front:
+        queue full, stop
+  if front == -1: front = 0
+  rear = (rear + 1) % MAX
+  Q[rear] = item
+
+CQDELETE(Q, MAX, front, rear):
+  if front == -1: queue empty (underflow), stop
+  item = Q[front]
+  if front == rear: front = rear = -1   (last element)
+  else: front = (front + 1) % MAX
+  return item</pre>
+      <p>Conventions differ between books on whether a circular queue holds MAX or MAX − 1 elements; the invariant to state is yours. Here empty is front == rear == −1 and full is &ldquo;the next rear would meet front&rdquo;, checked before inserting.</p></div>
+      <figure><svg width="100%" viewBox="0 0 560 200" role="img" aria-labelledby="ds-cq-title ds-cq-desc"><title id="ds-cq-title">Circular queue ring and deque ends</title><desc id="ds-cq-desc">Left: a ring of five slots; rear advances clockwise and wraps from the last slot back to slot zero, front advances the same way. Right: a deque bar with insertion and deletion arrows at both ends; input-restricted allows insertion at the rear only, output-restricted allows deletion at the front only.</desc><circle cx="110" cy="100" r="62" fill="none" stroke="currentColor"/><circle cx="110" cy="38" r="14" fill="var(--card-bg)" stroke="currentColor"/><text x="110" y="43" text-anchor="middle" fill="currentColor">0</text><circle cx="169" cy="81" r="14" fill="var(--card-bg)" stroke="currentColor"/><text x="169" y="86" text-anchor="middle" fill="currentColor">1</text><circle cx="146" cy="150" r="14" fill="var(--card-bg)" stroke="currentColor"/><text x="146" y="155" text-anchor="middle" fill="currentColor">2</text><circle cx="74" cy="150" r="14" fill="var(--card-bg)" stroke="currentColor"/><text x="74" y="155" text-anchor="middle" fill="currentColor">3</text><circle cx="51" cy="81" r="14" fill="var(--card-bg)" stroke="currentColor"/><text x="51" y="86" text-anchor="middle" fill="currentColor">4</text><text x="110" y="95" text-anchor="middle" fill="currentColor">rear wraps</text><text x="110" y="112" text-anchor="middle" fill="currentColor">(rear+1)%MAX</text><rect x="300" y="80" width="220" height="36" fill="var(--card-bg)" stroke="currentColor"/><text x="410" y="102" text-anchor="middle" fill="currentColor">deque: front ⇄ elements ⇄ rear</text><text x="300" y="65" fill="currentColor">insert / delete</text><text x="455" y="65" fill="currentColor">insert / delete</text><text x="300" y="140" fill="currentColor">Input-restricted: insert at rear only.</text><text x="300" y="160" fill="currentColor">Output-restricted: delete at front only.</text></svg><figcaption>Circular queue: indices move modulo MAX, so freed front slots become writable again. Deque: both ends work, and each restricted variant closes exactly one operation at one end.</figcaption></figure>
+      <div class="table-wrapper"><table class="data-table"><caption>Linear queue trace that exposes false overflow (capacity 8, indices 0–7; recomputed)</caption>
+        <thead><tr><th>Step</th><th>front</th><th>rear</th><th>Queue holds</th></tr></thead>
+        <tbody>
+          <tr><td>Add A, B, C, D, E, F</td><td>0</td><td>5</td><td>A B C D E F</td></tr>
+          <tr><td>Delete two (A, B)</td><td>2</td><td>5</td><td>C D E F</td></tr>
+          <tr><td>Add G, then H</td><td>2</td><td>7</td><td>C D E F G H</td></tr>
+          <tr><td>Delete four (C, D, E, F)</td><td>6</td><td>7</td><td>G H</td></tr>
+          <tr><td>Add M</td><td>6</td><td>7</td><td><strong>Overflow reported</strong> — rear is at MAX−1 although slots 0–5 are free. That is false overflow; a circular queue wraps rear to 0 and accepts M.</td></tr>
+        </tbody></table></div>
+      <div class="table-wrapper"><table class="data-table"><caption>Circular queue wrap check (capacity 5; recomputed)</caption>
+        <thead><tr><th>Operations</th><th>front</th><th>rear</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Insert A, B, C, D</td><td>0</td><td>3</td><td>fills forward</td></tr>
+          <tr><td>Delete A, B</td><td>2</td><td>3</td><td>slots 0–1 freed</td></tr>
+          <tr><td>Insert E</td><td>2</td><td>4</td><td>last slot</td></tr>
+          <tr><td>Insert F</td><td>2</td><td>0</td><td><strong>wraps</strong> into freed slot 0</td></tr>
+          <tr><td>Insert G</td><td>2</td><td>1</td><td>now full: next rear would meet front</td></tr>
+        </tbody></table></div>
+      <div class="concept-box"><div class="box-title"><i class="fas fa-lightbulb"></i> Deque Variants and Priority Queues</div>
+        <p><strong>Input-restricted deque:</strong> insertion at the rear only, deletion at both ends (a stack/queue hybrid for scheduling queues where jobs enter once but can leave either way). <strong>Output-restricted deque:</strong> insertion at both ends, deletion at the front only. A plain deque allows all four operations. Uses to quote: work-stealing schedulers, palindrome checking, sliding-window problems.</p>
+        <p><strong>Priority queue:</strong> each element carries a priority; deletion removes the highest (or lowest) priority, not the oldest. Implemented as an unsorted array (insert O(1), delete O(n)), a sorted list (insert O(n), delete O(1)), or a binary heap (both O(log n)). Applications: operating-system job scheduling, interrupt handling, and shortest-path algorithms.</p>
+      </div>
+
     </div>
   </section>
 
@@ -1003,6 +1095,36 @@ Total moves = 7 (which is 2^3 - 1)</pre>
           <li><strong>Stack Overflow:</strong> Too many recursive calls exhaust memory</li>
         </ul>
       </div>
+
+
+      <h3 id="recursion-gcd-and-hanoi-worked-traces"><i class="fas fa-angle-right"></i> Recursion Worked Traces: GCD and Tower of Hanoi</h3>
+      <div class="table-wrapper"><table class="data-table"><caption>Recursive Euclidean GCD for gcd(48, 18) (recomputed)</caption>
+        <thead><tr><th>Call</th><th>Division</th><th>Next call</th></tr></thead>
+        <tbody>
+          <tr><td>gcd(48, 18)</td><td>48 = 2 × 18 + 12</td><td>gcd(18, 12)</td></tr>
+          <tr><td>gcd(18, 12)</td><td>18 = 1 × 12 + 6</td><td>gcd(12, 6)</td></tr>
+          <tr><td>gcd(12, 6)</td><td>12 = 2 × 6 + 0</td><td>gcd(6, 0)</td></tr>
+          <tr><td>gcd(6, 0)</td><td>base case</td><td><strong>returns 6</strong></td></tr>
+        </tbody></table></div>
+      <div class="algo-box"><div class="box-title"><i class="fas fa-list-ol"></i> Tower of Hanoi: Algorithm and the 7-Move Trace for n = 3</div>
+      <pre>TOH(n, source, auxiliary, destination):
+  if n == 0: return
+  TOH(n-1, source, destination, auxiliary)
+  move disk n: source -> destination
+  TOH(n-1, auxiliary, source, destination)
+
+Moves for 3 disks, A -> C using B (recomputed):
+  1. disk 1: A -> C    5. disk 1: B -> A
+  2. disk 2: A -> B    6. disk 2: B -> C
+  3. disk 1: C -> B    7. disk 1: A -> C
+  4. disk 3: A -> C
+
+Count: T(n) = 2*T(n-1) + 1 with T(0) = 0 gives
+T(n) = 2^n - 1, so 3 disks need 7 moves and
+10 disks need 1023. Time is O(2^n); the call
+stack depth is only n.</pre></div>
+      <figure><svg width="100%" viewBox="0 0 560 170" role="img" aria-labelledby="ds-hanoi-title ds-hanoi-desc"><title id="ds-hanoi-title">Tower of Hanoi start and finish</title><desc id="ds-hanoi-desc">Three pegs A, B and C. At the start, disks 3, 2 and 1 are stacked largest to smallest on peg A. After seven moves the same stack stands on peg C and peg B is empty.</desc><line x1="60" y1="20" x2="60" y2="140" stroke="currentColor"/><line x1="180" y1="20" x2="180" y2="140" stroke="currentColor"/><line x1="300" y1="20" x2="300" y2="140" stroke="currentColor"/><rect x="30" y="120" width="60" height="12" fill="var(--card-bg)" stroke="currentColor"/><rect x="40" y="106" width="40" height="12" fill="var(--card-bg)" stroke="currentColor"/><rect x="48" y="92" width="24" height="12" fill="var(--card-bg)" stroke="currentColor"/><text x="60" y="160" text-anchor="middle" fill="currentColor">A (start)</text><text x="180" y="160" text-anchor="middle" fill="currentColor">B (aux)</text><text x="300" y="160" text-anchor="middle" fill="currentColor">C</text><text x="360" y="90" fill="currentColor">7 moves ⇒</text><line x1="420" y1="20" x2="420" y2="140" stroke="currentColor"/><line x1="500" y1="20" x2="500" y2="140" stroke="currentColor"/><rect x="470" y="120" width="60" height="12" fill="var(--card-bg)" stroke="currentColor"/><rect x="480" y="106" width="40" height="12" fill="var(--card-bg)" stroke="currentColor"/><rect x="488" y="92" width="24" height="12" fill="var(--card-bg)" stroke="currentColor"/><text x="420" y="160" text-anchor="middle" fill="currentColor">A (empty)</text><text x="500" y="160" text-anchor="middle" fill="currentColor">C (done)</text></svg><figcaption>Start and finish for 3 disks. The middle peg holds the tower twice during the seven moves; no larger disk ever rests on a smaller one.</figcaption></figure>
+      <p><strong>Recursion vs iteration, in one breath:</strong> recursion matches definitions that shrink (GCD, Hanoi, tree walks) and costs call-stack memory plus overhead; iteration uses explicit state and no stack growth. Prefer recursion when the recursive form is the clear one and depth is bounded; prefer iteration for simple loops and very deep repetition. The system stack is itself a stack data structure — that is why recursion and stacks are examined together.</p>
 
     </div>
   </section>
@@ -2335,32 +2457,12 @@ int main() {
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
+      <p class="video-note">Optional external lessons, checked on 19 November 2026. Nothing loads from YouTube until you choose a link. Watch-page title, channel and duration were checked; playback, captions and device availability were not tested. Not official course material.</p>
       <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=stack+data+structure+push+pop+tutorial" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Stacks and their operations</span>
-              <span class="video-link-meta">push, pop, peek and overflow &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=queue+circular+queue+data+structure" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Queues, circular queues and deques</span>
-              <span class="video-link-meta">Enqueue, dequeue and overflow handling &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=applications+of+stack+and+queue" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Applications of stacks and queues</span>
-              <span class="video-link-meta">Expression evaluation and scheduling &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=dn01XST9-bI" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Circular Queue using Arrays in C — Jenny's Lectures CS IT · 24:18</span><span class="video-link-meta">Linear-queue drawback, wrap-around and C code; deque and priority queues are covered in the notes above</span></span></a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=VmsTAVpz0xo" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Implementation of Stack using Array — Jenny's Lectures CS IT · 17:27</span><span class="video-link-meta">Push, pop, peek and traversal in C with the boundary conditions the papers ask about</span></span></a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=PAceaOSnxQs" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Infix to Postfix using Stack — Jenny's Lectures CS IT · 20:09</span><span class="video-link-meta">Full symbol/stack/output working; postfix evaluation and prefix conversion are worked in the notes above</span></span></a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=dvhausEOcvg" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Towers of Hanoi (Implementation) — Neso Academy · 17:09</span><span class="video-link-meta">Recursive tree for 3 disks; compare each move with the 7-move trace above and note the peg naming differs</span></span></a></li>
       </ul>
     </div>
   </section>

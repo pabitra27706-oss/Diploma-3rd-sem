@@ -642,6 +642,15 @@ int main() {
 }</code></pre>
       </div>
 
+
+      <h3 id="singly-linked-lists-searching-and-traversal"><i class="fas fa-angle-right"></i> Searching and Traversing Singly Linked Lists</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Linear Search Only — and Why</div>
+        <p><strong>Traversal</strong> walks <code>p = head; while (p != NULL) { visit p; p = p-&gt;next; }</code> in O(n). <strong>Search</strong> compares each node&rsquo;s data with the key and stops at the first match (or at NULL for &ldquo;not found&rdquo;), also O(n) average and worst case. Binary search is <em>not</em> suitable even on a sorted linked list: there is no O(1) jump to the middle element, so each &ldquo;halving&rdquo; step still costs a walk. That single sentence — no random access, therefore no binary search — is the answer the objective papers keep testing.</p>
+        <p><strong>Insert at beginning (O(1), the most repeated algorithm in the papers):</strong> create the node, set <code>new-&gt;next = head</code>, then <code>head = new</code>. Order matters: link to the old list <em>before</em> moving head, or the list is lost. <strong>Insert at end (O(n) without a tail pointer):</strong> handle the empty list first (<code>head == NULL</code>), otherwise walk to the last node and set its <code>next</code> to the new node, whose own <code>next</code> is NULL.</p>
+      </div>
+      <figure><svg width="100%" viewBox="0 0 560 180" role="img" aria-labelledby="ds-sll-title ds-sll-desc"><title id="ds-sll-title">Inserting at the beginning of a singly linked list</title><desc id="ds-sll-desc">A new node X first points to the old head A, then head moves to X, giving X, A, B, NULL. Below, inserting at the end walks to the last node B and links B to the new node.</desc><text x="20" y="25" fill="currentColor">Insert at beginning:</text><rect x="20" y="40" width="70" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="55" y="60" text-anchor="middle" fill="currentColor">X | •</text><rect x="150" y="40" width="70" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="185" y="60" text-anchor="middle" fill="currentColor">A | •</text><rect x="280" y="40" width="70" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="315" y="60" text-anchor="middle" fill="currentColor">B | NULL</text><line x1="90" y1="55" x2="150" y2="55" stroke="currentColor"/><line x1="220" y1="55" x2="280" y2="55" stroke="currentColor"/><text x="95" y="35" fill="currentColor">1. X-&gt;next = head</text><text x="20" y="90" fill="currentColor">2. head = X</text><text x="20" y="125" fill="currentColor">Insert at end: walk p while (p-&gt;next != NULL), then p-&gt;next = new; new-&gt;next = NULL.</text><rect x="20" y="135" width="70" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="55" y="155" text-anchor="middle" fill="currentColor">A | •</text><rect x="150" y="135" width="70" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="185" y="155" text-anchor="middle" fill="currentColor">B | •</text><rect x="280" y="135" width="70" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="315" y="155" text-anchor="middle" fill="currentColor">X | NULL</text><line x1="90" y1="150" x2="150" y2="150" stroke="currentColor"/><line x1="220" y1="150" x2="280" y2="150" stroke="currentColor"/></svg><figcaption>Top: the two assignments for head insertion, in the only safe order. Bottom: tail insertion after the walk.</figcaption></figure>
+
     </div>
   </section>
 
@@ -1089,6 +1098,14 @@ void displayBackward() {
 }</code></pre>
       </div>
 
+
+      <h3 id="doubly-linked-lists-insertion-and-deletion"><i class="fas fa-angle-right"></i> Doubly Linked Lists: Pointer Insertion and Deletion</h3>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Four Links Change on a Middle Insertion</div>
+        <p>To insert X between A and B in a doubly linked list, set all four links: <code>X-&gt;next = B</code>, <code>X-&gt;prev = A</code>, <code>A-&gt;next = X</code>, and <code>B-&gt;prev = X</code>. Missing any one leaves the list traversable in one direction and broken in the other — the exact fault objective questions probe when they ask how many pointers change (four, counting both links stored in X). Deleting the last node p is <code>p-&gt;prev-&gt;next = NULL; free(p);</code> (with a head update when p is also the first node). The price of the second direction is one extra pointer per node and these extra updates; the reward is backward traversal and O(1) deletion when you already hold the node.</p>
+      </div>
+      <figure><svg width="100%" viewBox="0 0 560 150" role="img" aria-labelledby="ds-dll-title ds-dll-desc"><title id="ds-dll-title">Doubly linked list middle insertion</title><desc id="ds-dll-desc">Nodes A and B are joined both ways. A new node X between them takes A as previous and B as next, while A points forward to X and B points back to X: four link updates.</desc><rect x="40" y="55" width="90" height="34" fill="var(--card-bg)" stroke="currentColor"/><text x="85" y="76" text-anchor="middle" fill="currentColor">⇤ | A | •</text><rect x="235" y="55" width="90" height="34" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="76" text-anchor="middle" fill="currentColor">• | X | •</text><rect x="430" y="55" width="90" height="34" fill="var(--card-bg)" stroke="currentColor"/><text x="475" y="76" text-anchor="middle" fill="currentColor">• | B | ⇥</text><line x1="130" y1="65" x2="235" y2="65" stroke="currentColor"/><line x1="235" y1="80" x2="130" y2="80" stroke="currentColor"/><line x1="325" y1="65" x2="430" y2="65" stroke="currentColor"/><line x1="430" y1="80" x2="325" y2="80" stroke="currentColor"/><text x="280" y="30" text-anchor="middle" fill="currentColor">every adjacent pair is linked in both directions</text></svg><figcaption>A doubly linked node stores prev and next; a middle insertion rewires the pair on both sides.</figcaption></figure>
+
     </div>
   </section>
 
@@ -1447,6 +1464,21 @@ int main() {
           <li><strong>Sparse Matrix:</strong> Store only non-zero elements using linked list</li>
         </ul>
       </div>
+
+
+      <h3 id="header-linked-lists-and-polynomials"><i class="fas fa-angle-right"></i> Header Linked Lists and Polynomial Representation (Exam Note)</h3>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Exam Extension — Header Linked List</div>
+        <p>A <strong>header linked list</strong> keeps a permanent dummy <em>header node</em> before the first real node; it stores no list data (or holds metadata such as the node count). Because the header always exists, insertion and deletion at the front need no special empty-list case — the code path is identical for empty and non-empty lists. In a <strong>grounded</strong> header list the last node points to NULL; in a <strong>circular</strong> header list it points back to the header. Uses to quote: polynomial lists, sparse structures, and any list where uniform front operations simplify the code.</p>
+      </div>
+      <div class="concept-box">
+        <div class="box-title"><i class="fas fa-lightbulb"></i> Polynomials as Linked Lists</div>
+        <p>One node per <em>non-zero</em> term, kept in decreasing exponent order: <code>coeff | exp | next</code>. Zero terms are simply absent, which is why linked lists beat arrays for sparse polynomials.</p>
+        <p><strong>Univariate example:</strong> 3x<sup>3</sup> + 2x<sup>2</sup> + 5x + 2 becomes [3|3] → [2|2] → [5|1] → [2|0] → NULL. Note 5x is exponent 1 and the constant 2 is exponent 0.</p>
+        <p><strong>Bivariate example:</strong> 7x<sup>3</sup>y<sup>2</sup> − 8x<sup>2</sup>y + 3xy + 11x + 4 needs two exponent fields, <code>coeff | ex | ey | next</code>: [7|3|2] → [−8|2|1] → [3|1|1] → [11|1|0] → [4|0|0] → NULL. The term 11x is ex=1, ey=0; the constant 4 is ex=0, ey=0. Signs live in the coefficient.</p>
+      </div>
+      <figure><svg width="100%" viewBox="0 0 560 170" role="img" aria-labelledby="ds-poly-title ds-poly-desc"><title id="ds-poly-title">Polynomial linked lists</title><desc id="ds-poly-desc">Top chain for 3x cubed plus 2x squared plus 5x plus 2: nodes 3 exponent 3, 2 exponent 2, 5 exponent 1, 2 exponent 0, then NULL. Bottom chain for the bivariate polynomial: 7 with exponents 3 and 2, minus 8 with 2 and 1, 3 with 1 and 1, 11 with 1 and 0, 4 with 0 and 0, then NULL.</desc><text x="20" y="22" fill="currentColor">3x³ + 2x² + 5x + 2:</text><rect x="20" y="32" width="72" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="56" y="52" text-anchor="middle" fill="currentColor">3 | 3</text><rect x="122" y="32" width="72" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="158" y="52" text-anchor="middle" fill="currentColor">2 | 2</text><rect x="224" y="32" width="72" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="260" y="52" text-anchor="middle" fill="currentColor">5 | 1</text><rect x="326" y="32" width="72" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="362" y="52" text-anchor="middle" fill="currentColor">2 | 0</text><text x="420" y="52" fill="currentColor">→ NULL</text><line x1="92" y1="47" x2="122" y2="47" stroke="currentColor"/><line x1="194" y1="47" x2="224" y2="47" stroke="currentColor"/><line x1="296" y1="47" x2="326" y2="47" stroke="currentColor"/><line x1="398" y1="47" x2="418" y2="47" stroke="currentColor"/><text x="20" y="92" fill="currentColor">7x³y² − 8x²y + 3xy + 11x + 4:</text><rect x="20" y="102" width="82" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="61" y="122" text-anchor="middle" fill="currentColor">7 | 3 | 2</text><rect x="122" y="102" width="82" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="163" y="122" text-anchor="middle" fill="currentColor">−8 | 2 | 1</text><rect x="224" y="102" width="82" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="265" y="122" text-anchor="middle" fill="currentColor">3 | 1 | 1</text><rect x="326" y="102" width="82" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="367" y="122" text-anchor="middle" fill="currentColor">11 | 1 | 0</text><rect x="428" y="102" width="82" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="469" y="122" text-anchor="middle" fill="currentColor">4 | 0 | 0</text><line x1="102" y1="117" x2="122" y2="117" stroke="currentColor"/><line x1="204" y1="117" x2="224" y2="117" stroke="currentColor"/><line x1="306" y1="117" x2="326" y2="117" stroke="currentColor"/><line x1="408" y1="117" x2="428" y2="117" stroke="currentColor"/></svg><figcaption>Each node is coeff | exponent(s). Terms descend by exponent and zero terms are omitted.</figcaption></figure>
+      <p>Linked stack and linked queue (the syllabus-listed applications) stay in the two sections above: push/pop at the head give an unbounded stack, and front/rear pointers give an unbounded queue — both O(1) per operation with no overflow state.</p>
 
     </div>
   </section>
@@ -2954,32 +2986,11 @@ int main() {
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
+      <p class="video-note">Optional external lessons, checked on 19 November 2026. Nothing loads from YouTube until you choose a link. Watch-page title, channel and duration were checked; playback, captions and device availability were not tested. Not official course material.</p>
       <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=singly+linked+list+insertion+deletion" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Singly linked lists from scratch</span>
-              <span class="video-link-meta">Nodes, traversal and insertion &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=doubly+and+circular+linked+list" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Doubly and circular linked lists</span>
-              <span class="video-link-meta">Prev pointers and circular traversal &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=reverse+a+linked+list+iterative+merge" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Reversing and merging linked lists</span>
-              <span class="video-link-meta">Pointer rewiring step by step &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=dq3F3e9o2DM" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Insertion of a Node in Linked List (Beginning, End, Specified Position) with Code — Jenny's Lectures CS IT · 27:07</span><span class="video-link-meta">Pointer-by-pointer C insertion; the exam algorithms above add the empty-list and search cases</span></span></a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=v4szCPs9yEY" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Insertion in Doubly Linked List (Beginning, End, Specific Position) — Jenny's Lectures CS IT · 35:15</span><span class="video-link-meta">Long-form DLL pointer work; circular lists and the four-type comparison are in the notes above</span></span></a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=Dze2Em2EazE" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Implement Polynomial Using Linked List — Rapid Tutor · 7:39</span><span class="video-link-meta">Short C walkthrough of coeff/exponent nodes; header lists and the bivariate example are only in the notes above</span></span></a></li>
       </ul>
     </div>
   </section>

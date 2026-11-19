@@ -1,5 +1,40 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
+## Phase 14 — Data Structures — ✅* owner-passed (Termux test), merge authorized (2026-11-19)
+
+Branch `arena/c5ca91cb-diploma-3rd-sem`, base `cdf001c` (Phase 16 PR #30
+merge), pushed to origin at owner direction. All four CST205 units completed
+and individually verified in order U4 → U2 → U3 → U1, then the Mode A topic
+map last. Frozen `_data/` and `_quiz-data/` bytes are unchanged
+(`check_pyq_integrity.py`: 0 drift).
+
+- All 54 section IDs, all 81 existing `<h3 id>` anchors and all 8
+  `guides.json` locks preserved; 17 new concept headings and 11 accessible
+  SVGs added. Every displayed trace is machine-generated
+  (`scripts/verify_cst205_traces.py`, `evidence/ds-traces.json`); BST and
+  circular-queue traces additionally reproduced in C.
+- 13 comparative, watch-page-checked plain video links (Jenny's Lectures won
+  most slots on comparison; Neso Academy won two; one recorded low-view risk
+  on the polynomial slot). Playback/captions NOT verified — no browser here.
+- Mode A map `assets/data/topic-map-CST205.json`: 80 topics, 23 decisions,
+  **106/106 questions land on specific concept headings** through the real
+  resolver (71 stored-unit corrections; 0 generic landings). One additive
+  runtime fix: CST205 mapped landings now reveal their section like CST207.
+- Local evidence: 178/178 Python tests, 11/11 Node DOM suites, all README
+  gates green, canonical rebuild run twice byte-identical. Two ratchets
+  re-pinned with reasons (anchored headings 679→696 = the 17 additions;
+  CST205 order-dependence 35→33, matcher untouched).
+- **Inherited CI red (unchanged):** base `cdf001c` Web CI `44490460318`
+  failed at the PYQ browser-smoke step; Pages green. The failure predates
+  this phase; identical root cause with Phase 16's is not established.
+
+See [Phase 14 evidence](phases/14-cst205-ds-content/record.md). The owner ran
+the Termux check and reported "Test passed", and authorized merging this
+branch (PR #31). Acceptance retains the video-verification caveat (no
+playback/caption pass) and the inherited browser-smoke caveat. No Phase 17,
+separate deploy or Pages settings change is authorized by this merge.
+Phase 16 stays owner-accepted/merged; Phase 15 remains closed.
+
 ## Phase 16 — Algorithms — ✅* owner-accepted, merge authorized (2026-11-19)
 
 Branch `arena/d7aa68ed-diploma-3rd-sem`, base `47d801b` (Phase 15 merge,
@@ -105,7 +140,7 @@ Revised-2022 syllabus scope (`docs/syllabus/syllabus.json`, PDF pp. 3–13):
 
 - **[Phase 12 — Computer Programming in C](phases/12-cst201-c-content/README.md)** (`unit-1/`–`unit-5/`, 6 parts · 2 cr, 30h [5+5+7+7+6], p. 3 · 4 papers / 105 Qs / 395m: U4 `97m` 24.6%, U2 `95m` 24.1%, U1 `86m` 21.8%, U3 `66m` 16.7%, U5 `51m` 12.9%) — ✅ **owner-passed 2026-11-18** (Termux check: *"Test pass and it's pretty accurate too"*). All six parts shipped (12.4, 12.2, 12.1, 12.3, 12.5, 12.6). All five unit pages are rewritten to the PYQ weights, `105/105` 2023–2026 C PYQs route to a syllabus heading (`103` same-unit, `2` correct cross-unit redirects, `0` unmatched, from `46/29/30` at baseline), the recorded CST201 U3↔U4 tag inversion is **resolved at source** in both `_data/` and `_quiz-data/` rather than merely disclosed, and PYQ→section routing now uses an explicit `assets/data/topic-map-CST201.json` (**82** topics mapped, consulted before the matcher) which cut generic-overview landings **35/105 → 3/105**. Standard: [`topic-map-standard.md`](phases/topic-map-standard.md)
 - **[Phase 13 — Scripting Languages (Python)](phases/13-cst203-python-content/README.md)** (`unit-1/`–`unit-5/`, 6 parts · 2 cr, 30h [7+5+6+6+6], pp. 5–7 · 4 papers / 104 Qs / 387m: U1 `152m` 39.3%, U3 `92m` 23.8%, U2 `64m` 16.5%, U4 `49m` 12.7%, U5 `30m` 7.8%)
-- **[Phase 14 — Data Structures](phases/14-cst205-ds-content/README.md)** (`unit-1/`–`unit-4/`, 5 parts · 3 cr, 45h [3+12+15+15], p. 7 · 4 papers / 106 Qs / 403m: U4 `145m` 36.0%, U2 `143m` 35.5%, U3 `75m` 18.6%, U1 `40m` 9.9%)
+- **[Phase 14 — Data Structures](phases/14-cst205-ds-content/README.md)** (`unit-1/`–`unit-4/`, 5 parts · 3 cr, 45h [3+12+15+15], p. 7 · 4 papers / 106 Qs / 403m: U4 `145m` 36.0%, U2 `143m` 35.5%, U3 `75m` 18.6%, U1 `40m` 9.9%) — ✅ **owner-passed 2026-11-19** (Termux: "Test passed"); merge authorized (PR #31). All four units verified one at a time; explicit topic map routes 106/106 PYQs to concept headings (71 stored-unit corrections, 0 generic landings); all frozen bytes unchanged.
 - **[Phase 15 — Computer System Organization](phases/15-cst207-cso-content/README.md)** (`unit-1/`–`unit-5/`, 6 parts · 4 cr, 60h [6+20+10+9+15], p. 10 · 4 papers / 103 Qs / 385m: U2 `112m` 29.1%, U5 `110m` 28.6%, U1 `81m` 21.0%, U3 `78m` 20.3%, U4 `4m` 1.0%)
 - **[Phase 16 — Algorithms](phases/16-cst209-algorithms-content/README.md)** (`unit-1/`–`unit-4/` + `unit-5-supplementary/`, 6 parts · 4 cr, 60h [6+16+18+20], p. 12 · 4 papers / 105 Qs / 395m: U4 `93m` 23.5%, U3 `92m` 23.3%, U1 `89m` 22.5%, U2 `79m` 20.0%, CO5 U5 `42m` 10.6%)
 
@@ -188,6 +223,35 @@ should be closed rather than merged.
 Implemented on `arena/908b6b19-diploma-3rd-sem` (from `main` at `0e53a4a`) and
 **merged to `main` by explicit owner command on 2026-11-17 as PR #17**
 (`c898a95`); GitHub Pages built that commit and the live site serves the Phase 9
+shell (`study-2026-11-17e`) and data version (`data-6b1621c45599`). The asterisk
+is the whole story: 9.4's counter gate is still open and no Lighthouse/phone pass
+has been recorded. Full evidence: [`phases/09-performance-launch/record.md`](phases/09-performance-launch/record.md).
+
+- **9.1 ✅** Data fan-out unchanged from 2026-11-09 (Practice 36 → 1 JSON, quiz
+  setup 20 → 2); the static side is now measured too (table below).
+- **9.2 ✅** One token file: 302 palette entries in `assets/css/variables.css`,
+  1,205 literals re-pointed, **0 hex literals outside the token file** and 0 value
+  differences (47 contrast pairs unchanged); `rgba()` values (373 occurrences,
+  188 distinct) stay outside that gate and are recorded as an open item. 71 dead rules removed. Icon CSS
+  subset 102,641 → **25,890 B** (−74.8 %). Three global sheets → `base.css` and
+  three global scripts → `shell.bundle.js`; the English catalog is no longer
+  fetched. **No browser here: colour equivalence is static, layout was not
+  re-screenshotted.**
+- **9.3 ✅** Data has its own generated version and cache namespace
+  (`data-6b1621c45599` over 81 files); shell `study-2026-11-17e`. A data fix now
+  reaches a returning device without a shell update or a storage reset, and a
+  shell update no longer discards the pools. Proved browser-free by
+  `tests/data-version.cjs`.
+- **9.5 ✅** `scripts/site_config.py` is the only place the published URL exists;
+  `scripts/check_root_rewrite.py` rewrites a temp copy to `/` and runs
+  `check_site.py --strict` inside it → 0 errors, 0 warnings. No domain action.
+- **9.4 ⚪ closed without a counter (owner choice, 2026-11-18)** — no measurement
+  requests or storage are authorized. The approved disclosure scope is
+  prospective only and does not authorize a counter. Reopening requires a new
+  explicit decision. See `docs/DECISIONS.md` + `docs/MEASUREMENT.md`.
+- **9.6 🚧 in progress** — static launch gates and byte budgets pass; all pages
+  remain within 340 KB CSS / 350 KB JS. Owner-reported physical Android checks
+  (2026-11-18) passed several listed flows; evidence and mi8a95`); GitHub Pages built that commit and the live site serves the Phase 9
 shell (`study-2026-11-17e`) and data version (`data-6b1621c45599`). The asterisk
 is the whole story: 9.4's counter gate is still open and no Lighthouse/phone pass
 has been recorded. Full evidence: [`phases/09-performance-launch/record.md`](phases/09-performance-launch/record.md).

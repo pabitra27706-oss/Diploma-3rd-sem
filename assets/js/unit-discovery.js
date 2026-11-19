@@ -264,9 +264,10 @@
     if (window.location.hash !== `#${best.anchor}`) {
       history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${best.anchor}`);
     }
-    // Reveal mapped CSO and all Algorithms concept landings, including matcher
-    // fallbacks and h2 section targets, without changing saved preferences.
-    if ((subject === 'CST207' && mappedEntry) || subject === 'CST209') {
+    // Reveal mapped CSO/Data Structures and all Algorithms concept landings,
+    // including matcher fallbacks and h2 section targets, without changing
+    // saved preferences.
+    if (((subject === 'CST207' || subject === 'CST205') && mappedEntry) || subject === 'CST209') {
       const content = target.closest('.section-content.collapsed')
         || target.closest('.section')?.querySelector('.section-content.collapsed');
       if (content) {
