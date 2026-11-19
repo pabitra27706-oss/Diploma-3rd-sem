@@ -81,7 +81,7 @@
   </style>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST207/units/unit-1.html">
-<meta name="app-build" content="study-2026-11-18e">
+<meta name="app-build" content="study-2026-11-19-cso">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unit 1 – Structure of Computers; Register Transfer and Micro Operations | CSO">
@@ -269,7 +269,8 @@
       </div>
 
       <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-brain"></i> Von-Neumann Architecture</div>
+        <h3 class="box-title" id="von-neumann-architecture-and-cpu-organization"><i class="fas fa-brain"></i> Von Neumann Architecture and CPU Organization</h3>
+        <p>A stored-program machine uses its program counter to name the next instruction address. The <a href="#system-bus-cpu-registers-and-memory-write-cycle">processor–memory diagram and RTL transfer steps</a> below show how MAR and MDR carry that fetch across the shared path.</p>
         <p>The Von-Neumann architecture (also called the stored-program concept) is the foundation of modern computers. Key features:</p>
         <ul style="margin-top:0.5rem; padding-left:1.3rem; line-height:2;">
           <li><strong>Stored Program Concept:</strong> Both instructions and data are stored in the same memory unit in binary form. The CPU fetches instructions from memory one by one and executes them sequentially.</li>
@@ -279,14 +280,75 @@
         </ul>
       </div>
 
+<figure><svg viewBox="0 0 420 220" role="img" aria-labelledby="stored-program-title stored-program-desc">
+<title id="stored-program-title">Von Neumann stored-program architecture</title><desc id="stored-program-desc">Input provides values, the CPU processes them, and output receives results. A single shared memory supplies instructions and exchanges data with the CPU.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<path d="M102 61 L136 91"/>
+<path d="M130.529 79.0588 L136 91 L123.471 87.0588"/>
+<path d="M281 91 L321 61"/>
+<path d="M309 63.75 L321 61 L315 71.75"/>
+<path d="M210 146 L210 176"/>
+<path d="M214 167 L210 176 L206 167"/>
+<path d="M206 155 L210 146 L214 155"/>
+<rect x="10" y="12" width="190" height="49" rx="4"/>
+<rect x="220" y="12" width="190" height="49" rx="4"/>
+<rect x="100" y="91" width="220" height="55" rx="4"/>
+<rect x="100" y="176" width="220" height="38" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="105" y="42.5">Input</text>
+<text x="315" y="42.5">Output</text>
+<text x="210" y="114.5">CPU</text>
+<text x="210" y="134.5">Control, ALU, registers</text>
+<text x="210" y="201">Instructions + data</text></g></svg><figcaption>Von Neumann stored-program architecture. Input provides values, the CPU processes them, and output receives results. A single shared memory supplies instructions and exchanges data with the CPU.</figcaption></figure>
       <div class="important-note" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-exclamation-circle"></i> Von-Neumann Bottleneck</div>
-        <p>Since both instructions and data share the same bus, only one can be transferred at a time. This limits performance. Harvard Architecture solves this by using separate buses and memory for instructions and data.</p>
+        <p>Instruction fetches and data transfers compete for bandwidth on the shared path. Separate instruction and data paths can overlap those transfers, although a shared lower memory can still limit throughput.</p>
       </div>
 
       <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-random"></i> Bus Structures</div>
+        <h3 class="box-title" id="system-bus-cpu-registers-and-memory-write-cycle"><i class="fas fa-random"></i> System Bus, CPU Registers and Memory Write Cycle</h3>
+<div class="table-wrapper"><table class="reg-table">
+<caption>Von Neumann and Harvard designs</caption><thead><tr><th scope="col">Feature</th><th scope="col">Von Neumann</th><th scope="col">Harvard</th></tr></thead><tbody>
+<tr><td>Memory</td><td>Unified instructions and data</td><td>Separate instruction and data memories</td></tr>
+<tr><td>Transfer paths</td><td>Shared path competes for bandwidth</td><td>Independent paths can operate in parallel</td></tr>
+<tr><td>Trade-off</td><td>One address space can be simpler to manage</td><td>Separate paths may have different widths or timing</td></tr>
+<tr><td>Practical variant</td><td>Unified main memory</td><td>Modified Harvard often splits instruction/data caches above unified memory</td></tr></tbody></table></div>
         <p>A bus is a shared communication pathway connecting all functional units. There are three main types:</p>
+<figure><svg viewBox="0 0 420 205" role="img" aria-labelledby="three-buses-title three-buses-desc">
+<title id="three-buses-title">System bus with one active master</title><desc id="three-buses-desc">The master sends addresses to the selected target, data moves in either direction, and distinct control lines specify or acknowledge the operation.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<path d="M73 47 L73 73"/>
+<path d="M77 64 L73 73 L69 64"/>
+<path d="M73 133 L73 163"/>
+<path d="M77 154 L73 163 L69 154"/>
+<path d="M210 47 L210 73"/>
+<path d="M214 64 L210 73 L206 64"/>
+<path d="M206 56 L210 47 L214 56"/>
+<path d="M210 133 L210 163"/>
+<path d="M214 154 L210 163 L206 154"/>
+<path d="M206 142 L210 133 L214 142"/>
+<path d="M347 47 L347 73"/>
+<path d="M351 64 L347 73 L343 64"/>
+<path d="M343 56 L347 47 L351 56"/>
+<path d="M347 133 L347 163"/>
+<path d="M351 154 L347 163 L343 154"/>
+<path d="M343 142 L347 133 L351 142"/>
+<rect x="10" y="12" width="400" height="35" rx="4"/>
+<rect x="10" y="73" width="126" height="60" rx="4"/>
+<rect x="147" y="73" width="126" height="60" rx="4"/>
+<rect x="284" y="73" width="126" height="60" rx="4"/>
+<rect x="10" y="163" width="400" height="35" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="210" y="35.5">CPU / current bus master</text>
+<text x="73" y="99">Address</text>
+<text x="73" y="119">downward</text>
+<text x="210" y="99">Data</text>
+<text x="210" y="119">both ways</text>
+<text x="347" y="99">Control</text>
+<text x="347" y="119">by signal</text>
+<text x="210" y="186.5">Memory and I/O interfaces</text></g></svg><figcaption>System bus with one active master. The master sends addresses to the selected target, data moves in either direction, and distinct control lines specify or acknowledge the operation.</figcaption></figure>
+        <p>The CPU normally drives the address; if another master owns the bus, it drives the address instead. Within the control bundle, a read/write command goes outward while a request, ready or interrupt input may come back. A suffix <code>#</code> denotes an active-low signal: <code>MEMW#</code> asserted means the write signal is low. Signal names and timing vary by hardware.</p>
+        <p>With 16 address lines and byte-addressed memory, there are 65,536 byte locations (64 KiB), even if the data bus carries only 8 bits at a time. Address width tells you how many locations can be selected; data width tells you how many bits can be transferred in one bus beat. In a shared single-bus design only one source can drive a particular line at a time; unselected outputs must not contend for it.</p>
         <div class="table-wrapper" style="margin-top:0.75rem;">
           <table class="reg-table">
             <thead>
@@ -328,6 +390,40 @@
 
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-sync-alt"></i> Instruction Execution Cycle</div>
+<figure><svg viewBox="0 0 420 225" role="img" aria-labelledby="processor-memory-title processor-memory-desc">
+<title id="processor-memory-title">Processor to memory connection</title><desc id="processor-memory-desc">The PC supplies the fetch address to the MAR. The MDR (also called MBR) exchanges words with memory and supplies the IR for instruction fetch. The control unit decodes the IR; the ALU operates on register values.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<path d="M135 33 L148 33"/>
+<path d="M139 29 L148 33 L139 37"/>
+<path d="M273 33 L286 33"/>
+<path d="M277 29 L286 33 L277 37"/>
+<path d="M348 54 L348 92"/>
+<path d="M352 83 L348 92 L344 83"/>
+<path d="M344 63 L348 54 L352 63"/>
+<path d="M286 113 L273 113"/>
+<path d="M282 117 L273 113 L282 109"/>
+<path d="M148 113 L135 113"/>
+<path d="M144 117 L135 113 L144 109"/>
+<path d="M73 134 L73 172"/>
+<path d="M77 163 L73 172 L69 163"/>
+<rect x="10" y="12" width="125" height="42" rx="4"/>
+<rect x="148" y="12" width="125" height="42" rx="4"/>
+<rect x="286" y="12" width="125" height="42" rx="4"/>
+<rect x="286" y="92" width="125" height="42" rx="4"/>
+<rect x="148" y="92" width="125" height="42" rx="4"/>
+<rect x="10" y="92" width="125" height="42" rx="4"/>
+<rect x="10" y="172" width="260" height="42" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="72.5" y="39">PC</text>
+<text x="210.5" y="39">MAR</text>
+<text x="348.5" y="39">Memory</text>
+<text x="348.5" y="119">MDR / MBR</text>
+<text x="210.5" y="119">IR</text>
+<text x="72.5" y="119">Control unit</text>
+<text x="140" y="199">ALU, AC and general registers</text></g></svg><figcaption>Processor to memory connection. The PC supplies the fetch address to the MAR. The MDR (also called MBR) exchanges words with memory and supplies the IR for instruction fetch. The control unit decodes the IR; the ALU operates on register values.</figcaption></figure>
+        <p><strong>Trace a complete fetch and store.</strong> Assume a teaching machine with 16-bit byte addresses and two-byte instructions. PC starts at 2000H. The control unit copies PC into MAR and starts a read. After the bus returns the instruction into MDR, the CPU copies it into IR and advances PC to 2002H. The instruction bytes are not interpreted as a number to be added to the accumulator: they are decoded as an operation and its operand selection.</p>
+        <p>Suppose IR decodes to a store of AC into address 3010H. MAR now takes 3010H, MDR takes the current AC value, and the control unit starts a <em>write</em>. On completion memory contains AC's old value at the destination while AC is unchanged. The next fetch uses PC = 2002H unless the instruction changed control flow. MAR held two different addresses during one instruction; IR kept the instruction while MDR was reused for data.</p>
+        <p><strong>What to draw in an answer:</strong> show PC feeding the address register for instruction fetch, and memory supplying the data register before IR. Draw a separate control path from the decoder so the read/write decision is visible. On a read, the selected device drives the data bus; on a write, the master drives it. Avoid drawing the data bus as unidirectional merely because one example is a read.</p>
         <p>The CPU repeatedly performs a fetch-decode-execute cycle for every instruction:</p>
         <div class="algo-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-list-ol"></i> Steps of Instruction Cycle</div>
@@ -351,6 +447,12 @@
         </div>
       </div>
 
+      <div class="concept-box"><p><strong>Worked transfer:</strong> Load the byte at address 1200H into R1, then copy it to address 1201H. Suppose the memory returns 4BH. The first cycle must select 1200H and sample the data bus only when the read completes. The second selects 1201H and drives 4BH on the data bus before the target latches it. The source byte stays unchanged.</p>
+<pre><code>READ:  MAR ← 1200H; assert Read
+       wait for completion; MDR ← M[MAR]; R1 ← MDR
+WRITE: MAR ← 1201H; MDR ← R1; assert Write
+       M[MAR] ← MDR; complete the cycle</code></pre><p>These steps are RTL pseudocode, not software or a fixed clock-by-clock bus specification. For a memory-mapped peripheral, the address selects the device register rather than RAM; in either case address decoding selects the target.</p></div>
+
     </div>
   </section>
 
@@ -365,7 +467,7 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-thumbtack"></i> Fixed-Point Numbers</div>
+        <h3 class="box-title" id="number-representation-fixed-point-and-twos-complement"><i class="fas fa-thumbtack"></i> Fixed-Point Number Representation and 2's Complement</h3>
         <p>In fixed-point representation, the binary point is assumed to be at a fixed position — either at the extreme right (integers) or at a defined position (fractions).</p>
         <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
           <li><strong>Unsigned integers:</strong> All bits represent magnitude. Range: 0 to 2ⁿ − 1 for n-bit number.</li>
@@ -373,6 +475,13 @@
           <li><strong>1's Complement:</strong> Negative number formed by inverting all bits. Has two representations of zero.</li>
           <li><strong>2's Complement:</strong> Most widely used. Negative number = 1's complement + 1. Only one zero representation. Simplifies arithmetic.</li>
         </ul>
+<div class="table-wrapper"><table class="reg-table">
+<caption>Three signed encodings of −75 in 8 bits</caption><thead><tr><th scope="col">Format</th><th scope="col">Construction from 01001011</th><th scope="col">Result</th><th scope="col">Zero</th></tr></thead><tbody>
+<tr><td>Sign-magnitude</td><td>Set sign bit, retain seven magnitude bits</td><td>11001011</td><td>±0</td></tr>
+<tr><td>1’s complement</td><td>Invert every bit</td><td>10110100</td><td>±0</td></tr>
+<tr><td>2’s complement</td><td>Invert every bit and add 1</td><td>10110101</td><td>One zero</td></tr></tbody></table></div>
+        <p>To verify the last row, use the negative MSB weight: −128 + 32 + 16 + 4 + 1 = −75. Decode the same pattern as unsigned and you get 181 instead. In the first two formats the 8-bit range is −127 to +127. In 2's complement it is −128 to +127; negating −128 cannot produce a representable positive 8-bit result.</p>
+        <p>Keep the width fixed throughout. To widen a 2's complement value, repeat the sign bit on the left: 10110101 becomes 1111111110110101 in 16 bits. Zero extension would turn −75 into +181. When adding two signed operands, a carry out alone does not indicate signed overflow: equal operand signs and an opposite result sign do.</p>
         <div class="formula-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-calculator"></i> 2's Complement Ranges</div>
           <div class="formula">n-bit 2's complement range: −2<sup>n−1</sup> to +2<sup>n−1</sup> − 1</div>
@@ -381,8 +490,19 @@
       </div>
 
       <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-wave-square"></i> Floating-Point Numbers</div>
-        <p>Floating-point representation is used for very large or very small numbers. A floating-point number has two parts:</p>
+        <h3 class="box-title" id="floating-point-and-ieee-754"><i class="fas fa-wave-square"></i> Floating-Point Representation and IEEE 754</h3>
+<div class="table-wrapper"><table class="reg-table">
+<caption>Fixed point versus floating point</caption><thead><tr><th scope="col">Feature</th><th scope="col">Fixed point</th><th scope="col">Floating point</th></tr></thead><tbody>
+<tr><td>Position</td><td>Fixed by a shared scale</td><td>Determined by the exponent</td></tr>
+<tr><td>Fields</td><td>Integer bit pattern, external scale</td><td>Sign, exponent, fraction</td></tr>
+<tr><td>Range</td><td>Bounded by width and scale</td><td>Broad dynamic range for the width</td></tr>
+<tr><td>Spacing</td><td>Uniform step</td><td>Depends on exponent</td></tr>
+<tr><td>Arithmetic</td><td>Addition at a common scale</td><td>Align exponents before addition</td></tr>
+<tr><td>Precision</td><td>Constant absolute step</td><td>Roughly constant relative precision for normal values</td></tr>
+<tr><td>Uses</td><td>Currency in integer minor units; scaled sensors</td><td>Scientific data across many orders of magnitude</td></tr></tbody></table></div>
+        <p><strong>Fixed-point example:</strong> interpret an 8-bit 2's complement word with four fractional bits. The stored integer 00110100₂ is 52, so the represented value is 52/16 = 3.25. Likewise 10110101₂ is −75/16 = −4.6875 under this scale. The binary point is not physically stored; the same bits meant −75 in the earlier integer example. The possible values are spaced 1/16 apart from −8 to +7.9375.</p>
+        <p>Add 00110100₂ and 00011000₂ at that same scale: 52 + 24 = 76, so 01001100₂ represents 4.75. Multiplication is different: multiplying the stored integers gives a product scaled by 16². To store the result back at the original scale, divide the integer product by 16, apply the chosen rounding rule and check the range. A larger scaling factor gives finer steps but reduces the largest representable value at the same width.</p>
+        <p>Floating point expresses values over a wide range. IEEE 754 stores three fields: a sign, an exponent and a fraction. The general scientific-notation idea is:</p>
         <div class="formula-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-equals"></i> Floating-Point Form</div>
           <div class="formula">Number = Mantissa × Base<sup>Exponent</sup></div>
@@ -395,7 +515,7 @@
                 <th>Total Bits</th>
                 <th>Sign</th>
                 <th>Exponent</th>
-                <th>Mantissa</th>
+                <th>Stored fraction</th>
               </tr>
             </thead>
             <tbody>
@@ -420,8 +540,42 @@
           <div class="box-title"><i class="fas fa-star"></i> IEEE 754 Biased Exponent</div>
           <p>Exponent is stored in biased (excess) form to handle both positive and negative exponents. Bias = 127 for single precision, 1023 for double precision.</p>
           <div class="formula" style="margin-top:0.5rem;">Stored Exponent = Actual Exponent + Bias</div>
+          <p>For normal numbers a larger unsigned exponent field means a larger exponent; there is no separate exponent sign bit. Decode with (−1)<sup>S</sup> × (1.F)<sub>2</sub> × 2<sup>E−bias</sup>. The leading 1 is implicit, not stored. This comparison property is for exponents; arbitrary signed floating-point bit patterns still cannot be compared as ordinary unsigned integers.</p>
         </div>
       </div>
+
+<figure><svg viewBox="0 0 420 143" role="img" aria-labelledby="ieee-fields-title ieee-fields-desc">
+<title id="ieee-fields-title">IEEE 754 layouts, most significant bit first</title><desc id="ieee-fields-desc">Single precision has 1 sign, 8 exponent and 23 fraction bits (bias 127). Double precision has 1 sign, 11 exponent and 52 fraction bits (bias 1023). Boxes are not to scale.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<rect x="6" y="10" width="75" height="52" rx="4"/>
+<rect x="83" y="10" width="145" height="52" rx="4"/>
+<rect x="230" y="10" width="184" height="52" rx="4"/>
+<rect x="6" y="82" width="75" height="52" rx="4"/>
+<rect x="83" y="82" width="145" height="52" rx="4"/>
+<rect x="230" y="82" width="184" height="52" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="43.5" y="32">Sign</text>
+<text x="43.5" y="52">bit 31</text>
+<text x="155.5" y="32">Exponent</text>
+<text x="155.5" y="52">bits 30–23</text>
+<text x="322" y="32">Fraction</text>
+<text x="322" y="52">bits 22–0</text>
+<text x="43.5" y="104">Sign</text>
+<text x="43.5" y="124">bit 63</text>
+<text x="155.5" y="104">Exponent</text>
+<text x="155.5" y="124">bits 62–52</text>
+<text x="322" y="104">Fraction</text>
+<text x="322" y="124">bits 51–0</text></g></svg><figcaption>IEEE 754 layouts, most significant bit first. Single precision has 1 sign, 8 exponent and 23 fraction bits (bias 127). Double precision has 1 sign, 11 exponent and 52 fraction bits (bias 1023). Boxes are not to scale.</figcaption></figure><div class="table-wrapper"><table class="reg-table">
+<caption>Interpret exponent before applying the normal-number formula</caption><thead><tr><th scope="col">Stored exponent</th><th scope="col">Fraction</th><th scope="col">Interpretation</th></tr></thead><tbody>
+<tr><td>All zeros</td><td>Zero</td><td>Signed zero</td></tr>
+<tr><td>All zeros</td><td>Nonzero</td><td>Subnormal: use 0.F × 2^(1−bias) with sign</td></tr>
+<tr><td>Neither extreme</td><td>Any</td><td>Normal: use 1.F × 2^(E−bias) with sign</td></tr>
+<tr><td>All ones</td><td>Zero</td><td>Signed infinity</td></tr>
+<tr><td>All ones</td><td>Nonzero</td><td>NaN (not a number)</td></tr></tbody></table></div>
+      <div class="concept-box"><p><strong>Worked conversion: −13.625.</strong> The integer part 13 is 1101₂. The fractional part 0.625 is 0.101₂ because 1/2 + 1/8 = 0.625. Normalize 1101.101₂ as 1.101101₂ × 2³. Use sign 1, stored exponent 3 + 127 = 130 = 10000010₂, and keep 101101 after dropping the leading 1. Pad on the right to 23 fraction bits. No rounding is needed for this exact binary fraction.</p>
+<pre><code>1 | 10000010 | 10110100000000000000000
+1100 0001 0101 1010 0000 0000 0000 0000
+   C    1    5    A    0    0    0    0</code></pre><p>Result: <strong>C15A0000H</strong>. Double precision keeps the same sign and normalized fraction but stores 1026 (10000000010₂) in the exponent and pads to 52 fraction bits. Decoding either format recovers −13.625.</p></div>
 
     </div>
   </section>
@@ -437,12 +591,12 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-check-double"></i> Parity Bits</div>
+        <h3 class="box-title" id="digital-logic-parity-and-error-codes"><i class="fas fa-check-double"></i> Parity Bits and Error-Detecting Codes</h3>
         <p>A parity bit is an extra bit added to a binary data word to make the total number of 1s either even or odd, allowing single-bit error detection.</p>
         <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
           <li><strong>Even Parity:</strong> Parity bit is chosen so total number of 1s (including parity bit) is even.</li>
           <li><strong>Odd Parity:</strong> Parity bit is chosen so total number of 1s is odd.</li>
-          <li><strong>Limitation:</strong> Can detect only single-bit errors. Cannot detect double-bit errors. Cannot correct errors.</li>
+          <li><strong>Limitation:</strong> Detects any odd number of flipped bits, including one. An even number of flips can go undetected. Parity alone cannot locate or correct an error.</li>
         </ul>
         <div class="formula-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-calculator"></i> Example</div>
@@ -510,11 +664,12 @@
         <p>Register Transfer Language is a symbolic notation used to describe the movement of data between registers and the operations performed on that data. It provides a hardware-level description of digital systems.</p>
         <div class="syntax-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-code"></i> RTL Notation Basics</div>
-          <p><code>R2 ← R1</code> &nbsp;&nbsp; Transfer contents of R1 to R2</p>
-          <p><code>R2 ← R1, if (T=1)</code> &nbsp;&nbsp; Conditional transfer (when control signal T is 1)</p>
-          <p><code>MAR ← PC</code> &nbsp;&nbsp; Transfer PC value to MAR</p>
-          <p><code>MDR ← M[MAR]</code> &nbsp;&nbsp; Read memory at address MAR into MDR</p>
-          <p><code>M[MAR] ← MDR</code> &nbsp;&nbsp; Write MDR contents to memory at MAR</p>
+          <p>RTL pseudocode: the arrow points toward the destination; the source is unchanged. A condition before the colon enables the transfer only when true.</p>
+          <pre><code>R2 ← R1
+T: R2 ← R1
+MAR ← PC
+MDR ← M[MAR]
+M[MAR] ← MDR</code></pre>
         </div>
       </div>
 
@@ -553,8 +708,9 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-atom"></i> What Are Micro-Operations?</div>
+        <h3 class="box-title" id="micro-operations-and-shift-operations"><i class="fas fa-atom"></i> Micro-Operations and Shift Operations</h3>
         <p>A micro-operation is the most basic, elementary operation performed on data stored in registers. A single machine instruction may consist of several micro-operations. There are four types:</p>
+        <p><strong>Transfer</strong> copies a word; <strong>arithmetic</strong> computes a numeric result; <strong>logic</strong> operates independently on each bit; <strong>shift</strong> moves positions or rotates them through the word.</p>
       </div>
 
       <!-- Arithmetic Micro-Ops -->
@@ -598,6 +754,8 @@
       <!-- Shift Micro-Ops -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-arrows-alt-h"></i> Shift Micro-Operations</div>
+        <p>Compare the same input 10110101₂: a logical right shift inserts 0 and gives 01011010₂; arithmetic right inserts the old sign and gives 11011010₂ (−38); rotate right copies the outgoing low bit to the high end and also gives 11011010₂ here, by coincidence. Rotate 10110100₂ instead and the difference is clear: rotate gives 01011010₂ and arithmetic shift gives 11011010₂.</p>
+        <p>For signed two's complement, arithmetic right shift by one gives floor division by two, not truncation toward zero for a negative odd input. Left shifts discard the high bit; multiplying by two is exact only if the result fits the chosen interpretation and width.</p>
         <div class="table-wrapper" style="margin-top:0.75rem;">
           <table class="reg-table">
             <thead>
@@ -1003,7 +1161,14 @@
           </div>
         </div>
 
-      </div>
+
+<div class="mcq-item"><p class="card-title">Q 9</p><p>Which biased exponent represents an actual exponent of −3 in binary32?</p><ul class="options"><li>a. 3</li><li>b. 124</li><li>c. 127</li><li>d. 130</li></ul>
+<button class="toggle-btn" data-target="mcq9"><i class="fas fa-eye"></i> Show Answer</button>
+<div class="answer-reveal" id="mcq9"><p><strong>Answer: b.</strong> 127 − 3 = 124. The exponent field is unsigned.</p></div></div>
+<div class="mcq-item"><p class="card-title">Q 10</p><p>Which 8-bit pattern represents −75 in 2’s complement?</p><ul class="options"><li>a. 01001011</li><li>b. 11001011</li><li>c. 10110100</li><li>d. 10110101</li></ul>
+<button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
+<div class="answer-reveal" id="mcq10"><p><strong>Answer: d.</strong> Start with 01001011; invert to 10110100 and add 1.</p></div></div>
+</div>
     </div>
   </section>
 
@@ -1056,15 +1221,6 @@
 
         <div class="mcq-item">
           <p class="card-title">Q 5</p>
-          <p>List the four types of micro-operations.</p>
-          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5">
-            <p>The four types of micro-operations are: (1) <strong>Register Transfer</strong> — moving data between registers. (2) <strong>Arithmetic</strong> — add, subtract, increment, decrement. (3) <strong>Logic</strong> — AND, OR, XOR, NOT. (4) <strong>Shift</strong> — logical, arithmetic, circular shifts.</p>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 6</p>
           <p>What is the Von-Neumann bottleneck?</p>
           <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq6">
@@ -1170,7 +1326,11 @@
           </div>
         </div>
 
-      </div>
+
+<div class="mcq-item"><p class="card-title">Q 4</p><p>Compare fixed and floating point (4 marks). Encode −13.625 in IEEE 754 single precision (4 marks).</p>
+<button class="toggle-btn" data-target="lq4"><i class="fas fa-eye"></i> Show Answer</button>
+<div class="answer-reveal" id="lq4"><p><strong>Comparison:</strong> Fixed point uses a predetermined scale and equal spacing. Floating point uses an exponent and variable spacing. Fixed-point addition at equal scales uses integer addition, while floating point first aligns exponents. With the same bit budget, floating point can represent a wider dynamic range.</p><p><strong>Conversion:</strong> 13.625 is 1101.101₂, normalized as 1.101101₂ × 2³. The sign is 1, and 3 + 127 = 130 sets exponent 10000010. Store the fractional bits 101101 followed by 17 zeros. Group all 32 bits in fours to obtain <strong>C15A0000H</strong>.</p></div></div>
+</div>
     </div>
   </section>
 
@@ -1324,30 +1484,18 @@
     <div class="section-content">
       <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
       <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=computer+organisation+memory+hierarchy+bus+tutorial" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Computer organisation from scratch</span>
-              <span class="video-link-meta">CPU, memory hierarchy and buses &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=register+transfer+language+micro+operations" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Register transfer language</span>
-              <span class="video-link-meta">Micro-operations and RTL notation &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=bus+transfer+memory+transfer+microoperations" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Bus transfer and memory transfers</span>
-              <span class="video-link-meta">Three-state buffers and multiplexers &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=5kH2A40tbIA" target="_blank" rel="noopener noreferrer">
+          <span class="video-link-text"><span class="video-link-title">How do computers work? The Von Neumann Architecture</span>
+          <span class="video-link-meta">Solid State Tech · 8:20 · Stored-program architecture</span></span>
+        </a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=TaDrBnRS0_Q" target="_blank" rel="noopener noreferrer">
+          <span class="video-link-text"><span class="video-link-title">IEEE 754 – Single and Double Precision</span>
+          <span class="video-link-meta">Neso Academy · 10:41 · Fields, bias and special values</span></span>
+        </a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=Cy1a0fUxJTw" target="_blank" rel="noopener noreferrer">
+          <span class="video-link-text"><span class="video-link-title">Shift Microoperation</span>
+          <span class="video-link-meta">Hira Naqvi · 37:31 · Logical, circular and arithmetic shifts</span></span>
+        </a></li>
       </ul>
     </div>
   </section>

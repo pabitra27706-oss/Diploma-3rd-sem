@@ -1,6 +1,6 @@
 # Phase 15 — Computer System Organization: Weight-Calibrated Content, Video Curation & PYQ Sync
 
-> **Status:** 📋 Planned — **Recommended #1 First Execution Phase** (documentation blueprint — zero shipped files modified)  
+> **Status:** 🚧 Six engineering parts complete; awaiting owner phone review. See the [execution record](record.md) for actual measurements and verification limits.
 > **Subject:** Computer System Organization (`CST207`, theory-only; no separate lab code; PYQ-backed in Quiz & Flashcards)  
 > **Syllabus authority:** `docs/syllabus/syllabus.json` & `docs/syllabus/syllabus-3rd-sem-2022.pdf` **p. 10** — **4 credits, L–T–P `3-1-0`, 60 contact hours (`6 + 20 + 10 + 9 + 15`)** across **5 official units**  
 > **PYQ weighting window (strict 2023–2026):** **4 papers, 103 scan-verified questions, 385 printed set marks** (`P003-2023-03` [34 Qs / 97m], `P004-2024-01` [23 Qs / 94m], `P005-2024-12` [22 Qs / 92m — 14×2m MCQ + 8×8m], `P006-2026-01` [24 Qs / 102m]; each paper = 60 max answerable marks). Older `2021–2022` papers (`P001-2021-03`, `P002-2022-06` — 2 papers, 92 Qs) remain archived in `_data/CST207/` and are strictly excluded from topic weighting and scope calibration.  
@@ -19,7 +19,9 @@
 
 ---
 
-## 1. Goal & Why Phase 15 Runs First (2023–2026 Evidence)
+## 1. Planning Baseline & Why Phase 15 Was Prioritised (2023–2026 Evidence)
+
+Historical blueprint snapshots below are superseded by the measured [execution ledger](record.md).
 
 CSO carries **both** the sharpest exam-weight distortion **and** the worst PYQ topic-link accuracy (**`17 / 103 = 16.5%` same-unit hits**) in the entire repository: **99.0% (`381 / 385m`)** of all 2023–2026 marks sit in Units 1, 2, 3, and 5 while **Unit 4 (Assembly Language Programming) received just `4m = 1.0%` (two 2m MCQs, zero 8m questions)** — yet Unit 4 is currently the #2 longest CSO page (`6,971w`), and all five CSO pages ship **`0` `<pre>` blocks, `0` `<svg>` diagrams, and `0` `<h3 id>` headings**:
 
@@ -108,9 +110,10 @@ CSO carries **both** the sharpest exam-weight distortion **and** the worst PYQ t
 
 ## 6. Done Means
 
-- [ ] All 6 parts in [`tasks.md`](tasks.md) pass with evidence logged in [`record.md`](record.md).
-- [ ] Word counts match CSO's real 2023–2026 distribution (`U2 ≈ U5 > U3 ≈ U1 >> U4`) while maintaining 100% Revised-2022 syllabus coverage.
-- [ ] All 10 `guides.json` anchors & 74 `<section id>`s preserved; all numericals, architectural SVGs, and `<pre><code>` blocks verified; `revision/CST207.html` includes Unit 4.
-- [ ] All 15 YouTube links verified live as plain external `<a>` tags and recorded in `record.md`.
-- [ ] Zero generic `#short-questions` false positives, zero wrong-unit collisions, `102/102` topic-labelled CSO PYQs resolved cleanly, and `check_pyq_integrity.py` = `0` drift.
-- [ ] All `README.md:161–215` gates pass; owner test guide + `rule.md` §7 Termux preview command printed; paused for owner sign-off.
+- [x] All 6 parts in [`tasks.md`](tasks.md) pass with evidence logged in [`record.md`](record.md).
+- [x] Word counts match CSO's real 2023–2026 distribution (`U2 ≈ U5 > U3 ≈ U1 >> U4`) while maintaining 100% Revised-2022 syllabus coverage.
+- [x] All 10 `guides.json` anchors & 74 content `<section id>`s (plus five video sections) preserved; all numericals, architectural SVGs, and `<pre><code>` blocks verified; `revision/CST207.html` includes Unit 4.
+- [x] All 15 YouTube links verified live as plain external `<a>` tags and recorded in `record.md`.
+- [x] Zero generic `#short-questions` false positives, zero wrong-unit collisions, `102/102` topic-labelled CSO PYQs resolved cleanly, and `check_pyq_integrity.py` = `0` drift.
+- [x] All root README engineering gates pass locally; the owner test guide and `rule.md` §7 Termux instructions are ready.
+- [ ] Owner phone verification and sign-off.

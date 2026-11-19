@@ -1,5 +1,14 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
+> **Current checkpoint — Phase 15, 2026-11-19:** `arena/fbc84d5d-diploma-3rd-sem`
+> (base `e83cd64`) contains the six CST207 parts and Mode A topic map. Local
+> gates: 159/159 Python, 13/13 README scripts, 14/14 deterministic Node; 0 PYQ
+> drift. 102 labelled questions have concept destinations; the one unlabelled
+> pool intentionally does not jump. All 25 new anchors, 17 diagrams and 15
+> verified watch-page links are recorded in `docs/phases/15-cst207-cso-content/record.md`.
+> Owner phone test and explicit acceptance are still pending. Follow `rule.md`
+> §7; do not start another phase or open/merge a PR without direction.
+
 > **Maintenance handoff — 2026-11-18:** On `arena/eec36cd0-diploma-3rd-sem`
 > (base `a2bb413`), Home now follows the manual theory checklist, uses the
 > same activity streak as Today, and refreshes greetings on local time. The
@@ -340,25 +349,9 @@ no content: 0 revision entries and 0 answers are owner-verified.
 
 ## Termux delivery convention (post-phase test flow)
 
-After a phase is complete and pushed, run this on your device to pull the
-current session branch and serve it at the real subpath. It follows **push →
-pull → run** on the branch named in `rule.md` §1:
-
-```sh
-cd ~/Diploma-3rd-sem
-git fetch origin main
-git checkout main
-git pull --ff-only origin main
-cd ..
-python3 -m http.server 8010 --bind 127.0.0.1
-```
-
-Open `http://127.0.0.1:8010/Diploma-3rd-sem/`. Stop with Ctrl+C. For a first-time setup, clone instead from the parent
-directory: `git clone --branch main
-https://github.com/pabitra27706-oss/Diploma-3rd-sem.git`, then run the block
-above from inside the checkout. Unpushed Arena changes are not available through
-a fresh clone or pull; state which commit/branch holds a change before telling
-anyone to pull.
+Use the current Phase 15 command in `rule.md` §7 after the session branch is
+pushed. The dedicated checkout preserves `/Diploma-3rd-sem/` as the base URL:
+`http://127.0.0.1:8012/Diploma-3rd-sem/`. This is local testing, not deployment.
 
 ## Next session kickoff — Phase 9, performance and launch
 

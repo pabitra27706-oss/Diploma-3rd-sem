@@ -1,5 +1,17 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
+## Phase 15 — Computer System Organization — 🚧 owner verification pending (2026-11-19)
+
+On `arena/fbc84d5d-diploma-3rd-sem` from `e83cd64`, all six parts implemented
+for the 2023–2026 window. Five units retained all 79 live section IDs and all
+10 guide locks; 15 public-watch-page-verified links, 17 diagrams, and the lean
+Unit 4 revision entry are present. The Mode A map resolves 102/102 labelled
+questions and leaves the unlabelled choice pool at the overview; zero question
+data drift. **159 Python tests, 13 README gates and 14 deterministic Node
+suites passed locally.** Browser/device review remains owner-side; no rendered
+artifact was used. See [Phase 15 evidence](phases/15-cst207-cso-content/record.md)
+and `rule.md` §7. Do not start another phase or open a PR before owner direction.
+
 ## Home maintenance — 2026-11-18 (working tree)
 
 The theory roadmap now follows existing manual checkmarks rather than the date
