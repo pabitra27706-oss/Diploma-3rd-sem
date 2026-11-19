@@ -7,7 +7,8 @@
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
 > **Phase 15 — current session (2026-11-19):** `arena/fbc84d5d-diploma-3rd-sem` from
-> `e83cd64`. Six engineering parts implemented; owner verification pending.
+> `e83cd64`. All six parts and five theory units owner-passed; see the phase record
+> for the hosted browser-smoke caveat.
 > Use the Phase 15 Termux block in §7; no PR, Pages change or deploy is authorized.
 >
 > **Phase 13 CLOSED (2026-11-19):** `arena/c323dee5-diploma-3rd-sem` (based on

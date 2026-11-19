@@ -6,8 +6,10 @@
 > drift. 102 labelled questions have concept destinations; the one unlabelled
 > pool intentionally does not jump. All 25 new anchors, 17 diagrams and 15
 > verified watch-page links are recorded in `docs/phases/15-cst207-cso-content/record.md`.
-> Owner phone test and explicit acceptance are still pending. Follow `rule.md`
-> §7; do not start another phase or open/merge a PR without direction.
+> **Owner-passed 2026-11-19.** All five theory units rechecked against 22
+> syllabus topic lines. Hosted Web CI `44483074003` failed at PYQ browser
+> smoke; no separate phone result was supplied. Do not start another phase
+> or open/merge a PR without direction.
 
 > **Maintenance handoff — 2026-11-18:** On `arena/eec36cd0-diploma-3rd-sem`
 > (base `a2bb413`), Home now follows the manual theory checklist, uses the

@@ -1,6 +1,6 @@
 # Phase 15 — Computer System Organization: Weight-Calibrated Content, Video Curation & PYQ Sync
 
-> **Status:** 🚧 Six engineering parts complete; awaiting owner phone review. See the [execution record](record.md) for actual measurements and verification limits.
+> **Status:** ✅* Owner-passed 2026-11-19; all five theory units and six implementation parts complete. The hosted browser-smoke caveat is recorded. See the [execution record](record.md) for actual measurements and verification limits.
 > **Subject:** Computer System Organization (`CST207`, theory-only; no separate lab code; PYQ-backed in Quiz & Flashcards)  
 > **Syllabus authority:** `docs/syllabus/syllabus.json` & `docs/syllabus/syllabus-3rd-sem-2022.pdf` **p. 10** — **4 credits, L–T–P `3-1-0`, 60 contact hours (`6 + 20 + 10 + 9 + 15`)** across **5 official units**  
 > **PYQ weighting window (strict 2023–2026):** **4 papers, 103 scan-verified questions, 385 printed set marks** (`P003-2023-03` [34 Qs / 97m], `P004-2024-01` [23 Qs / 94m], `P005-2024-12` [22 Qs / 92m — 14×2m MCQ + 8×8m], `P006-2026-01` [24 Qs / 102m]; each paper = 60 max answerable marks). Older `2021–2022` papers (`P001-2021-03`, `P002-2022-06` — 2 papers, 92 Qs) remain archived in `_data/CST207/` and are strictly excluded from topic weighting and scope calibration.  
@@ -116,4 +116,4 @@ CSO carries **both** the sharpest exam-weight distortion **and** the worst PYQ t
 - [x] All 15 YouTube links verified live as plain external `<a>` tags and recorded in `record.md`.
 - [x] Zero generic `#short-questions` false positives, zero wrong-unit collisions, `102/102` topic-labelled CSO PYQs resolved cleanly, and `check_pyq_integrity.py` = `0` drift.
 - [x] All root README engineering gates pass locally; the owner test guide and `rule.md` §7 Termux instructions are ready.
-- [ ] Owner phone verification and sign-off.
+- [x] Owner sign-off received (“Mark as pass”). No separate phone test result was supplied.

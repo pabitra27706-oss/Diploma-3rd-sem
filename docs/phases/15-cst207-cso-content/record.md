@@ -1,6 +1,6 @@
 # Phase 15 Record — Computer System Organization
 
-**Engineering complete 2026-11-19; owner device sign-off pending.** Branch
+**✅* Owner-passed 2026-11-19 (“Mark as pass”).** Branch
 `arena/fbc84d5d-diploma-3rd-sem`, based on `e83cd64` (PR #28 merge). No Phase 15
 PR, merge, Pages change or deployment. All weighting is limited to P003–P006:
 103 questions and 385 printed set marks. P001/P002 remain archived and were
@@ -143,4 +143,20 @@ source of dashboard/PYQ unit filtering, not this map.
 **Owner test:** Use the Phase 15 Termux command in `rule.md` §7. Check all five
 unit pages, Unit 4 on `revision/CST207.html`, and the “Open topic” link on
 an answer page. Test a collapsed target and the unlabelled short-note fallback.
-Wait for **mark as pass** or **add for later** before starting another phase.
+This remains a retest guide, not evidence of phone verification.
+
+### Owner closeout — 2026-11-19
+
+The owner said “Mark as pass” and asked whether the theory units were complete.
+Re-read the phase README, tasks, record and unit blueprints; cross-checked the
+22 Revised-2022 syllabus topic lines against all five shipped unit pages.
+All five theory units are present. Unit 4 is concise by design and retains
+its three syllabus topic lines plus the revision entry. CST207 is `3-1-0`:
+there is no separate practical unit in Phase 15. This confirms coverage, not
+certification of every answer, assembly execution, or device playback.
+
+Hosted Web CI run `44483074003` failed at the PYQ browser-smoke step, which also
+failed on base run `44480060397`. The same failing step does not establish the
+same root cause. The owner's pass is recorded with that caveat; the existing
+local pass evidence stands. No phone result or preview artifact is claimed.
+No PR, merge, deployment or next phase was authorized.
