@@ -223,7 +223,7 @@ Per §6.1 item 8 of the Phase 13 record: a ratchet pins a number; it does not pr
 
 ## 9. Inherited versus new
 
-- **Hosted CI on `main` (`9fda855`):** Web CI run `44515857069` fails at the step **"PYQ browser smoke — paper width, icon cluster, print control"**. Pages build is green. The predecessor run `44490460318` (on `cdf001c`) failed at the same named step. Both failures are inherited. **I have not established their root cause and do not claim it is identical.** Logs could not be downloaded from this sandbox; the step name was read from the job metadata.
+- **Hosted CI on `main` (`9fda855`):** Web CI run `44515857069` fails at the step **"PYQ browser smoke — paper width, icon cluster, print control"**. Pages build is green. The predecessor run `44490460318` (on `cdf001c`) failed at the same named step. Both failures are inherited. **Root cause now established (section 17):** the same stale assertion on every run. Logs could not be downloaded from this sandbox; the step name was read from the job metadata.
 - **This branch has not been pushed**, so no hosted run covers it.
 - `validate_data` (7 ERRORs) and `validate_syllabus` (CO5 unit-5 ERRORs): identical to `main` (F7).
 - `check_tokens` legacy rgba `391`: identical to `main`.
@@ -238,7 +238,7 @@ Per §6.1 item 8 of the Phase 13 record: a ratchet pins a number; it does not pr
 
 ## 11. Flags for the owner (summary)
 
-F1 CST201 generic `fundamentals` (accept or author) · F2 CST205 `binary trees` re-point candidate · F3 CST205 `circular` re-point candidate · F4 CST207 `cache memory` re-point candidate · F5 multi-part partials · F6 CST207 stored-unit tags (85) · F7 CST209 unit-5 validator findings (inherited) · F8 `Short notes` in-window no-jump · tie-break kept pinned (section 7).
+F1 CST201 generic `fundamentals` — **accepted** · F2 CST205 `binary trees` — **left as is** (deferred, section 17) · F3 CST205 `circular linked list` — **left as is** (deferred) · F4 CST207 `cache memory` — **left as is** (deferred) · F5 multi-part partials — **accepted** · F6 CST207 stored-unit tags (85) — **kept as is** · F7 CST209 unit-5 validator findings (inherited, `_data/` frozen) — **left as is** · F8 `Short notes` in-window no-jump — **accepted** · tie-break kept pinned (section 7).
 
 ## 12. What to test on the website
 
@@ -277,3 +277,16 @@ Open `http://127.0.0.1:8013/Diploma-3rd-sem/subjects/CST203/units/unit-1.html?to
 - Owner reported "Test passed" after the Termux check (2026-11-19). Treated as the `rule.md` §4 step 7 pass for Phase 17.
 - The owner's report does not list which URLs or steps were exercised. The pass covers what the owner reported, nothing wider. No browser, device or playback evidence was produced in this environment.
 - Acceptance remains subject to the inherited hosted browser-smoke red on `main` (section 9) and the open owner flags F1–F8 (section 11). Merge is not authorised; a separate instruction is needed.
+
+## 17. Hosted CI — PYQ browser smoke: diagnosis and fix (local commit, not pushed)
+
+- **Failing assertion.** `tests/pyq-browser.cjs` line 61 (URL hash after the answer-card topic link is clicked) expected `#modules`; the actual value was `#creating-and-importing-modules`. The same annotation appears on `8f37939` (run `44521869325`, job `135552260910`), `main` `44515857069` and `cdf001c` `44490460318`. Hosted logs could not be downloaded (blob EOF); the annotations were read from the check-run API.
+- **Mechanism (read from code, reproduced in headless Chromium 131).** The answer link is `unit-4.html?topic=Modules#modules`. `pyq/js/answers.js` builds that fragment from a slug of the topic name; the code calls it a synthetic fallback. On arrival, `focusQuestionTopic` in `assets/js/unit-discovery.js` reads the reviewed map entry `modules → [3, 'creating-and-importing-modules']` and redirects (line 276) to `unit-3.html?topic=Modules#creating-and-importing-modules`. The reviewed landing came from Phase 13.6 (`c402c3f`, already in the base). The test expectation was never updated, so `main` has been red at this line since then.
+- **Change (test only).** Line 61 now expects `#creating-and-importing-modules`, and the test also checks that element exists on the page. Line 57 (the link's `href` fragment `#modules`) is unchanged: it is the synthetic fallback, it is correct, and it passes. No runtime file, map, anchor or unit page changed.
+- **Written reason for changing the test.** The old expectation described a landing the reviewed map replaced. It was not a defect in the page. The change updates the value and adds an existence check. It does not weaken the assertion: it still checks the exact fragment after the redirect.
+- **Discrimination check.** With the map landing removed from the runtime (both the redirect's destination hash and the same-unit `replaceState`), the fixed test fails at the new assertion with `actual: ''`. With only one of those two steps removed, it still passes, because the other step restores the fragment. The test checks the end state the user sees, so that is intended. `assets/js/unit-discovery.js` was restored and verified byte-identical (sha256) after each ablation.
+- **Local results.** Before the fix: `tests/pyq-browser.cjs` rc 1, the same assertion, line 61. After the fix: rc 0. The next two browser tests in the same CI job, `home-roadmap-browser.cjs` and `suggestions-browser.cjs`, never ran on the failing runs. Run locally, both rc 0. This is headless automated evidence, not a browser or device pass.
+- **Gates (after the fix).** unittest 202 OK; `check_readme_paths` rc 0; `check_pyq_integrity` 0 drift; `check_platform` rc 0; `_data/` and `_quiz-data/` unchanged against `9fda855`.
+- **Not verified.** Hosted CI on the fixed commit: not pushed, so no hosted run covers it. The push is not authorised.
+- **Map decisions in this step.** None applied. F2, F3 and F4 stay as they are. Each is a same-unit landing on a sub-section, and the owner allowed leaving them. A re-point changes the map the owner has tested, needs the full rebuild chain (the question-number groups in `scripts/build_topic_map_cst205.py` and `cst207.py` would also need editing) and a new owner pass. F7 stays: the validator findings are inherited from `_data/`, which is frozen.
+

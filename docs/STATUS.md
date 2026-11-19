@@ -22,9 +22,12 @@ Branch `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (PR #31 merge), head
 - Gates: 202 Python tests OK (0 skipped); 12 DOM cases; `check_pyq_integrity` 0
   drift; all README gates exit 0; canonical rebuild byte-identical on a second
   pass; `validate_data` and `validate_syllabus` output identical to `main`.
-- **Inherited CI red (unchanged):** `main` Web CI `44515857069` fails at
-  "PYQ browser smoke"; Pages green. Predecessor `44490460318` failed at the same
-  named step. Root cause not established; not claimed identical.
+- **Hosted CI red: cause found and fixed locally, not pushed.** The "PYQ browser
+  smoke" step fails on `main` `44515857069`, `44490460318` and `8f37939`. Cause:
+  a stale expectation at `tests/pyq-browser.cjs` line 61 (`#modules`), left behind
+  when Phase 13.6 (`c402c3f`) changed the reviewed landing. Fixed in a local
+  commit (record §17). Reproduced locally before the fix and passing after. The
+  hosted run needs a push, which the owner has not yet authorised.
 - No browser, device or playback evidence. Owner-test URLs and the Termux block
   are in record §12 and §14. The owner reported "Test passed".
 
