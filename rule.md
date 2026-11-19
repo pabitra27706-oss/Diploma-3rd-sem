@@ -6,6 +6,11 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
+> **Phase 15 — current session (2026-11-19):** `arena/fbc84d5d-diploma-3rd-sem` from
+> `e83cd64`. All six parts and five theory units owner-passed; see the phase record
+> for the hosted browser-smoke caveat.
+> Use the Phase 15 Termux block in §7; no PR, Pages change or deploy is authorized.
+>
 > **Phase 13 CLOSED (2026-11-19):** `arena/c323dee5-diploma-3rd-sem` (based on
 > `9b13f13`, the PR #27 merge) carried **Phase 13 — Scripting Languages
 > (Python)**: weight-calibrated rewrites of `CST203` units 1–5, the PYQ↔unit
@@ -47,7 +52,7 @@
 
 - Site: Diploma 3rd Semester — CST Study Hub
 - Repo: `pabitra27706-oss/Diploma-3rd-sem` · working branch:
-  `arena/c323dee5-diploma-3rd-sem` (Phase 13, CST203 content). `main` is the
+  `arena/fbc84d5d-diploma-3rd-sem` (Phase 15, CST207 content). `main` is the
   Pages source; no merge or deploy without an explicit owner command.
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
@@ -213,33 +218,16 @@ A **public launch** additionally needs every item in
   which branch/revision contains the changes and whether it has been pushed.
   Never suggest a destructive reset, overwrite local changes, or present an
   unpushed change as available through `git pull`.
-- **Home maintenance Termux preview (only after the working branch has been pushed).**
-  For a fresh isolated checkout, with Python and Git installed:
+- **Phase 15 Termux preview (after the working branch has been pushed).**
+  With Python and Git installed (`pkg install python git` if needed), use this
+  single command. It clones or updates a dedicated working directory and refuses
+  to update a checkout on the wrong branch. If a pull refuses local changes,
+  stop and keep those changes; do not reset the checkout.
 
   ```sh
-  mkdir -p ~/study-hub-fixes-preview
-  cd ~/study-hub-fixes-preview
-  git clone --single-branch --branch arena/c323dee5-diploma-3rd-sem \
-    https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem
-  python3 -m http.server 8010 --bind 127.0.0.1
+  cd ~ && mkdir -p ~/study-hub-cso-preview && cd ~/study-hub-cso-preview && (test -d Diploma-3rd-sem/.git || git clone --single-branch --branch arena/fbc84d5d-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && test "$(git branch --show-current)" = arena/fbc84d5d-diploma-3rd-sem && git pull --ff-only origin arena/fbc84d5d-diploma-3rd-sem && cd ~/study-hub-cso-preview && python3 -m http.server 8012 --bind 127.0.0.1
   ```
 
-  Open `http://127.0.0.1:8010/Diploma-3rd-sem/`; stop with
-  Ctrl+C. If that preview checkout already exists on this branch, pull it with
-  `git pull --ff-only` inside `~/study-hub-fixes-preview/Diploma-3rd-sem`, then serve
-  again from the parent directory. Use a fresh port if an older service worker
-  controls the origin. This is branch testing, not production deployment.
-
-  **The owner gets ONE copy-pasteable block, never several, and it starts with
-  `cd ~`.** A single block that also refreshes an existing preview checkout, so
-  it is safe to paste whether or not the folder exists yet:
-
-  ```sh
-  cd ~ && mkdir -p ~/study-hub-fixes-preview && cd ~/study-hub-fixes-preview && (test -d Diploma-3rd-sem || git clone --single-branch --branch arena/c323dee5-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && git pull --ff-only && cd ~/study-hub-fixes-preview && python3 -m http.server 8011 --bind 127.0.0.1
-  ```
-
-  Open `http://127.0.0.1:8011/Diploma-3rd-sem/subjects/CST203/units/unit-1.html`.
-  Port `8011`, not `8010`, so a service worker from an earlier preview on `8010`
-  cannot serve stale files over the top. If `git pull` refuses because the local
-  checkout has edits, do not reset it — delete
-  `~/study-hub-fixes-preview/Diploma-3rd-sem` and paste the block again.
+  Open `http://127.0.0.1:8012/Diploma-3rd-sem/subjects/CST207/units/unit-1.html`.
+  Stop with Ctrl+C. Port 8012 isolates the preview from prior service workers.
+  This is local testing, not production deployment.

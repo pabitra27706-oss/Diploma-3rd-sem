@@ -553,6 +553,91 @@ const RAW_QID_RE = /\bCST\d{3}-(?:P\d{3}-|U\d+-)?Q\d+\b/;
   }
   console.log(`PASS topic map honoured first, matcher fallback intact, missing map tolerated, all ${anchorCount} anchors across every map present`);
 
+  /* CST207: exercise the real resolver for every question in the strict window. */
+  {
+    const unitDir = 'subjects/CST207/units/';
+    const units = Array.from({ length: 5 }, (_, i) => fs.readFileSync(path.join(ROOT, unitDir, `unit-${i + 1}.html`), 'utf8'));
+    const sectionBlocks = raw => raw.matchAll(/<section\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/section>/g);
+    function mountHeadings(doc, root, raw, omit) {
+      for (const [, sectionId, inner] of sectionBlocks(raw)) {
+        const sec = doc.createElement('section');
+        sec.id = sectionId;
+        sec.className = 'section';
+        root.append(sec);
+        const content = doc.createElement('div');
+        content.className = 'section-content collapsed';
+        content.style.maxHeight = '0';
+        sec.append(content);
+        for (const [, tag, attrs, text] of inner.matchAll(/<(h[234])\b([^>]*)>([\s\S]*?)<\/\1>/gi)) {
+          const id = attrs.match(/\bid="([^"]+)"/)?.[1];
+          if (id && id === omit) continue;
+          const h = doc.createElement(tag);
+          if (id) h.id = id;
+          h.textContent = text.replace(/<[^>]*>/g, ' ').trim();
+          if (tag === 'h2') {
+            h.className = 'section-title';
+            h.setAttribute('aria-expanded', 'false');
+            sec.append(h);
+          } else content.append(h);
+        }
+      }
+    }
+    async function openTopic(unit, topic, omit) {
+      // The answer-page action supplies a synthetic topic fragment. Include
+      // that fragment for the no-topic case, where it should be cleared.
+      const fragment = topic === 'Short notes' ? '#short-notes' : '';
+      const dom = createMiniDom(`${BASE}${unitDir}unit-${unit}.html?topic=${encodeURIComponent(topic)}${fragment}`);
+      const { doc, win } = dom;
+      const main = doc.createElement('main');
+      doc.body.append(main);
+      mountHeadings(doc, main, units[unit - 1], omit);
+      win.location.replace = url => { win.location.href = url; };
+      win.fetch = createRepoFetch('/Diploma-3rd-sem/', null, () => win.location.href);
+      win.DOMParser = class {
+        parseFromString(raw) {
+          const temp = createMiniDom(win.location.href).doc;
+          mountHeadings(temp, temp.body, raw);
+          return temp;
+        }
+      };
+      runScriptIn(win, 'assets/js/subject-labels.js');
+      runScriptIn(win, 'assets/js/unit-discovery.js');
+      await flush(4);
+      return dom;
+    }
+    const csoMap = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/data/topic-map-CST207.json'), 'utf8')).map;
+    const paperDir = path.join(ROOT, '_data/CST207');
+    const questions = fs.readdirSync(paperDir).filter(p => /-P00[3-6]-.*\.json$/.test(p))
+      .flatMap(p => JSON.parse(fs.readFileSync(path.join(paperDir, p), 'utf8')).questions);
+    let resolved = 0;
+    let noTopic = 0;
+    for (const q of questions) {
+      const initial = await openTopic(q.unit, q.topic);
+      if (q.id === 'CST207-P006-Q24') {
+        assert.equal(initial.win.location.hash, '', 'Unlabelled Short notes must not jump to #short-questions');
+        assert.equal(initial.doc.querySelectorAll('.pyq-topic-target').length, 0);
+        noTopic += 1;
+        continue;
+      }
+      const [unit, anchor] = csoMap[q.topic.toLowerCase().trim().replace(/\s+/g, ' ')];
+      assert(initial.win.location.pathname.endsWith(`/unit-${unit}.html`), q.id);
+      assert.equal(initial.win.location.hash, '#' + anchor, q.id);
+      const { doc } = unit === q.unit ? initial : await openTopic(unit, q.topic);
+      const node = doc.getElementById(anchor);
+      assert(node?.classList.contains('pyq-topic-target'), `${q.id} must highlight the mapped heading`);
+      assert(!node.closest('.section-content').classList.contains('collapsed'), `${q.id} landing is hidden`);
+      assert.equal(node.closest('.section-content').style.maxHeight, '', `${q.id} retains a height cap`);
+      resolved += 1;
+    }
+    assert.equal(resolved, 102);
+    assert.equal(noTopic, 1);
+    const stale = await openTopic(5, 'Memory hierarchy', 'memory-hierarchy-organization-and-memory-size');
+    assert.notEqual(stale.win.location.hash, '#memory-hierarchy-organization-and-memory-size');
+    assert(stale.win.location.hash || /\/unit-[1-4]\.html$/.test(stale.win.location.pathname),
+      'CSO stale map target must fall back in the presence of matching headings');
+    console.log('PASS CST207 102/102 concept landings, revealed highlights, stale fallback and unlabelled short notes');
+  }
+
   console.log('PASS unit breadcrumbs, authored #section anchors, prev/next nav, subject hub jump list, and filtered-PYQ URL handoff');
 
   /* ── 7. Service worker offline simulation (precache + WARM_SEARCH + offline fetch) ── */

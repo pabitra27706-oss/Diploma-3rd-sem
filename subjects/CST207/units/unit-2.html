@@ -104,7 +104,7 @@
   </style>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST207/units/unit-2.html">
-<meta name="app-build" content="study-2026-11-18e">
+<meta name="app-build" content="study-2026-11-19-cso">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unit 2 – Micro Programmed Control; Computer Arithmetic; Pipelining | CSO">
@@ -273,7 +273,7 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> What is a Control Unit?</div>
+        <h3 class="box-title" id="control-unit-control-memory-and-instruction-cycle"><i class="fas fa-info-circle"></i> Control Unit, Control Memory and Instruction Cycle</h3>
         <p>The Control Unit (CU) is the part of the CPU that directs the operation of all other units. It generates control signals that activate specific hardware components at the right time to execute each instruction. There are two ways to implement a control unit:</p>
         <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
           <li><strong>Hardwired Control:</strong> Logic circuits are directly wired to produce control signals. Fast but inflexible.</li>
@@ -283,6 +283,52 @@
 
       <!-- Control Memory -->
       <div class="concept-box" style="margin-top:1rem;">
+<figure><svg viewBox="0 0 420 252" role="img" aria-labelledby="microcontrol-title microcontrol-desc">
+<title id="microcontrol-title">Microprogrammed control unit</title><desc id="microcontrol-desc">Opcode mapping or a next-address decision loads the control address register (CAR). Control memory supplies a microinstruction to the control data register (CDR). One field drives the datapath; the next-address field feeds the sequencer along with status flags.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<path d="M200 32 L220 32"/>
+<path d="M211 28 L220 32 L211 36"/>
+<path d="M315 52 L315 76"/>
+<path d="M319 67 L315 76 L311 67"/>
+<path d="M315 116 L315 140"/>
+<path d="M319 131 L315 140 L311 131"/>
+<path d="M220 160 L200 160"/>
+<path d="M209 164 L200 160 L209 156"/>
+<path d="M105 140 L220 52"/>
+<path d="M207.939 54.887 L220 52 L214.061 62.887"/>
+<path d="M105 180 L105 202"/>
+<path d="M109 193 L105 202 L101 193"/>
+<rect x="10" y="12" width="190" height="40" rx="4"/>
+<rect x="220" y="12" width="190" height="40" rx="4"/>
+<rect x="220" y="76" width="190" height="40" rx="4"/>
+<rect x="220" y="140" width="190" height="40" rx="4"/>
+<rect x="10" y="140" width="190" height="40" rx="4"/>
+<rect x="10" y="202" width="190" height="40" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="105" y="38">Opcode / status</text>
+<text x="315" y="38">Sequencer</text>
+<text x="315" y="102">CAR</text>
+<text x="315" y="166">Control memory</text>
+<text x="105" y="166">CDR</text>
+<text x="105" y="228">Datapath controls</text></g></svg><figcaption>Microprogrammed control unit. Opcode mapping or a next-address decision loads the control address register (CAR). Control memory supplies a microinstruction to the control data register (CDR). One field drives the datapath; the next-address field feeds the sequencer along with status flags.</figcaption></figure><p>At the start of a machine instruction, fetch puts its opcode in the instruction register. Decode maps the opcode to the entry address of a microroutine. Each microinstruction enables a particular set of operations, such as gating a register onto a bus or loading the ALU result. The sequencer then takes the sequential address, a branch target conditioned on a flag, or the entry of another routine. The last microinstruction returns control to fetch.</p>
+<p>For example, <code>ADD R1,R2</code> could map to entry 40H. The first microinstruction selects the two register operands and an add function; a following microinstruction writes the result to R1 and updates the flags. In a load routine the sequencer may wait for a ready input before enabling the destination register. The CAR points into the control store, not into program memory, and is not the machine program counter.</p>
+<figure><svg viewBox="0 0 420 76" role="img" aria-labelledby="instruction-cycle-title instruction-cycle-desc">
+<title id="instruction-cycle-title">Basic instruction cycle</title><desc id="instruction-cycle-desc">Fetch transfers the instruction into IR. Decode identifies the required operation; execute performs it, and control returns to fetch at the updated PC.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<path d="M130 40 L149 40"/>
+<path d="M140 36 L149 40 L140 44"/>
+<path d="M271 40 L290 40"/>
+<path d="M281 36 L290 40 L281 44"/>
+<rect x="8" y="12" width="122" height="56" rx="4"/>
+<rect x="149" y="12" width="122" height="56" rx="4"/>
+<rect x="290" y="12" width="122" height="56" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="69" y="36">Fetch</text>
+<text x="69" y="56">PC → IR path</text>
+<text x="210" y="36">Decode</text>
+<text x="210" y="56">Opcode</text>
+<text x="351" y="36">Execute</text>
+<text x="351" y="56">Update state</text></g></svg><figcaption>Basic instruction cycle. Fetch transfers the instruction into IR. Decode identifies the required operation; execute performs it, and control returns to fetch at the updated PC.</figcaption></figure>
         <div class="box-title"><i class="fas fa-database"></i> Control Memory</div>
         <p>Control memory (also called control store or microprogram memory) is a special read-only memory inside the CPU that stores micro-instructions. Each micro-instruction specifies the control signals to be activated during one clock cycle.</p>
         <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
@@ -397,7 +443,7 @@
 
       <!-- Booth's Algorithm -->
       <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-times"></i> Booth's Multiplication Algorithm</div>
+        <h3 class="box-title" id="booth-multiplication-and-restoring-division"><i class="fas fa-times"></i> Booth's Multiplication and Restoring Division</h3>
         <p>Booth's algorithm multiplies two signed binary numbers in 2's complement form. It reduces the number of additions required by examining pairs of bits in the multiplier.</p>
 
         <div class="algo-box" style="margin-top:0.75rem;">
@@ -480,6 +526,36 @@
         </div>
 
         <div class="important-note" style="margin-top:0.75rem;">
+<figure><svg viewBox="0 0 420 225" role="img" aria-labelledby="booth-flow-title booth-flow-desc">
+<title id="booth-flow-title">Booth cycle</title><desc id="booth-flow-desc">Inspect Q₀ and Q₋₁: 01 adds M, 10 subtracts M, and 00/11 do not alter A. Shift A:Q:Q₋₁ right as one signed word; repeat until the count is zero.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<path d="M210 42 L210 66"/>
+<path d="M214 57 L210 66 L206 57"/>
+<path d="M210 100 L210 124"/>
+<path d="M214 115 L210 124 L206 115"/>
+<path d="M210 158 L210 182"/>
+<path d="M214 173 L210 182 L206 173"/>
+<rect x="8" y="10" width="404" height="32" rx="4"/>
+<rect x="8" y="66" width="404" height="34" rx="4"/>
+<rect x="8" y="124" width="404" height="34" rx="4"/>
+<rect x="8" y="182" width="404" height="34" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="210" y="32">Initialize A = 0, Q₋₁ = 0, count = n</text>
+<text x="210" y="89">Inspect pair: 01 add, 10 subtract, else skip</text>
+<text x="210" y="147">Arithmetic right shift A:Q:Q₋₁</text>
+<text x="210" y="205">Decrement; repeat if count is nonzero</text></g></svg><figcaption>Booth cycle. Inspect Q₀ and Q₋₁: 01 adds M, 10 subtracts M, and 00/11 do not alter A. Shift A:Q:Q₋₁ right as one signed word; repeat until the count is zero.</figcaption></figure><p>M = 10111, initial Q = 10011, A = 00000, Q₋₁ = 0. Keep five bits in each register and record both the ALU result and the shifted result.</p><div class="table-wrapper"><table class="reg-table">
+<caption>Five-bit Booth trace: (-9) × (-13) = +117</caption><thead><tr><th scope="col">Cycle</th><th scope="col">Q₀ Q₋₁</th><th scope="col">Operation</th><th scope="col">A before shift</th><th scope="col">A after</th><th scope="col">Q after</th><th scope="col">Q₋₁ after</th></tr></thead><tbody>
+<tr><td>1</td><td>10</td><td>A − M</td><td>01001</td><td>00100</td><td>11001</td><td>1</td></tr>
+<tr><td>2</td><td>11</td><td>No change</td><td>00100</td><td>00010</td><td>01100</td><td>1</td></tr>
+<tr><td>3</td><td>01</td><td>A + M</td><td>11001</td><td>11100</td><td>10110</td><td>0</td></tr>
+<tr><td>4</td><td>00</td><td>No change</td><td>11100</td><td>11110</td><td>01011</td><td>0</td></tr>
+<tr><td>5</td><td>10</td><td>A − M</td><td>00111</td><td>00011</td><td>10101</td><td>1</td></tr></tbody></table></div><p>The final product A:Q is <strong>0001110101₂ = +117</strong>; discard Q₋₁.</p><p>M = 10101, initial Q = 10111, A = 00000, Q₋₁ = 0. Keep five bits in each register and record both the ALU result and the shifted result.</p><div class="table-wrapper"><table class="reg-table">
+<caption>Five-bit Booth trace: (-11) × (-9) = +99</caption><thead><tr><th scope="col">Cycle</th><th scope="col">Q₀ Q₋₁</th><th scope="col">Operation</th><th scope="col">A before shift</th><th scope="col">A after</th><th scope="col">Q after</th><th scope="col">Q₋₁ after</th></tr></thead><tbody>
+<tr><td>1</td><td>10</td><td>A − M</td><td>01011</td><td>00101</td><td>11011</td><td>1</td></tr>
+<tr><td>2</td><td>11</td><td>No change</td><td>00101</td><td>00010</td><td>11101</td><td>1</td></tr>
+<tr><td>3</td><td>11</td><td>No change</td><td>00010</td><td>00001</td><td>01110</td><td>1</td></tr>
+<tr><td>4</td><td>01</td><td>A + M</td><td>10110</td><td>11011</td><td>00111</td><td>0</td></tr>
+<tr><td>5</td><td>10</td><td>A − M</td><td>00110</td><td>00011</td><td>00011</td><td>1</td></tr></tbody></table></div><p>The final product A:Q is <strong>0001100011₂ = +99</strong>; discard Q₋₁.</p><p>The subtraction in pair 10 marks the low edge of a run of ones; the addition in pair 01 marks its high edge. This replaces many identical partial products with two operations for a long run. Arithmetic shift copies the sign of A, transfers its least significant bit into Q, and saves the old Q₀ in Q₋₁. A plain logical shift would corrupt a negative partial result. For the most negative n-bit multiplicand, use a sign-extended accumulator and multiplicand so subtraction can represent its positive negation.</p>
           <div class="box-title"><i class="fas fa-star"></i> Why Booth's Algorithm?</div>
           <ul style="padding-left:1.3rem; line-height:2;">
             <li>Works correctly for both positive and negative multipliers in 2's complement.</li>
@@ -508,6 +584,34 @@
         </div>
       </div>
 
+      <div class="concept-box"><p><strong>Unsigned worked example: 11 ÷ 3.</strong> Start with A = 00000, Q = 1011 and M = 00011. Use an extra bit in A to distinguish a negative trial difference from a large positive remainder.</p><div class="table-wrapper"><table class="reg-table">
+<caption>Four-cycle restoring division</caption><thead><tr><th scope="col">Cycle</th><th scope="col">A after shift</th><th scope="col">Trial A − M</th><th scope="col">New Q₀</th><th scope="col">Restored/kept A</th><th scope="col">Q</th></tr></thead><tbody>
+<tr><td>1</td><td>00001</td><td>11110</td><td>0</td><td>00001</td><td>0110</td></tr>
+<tr><td>2</td><td>00010</td><td>11111</td><td>0</td><td>00010</td><td>1100</td></tr>
+<tr><td>3</td><td>00101</td><td>00010</td><td>1</td><td>00010</td><td>1001</td></tr>
+<tr><td>4</td><td>00101</td><td>00010</td><td>1</td><td>00010</td><td>0011</td></tr></tbody></table></div><p>For negative trials emit 0 and restore the partial remainder. Otherwise emit 1 and retain the subtraction. After four cycles quotient Q = 0011₂, remainder A = 00010₂; check 3 × 3 + 2 = 11 and 0 ≤ 2 &lt; 3. Reject a zero divisor before starting.</p></div>
+<figure><svg viewBox="0 0 420 198" role="img" aria-labelledby="restoring-flow-title restoring-flow-desc">
+<title id="restoring-flow-title">Restoring division cycle</title><desc id="restoring-flow-desc">Shift the dividend/quotient pair left and subtract the divisor. If negative, undo the subtraction and set quotient bit 0; otherwise keep the difference and set quotient bit 1. Repeat for the dividend width.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<path d="M121 44 L101 70"/>
+<path d="M111.923 64.0769 L101 70 L103.923 57.9231"/>
+<path d="M299 44 L320 70"/>
+<path d="M316.731 57.7692 L320 70 L308.731 64.2308"/>
+<path d="M101 122 L121 153"/>
+<path d="M119.194 141.419 L121 153 L111.194 146.581"/>
+<path d="M320 122 L299 153"/>
+<path d="M309.097 146.71 L299 153 L301.097 141.29"/>
+<rect x="8" y="10" width="404" height="34" rx="4"/>
+<rect x="8" y="70" width="192" height="52" rx="4"/>
+<rect x="220" y="70" width="192" height="52" rx="4"/>
+<rect x="8" y="153" width="404" height="34" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="210" y="33">Shift A:Q left; trial = A − M</text>
+<text x="104" y="92">Trial negative</text>
+<text x="104" y="112">Restore; Q₀ = 0</text>
+<text x="316" y="92">Trial nonnegative</text>
+<text x="316" y="112">Keep; Q₀ = 1</text>
+<text x="210" y="176">Decrement count; repeat until zero</text></g></svg><figcaption>Restoring division cycle. Shift the dividend/quotient pair left and subtract the divisor. If negative, undo the subtraction and set quotient bit 0; otherwise keep the difference and set quotient bit 1. Repeat for the dividend width.</figcaption></figure>
       <!-- Division: Non-Restoring -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-divide"></i> Non-Restoring Division Algorithm</div>
@@ -603,7 +707,7 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> What is Pipelining?</div>
+        <h3 class="box-title" id="pipeline-speedup-and-hazards"><i class="fas fa-info-circle"></i> Pipelining: Space-Time, Speedup and Hazards</h3>
         <p>Pipelining is a technique of implementing instruction-level parallelism by overlapping the execution of multiple instructions. Like an assembly line in a factory, different stages of different instructions are processed simultaneously. Each stage handles one part of instruction processing.</p>
         <div class="formula-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-calculator"></i> Pipeline Speedup</div>
@@ -612,11 +716,71 @@
         </div>
         <div class="formula-box" style="margin-top:0.75rem;">
           <div class="box-title"><i class="fas fa-calculator"></i> Pipeline Throughput &amp; Efficiency</div>
-          <div class="formula">Throughput = n / (k + n − 1) × T<sub>clk</sub></div>
+          <div class="formula">Throughput = n / [(k + n − 1) × T<sub>clk</sub>]</div>
           <div class="formula answer">Efficiency = Speedup / k</div>
         </div>
       </div>
 
+<figure><svg viewBox="0 0 410 173" role="img" aria-labelledby="space-time-title space-time-desc">
+<title id="space-time-title">Four-stage pipeline space-time schedule</title><desc id="space-time-desc">Rows are instructions, columns are cycles. I1 occupies stages S1 to S4 in cycles 1–4. I2, I3 and I4 each start one cycle later; four instructions finish in seven cycles without stalls.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<rect x="10" y="10" width="75" height="25" rx="4"/>
+<rect x="89" y="10" width="42" height="25" rx="4"/>
+<rect x="134" y="10" width="42" height="25" rx="4"/>
+<rect x="179" y="10" width="42" height="25" rx="4"/>
+<rect x="224" y="10" width="42" height="25" rx="4"/>
+<rect x="269" y="10" width="42" height="25" rx="4"/>
+<rect x="314" y="10" width="42" height="25" rx="4"/>
+<rect x="359" y="10" width="42" height="25" rx="4"/>
+<rect x="10" y="41" width="75" height="28" rx="4"/>
+<rect x="10" y="73" width="75" height="28" rx="4"/>
+<rect x="10" y="105" width="75" height="28" rx="4"/>
+<rect x="10" y="137" width="75" height="28" rx="4"/>
+<rect x="89" y="41" width="42" height="28" rx="4"/>
+<rect x="134" y="41" width="42" height="28" rx="4"/>
+<rect x="179" y="41" width="42" height="28" rx="4"/>
+<rect x="224" y="41" width="42" height="28" rx="4"/>
+<rect x="134" y="73" width="42" height="28" rx="4"/>
+<rect x="179" y="73" width="42" height="28" rx="4"/>
+<rect x="224" y="73" width="42" height="28" rx="4"/>
+<rect x="269" y="73" width="42" height="28" rx="4"/>
+<rect x="179" y="105" width="42" height="28" rx="4"/>
+<rect x="224" y="105" width="42" height="28" rx="4"/>
+<rect x="269" y="105" width="42" height="28" rx="4"/>
+<rect x="314" y="105" width="42" height="28" rx="4"/>
+<rect x="224" y="137" width="42" height="28" rx="4"/>
+<rect x="269" y="137" width="42" height="28" rx="4"/>
+<rect x="314" y="137" width="42" height="28" rx="4"/>
+<rect x="359" y="137" width="42" height="28" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="47.5" y="28.5">Task</text>
+<text x="110" y="28.5">1</text>
+<text x="155" y="28.5">2</text>
+<text x="200" y="28.5">3</text>
+<text x="245" y="28.5">4</text>
+<text x="290" y="28.5">5</text>
+<text x="335" y="28.5">6</text>
+<text x="380" y="28.5">7</text>
+<text x="47.5" y="61">I1</text>
+<text x="47.5" y="93">I2</text>
+<text x="47.5" y="125">I3</text>
+<text x="47.5" y="157">I4</text>
+<text x="110" y="61">S1</text>
+<text x="155" y="61">S2</text>
+<text x="200" y="61">S3</text>
+<text x="245" y="61">S4</text>
+<text x="155" y="93">S1</text>
+<text x="200" y="93">S2</text>
+<text x="245" y="93">S3</text>
+<text x="290" y="93">S4</text>
+<text x="200" y="125">S1</text>
+<text x="245" y="125">S2</text>
+<text x="290" y="125">S3</text>
+<text x="335" y="125">S4</text>
+<text x="245" y="157">S1</text>
+<text x="290" y="157">S2</text>
+<text x="335" y="157">S3</text>
+<text x="380" y="157">S4</text></g></svg><figcaption>Four-stage pipeline space-time schedule. Rows are instructions, columns are cycles. I1 occupies stages S1 to S4 in cycles 1–4. I2, I3 and I4 each start one cycle later; four instructions finish in seven cycles without stalls.</figcaption></figure><div class="concept-box"><p>Let τ be the stage clock period, chosen for the slowest stage plus pipeline-register overhead. The first item completes after k cycles and the rest complete one per cycle in the ideal case: <strong>T = (k + n − 1)τ</strong>. If the unpipelined system uses the same stage delays and does the k stages serially, its comparison time is nkτ, giving speedup nk/(k+n−1). If unpipelined and pipelined clocks differ, use the actual latencies before dividing.</p><p>With k = 5, n = 10, τ = 2 ns, and two stall cycles, time is (5 + 10 − 1 + 2) × 2 ns = 32 ns rather than 28 ns ideal. Against a 100 ns serial baseline the achieved speedup is 3.125×. The latency of the first instruction is not cut to one clock. Pipelining improves steady-state throughput; an arithmetic pipeline overlaps work on different operands, while an instruction pipeline overlaps stages of different machine instructions.</p></div>
       <!-- Arithmetic Pipeline -->
       <div class="concept-box" style="margin-top:1rem;">
         <div class="box-title"><i class="fas fa-calculator"></i> Arithmetic Pipeline</div>
@@ -666,6 +830,13 @@
             <li><strong>Data Hazard:</strong> Instruction depends on result of a previous instruction still in the pipeline (RAW — Read After Write is most common).</li>
             <li><strong>Control Hazard (Branch Hazard):</strong> Branch instruction changes PC — the instructions already fetched may be wrong.</li>
           </ul>
+<div class="table-wrapper"><table class="reg-table">
+<caption>Dependencies and their remedies</caption><thead><tr><th scope="col">Hazard</th><th scope="col">Example</th><th scope="col">Consequence and response</th></tr></thead><tbody>
+<tr><td>RAW</td><td>I1 writes R1; I2 reads R1</td><td>True dependency: forward once available or wait</td></tr>
+<tr><td>WAR</td><td>I1 reads R1; I2 writes R1</td><td>Preserve the old value; register renaming removes the false dependency</td></tr>
+<tr><td>WAW</td><td>I1 writes R1; I2 writes R1</td><td>Preserve final write order; renaming separates versions</td></tr>
+<tr><td>Structural</td><td>Fetch and load both need one memory port</td><td>Separate ports or stall one instruction</td></tr>
+<tr><td>Control</td><td>Branch target not known at fetch</td><td>Predict, then flush wrong-path work on a miss</td></tr></tbody></table></div><p>WAR and WAW need reordering or variable completion to become hazards; they do not occur in the simple in-order five-stage design with reads in ID and writes in WB. In that design a load produces data at the end of MEM; a following dependent ALU instruction would need it in EX that same cycle. One bubble moves the consuming EX stage to the next cycle so forwarding can work. Some historical ISAs expose a load or branch delay slot to software; that is an ISA rule, not a requirement of pipelining.</p>
           <p style="margin-top:0.5rem;"><strong>Solutions:</strong></p>
           <ul style="padding-left:1.3rem; line-height:2;">
             <li><strong>Stalling (Bubbles):</strong> Insert NOP cycles to wait for data.</li>
@@ -678,23 +849,33 @@
 
       <!-- RISC Pipeline -->
       <div class="concept-box" style="margin-top:1rem;">
-        <div class="box-title"><i class="fas fa-bolt"></i> RISC Pipeline</div>
+        <h3 class="box-title" id="risc-pipeline-and-risc-vs-cisc"><i class="fas fa-bolt"></i> RISC Pipeline and RISC vs CISC</h3>
         <p>RISC (Reduced Instruction Set Computer) processors are specifically designed to be pipelined efficiently. Key features that enable clean pipelining:</p>
         <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
-          <li><strong>Fixed instruction length:</strong> All instructions are the same size (e.g., 32 bits), making IF stage uniform.</li>
-          <li><strong>Load-Store architecture:</strong> Only LOAD and STORE access memory. All arithmetic uses registers, eliminating memory-EX hazards.</li>
+          <li><strong>Fixed instruction length:</strong> Many classic RISC encodings are fixed-width, simplifying fetch; compressed instruction extensions can mix lengths.</li>
+          <li><strong>Load-Store architecture:</strong> Ordinary arithmetic uses registers; explicit loads and stores access data memory. This simplifies the pipeline but does not eliminate hazards.</li>
           <li><strong>Simple addressing modes:</strong> Reduces decode complexity.</li>
           <li><strong>Large register file:</strong> Reduces memory accesses, keeping data in registers.</li>
           <li><strong>Hardwired control:</strong> No microprogram lookup — faster decode.</li>
         </ul>
+<div class="table-wrapper"><table class="reg-table">
+<caption>Typical RISC and CISC design tendencies, not timing guarantees</caption><thead><tr><th scope="col">Aspect</th><th scope="col">RISC tendency</th><th scope="col">CISC tendency</th></tr></thead><tbody>
+<tr><td>Encoding</td><td>Regular fields; often fixed width</td><td>Variable width and prefixes often supported</td></tr>
+<tr><td>Arithmetic</td><td>Register operands</td><td>May take a memory operand</td></tr>
+<tr><td>Addressing</td><td>Smaller set of forms</td><td>Richer address expressions</td></tr>
+<tr><td>Decode</td><td>Often simple early decode</td><td>May translate instructions into micro-ops</td></tr>
+<tr><td>Control</td><td>Frequently hardwired common paths</td><td>May use microcode for complex paths</td></tr>
+<tr><td>Density</td><td>One source operation may need more instructions</td><td>Complex operations may fit one encoding</td></tr>
+<tr><td>Examples</td><td>MIPS, RISC-V</td><td>8086, x86-64</td></tr>
+<tr><td>Performance</td><td>Depends on implementation and workload</td><td>Depends on implementation and workload</td></tr></tbody></table></div>
         <div class="pipeline-stages">
           <div class="pipe-stage">IF<br>Fetch</div>
-          <div class="pipe-stage">RD<br>Register<br>Read</div>
-          <div class="pipe-stage">ALU<br>Execute</div>
+          <div class="pipe-stage">ID<br>Decode / read</div>
+          <div class="pipe-stage">EX<br>Execute</div>
           <div class="pipe-stage">MEM<br>Memory<br>Access</div>
           <div class="pipe-stage">WB<br>Write<br>Back</div>
         </div>
-        <p style="font-size:0.88rem; color:var(--text-secondary);">Classic 5-stage RISC pipeline (used in MIPS, ARM). Each stage takes exactly 1 clock cycle.</p>
+        <p style="font-size:0.88rem; color:var(--text-secondary);">Classic textbook five-stage RISC model. Stage slots are one cycle in the ideal schedule; real pipelines can stall.</p>
       </div>
 
     </div>
@@ -711,7 +892,7 @@
     <div class="section-content">
 
       <div class="concept-box">
-        <div class="box-title"><i class="fas fa-list"></i> Vector Processing (SIMD)</div>
+        <h3 class="box-title" id="flynn-taxonomy-and-vector-processing"><i class="fas fa-list"></i> Flynn's Taxonomy and Vector Processing</h3>
         <p>Vector processing performs the same operation on multiple data elements simultaneously. This is also called SIMD — Single Instruction Multiple Data.</p>
         <ul style="padding-left:1.3rem; line-height:2; margin-top:0.5rem;">
           <li><strong>Vector:</strong> A one-dimensional array of numbers (e.g., [1, 2, 3, 4]).</li>
@@ -720,6 +901,28 @@
           <li><strong>Example:</strong> Instead of adding 8 pairs of numbers with 8 ADD instructions, a vector ADD instruction adds all 8 pairs in one instruction.</li>
         </ul>
         <div class="formula-box" style="margin-top:0.75rem;">
+<figure><svg viewBox="0 0 420 145" role="img" aria-labelledby="flynn-grid-title flynn-grid-desc">
+<title id="flynn-grid-title">Flynn classification grid</title><desc id="flynn-grid-desc">Rows classify instruction streams (single or multiple); columns classify data streams (single or multiple). SISD is conventional scalar execution, SIMD applies one operation across lanes, MISD is rare, and MIMD permits independent instruction streams.</desc>
+<g fill="none" stroke="currentColor" stroke-width="2">
+<rect x="101" y="10" width="147" height="30" rx="4"/>
+<rect x="252" y="10" width="160" height="30" rx="4"/>
+<rect x="6" y="46" width="90" height="44" rx="4"/>
+<rect x="6" y="94" width="90" height="44" rx="4"/>
+<rect x="101" y="46" width="147" height="44" rx="4"/>
+<rect x="252" y="46" width="160" height="44" rx="4"/>
+<rect x="101" y="94" width="147" height="44" rx="4"/>
+<rect x="252" y="94" width="160" height="44" rx="4"/>
+</g><g fill="currentColor" font-size="17" text-anchor="middle">
+<text x="174.5" y="31">Single data</text>
+<text x="332" y="31">Multiple data</text>
+<text x="51" y="64">Single</text>
+<text x="51" y="84">instr.</text>
+<text x="51" y="112">Multiple</text>
+<text x="51" y="132">instr.</text>
+<text x="174.5" y="74">SISD</text>
+<text x="332" y="74">SIMD</text>
+<text x="174.5" y="122">MISD</text>
+<text x="332" y="122">MIMD</text></g></svg><figcaption>Flynn classification grid. Rows classify instruction streams (single or multiple); columns classify data streams (single or multiple). SISD is conventional scalar execution, SIMD applies one operation across lanes, MISD is rare, and MIMD permits independent instruction streams.</figcaption></figure><p>A scalar processor running one sequential instruction stream is the SISD model. A vector addition applying the same instruction to several lane values is SIMD. MISD describes several different operations on one input stream; independent checks on the same sensor input illustrate the idea, though practical classifications vary. Parallel cores running different threads on their own data exemplify MIMD.</p><p>A vector processor issues one instruction describing operations on an ordered series of elements. Its lanes or pipelined functional units process successive chunks; vector length determines how many elements participate, and a mask can disable selected elements. A classic SIMD array processor broadcasts control to many spatial processing elements; vector instruction sets abstract the element count from the number of physical lanes.</p>
           <div class="box-title"><i class="fas fa-calculator"></i> Vector Operation Example</div>
           <div class="formula">C[i] = A[i] + B[i] &nbsp; for i = 0 to n−1</div>
           <p style="font-size:0.88rem; margin-top:0.4rem;">Scalar: n ADD instructions. Vector: 1 VADD instruction processes all n elements.</p>
@@ -951,8 +1154,7 @@
     </h2>
     <div class="section-content">
       <div class="mcq-grid">
-
-        <div class="mcq-item">
+<div class="mcq-item">
           <p class="card-title">Q 1</p>
           <p>In Booth's algorithm, if the current bit Q₀ and previous bit Q₋₁ are 1 and 0 respectively (Q₀Q₋₁ = 10), what operation is performed?</p>
           <ul class="options">
@@ -968,24 +1170,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 2</p>
-          <p>Which type of control unit is used in RISC processors?</p>
-          <ul class="options">
-            <li>a. Microprogrammed control</li>
-            <li>b. Hardwired control</li>
-            <li>c. Stored program control</li>
-            <li>d. ROM-based control</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq2"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="mcq2">
-            <strong>Answer: b. Hardwired control</strong>
-            <p>RISC processors use hardwired control because they have simple, fixed-length instructions. Hardwired control is faster and suits RISC's streamlined design. CISC uses microprogrammed control.</p>
-          </div>
-        </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 3</p>
+<div class="mcq-item">
+          <p class="card-title">Q 2</p>
           <p>In a 4-stage pipeline, 10 instructions are to be executed. What is the total number of clock cycles needed?</p>
           <ul class="options">
             <li>a. 40</li>
@@ -1000,8 +1187,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 4</p>
+
+<div class="mcq-item">
+          <p class="card-title">Q 3</p>
           <p>Which hazard occurs when two instructions need the same hardware resource at the same time in a pipeline?</p>
           <ul class="options">
             <li>a. Data hazard</li>
@@ -1016,8 +1204,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 5</p>
+
+<div class="mcq-item">
+          <p class="card-title">Q 4</p>
           <p>In restoring division, what happens when the partial remainder becomes negative after subtraction?</p>
           <ul class="options">
             <li>a. Quotient bit set to 1</li>
@@ -1032,8 +1221,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 6</p>
+
+<div class="mcq-item">
+          <p class="card-title">Q 5</p>
           <p>What is the primary advantage of microprogrammed control over hardwired control?</p>
           <ul class="options">
             <li>a. Faster execution speed</li>
@@ -1048,8 +1238,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 7</p>
+
+<div class="mcq-item">
+          <p class="card-title">Q 6</p>
           <p>SIMD stands for:</p>
           <ul class="options">
             <li>a. Single Instruction Multiple Data</li>
@@ -1064,24 +1255,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 8</p>
-          <p>In floating-point multiplication, the result exponent is computed as:</p>
-          <ul class="options">
-            <li>a. E₁ − E₂ + Bias</li>
-            <li>b. E₁ + E₂ + Bias</li>
-            <li>c. E₁ + E₂ − Bias</li>
-            <li>d. E₁ × E₂ − Bias</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq8"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="mcq8">
-            <strong>Answer: c. E₁ + E₂ − Bias</strong>
-            <p>For FP multiplication: E_result = E₁ + E₂ − Bias (subtract bias once because both stored exponents already include it). For division: E_result = E₁ − E₂ + Bias.</p>
-          </div>
-        </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 9</p>
+<div class="mcq-item">
+          <p class="card-title">Q 7</p>
           <p>Which technique routes the ALU result directly to the next instruction's input without waiting for the write-back stage?</p>
           <ul class="options">
             <li>a. Branch prediction</li>
@@ -1096,24 +1272,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 10</p>
-          <p>In Booth's algorithm, what is the initial value of Q₋₁?</p>
-          <ul class="options">
-            <li>a. 1</li>
-            <li>b. Same as MSB of multiplier</li>
-            <li>c. 0</li>
-            <li>d. Same as LSB of multiplier</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq10"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="mcq10">
-            <strong>Answer: c. 0</strong>
-            <p>In Booth's algorithm initialization: Accumulator A = 0, Q = multiplier, Q₋₁ = 0 (initially zero, as there is no previous bit before the LSB of Q).</p>
-          </div>
-        </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 11</p>
+<div class="mcq-item">
+          <p class="card-title">Q 8</p>
           <p>The speedup of an ideal k-stage pipeline with very large number of instructions approaches:</p>
           <ul class="options">
             <li>a. 1</li>
@@ -1128,40 +1289,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 12</p>
-          <p>Which of the following is NOT a feature of RISC architecture?</p>
-          <ul class="options">
-            <li>a. Fixed instruction length</li>
-            <li>b. Load-Store architecture</li>
-            <li>c. Microprogrammed control unit</li>
-            <li>d. Large register file</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq12"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="mcq12">
-            <strong>Answer: c. Microprogrammed control unit</strong>
-            <p>RISC uses hardwired control (not microprogrammed). Microprogrammed control is a feature of CISC processors. RISC has fixed instruction length, load-store architecture, and large register files.</p>
-          </div>
-        </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 13</p>
-          <p>In floating-point addition, before adding the mantissas, what must be done first?</p>
-          <ul class="options">
-            <li>a. Multiply the mantissas</li>
-            <li>b. Align the exponents</li>
-            <li>c. Normalize the result</li>
-            <li>d. Find the sign of the result</li>
-          </ul>
-          <button class="toggle-btn" data-target="mcq13"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="mcq13">
-            <strong>Answer: b. Align the exponents</strong>
-            <p>Before adding or subtracting floating-point mantissas, exponents must be equalized. The mantissa of the smaller exponent is right-shifted until both exponents match.</p>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 14</p>
+<div class="mcq-item">
+          <p class="card-title">Q 9</p>
           <p>The register that holds the address of the next micro-instruction in microprogrammed control is called:</p>
           <ul class="options">
             <li>a. Program Counter</li>
@@ -1176,8 +1306,9 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 15</p>
+
+<div class="mcq-item">
+          <p class="card-title">Q 10</p>
           <p>A control hazard in a pipeline is caused by:</p>
           <ul class="options">
             <li>a. Two instructions needing the same register</li>
@@ -1192,7 +1323,8 @@
           </div>
         </div>
 
-      </div>
+
+</div>
     </div>
   </section>
 
@@ -1206,8 +1338,7 @@
     </h2>
     <div class="section-content">
       <div class="mcq-grid">
-
-        <div class="mcq-item">
+<div class="mcq-item">
           <p class="card-title">Q 1</p>
           <p>What is control memory and what does it store?</p>
           <button class="toggle-btn" data-target="sq1"><i class="fas fa-eye"></i> Show Answer</button>
@@ -1216,7 +1347,8 @@
           </div>
         </div>
 
-        <div class="mcq-item">
+
+<div class="mcq-item">
           <p class="card-title">Q 2</p>
           <p>State the four rules of Booth's algorithm for deciding the operation based on Q₀ and Q₋₁.</p>
           <button class="toggle-btn" data-target="sq2"><i class="fas fa-eye"></i> Show Answer</button>
@@ -1232,7 +1364,8 @@
           </div>
         </div>
 
-        <div class="mcq-item">
+
+<div class="mcq-item">
           <p class="card-title">Q 3</p>
           <p>What is a pipeline hazard? Name its three types.</p>
           <button class="toggle-btn" data-target="sq3"><i class="fas fa-eye"></i> Show Answer</button>
@@ -1246,36 +1379,19 @@
           </div>
         </div>
 
-        <div class="mcq-item">
+
+<div class="mcq-item">
           <p class="card-title">Q 4</p>
-          <p>What is the difference between horizontal and vertical micro-instructions?</p>
-          <button class="toggle-btn" data-target="sq4"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq4">
-            <p><strong>Horizontal micro-instruction:</strong> Each bit directly controls one micro-operation. Wide word, allows parallel operations, less encoding overhead, faster. Used when speed is priority.</p>
-            <p><strong>Vertical micro-instruction:</strong> Encoded fields — a decoder converts to control signals. Narrower word, one or few operations per cycle, more encoding. Saves control memory space but slower.</p>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 5</p>
-          <p>What is operand forwarding and which hazard does it solve?</p>
-          <button class="toggle-btn" data-target="sq5"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq5">
-            <p>Operand forwarding (bypassing) is a technique that routes the result of an ALU operation directly from the output of the Execute stage to the input of the next instruction's Execute stage, without waiting for the result to be written back to the register file. It solves <strong>RAW (Read After Write) data hazards</strong> in pipelines.</p>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 6</p>
           <p>Why is RISC architecture more suitable for pipelining than CISC?</p>
           <button class="toggle-btn" data-target="sq6"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq6">
-            <p>RISC is more pipeline-friendly because: (1) Fixed-length instructions make IF stage uniform. (2) Load-Store architecture eliminates memory hazards in EX stage. (3) Simple addressing modes speed up decode. (4) Hardwired control is faster than microprogram lookup. (5) Large register files keep data available without memory access.</p>
+            <p>RISC is more pipeline-friendly because: (1) Fixed-length instructions make IF stage uniform. (2) Load-store instructions separate data access from register ALU work, though hazards remain. (3) Simple addressing modes speed up decode. (4) Hardwired control is faster than microprogram lookup. (5) Large register files keep data available without memory access.</p>
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 7</p>
+
+<div class="mcq-item">
+          <p class="card-title">Q 5</p>
           <p>What is vector processing? Give one real-world application.</p>
           <button class="toggle-btn" data-target="sq7"><i class="fas fa-eye"></i> Show Answer</button>
           <div class="answer-reveal" id="sq7">
@@ -1283,43 +1399,8 @@
           </div>
         </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 8</p>
-          <p>What is the difference between arithmetic pipeline and instruction pipeline?</p>
-          <button class="toggle-btn" data-target="sq8"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq8">
-            <p><strong>Arithmetic pipeline</strong> breaks a complex arithmetic operation (like floating-point addition) into stages so multiple arithmetic operations can overlap. The stages are parts of the computation (e.g., align exponents → add mantissas → normalize).</p>
-            <p><strong>Instruction pipeline</strong> overlaps the fetch, decode, and execute stages of multiple different instructions. The stages are parts of the instruction execution process (IF → ID → EX → WB).</p>
-          </div>
-        </div>
 
-        <div class="mcq-item">
-          <p class="card-title">Q 9</p>
-          <p>What are the steps in floating-point addition?</p>
-          <button class="toggle-btn" data-target="sq9"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq9">
-            <p>Steps in floating-point addition:</p>
-            <ol style="padding-left:1.3rem; line-height:2;">
-              <li>Check for zero operands.</li>
-              <li>Align exponents (shift mantissa of smaller exponent right).</li>
-              <li>Add or subtract the mantissas.</li>
-              <li>Normalize the result.</li>
-              <li>Round to fit mantissa precision.</li>
-              <li>Check for exponent overflow/underflow.</li>
-            </ol>
-          </div>
-        </div>
-
-        <div class="mcq-item">
-          <p class="card-title">Q 10</p>
-          <p>What is address sequencing in microprogrammed control?</p>
-          <button class="toggle-btn" data-target="sq10"><i class="fas fa-eye"></i> Show Answer</button>
-          <div class="answer-reveal" id="sq10">
-            <p>Address sequencing is the process of determining the address of the next micro-instruction to execute in the control memory. Methods include: (1) Incrementing the CAR by 1 for sequential execution, (2) Unconditional branching using address field, (3) Conditional branching based on status flags, and (4) Mapping from the opcode of a machine instruction to the start address of its microprogram.</p>
-          </div>
-        </div>
-
-      </div>
+</div>
     </div>
   </section>
 
@@ -1495,7 +1576,11 @@
           </div>
         </div>
 
-      </div>
+
+<div class="mcq-item"><p class="card-title">Q 6</p><p>Classify SISD, SIMD, MISD and MIMD (4 marks), then explain how a vector processor executes an array addition (4 marks).</p>
+<button class="toggle-btn" data-target="lq6"><i class="fas fa-eye"></i> Show Answer</button>
+<div class="answer-reveal" id="lq6"><p>SISD: one instruction stream and one data stream. SIMD: one instruction stream acts on several elements. MISD: multiple instructions act on one stream, an uncommon design. MIMD: independent instruction streams run on independent data.</p><p>One vector-add instruction reads vector elements in parallel lanes or successive pipelined batches. Each enabled lane computes its own sum, written to the corresponding output element. Vector length specifies the active range; a mask may disable individual elements. No separate fetched add instruction is needed for each element.</p></div></div>
+</div>
     </div>
   </section>
 
@@ -1676,7 +1761,7 @@
           <li>Booth's rules: <strong>10 → subtract, 01 → add, 00/11 → nothing</strong> + arithmetic right shift each step.</li>
           <li>Pipeline clock cycles with pipeline = <strong>k + n − 1</strong>. Without = <strong>n × k</strong>.</li>
           <li>Ideal speedup of k-stage pipeline with n→∞ instructions = <strong>k</strong>.</li>
-          <li>RISC → Hardwired control. CISC → Microprogrammed control.</li>
+          <li>Hardwired control is typical of textbook RISC; many CISC implementations use microcode for complex instructions.</li>
           <li>Restoring division restores when negative. Non-restoring does NOT restore.</li>
           <li>FP addition must <strong>align exponents first</strong> before adding mantissas.</li>
           <li>Forwarding solves RAW hazards. Load-use still needs 1 stall cycle.</li>
@@ -1713,30 +1798,22 @@
     <div class="section-content">
       <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
       <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=hardwired+vs+microprogrammed+control+unit" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Hardwired versus microprogrammed control</span>
-              <span class="video-link-meta">Control unit design trade-offs &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=microinstruction+sequencing+control+memory" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Microinstruction sequencing</span>
-              <span class="video-link-meta">Control memory and micro-instruction format &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=booth+multiplication+floating+point+arithmetic" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Fixed and floating point arithmetic</span>
-              <span class="video-link-meta">Addition, subtraction and Booth multiplication &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=srlgaJgaxRE" target="_blank" rel="noopener noreferrer">
+          <span class="video-link-text"><span class="video-link-title">What is Hazard in Pipelining?</span>
+          <span class="video-link-meta">Gate Smashers · 10:29 · Data, structural and control hazards</span></span>
+        </a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=n0dkX_nAiAs" target="_blank" rel="noopener noreferrer">
+          <span class="video-link-text"><span class="video-link-title">Control Memory – Micro Programed Control Unit</span>
+          <span class="video-link-meta">Ekeeda · 14:58 · Instruction cycle and control store</span></span>
+        </a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=MeD8iWb8wlo" target="_blank" rel="noopener noreferrer">
+          <span class="video-link-text"><span class="video-link-title">Booth's Algorithm</span>
+          <span class="video-link-meta">Semesters Simplified · 7:44 · Flowchart and worked trace</span></span>
+        </a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=qgbt9mrQ7Gs" target="_blank" rel="noopener noreferrer">
+          <span class="video-link-text"><span class="video-link-title">Flynn’s Classification</span>
+          <span class="video-link-meta">Shanu Kuttan CSE Classes · 18:35 · Hindi · SISD, SIMD, MISD, MIMD</span></span>
+        </a></li>
       </ul>
     </div>
   </section>

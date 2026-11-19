@@ -103,6 +103,14 @@
     if (!topic || !topic.trim()) return;
     const normalized = (value) => String(value || '').replace(/\s+/g, ' ').trim().toLocaleLowerCase();
     const needle = normalized(topic);
+    // CSO's unlabelled short-note choice pool spans two units. It does not
+    // name a concept, and must not match the practice heading "Short Questions".
+    if (subject === 'CST207' && needle === 'short notes') {
+      if (window.location.hash === '#short-notes') {
+        history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+      }
+      return;
+    }
     const terms = needle.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 2);
     if (!terms.length) return;
 
@@ -239,6 +247,22 @@
     if (!target) return;
     if (window.location.hash !== `#${best.anchor}`) {
       history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${best.anchor}`);
+    }
+    // CST207 concept headings can sit inside a section previously closed by
+    // the learner. Reveal this landing without changing the saved preference.
+    if (subject === 'CST207' && mappedEntry) {
+      const content = target.closest('.section-content.collapsed');
+      if (content) {
+        const section = content.closest('.section');
+        const title = section && section.querySelector('.section-title');
+        content.classList.remove('collapsed');
+        content.style.maxHeight = '';
+        if (title) {
+          title.setAttribute('aria-expanded', 'true');
+          const icon = title.querySelector('.collapse-icon');
+          if (icon) icon.classList.remove('rotated');
+        }
+      }
     }
     target.classList.add('pyq-topic-target');
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
