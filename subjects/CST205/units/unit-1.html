@@ -299,6 +299,8 @@
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
+      <figure><svg width="100%" viewBox="0 0 560 190" role="img" aria-labelledby="ds-tax-title ds-tax-desc"><title id="ds-tax-title">Classification of data structures</title><desc id="ds-tax-desc">Data structures split into primitive (int, float, char, pointer) and non-primitive. Non-primitive splits into linear (array, stack, queue, linked list) and non-linear (tree, graph).</desc><rect x="200" y="10" width="160" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="30" text-anchor="middle" fill="currentColor">Data Structures</text><line x1="240" y1="40" x2="120" y2="70" stroke="currentColor"/><line x1="320" y1="40" x2="440" y2="70" stroke="currentColor"/><rect x="40" y="70" width="160" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="120" y="90" text-anchor="middle" fill="currentColor">Primitive</text><rect x="360" y="70" width="160" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="440" y="90" text-anchor="middle" fill="currentColor">Non-Primitive</text><text x="120" y="120" text-anchor="middle" fill="currentColor">int · float · char · pointer</text><line x1="400" y1="100" x2="340" y2="130" stroke="currentColor"/><line x1="480" y1="100" x2="500" y2="130" stroke="currentColor"/><rect x="260" y="130" width="150" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="335" y="150" text-anchor="middle" fill="currentColor">Linear</text><rect x="440" y="130" width="110" height="30" fill="var(--card-bg)" stroke="currentColor"/><text x="495" y="150" text-anchor="middle" fill="currentColor">Non-Linear</text><text x="335" y="178" text-anchor="middle" fill="currentColor">array · stack · queue · linked list</text><text x="495" y="178" text-anchor="middle" fill="currentColor">tree · graph</text></svg><figcaption>One classification tree for the whole unit: built-in types on the left, constructed structures on the right.</figcaption></figure>
+
 
       <div class="concept-box">
         <div class="box-title"><i class="fas fa-folder-tree"></i> Overview</div>
@@ -649,6 +651,33 @@ arr[2] = 99;  // Update element at index 2
         <p class="formula">Total memory = n × size of data type</p>
         <p>Example: int arr[100] requires 100 × 4 = 400 bytes</p>
       </div>
+
+
+      <h3 id="arrays-and-index-addressing"><i class="fas fa-angle-right"></i> Arrays, Array Index and Row-Major / Column-Major Address Calculation</h3>
+      <div class="important-note">
+        <div class="box-title"><i class="fas fa-star"></i> Exam Extension — Array Addressing</div>
+        <p>Arrays store elements <strong>contiguously</strong>, so any element&rsquo;s address is arithmetic, not a search. The smallest index is the <strong>lower bound (LB)</strong>; an array with bounds LB..UB holds UB − LB + 1 elements. &ldquo;Linear arrays&rdquo; are simply one-dimensional arrays. Let <em>w</em> be bytes per element and Base the first element&rsquo;s address.</p>
+        <p class="formula">1D: LOC(A[i]) = Base + w × (i − LB)</p>
+        <p class="formula">2D row-major (C order), m rows × n cols: LOC(A[i][j]) = Base + w × [(i − Lr) × n + (j − Lc)]</p>
+        <p class="formula">2D column-major: LOC(A[i][j]) = Base + w × [(j − Lc) × m + (i − Lr)]</p>
+      </div>
+      <figure><svg width="100%" viewBox="0 0 560 150" role="img" aria-labelledby="ds-addr-title ds-addr-desc"><title id="ds-addr-title">Row-major versus column-major storage</title><desc id="ds-addr-desc">A 2 by 3 matrix stored row-major reads a b c d e f along memory; stored column-major it reads a d b e c f. The element address counts whole rows or columns skipped.</desc><text x="20" y="25" fill="currentColor">Row-major (rows laid end to end):</text><rect x="20" y="35" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="40" y="52" text-anchor="middle" fill="currentColor">a</text><rect x="60" y="35" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="80" y="52" text-anchor="middle" fill="currentColor">b</text><rect x="100" y="35" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="120" y="52" text-anchor="middle" fill="currentColor">c</text><rect x="140" y="35" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="160" y="52" text-anchor="middle" fill="currentColor">d</text><rect x="180" y="35" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="200" y="52" text-anchor="middle" fill="currentColor">e</text><rect x="220" y="35" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="240" y="52" text-anchor="middle" fill="currentColor">f</text><text x="300" y="52" fill="currentColor">for matrix [a b c / d e f]</text><text x="20" y="95" fill="currentColor">Column-major (columns laid end to end):</text><rect x="20" y="105" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="40" y="122" text-anchor="middle" fill="currentColor">a</text><rect x="60" y="105" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="80" y="122" text-anchor="middle" fill="currentColor">d</text><rect x="100" y="105" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="120" y="122" text-anchor="middle" fill="currentColor">b</text><rect x="140" y="105" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="160" y="122" text-anchor="middle" fill="currentColor">e</text><rect x="180" y="105" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="200" y="122" text-anchor="middle" fill="currentColor">c</text><rect x="220" y="105" width="40" height="26" fill="var(--card-bg)" stroke="currentColor"/><text x="240" y="122" text-anchor="middle" fill="currentColor">f</text></svg><figcaption>Same matrix, two memory orders. C uses row-major; Fortran and MATLAB use column-major.</figcaption></figure>
+      <div class="algo-box"><div class="box-title"><i class="fas fa-list-ol"></i> Worked Numerical (Recomputed Both Ways)</div>
+      <pre>An 8 x 3 matrix (8 rows, 3 columns), w = 4 bytes,
+base address 3500. Find LOC(A[5][2]) in row-major.
+
+If subscripts are 1-based (Lr = Lc = 1):
+  LOC = 3500 + 4 x [(5-1) x 3 + (2-1)]
+      = 3500 + 4 x 13 = 3552
+
+If subscripts are 0-based values (Lr = Lc = 0):
+  LOC = 3500 + 4 x [5 x 3 + 2]
+      = 3500 + 4 x 17 = 3568
+
+Column-major, 1-based, for comparison:
+  LOC = 3500 + 4 x [(2-1) x 8 + (5-1)]
+      = 3500 + 4 x 12 = 3548</pre>
+      <p>Papers in this window do not always state the starting subscript. The safe exam habit is to <strong>declare your convention in the first line</strong> (&ldquo;taking subscripts from 1&rdquo;) and apply one formula consistently — a correct method with a stated convention earns the working marks even when the expected convention differs.</p></div>
 
     </div>
   </section>
@@ -1419,32 +1448,10 @@ int main() {
       <i class="fas fa-chevron-up collapse-icon"></i>
     </h2>
     <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
+      <p class="video-note">Optional external lessons, checked on 19 November 2026. Nothing loads from YouTube until you choose a link. Watch-page title, channel and duration were checked; playback, captions and device availability were not tested. Not official course material.</p>
       <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=what+is+a+data+structure+introduction" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">What is a data structure?</span>
-              <span class="video-link-meta">Abstract data types, linear vs non-linear &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=time+complexity+big+o+notation+tutorial" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Time and space complexity</span>
-              <span class="video-link-meta">Big-O notation from first principles &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=array+vs+linked+list+memory+trade+offs" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Arrays versus linked structures</span>
-              <span class="video-link-meta">Trade-offs in memory and access &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=T9DSBhBR_I4" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Types of Data Structures — Neso Academy · 4:28</span><span class="video-link-meta">Short visual intro to linear/non-linear and static/dynamic; primitive types and ADT are covered in the notes above</span></span></a></li>
+        <li><a class="video-link" href="https://www.youtube.com/watch?v=KDQXUysHLL8" target="_blank" rel="noopener noreferrer"><span class="video-link-text"><span class="video-link-title">Introduction to Two Dimensional (2D) Arrays | Memory Representation — Jenny's Lectures CS IT · 37:43</span><span class="video-link-meta">Long-form row-major and column-major memory layout in C; the worked address numerical above adds the exam formula practice</span></span></a></li>
       </ul>
     </div>
   </section>
