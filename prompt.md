@@ -7,13 +7,28 @@
 > `tests/home-roadmap-browser.cjs` for the focused regression. This bug fix
 > does not change any phase acceptance or deployment status.
 
-> **Phase 13 handoff — 2026-11-19:** in progress on
-> `arena/c323dee5-diploma-3rd-sem`, cut from `main` at `9b13f13`. Part 13.1
-> (Unit 1) shipped; 13.2–13.6 outstanding. The Python routing baseline is
-> **not** `42 / 7 / 55` — it is `78 / 11 / 15`, and 61 of 104 questions can
-> only reach a coarse chapter title. Read
-> `docs/phases/13-cst203-python-content/record.md` §3.1 and §4.1 before
-> touching Unit 2. Nothing is PR'd, merged or deployed.
+> **Phase 13 CLOSED — 2026-11-19, owner-passed and merged.** Owner words:
+> *"All good. Ok then this phase is completed."* Branch
+> `arena/c323dee5-diploma-3rd-sem` merged to `main`. All six parts shipped:
+> Units 1–5 rewritten to the 2023–2026 weights, `assets/data/topic-map-CST203.json`
+> (92 entries / 21 decisions), two anchors authored in Unit 1, and a phone
+> section-overlap fix. **157/157 unittest, 13/13 gates green.**
+>
+> **Read `docs/DECISIONS.md` §"Phase 13 accepted, and the decisions Phases 14–17
+> must inherit" before doing anything in a later phase.** It is the register
+> that stops the same questions being re-asked: word budgets are **waived**
+> ("No problem over budget"), the anchor plan is a planning number not a target,
+> the map lives in `assets/data/` and never `_data/<subject>/`, `_data/` is
+> byte-frozen in Mode A, videos are verified plain `<a>` links, and seven
+> repeating defects (prose hygiene, vacuous routing criteria, layout bugs
+> invisible to tests, …) are listed with how to prevent each.
+>
+> Do **not** trust this blueprint's planning numbers — the `31-anchor` plan, the
+> word budgets, and the `42 / 7 / 55` routing baseline are all history. Actual:
+> `95 / 9 / 0` same-unit routing with **104/104** named landings, `36,982w`.
+> Remaining open item: the matcher's substring and document-order defects stay
+> in the engine and belong to **Phase 17**, which runs after Phase 16.
+> Nothing else is authorized by this closure.
 
 > **Phase 11 handoff — 2026-11-18:** The owner closed Phases 1–10 with the
 > recorded skips in `docs/PROJECT-CLOSURE.md`, then approved **Phase 11 —

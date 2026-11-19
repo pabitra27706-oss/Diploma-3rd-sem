@@ -6,12 +6,18 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
-> **Current session (2026-11-19):** `arena/c323dee5-diploma-3rd-sem`, based on
-> `9b13f13` (the PR #27 merge). This branch carries **Phase 13 — Scripting
-> Languages (Python)**: weight-calibrated rewrites of `CST203` units 1–5 plus
-> the PYQ↔unit sync and topic-map gate. Part 13.1 (Unit 1) is pushed; parts
-> 13.2–13.6 are outstanding. It does not change earlier phase acceptance or
-> authorize publication. Phase 12 (C) is merged and owner-passed.
+> **Phase 13 CLOSED (2026-11-19):** `arena/c323dee5-diploma-3rd-sem` (based on
+> `9b13f13`, the PR #27 merge) carried **Phase 13 — Scripting Languages
+> (Python)**: weight-calibrated rewrites of `CST203` units 1–5, the PYQ↔unit
+> topic map, and a phone section-overlap fix. **All six parts are done,
+> owner-passed ("All good. Ok then this phase is completed") and merged to
+> `main`. 157/157 unittest, 13/13 gates green.** The next session starts from a
+> fresh Arena branch cut from that merge — **read the branch name from Git.**
+> Before planning anything, read `docs/DECISIONS.md`
+> §"Phase 13 accepted, and the decisions Phases 14–17 must inherit"; it is the
+> register that prevents re-asking the same questions. Phase 12 (C) is also
+> merged and owner-passed. Phases 14–16 (Data Structures, CSO, Algorithms) are
+> planned blueprints; Phase 17 (topic-map cross-check) runs after Phase 16.
 >
 > **Reconciled 2026-11-16** (audit `docs/AUDIT-2026-11-16.md`) and **2026-11-17**
 > (sub-phase 8A, Phase 3 `✅*` sign-off, Phases 4–6 merged, Phase 7 accepted and

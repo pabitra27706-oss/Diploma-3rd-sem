@@ -7,6 +7,17 @@
 > **PYQ weighting window (strict `2023–2026`):** **4 papers, 105 scan-verified questions, 395 printed set marks** (`P003-2023-03` [34 Qs / 97m], `P004-2024-01` [23 Qs / 94m], `P005-2024-12` [24 Qs / 102m], `P006-2026-01` [24 Qs / 102m]; each paper max 60 answerable marks).  
 > **Excluded legacy paper:** `P001-2022-06` (1 paper, 62 Qs, including the legacy Colpitts-oscillator misprint) stays archived read-only in `_data/CST209/` and is **excluded from all topic weights and scope decisions**.
 
+> **Inherited decisions — read before planning.** `docs/DECISIONS.md`
+> §"Phase 13 accepted, and the decisions Phases 14–17 must inherit" records what
+> is already settled and must not be re-asked: word budgets are **waived**
+> (owner: *"No problem over budget"*), calibrate to the 2023–2026 window only,
+> an anchor plan is a planning number rather than a target, maps live in
+> `assets/data/` and never `_data/<subject>/`, `_data/`/`_quiz-data/` are
+> byte-frozen in Mode A, videos are verified plain `<a>` links, and there are
+> seven repeating defects (prose hygiene, vacuous routing criteria, layout bugs
+> invisible to tests, …) with how to prevent each. Phase 13 closed at 157/157
+> unittest and 13/13 gates; use its `record.md` as the pattern.
+
 ---
 
 ## 1. Goal & Why This Phase Matters (2023–2026 Evidence)

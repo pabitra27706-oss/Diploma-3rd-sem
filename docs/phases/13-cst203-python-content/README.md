@@ -1,6 +1,6 @@
 # Phase 13 — Scripting Languages (Python): Weight-Calibrated Content, Video Curation & PYQ Sync
 
-> **Status:** 📋 Planned (documentation blueprint — zero shipped files modified)  
+> **Status:** ✅ **Owner-passed 2026-11-19** — all six parts (13.1–13.6) shipped and merged to `main`. Owner words: *"All good. Ok then this phase is completed."* This blueprint's planning numbers (word budgets, 31-anchor plan, `42/7/55` routing baseline) are **history**, not targets: see [`record.md`](record.md) §4 and `docs/DECISIONS.md` for what actually shipped and why the plan moved.  
 > **Subject:** Scripting Languages (Python) (`CST203`, paired practical `CST213` Scripting Languages Lab)  
 > **Syllabus authority:** `docs/syllabus/syllabus.json` & `docs/syllabus/syllabus-3rd-sem-2022.pdf` **pp. 5–7** — **2 credits, L–T–P `2-0-0`, 30 contact hours (`7 + 5 + 6 + 6 + 6`)** across 5 official units  
 > **Paired practical:** `CST213` Scripting Languages Lab — **PDF pp. 16–18** (`2` credits, L–T–P `0-0-4`, 4 hrs/week, 8 practical areas; honest reference page at `subjects/CST213/index.html`)  
