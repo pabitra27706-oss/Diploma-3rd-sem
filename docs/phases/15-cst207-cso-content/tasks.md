@@ -69,11 +69,19 @@
 
 ---
 
-## Part 15.6 — `unit-discovery.js` Guard, PYQ Sync, Canonical Rebuild & Gate Verification
+## Part 15.6 — Topic Map, PYQ Sync, Canonical Rebuild & Gate Verification
+
+> **Topic map required.** Follow [`docs/phases/topic-map-standard.md`](../topic-map-standard.md)
+> — the Phase 12 CST201 map is the worked example. This subject has the worst
+> baseline in the corpus (**58 unmatched / 60 redirects** of 195 questions), so its
+> map is the highest-value authoring job; author it **last**, after the anchors exist.
+> The old "ignore generic non-concept section IDs in `entriesFor()`" task is
+> superseded: the map is what fixes this, and `entriesFor()` is now shared code.
 - **Target files:** `assets/js/unit-discovery.js`, `tests/discovery-dom.cjs`, `tests/test_discovery.py`, `docs/revision-sheets/CST207.json`, `revision/CST207.html`, generated indices, `record.md`, `docs/ROADMAP.md`, `docs/STATUS.md`, `prompt.md`.
 - **Verification & rebuild checklist:**
   - [ ] Update `entriesFor()` in `assets/js/unit-discovery.js` to ignore generic non-concept section IDs (`overview`, `mcqs`, `short-questions`, `long-questions`, `practice`, `revision`) and add a regression assertion in `tests/discovery-dom.cjs` (`P006-Q24` `"Short notes"` no longer jumps to `#short-questions`).
   - [ ] Run `focusQuestionTopic()` simulation across all **103 `2023–2026` CSO PYQs**: confirm all `50` previously unmatched items and all `6` wrong-unit redirects resolve to their exact syllabus headings (`0` `_data/` edits).
+  - [ ] Author `assets/data/topic-map-CST207.json` per the standard: every question in the `P00[3-6]` window mapped, zero raw paper-section anchors, every anchor verified present in its unit page, and `tests/test_topic_map.py` repointed at this subject passing. Record before/after generic-landing counts in `record.md` (baseline: 0 of 195, but 118 of 195 fail to land same-unit — that is the number to move).
   - [ ] Execute `README.md:187–215` canonical rebuild (`build_suggestions.py`, `build_revision_sheets.py`, `generate_presence.py` twice, `build_search_index.py`, `build_icon_subset.py`, `build_data_version.py` last), update `unitAnchored` in `tests/test_discovery.py:111`, and pass all 13 Python gates + `unittest` + `node tests/discovery-dom.cjs`.
   - [ ] Populate `record.md`, update `docs/ROADMAP.md`, `docs/STATUS.md`, `prompt.md`, print **"What to test on the website"** + `rule.md` §7 Termux preview block, and pause for owner sign-off.
 - **Acceptance & evidence:**

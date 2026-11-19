@@ -35,6 +35,8 @@ Revised-2022 syllabus scope (`docs/syllabus/syllabus.json`, PDF pp. 3–13):
 - **[Phase 15 — Computer System Organization](phases/15-cst207-cso-content/README.md)** (`unit-1/`–`unit-5/`, 6 parts · 4 cr, 60h [6+20+10+9+15], p. 10 · 4 papers / 103 Qs / 385m: U2 `112m` 29.1%, U5 `110m` 28.6%, U1 `81m` 21.0%, U3 `78m` 20.3%, U4 `4m` 1.0%)
 - **[Phase 16 — Algorithms](phases/16-cst209-algorithms-content/README.md)** (`unit-1/`–`unit-4/` + `unit-5-supplementary/`, 6 parts · 4 cr, 60h [6+16+18+20], p. 12 · 4 papers / 105 Qs / 395m: U4 `93m` 23.5%, U3 `92m` 23.3%, U1 `89m` 22.5%, U2 `79m` 20.0%, CO5 U5 `42m` 10.6%)
 
+- **[Phase 17 — Topic-map cross-check](phases/17-topic-map-crosscheck/README.md)** (5 parts, runs after Phase 16) — re-audits the five `assets/data/topic-map-<subject>.json` files that Phases 13–16 author, catches anchor rot that the runtime would otherwise hide, and fixes it in place. Standard: [`topic-map-standard.md`](phases/topic-map-standard.md).
+
 Each unit blueprint grades every topic into weight tiers (**Tier A** core
 heavyweight, **Tier B** regular, **Tier C** low-weight, **Tier S** syllabus-only
 `0m`, and **Tier E** explicitly badged out-of-syllabus 2023–2026 exam hits),

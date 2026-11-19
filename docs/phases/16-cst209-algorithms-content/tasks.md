@@ -60,9 +60,14 @@ python3 scripts/check_pyq_integrity.py && python3 scripts/build_suggestions.py -
 
 ---
 
-## Part 6 — YouTube Curation, Full PYQ Routing Audit & 13-Gate Verification
+## Part 6 — YouTube Curation, Topic Map, Full PYQ Routing Audit & 13-Gate Verification
+
+> **Topic map required.** Follow [`docs/phases/topic-map-standard.md`](../topic-map-standard.md)
+> — the Phase 12 CST201 map is the worked example. Author it **last**, after the
+> CO5 supplementary anchors exist (the map must cover the `unit 5` items too).
 
 - [ ] Curate and live-verify all **15 plain-`<a>` YouTube links** (`3` each in U1–U5; zero `<iframe>`, zero `ytimg.com` thumbnails) and record video titles, channels, durations, and verification dates in [`record.md`](record.md).
+- [ ] Author `assets/data/topic-map-CST209.json` per the standard: every question in the `P00[3-6]` window mapped (including the `8 / 8` CO5 supplementary items), zero raw paper-section anchors, every anchor verified present in its unit page, and `tests/test_topic_map.py` repointed at this subject passing. Record before/after generic-landing counts in `record.md` (baseline: 9 of 167 questions land on a generic card today).
 - [ ] Run canonical `README.md:187–215` regeneration (`build_revision_sheets.py`, `build_suggestions.py`, `build_icon_subset.py`, `generate_presence.py` **twice** for idempotence across all `84` HTML pages, `build_search_index.py` updating `assets/search/index-CST209.json`, and `build_data_version.py` updating `assets/data/data-version.json` last); verify `105 / 105` `2023–2026` `CST209` PYQs resolve to exact concept anchors (including `8 / 8` CO5 items) and update `unitAnchored` in `tests/test_discovery.py:111`.
 - [ ] Run the full `README.md:161–173` verification suite plus Python/Node tests and log exit codes in [`record.md`](record.md):
 
