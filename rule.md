@@ -6,12 +6,12 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
-> **Phase 16 — current session (2026-11-19):**
+> **Phase 16 — owner-accepted (2026-11-19):**
 > `arena/d7aa68ed-diploma-3rd-sem` from Phase 15 merge `47d801b` (PR #29).
-> Algorithms implementation is local; owner verification is pending. Phase 15
-> stays closed. No push, PR, merge, deploy or Phase 17 is authorized.
-> See the Phase 16 record and the updated §7 command (usable after a separately
-> authorized push only; these changes are not currently available by pull).
+> Owner authorized push, then merge after reporting “Everything looks good”.
+> Acceptance retains video-selection and hosted browser-smoke caveats; see the
+> Phase 16 record. No Phase 17 or separate deployment/settings action authorized.
+> The branch now exists remotely; §7's Termux command is usable.
 >
 > **Phase 13 CLOSED (2026-11-19):** `arena/c323dee5-diploma-3rd-sem` (based on
 > `9b13f13`, the PR #27 merge) carried **Phase 13 — Scripting Languages
@@ -220,7 +220,7 @@ A **public launch** additionally needs every item in
   which branch/revision contains the changes and whether it has been pushed.
   Never suggest a destructive reset, overwrite local changes, or present an
   unpushed change as available through `git pull`.
-- **Phase 16 Termux preview (NOT available until a separately authorized push).**
+- **Phase 16 Termux preview (branch pushed with owner authorization).**
   With Python and Git installed (`pkg install python git` if needed), use this
   single command. It clones or updates a dedicated working directory and refuses
   to update a checkout on the wrong branch. If a pull refuses local changes,

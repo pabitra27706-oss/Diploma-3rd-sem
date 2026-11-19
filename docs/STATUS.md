@@ -1,6 +1,6 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
-## Phase 16 — Algorithms — 🚧 implemented locally, awaiting owner verification (2026-11-19)
+## Phase 16 — Algorithms — ✅* owner-accepted, merge authorized (2026-11-19)
 
 Branch `arena/d7aa68ed-diploma-3rd-sem`, base `47d801b` (Phase 15 merge,
 PR #29). Completed in order U4 → U3 → U1 → U2 → CO5 supplementary U5,
@@ -18,14 +18,16 @@ supplementary. All frozen `_data/` and `_quiz-data/` bytes are unchanged.
   again after suite mutations; final evidence is in the phase record.
 - **Inherited CI red:** base Web CI `44484813834` failed at PYQ browser smoke;
   Pages run `44484812632` succeeded. Job metadata was accessible but downloading
-  the old log failed at the outbound host. No new hosted run (nothing pushed).
+  the old log failed at the outbound host. Pushed implementation run `44488748038` also failed at that same browser-smoke step; identical root cause is not established.
   Local browser tests unavailable: no playwright-core/Chromium. No new rendering,
   phone, captions, playback, print or offline/device result is claimed.
 
-See [Phase 16 evidence](phases/16-cst209-algorithms-content/record.md). Owner
-must test a local copy; the remote live site does not contain these edits.
-Stop for **“mark as pass”** or **“add for later”**. Do not push/open a PR,
-merge/deploy, reopen Phase 15, or start Phase 17 without explicit instruction.
+See [Phase 16 evidence](phases/16-cst209-algorithms-content/record.md). The owner
+reported “Everything looks good” and explicitly authorized merging this branch.
+Acceptance retains the video-curation caveat: 10/15 familiar-channel selections,
+no systematic best-of comparison, two short previews, no playback/caption pass.
+The proposed video-only review was not performed. No Phase 17, separate deploy
+or Pages settings change is authorized. Phase 15 remains closed.
 
 ## Phase 15 — Computer System Organization — ✅* owner-passed (2026-11-19)
 

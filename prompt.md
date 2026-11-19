@@ -1,22 +1,17 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-> **Current checkpoint — Phase 16, 2026-11-19:**
-> `arena/d7aa68ed-diploma-3rd-sem`, base `47d801b` (Phase 15 merged PR #29).
-> All six Algorithms parts implemented locally in the required unit order;
-> 105/105 questions have reviewed destinations (85 topic keys, 34 decisions),
-> 8/8 CO5 routes, 14 diagrams, 15 verified plain video links. Frozen data and
-> quiz trees unchanged. Owner verification is pending, not passed.
-> Local result: 166 Python tests, 13 README gates plus advisory syllabus check,
-> 14 deterministic Node suites; section-clipping regression included. Read
-> `docs/phases/16-cst209-algorithms-content/record.md` for final rebuild evidence,
-> exact route measurements, video caveats and owner URLs.
-> Base Web CI `44484813834` already failed at PYQ browser smoke. No hosted
-> Phase 16 run, screenshot artifact, device test or playback evidence exists.
-> Shell version `study-2026-11-19-algorithms`; generated head metadata changes
-> elsewhere are canonical rebuild output, not a reopening of other phases.
-> **No push, PR, merge, deploy or Phase 17.** Stop for “mark as pass” or
-> “add for later”. The §7 Termux fetch command is usable only after a separately
-> authorized push; this branch's new commit is local-only.
+> **Phase 16 closeout — 2026-11-19:** Owner reported “Everything looks good”
+> and explicitly authorized merging `arena/d7aa68ed-diploma-3rd-sem` (base
+> `47d801b`). Implementation `79585e2` is pushed; acceptance is **✅*** with
+> video-selection and hosted browser-smoke caveats in the phase record.
+> Local evidence: 166 Python tests, 13 README gates, 14 deterministic Node
+> suites; 105/105 editorial routes, 8/8 CO5, frozen data unchanged.
+> Hosted implementation CI `44488748038` failed at the same PYQ browser-smoke
+> step as the base; no identical-root-cause or hosted-pass claim. Videos were
+> not systematically compared against alternatives; two are short previews.
+> The offered video-only review was not performed. Merge the existing work on
+> owner instruction; do not start Phase 17 or perform a separate deploy/settings
+> action. Consult GitHub for the actual PR merge result, not this pre-merge note.
 
 > **Maintenance handoff — 2026-11-18:** On `arena/eec36cd0-diploma-3rd-sem`
 > (base `a2bb413`), Home now follows the manual theory checklist, uses the

@@ -1,10 +1,10 @@
 # Phase 16 — Algorithms execution record
 
-**2026-11-19 · 🚧 Implemented locally; awaiting owner verification.**
+**2026-11-19 · ✅* Owner accepted; merge authorized.**
 Branch `arena/d7aa68ed-diploma-3rd-sem`, clean start and HEAD/base
 `47d801b660cea9b417e62f81c2be0803ddc66312` (Phase 15 merge, PR #29).
 Mode A: **all `_data/` and `_quiz-data/` files byte-identical**, not just PYQs.
-No push, PR, merge, Pages action, deploy or Phase 17. Phase 15 stays closed.
+Implementation was initially local-only; subsequent owner-authorized push and merge closeout are recorded below. Phase 15 stays closed.
 
 ## Preflight and reuse
 
@@ -269,3 +269,26 @@ serve its parent with `python3 -m http.server 8012 --bind 127.0.0.1`.
 
 **Stop:** awaiting “mark as pass” or “add for later”. Neither is assumed.
 No next phase or release action is authorized.
+
+
+## Owner acceptance and merge authorization — 2026-11-19
+
+After the authorized push of `79585e2`, the owner reported “Everything looks
+good”, asked about video-selection bias, then explicitly instructed “Ok you can
+merged this branch”. Record Phase 16 as **✅*** accepted with caveats, and merge
+this session branch through a PR. No Phase 17 or separate deployment/settings
+action is authorized.
+
+Video curation is useful but **not demonstrated best-in-class**: 10/15 links
+are from Abdul Bari, alternatives were not systematically compared for every
+slot, and the 58s/68s sorting links are previews. Full playback/captions remain
+unverified. A video-only comparison review was offered but not performed; the
+owner instead authorized merging the existing selection. Do not silently claim
+that review happened or that every blueprint video-depth preference was met.
+
+Pushed implementation Web CI **44488748038** failed at “PYQ browser smoke —
+paper width, icon cluster, print control”, the same step as base **44484813834**.
+This establishes an inherited failing step, not identical root cause or a new
+hosted pass. Local implementation results remain 166 Python tests, 13 README
+gates and 14 deterministic Node suites. This closeout changes documentation
+only, not content, frozen data, tests or runtime outputs.
