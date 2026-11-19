@@ -21,6 +21,9 @@
     CST209: 4
   };
 
+  // Topic lookup only; never extend official Prev/Next navigation.
+  const SUPPLEMENTARY_UNITS = { CST209: [5] };
+
   // Subjects that ship a dedicated quiz bank under quiz/data/.
   const QUIZ_BANK_SUBJECTS = new Set(['CST201', 'CST203', 'CST205', 'CST209']);
 
@@ -219,8 +222,9 @@
     // When a stored PYQ unit is stale, search the subject's authored section
     // headings instead of sending the learner to a vaguely related overview.
     if (!mappedEntry && !candidates.some((entry) => scoreTitle(entry.title) >= 0.5)) {
-      const others = await Promise.all(Array.from({ length: maxUnits }, async (_, index) => {
-        const unit = index + 1;
+      const lookupUnits = Array.from({ length: maxUnits }, (_, index) => index + 1)
+        .concat(SUPPLEMENTARY_UNITS[subject] || []);
+      const others = await Promise.all(lookupUnits.map(async (unit) => {
         return unit === currentUnit ? [] : fetchUnitEntries(unit);
       }));
       candidates = candidates.concat(...others);
@@ -233,7 +237,19 @@
         best = { ...entry, score: scoreTitle(entry.title), covered: segmentsCovered(entry.title) };
       }
     }
-    if (!best || best.score < 0.5) return;
+    if (!best || best.score < 0.5) {
+      // Answer links carry a synthetic topic fragment, which may not name any
+      // authored heading. A failed Algorithms lookup must not leave that dead
+      // fragment masquerading as a successful concept jump. Keep real anchors.
+      if (subject === 'CST209' && window.location.hash) {
+        let hash = window.location.hash.slice(1);
+        try { hash = decodeURIComponent(hash); } catch (_) { /* keep literal */ }
+        if (!document.getElementById(hash)) {
+          history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+        }
+      }
+      return;
+    }
 
     if (best.unit !== currentUnit) {
       const destination = new URL(`unit-${best.unit}.html`, window.location.href);
@@ -248,10 +264,11 @@
     if (window.location.hash !== `#${best.anchor}`) {
       history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${best.anchor}`);
     }
-    // CST207 concept headings can sit inside a section previously closed by
-    // the learner. Reveal this landing without changing the saved preference.
-    if (subject === 'CST207' && mappedEntry) {
-      const content = target.closest('.section-content.collapsed');
+    // Reveal mapped CSO and all Algorithms concept landings, including matcher
+    // fallbacks and h2 section targets, without changing saved preferences.
+    if ((subject === 'CST207' && mappedEntry) || subject === 'CST209') {
+      const content = target.closest('.section-content.collapsed')
+        || target.closest('.section')?.querySelector('.section-content.collapsed');
       if (content) {
         const section = content.closest('.section');
         const title = section && section.querySelector('.section-title');

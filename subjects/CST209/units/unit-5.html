@@ -116,7 +116,7 @@
   </style>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST209/units/unit-5.html">
-<meta name="app-build" content="study-2026-11-19-cso">
+<meta name="app-build" content="study-2026-11-19-algorithms">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Supplementary – String Algorithms (Outcome Topic) | Algorithms">
@@ -232,7 +232,7 @@
       <div class="info-item"><i class="fas fa-info-circle"></i> Outside 4-unit syllabus (60h)</div>
       <div class="info-item"><i class="fas fa-graduation-cap"></i> Diploma 3rd Semester</div>
     </div>
-    <h1><i class="fas fa-font"></i> Supplementary: String Algorithms (Outcome Topic)</h1>
+    <h1><i class="fas fa-font"></i> CO5 Supplementary Unit 5: String Matching and Tries</h1>
     <p>Revised-2022 syllabus declares 4 units (60 hours total) and lists string sort and substring search under course outcomes. These supplementary notes remain available while archived Unit-5 tags await source review.</p>
   </div>
 </header>
@@ -307,85 +307,17 @@
           </span>
           <span class="jump-videos-arrow" aria-hidden="true">&rarr;</span>
         </a>
-    </div>
+    <h3 id="string-matching-overview">CO5 String Matching: Scope and Algorithm Choice</h3>
+<p>There are four official Algorithms theory units, totalling 60 contact hours. This is a <strong>CO5 supplementary module</strong>: the syllabus course outcome covers string processing, but its detailed four-unit table does not assign a fifth unit. String/trie material nevertheless appears in all four 2023–2026 papers: 42/395 printed set marks (10.6%). Rabin–Karp accounts for 15 (Tier B), KMP 11 (Tier B), naive matching 8 and tries 8 (Tier C); the other retained sections have zero observed direct marks. Stored paper/quiz unit tags remain unchanged under source review.</p>
+<p>Use zero-based T[0..n−1], P[0..m−1], alphabet size d and valid shift 0≤s≤n−m. All matching pseudocode assumes a nonempty pattern; if m&gt;n return no matches. An empty-pattern policy must be specified separately (for example, every boundary is a match) before preprocessing, because indexing P[0] is otherwise invalid. The code blocks are language-neutral pseudocode, not executed Python.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 2: STRING SORT =================== -->
-  <section class="section" id="string-sort">
-    <h2 class="section-title">
+  <section class="section" id="string-sort"><h2 class="section-title">
       <i class="fas fa-sort-alpha-down"></i> String Sort
       <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Sorting Strings</div>
-        <p>Standard comparison-based sorting of strings takes O(n·W·log n) where W = average string length (because comparing two strings takes O(W)). Radix-based approaches can sort strings faster by processing characters one at a time.</p>
-      </div>
-
-      <h3 id="string-sort-lsd-radix-sort-for-strings" style="color:var(--accent);font-size:1.05rem;margin:1rem 0 0.6rem;"><i class="fas fa-sort-amount-down"></i> LSD Radix Sort for Strings</h3>
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
-        <p><strong>Least Significant Digit (LSD) Radix Sort</strong> processes strings from the <strong>rightmost character</strong> to the leftmost. It requires all strings to have the <strong>same length W</strong>. Uses a stable sort (counting sort) as subroutine for each character position.</p>
-      </div>
-      <div class="pseudocode-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: LSD String Sort</div>
-        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
-LSD-STRING-SORT(strings[], n, W)
-  R = radix (e.g., 256 for ASCII)
-  for d = W-1 downto 0       // rightmost to leftmost
-    count[0..R] = {0}
-    // Count frequencies
-    for i = 0 to n-1: count[strings[i][d] + 1]++
-    // Prefix sums
-    for r = 0 to R-1: count[r+1] += count[r]
-    // Distribute
-    for i = 0 to n-1:
-      aux[count[strings[i][d]]++] = strings[i]
-    // Copy back
-    for i = 0 to n-1: strings[i] = aux[i]
-        </pre>
-      </div>
-      <div class="complexity-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: LSD String Sort</div>
-        <ul>
-          <li><strong>Time:</strong> O(W · (n + R)) where W = string length, R = alphabet size.</li>
-          <li><strong>Space:</strong> O(n + R).</li>
-          <li><strong>Stable:</strong> Yes.</li>
-          <li><strong>Limitation:</strong> All strings must have the same length.</li>
-        </ul>
-      </div>
-
-      <hr style="margin:1.5rem 0;border:none;border-top:1px dashed var(--border);">
-
-      <h3 id="string-sort-msd-radix-sort-for-strings" style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-sort-amount-up"></i> MSD Radix Sort for Strings</h3>
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
-        <p><strong>Most Significant Digit (MSD) Radix Sort</strong> processes from the <strong>leftmost character</strong> first, then recursively sorts subgroups sharing the same prefix. Works with <strong>variable-length strings</strong>.</p>
-      </div>
-      <div class="complexity-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: MSD String Sort</div>
-        <ul>
-          <li><strong>Time:</strong> O(n · W) average for random strings.</li>
-          <li><strong>Space:</strong> O(n + W · R) — overhead for recursive subgroup arrays.</li>
-          <li><strong>Advantage:</strong> Variable-length strings; can terminate early for equal-prefix groups.</li>
-          <li><strong>Disadvantage:</strong> Overhead of recursion; many small subarrays at deep levels.</li>
-        </ul>
-      </div>
-
-      <div class="table-wrapper" style="margin-top:1rem;">
-        <table class="data-table">
-          <thead><tr><th>Feature</th><th>LSD Radix Sort</th><th>MSD Radix Sort</th></tr></thead>
-          <tbody>
-            <tr><td>Direction</td><td>Right → Left</td><td>Left → Right</td></tr>
-            <tr><td>String length</td><td>Must be equal (fixed W)</td><td>Can be variable</td></tr>
-            <tr><td>Method</td><td>Iterative (W passes)</td><td>Recursive</td></tr>
-            <tr><td>Stable</td><td>Yes</td><td>Yes</td></tr>
-            <tr><td>Best for</td><td>Fixed-width keys</td><td>Variable-length strings</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+    </h2><div class="section-content"><p><strong>Background only — 0 direct marks in 2023–2026.</strong></p><h3 id="string-sort-lsd-radix-sort-for-strings" style="color:var(--accent);font-size:1.05rem;margin:1rem 0 0.6rem;"><i class="fas fa-sort-amount-down"></i> LSD Radix Sort for Strings</h3><h3 id="string-sort-msd-radix-sort-for-strings" style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-sort-amount-up"></i> MSD Radix Sort for Strings</h3><p>String sorting orders whole keys, unlike substring matching which locates a pattern inside a text. Fixed-width LSD sorting processes characters right to left using a stable digit routine. MSD sorts by the first character then recursively refines common-prefix groups, with an explicit end-of-string sentinel for variable lengths. Character alphabet size, width and storage model affect cost. These techniques provide useful CO5 background but receive zero direct marks in the 2023–2026 calibration window. Prioritise Rabin–Karp, KMP, naive matching and tries first; zero observed marks is not a promise about future exams.</p></div></section>
 
   <!-- =================== SECTION 3: TRIES =================== -->
   <section class="section" id="tries">
@@ -475,7 +407,18 @@ TRIE-SEARCH(root, word)
           <li><strong>DNS lookup:</strong> Domain name resolution.</li>
         </ul>
       </div>
-    </div>
+    <h3 id="tries-prefix-trees">Tries: Prefix Trees and the Exact Eight Words</h3>
+<p>December 2024 asks for {bat, ball, doll, dork, do, dorm, send, sense}. In insertion order, bat creates b→a→t*; ball shares ba and adds l→l*; doll creates d→o→l→l*; dork shares do and adds r→k*; do creates no node but marks the existing o terminal; dorm shares dor and adds m*; send creates s→e→n→d*; sense shares sen and adds s→e*. An asterisk marks a whole word, not necessarily a leaf.</p>
+<figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="eight-word-trie-title eight-word-trie-desc"><title id="eight-word-trie-title">eight word trie</title><desc id="eight-word-trie-desc">root to b: b; root to d: d; root to s: s; b to ba: a; d to do*: o; s to se: e; ba to bal: l; ba to bat*: t; do* to dol: l; do* to dor: r; se to sen: n; bal to ball*: l; dol to doll*: l; dor to dork*: k; dor to dorm*: m; sen to send*: d; sen to sens: s; sens to sense*: e</desc><defs><marker id="eight-word-trie-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="261.3" y1="28.5" x2="63.7" y2="65.5" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="167.5" y="42.0" fill="currentColor">b</text><line x1="280.0" y1="44.0" x2="280.0" y2="50.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="285.0" y="42.0" fill="currentColor">d</text><line x1="298.7" y1="28.5" x2="496.3" y2="65.5" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="402.5" y="42.0" fill="currentColor">s</text><line x1="45.0" y1="88.0" x2="45.0" y2="94.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="50.0" y="86.0" fill="currentColor">a</text><line x1="280.0" y1="88.0" x2="280.0" y2="94.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="285.0" y="86.0" fill="currentColor">o</text><line x1="515.0" y1="88.0" x2="515.0" y2="94.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="520.0" y="86.0" fill="currentColor">e</text><line x1="45.0" y1="132.0" x2="45.0" y2="138.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="50.0" y="130.0" fill="currentColor">l</text><line x1="62.8" y1="119.7" x2="144.7" y2="150.3" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="108.75" y="130.0" fill="currentColor">t</text><line x1="280.0" y1="132.0" x2="280.0" y2="138.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="285.0" y="130.0" fill="currentColor">l</text><line x1="297.8" y1="119.7" x2="379.7" y2="150.3" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="343.75" y="130.0" fill="currentColor">r</text><line x1="515.0" y1="132.0" x2="515.0" y2="138.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="520.0" y="130.0" fill="currentColor">n</text><line x1="45.0" y1="176.0" x2="45.0" y2="182.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="50.0" y="174.0" fill="currentColor">l</text><line x1="261.9" y1="162.7" x2="157.1" y2="195.3" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="214.5" y="174.0" fill="currentColor">l</text><line x1="379.1" y1="161.9" x2="251.4" y2="196.1" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="320.25" y="174.0" fill="currentColor">k</text><line x1="381.4" y1="167.1" x2="343.1" y2="190.9" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="367.25" y="174.0" fill="currentColor">m</text><line x1="497.8" y1="165.1" x2="438.2" y2="192.9" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="473.0" y="174.0" fill="currentColor">d</text><line x1="515.0" y1="176.0" x2="515.0" y2="182.0" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="520.0" y="174.0" fill="currentColor">s</text><line x1="496.1" y1="202.8" x2="63.9" y2="243.2" stroke="currentColor" marker-end="url(#eight-word-trie-arrow)"/><text x="285.0" y="218.0" fill="currentColor">e</text><circle cx="280" cy="25" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="30" text-anchor="middle" fill="currentColor">root</text><circle cx="45.0" cy="69" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="45.0" y="74" text-anchor="middle" fill="currentColor">b</text><circle cx="280.0" cy="69" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280.0" y="74" text-anchor="middle" fill="currentColor">d</text><circle cx="515.0" cy="69" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="515.0" y="74" text-anchor="middle" fill="currentColor">s</text><circle cx="45.0" cy="113" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="45.0" y="118" text-anchor="middle" fill="currentColor">ba</text><circle cx="280.0" cy="113" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280.0" y="118" text-anchor="middle" fill="currentColor">do*</text><circle cx="515.0" cy="113" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="515.0" y="118" text-anchor="middle" fill="currentColor">se</text><circle cx="45.0" cy="157" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="45.0" y="162" text-anchor="middle" fill="currentColor">bal</text><circle cx="162.5" cy="157" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="162.5" y="162" text-anchor="middle" fill="currentColor">bat*</text><circle cx="280.0" cy="157" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280.0" y="162" text-anchor="middle" fill="currentColor">dol</text><circle cx="397.5" cy="157" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="397.5" y="162" text-anchor="middle" fill="currentColor">dor</text><circle cx="515.0" cy="157" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="515.0" y="162" text-anchor="middle" fill="currentColor">sen</text><circle cx="45.0" cy="201" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="45.0" y="206" text-anchor="middle" fill="currentColor">ball*</text><circle cx="139.0" cy="201" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="139.0" y="206" text-anchor="middle" fill="currentColor">doll*</text><circle cx="233.0" cy="201" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="233.0" y="206" text-anchor="middle" fill="currentColor">dork*</text><circle cx="327.0" cy="201" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="327.0" y="206" text-anchor="middle" fill="currentColor">dorm*</text><circle cx="421.0" cy="201" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="421.0" y="206" text-anchor="middle" fill="currentColor">send*</text><circle cx="515.0" cy="201" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="515.0" y="206" text-anchor="middle" fill="currentColor">sens</text><circle cx="45.0" cy="245" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="45.0" y="250" text-anchor="middle" fill="currentColor">sense*</text></svg><figcaption>root to b: b; root to d: d; root to s: s; b to ba: a; d to do*: o; s to se: e; ba to bal: l; ba to bat*: t; do* to dol: l; do* to dor: r; se to sen: n; bal to ball*: l; dol to doll*: l; dor to dork*: k; dor to dorm*: m; sen to send*: d; sen to sens: s; sens to sense*: e</figcaption></figure>
+<p>The union of nonempty prefixes contains <strong>18 nodes</strong>; including the root gives 19. There are eight end-of-word markers, including internal prefix <strong>do*</strong>, which is also a prefix of doll, dork and dorm. Searching "dor" returns false as a whole word but true as a prefix. Searching "do" returns true although it has children. The diagram labels each node by its complete prefix so shared paths can be audited.</p>
+<pre><code>STARTS-WITH(root,prefix)
+  node ← root
+  for each character c in prefix:
+    if node.children[c] is absent: return false
+    node ← node.children[c]
+  return true</code></pre>
+<p>INSERT and SEARCH above take O(L) for a length-L key when child selection is O(1). Reaching a prefix costs O(L), but listing completions also costs the visited subtree/output size. Dense alphabet arrays need O(R·nodes) child storage; sparse maps use storage closer to the number of actual edges but may change lookup constants or complexity. Hash tables provide expected whole-key lookup, not native prefix enumeration; balanced trees provide ordered traversal but compare strings character by character. Tries trade higher pointer overhead for direct prefix navigation.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 4: NAIVE STRING MATCHING =================== -->
@@ -523,7 +466,11 @@ NAIVE-MATCH(T, P)
           <li><strong>No preprocessing required.</strong></li>
         </ul>
       </div>
-    </div>
+    <h3 id="naive-string-matching-algorithm">Naive String Matching: Exact Eleven-Shift Trace</h3>
+<p>At each valid shift compare P[j] with T[s+j] left to right, stopping at the first mismatch. A successful alignment requires all m characters; a mismatch advances the shift by exactly one, not by the number already compared. January 2024 gives T="1110101011101100", P="101110". There are n−m+1=11 alignments:</p>
+<div class="table-wrapper"><table class="data-table"><caption>Naive matching: shifts 0 through 10 inclusive</caption><thead><tr><th scope="col">Shift</th><th scope="col">Text window of length 6</th><th scope="col">Result</th></tr></thead><tbody><tr><td>0</td><td>111010</td><td>mismatch</td></tr><tr><td>1</td><td>110101</td><td>mismatch</td></tr><tr><td>2</td><td>101010</td><td>mismatch</td></tr><tr><td>3</td><td>010101</td><td>mismatch</td></tr><tr><td>4</td><td>101011</td><td>mismatch</td></tr><tr><td>5</td><td>010111</td><td>mismatch</td></tr><tr><td>6</td><td>101110</td><td>match</td></tr><tr><td>7</td><td>011101</td><td>mismatch</td></tr><tr><td>8</td><td>111011</td><td>mismatch</td></tr><tr><td>9</td><td>110110</td><td>mismatch</td></tr><tr><td>10</td><td>101100</td><td>mismatch</td></tr></tbody></table></div>
+<p>Only s=6 matches, so the one-based starting position is 7. On that alignment all six characters agree. For a nonempty pattern of length at most n, the best behaviour has a first-character mismatch at each shift, Θ(n−m+1); the worst compares m characters at each shift, Θ((n−m+1)m). Often O(n) and O(nm) are used as simpler bounds, but they conceal the role of m near n. Extra space is O(1), excluding output matches. No pattern preprocessing is needed.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 5: RABIN-KARP =================== -->
@@ -583,12 +530,18 @@ RABIN-KARP(T, P, d, q)
         <ul>
           <li><strong>Preprocessing:</strong> O(m).</li>
           <li><strong>Average Case:</strong> O(n + m) — few spurious hits.</li>
-          <li><strong>Worst Case:</strong> O(m · n) — all hash matches are spurious (hash collisions).</li>
+          <li><strong>Worst Case:</strong> O(m · n) — many windows require character verification.</li>
           <li><strong>Space:</strong> O(1).</li>
           <li><strong>Advantage:</strong> Multiple pattern search — can search for multiple patterns simultaneously.</li>
         </ul>
       </div>
-    </div>
+    <h3 id="rabin-karp-string-matching">Rabin–Karp Rolling Hash and Spurious Hits</h3>
+<p>Hash each length-m window as a base-d number modulo prime q, using numeric character codes. Horner accumulation p←(d·p+code) mod q takes Θ(m) time without computing the full exponentially large number. Precompute h=d^(m−1) mod q. To slide, remove the outgoing code times h, multiply the remainder by d and add the new code: tₛ₊₁=(d(tₛ−T[s]h)+T[s+m]) mod q. Normalise negative remainders if the implementation's % can be negative.</p>
+<p><strong>Teaching example with both collision and match:</strong> T="152626", P="26", d=10, q=11. Pattern hash is 26 mod 11=4 and h=10. The first window "15" also hashes to 4 but differs character-by-character: a spurious hit. Rolling to "52" gives (10(4−1·10)+2) mod 11=8. Continue as below, verifying characters whenever a hash equals 4.</p>
+<div class="table-wrapper"><table class="data-table"><caption>Rabin–Karp: all five valid shifts</caption><thead><tr><th scope="col">Shift</th><th scope="col">Window</th><th scope="col">Hash mod 11</th><th scope="col">Action</th></tr></thead><tbody><tr><td>0</td><td>15</td><td>4</td><td>spurious hit</td></tr><tr><td>1</td><td>52</td><td>8</td><td>hash mismatch</td></tr><tr><td>2</td><td>26</td><td>4</td><td>match</td></tr><tr><td>3</td><td>62</td><td>7</td><td>hash mismatch</td></tr><tr><td>4</td><td>26</td><td>4</td><td>match</td></tr></tbody></table></div>
+<p><a href="unit-3.html#hashing-collision-resolution-techniques">Review Unit 3 hashing and collision resolution</a> for the other half of the January 2026 combined question.</p><p>Equal hashes filter candidates; they never certify equality. Correctness is deterministic when candidates are verified. Expected O(n+m) needs few false candidates under an appropriate hash/input assumption; worst case Θ((n−m+1)m) occurs when many candidates require m character comparisons. Even many true overlapping matches can cause verification work, so “all hash matches must be spurious” is not a necessary worst-case condition. Hash collisions change speed, not correctness, if verification remains.</p>
+<p>Single-pattern auxiliary hash state is O(1), excluding inputs and output. Equal-length multi-pattern matching can compare a window hash against a set of pattern hashes, then verify candidate strings; maintaining that set has additional cost. Never claim this single-pattern pseudocode solves arbitrary-length multi-pattern search for free.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 6: KMP =================== -->
@@ -683,290 +636,39 @@ KMP-SEARCH(T, P)
           <li><strong>No worst case degradation</strong> — unlike Naive and Rabin-Karp.</li>
         </ul>
       </div>
-    </div>
+    <h3 id="kmp-string-matching-and-lps">KMP String Matching and the Exact LPS Trace</h3>
+<p>A proper prefix excludes the whole string; a proper suffix does likewise. LPS[i] is the length of the longest proper prefix of P[0..i] that is also its suffix. For P="ababd", the prefixes "a","ab","aba","abab","ababd" have LPS lengths <strong>[0,0,1,2,0]</strong>: "aba" shares "a", "abab" shares "ab", and "ababd" shares no nonempty proper prefix/suffix. At its last character, fallback length 2→0 still mismatches d, yielding 0. This is preprocessing on the pattern only.</p>
+<p><strong>December 2024 exact strings:</strong> T="ababcabcabababd" (15 characters), P="ababd" (5). Each row records the compared indices before the action and the resulting indices after it. This one-comparison-per-row version is equivalent to the existing pseudocode, which may perform the next mismatch check in the same loop iteration.</p>
+<div class="table-wrapper"><table class="data-table"><caption>KMP: every character comparison and fallback</caption><thead><tr><th scope="col">i before</th><th scope="col">j before</th><th scope="col">T[i]</th><th scope="col">P[j]</th><th scope="col">Action</th><th scope="col">i after</th><th scope="col">j after</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>a</td><td>a</td><td>advance both</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>b</td><td>b</td><td>advance both</td><td>2</td><td>2</td></tr><tr><td>2</td><td>2</td><td>a</td><td>a</td><td>advance both</td><td>3</td><td>3</td></tr><tr><td>3</td><td>3</td><td>b</td><td>b</td><td>advance both</td><td>4</td><td>4</td></tr><tr><td>4</td><td>4</td><td>c</td><td>d</td><td>fallback j only</td><td>4</td><td>2</td></tr><tr><td>4</td><td>2</td><td>c</td><td>a</td><td>fallback j only</td><td>4</td><td>0</td></tr><tr><td>4</td><td>0</td><td>c</td><td>a</td><td>advance text</td><td>5</td><td>0</td></tr><tr><td>5</td><td>0</td><td>a</td><td>a</td><td>advance both</td><td>6</td><td>1</td></tr><tr><td>6</td><td>1</td><td>b</td><td>b</td><td>advance both</td><td>7</td><td>2</td></tr><tr><td>7</td><td>2</td><td>c</td><td>a</td><td>fallback j only</td><td>7</td><td>0</td></tr><tr><td>7</td><td>0</td><td>c</td><td>a</td><td>advance text</td><td>8</td><td>0</td></tr><tr><td>8</td><td>0</td><td>a</td><td>a</td><td>advance both</td><td>9</td><td>1</td></tr><tr><td>9</td><td>1</td><td>b</td><td>b</td><td>advance both</td><td>10</td><td>2</td></tr><tr><td>10</td><td>2</td><td>a</td><td>a</td><td>advance both</td><td>11</td><td>3</td></tr><tr><td>11</td><td>3</td><td>b</td><td>b</td><td>advance both</td><td>12</td><td>4</td></tr><tr><td>12</td><td>4</td><td>a</td><td>d</td><td>fallback j only</td><td>12</td><td>2</td></tr><tr><td>12</td><td>2</td><td>a</td><td>a</td><td>advance both</td><td>13</td><td>3</td></tr><tr><td>13</td><td>3</td><td>b</td><td>b</td><td>advance both</td><td>14</td><td>4</td></tr><tr><td>14</td><td>4</td><td>d</td><td>d</td><td>match at 10; fallback</td><td>15</td><td>0</td></tr></tbody></table></div>
+<p>The match begins at 15−5=<strong>10</strong>, not 11 (which is its one-based position). At i=4,j=4 the c/d mismatch falls back to j=2; the same text character is compared again without moving i backwards, then j falls to 0. Only j retreats. After a full match set j=LPS[m−1] to find overlapping matches rather than restarting the text pointer.</p>
+<p>LPS construction is Θ(m): each forward pattern step increases the matched length by at most one, while fallback decreases it; the total number of fallback steps is linear. The same amortized argument gives Θ(n) matching: text i never retreats, and j cannot decrease more often than previous advances permit. Overall Θ(n+m) worst-case time and Θ(m) auxiliary space, independent of hash assumptions. Calling KMP “O(n)” without separating preprocessing hides the pattern cost.</p>
+<figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="kmp-fallback-on-ababd-title kmp-fallback-on-ababd-desc"><title id="kmp-fallback-on-ababd-title">kmp fallback on ababd</title><desc id="kmp-fallback-on-ababd-desc">abab to ab: LPS[3]=2; ab to empty: LPS[1]=0</desc><defs><marker id="kmp-fallback-on-ababd-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="99.0" y1="130.0" x2="261.0" y2="130.0" stroke="currentColor" marker-end="url(#kmp-fallback-on-ababd-arrow)"/><text x="185.0" y="125.0" fill="currentColor">LPS[3]=2</text><line x1="299.0" y1="130.0" x2="461.0" y2="130.0" stroke="currentColor" marker-end="url(#kmp-fallback-on-ababd-arrow)"/><text x="385.0" y="125.0" fill="currentColor">LPS[1]=0</text><circle cx="80" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="80" y="135" text-anchor="middle" fill="currentColor">abab</text><circle cx="280" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="135" text-anchor="middle" fill="currentColor">ab</text><circle cx="480" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="480" y="135" text-anchor="middle" fill="currentColor">empty</text></svg><figcaption>abab to ab: LPS[3]=2; ab to empty: LPS[1]=0</figcaption></figure>
+</div>
   </section>
 
   <!-- =================== SECTION 7: HORSPOOL =================== -->
-  <section class="section" id="horspool">
-    <h2 class="section-title">
+  <section class="section" id="horspool"><h2 class="section-title">
       <i class="fas fa-step-backward"></i> Horspool Algorithm
       <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
-        <p>Horspool is a simplified version of Boyer-Moore. It compares the pattern <strong>right-to-left</strong> against the text, but uses only the <strong>bad character heuristic</strong> based on the <strong>rightmost character</strong> of the text window to determine the shift amount.</p>
-        <p style="margin-top:0.5rem;"><strong>Key Idea:</strong> When a mismatch occurs, look at the text character aligned with the <strong>last character</strong> of the pattern window and shift based on a precomputed <strong>shift table</strong>.</p>
-      </div>
-
-      <div class="algo-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-table"></i> Shift Table Construction</div>
-        <p>For each character c in the alphabet:</p>
-        <div class="formula">shift[c] = m  (if c not in pattern or c is last char of pattern only)</div>
-        <div class="formula" style="margin-top:0.3rem;">shift[c] = m − 1 − (rightmost position of c in P[0..m-2])</div>
-        <p style="margin-top:0.5rem;"><strong>Example:</strong> P = "BARBER", m = 6</p>
-        <div class="table-wrapper" style="margin-top:0.4rem;">
-          <table class="data-table" style="text-align:center;">
-            <thead><tr><th>Char</th><th>B</th><th>A</th><th>R</th><th>E</th><th>Others</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Shift</strong></td><td>2</td><td>4</td><td>1</td><td>3</td><td>6</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="pseudocode-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Horspool</div>
-        <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
-HORSPOOL(T, P)
-  n = len(T), m = len(P)
-  Build shift table for P
-  i = m - 1      // Start at rightmost position of first window
-  while i < n:
-    k = 0        // Number of matches from the right
-    while k < m and P[m-1-k] == T[i-k]:
-      k++
-    if k == m:
-      print "Match at", i - m + 1
-    i += shift[T[i]]    // Shift based on rightmost text character
-        </pre>
-      </div>
-
-      <div class="trace-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: T="JIMBOBBARBERDAN", P="BARBER"</div>
-        <div class="trace-step"><span class="step-label">Shift table:</span> B=2, A=4, R=1, E=3, others=6</div>
-        <div class="trace-step"><span class="step-label">Window 1:</span> T[0..5]="JIMBO<span class="mismatch">B</span>" — right char B. Compare from right: P[5]='R' vs T[5]='B' → mismatch. Shift by shift['B']=2</div>
-        <div class="trace-step"><span class="step-label">Window 2:</span> T[2..7]="MBOBB<span class="mismatch">A</span>" — right char A. Mismatch. Shift by shift['A']=4</div>
-        <div class="trace-step"><span class="step-label">Window 3:</span> T[6..11]="<span class="highlight-el">BARBER</span>" — all match right-to-left → <strong>Match at 6</strong> ✅</div>
-      </div>
-
-      <div class="complexity-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Horspool</div>
-        <ul>
-          <li><strong>Preprocessing:</strong> O(m + |Σ|) where |Σ| = alphabet size.</li>
-          <li><strong>Best Case:</strong> O(n/m) — large shifts skip many characters.</li>
-          <li><strong>Average Case:</strong> O(n) — sub-linear in practice.</li>
-          <li><strong>Worst Case:</strong> O(m · n) — pathological inputs.</li>
-          <li><strong>Space:</strong> O(|Σ|) for shift table.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </h2><div class="section-content"><p><strong>Background only — 0 direct marks in 2023–2026.</strong></p><p>Horspool compares a pattern from its right end and uses a precomputed bad-character shift table. Initialise shifts to pattern length, then update entries for pattern positions before the final character. On mismatch the text character aligned with the last pattern position determines the shift. It can skip many positions on ordinary text but has quadratic worst-case behaviour. Exact details differ from full Boyer–Moore. This legacy background topic has zero direct marks in 2023–2026; keep it as a comparison reference after mastering the four examined supplementary topics.</p></div></section>
 
   <!-- =================== SECTION 8: BOYER-MOORE =================== -->
-  <section class="section" id="boyer-moore">
-    <h2 class="section-title">
+  <section class="section" id="boyer-moore"><h2 class="section-title">
       <i class="fas fa-fast-backward"></i> Boyer-Moore Algorithm
       <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
-        <p>Boyer-Moore is the <strong>most efficient</strong> practical string matching algorithm. Like Horspool, it compares right-to-left but uses <strong>two heuristics</strong> for shifting:</p>
-        <ol style="margin:0.5rem 0 0 1rem;line-height:1.9;">
-          <li><strong>Bad Character Heuristic:</strong> On mismatch at T[i], find the rightmost occurrence of T[i] in the pattern and align. If T[i] doesn't occur in pattern, shift past it entirely.</li>
-          <li><strong>Good Suffix Heuristic:</strong> If a suffix of the pattern has matched, find the rightmost occurrence of that suffix elsewhere in the pattern and align. This prevents missing matches.</li>
-        </ol>
-        <p style="margin-top:0.5rem;"><strong>Shift = max(bad character shift, good suffix shift).</strong></p>
-      </div>
-
-      <div class="concept-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-chess"></i> Bad Character Heuristic</div>
-        <p>When T[i] ≠ P[j] (mismatch at position j in pattern):</p>
-        <ul>
-          <li>If T[i] occurs in P at position k (k &lt; j): shift pattern so P[k] aligns with T[i].</li>
-          <li>If T[i] does not occur in P: shift entire pattern past T[i].</li>
-        </ul>
-        <p style="margin-top:0.4rem;"><strong>Shift = max(1, j − rightmost position of T[i] in P)</strong></p>
-      </div>
-
-      <div class="concept-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-chess-rook"></i> Good Suffix Heuristic</div>
-        <p>When P[j+1..m-1] has matched (good suffix) but P[j] mismatches:</p>
-        <ul>
-          <li><strong>Case 1:</strong> The good suffix occurs elsewhere in P → align to that occurrence.</li>
-          <li><strong>Case 2:</strong> A prefix of P matches a suffix of the good suffix → align to that prefix.</li>
-          <li><strong>Case 3:</strong> Neither → shift by m.</li>
-        </ul>
-      </div>
-
-      <div class="complexity-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Boyer-Moore</div>
-        <ul>
-          <li><strong>Preprocessing:</strong> O(m + |Σ|) for bad char + O(m) for good suffix.</li>
-          <li><strong>Best Case:</strong> O(n/m) — can skip large portions of text. Fastest practical algorithm.</li>
-          <li><strong>Average Case:</strong> O(n) — sub-linear in practice.</li>
-          <li><strong>Worst Case:</strong> O(m · n) without Galil rule; O(n) with Galil rule.</li>
-          <li><strong>Space:</strong> O(m + |Σ|).</li>
-        </ul>
-      </div>
-
-      <div class="important-note" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-star"></i> Boyer-Moore vs Horspool</div>
-        <p>Horspool uses only the bad character heuristic (simplified). Boyer-Moore uses both bad character AND good suffix heuristics, making it more efficient. Boyer-Moore is the <strong>gold standard</strong> for single-pattern text search in practice (used in grep, text editors).</p>
-      </div>
-    </div>
-  </section>
+    </h2><div class="section-content"><p><strong>Background only — 0 direct marks in 2023–2026.</strong></p><p>Boyer–Moore compares from the pattern end and combines bad-character and good-suffix information to skip alignments. The good-suffix rule exploits an already-matched suffix, whereas the bad-character rule uses the mismatching text character. Performance depends on the precise variant and preprocessing; do not transfer the original algorithm’s bounds to every simplified implementation. It is useful on long alphabets and long patterns but requires more shift-table reasoning than naive matching. This retained background section has zero direct marks in the 2023–2026 window and is not one of the four priority CO5 topics.</p></div></section>
 
   <!-- =================== SECTION 9: REGEX =================== -->
-  <section class="section" id="regex">
-    <h2 class="section-title">
+  <section class="section" id="regex"><h2 class="section-title">
       <i class="fas fa-asterisk"></i> Regular Expressions
       <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <div class="definition-box">
-        <div class="box-title"><i class="fas fa-quote-left"></i> Definition</div>
-        <p>A <strong>Regular Expression (regex)</strong> is a sequence of characters that defines a <strong>search pattern</strong>. It is used for pattern matching in strings — validating formats, searching text, and replacing substrings.</p>
-      </div>
-
-      <div class="concept-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-list"></i> Common Regex Operators</div>
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead><tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Matches</th></tr></thead>
-            <tbody>
-              <tr><td><code>.</code></td><td>Any single character</td><td><code>a.c</code></td><td>abc, adc, a1c</td></tr>
-              <tr><td><code>*</code></td><td>Zero or more of previous</td><td><code>ab*c</code></td><td>ac, abc, abbc</td></tr>
-              <tr><td><code>+</code></td><td>One or more of previous</td><td><code>ab+c</code></td><td>abc, abbc (not ac)</td></tr>
-              <tr><td><code>?</code></td><td>Zero or one of previous</td><td><code>ab?c</code></td><td>ac, abc</td></tr>
-              <tr><td><code>|</code></td><td>Alternation (OR)</td><td><code>cat|dog</code></td><td>cat, dog</td></tr>
-              <tr><td><code>[abc]</code></td><td>Character class</td><td><code>[aeiou]</code></td><td>Any vowel</td></tr>
-              <tr><td><code>[^abc]</code></td><td>Negated class</td><td><code>[^0-9]</code></td><td>Any non-digit</td></tr>
-              <tr><td><code>^</code></td><td>Start of string</td><td><code>^Hello</code></td><td>Starts with Hello</td></tr>
-              <tr><td><code>$</code></td><td>End of string</td><td><code>end$</code></td><td>Ends with end</td></tr>
-              <tr><td><code>{n}</code></td><td>Exactly n repetitions</td><td><code>a{3}</code></td><td>aaa</td></tr>
-              <tr><td><code>\d</code></td><td>Any digit [0-9]</td><td><code>\d{3}</code></td><td>123, 456</td></tr>
-              <tr><td><code>\w</code></td><td>Word character [a-zA-Z0-9_]</td><td><code>\w+</code></td><td>hello, var_1</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="concept-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-check-circle"></i> Regex Examples</div>
-        <ul style="line-height:2.2;">
-          <li><code>^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$</code> — Email validation.</li>
-          <li><code>^\d{10}$</code> — 10-digit phone number.</li>
-          <li><code>^[A-Z][a-z]+</code> — Capitalized word.</li>
-          <li><code>(ab|cd)*</code> — Zero or more repetitions of "ab" or "cd".</li>
-        </ul>
-      </div>
-
-      <div class="tip-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-lightbulb"></i> Regex and Automata</div>
-        <p>Every regex can be converted to a <strong>Finite Automaton (NFA or DFA)</strong> for matching. NFA construction takes O(m) time and matching takes O(n) with NFA simulation. This is the theoretical foundation of regex engines.</p>
-      </div>
-    </div>
-  </section>
+    </h2><div class="section-content"><p><strong>Background only — 0 direct marks in 2023–2026.</strong></p><p>Regular expressions describe languages of strings using operations such as concatenation, alternation and repetition, rather than matching only one literal pattern. A finite-automaton engine tracks states; a backtracking engine can have very different worst-case behaviour on the same expression. Escaping, anchors and character classes depend on the syntax in use. A literal dot and a wildcard dot are not the same pattern. This background bridge to string processing receives zero direct marks in the 2023–2026 calibration window; it is retained for reference, not expanded into an unofficial fifth theory unit.</p></div></section>
 
   <!-- =================== SECTION 10: COMPRESSION =================== -->
-  <section class="section" id="compression">
-    <h2 class="section-title">
+  <section class="section" id="compression"><h2 class="section-title">
       <i class="fas fa-compress-alt"></i> Elementary Data Compression
       <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-
-      <h3 id="compression-1-huffman-coding" style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-tree"></i> 1. Huffman Coding</h3>
-
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
-        <p><strong>Huffman Coding</strong> is a lossless data compression algorithm that assigns <strong>variable-length codes</strong> to characters based on their frequencies. More frequent characters get <strong>shorter codes</strong>; less frequent characters get longer codes. The codes are <strong>prefix-free</strong> (no code is a prefix of another).</p>
-        <p style="margin-top:0.5rem;"><strong>Paradigm:</strong> Greedy Algorithm.</p>
-      </div>
-
-      <div class="algo-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-list-ol"></i> Huffman Algorithm Steps</div>
-        <ol style="margin:0.5rem 0 0 1rem;line-height:2.0;">
-          <li>Count <strong>frequency</strong> of each character.</li>
-          <li>Create a leaf node for each character and add to a <strong>min-heap (priority queue)</strong>.</li>
-          <li>While heap has more than 1 node:
-            <ul>
-              <li>Extract two nodes with minimum frequency.</li>
-              <li>Create a new internal node with frequency = sum of the two.</li>
-              <li>Make the two extracted nodes left and right children.</li>
-              <li>Insert new node back into heap.</li>
-            </ul>
-          </li>
-          <li>The remaining node is the <strong>root of the Huffman tree</strong>.</li>
-          <li>Assign codes: left edge = 0, right edge = 1. Traverse root to each leaf to get codes.</li>
-        </ol>
-      </div>
-
-      <div class="trace-box" style="margin-top:0.8rem;">
-        <div class="box-title"><i class="fas fa-shoe-prints"></i> Example: Huffman Coding</div>
-        <p style="margin:0.3rem 0;font-size:0.9rem;">Characters: A(5), B(9), C(12), D(13), E(16), F(45)</p>
-        <div class="trace-step"><span class="step-label">Step 1:</span> Heap: [A:5, B:9, C:12, D:13, E:16, F:45]</div>
-        <div class="trace-step"><span class="step-label">Step 2:</span> Merge A(5)+B(9)=AB(14). Heap: [C:12, D:13, AB:14, E:16, F:45]</div>
-        <div class="trace-step"><span class="step-label">Step 3:</span> Merge C(12)+D(13)=CD(25). Heap: [AB:14, E:16, CD:25, F:45]</div>
-        <div class="trace-step"><span class="step-label">Step 4:</span> Merge AB(14)+E(16)=ABE(30). Heap: [CD:25, ABE:30, F:45]</div>
-        <div class="trace-step"><span class="step-label">Step 5:</span> Merge CD(25)+ABE(30)=CDABE(55). Heap: [F:45, CDABE:55]</div>
-        <div class="trace-step"><span class="step-label">Step 6:</span> Merge F(45)+CDABE(55)=Root(100).</div>
-      </div>
-
-      <div class="table-wrapper" style="margin-top:0.6rem;">
-        <table class="data-table huffman-table">
-          <thead><tr><th>Character</th><th>Frequency</th><th>Huffman Code</th><th>Bits</th></tr></thead>
-          <tbody>
-            <tr><td>F</td><td>45</td><td>0</td><td>1</td></tr>
-            <tr><td>C</td><td>12</td><td>100</td><td>3</td></tr>
-            <tr><td>D</td><td>13</td><td>101</td><td>3</td></tr>
-            <tr><td>A</td><td>5</td><td>1100</td><td>4</td></tr>
-            <tr><td>B</td><td>9</td><td>1101</td><td>4</td></tr>
-            <tr><td>E</td><td>16</td><td>111</td><td>3</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="complexity-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Huffman Coding</div>
-        <ul>
-          <li><strong>Building tree:</strong> O(n log n) — n insertions/extractions from min-heap.</li>
-          <li><strong>Encoding:</strong> O(total characters × max code length).</li>
-          <li><strong>Space:</strong> O(n) for tree + code table.</li>
-          <li><strong>Lossless:</strong> Yes — original data can be perfectly reconstructed.</li>
-          <li><strong>Optimal:</strong> Among all prefix-free codes, Huffman gives minimum total bits.</li>
-        </ul>
-      </div>
-
-      <hr style="margin:1.5rem 0;border:none;border-top:1px dashed var(--border);">
-
-      <h3 id="compression-2-run-length-encoding-rle" style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-compress"></i> 2. Run-Length Encoding (RLE)</h3>
-
-      <div class="concept-box">
-        <div class="box-title"><i class="fas fa-info-circle"></i> Concept</div>
-        <p><strong>Run-Length Encoding</strong> replaces consecutive runs of the same character with the character followed by its count. Simple and effective for data with many repeated consecutive characters.</p>
-      </div>
-
-      <div class="trace-box" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-shoe-prints"></i> RLE Examples</div>
-        <div class="trace-step"><span class="step-label">Input:</span>  AAABBBCCDDDDDD</div>
-        <div class="trace-step"><span class="step-label">Output:</span> A3B3C2D6</div>
-        <div class="trace-step"><span class="step-label">Savings:</span> 14 chars → 8 chars (43% reduction) ✅</div>
-        <div class="trace-step" style="margin-top:0.5rem;"><span class="step-label">Input:</span>  ABCDEFG</div>
-        <div class="trace-step"><span class="step-label">Output:</span> A1B1C1D1E1F1G1</div>
-        <div class="trace-step"><span class="step-label">Result:</span> 7 chars → 14 chars (expansion!) — RLE is BAD for non-repetitive data ✗</div>
-      </div>
-
-      <div class="important-note" style="margin-top:0.6rem;">
-        <div class="box-title"><i class="fas fa-star"></i> RLE vs Huffman</div>
-        <div class="table-wrapper" style="margin-top:0.4rem;">
-          <table class="data-table">
-            <thead><tr><th>Feature</th><th>Huffman Coding</th><th>Run-Length Encoding</th></tr></thead>
-            <tbody>
-              <tr><td>Type</td><td>Variable-length code</td><td>Count-based</td></tr>
-              <tr><td>Best for</td><td>Varied frequency data</td><td>Many consecutive repeats</td></tr>
-              <tr><td>Lossless</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>Complexity</td><td>O(n log n)</td><td>O(n)</td></tr>
-              <tr><td>Can expand?</td><td>Never worse than fixed-length</td><td>Yes (no repeats → expansion)</td></tr>
-              <tr><td>Used in</td><td>JPEG, MP3, ZIP</td><td>BMP, Fax machines, PCX</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
+    </h2><div class="section-content"><p><strong>Background only — 0 direct marks in 2023–2026.</strong></p><h3 id="compression-1-huffman-coding" style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-tree"></i> 1. Huffman Coding</h3><h3 id="compression-2-run-length-encoding-rle" style="color:var(--accent);font-size:1.05rem;margin-bottom:0.6rem;"><i class="fas fa-compress"></i> 2. Run-Length Encoding (RLE)</h3><p>Compression represents data with fewer bits by exploiting redundancy. Huffman coding uses symbol frequencies to construct a prefix-free code tree; frequent symbols get shorter codes. Run-length encoding stores repeated runs as a count and symbol; it works well for long runs but may expand alternating input. Lossless decoding must reproduce the original sequence exactly. Compression is not substring searching, and neither method replaces KMP or Rabin–Karp. These legacy subsections have zero direct marks in the 2023–2026 calibration window and are intentionally brief background, with their original anchors retained for existing notes and links.</p></div></section>
 
   <!-- =================== SECTION 11: FORMULAS =================== -->
   <section class="section" id="formulas">
@@ -1083,7 +785,8 @@ HORSPOOL(T, P)
         </table>
       </div>
 
-    </div>
+    <div class="table-wrapper"><table class="data-table"><caption>Seven-way comparison for nonempty patterns with m≤n</caption><thead><tr><th scope="col">Feature</th><th scope="col">Naive</th><th scope="col">Rabin–Karp</th><th scope="col">KMP</th></tr></thead><tbody><tr><td>Pattern preprocessing</td><td>None</td><td>Θ(m) hash</td><td>Θ(m) LPS</td></tr><tr><td>Typical full scan</td><td>Up to O(nm)</td><td>Expected O(n+m), assumptions needed</td><td>O(n+m) including preprocessing</td></tr><tr><td>Worst total time</td><td>O((n−m+1)m)</td><td>O((n−m+1)m)</td><td>Θ(n+m)</td></tr><tr><td>Extra space</td><td>O(1)</td><td>O(1) single pattern</td><td>Θ(m)</td></tr><tr><td>Evidence of match</td><td>All characters equal</td><td>Hash equal AND characters equal</td><td>Full state reaches m</td></tr><tr><td>Mismatch action</td><td>Shift by one</td><td>Roll window hash</td><td>Fallback using LPS</td></tr><tr><td>Main risk</td><td>Repeated comparisons</td><td>Spurious/expensive hits</td><td>Wrong prefix/fallback indices</td></tr></tbody></table></div>
+</div>
   </section>
   
   <!-- =================== SECTION 14: MCQs =================== -->
@@ -1829,7 +1532,8 @@ HORSPOOL(T, P)
         </div>
 
       </div>
-    </div>
+    <p><strong>Four eight-mark rehearsal models (self-review):</strong> Rabin–Karp algorithm (6) and KMP comparison (2); naive pseudocode (4) and the eleven-shift binary trace (4); trie definition/storage (3) and exact eight-word construction (5); KMP explanation (3) and exact strings/LPS trace (5). Expected checkpoints: hash equality is not equality of strings, naive shift 6, KMP LPS [0,0,1,2,0] and match 10, and do marked terminal inside a 19-node trie. Legacy compression/regex drills below are optional background, not weight-calibrated priorities.</p><p><a href="../../../quiz/setup.html?subject=CST209&amp;unit=5">Open supplementary quiz practice</a>. This bank remains outside the four declared syllabus units and under source review; automatic scoring is not certification.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 18: REVISION =================== -->
@@ -1895,41 +1599,7 @@ HORSPOOL(T, P)
     </div>
   </section>
 
-  <section class="section" id="videos">
-    <h2 class="section-title">
-      <i class="fas fa-play-circle"></i> Watch &amp; Learn
-      <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
-      <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=kmp+string+matching+prefix+function" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">String matching with KMP</span>
-              <span class="video-link-meta">Prefix function and failure links &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=rabin+karp+rolling+hash+string+matching" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Rabin-Karp and rolling hash</span>
-              <span class="video-link-meta">Hashing for substring search &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=trie+data+structure+suffix+array+explained" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Tries and suffix structures</span>
-              <span class="video-link-meta">Trie insertion, search and autocomplete &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <section class="section" id="videos"><h2 class="section-title"><i class="fas fa-play-circle"></i> Watch &amp; Learn<i class="fas fa-chevron-up collapse-icon"></i></h2><div class="section-content"><p>Optional external lessons. Public watch pages checked 19 November 2026; playback and captions not device-tested. No YouTube request occurs until a link is selected. Not official course material.</p><ul class="video-list"><li><a class="video-link" href="https://www.youtube.com/watch?v=qQ8vS2btsxI" target="_blank" rel="noopener noreferrer">9.2 Rabin-Karp String Matching Algorithm — Abdul Bari · 23:50</a><p>Rolling hashes and verification. Watch metadata was available; one endpoint showed a sign-in/bot challenge. Playback availability must be checked on your device.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=V5-7GzOfADQ" target="_blank" rel="noopener noreferrer">9.1 Knuth-Morris-Pratt KMP String Matching Algorithm — Abdul Bari · 18:55</a><p>Naive comparison, prefixes and LPS. The creator description corrects an LPS example; our exact exam trace is independently computed.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=zIjfhVPRZCg" target="_blank" rel="noopener noreferrer">Data Structures: Tries — HackerRank · 04:54</a><p>Prefix navigation and complete-word flags; build the eight-word exam trie from our notes afterwards.</p></li></ul></div></section>
   </main><!-- end container -->
 
 <!-- FAB BUTTONS -->

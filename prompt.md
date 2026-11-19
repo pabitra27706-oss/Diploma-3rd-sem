@@ -1,15 +1,22 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-> **Current checkpoint — Phase 15, 2026-11-19:** `arena/fbc84d5d-diploma-3rd-sem`
-> (base `e83cd64`) contains the six CST207 parts and Mode A topic map. Local
-> gates: 159/159 Python, 13/13 README scripts, 14/14 deterministic Node; 0 PYQ
-> drift. 102 labelled questions have concept destinations; the one unlabelled
-> pool intentionally does not jump. All 25 new anchors, 17 diagrams and 15
-> verified watch-page links are recorded in `docs/phases/15-cst207-cso-content/record.md`.
-> **Owner-passed 2026-11-19.** All five theory units rechecked against 22
-> syllabus topic lines. Hosted Web CI `44483074003` failed at PYQ browser
-> smoke; no separate phone result was supplied. Do not start another phase
-> or open/merge a PR without direction.
+> **Current checkpoint — Phase 16, 2026-11-19:**
+> `arena/d7aa68ed-diploma-3rd-sem`, base `47d801b` (Phase 15 merged PR #29).
+> All six Algorithms parts implemented locally in the required unit order;
+> 105/105 questions have reviewed destinations (85 topic keys, 34 decisions),
+> 8/8 CO5 routes, 14 diagrams, 15 verified plain video links. Frozen data and
+> quiz trees unchanged. Owner verification is pending, not passed.
+> Local result: 166 Python tests, 13 README gates plus advisory syllabus check,
+> 14 deterministic Node suites; section-clipping regression included. Read
+> `docs/phases/16-cst209-algorithms-content/record.md` for final rebuild evidence,
+> exact route measurements, video caveats and owner URLs.
+> Base Web CI `44484813834` already failed at PYQ browser smoke. No hosted
+> Phase 16 run, screenshot artifact, device test or playback evidence exists.
+> Shell version `study-2026-11-19-algorithms`; generated head metadata changes
+> elsewhere are canonical rebuild output, not a reopening of other phases.
+> **No push, PR, merge, deploy or Phase 17.** Stop for “mark as pass” or
+> “add for later”. The §7 Termux fetch command is usable only after a separately
+> authorized push; this branch's new commit is local-only.
 
 > **Maintenance handoff — 2026-11-18:** On `arena/eec36cd0-diploma-3rd-sem`
 > (base `a2bb413`), Home now follows the manual theory checklist, uses the
@@ -351,7 +358,7 @@ no content: 0 revision entries and 0 answers are owner-verified.
 
 ## Termux delivery convention (post-phase test flow)
 
-Use the current Phase 15 command in `rule.md` §7 after the session branch is
+Use the current Phase 16 command in `rule.md` §7 after the session branch is
 pushed. The dedicated checkout preserves `/Diploma-3rd-sem/` as the base URL:
 `http://127.0.0.1:8012/Diploma-3rd-sem/`. This is local testing, not deployment.
 

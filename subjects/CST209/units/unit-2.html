@@ -67,7 +67,7 @@
   </style>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST209/units/unit-2.html">
-<meta name="app-build" content="study-2026-11-19-cso">
+<meta name="app-build" content="study-2026-11-19-algorithms">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unit 2 – Sorting | Algorithms">
@@ -259,7 +259,8 @@
           </span>
           <span class="jump-videos-arrow" aria-hidden="true">&rarr;</span>
         </a>
-    </div>
+    <p><strong>2023–2026 priority:</strong> Sorting accounts for 79/395 printed set marks (20.0%): efficient sorts 32 (Tier A), elementary sorts 30 (Tier A), radix/bucket and linear-time significance 17 (Tier B). Standalone Counting and Shell sorts are Tier S: syllabus-listed with zero direct marks in this window, not “unimportant forever”. Optional questions are included; these are historical weights, not predictions.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 2: SORTING PROBLEM =================== -->
@@ -431,7 +432,7 @@ INSERTION-SORT(A, n)
         <div class="box-title"><i class="fas fa-file-alt"></i> Pseudocode: Shell Sort</div>
         <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
 SHELL-SORT(A, n)
-  gap = n / 2
+  gap = floor(n / 2)
   while gap > 0
     for i = gap to n-1
       temp = A[i]
@@ -440,12 +441,12 @@ SHELL-SORT(A, n)
         A[j] = A[j - gap]
         j = j - gap
       A[j] = temp
-    gap = gap / 2
+    gap = floor(gap / 2)
         </pre>
       </div>
       <div class="trace-box" style="margin-top:0.6rem;">
         <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [8, 3, 6, 1, 5], gap=2 then gap=1</div>
-        <div class="trace-step"><span class="step-label">gap=2:</span> Compare positions 0&2, 1&3, 2&4 → [6, 1, 8, 3, 5] → partial ordering</div>
+        <div class="trace-step"><span class="step-label">gap=2:</span> Compare positions 0&2, 1&3, 2&4 → [5, 1, 6, 3, 8] → gap-sorted subsequences</div>
         <div class="trace-step"><span class="step-label">gap=1:</span> Standard insertion sort on nearly-sorted array → [1, 3, 5, 6, 8]</div>
         <div class="trace-step"><span class="step-label">Result:</span> [1, 3, 5, 6, 8] ✅</div>
       </div>
@@ -454,13 +455,17 @@ SHELL-SORT(A, n)
         <ul>
           <li><strong>Best Case:</strong> O(n log n)</li>
           <li><strong>Average Case:</strong> O(n^1.5) or O(n log² n) depending on gap sequence.</li>
-          <li><strong>Worst Case:</strong> O(n²) with Shell's original gap; O(n log² n) with Hibbard's gap.</li>
+          <li><strong>Worst Case:</strong> O(n²) with Shell's original halving gaps; other sequences have different bounds.</li>
           <li><strong>Space:</strong> O(1) — in-place.</li>
           <li><strong>Stable:</strong> No.</li>
         </ul>
       </div>
 
-    </div>
+    <p><strong>January 2026 exact Bubble Sort trace:</strong> ascending order, scan left to right, compare adjacent keys, and shrink the unsorted suffix boundary each pass. The maximum remaining key reaches the end of that region. Only swap strictly greater neighbours to retain stability. The flag detects an already ordered region.</p>
+<div class="table-wrapper"><table class="data-table"><caption>Bubble Sort on 25,57,48,37,12,92,86,33</caption><thead><tr><th scope="col">Pass</th><th scope="col">Whole array</th><th scope="col">Any swap?</th></tr></thead><tbody><tr><td>1</td><td>25, 48, 37, 12, 57, 86, 33, 92</td><td>yes</td></tr><tr><td>2</td><td>25, 37, 12, 48, 57, 33, 86, 92</td><td>yes</td></tr><tr><td>3</td><td>25, 12, 37, 48, 33, 57, 86, 92</td><td>yes</td></tr><tr><td>4</td><td>12, 25, 37, 33, 48, 57, 86, 92</td><td>yes</td></tr><tr><td>5</td><td>12, 25, 33, 37, 48, 57, 86, 92</td><td>yes</td></tr><tr><td>6</td><td>12, 25, 33, 37, 48, 57, 86, 92</td><td>no — early exit</td></tr></tbody></table></div>
+<p>The optimized best case needs n−1 comparisons and no swaps, Θ(n). The average/worst case is Θ(n²). Selection Sort always scans the rest to find its minimum, making exactly n(n−1)/2 key comparisons in all cases but at most n−1 swaps; swapping a distant minimum can reverse equal records, so it is unstable. Insertion Sort instead maintains a sorted prefix and shifts larger values right before inserting the held key. On sorted input it performs n−1 order checks; reverse input makes n(n−1)/2 shifts. It is stable if equal values are not shifted and is useful for nearly ordered small runs.</p>
+<p><strong>Tier S Shell reference:</strong> the diminishing-gap method performs insertion sort within each residue class; gap=1 finally makes the result fully sorted. Use integer floor division for halving gaps. For [8,3,6,1,5], gap 2 yields [5,1,6,3,8], then gap 1 yields [1,3,5,6,8]. Its bounds depend on the actual gap sequence; do not quote a universal n log n bound. The original halving sequence has O(n²) worst case, uses constant extra space and is unstable.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 4: EFFICIENT SORTING =================== -->
@@ -553,15 +558,15 @@ PARTITION(A, low, high)
       <div class="trace-box" style="margin-top:0.6rem;">
         <div class="box-title"><i class="fas fa-shoe-prints"></i> Trace: A = [10, 7, 8, 9, 1, 5], pivot=5 (last)</div>
         <div class="trace-step"><span class="step-label">Partition:</span> Elements ≤ 5: {1,5}, Elements > 5: {10,7,8,9}</div>
-        <div class="trace-step"><span class="step-label">After partition:</span> [1, <span class="highlight-el">5</span>, 10, 7, 8, 9] — pivot 5 at index 1</div>
+        <div class="trace-step"><span class="step-label">After partition:</span> [1, <span class="highlight-el">5</span>, 8, 9, 10, 7] — pivot 5 at index 1</div>
         <div class="trace-step"><span class="step-label">Recurse left:</span> [1] — sorted</div>
-        <div class="trace-step"><span class="step-label">Recurse right:</span> [10,7,8,9] → partition → [7,8,9,10]</div>
+        <div class="trace-step"><span class="step-label">Recurse right:</span> [8,9,10,7] → recurse to [7,8,9,10]</div>
         <div class="trace-step"><span class="step-label">Result:</span> [1, 5, 7, 8, 9, 10] ✅</div>
       </div>
       <div class="complexity-box" style="margin-top:0.6rem;">
         <div class="box-title"><i class="fas fa-chart-line"></i> Complexity: Quick Sort</div>
         <ul>
-          <li><strong>Recurrence (avg):</strong> T(n) = 2T(n/2) + O(n) → O(n log n)</li>
+          <li><strong>Recurrence (avg):</strong> Expected O(n log n) under random pivots; balanced recurrence is the best-case model.</li>
           <li><strong>Best Case:</strong> O(n log n) — pivot always divides array equally.</li>
           <li><strong>Average Case:</strong> O(n log n)</li>
           <li><strong>Worst Case:</strong> O(n²) — pivot is always min or max (sorted/reverse-sorted array).</li>
@@ -633,7 +638,18 @@ HEAP-SORT(A, n)
         </ul>
       </div>
 
-    </div>
+    <h3 id="quicksort-exam-partition-trace">Quick Sort: Exact Exam Partition Trace</h3>
+<p>The December 2024 input is 38,81,22,48,13,69,93,14,45,58,79,72. Use the existing <strong>Lomuto last-element pivot</strong> algorithm: scan j from low to high−1, maintain A[low..i]≤pivot, then swap pivot into i+1. Different partition conventions produce different intermediate arrays, so name yours. The following table records the <em>whole array after every partition</em>, in recursive left-first order, not just the final sorted list.</p>
+<div class="table-wrapper"><table class="data-table"><caption>December 2024 Quick Sort: zero-based inclusive bounds</caption><thead><tr><th scope="col">low</th><th scope="col">high</th><th scope="col">Pivot</th><th scope="col">Final pivot index</th><th scope="col">Whole array after partition</th></tr></thead><tbody><tr><td>0</td><td>11</td><td>72</td><td>8</td><td>38, 22, 48, 13, 69, 14, 45, 58, 72, 81, 79, 93</td></tr><tr><td>0</td><td>7</td><td>58</td><td>6</td><td>38, 22, 48, 13, 14, 45, 58, 69, 72, 81, 79, 93</td></tr><tr><td>0</td><td>5</td><td>45</td><td>4</td><td>38, 22, 13, 14, 45, 48, 58, 69, 72, 81, 79, 93</td></tr><tr><td>0</td><td>3</td><td>14</td><td>1</td><td>13, 14, 38, 22, 45, 48, 58, 69, 72, 81, 79, 93</td></tr><tr><td>2</td><td>3</td><td>22</td><td>2</td><td>13, 14, 22, 38, 45, 48, 58, 69, 72, 81, 79, 93</td></tr><tr><td>9</td><td>11</td><td>93</td><td>11</td><td>13, 14, 22, 38, 45, 48, 58, 69, 72, 81, 79, 93</td></tr><tr><td>9</td><td>10</td><td>79</td><td>9</td><td>13, 14, 22, 38, 45, 48, 58, 69, 72, 79, 81, 93</td></tr></tbody></table></div>
+<p>In the first partition, 81 and 93 are displaced into the right side as smaller keys move left; pivot 72 ends at index 8. The invariant is not that either side is already sorted. Recursing excludes the pivot, so the intervals shrink. Balanced splits give T(n)=2T(n/2)+Θ(n)=Θ(n log n). Repeated extreme pivots give T(n)=T(n−1)+Θ(n)=Θ(n²) since (n−1)+…+1=n(n−1)/2. The balanced recurrence describes the best case; expected Θ(n log n) under random pivots needs an expectation argument, not an assumption of equal splits every time.</p>
+<p>Partition needs O(1) auxiliary storage, but the straightforward recursive sort uses O(log n) expected stack and O(n) worst-case stack. Recursing on the smaller side and iterating on the larger caps stack depth at O(log n), not worst-case running time. Equal keys can degrade two-way Lomuto partitioning too; three-way partitioning is a separate variant. Quick Sort is not stable.</p>
+<p><strong>Merge Sort proof:</strong> split to singleton arrays, then merge two sorted sequences using the smaller front element, exhausting one before copying the remainder. Choose the left item first on equality to preserve stability. Across any level, the merged subarrays total n elements; Θ(log n) levels give Θ(n log n) in every case for this ordinary implementation. Array merging needs Θ(n) buffer space, whereas linked-list merging can relink nodes. The input-storage model matters.</p>
+<figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="merge-split-and-combine-title merge-split-and-combine-desc"><title id="merge-split-and-combine-title">merge split and combine</title><desc id="merge-split-and-combine-desc">38,27,43,3 to 38,27: divide; 38,27,43,3 to 43,3: divide; 38,27 to 3,27,38,43: merge; 43,3 to 3,27,38,43: merge</desc><defs><marker id="merge-split-and-combine-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="263.4" y1="39.2" x2="116.6" y2="120.8" stroke="currentColor" marker-end="url(#merge-split-and-combine-arrow)"/><text x="195.0" y="75.0" fill="currentColor">divide</text><line x1="296.4" y1="39.6" x2="433.6" y2="120.4" stroke="currentColor" marker-end="url(#merge-split-and-combine-arrow)"/><text x="370.0" y="75.0" fill="currentColor">divide</text><line x1="116.2" y1="139.9" x2="263.8" y2="230.1" stroke="currentColor" marker-end="url(#merge-split-and-combine-arrow)"/><text x="195.0" y="180.0" fill="currentColor">merge</text><line x1="434.0" y1="140.3" x2="296.0" y2="229.7" stroke="currentColor" marker-end="url(#merge-split-and-combine-arrow)"/><text x="370.0" y="180.0" fill="currentColor">merge</text><circle cx="280" cy="30" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="35" text-anchor="middle" fill="currentColor">38,27,43,3</text><circle cx="100" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="100" y="135" text-anchor="middle" fill="currentColor">38,27</text><circle cx="450" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="450" y="135" text-anchor="middle" fill="currentColor">43,3</text><circle cx="280" cy="240" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="245" text-anchor="middle" fill="currentColor">3,27,38,43</text></svg><figcaption>38,27,43,3 to 38,27: divide; 38,27,43,3 to 43,3: divide; 38,27 to 3,27,38,43: merge; 43,3 to 3,27,38,43: merge</figcaption></figure>
+<h3 id="heaps-and-linear-build-max-heap">Heaps and Linear BUILD-MAX-HEAP</h3>
+<p>A heap is a complete binary tree with a local parent≥children property, not a fully sorted array. In zero-based arrays the children are 2i+1 and 2i+2, parent floor((i−1)/2). The existing heap pseudocode uses this convention; do not mix it with one-based 2i and 2i+1. BUILD-MAX-HEAP calls HEAPIFY bottom-up on i=floor(n/2)−1 down to 0; leaves need no repair.</p>
+<p>A loose n·O(log n) bound misses the tight build result. At most about n/2^(h+1) nodes have height h, so total work is O(n·Σ h/2^h)=O(n), and reading the input gives Ω(n): build is Θ(n). The entire sort still performs n−1 root removals with up to logarithmic repair each, giving O(n log n). Iterative HEAPIFY makes auxiliary space O(1); the recursive version printed above uses O(log n) call-stack space. State this distinction when comparing “in-place” algorithms.</p>
+<figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="max-heap-example-title max-heap-example-desc"><title id="max-heap-example-title">max heap example</title><desc id="max-heap-example-desc">9 to 7: ; 9 to 8: ; 7 to 2: ; 7 to 3: ; 8 to 4: </desc><defs><marker id="max-heap-example-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="264.7" y1="41.3" x2="160.3" y2="118.7" stroke="currentColor" marker-end="url(#max-heap-example-arrow)"/><text x="217.5" y="75.0" fill="currentColor"></text><line x1="295.3" y1="41.3" x2="399.7" y2="118.7" stroke="currentColor" marker-end="url(#max-heap-example-arrow)"/><text x="352.5" y="75.0" fill="currentColor"></text><line x1="133.5" y1="145.1" x2="76.5" y2="219.9" stroke="currentColor" marker-end="url(#max-heap-example-arrow)"/><text x="110.0" y="177.5" fill="currentColor"></text><line x1="155.5" y1="145.8" x2="204.5" y2="219.2" stroke="currentColor" marker-end="url(#max-heap-example-arrow)"/><text x="185.0" y="177.5" fill="currentColor"></text><line x1="404.5" y1="145.8" x2="355.5" y2="219.2" stroke="currentColor" marker-end="url(#max-heap-example-arrow)"/><text x="385.0" y="177.5" fill="currentColor"></text><circle cx="280" cy="30" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="35" text-anchor="middle" fill="currentColor">9</text><circle cx="145" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="145" y="135" text-anchor="middle" fill="currentColor">7</text><circle cx="415" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="415" y="135" text-anchor="middle" fill="currentColor">8</text><circle cx="65" cy="235" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="65" y="240" text-anchor="middle" fill="currentColor">2</text><circle cx="215" cy="235" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="215" y="240" text-anchor="middle" fill="currentColor">3</text><circle cx="345" cy="235" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="345" y="240" text-anchor="middle" fill="currentColor">4</text></svg><figcaption>9 to 7: ; 9 to 8: ; 7 to 2: ; 7 to 3: ; 8 to 4: </figcaption></figure>
+</div>
   </section>
 
   <!-- =================== SECTION 5: LINEAR TIME SORTING =================== -->
@@ -757,7 +773,14 @@ BUCKET-SORT(A, n)
         </ul>
       </div>
 
-    </div>
+    <p><strong>January 2026 exact LSD Radix trace:</strong> process ones, tens, hundreds using a <em>stable</em> per-digit sort. Missing high digits count as zero for non-negative integers.</p>
+<div class="table-wrapper"><table class="data-table"><caption>Radix Sort on the nine printed keys</caption><thead><tr><th scope="col">Digit place</th><th scope="col">Whole array after stable pass</th></tr></thead><tbody><tr><td>1</td><td>320, 361, 142, 423, 365, 126, 347, 538, 549</td></tr><tr><td>10</td><td>320, 423, 126, 538, 142, 347, 549, 361, 365</td></tr><tr><td>100</td><td>126, 142, 320, 347, 361, 365, 423, 538, 549</td></tr></tbody></table></div>
+<p>Why stability matters: after tens sorting, keys with the same tens digit must keep their already-established ones order. After d passes the lexicographic digit order equals numeric order. With radix b and d digits, stable counting per pass costs Θ(n+b), so total Θ(d(n+b)), auxiliary Θ(n+b). It is “linear” in n only when d and b are suitably controlled, not for arbitrary unbounded-length integers. Signed values and variable-length strings require an explicit convention.</p>
+<p><strong>Counting — Tier S standalone reference:</strong> count occurrences of integer keys in 0..k−1, prefix-sum counts to get end positions, then scan input right-to-left, decrementing the destination count and placing each record into output. Reverse traversal preserves order of equal records. Time Θ(n+k), extra space Θ(n+k); huge sparse ranges are costly. A frequency-only rewrite is fine for plain integer values but is not a stable record sort and cannot serve the same LSD Radix role without preserving records.</p>
+<p><strong>Bucket Sort:</strong> for [0,1), distribute x to floor(nx) among n buckets, sort each bucket (often insertion sort), concatenate. Example [0.78,0.17,0.39,0.26,0.72,0.94,0.21,0.12] with eight buckets places [0.12] in 0, [0.17,0.21] in 1, [0.26] in 2, [0.39] in 3, [0.72] in 5, [0.78] in 6, [0.94] in 7. Bucket 1 already has [0.17,0.21]; concatenation yields sorted order. Under an appropriate uniform independent distribution, expected time is Θ(n); all keys in one insertion-sorted bucket can take Θ(n²). Boundary x=1 needs separate treatment because floor(nx)=n lies outside the array.</p>
+<p>The comparison decision-tree lower bound Ω(n log n) assumes ordering only by comparisons of arbitrary keys. Counting/Radix exploit digit or integer-range structure and Bucket exploits a distribution assumption, so none contradicts it. Linear time is not free: key restrictions, memory and digit/distribution costs must be named. The master table's O(1) Heap space assumes iterative repair; recursive heapify uses stack.</p>
+<figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="radix-stable-pass-pipeline-title radix-stable-pass-pipeline-desc"><title id="radix-stable-pass-pipeline-title">radix stable pass pipeline</title><desc id="radix-stable-pass-pipeline-desc">input to ones: stable; ones to tens: stable; tens to hundreds: stable</desc><defs><marker id="radix-stable-pass-pipeline-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="74.0" y1="130.0" x2="186.0" y2="130.0" stroke="currentColor" marker-end="url(#radix-stable-pass-pipeline-arrow)"/><text x="135.0" y="125.0" fill="currentColor">stable</text><line x1="224.0" y1="130.0" x2="336.0" y2="130.0" stroke="currentColor" marker-end="url(#radix-stable-pass-pipeline-arrow)"/><text x="285.0" y="125.0" fill="currentColor">stable</text><line x1="374.0" y1="130.0" x2="486.0" y2="130.0" stroke="currentColor" marker-end="url(#radix-stable-pass-pipeline-arrow)"/><text x="435.0" y="125.0" fill="currentColor">stable</text><circle cx="55" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="55" y="135" text-anchor="middle" fill="currentColor">input</text><circle cx="205" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="205" y="135" text-anchor="middle" fill="currentColor">ones</text><circle cx="355" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="355" y="135" text-anchor="middle" fill="currentColor">tens</text><circle cx="505" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="505" y="135" text-anchor="middle" fill="currentColor">hundreds</text></svg><figcaption>input to ones: stable; ones to tens: stable; tens to hundreds: stable</figcaption></figure>
+</div>
   </section>
 
   <!-- =================== SECTION 6: COMPLEXITY ANALYSIS =================== -->
@@ -1723,7 +1746,8 @@ BUCKET-SORT(A, n)
         </div>
 
       </div>
-    </div>
+    <p><strong>Five eight-mark rehearsal models:</strong> Selection algorithm (3), trace (3), n(n−1)/2 proof (2); Selection example (4) and Bubble/Selection/Insertion comparison (4); Quick partition trace (4) plus best/worst recurrences (4); linear-sort significance (2), limitations (2), Bucket example (4); Merge/Quick/Heap comparison (3) plus exact Radix passes (5). Use the worked tables above to check intermediate states, not just the final sorted sequence. On the Bubble exam data finish [12,25,33,37,48,57,86,92]; on the Quick data finish [13,14,22,38,45,48,58,69,72,79,81,93]. These are self-review models, not official marking schemes.</p><p><a href="../../../quiz/setup.html?subject=CST209&amp;unit=2">Practise Sorting quiz questions</a>.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 14: REVISION =================== -->
@@ -1785,41 +1809,7 @@ BUCKET-SORT(A, n)
     </div>
   </section>
 
-  <section class="section" id="videos">
-    <h2 class="section-title">
-      <i class="fas fa-play-circle"></i> Watch &amp; Learn
-      <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
-      <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=bubble+selection+insertion+sort+comparison" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Bubble, selection and insertion sort</span>
-              <span class="video-link-meta">Comparison and swap counts &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=merge+sort+and+quick+sort+explained" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Merge sort and quick sort</span>
-              <span class="video-link-meta">Divide and conquer in practice &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=heapsort+build+heap+sift+down" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Heapsort and heap operations</span>
-              <span class="video-link-meta">Build-heap and sift-down &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <section class="section" id="videos"><h2 class="section-title"><i class="fas fa-play-circle"></i> Watch &amp; Learn<i class="fas fa-chevron-up collapse-icon"></i></h2><div class="section-content"><p>Optional external lessons. Public watch pages checked 19 November 2026; playback and captions not device-tested. No YouTube request occurs until a link is selected. Not official course material.</p><ul class="video-list"><li><a class="video-link" href="https://www.youtube.com/watch?v=7h1s2SojIRw" target="_blank" rel="noopener noreferrer">2.8.1 QuickSort Algorithm — Abdul Bari · 13:42</a><p>Compare partition conventions; our exact exam table uses last-element Lomuto.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=nmhjrI-aW5o" target="_blank" rel="noopener noreferrer">Bubble Sort Algorithm | GeeksforGeeks — GeeksforGeeks · 00:58</a><p>A short visual preview, not a substitute for the full pseudocode and exact eight-key trace.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=nu4gDuFabIM" target="_blank" rel="noopener noreferrer">Radix Sort | GeeksforGeeks — GeeksforGeeks · 01:08</a><p>Short visual preview; use our notes for stability, counting subroutine and Bucket Sort.</p></li></ul></div></section>
   </main><!-- end container -->
 
 <!-- FAB BUTTONS -->

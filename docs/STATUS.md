@@ -1,5 +1,32 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
+## Phase 16 — Algorithms — 🚧 implemented locally, awaiting owner verification (2026-11-19)
+
+Branch `arena/d7aa68ed-diploma-3rd-sem`, base `47d801b` (Phase 15 merge,
+PR #29). Completed in order U4 → U3 → U1 → U2 → CO5 supplementary U5,
+then the Mode A map. Four official units remain official; U5 is visibly CO5
+supplementary. All frozen `_data/` and `_quiz-data/` bytes are unchanged.
+
+- 14 accessible SVGs, 20 added concept headings, 15 watch-page-verified plain
+  video links; no playback/device claim. Existing section/note keys preserved.
+- 85 topic keys / 105 questions; 34 decisions. Production-runtime DOM audit:
+  9→0 generic landings, 8→0 no-jumps, 9→0 wrong-unit landings against reviewed
+  destinations, CO5 1→8. Includes missing/malformed/stale and failed-page tests.
+- Local checkpoints: 13 README script gates + advisory syllabus validator,
+  166 Python tests and 14 deterministic Node suites pass. Section-clipping
+  regression passes. Full canonical rebuild and two presence runs are required
+  again after suite mutations; final evidence is in the phase record.
+- **Inherited CI red:** base Web CI `44484813834` failed at PYQ browser smoke;
+  Pages run `44484812632` succeeded. Job metadata was accessible but downloading
+  the old log failed at the outbound host. No new hosted run (nothing pushed).
+  Local browser tests unavailable: no playwright-core/Chromium. No new rendering,
+  phone, captions, playback, print or offline/device result is claimed.
+
+See [Phase 16 evidence](phases/16-cst209-algorithms-content/record.md). Owner
+must test a local copy; the remote live site does not contain these edits.
+Stop for **“mark as pass”** or **“add for later”**. Do not push/open a PR,
+merge/deploy, reopen Phase 15, or start Phase 17 without explicit instruction.
+
 ## Phase 15 — Computer System Organization — ✅* owner-passed (2026-11-19)
 
 On `arena/fbc84d5d-diploma-3rd-sem` from `e83cd64`, all six parts implemented
@@ -12,7 +39,7 @@ suites passed locally.** The owner said “Mark as pass”; the source recheck f
 all 22 Revised-2022 topic lines represented across the five theory units. Hosted
 Web CI `44483074003` failed at PYQ browser smoke; no separate phone result or
 rendered artifact was supplied. See the [phase record](phases/15-cst207-cso-content/record.md)
-and `rule.md` §7. No PR or next phase was authorized.
+and `rule.md` §7. Subsequently merged by owner instruction as PR #29 (`47d801b`); Phase 15 is closed.
 
 ## Home maintenance — 2026-11-18 (working tree)
 

@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../units-com/common.css">
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST209/units/unit-1.html">
-<meta name="app-build" content="study-2026-11-19-cso">
+<meta name="app-build" content="study-2026-11-19-algorithms">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unit 1: Fundamentals of Algorithms - Algorithms">
@@ -167,7 +167,8 @@
           </div>
           <p>This unit forms the theoretical foundation for all algorithm analysis. Expect MCQs on asymptotic notations, complexity calculations, and algorithm characteristics.</p>
         </div>
-      </div>
+      <p><strong>2023–2026 study priorities:</strong> Introduction contributes 89/395 printed set marks (22.5%), despite only six contact hours: characteristics and asymptotic notation 30 (Tier A), design paradigms 26 (Tier A), complexity/recurrences 17 (Tier B), ADTs/sets/stacks 16 (Tier B). Queues are Tier S (syllabus, no direct marks in this window). Optional questions are included in these totals. Do not omit syllabus topics or treat past weights as a prediction.</p>
+</div>
     </section>
 
     <!-- Definitions and Characteristics Section -->
@@ -261,7 +262,10 @@ Algorithm FindMax(A, n)
           <p>Remember the five characteristics by the acronym <strong>FDIOE</strong>: Finiteness, Definiteness, Input, Output, Effectiveness. Questions often ask to identify which characteristic is violated in a given procedure.</p>
         </div>
 
-      </div>
+      <h3 id="algorithm-characteristics-with-examples">Algorithm Characteristics with Examples</h3>
+<p>An algorithm is a finite, precise, effective procedure for a specified problem, not a program in one particular language. For maximum-of-a-nonempty-array, the input is a finite sequence of comparable values, output is a largest value, the first value initializes max, subsequent comparisons update it, and the loop stops after the last element. State the nonempty precondition or explicitly handle empty input.</p>
+<div class="table-wrapper"><table class="data-table"><caption>Five classical characteristics</caption><thead><tr><th scope="col">Characteristic</th><th scope="col">Valid example</th><th scope="col">What violates it</th></tr></thead><tbody><tr><td>Input</td><td>Accept zero or more specified inputs; maximum takes an array</td><td>No description of required data or domain</td></tr><tr><td>Output</td><td>Return at least one result; maximum returns a value</td><td>Finish without producing the specified result</td></tr><tr><td>Definiteness</td><td>If A[i] &gt; max, set max=A[i]</td><td>Use a vague step such as “choose something good”</td></tr><tr><td>Finiteness</td><td>Advance i towards the finite array end</td><td>Loop forever without progress</td></tr><tr><td>Effectiveness</td><td>Compare two finite machine-representable values</td><td>Require an uncomputable primitive or an impossible step</td></tr></tbody></table></div><p>Correctness and efficiency are separate questions. A terminating algorithm can still return the wrong maximum; an accurate answer for one example is not a proof for all legal inputs. A loop invariant here is that max is the largest element in the prefix already examined. Initialization establishes it; comparison/update preserves it; termination makes that prefix the whole array.</p>
+</div>
     </section>
 
     <!-- Data Abstraction Section -->
@@ -450,7 +454,10 @@ Algorithm FindMax(A, n)
           <p>Sets and multisets form the mathematical foundation for many algorithms, especially in graph theory, database operations, and search algorithms.</p>
         </div>
 
-      </div>
+      <h3 id="power-sets-and-multiset-multiplicity">Power Sets and Multiset Multiplicity</h3>
+<p>For S={a,b,c}, P(S)={∅,{a},{b},{c},{a,b},{a,c},{b,c},{a,b,c}}. Each of n distinct elements is either included or excluded independently, so |P(S)|=2ⁿ, including the empty set and S itself. Order is irrelevant: {a,b}={b,a}; repeats do not enlarge a set. P(∅)={∅} has one member, not zero.</p>
+<p>For bags A={a,a,b} and B={a,b,b}, multiplicities are A(a)=2,A(b)=1 and B(a)=1,B(b)=2. Multiset union using max gives {a,a,b,b}; intersection using min gives {a,b}; sum adds counts and gives {a,a,a,b,b,b}. Difference uses max(0,m_A−m_B). State the convention: “union” is sometimes used informally for the sum, but this page uses max. A set stores existence; a multiset stores how many occurrences. In an ADT specification these operations have defined behaviour independent of arrays, lists or hash tables used to implement them.</p>
+</div>
     </section>
 
     <!-- Stacks and Queues Section -->
@@ -569,7 +576,19 @@ dequeue()   → returns 20, Q = [30]
           <p>Both Stack and Queue operations (push/pop, enqueue/dequeue) have <strong>O(1)</strong> time complexity when implemented efficiently using arrays or linked lists.</p>
         </div>
 
-      </div>
+      <h3 id="stack-push-pop-pseudocode">Stack PUSH and POP Pseudocode</h3>
+<pre><code>PUSH(S,x)                    // capacity c, top initially −1
+  if S.top = c−1: report OVERFLOW; return
+  S.top ← S.top+1
+  S[S.top] ← x
+POP(S)
+  if S.top = −1: report UNDERFLOW; return
+  x ← S[S.top]
+  S.top ← S.top−1
+  return x</code></pre>
+<p>For capacity 2, PUSH 7 then PUSH 9 leaves top=1; another PUSH fails without changing the stack. POP returns 9 then 7, leaving top=−1; another POP underflows. Both valid operations are Θ(1). Recursion uses a call stack: the newest unfinished call returns first. The ADT is linear in logical order even when its implementation uses linked nodes.</p>
+<p><strong>Queue — Tier S reference:</strong> with circular-array capacity c, track front=0,size=0. ENQUEUE(x): if size=c report overflow; otherwise place x at (front+size) mod c and increment size. DEQUEUE(): if size=0 report underflow; otherwise save A[front], set front=(front+1) mod c, decrement size and return the saved value. This avoids shifting all elements, uses every slot because size distinguishes full from empty, and costs Θ(1) per operation. Enqueuing 7 then 9 dequeues 7 first, the opposite of a stack.</p>
+</div>
     </section>
 
     <!-- Asymptotic Notations Section -->
@@ -720,7 +739,12 @@ dequeue()   → returns 20, Q = [30]
           </ul>
         </div>
 
-      </div>
+      <h3 id="asymptotic-polynomial-witness-proof">Asymptotic Bounds: Polynomial Witness Proof</h3>
+<p>Assume f and g are non-negative for all sufficiently large n. Big-O means there exist c&gt;0 and n₀ such that 0≤f(n)≤cg(n) for every n≥n₀. Omega reverses that bound: 0≤cg(n)≤f(n). Theta needs two positive constants c₁,c₂ satisfying c₁g(n)≤f(n)≤c₂g(n) eventually. Theta is a <strong>tight bound</strong>, not “average case”; any of these notations can describe a best-, average- or worst-case function. Big-O is not synonymous with worst case.</p>
+<p>For f(n)=3n²+5n+2, take g(n)=n². When n≥1, 5n≤5n² and 2≤2n², so f(n)≤10n²: witnesses c=10,n₀=1 prove O(n²). Also f(n)≥3n²: c=3,n₀=1 prove Ω(n²). Together 3n²≤f(n)≤10n² prove Θ(n²). Giving “highest power is 2” is a shortcut; the inequalities are the formal justification. O(n³) is also a valid but loose upper bound; Ω(n) is a loose lower bound.</p>
+<figure><svg width="100%" viewBox="0 0 600 220" role="img" aria-labelledby="bounds-title bounds-desc"><title id="bounds-title">Upper, lower and tight bounds</title><desc id="bounds-desc">Three schematic plots after n-zero: f below c g, f above c g, and f between c-one g and c-two g. Curves are labelled; no colour distinction is needed.</desc><g fill="none" stroke="currentColor"><path d="M15 180 H190 M20 190 V25 M215 180 H390 M220 190 V25 M415 180 H590 M420 190 V25"/><path d="M55 170 Q115 155 180 40 M55 175 Q115 165 180 95 M255 170 Q315 155 380 40 M255 175 Q315 165 380 95 M455 170 Q515 155 580 40 M455 173 Q515 160 580 75 M455 177 Q515 170 580 120"/></g><g fill="currentColor"><text x="30" y="20">O: upper bound</text><text x="135" y="45">cg</text><text x="175" y="112">f</text><text x="230" y="20">Ω: lower bound</text><text x="375" y="42">f</text><text x="345" y="115">cg</text><text x="430" y="20">Θ: tight bound</text><text x="535" y="40">c₂g</text><text x="575" y="88">f</text><text x="545" y="140">c₁g</text><text x="50" y="205">n₀ → n</text><text x="250" y="205">n₀ → n</text><text x="450" y="205">n₀ → n</text></g></svg><figcaption>Schematic eventual bounds; constants scale g vertically and n₀ excludes the small-input prefix.</figcaption></figure>
+<p>Little-o is strictly smaller growth: f/g→0, for example n=o(n²). Little-omega means f/g→∞, for example n²=ω(n). Fixed-base logarithms differ by a constant factor. Typical growth order is 1, log n, n, n log n, n², n³, 2ⁿ, n!. This hierarchy concerns sufficiently large inputs, not a guarantee that a slower-growing implementation wins for every small n.</p>
+</div>
     </section>
 
     <!-- Time and Space Complexity Section -->
@@ -892,7 +916,15 @@ int[] createArray(int n) {
           </ul>
         </div>
 
-      </div>
+      <h3 id="loop-counting-and-recurrence-substitution">Loop Counting and Recurrence Substitution</h3>
+<p>Count primitive operations under a stated model rather than wall-clock seconds. For i=1; while i≤n: i=2i, n≥1, the body sees 1,2,4,…,2ᵏ≤n. Thus body executions are floor(log₂ n)+1 and the final failed condition adds one test. At n=16, the values are 1,2,4,8,16: five body executions and six tests. Initialization and arithmetic change constants, not Θ(log n). If n&lt;1 there are no body executions; do not take log 0.</p>
+<p>Two independent loops i=0..n−1 and j=0..n−1 execute the inner body n² times. A triangular loop j=0..i−1 instead totals 0+1+…+(n−1)=n(n−1)/2: still Θ(n²), but not n² exact iterations. Distinguish sequential loops (add their costs) from nested independent loops (multiply). Input size may mean number of items or number of bits; counting arithmetic as constant time is an explicit simplification.</p>
+<p><strong>December 2024 recurrence:</strong> T(n)=2T(n/2)+1, T(1)=1, assume n=2ᵏ. First expansion is 4T(n/4)+3; second is 8T(n/8)+7. After j expansions it is 2ʲT(n/2ʲ)+(2ʲ−1). Set j=log₂ n, obtaining nT(1)+n−1=<strong>2n−1=Θ(n)</strong>. Check n=1,2,4,8 gives 1,3,7,15. The two recursive calls create a linear number of nodes, not just logarithmic total work; logarithmic recursion depth alone does not determine running time.</p>
+<p>For T(n)=T(n/2)+1 with T(1)=1, repeated expansion gives T(n/2ʲ)+j and Θ(log n). For T(n)=2T(n/2)+n, each recursion level costs n and there are log₂ n levels plus the leaf level, giving Θ(n log n). Do not confuse +1 with +n. A linear recurrence-time example can still have Θ(log n) stack depth if its two children execute sequentially.</p>
+<h3 id="master-theorem-reference">Master Theorem Reference and Limits</h3>
+<p>For T(n)=aT(n/b)+f(n), a≥1,b&gt;1, let p=log_b a. If f(n)=O(n^(p−ε)) for some ε&gt;0, T(n)=Θ(nᵖ). If f(n)=Θ(nᵖ), T(n)=Θ(nᵖ log n). If f(n)=Ω(n^(p+ε)) and af(n/b)≤cf(n) eventually for some c&lt;1, T(n)=Θ(f(n)). These are the basic three cases; do not drop the regularity condition or force recurrences such as T(n−1)+n into this dividing form.</p>
+<p>Time and auxiliary space both matter: a fast merge sort can require an O(n) buffer, whereas heap sort can avoid it. Include recursion stack in auxiliary space; distinguish input storage from extra storage and state which you count. Best, worst and average are functions over inputs of a fixed size; average requires an input probability model.</p>
+</div>
     </section>
 
     <!-- Programming Models Section -->
@@ -1069,7 +1101,10 @@ fibDP(n):
           </ul>
         </div>
 
-      </div>
+      <p>Divide and conquer separates smaller instances, solves them and combines results: merge sort sorts left/right halves then merges; binary search follows only one half and has a trivial combine. Dynamic programming reuses overlapping states, for example memoising F(k) when Fibonacci's naive recursion repeats it. Tabulation solves a dependency order bottom-up; memoization solves demanded states top-down. Both need an explicit state definition, recurrence and base cases. Optimal substructure is required for the usual optimization DP formulations, not sufficient by itself to prove a greedy choice.</p>
+<p>A greedy method commits to a locally best feasible choice without exploring every future alternative. Prove its greedy-choice property, usually by an exchange or cut argument. Fractional knapsack accepts items by value/weight and can take fractions; the same choice can fail for 0/1 knapsack. With capacity 50 and items (weight,value)=(10,60),(20,100),(30,120), ratio-greedy takes the first two for 160 while the last two yield 220. Prim/Kruskal use safe MST edges; Dijkstra additionally needs non-negative weights.</p>
+<div class="table-wrapper"><table class="data-table"><caption>Seven distinctions: D&amp;C versus DP</caption><thead><tr><th scope="col">Feature</th><th scope="col">Divide and conquer</th><th scope="col">Dynamic programming</th></tr></thead><tbody><tr><td>Subproblems</td><td>Usually independent instances</td><td>Overlapping states reused</td></tr><tr><td>Repeated work</td><td>May recompute identical states</td><td>Save solved states</td></tr><tr><td>Storage</td><td>Recursion plus combine buffers</td><td>Table/cache plus possible stack</td></tr><tr><td>Direction</td><td>Usually recursive splitting</td><td>Memoization or tabulation</td></tr><tr><td>Example</td><td>Merge sort on disjoint halves</td><td>Fibonacci or Floyd–Warshall</td></tr><tr><td>Recurrence meaning</td><td>Cost across recursive calls</td><td>Value/count for each defined state</td></tr><tr><td>Selection rule</td><td>Split, solve, combine</td><td>Solve dependencies once</td></tr></tbody></table></div><figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="independent-and-shared-subproblems-title independent-and-shared-subproblems-desc"><title id="independent-and-shared-subproblems-title">independent and shared subproblems</title><desc id="independent-and-shared-subproblems-desc">root to L: split; root to R: split; L to shared: DP; R to shared: DP</desc><defs><marker id="independent-and-shared-subproblems-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="263.4" y1="39.2" x2="116.6" y2="120.8" stroke="currentColor" marker-end="url(#independent-and-shared-subproblems-arrow)"/><text x="195.0" y="75.0" fill="currentColor">split</text><line x1="296.4" y1="39.6" x2="433.6" y2="120.4" stroke="currentColor" marker-end="url(#independent-and-shared-subproblems-arrow)"/><text x="370.0" y="75.0" fill="currentColor">split</text><line x1="116.2" y1="139.9" x2="263.8" y2="230.1" stroke="currentColor" marker-end="url(#independent-and-shared-subproblems-arrow)"/><text x="195.0" y="180.0" fill="currentColor">DP</text><line x1="434.0" y1="140.3" x2="296.0" y2="229.7" stroke="currentColor" marker-end="url(#independent-and-shared-subproblems-arrow)"/><text x="370.0" y="180.0" fill="currentColor">DP</text><circle cx="280" cy="30" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="35" text-anchor="middle" fill="currentColor">root</text><circle cx="100" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="100" y="135" text-anchor="middle" fill="currentColor">L</text><circle cx="450" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="450" y="135" text-anchor="middle" fill="currentColor">R</text><circle cx="280" cy="240" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="245" text-anchor="middle" fill="currentColor">shared</text></svg><figcaption>root to L: split; root to R: split; L to shared: DP; R to shared: DP</figcaption></figure><p>The diamond illustrates reuse in a DP dependency graph: both L and R need the shared state. In ordinary merge-sort D&C the child input ranges are disjoint instead; no shared-state cache is needed. The design method does not itself fix the complexity: count the states or recursive calls and the work per state.</p>
+</div>
     </section>
 
     <!-- Formulas Section -->
@@ -1946,7 +1981,8 @@ while (i <= n) {
 
         </div>
 
-      </div>
+      <p><strong>Five eight-mark rehearsals (self-review, not an official scheme):</strong> definition/traits (3) + formal bounds (5); loop doubling (4) + D&C example (4); algorithm definition (2) + multiset comparison (2) + PUSH/POP (4); D&C (3) + recurrence 2T(n/2)+1 (3) + nested-loop count (2); D&C example (4) + D&C versus DP (4). Check against the witnesses c₁=3,c₂=10,n₀=1, recurrence 2n−1, eight subsets, and overflow-safe stack trace above. A correct formula without its assumptions is incomplete.</p><p><a href="../../../quiz/setup.html?subject=CST209&amp;unit=1">Practise Introduction quiz questions</a>; see <a href="../../CST205/units/unit-2.html">Data Structures stacks and queues</a> for full implementations.</p>
+</div>
     </section>
 
     <!-- Revision Section -->
@@ -2018,49 +2054,7 @@ while (i <= n) {
       </div>
     </section>
 
-  <section class="section" id="videos">
-    <h2 class="section-title">
-      <i class="fas fa-play-circle"></i> Watch &amp; Learn
-      <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
-      <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=algorithm+correctness+efficiency+introduction" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">What makes a good algorithm?</span>
-              <span class="video-link-meta">Correctness, efficiency and growth rates &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=asymptotic+analysis+big+o+theta+omega" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Asymptotic analysis: O, Theta, Omega</span>
-              <span class="video-link-meta">Formal definitions with examples &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=divide+and+conquer+recurrence+master+theorem" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Divide and conquer and recurrences</span>
-              <span class="video-link-meta">Master theorem intuition &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-      </ul>
-      <a class="jump-videos" href="#videos">
-          <span class="jump-videos-icon" aria-hidden="true"></span>
-          <span class="jump-videos-text">
-            <strong>Watch &amp; Learn</strong>
-            <span>Hand-picked videos for this unit</span>
-          </span>
-          <span class="jump-videos-arrow" aria-hidden="true">&rarr;</span>
-        </a>
-    </div>
-  </section>
+  <section class="section" id="videos"><h2 class="section-title"><i class="fas fa-play-circle"></i> Watch &amp; Learn<i class="fas fa-chevron-up collapse-icon"></i></h2><div class="section-content"><p>Optional external lessons. Public watch pages checked 19 November 2026; playback and captions not device-tested. No YouTube request occurs until a link is selected. Not official course material.</p><ul class="video-list"><li><a class="video-link" href="https://www.youtube.com/watch?v=A03oI0znAoc" target="_blank" rel="noopener noreferrer">1.8.1 Asymptotic Notations Big Oh - Omega - Theta #1 — Abdul Bari · 15:46</a><p>Important correction: the video calls Theta an “average bound”; use tight bound, not average-case complexity.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=2Rr2tW9zvRg" target="_blank" rel="noopener noreferrer">2 Divide And Conquer — Abdul Bari · 07:04</a><p>Control abstraction and splitting; compare DP and greedy in the notes.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=1K9ebQJosvo" target="_blank" rel="noopener noreferrer">2.3.3 Recurrence Relation [ T(n)= 2T(n/2) +n] #3 — Abdul Bari · 11:20</a><p>Back-substitution on +n; contrast carefully with the exam recurrence +1 worked above.</p></li></ul></div></section>
     </main>
 
   <!-- FAB Buttons -->

@@ -1,0 +1,89 @@
+Phase 16 final local verification — 2026-11-19
+Branch: arena/d7aa68ed-diploma-3rd-sem
+Base: 47d801b660cea9b417e62f81c2be0803ddc66312
+No push / hosted Phase 16 CI / browser / phone test.
+
+Final README gates, advisory syllabus and full unittest:
+0 python3 scripts/check_pyq_integrity.py
+0 python3 scripts/check_platform.py
+0 python3 scripts/build_suggestions.py --check
+0 python3 scripts/check_site.py --strict --quiet
+0 python3 scripts/validate_pyq.py
+0 python3 scripts/validate_data.py --check-baseline
+0 python3 scripts/validate_syllabus.py
+0 python3 scripts/audit_accessibility.py --fail
+0 python3 scripts/check_tokens.py --strict
+0 python3 scripts/build_icon_subset.py --check
+0 python3 scripts/build_data_version.py --check
+0 python3 scripts/audit_page_weight.py --budget
+0 python3 scripts/check_root_rewrite.py
+0 python3 scripts/check_readme_paths.py
+0 unittest
+......................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 166 tests in 11.612s
+
+OK
+
+Explicit section-clipping regression:
+test_collapsed_section_still_clips_and_hides (tests.test_section_clipping.SectionClippingTests.test_collapsed_section_still_clips_and_hides) ... ok
+test_every_shipped_unit_file_has_more_than_one_section (tests.test_section_clipping.SectionClippingTests.test_every_shipped_unit_file_has_more_than_one_section) ... ok
+test_expand_measures_height_before_pinning (tests.test_section_clipping.SectionClippingTests.test_expand_measures_height_before_pinning) ... ok
+test_no_unit_section_is_far_taller_than_the_old_cap (tests.test_section_clipping.SectionClippingTests.test_no_unit_section_is_far_taller_than_the_old_cap) ... ok
+test_open_section_content_does_not_clip (tests.test_section_clipping.SectionClippingTests.test_open_section_content_does_not_clip) ... ok
+test_open_section_content_has_no_fixed_height_cap (tests.test_section_clipping.SectionClippingTests.test_open_section_content_has_no_fixed_height_cap) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.091s
+
+OK
+
+README deterministic Node suites:
+0 node tests/attempt-store.cjs
+0 node tests/quiz-engine-dom.cjs
+0 node tests/study-store.cjs
+0 node tests/study-dom.cjs
+0 node tests/study-offline.cjs
+0 node tests/storage.cjs
+0 node tests/storage-recovery.cjs
+0 node tests/storage-mirror.cjs
+0 node tests/preferences.cjs
+0 node tests/section-notes.cjs
+0 node tests/theme-skew.cjs
+0 node tests/data-pipeline-consumers.cjs
+0 node tests/discovery-dom.cjs
+0 node tests/data-version.cjs
+
+After the suite: entire README canonical rebuild run twice, each including two
+presence runs over 84 HTML pages. SHA256 comparison of 162 shipped/generated
+files before/after the second full chain: zero changed. Not just exit-code evidence.
+Rechecked integrity, strict site (0 errors/0 warnings), suggestions, icon subset
+and data-version --check: all exit 0. No stale outputs.
+
+Map generator --check: 85 normalized keys, 105 question assignments, 34 decisions.
+Real production resolver DOM audit: 105/105 exact editorial destinations, 8/8 CO5.
+Graph and algorithm trace --check scripts: exit 0.
+JS/CJS node --check: 67 files, zero failures. JSON parse: 107 files, zero failures.
+Shell version study-2026-11-19-algorithms.
+Data version data-58765c5cf7af, 85 files.
+Icon subset 25,926 bytes, 228 icons.
+
+Ablations (exact source bytes restored after each):
+- displayed Quick trace corrupted: source-bound trace test exit 1
+- supplementary candidates removed: missing-map runtime DOM test exit 1
+- locked MST anchor renamed: anchor preservation test exit 1
+- frozen-hash evidence tampered (not raw data): byte-freeze guard exit 1
+- valid JSON map given a wrong concept anchor: map guard exit 1
+- after-runtime evidence assigned overview: specificity guard exit 1
+- SVG role removed: accessible figure guard exit 1
+- official count changed from 4 to 5: supplementary boundary guard exit 1
+All seven new Python test methods have a failing ablation; source restored,
+then 7/7 passed again.
+
+Limitations: advisory syllabus prints its three inherited grouped findings;
+validate_data --check-baseline means exact agreement with nine-finding ledger,
+not full strict success. No question/answer certification. playwright-core and
+Chromium absent, so no rendered screenshot artifact, playback, captions, physical
+phone, print, zoom or real-device offline/update claim.
+Inherited base Web CI 44484813834 failed at PYQ browser smoke. This is not a
+Phase 16 hosted regression test or evidence that the root cause is unchanged.
