@@ -126,8 +126,8 @@ result; do not treat earlier unpushed/blocked checkpoint notes as current state.
   §3.1. `13/README.md` and the `docs/phases/README.md` matrix row were corrected
   in place; the old figure survives only as dated history.
 - **13.1 delivered:** `subjects/CST203/units/unit-1.html` (152m / 39.3%, the
-  largest unit in the repository) went from 5,438w and 0 anchors to **10,820w
-  and 12 anchors**. Concept prose `#intro…#operators` is 6,088w, ordered by
+  largest unit in the repository) went from 5,438w and 0 anchors to **10,837w
+  and 12 anchors**. Concept prose `#intro…#operators` is 6,056w, ordered by
   marks (collections 1,625w / operators 1,393w / intro 1,164w / strings
   1,052w / variables 854w). 2 inline SVGs, 5 comparison tables, practice bank
   14 MCQ / 6 short / 6 worked 8m / 6 programs, and **5 verified YouTube links**
@@ -136,7 +136,7 @@ result; do not treat earlier unpushed/blocked checkpoint notes as current state.
 - **Ablation proof (do this every part):** deleting the 12 anchors leaves the
   routing triple **byte-identical** (89/10/5) while U1 named landings collapse
   **36 → 0**. Counts alone would have reported success either way.
-- **Open gap, stated not hidden:** the page is **10,820w against a 7,200–8,000w
+- **Open gap, stated not hidden:** the page is **10,837w against a 7,200–8,000w
   target**. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the
   marks, so a weight-proportional U1 at the same total is 10,300–11,475w. The
   overrun is the practice bank (3,721w; worked 8-mark answers average 263w).

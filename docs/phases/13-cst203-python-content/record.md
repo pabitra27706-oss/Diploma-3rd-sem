@@ -20,7 +20,7 @@
 
 | Unit | 2023–2026 Weight | Words Before | Target Budget | Words After | `<h3 id>`s Added | Locked `guides.json` Anchors | `<section id>` Count | `python3` Check |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :---: | :---: |
-| Unit 1 | `152m` (39.3%) | 5,438w | ~7,200–8,000w | **10,820w** ⚠️ over | **12** | `#collections`, `#strings` ✅ | 15 / 15 ✅ (see §2.1) | **31/31 parse, 22 run clean** |
+| Unit 1 | `152m` (39.3%) | 5,438w | ~7,200–8,000w | **10,837w** ⚠️ over | **12** | `#collections`, `#strings` ✅ | 15 / 15 ✅ (see §4) | **31/31 parse, 22 run clean** |
 | Unit 2 | `64m` (16.5%) | 2,912w | ~4,600–5,200w | _TBD_ | _TBD_ (plan: 5) | `#loops`, `#loop-control` | 12 / 12 | _TBD_ |
 | Unit 3 | `92m` (23.8%) | 4,340w | ~5,800–6,400w | _TBD_ | _TBD_ (plan: 6) | `#parameters`, `#modules` | 14 / 14 | _TBD_ |
 | Unit 4 | `49m` (12.7%) | 4,805w | ~4,800–5,300w | _TBD_ | _TBD_ (plan: 4) | `#fileio`, `#regex` | 12 / 12 | _TBD_ |
@@ -100,7 +100,7 @@ Corrected in place: `13/README.md` §1, `docs/phases/README.md` matrix row 13 (w
 | `#definitions` | 277w | 197w | −80 | condensed | — |
 | `#comparisons` | 187w | 74w | −113 | now an index into the five tables | — |
 | `#revision` / `#overview` / `#videos` | 568w | 566w | ⇄ | `#videos` 78 → 132w for 5 links | — |
-| **Total** | **5,438w** | **10,820w** | **+5,382** | | |
+| **Total** | **5,438w** | **10,837w** | **+5,399** | | |
 
 - **12 `<h3 id>` anchors**, verified by `grep -o '<h3[^>]*id="[^"]*"'` on the written file, not from a heading list:
   `python-basics-indentation-keywords-and-comments`, `running-python-interactive-script-mode-and-builtin-functions`, `data-types-mutability-and-type-conversion`, `datetime-in-python`, `string-slicing-indexing-and-methods`, `string-formatting-and-immutability`, `lists-slicing-methods-and-copy-semantics`, `tuples-and-sequences`, `dictionaries-keys-and-methods`, `arithmetic-string-and-assignment-operators`, `logical-identity-and-membership-operators`, `bitwise-operators-and-precedence`.
@@ -189,7 +189,11 @@ The blueprint asked for **4** slots; five shipped because `#collections` and `#o
 
 ### 4.1.6 Honest gap: the word budget
 
-The page is **10,820w** against the blueprint's **7,200–8,000w**. Concept prose `#intro…#operators` is **6,088w** against a planned 5,870w — on target. The overrun is the **practice bank**: `#mcqs` + `#long-questions` + `#short-questions` + `#practice` = **3,721w**, against roughly 2,100w at the blueprint's implied rate. Worked 8-mark answers on this page average 263 words each, because the marks are 5+3 or 4+4 and a model answer has to address every part.
+The page is **10,837w** against the blueprint's **7,200–8,000w**. *(Figures on this
+line were re-measured directly from the committed file on 2026-11-19 after a 17-word
+discrepancy was noticed between the prose and the file; the earlier `10,820w` / `6,088w`
+came from summing per-section counts, which drops words in the inter-section markup.
+The page total is the authoritative number.)* Concept prose `#intro…#operators` is **6,056w** against a planned 5,870w — on target. The overrun is the **practice bank**: `#mcqs` + `#long-questions` + `#short-questions` + `#practice` = **3,721w**, against roughly 2,100w at the blueprint's implied rate. Worked 8-mark answers on this page average 263 words each, because the marks are 5+3 or 4+4 and a model answer has to address every part.
 
 The blueprint's own arithmetic is also internally inconsistent, and this was checked rather than assumed: its per-unit budgets sum correctly to 26.2–29.2kw, but Unit 1 is given **27.5%** of that budget while carrying **39.3%** of the marks. A purely weight-proportional Unit 1 at the same total is **10,300–11,475w** — which brackets what shipped. The other four units absorb the difference (U4 gets 18.3% of the words for 12.7% of the marks).
 
@@ -236,7 +240,7 @@ The 11 `*-browser.cjs` suites were **not run**: they require `playwright-core` a
 - **URLs to verify under `/Diploma-3rd-sem/`:** `subjects/CST203/index.html`, `subjects/CST203/units/unit-{1..5}.html`, `suggestions/python/easy-read.html`, `revision/CST203.html`, `pyq/viewer.html` (spot-checking 2023–2026 Python `.unit-topic-link` jumps), and `subjects/CST213/index.html`.
 - **Owner decision (`rule.md` §4.7):** _Pending execution (`mark as pass` / `add for later`)._
 - **Two decisions waiting for the owner after part 13.1:**
-  1. **Word budget (§4.1.6).** Unit 1 ships at 10,820w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
+  1. **Word budget (§4.1.6).** Unit 1 ships at 10,837w against a 7,200–8,000w target. The blueprint gives Unit 1 27.5% of the word budget for 39.3% of the marks, so a weight-proportional U1 at the same total is 10,300–11,475w. Options: (a) accept the overrun as weight-correct, (b) enforce the ceiling by cutting 4 long answers + 2 MCQs, (c) re-base the per-unit budgets to be weight-proportional for units 2–5. **Nothing has been cut that cannot be restored in one commit.**
   2. **Matcher substring defect (§4.1.3a).** `Built-ins / all` resolves to the collections section because `all` occurs inside `shallow`. A global word-boundary fix moves 19 questions across all five subjects and regresses two of them; the scoped fix is the 13.6 topic map. Recommend: map entry for CST203, matcher fix deferred to Phase 17 where all five maps can be re-validated. **Owner's call.**
 - **Standing caveats:** Physical-device check stays owner-side via Termux; PYQ answer keys remain uncertified per `docs/PROJECT-CLOSURE.md`.
 
