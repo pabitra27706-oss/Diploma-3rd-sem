@@ -106,7 +106,7 @@
   </style>
 <!-- presence:v1 -->
 <link rel="canonical" href="https://pabitra27706-oss.github.io/Diploma-3rd-sem/subjects/CST209/units/unit-3.html">
-<meta name="app-build" content="study-2026-11-19-cso">
+<meta name="app-build" content="study-2026-11-19-algorithms">
 <meta name="description" content="Diploma 3rd Semester CST study resources: notes, practice and previous year questions.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Unit 3 – Searching | Algorithms">
@@ -281,7 +281,8 @@
           </span>
           <span class="jump-videos-arrow" aria-hidden="true">&rarr;</span>
         </a>
-    </div>
+    <p><strong>2023–2026 priority:</strong> Searching carries 92 of 395 printed set marks (23.3%): linear/binary search 37 (Tier A), hashing 31 (Tier A), BST/balanced trees 24 (Tier A), symbol tables 0 (Tier S, still in the syllabus). These include optional questions; do not add them as a paper's answerable total. Rehearse search pseudocode and collision traces before supplementary tree variations.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 2: LINEAR SEARCH =================== -->
@@ -355,7 +356,7 @@ BINARY-SEARCH(A, n, key)
   low = 0
   high = n - 1
   while low <= high
-    mid = (low + high) / 2
+    mid = low + floor((high - low) / 2)
     if A[mid] == key
       return mid          // Found
     else if A[mid] < key
@@ -370,7 +371,7 @@ BINARY-SEARCH(A, n, key)
         <pre style="margin:0;font-family:'Courier New',monospace;line-height:1.8;">
 BINARY-SEARCH-REC(A, low, high, key)
   if low > high: return -1
-  mid = (low + high) / 2
+  mid = low + floor((high - low) / 2)
   if A[mid] == key: return mid
   else if A[mid] < key:
     return BINARY-SEARCH-REC(A, mid+1, high, key)
@@ -402,13 +403,18 @@ BINARY-SEARCH-REC(A, low, high, key)
       </div>
       <div class="warning-box" style="margin-top:0.6rem;">
         <div class="box-title"><i class="fas fa-exclamation-triangle"></i> Common Mistake</div>
-        <p>Using <code>mid = (low + high) / 2</code> can cause integer overflow for large values. The safe version is: <code>mid = low + (high - low) / 2</code>.</p>
+        <p>Using <code>mid = low + floor((high - low) / 2)</code> can cause integer overflow for large values. The safe version is: <code>mid = low + (high - low) / 2</code>.</p>
       </div>
       <div class="important-note" style="margin-top:0.6rem;">
         <div class="box-title"><i class="fas fa-star"></i> Binary Search Recurrence</div>
         <p>T(n) = T(n/2) + O(1) → By Master Theorem (Case 2 with f(n)=O(1)): <strong>T(n) = O(log n)</strong></p>
       </div>
-    </div>
+    <h3 id="searching-linear-and-binary">Searching: Linear and Binary Search Complexity</h3>
+<p>The sorted-order requirement is what makes discarding half the array sound: if key &lt; A[mid], every element from mid onwards is at least A[mid]. Maintain the invariant that, if the key exists, an occurrence remains in A[low..high]. The interval strictly shrinks because the new boundary excludes mid. For [10,2,8,4,6] searching 2 first sees 8 and goes left, then sees 10 and wrongly discards the 2 at index 1. Binary search is not a sorting algorithm and may fail on unsorted data.</p>
+<p>For [2,3,4,10,40] and missing key 5, the states (low,mid,high,A[mid]) are (0,2,4,4), then (3,3,4,10), then low=3, high=2: return −1. For the hit key 10 the same first state goes right and the second succeeds. Both iterative and recursive versions must test the empty interval. The safe integer midpoint is low+floor((high−low)/2); slicing arrays in a recursive implementation adds copying costs not present in the pseudocode.</p>
+<p>Repeated expansion of T(n)=T(floor(n/2))+c gives T(n/2ᵏ)+kc. At k≈log₂ n the range reaches one element. For n≥1 there are at most floor(log₂ n)+1 midpoint probes, so worst-case time is Θ(log n), not exactly log₂ n comparisons for every input. Best case is Θ(1); average logarithmic claims require an ordinary distribution of successful or unsuccessful searches. Iteration uses Θ(1) auxiliary space; recursion uses Θ(log n) stack space without assuming tail-call optimization.</p>
+<p>Linear search needs no preprocessing, works on unsorted input and sequential storage, and uses Θ(1) space. For one lookup, sorting first can cost Θ(n log n), outweighing a Θ(n) scan. For repeated searches on fixed sorted arrays binary search wins asymptotically; for frequently updated collections the insertion cost also matters. “n&lt;10” is only a heuristic, never a universal crossover theorem. With uniformly likely successful positions, linear search averages (n+1)/2 probes; a miss needs n.</p><figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="binary-interval-halving-title binary-interval-halving-desc"><title id="binary-interval-halving-title">binary interval halving</title><desc id="binary-interval-halving-desc">15 – 7: halve; 7 – 3: halve; 3 – 1: halve</desc><defs><marker id="binary-interval-halving-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="79.0" y1="130.0" x2="181.0" y2="130.0" stroke="currentColor"/><text x="135.0" y="125.0" fill="currentColor">halve</text><line x1="219.0" y1="130.0" x2="321.0" y2="130.0" stroke="currentColor"/><text x="275.0" y="125.0" fill="currentColor">halve</text><line x1="359.0" y1="130.0" x2="461.0" y2="130.0" stroke="currentColor"/><text x="415.0" y="125.0" fill="currentColor">halve</text><circle cx="60" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="60" y="135" text-anchor="middle" fill="currentColor">15</text><circle cx="200" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="200" y="135" text-anchor="middle" fill="currentColor">7</text><circle cx="340" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="340" y="135" text-anchor="middle" fill="currentColor">3</text><circle cx="480" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="480" y="135" text-anchor="middle" fill="currentColor">1</text></svg><figcaption>15 – 7: halve; 7 – 3: halve; 3 – 1: halve</figcaption></figure>
+</div>
   </section>
 
   <!-- =================== SECTION 4: BST =================== -->
@@ -506,7 +512,32 @@ BST-INSERT(root, key)
         <div class="box-title"><i class="fas fa-exclamation-triangle"></i> BST Degeneration Problem</div>
         <p>Inserting keys in sorted order (e.g., 10, 20, 30, 40, 50) creates a BST that looks like a linked list — every node only has a right child. Height becomes O(n), making all operations O(n). This is why <strong>balanced BSTs</strong> (AVL, Red-Black) are needed.</p>
       </div>
-    </div>
+    <p><strong>Insertion contract:</strong> the existing recursive algorithm ignores duplicate keys. State a duplicate policy (ignore, replace associated value, or maintain a count) before tracing. An iterative form tracks parent and current node, follows left/right comparisons until NIL, then attaches the new leaf; it uses O(1) auxiliary space. A recursive operation uses O(h) stack space. Both take O(h), with h logarithmic under balancing and linear for a chain; average O(log n) for a plain BST is not a worst-case promise.</p>
+<pre><code>BST-INSERT-ITERATIVE(root, key)
+  parent ← NIL; current ← root
+  while current ≠ NIL:
+    parent ← current
+    if key = current.key: return root
+    if key &lt; current.key: current ← current.left
+    else: current ← current.right
+  z ← new leaf(key)
+  if parent = NIL: return z
+  if key &lt; parent.key: parent.left ← z
+  else: parent.right ← z
+  return root
+BST-DELETE(root, key)
+  if root = NIL: return NIL
+  if key &lt; root.key: root.left ← BST-DELETE(root.left,key)
+  else if key &gt; root.key: root.right ← BST-DELETE(root.right,key)
+  else:
+    if root.left = NIL: return root.right
+    if root.right = NIL: return root.left
+    next ← minimum node in root.right
+    root.key ← next.key
+    root.right ← BST-DELETE(root.right,next.key)
+  return root</code></pre>
+<p>Three independent deletion drills on the original 50-rooted tree: remove leaf 20 by replacing its parent's left link with NIL; after inserting 65 below 60, remove one-child node 60 by linking 70.left to 65; remove two-child root 50 by copying successor 60 into the root and deleting the old 60 node. Do not delete an entire subtree or leave a duplicate successor. When nodes contain records, move the associated value with its key. In C/C++, reclaim the detached node using the appropriate memory convention.</p><figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="bst-successor-example-title bst-successor-example-desc"><title id="bst-successor-example-title">bst successor example</title><desc id="bst-successor-example-desc">50 to 30: ; 50 to 70: ; 30 to 20: ; 30 to 40: ; 70 to 60: ; 70 to 80: </desc><defs><marker id="bst-successor-example-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="264.7" y1="41.3" x2="160.3" y2="118.7" stroke="currentColor" marker-end="url(#bst-successor-example-arrow)"/><text x="217.5" y="75.0" fill="currentColor"></text><line x1="295.3" y1="41.3" x2="399.7" y2="118.7" stroke="currentColor" marker-end="url(#bst-successor-example-arrow)"/><text x="352.5" y="75.0" fill="currentColor"></text><line x1="133.5" y1="145.1" x2="76.5" y2="219.9" stroke="currentColor" marker-end="url(#bst-successor-example-arrow)"/><text x="110.0" y="177.5" fill="currentColor"></text><line x1="155.5" y1="145.8" x2="204.5" y2="219.2" stroke="currentColor" marker-end="url(#bst-successor-example-arrow)"/><text x="185.0" y="177.5" fill="currentColor"></text><line x1="404.5" y1="145.8" x2="355.5" y2="219.2" stroke="currentColor" marker-end="url(#bst-successor-example-arrow)"/><text x="385.0" y="177.5" fill="currentColor"></text><line x1="426.5" y1="145.1" x2="483.5" y2="219.9" stroke="currentColor" marker-end="url(#bst-successor-example-arrow)"/><text x="460.0" y="177.5" fill="currentColor"></text><circle cx="280" cy="30" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="280" y="35" text-anchor="middle" fill="currentColor">50</text><circle cx="145" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="145" y="135" text-anchor="middle" fill="currentColor">30</text><circle cx="415" cy="130" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="415" y="135" text-anchor="middle" fill="currentColor">70</text><circle cx="65" cy="235" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="65" y="240" text-anchor="middle" fill="currentColor">20</text><circle cx="215" cy="235" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="215" y="240" text-anchor="middle" fill="currentColor">40</text><circle cx="345" cy="235" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="345" y="240" text-anchor="middle" fill="currentColor">60</text><circle cx="495" cy="235" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="495" y="240" text-anchor="middle" fill="currentColor">80</text></svg><figcaption>50 to 30: ; 50 to 70: ; 30 to 20: ; 30 to 40: ; 70 to 60: ; 70 to 80: </figcaption></figure>
+</div>
   </section>
 
   <!-- =================== SECTION 5: BALANCED SEARCH TREES =================== -->
@@ -647,7 +678,9 @@ BST-INSERT(root, key)
           </tbody>
         </table>
       </div>
-    </div>
+    <p><strong>2-3 trees (syllabus reference, no separate marks in the window):</strong> a 2-node stores one key and has two children; a 3-node stores two ordered keys and has three children. All leaves have the same depth. Search compares against both separators as necessary and follows the correct range. Inserting into a full leaf temporarily produces three keys: promote the median and split the remaining keys into two nodes. Splits can propagate to the root, creating a new root and raising every leaf depth equally. Example inserts 10,20,30 split [10,20,30] into root [20] with leaves [10] and [30]. Delete by borrowing from a sibling with spare keys, otherwise merge with a sibling and parent separator; underflow repair can propagate upwards.</p>
+<p>Height balancing prevents sorted input from degrading search to a chain, the key significance examined in 2023 and 2026. AVL maintains a strict local height difference; red-black uses equal black-height and no red-red edge to bound h≤2log₂(n+1). A 2-3 tree achieves balance with multi-key nodes; a B-tree generalises high fan-out for disk pages. They all support logarithmic search, insertion and deletion when invariants are maintained, but have different rotation, split and storage costs. A plain BST needs no balance metadata but cannot guarantee logarithmic time. For detailed rotation drawings, see <a href="../../CST205/units/unit-4.html">Data Structures tree notes</a>.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 6: HASHING =================== -->
@@ -776,7 +809,14 @@ BST-INSERT(root, key)
         </div>
       </div>
 
-    </div>
+    <h3 id="hashing-search-and-collision-overview">Hashing Search and Collision Resolution</h3>
+<p>A hash table implements key→value lookup, not sorted traversal. Examples include compiler identifier tables, caches and dictionaries. The hash function should be fast, deterministic for a key and spread the actual key distribution across buckets; being complicated alone does not guarantee this. Collisions are unavoidable when the key universe exceeds table size. Equal hashes are not proof of equal keys: compare stored keys before returning a value.</p>
+<p>Four numeric function examples: division h(123)=123 mod 10=3; multiplication with m=10 and A≈0.618 gives floor(10·fraction(50A))=9; mid-square squares 44 to 1936 and selects the middle two decimal digits 93 for a 100-slot table; folding 123456 as 12+34+56 gives 102, then mod 10 gives 2. Specify digit width, extraction and final reduction: “take middle digits” without a convention is ambiguous. Multiplication here uses an approximation for illustration, not a claim that this A is universally best.</p>
+<p><strong>One shared teaching dataset:</strong> insert 23,43,13,27,37 into m=10 slots with h₁(k)=k mod 10. Chaining appends to bucket lists; open addressing probes start at i=0. For double hashing choose h₂(k) from [1,3,7,9] indexed by k mod 4, guaranteeing gcd(h₂,10)=1. This deliberate teaching choice avoids the common error of using a step of 2 or 5 in a ten-slot table. A prime table with 1≤step&lt;m is another solution.</p>
+<div class="table-wrapper"><table class="data-table"><caption>Collision resolution: every attempted slot, stop at first empty</caption><thead><tr><th scope="col">Key</th><th scope="col">Chaining bucket</th><th scope="col">Linear probes</th><th scope="col">Quadratic probes (h+i²) mod 10</th><th scope="col">Double-hash probes</th></tr></thead><tbody><tr><td>23</td><td>3</td><td>3</td><td>3</td><td>3</td></tr><tr><td>43</td><td>3</td><td>3→4</td><td>3→4</td><td>3→2</td></tr><tr><td>13</td><td>3</td><td>3→4→5</td><td>3→4→7</td><td>3→6</td></tr><tr><td>27</td><td>7</td><td>7</td><td>7→8</td><td>7</td></tr><tr><td>37</td><td>7</td><td>7→8</td><td>7→8→1</td><td>7→0</td></tr></tbody></table></div>
+<p>Final chains are 3:[23,43,13] and 7:[27,37]. Linear probing fills adjacent slots and creates primary clustering; quadratic probing separates consecutive home buckets but keys with the same home follow the same sequence (secondary clustering). Quadratic probing with m=10 does not visit every slot: it may fail even with free slots, so cap probes and rehash rather than loop forever. Double hashing reduces shared probe paths but needs a nonzero step coprime to m.</p>
+<p>Here α=n/m=0.5. Chaining tolerates α&gt;1; under uniform hashing, expected search is O(1+α). Open addressing needs α&lt;1 and becomes slower near fullness. Expected O(1) assumes controlled load and suitable distribution; worst case remains O(n). For probing deletion use a DELETED tombstone: search continues through it but may stop at a never-used EMPTY cell. Insert remembers a tombstone but still checks for an existing equal key before reusing it. Rehash periodically to remove tombstones and restore performance.</p><figure><svg width="100%" viewBox="0 0 560 270" role="img" aria-labelledby="hash-collision-chaining-title hash-collision-chaining-desc"><title id="hash-collision-chaining-title">hash collision chaining</title><desc id="hash-collision-chaining-desc">3 to 23: ; 23 to 43: ; 43 to 13: ; 7 to 27: ; 27 to 37: </desc><defs><marker id="hash-collision-chaining-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><line x1="64.0" y1="60.0" x2="176.0" y2="60.0" stroke="currentColor" marker-end="url(#hash-collision-chaining-arrow)"/><text x="125.0" y="55.0" fill="currentColor"></text><line x1="214.0" y1="60.0" x2="326.0" y2="60.0" stroke="currentColor" marker-end="url(#hash-collision-chaining-arrow)"/><text x="275.0" y="55.0" fill="currentColor"></text><line x1="364.0" y1="60.0" x2="476.0" y2="60.0" stroke="currentColor" marker-end="url(#hash-collision-chaining-arrow)"/><text x="425.0" y="55.0" fill="currentColor"></text><line x1="64.0" y1="210.0" x2="176.0" y2="210.0" stroke="currentColor" marker-end="url(#hash-collision-chaining-arrow)"/><text x="125.0" y="205.0" fill="currentColor"></text><line x1="214.0" y1="210.0" x2="326.0" y2="210.0" stroke="currentColor" marker-end="url(#hash-collision-chaining-arrow)"/><text x="275.0" y="205.0" fill="currentColor"></text><circle cx="45" cy="60" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="45" y="65" text-anchor="middle" fill="currentColor">3</text><circle cx="195" cy="60" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="195" y="65" text-anchor="middle" fill="currentColor">23</text><circle cx="345" cy="60" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="345" y="65" text-anchor="middle" fill="currentColor">43</text><circle cx="495" cy="60" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="495" y="65" text-anchor="middle" fill="currentColor">13</text><circle cx="45" cy="210" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="45" y="215" text-anchor="middle" fill="currentColor">7</text><circle cx="195" cy="210" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="195" y="215" text-anchor="middle" fill="currentColor">27</text><circle cx="345" cy="210" r="17" fill="var(--card-bg)" stroke="currentColor"/><text x="345" y="215" text-anchor="middle" fill="currentColor">37</text></svg><figcaption>3 to 23: ; 23 to 43: ; 43 to 13: ; 7 to 27: ; 27 to 37: </figcaption></figure>
+</div>
   </section>
 
   <!-- =================== SECTION 7: SYMBOL TABLES =================== -->
@@ -1595,7 +1635,8 @@ BINARY-SEARCH(A, n, key)
         </div>
 
       </div>
-    </div>
+    <p><strong>Exam-focused eight-mark rehearsal (self-review rubrics, not official keys):</strong> (1) explain two cases favouring linear search (2), write binary search (4), expand its recurrence (2); (2) give recursive binary search (4), an unsorted counterexample (1), and time/space analysis (3); (3) define hashing (2) and trace the four collision methods above (6); (4) explain height balancing (4) and iterative BST insertion (4); (5) show BST insertion/deletion cases (5) and explain balancing's benefit (3). Expected checkpoints are the probe table above, missing-key result −1, successor deletion without lost children, and O(h) becoming O(log n) only under suitable height assumptions.</p><p><a href="../../../quiz/setup.html?subject=CST209&amp;unit=3">Practise Searching quiz questions</a>. Preserve written reasoning alongside any automatically graded score.</p>
+</div>
   </section>
 
   <!-- =================== SECTION 15: REVISION =================== -->
@@ -1661,41 +1702,7 @@ BINARY-SEARCH(A, n, key)
     </div>
   </section>
 
-  <section class="section" id="videos">
-    <h2 class="section-title">
-      <i class="fas fa-play-circle"></i> Watch &amp; Learn
-      <i class="fas fa-chevron-up collapse-icon"></i>
-    </h2>
-    <div class="section-content">
-      <p class="video-note">Hand-picked external videos. They open on YouTube in a new tab; nothing loads from YouTube until you choose one. Not official course material.</p>
-      <ul class="video-list">
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=linear+search+vs+binary+search" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Linear and binary search</span>
-              <span class="video-link-meta">Preconditions and complexity &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=hashing+collision+resolution+open+addressing" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Hashing and collision resolution</span>
-              <span class="video-link-meta">Chaining and open addressing &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="video-link" href="https://www.youtube.com/results?search_query=binary+search+tree+search+complexity" target="_blank" rel="noopener noreferrer">
-            <span class="video-link-text">
-              <span class="video-link-title">Binary search trees for search</span>
-              <span class="video-link-meta">Balanced vs unbalanced trees &middot; search on YouTube</span>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <section class="section" id="videos"><h2 class="section-title"><i class="fas fa-play-circle"></i> Watch &amp; Learn<i class="fas fa-chevron-up collapse-icon"></i></h2><div class="section-content"><p>Optional external lessons. Watch pages checked 19 November 2026; playback and captions not device-tested. No YouTube request occurs until a link is selected.</p><ul class="video-list"><li><a class="video-link" href="https://www.youtube.com/watch?v=C2apEw9pgtw" target="_blank" rel="noopener noreferrer">2.6.1 Binary Search Iterative Method — Abdul Bari · 19:35</a><p>Trace halving and analysis. Recursive pseudocode is in these notes.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=0M_kIqhwbFo" target="_blank" rel="noopener noreferrer">Lecture 8: Hashing with Chaining — MIT OpenCourseWare · 51:15</a><p>Longer optional background on dictionaries and chaining; use our shared-key table for open addressing.</p></li><li><a class="video-link" href="https://www.youtube.com/watch?v=gcULXE7ViZw" target="_blank" rel="noopener noreferrer">Delete a node from Binary Search Tree — mycodeschool · 18:26</a><p>Three deletion cases in C++; balanced-tree overview remains in the notes.</p></li></ul></div></section>
   </main><!-- end container -->
 
 <!-- FAB BUTTONS -->

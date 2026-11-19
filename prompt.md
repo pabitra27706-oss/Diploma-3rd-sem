@@ -1,15 +1,17 @@
 # Diploma 3rd Sem Study Hub — continuation handoff
 
-> **Current checkpoint — Phase 15, 2026-11-19:** `arena/fbc84d5d-diploma-3rd-sem`
-> (base `e83cd64`) contains the six CST207 parts and Mode A topic map. Local
-> gates: 159/159 Python, 13/13 README scripts, 14/14 deterministic Node; 0 PYQ
-> drift. 102 labelled questions have concept destinations; the one unlabelled
-> pool intentionally does not jump. All 25 new anchors, 17 diagrams and 15
-> verified watch-page links are recorded in `docs/phases/15-cst207-cso-content/record.md`.
-> **Owner-passed 2026-11-19.** All five theory units rechecked against 22
-> syllabus topic lines. Hosted Web CI `44483074003` failed at PYQ browser
-> smoke; no separate phone result was supplied. Do not start another phase
-> or open/merge a PR without direction.
+> **Phase 16 closeout — 2026-11-19:** Owner reported “Everything looks good”
+> and explicitly authorized merging `arena/d7aa68ed-diploma-3rd-sem` (base
+> `47d801b`). Implementation `79585e2` is pushed; acceptance is **✅*** with
+> video-selection and hosted browser-smoke caveats in the phase record.
+> Local evidence: 166 Python tests, 13 README gates, 14 deterministic Node
+> suites; 105/105 editorial routes, 8/8 CO5, frozen data unchanged.
+> Hosted implementation CI `44488748038` failed at the same PYQ browser-smoke
+> step as the base; no identical-root-cause or hosted-pass claim. Videos were
+> not systematically compared against alternatives; two are short previews.
+> The offered video-only review was not performed. Merge the existing work on
+> owner instruction; do not start Phase 17 or perform a separate deploy/settings
+> action. Consult GitHub for the actual PR merge result, not this pre-merge note.
 
 > **Maintenance handoff — 2026-11-18:** On `arena/eec36cd0-diploma-3rd-sem`
 > (base `a2bb413`), Home now follows the manual theory checklist, uses the
@@ -351,7 +353,7 @@ no content: 0 revision entries and 0 answers are owner-verified.
 
 ## Termux delivery convention (post-phase test flow)
 
-Use the current Phase 15 command in `rule.md` §7 after the session branch is
+Use the current Phase 16 command in `rule.md` §7 after the session branch is
 pushed. The dedicated checkout preserves `/Diploma-3rd-sem/` as the base URL:
 `http://127.0.0.1:8012/Diploma-3rd-sem/`. This is local testing, not deployment.
 

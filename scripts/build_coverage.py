@@ -399,6 +399,10 @@ def build(root=ROOT):
             quiz_bits = ', '.join(f'U{k}: {v}' for k, v in outside['quiz'].items()) or 'none'
             body += (f' Out-of-syllabus stored tags — PYQ ({e(pyq_bits)}); quiz ({e(quiz_bits)}); '
                      f'extra unit page: {"yes" if outside["unitPageBeyondSyllabus"] else "no"}.')
+        if code == 'CST209':
+            body += (' CO5 Supplementary Unit 5 covers string matching and tries '
+                     '(42 printed set marks in the 2023–2026 window), not a fifth official unit. '
+                     '<a href="subjects/CST209/units/unit-5.html">Open CO5 supplementary notes</a>.')
         body += ('</p><table><caption>'
                  f'{e(title)} — inventory by syllabus unit'
                  '</caption><thead><tr><th scope="col">Unit</th><th scope="col">Syllabus topics</th>'

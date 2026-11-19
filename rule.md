@@ -6,10 +6,12 @@
 > Owner answers and waivers live in `docs/DECISIONS.md`; the living state lives
 > in `prompt.md`; the evidence base is `docs/AUDIT.md`.
 >
-> **Phase 15 — current session (2026-11-19):** `arena/fbc84d5d-diploma-3rd-sem` from
-> `e83cd64`. All six parts and five theory units owner-passed; see the phase record
-> for the hosted browser-smoke caveat.
-> Use the Phase 15 Termux block in §7; no PR, Pages change or deploy is authorized.
+> **Phase 16 — owner-accepted (2026-11-19):**
+> `arena/d7aa68ed-diploma-3rd-sem` from Phase 15 merge `47d801b` (PR #29).
+> Owner authorized push, then merge after reporting “Everything looks good”.
+> Acceptance retains video-selection and hosted browser-smoke caveats; see the
+> Phase 16 record. No Phase 17 or separate deployment/settings action authorized.
+> The branch now exists remotely; §7's Termux command is usable.
 >
 > **Phase 13 CLOSED (2026-11-19):** `arena/c323dee5-diploma-3rd-sem` (based on
 > `9b13f13`, the PR #27 merge) carried **Phase 13 — Scripting Languages
@@ -52,7 +54,7 @@
 
 - Site: Diploma 3rd Semester — CST Study Hub
 - Repo: `pabitra27706-oss/Diploma-3rd-sem` · working branch:
-  `arena/fbc84d5d-diploma-3rd-sem` (Phase 15, CST207 content). `main` is the
+  `arena/d7aa68ed-diploma-3rd-sem` (Phase 16, CST209 content). `main` is the
   Pages source; no merge or deploy without an explicit owner command.
 - Host: GitHub Pages · live URL: `https://pabitra27706-oss.github.io/Diploma-3rd-sem/`
 - **Base path: `/Diploma-3rd-sem/`** — everything must work under it
@@ -218,16 +220,16 @@ A **public launch** additionally needs every item in
   which branch/revision contains the changes and whether it has been pushed.
   Never suggest a destructive reset, overwrite local changes, or present an
   unpushed change as available through `git pull`.
-- **Phase 15 Termux preview (after the working branch has been pushed).**
+- **Phase 16 Termux preview (branch pushed with owner authorization).**
   With Python and Git installed (`pkg install python git` if needed), use this
   single command. It clones or updates a dedicated working directory and refuses
   to update a checkout on the wrong branch. If a pull refuses local changes,
   stop and keep those changes; do not reset the checkout.
 
   ```sh
-  cd ~ && mkdir -p ~/study-hub-cso-preview && cd ~/study-hub-cso-preview && (test -d Diploma-3rd-sem/.git || git clone --single-branch --branch arena/fbc84d5d-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && test "$(git branch --show-current)" = arena/fbc84d5d-diploma-3rd-sem && git pull --ff-only origin arena/fbc84d5d-diploma-3rd-sem && cd ~/study-hub-cso-preview && python3 -m http.server 8012 --bind 127.0.0.1
+  cd ~ && mkdir -p ~/study-hub-algorithms-preview && cd ~/study-hub-algorithms-preview && (test -d Diploma-3rd-sem/.git || git clone --single-branch --branch arena/d7aa68ed-diploma-3rd-sem https://github.com/pabitra27706-oss/Diploma-3rd-sem.git Diploma-3rd-sem) && cd Diploma-3rd-sem && test "$(git branch --show-current)" = arena/d7aa68ed-diploma-3rd-sem && git pull --ff-only origin arena/d7aa68ed-diploma-3rd-sem && cd ~/study-hub-algorithms-preview && python3 -m http.server 8012 --bind 127.0.0.1
   ```
 
-  Open `http://127.0.0.1:8012/Diploma-3rd-sem/subjects/CST207/units/unit-1.html`.
+  Open `http://127.0.0.1:8012/Diploma-3rd-sem/subjects/CST209/units/unit-4.html`.
   Stop with Ctrl+C. Port 8012 isolates the preview from prior service workers.
   This is local testing, not production deployment.

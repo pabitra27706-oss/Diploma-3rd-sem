@@ -1,6 +1,6 @@
 # Phase 16 — Algorithms: Weight-Calibrated Content, Video Curation & PYQ Sync
 
-> **Status:** 📋 Planned (documentation blueprint — zero shipped files modified)  
+> **Status:** ✅* Owner-accepted 2026-11-19; merge authorized. See `record.md` for video-selection and hosted browser-smoke caveats.
 > **Execution Priority:** **#3 of 5** (`15 → 13 → 16 → 14 → 12` — most uniform exam split + unreachable `42m` CO5 module)  
 > **Subject:** Algorithms (`CST209` — theory-only, no companion lab course)  
 > **Syllabus authority:** `docs/syllabus/syllabus.json` & `docs/syllabus/syllabus-3rd-sem-2022.pdf` **p. 12** — **4 credits, L–T–P `3-1-0`, 60 contact hours (`6 + 16 + 18 + 20`)** across **4 official syllabus units**, plus Course Outcome **CO5** (*"Learn various string processing algorithms"*, p. 12) whose detailed unit table was omitted from the printed PDF but is tested in **every `2023–2026` paper (`4/4`)**  

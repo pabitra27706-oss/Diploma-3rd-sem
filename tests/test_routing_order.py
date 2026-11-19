@@ -41,7 +41,7 @@ ORDER_DEPENDENT = {
     'CST203': 30,
     'CST205': 35,
     'CST207': 25,
-    'CST209': 50,
+    'CST209': 49,  # Phase 16 content anchors: 50→48→47→50→49→49; matcher unchanged.
 }
 
 

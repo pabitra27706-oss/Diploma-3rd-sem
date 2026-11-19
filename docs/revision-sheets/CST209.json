@@ -5,13 +5,13 @@
   "draftedOn": "2026-11-17",
   "draftedBy": "agent-draft",
   "status": "unverified — owner sign-off required",
-  "note": "Every entry cites a verbatim syllabus topic phrase for its unit. The one-line meaning is an agent draft, not an authority. Nothing here is owner-verified, and no sheet is linked from navigation.",
+  "note": "Every entry cites a verbatim syllabus topic phrase for its unit. The one-line meaning is an agent draft, not an authority. Nothing here is owner-verified, and no sheet is linked from navigation. Phase 16 calibrated to 2023–2026 papers only. CO5 String Matching and Tries remains supplementary, not a fifth declared syllabus unit.",
   "entries": [
     {
       "id": "CST209-d-01",
       "kind": "definition",
       "term": "Algorithm",
-      "meaning": "A finite sequence of unambiguous steps that takes inputs, produces outputs and terminates.",
+      "meaning": "A finite, definite and effective procedure with specified inputs and at least one output; correctness and efficiency are separate requirements.",
       "unit": 1,
       "syllabusPage": 12,
       "citationQuote": "Definitions and characteristics of an algorithm; examples"
@@ -49,7 +49,7 @@
       "id": "CST209-d-03",
       "kind": "definition",
       "term": "Theta notation",
-      "meaning": "A tight bound: f(n) is Theta(g(n)) when it is both O(g(n)) and Omega(g(n)).",
+      "meaning": "An eventual tight bound with positive lower and upper constants; Theta is not average-case analysis.",
       "unit": 1,
       "syllabusPage": 12,
       "citationQuote": "Asymptotic notations: order (O), Omega, Theta, with examples"
@@ -58,7 +58,7 @@
       "id": "CST209-f-04",
       "kind": "formula",
       "term": "Binary search worst case",
-      "meaning": "Binary search halves the search range each step, so its worst case grows with the logarithm of n.",
+      "meaning": "On a sorted random-access array, binary search halves the interval; for n ≥ 1 the worst case uses at most floor(log2(n))+1 midpoint probes. Iteration needs O(1) auxiliary space; recursion O(log n).",
       "unit": 3,
       "syllabusPage": 12,
       "citationQuote": "Best, average and worst-case complexity of linear and binary search",
@@ -79,7 +79,7 @@
       "id": "CST209-d-05",
       "kind": "definition",
       "term": "Divide and conquer",
-      "meaning": "Splitting a problem into smaller sub-problems, solving them recursively, then combining the results.",
+      "meaning": "Divide an instance, solve smaller instances and combine; dynamic programming instead reuses overlapping states. The method alone does not determine running time.",
       "unit": 1,
       "syllabusPage": 12,
       "citationQuote": "Programming models: divide and conquer, greedy, dynamic programming"
@@ -88,7 +88,7 @@
       "id": "CST209-d-06",
       "kind": "definition",
       "term": "Stable sort",
-      "meaning": "A sort that keeps the original relative order of items that compare equal.",
+      "meaning": "A sort preserves the relative order of equal-key records. Merge must take left on equality and LSD Radix needs stable digit passes; Quick and ordinary Selection/Heap are unstable.",
       "unit": 2,
       "syllabusPage": 12,
       "citationQuote": "The sorting problem"
@@ -97,7 +97,7 @@
       "id": "CST209-d-07",
       "kind": "definition",
       "term": "Hash collision",
-      "meaning": "Two different keys mapping to the same table slot; resolution needs chaining or open addressing.",
+      "meaning": "Different keys can share a home slot. Chaining keeps lists; open addressing probes other slots. Expected constant time requires controlled load/distribution; probing deletion needs tombstones.",
       "unit": 3,
       "syllabusPage": 12,
       "citationQuote": "Hashing, hash tables, hash functions, collision and collision resolution"
@@ -106,10 +106,19 @@
       "id": "CST209-d-08",
       "kind": "definition",
       "term": "Minimum spanning tree",
-      "meaning": "A set of edges connecting every vertex of a weighted graph with the smallest total weight and no cycle.",
+      "meaning": "For a connected, weighted undirected graph, a spanning tree of minimum total edge weight; it includes all vertices, has V−1 edges and no cycle. Prim grows one tree; Kruskal merges components using Union-Find.",
       "unit": 4,
       "syllabusPage": 12,
       "citationQuote": "Minimum spanning tree: Prim's algorithm, Kruskal's algorithm"
+    },
+    {
+      "id": "CST209-d-09",
+      "kind": "definition",
+      "term": "Shortest-path algorithm choice",
+      "meaning": "Dijkstra requires non-negative edges; Bellman–Ford permits negative edges and detects reachable negative cycles; Floyd–Warshall computes all pairs and detects negative cycles by a negative diagonal.",
+      "unit": 4,
+      "syllabusPage": 12,
+      "citationQuote": "Shortest paths: Dijkstra, Bellman-Ford, Floyd-Warshall"
     }
   ]
 }
