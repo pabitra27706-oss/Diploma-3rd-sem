@@ -1,7 +1,7 @@
 (() => {
  'use strict';const $=s=>document.querySelector(s),status=$('#settings-status');let preview=null;
  const report=e=>{status.textContent=e.message||String(e);};
- function render(){const prefs=StudyStorage.prefs();for(const [key,value]of Object.entries(prefs)){const field=$('#prefs-form [name="'+key+'"]');if(field)field.value=value;}const groups=StudyStorage.estimate();$('#storage-summary').textContent=Object.entries(groups).map(([key,value])=>`${key}: ${value.records} records, ~${value.bytes} bytes`).join(' · ');labelResetOptions(groups);renderMirror();}
+ function render(){const prefs=StudyStorage.prefs();const examDate=$('#exam-date');if(examDate)examDate.value=prefs.examDate||'';for(const [key,value]of Object.entries(prefs)){const field=$('#prefs-form [name="'+key+'"]');if(field)field.value=value;}const groups=StudyStorage.estimate();$('#storage-summary').textContent=Object.entries(groups).map(([key,value])=>`${key}: ${value.records} records, ~${value.bytes} bytes`).join(' · ');labelResetOptions(groups);renderMirror();}
  // Reset choices are named from the registry and carry live counts, so the
  // dialog always shows what each group holds before anything is cleared.
  function labelResetOptions(groups){
@@ -28,6 +28,13 @@
  $('#retry-recovery').onclick=()=>{try{const recovered=StudyStorage.recover();render();status.textContent=recovered?'Original pre-import records recovered. Reload other open tabs.':'No pending import recovery.';}catch(e){report(e);}};
  function snapshot(){invalidatePreview();const data=JSON.stringify(StudyStorage.backup(),null,2);$('#backup-text').value=data;return data;}
  $('#prefs-form').onsubmit=e=>{e.preventDefault();try{const prefs=Object.fromEntries(new FormData(e.target));prefs.fontScale=Number(prefs.fontScale);StudyStorage.setPrefs(prefs);status.textContent='Preferences saved.';}catch(error){report(error);}};
+ function saveExamDate(value){
+  const status=$('#exam-date-status');
+  try{StudyStorage.setPrefs({examDate:value});$('#exam-date').value=value;status.textContent=value?'Exam date saved.':'Exam date cleared.';}
+  catch(error){status.textContent=error.message;}
+ }
+ $('#exam-date-form')?.addEventListener('submit',e=>{e.preventDefault();saveExamDate($('#exam-date').value);});
+ $('#clear-exam-date')?.addEventListener('click',()=>saveExamDate(''));
  $('#reset-reading').onclick=()=>{try{StudyStorage.setPrefs({fontScale:100,lineHeight:'normal',contrast:'normal',reduceMotion:'system'});render();status.textContent='Reading settings reset.';}catch(e){report(e);}};
  $('#export-backup').onclick=()=>{try{const blob=new Blob([snapshot()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='study-hub-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Backup prepared. If download is blocked, copy the text below.';}catch(e){report(e);}};
  $('#copy-backup').onclick=async()=>{try{const data=snapshot();try{await navigator.clipboard.writeText(data);status.textContent='Backup copied.';}catch{$('#backup-text').focus();$('#backup-text').select();status.textContent='Select and copy the backup text manually.';}}catch(e){report(e);}};
