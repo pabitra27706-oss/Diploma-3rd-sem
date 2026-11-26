@@ -830,7 +830,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** Finiteness, definiteness, input, output, effectiveness, and termination.\n\n**b)** Asymptotic notation describes growth rates independent of machine constants: O (upper), Ω (lower), Θ (tight), o (strict upper), ω (strict lower).",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 3 marks + b) 5 marks.**\n\n**a) Characteristics of an algorithm** — it must have **input** (zero or more values), **output** (at least one result), **definiteness** (each step has one meaning), **finiteness** (it terminates), **effectiveness** (each step is basic enough to execute) and **generality** (it works for a whole set of inputs).\n\n**b) Asymptotic notation** describes how cost grows with `n`, ignoring constants and lower-order terms.\n\n| Notation | Bound | Definition | Example |\n|---|---|---|---|\n| `O` | Upper | `f(n) ≤ c·g(n)` | `3n² + 5n = O(n²)` |\n| `Ω` | Lower | `f(n) ≥ c·g(n)` | `3n² + 5n = Ω(n²)` |\n| `Θ` | Tight | `c₁g(n) ≤ f(n) ≤ c₂g(n)` | `3n² + 5n = Θ(n²)` |\n| `o` | Strict upper | `f(n) < c·g(n)` for every `c` | `2n = o(n²)` |\n| `ω` | Strict lower | `f(n) > c·g(n)` for every `c` | `n² = ω(n)` |\n\n```text\nO(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)\n```\n\n`O` gives the worst-case guarantee, `Ω` the floor, `Θ` the exact order.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -879,7 +879,7 @@
         }
       ],
       "markSplit": "3+3+2",
-      "answer": "**a)** Divide the problem, solve subproblems recursively, then combine results (merge sort, quicksort).\n\n**b)** `T(n)=2T(n/2)+1` expands to `2^k T(1) + (2^k−1)` with `n=2^k`, so `T(n)=Θ(n)`.\n\n**c)** The nested loops execute `n × n` statements: Θ(n²).",
+      "answer": "\n**Mark distribution — Total 8 marks: 3 + 3 + 2.**\n\n**a) Divide and conquer** splits a problem into smaller subproblems of the same type, solves them recursively and combines the results, giving `T(n) = a·T(n/b) + f(n)`. Merge sort and binary search are classic examples.\n\n**b) Substitution for T(n) = 2T(n/2) + 1**\n\n```text\nT(n) = 2T(n/2) + 1\n     = 2[2T(n/4) + 1] + 1 = 4T(n/4) + 3\n     = 8T(n/8) + 7 = 2ᵏT(n/2ᵏ) + (2ᵏ − 1)\nFor n/2ᵏ = 1 → k = log₂ n:\n     T(n) = n·T(1) + n − 1 = Θ(n)\n```\n\n**c) Two nested loops each running n times** perform `n × n` iterations of `Θ(1)` work, so the complexity is `Θ(n²)`.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -921,7 +921,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Find the minimum in the unsorted suffix and swap it into position. `[5,2,9,1]` → `[1,2,9,5]` → `[1,2,5,9]`.\n\n**b)** All are Θ(n²) average/worst. Bubble swaps adjacent inversions; selection uses O(n) swaps; insertion is efficient on nearly sorted/small data. Selection and insertion are in-place; bubble and insertion are stable in their usual form.",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Selection sort** on `[5, 2, 9, 1]` — find the smallest in the unsorted part and swap it to the front:\n\n| Pass | Smallest | Array |\n|---|---|---|\n| 1 | 1 at index 3 | `1, 2, 9, 5` |\n| 2 | 2 already placed | `1, 2, 9, 5` |\n| 3 | 5 at index 3 | `1, 2, 5, 9` |\n\nThere are always `n(n−1)/2` comparisons, so it is `Θ(n²)` in every case, with `O(1)` extra space.\n\n**b) Comparison**\n\n| Point | Bubble | Selection | Insertion |\n|---|---|---|---|\n| Best case | `Ω(n)` with a flag | `Θ(n²)` | **Ω(n)** |\n| Average / worst | `Θ(n²)` | `Θ(n²)` | `Θ(n²)` |\n| Swaps | Many — `Θ(n²)` | **At most n − 1** | `Θ(n²)` shifts |\n| Stable | Yes | No | Yes |\n| Best used when | Data nearly sorted | Swap cost is high | Small or nearly sorted data |\n\nInsertion sort is usually the fastest of the three in practice because it stops each comparison early.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -963,7 +963,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Choose a pivot (e.g. 72), partition into `<72` and `>72`, recursively sort both sides and concatenate: `[13,14,22,38,45,48,58,69,72,79,81,93]`.\n\n**b)** Best/average: Θ(n log n) with balanced partitions. Worst: Θ(n²) with maximally unbalanced partitions.",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Quick sort** on `38, 81, 22, 48, 13, 69, 93, 14, 45, 58, 79, 72` — Lomuto partition, last element as pivot:\n\n| Pivot | Elements smaller | Elements larger | Pivot's final index |\n|---|---|---|---|\n| 72 | 38, 22, 48, 13, 69, 14, 45, 58 | 81, 93, 79 | 8 |\n| 58 | 38, 22, 48, 13, 45, 14 | 69, 79 | 6 |\n| 45 | 38, 22, 13, 14 | 48 | 4 |\n| 14 | 13 | 22, 38 | 1 |\n| 22 | — | 38 | 2 |\n| 93 | 79 | — | 11 |\n| 79 | — | — | 9 |\n\n```text\nSorted: 13, 14, 22, 38, 45, 48, 58, 69, 72, 79, 81, 93\n```\n\n**b) Complexity** — the best case splits the array into two equal halves, giving `T(n) = 2T(n/2) + Θ(n) = `Θ(n log n)`. The worst case picks the smallest or largest element as pivot, giving parts of size `0` and `n − 1`: `T(n) = T(n−1) + Θ(n) = Θ(n²)`, which happens on already-sorted input. A random or median-of-three pivot makes the worst case improbable.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1005,7 +1005,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)**\n```text\nwhile lo <= hi: mid=(lo+hi)//2\n  if a[mid]==x return mid\n  elif a[mid]>x hi=mid-1 else lo=mid+1\nreturn -1\n```\n\n**b)** A collision occurs when two keys hash to the same slot. Open addressing uses linear/quadratic probing or double hashing; separate chaining stores colliding keys in a list.",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 3 marks + b) 5 marks.**\n\n**a) Binary search**\n\n```text\nlow = 0; high = n - 1\nwhile low <= high:\n    mid = (low + high) / 2\n    if A[mid] = key: return mid\n    if A[mid] < key: low = mid + 1\n    else: high = mid - 1\nreturn -1\n```\n\nIt needs a sorted array and costs `Θ(log n)`.\n\n**b) Collision** — two different keys hash to the same slot. Resolving techniques:\n\n| Technique | Probe sequence | Drawback |\n|---|---|---|\n| Separate chaining | Linked list per slot | Pointer overhead |\n| Linear probing | `(h(k)+i) mod m` | Primary clustering |\n| Quadratic probing | `(h(k)+c₁i+c₂i²) mod m` | Secondary clustering |\n| Double hashing | `(h₁(k)+i·h₂(k)) mod m` | Needs a good second hash |\n\nOpen addressing must keep the load factor below 1 and needs tombstones for deletion; rehashing before about 0.75 keeps probing short.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1049,7 +1049,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** An MST connects all vertices with minimum total edge weight and no cycles.\n\n**b)** Printed edges include 0–3(5), 0–1(7), 1–2(8), 1–3(9), 1–4(7), 2–4(5), 3–4(15), 3–5(6), 5–4(8), 4–6(9), 5–6(11). Kruskal selects 0–3(5), 2–4(5), 3–5(6), 0–1(7), 1–4(7), 4–6(9); total weight **39**.",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 2 marks + b) 6 marks.**\n\n**a) Minimum spanning tree** — a spanning tree of a weighted connected graph (all `V` vertices, exactly `V − 1` edges, no cycle) whose total edge weight is the smallest possible.\n\n**b) Kruskal's algorithm** sorts the edges by weight and adds each one unless it closes a cycle, using union-find to test that, stopping after `V − 1` edges:\n\n```text\nsort edges by weight\nfor each edge (u, v, w) in increasing order:\n    if find(u) ≠ find(v):\n        add the edge; union(u, v)\n    stop when V - 1 edges are added\n```\n\nOn the printed graph the edges are `A–B=1`, `D–E=2`, `B–C=3`, `C–D=4`, `A–E=5`, `A–C=7`, `A–D=10`:\n\n| Edge | Weight | Action |\n|---|---|---|\n| A–B | 1 | **add** |\n| D–E | 2 | **add** |\n| B–C | 3 | **add** |\n| C–D | 4 | **add** — all five vertices now connected |\n| A–E, A–C, A–D | 5, 7, 10 | reject — would form a cycle |\n\n```text\nChosen: A–B (1), D–E (2), B–C (3), C–D (4)\n```\n\n**MST weight = 1 + 2 + 3 + 4 = 10** with 4 edges over 5 vertices. Kruskal runs in `O(E log E)`, dominated by the sort; the union-find tests take almost `O(1)` each.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1091,7 +1091,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** A Directed Acyclic Graph has directed edges and no directed cycle; prerequisite graphs and topological-sort dependency graphs are examples.\n\n**b)** Initialize `D[i][j]=w(i,j)` (0 on diagonal, ∞ if no edge). For each `k`, for each `i,j`, set `D[i][j]=min(D[i][j], D[i][k]+D[k][j])`. For a 3-vertex example, applying intermediate vertex 1 updates 2→3 from ∞ to `w(2,1)+w(1,3)`; repeat for all k to obtain all-pairs shortest paths.",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 2 marks + b) 6 marks.**\n\n**a) DAG** — a **directed acyclic graph** has directed edges and no cycle. Example: course prerequisites `Maths → DS → Algorithms`, where topological order `Maths, DS, Algorithms` is valid.\n\n**b) Floyd–Warshall** finds all-pairs shortest paths by allowing intermediate vertices one at a time:\n\n```text\nD = weight matrix (∞ where no edge, 0 on the diagonal)\nfor k = 1 to V:\n    for i = 1 to V:\n        for j = 1 to V:\n            D[i][j] = min(D[i][j], D[i][k] + D[k][j])\n```\n\nIt handles negative edges (but not negative cycles), costs `Θ(V³)` and needs `Θ(V²)` space.\n\n**Example** — vertices 1, 2, 3 with `1→2 = 3`, `1→3 = 8`, `2→3 = 2`, no other edges:\n\n| Stage | D[1][2] | D[1][3] |\n|---|---|---|\n| Initial | 3 | 8 |\n| k = 2 allowed | 3 | min(8, 3 + 2) = **5** |\n| k = 3 allowed | 3 | 5 |\n\n**Final distances from 1: to 2 = 3, to 3 = 5.**\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1133,7 +1133,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** A trie stores characters along root-to-node paths; shared prefixes share nodes, and terminal markers indicate complete words.\n\n**b)** Root branches `b`, `d`, `s`; `b-a` branches `t` (bat) and `l-l` (ball); `d-o` branches `l-l` (doll), `r-k` (dork), `r-m` (dorm), and marks “do” terminal; `s-e` branches `n-d` (send) and `n-s-e` (sense). Lookup is O(length of word).",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 3 marks + b) 5 marks.**\n\n**a) Trie** — a tree storing strings character by character, one edge per character, each node standing for a prefix and a flag marking the end of a word. Lookup costs `O(L)` for word length `L`, independent of how many words are stored, and words sharing a prefix share a path — which is why tries power autocomplete and spell checkers.\n\n**b) Trie for bat, ball, doll, dork, do, dorm, send, sense**\n\n```text\n(root)\n+-- b -- a -- t*          bat\n|        `-- l -- l*      ball\n+-- d -- o*               do\n|        +-- l -- l*      doll\n|        `-- r --+-- k*   dork\n|                `-- m*   dorm\n`-- s -- e -- n --+-- d*  send\n                  `-- s -- e*   sense\n```\n\nEach `*` marks the `isEndOfWord` flag. Words sharing a prefix share its path — `ball` and `bat` share `ba`; `doll`, `dork` and `dorm` share `do`, and `dork`/`dorm` also share `dor`; `send` and `sense` share `sen`. The eight words occupy 18 nodes in all, far fewer than storing them separately. `do` is a complete word even though it is an **internal** node, so a search tests the flag rather than the absence of children. Looking up `dorm` follows `d`, `o`, `r`, `m` in `O(4)` steps no matter how many words the trie holds, and listing every word with a given prefix costs just the walk to that prefix plus its subtree.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1176,7 +1176,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** KMP precomputes LPS (longest proper prefix which is also suffix) for the pattern and shifts the pattern on mismatch without moving the text pointer backward.\n\n**b)** `lps(\"ababd\") = [0,0,1,2,0]`. The pattern matches at 0-based index **10** (`ababcabcab ababd`). Time is O(n+m).",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 3 marks + b) 5 marks.**\n\n**a) KMP** avoids re-scanning text by precomputing an **LPS** array (longest proper prefix that is also a suffix) for the pattern; on a mismatch it shifts the pattern by `j − LPS[j−1]` instead of by one, giving `Θ(n + m)`. The matching core is\n\n```text\nj = 0\nfor i = 0 to n-1:\n    while j > 0 and T[i] ≠ P[j]: j = LPS[j-1]\n    if T[i] = P[j]: j = j + 1\n    if j = m: report match at i - m + 1; j = LPS[j-1]\n```\n\n**b) T = ababcabcabababd, P = ababd**\n\n| j | 0 | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|---|\n| P[j] | a | b | a | b | d |\n| **LPS** | 0 | 0 | 1 | 2 | 0 |\n\n`LPS = [0, 0, 1, 2, 0]`: after matching `abab`, a mismatch on `d` falls back to `LPS[3] = 2`, reusing the `ab` already seen.\n\n```text\nT : a b a b c a b c a b a b a b d\nP : a b a b d                    ← fails at c, fall back to j = 0\n              a b a b a b d      ← scans on\n                        a b a b d ← match ending at index 14\n```\n\n**The pattern occurs once, ending at index 14, i.e. starting at index 10** (`T[10..14] = ababd`), using 15+ comparisons rather than the 33 a naive scan would need.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

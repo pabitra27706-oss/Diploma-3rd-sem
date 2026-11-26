@@ -1,4 +1,5 @@
 """Regression and mutation tests; temporary copies only, source files never edited."""
+import hashlib
 import json
 import shutil
 import subprocess
@@ -81,6 +82,14 @@ class PipelineTests(unittest.TestCase):
         for qid,suffix in allowed_fence_repairs.items():
             self.assertEqual(suffix,{'appended':'```'},qid)
         allowed_fence_ids=set(allowed_fence_repairs)
+        # A recorded reconciliation may also authorise replacing an answer outright when
+        # the stored prose did not fit the marks it carried. The allowance is an exact
+        # hash pair per question: the frozen answer must hash to `oldSha256` and the
+        # stored answer to `newSha256`. Any other answer text fails.
+        allowed_answer_rewrites=integrity.get('reconciliation',{}).get('answerRewrites',{})
+        self.assertLessEqual(len(allowed_answer_rewrites),47,'recorded answer rewrites grew without a new approval')
+        allowed_rewrite_ids=set(allowed_answer_rewrites)
+        seen_rewrites=set()
         seen_fences=set()
         seen=set()
         for path,store in sum((list(s) for s in stores()),[]):
@@ -109,9 +118,20 @@ class PipelineTests(unittest.TestCase):
                     self.assertEqual(repaired[:-len('\n```')],frozen,q['id'])
                     clean={'k':v for k,v in clean.items() if k!='answer'}
                     old={'k':v for k,v in old.items() if k!='answer'}
+                if q['id'] in allowed_rewrite_ids:
+                    seen_rewrites.add(q['id'])
+                    allowed=allowed_answer_rewrites[q['id']]
+                    self.assertEqual(hashlib.sha256(old['answer'].encode()).hexdigest(),
+                                     allowed['oldSha256'],q['id'])
+                    self.assertEqual(hashlib.sha256(clean['answer'].encode()).hexdigest(),
+                                     allowed['newSha256'],q['id'])
+                    self.assertNotEqual(clean['answer'],old['answer'],q['id'])
+                    clean={'k':v for k,v in clean.items() if k!='answer'}
+                    old={'k':v for k,v in old.items() if k!='answer'}
                 self.assertEqual(clean,old,q['id'])
         self.assertEqual(seen,set(allowed_unit_moves),'a recorded unit move did not apply')
         self.assertEqual(seen_fences,allowed_fence_ids,'a recorded fence repair did not apply')
+        self.assertEqual(seen_rewrites,allowed_rewrite_ids,'a recorded answer rewrite did not apply')
 
     def test_generator_is_idempotent_and_dry_run_does_not_write(self):
         paths=list((ROOT/'_data').rglob('*.json'))+list((ROOT/'_quiz-data').rglob('*.json'))+list((ROOT/'docs/data').glob('*'))

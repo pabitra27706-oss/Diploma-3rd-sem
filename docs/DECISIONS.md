@@ -850,6 +850,66 @@ answers, fixing Python's thin 2022 paper, and adding the missing diagrams and
 code blocks. The 12 inline-fence answers (`**b)** ```c` on one line) were also
 left alone: they render correctly today.
 
+## PYQ answer-depth review, step 2 — Algorithms (CST209) — 2026-11-26
+
+**Owner command:** "Start with algorithm" — i.e. apply the step-1 analysis to
+CST209, the subject the owner named, and bring its Group B answers up to the
+length the marks actually justify.
+
+**Reference used.** Python (CST203) was the owner's stated standard, so the
+target is *its* measured shape, not an abstract target: CST203's 8-mark answers
+have a median of **146 words** (18.2 words/mark) and its 2-mark answers **12
+words**. The first draft of this pass overshot badly — medians of 414 words for
+8-markers and 110 for 2-markers, i.e. 3× the reference — and was discarded
+before it was committed. The committed answers match the reference: **8-mark
+median 165 words (20.6/mark, CST203 146/18.2)** and **2-mark median 29 words
+(CST203 12)**.
+
+**What changed:** the `answer` prose of **47 CST209 Group B questions** — 12 in
+P001 (2-mark), 9 in P003, 8 in P004, 9 in P005, 9 in P006 (all 8-mark). Total
+length **2,936 → 6,362 words**; answers under 8 words/mark **28 → 0**. Medians
+by subject now read Python 16.6, Algorithms 19.9, DS 7.1, CSO 7.6, C 7.0
+words/mark. Question stems, options, keys, marks, `markSplit`, `subparts`,
+`topic`, `tags` and `unit` are byte-identical, verified field by field against
+the previous commit, and `check_pyq_integrity.py` reports 0 changed files.
+
+**Every worked trace was computed, not written from memory.** Bubble-sort passes
+and 13 swaps on `25, 57, 48, 37, 12, 92, 86, 33`; LSD radix rounds; KMP on
+`ababcabcabababd`/`ababd` (`lps = [0,0,1,2,0]`, match ending at index 14);
+naive search for `101110` in `1110101011101100` (**match at shift 6, 11
+alignments, 30 comparisons** — my first draft said 7 alignments and the trace
+was recomputed); Dijkstra, Bellman–Ford, Prim, Kruskal and Floyd–Warshall on
+generated graphs; merge-sort and selection-sort splits; binary-search probes;
+and the eight-word trie. Two questions print their graph only in the paper, so
+the **frozen edge lists were recovered from the previous answers** rather than
+invented: P003-Q30 and P005-Q21 both keep the stored `A–B=1 … A–D=10` edges and
+the recorded **MST weight 10**, and P004-Q22 keeps `A→B(6) … E→F(3)` with
+`B=1, C=3, D=5, E=0, F=3`. My draft had invented different weights and a wrong
+39 total for P005-Q21; both were corrected before committing.
+
+**Guard changes, both ablated before being claimed:**
+`_data/pyq-integrity.json` gains `reconciliation.answerRewrites`, an exact
+old-SHA-256 → new-SHA-256 pair per question (47 entries, no wildcard).
+`tests/test_data_pipeline.py` accepts an answer only if the frozen text hashes
+to `oldSha256` and the stored text to `newSha256`; every other field must still
+be byte-identical. `tests/test_algorithms_content.py::test_both_frozen_trees_byte_identical`
+extends its allowance to the five CST209 paper files, still pinned to CST209 and
+capped at 47. Ablation: rewording one approved answer fails the hash assert, and
+`validate_data --check-baseline` fails with it. The Phase-12 `unitMoves` (44)
+and step-1 `answerSuffixRepairs` (18) records are preserved unchanged.
+
+`docs/data/validation-exceptions.json` re-anchors exactly one `contentHash`,
+`CST209-P003-Q34`, because its answer text changed; that question's open unit-5
+finding is **not** waived. Derived data regenerated (`practice-pool.json`,
+`assets/cards/CST209.json`, coverage, search manifest, data version
+`data-ea84c159c175`). Gates: **202/202 unittest**, 14/14 node suites, all 13
+checks green; all 47 answers render with balanced markup and no stray fences.
+
+**Deliberately not done:** CSO (CST205), DS (CST201) and C (CST207) Group B
+depth passes, the Python 2022 paper's thin 6-markers, and the missing
+diagrams/code blocks for "draw a diagram" questions — each is a separate content
+GATE and needs its own owner yes.
+
 ## Phase 13 accepted, and the decisions Phases 14–17 must inherit — 2026-11-19
 
 **Owner command:** "All good. Ok then this phase is completed." Phase 13

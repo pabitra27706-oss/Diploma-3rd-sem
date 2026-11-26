@@ -38,14 +38,25 @@ class AlgorithmsContentTests(unittest.TestCase):
         # integrity record explicitly names the same four files, and its answer-level
         # verification is enforced by test_data_pipeline. Nothing else may drift.
         integrity=json.loads((ROOT/'_data/pyq-integrity.json').read_text())
-        repairs=integrity.get('reconciliation',{}).get('answerSuffixRepairs',{})
+        reconciliation=integrity.get('reconciliation',{})
+        repairs=reconciliation.get('answerSuffixRepairs',{})
+        rewrites=reconciliation.get('answerRewrites',{})
         allowed=set()
         if repairs:
-            allowed={'_data/CST203/CST203-P003-2023-03.json','_data/CST203/CST203-P004-2024-01.json',
-                     '_data/CST203/CST203-P005-2024-12.json','_data/CST203/CST203-P006-2026-01.json',
-                     '_data/pyq-integrity.json'}
+            allowed|={'_data/CST203/CST203-P003-2023-03.json','_data/CST203/CST203-P004-2024-01.json',
+                      '_data/CST203/CST203-P005-2024-12.json','_data/CST203/CST203-P006-2026-01.json',
+                      '_data/pyq-integrity.json'}
             self.assertEqual({q.split('-')[0] for q in repairs},{'CST203'},'repair allowance is CST203 only')
             self.assertEqual(len(repairs),18,'repair allowance grew without a new approval')
+        if rewrites:
+            # Owner-instructed answer-depth pass on CST209: the four rewritten paper files
+            # plus the integrity anchor and the source-review ledger. Verified per-question
+            # by test_data_pipeline, which pins old and new answer hashes exactly.
+            allowed|={'_data/CST209/CST209-P001-2022-06.json','_data/CST209/CST209-P003-2023-03.json',
+                      '_data/CST209/CST209-P004-2024-01.json','_data/CST209/CST209-P005-2024-12.json',
+                      '_data/CST209/CST209-P006-2026-01.json','_data/pyq-integrity.json'}
+            self.assertEqual({q.split('-')[0] for q in rewrites},{'CST209'},'rewrite allowance is CST209 only')
+            self.assertEqual(len(rewrites),47,'rewrite allowance grew without a new approval')
         drifted={k for k in set(before)|set(after) if before.get(k)!=after.get(k)}
         self.assertEqual(drifted-allowed,set(),'unapproved data drift')
         self.assertEqual(before,after, 'reverted: authorised files drifted from the pinned tree') if not allowed else None

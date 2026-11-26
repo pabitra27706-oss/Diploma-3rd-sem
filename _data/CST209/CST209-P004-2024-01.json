@@ -835,7 +835,7 @@
         }
       ],
       "markSplit": "2+2+4",
-      "answer": "**a)** An algorithm is a finite, unambiguous sequence of steps that transforms input into output and terminates.\n\n**b)** A set contains each distinct element once; a multiset allows repeated multiplicity.\n\n**c)**\n```text\nPUSH(S,x): if top == MAX-1 overflow else S[++top]=x\nPOP(S):    if top == -1 underflow else return S[top--]\n```",
+      "answer": "\n**Mark distribution — Total 8 marks: 2 + 2 + 4.**\n\n**a) Algorithm** — a finite, unambiguous, step-by-step procedure that takes input, produces output and terminates.\n\n**b) Set vs multiset** — a **set** stores each value at most once (`{1, 2, 3}`); a **multiset** allows repeats (`{1, 1, 2, 3}`), so multiplicity is part of the structure. Sets answer \"is it present?\", multisets also answer \"how many times?\".\n\n**c) Stack operations**\n\n```text\nPUSH(S, x):            POP(S):\n  if top = MAX-1:        if top = -1: error \"underflow\"\n      error \"overflow\"   x = S[top]\n  top = top + 1          top = top - 1\n  S[top] = x             return x\n```\n\nBoth are `Θ(1)`: they touch only the top index, which is why a stack gives LIFO order in constant time.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -883,7 +883,7 @@
         }
       ],
       "markSplit": "3+3+2",
-      "answer": "**a)** Repeatedly find the minimum in the unsorted suffix and swap it into the current position.\n\n**b)** For `[5,2,9,1]`: swap 1→pos0 `[1,2,9,5]`; 2 stays; swap 5→pos2 `[1,2,5,9]`.\n\n**c)** Θ(n²) comparisons in all cases; O(1) extra space.",
+      "answer": "\n**Mark distribution — Total 8 marks: 3 + 3 + 2.**\n\n**a) Selection sort**\n\n```text\nfor i = 0 to n - 2:\n    min = i\n    for j = i + 1 to n - 1:\n        if A[j] < A[min]: min = j\n    swap A[i], A[min]\n```\n\n**b) Example** on `[5, 2, 9, 1]`:\n\n| Pass | Smallest of the unsorted part | Array |\n|---|---|---|\n| 1 | 1 at index 3 | `1, 2, 9, 5` |\n| 2 | 2 already in place | `1, 2, 9, 5` |\n| 3 | 5 at index 3 | `1, 2, 5, 9` |\n\n**c) Worst case** — the inner loop always runs fully, giving `(n−1) + (n−2) + … + 1 = n(n−1)/2` comparisons, so `Θ(n²)`. It is not stable and uses `O(1)` extra space.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -924,7 +924,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Start at any vertex; repeatedly add the minimum-weight edge connecting the visited set to an unvisited vertex until all vertices are included.\n\n**b)** For triangle A–B=1, A–C=3, B–C=2, start A: add A–B(1), then B–C(2); MST weight 3.",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Prim's algorithm**\n\n```text\nkey[v] = ∞ for all v; key[r] = 0; parent[r] = null\nrepeat V - 1 times:\n    u = unused vertex with the smallest key\n    mark u used\n    for each neighbour v of u with v unused:\n        if w(u,v) < key[v]: key[v] = w(u,v); parent[v] = u\n```\n\nThe tree grows from `r`, always adding the cheapest edge that crosses the cut — the cut property guarantees each choice is safe. With a heap the cost is `O(E log V)`.\n\n**b) Example** — `A–C = 3`, `A–B = 4`, `B–C = 1`, `B–D = 2`, `C–D = 4`, `D–E = 6`, starting at `A`:\n\n| Step | Tree | Chosen edge |\n|---|---|---|\n| 1 | {A} | A–C (3) |\n| 2 | {A, C} | C–B (1) |\n| 3 | {A, C, B} | B–D (2) |\n| 4 | {A, C, B, D} | D–E (6) |\n\n**MST weight = 3 + 1 + 2 + 6 = 12** over 4 edges. `C–D (4)` is rejected because `C` and `D` are already connected through `C–B–D`.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -970,7 +970,7 @@
         }
       ],
       "markSplit": "2+2+4",
-      "answer": "**a)** Counting/radix/bucket sorts can beat the Ω(n log n) comparison-sort lower bound by exploiting key structure.\n\n**b)** They need bounded integer/range keys, extra memory, stable subroutines, and uniform distribution for best performance.\n\n**c)** Bucket sort distributes values into buckets, sorts each bucket, then concatenates. Example `[0.42,0.32,0.73,0.11]` → ten buckets by first decimal digit, sorted buckets give `[0.11,0.32,0.42,0.73]`.",
+      "answer": "\n**Mark distribution — Total 8 marks: 2 + 2 + 4.**\n\n**a) Significance of linear search** — it is the only option on **unsorted** or sequential data (a linked list), needs no preprocessing, works on any comparable type and needs `O(1)` space.\n\n**b) Limitations** — it is `Θ(n)`: every element may be examined, so it is far too slow for large collections; on sorted data binary search is `Θ(log n)` and much better.\n\n**c) Bucket sort** distributes the elements into `k` buckets by value range, sorts each bucket separately, then concatenates them. For `0.42, 0.32, 0.73, 0.11` with 10 buckets:\n\n| Bucket | Value |\n|---|---|\n| 1 | 0.11 |\n| 3 | 0.32 |\n| 4 | 0.42 |\n| 7 | 0.73 |\n\n```text\nConcatenating the buckets: 0.11, 0.32, 0.42, 0.73  ✓\n```\n\nIt runs in `Θ(n + k)` on average when the values are spread evenly, but degrades to `Θ(n²)` if they all land in one bucket. It needs `Θ(n + k)` extra space and is stable if the per-bucket sort is stable.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1016,7 +1016,7 @@
         }
       ],
       "markSplit": "4+1+3",
-      "answer": "**a)**\n```text\nBS(a, lo, hi, x): if lo>hi return -1\n  mid=(lo+hi)//2\n  if a[mid]==x return mid\n  elif a[mid]>x return BS(a,lo,mid-1,x)\n  else return BS(a,mid+1,hi,x)\n```\n\n**b)** No; sorting is required first.\n\n**c)** O(log n) time, O(log n) recursive stack (O(1) iterative space).",
+      "answer": "\n**Mark distribution — Total 8 marks: 4 + 1 + 3.**\n\n**a) Recursive binary search**\n\n```text\nBinarySearch(A, low, high, key):\n    if low > high: return -1\n    mid = (low + high) / 2\n    if A[mid] = key: return mid\n    if A[mid] < key: return BinarySearch(A, mid+1, high, key)\n    return BinarySearch(A, low, mid-1, key)\n```\n\n**b) Unsorted array** — **no**, binary search requires the array to be **sorted**; the decision to discard a half is only valid if that half cannot contain the key. On unsorted data use linear search, or sort first in `Θ(n log n)`.\n\n**c) Complexity** — each call halves the range, so the recursion depth is `log₂ n`: `T(n) = T(n/2) + Θ(1)`, giving `T(n) = Θ(log n)` in every case, with `Θ(log n)` stack space (`Θ(1)` if written iteratively).\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1063,7 +1063,7 @@
         }
       ],
       "markSplit": "2+3+3",
-      "answer": "**a)** Hashing maps a key to a fixed-size table index with a hash function.\n\n**b)** Hash tables support dictionaries, caches, symbol tables, indexes, and sets; the hash function spreads keys uniformly.\n\n**c)** In separate chaining each bucket holds a linked list/dynamic array of all keys hashing there; insertion is O(1) average and lookup depends on load factor.",
+      "answer": "\n**Mark distribution — Total 8 marks: 2 + 3 + 3.**\n\n**a) Hashing** maps a key to a slot index with a hash function, giving `O(1)` average insert, search and delete — the basis of dictionaries and symbol tables.\n\n**b) Uses of a hash table and hash function** — the **hash table** stores key–value pairs and supports constant-time lookup, deduplication and set membership; the **hash function** converts any key into a bounded index, and a good one spreads keys uniformly and computes quickly. Lists have to scan `Θ(n)` while a hash table answers in `Θ(1 + α)`.\n\n**c) Chaining** — each slot holds a linked list of all keys hashing there:\n\n```text\nslot 2 → [12] → [22] → [17]\nslot 5 → [35]\n```\n\nInsert is `Θ(1)` at the head; search costs `Θ(1 + α)` for load factor `α = n/m`. Chaining tolerates `α > 1`, but pointers cost memory and nodes are not cache friendly.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1105,7 +1105,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Initialize `dist[s]=0`, others ∞; relax every edge `|V|-1` times; one more pass detects a negative-weight cycle.\n\n**b)** Using the printed edges A→B(6), A→C(4), A→D(5), D→C(−2), C→B(−2), B→E(−1), C→E(3), D→F(−1), E→F(3), from A the final distances are B=1, C=3, D=5, E=0, F=3. No negative cycle is reachable.",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Bellman–Ford** handles **negative** weights and detects negative cycles. It relaxes every edge `V − 1` times:\n\n```text\nfor each v: dist[v] = ∞; dist[s] = 0\nrepeat V - 1 times:\n    for each edge (u, v, w):\n        if dist[u] + w < dist[v]: dist[v] = dist[u] + w\nfor each edge (u, v, w):        // negative-cycle check\n    if dist[u] + w < dist[v]: report negative cycle\n```\n\nAfter `k` passes all shortest paths using at most `k` edges are correct, so `V − 1` passes suffice; the extra pass proves no negative cycle exists. Cost is `O(V·E)` — slower than Dijkstra but far more general.\n\n**b) On the printed graph** — `A→B(6)`, `A→C(4)`, `A→D(5)`, `D→C(−2)`, `C→B(−2)`, `B→E(−1)`, `C→E(3)`, `D→F(−1)`, `E→F(3)`:\n\n| Vertex | Final distance | Path |\n|---|---|---|\n| B | 1 | `A→D→C→B` (5 − 2 − 2) |\n| C | 3 | `A→D→C` (5 − 2) |\n| D | 5 | `A→D` |\n| E | 0 | `A→D→C→B→E` (5 − 2 − 2 − 1) |\n| F | 3 | `A→D→C→B→E→F` (5 − 2 − 2 − 1 + 3) |\n\n**E = 0**, not 5, because the negative edges pay for themselves: the direct `A→D` cost of 5 is recovered by `−2 − 2 − 1`. No negative cycle is reachable, so the final pass makes no change. Note that Dijkstra would give wrong answers here — it would settle `D` at 5 and never revisit it to find the cheaper `C`.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1147,7 +1147,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks (pseudocode) + b) 4 marks (worked example).**\n\n**a) Pseudocode of Naive String-Matching Algorithm**\n\nNaive string matching slides the pattern over the text one position at a time and checks for a match at each position.\n\n```\nAlgorithm Naive-String-Matcher(T, P):   // T = text, P = pattern\n1. n = length(T)\n2. m = length(P)\n3. For s = 0 to n - m:                 // s = current shift/alignment\n4.     If P[0..m-1] == T[s..s+m-1]:    // compare all m characters\n5.         Print \"Pattern occurs at shift\", s\n6. Return\n```\n\n- Outer loop tries every possible starting position `s` where the pattern could fit.\n- Inner comparison checks all `m` characters; on first mismatch, shift by 1 and try again.\n- Simple but slow in the worst case.\n\n**Complexity:**\n- Worst-case time: O((n − m + 1) × m), i.e. O(n·m).\n- Best case: O(n) (when the first character mismatches at every shift).\n- Space: O(1) extra.\n\n**b) Find pattern `101110` in text `1110101011101100` using Naive matching**\n\nPattern P = `1 0 1 1 1 0` (m = 6)\nText    T = `1 1 1 0 1 0 1 0 1 1 1 0 1 1 0 0` (n = 16)\n\nIndex:   0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15\nText:    1 1 1 0 1 0 1 0 1 1  1  0  1  1  0  0\n\nTry each shift s = 0 to (16 − 6) = 10:\n\n- s = 0: T[0..5] = `1 1 1 0 1 0` vs P `1 0 1 1 1 0` → mismatch at index 1 (T[1]=1 vs P[1]=0). No match.\n- s = 1: T[1..6] = `1 1 0 1 0 1` vs `1 0 1 1 1 0` → mismatch at index 2 (T[2]=0 vs P[2]=1). No match.\n- s = 2: T[2..7] = `1 0 1 0 1 0` vs `1 0 1 1 1 0` → mismatch at index 5 (T[5]=0 vs P[5]=0 ok; actually T[3]=0 vs P[3]=1 mismatch). No match.\n- s = 3: T[3..8] = `0 1 0 1 0 1` vs `1 0 1 1 1 0` → mismatch at first char. No match.\n- s = 4: T[4..9] = `1 0 1 0 1 1` vs `1 0 1 1 1 0` → mismatch at index 3 (T[7]=0 vs P[3]=1). No match.\n- s = 5: T[5..10] = `0 1 0 1 1 1` vs `1 0 1 1 1 0` → mismatch at first char. No match.\n- s = 6: T[6..11] = `1 0 1 1 1 0` vs `1 0 1 1 1 0` → **MATCH** (all 6 equal).\n- s = 7: T[7..12] = `0 1 1 1 0 1` vs `1 0 1 1 1 0` → mismatch at first char. No match.\n- s = 8: T[8..13] = `1 1 1 0 1 1` vs `1 0 1 1 1 0` → mismatch at index 1. No match.\n- s = 9: T[9..14] = `1 1 0 1 1 0` vs `1 0 1 1 1 0` → mismatch at index 1 (T[10]=1 vs P[1]=0). No match.\n- s = 10: T[10..15] = `1 0 1 1 0 0` vs `1 0 1 1 1 0` → mismatch at index 4 (T[14]=0 vs P[4]=1). No match.\n\n**Result:** The pattern `101110` occurs once, starting at **0-based index 6** (1-based position 7) in the text.\n\nThe matched portion:\n```\nText:    1 1 1 0 1 0 [1 0 1 1 1 0] 1 1 0 0\nIndex:   0 1 2 3 4 5  6 7 8 9 10 11  12 13 14 15\n                         P = 1 0 1 1 1 0  ← match\n```\n\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Naive string matching**\n\n```text\nfor s = 0 to n - m:\n    j = 0\n    while j < m and T[s+j] = P[j]: j = j + 1\n    if j = m: report match at shift s\n```\n\nIt slides the pattern one position at a time and re-compares from the start, costing `Θ((n−m+1)·m)` — `Θ(nm)` in the worst case, `Θ(n)` when the first character mismatches every time.\n\n**b) Trace** for `P = 101110` (m = 6) in `T = 1110101011101100` (n = 16), shifts `s = 0 … 10`:\n\n```text\nT : 1 1 1 0 1 0 1 0 1 1 1 0 1 1 0 0\n        1 0 1 1 1 0          ← match at s = 6\n```\n\n| Shift | Window | Comparisons | Matched prefix | Result |\n|---|---|---|---|---|\n| 0 | `111010` | 2 | `1` | mismatch at position 2 |\n| 1 | `110101` | 2 | `1` | mismatch |\n| 2 | `101010` | 4 | `101` | mismatch at position 4 |\n| 3 | `010101` | 1 | — | mismatch |\n| 4 | `101011` | 4 | `101` | mismatch at position 4 |\n| 5 | `010111` | 1 | — | mismatch |\n| **6** | **101110** | **6** | `101110` | **full match** |\n| 7 | `011101` | 1 | — | mismatch |\n| 8 | `111011` | 2 | `1` | mismatch |\n| 9 | `110110` | 2 | `1` | mismatch |\n| 10 | `101100` | 5 | `101` then `1011` | mismatch at position 5 |\n\n**The pattern occurs once, at shift 6** (`T[6..11] = 101110`). All 11 alignments ran to the end and cost **30 character comparisons** in total — note that the naive algorithm cannot know the match is unique until shift 10.\n\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
