@@ -115,7 +115,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Guido van Rossum.**\n\nGuido van Rossum created Python and released the first version in 1991.",
+      "answer": "**Correct answer: B) Guido van Rossum.**\n\n- **Origin:** Guido van Rossum conceived Python in the late 1980s at Centrum Wiskunde & Informatica (CWI) in the Netherlands as a readable successor to the ABC language and published version `0.9.0` in February 1991.\n- **Why other options are wrong:** Dennis Ritchie created C, James Gosling led Java at Sun Microsystems, and Bjarne Stroustrup designed C++.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -162,7 +162,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Interpreted and high-level.**\n\nPython is a high-level, interpreted language with automatic memory management.",
+      "answer": "**Correct answer: C) Interpreted and high-level.**\n\n- **Execution Model:** CPython compiles `.py` source code into portable bytecode (`.pyc`) and executes it statement-by-statement on the Python Virtual Machine (PVM), abstracting away CPU registers and machine addresses.\n- **Why other options are wrong:** Python is neither a standalone ahead-of-time native-compiled language nor low-level, and its reference-counting plus generational garbage collector manages memory automatically.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -210,7 +210,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) complex.**\n\n`3+4j` is a complex literal, so `type()` returns `<class 'complex'>`.",
+      "answer": "**Correct answer: C) complex.**\n\n- **Complex Literal Rule:** Appending `j` or `J` to a numeric literal (`4j`) denotes the imaginary unit `√(-1)` in Python, making `3+4j` an instance of the built-in `complex` class (`<class 'complex'>`) with `.real == 3.0` and `.imag == 4.0`.\n- **Why other options are wrong:** `int` and `float` represent purely real numbers, and Python has no separate `imaginary` built-in type.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -258,7 +258,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) +.**\n\n`+` joins two strings; `*` repeats a string, and `%` is old-style formatting/modulo.",
+      "answer": "**Correct answer: B) +.**\n\n- **String Concatenation:** Applying the binary `+` operator to two `str` operands allocates and returns a new combined string (for example, `'Py' + 'thon'` evaluates to `'Python'`), while joining mismatched types like `'Age: ' + 20` raises `TypeError`.\n- **Why other options are wrong:** `*` performs string repetition (`'Hi' * 3 == 'HiHiHi'`), `%` performs printf-style string interpolation, and `&` raises `TypeError` on strings.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -306,7 +306,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) list.**\n\nLists can be modified in place; tuples, strings, and integers are immutable.",
+      "answer": "**Correct answer: B) list.**\n\n- **In-Place Mutability:** A `list` (`[10, 20, 30]`) stores dynamic object references whose elements can be reassigned (`lst[0] = 99`), appended (`lst.append(40)`), or deleted without changing `id(lst)`.\n- **Why other options are wrong:** `tuple`, `str` (`string`), and `int` are strictly immutable — any attempted item assignment raises `TypeError`, and arithmetic/concatenation creates a new object.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -354,7 +354,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) 2.**\n\nFloor division divides and then rounds down to the nearest integer, so 5 // 2 is 2 and not 2.5. The remainder is given separately by `5 % 2`, which is 1.",
+      "answer": "**Correct answer: C) 2.**\n\n- **Floor Division (`//`):** The `//` operator computes the exact quotient `5 / 2 = 2.5` and applies mathematical floor (`⌊2.5⌋ = 2`), returning an `int` when both operands are `int`.\n- **Why other options are wrong:** True division `5 / 2` returns `2.5`, ceiling would give `3`, and `2.0` is returned only when at least one operand is a `float` (such as `5.0 // 2`).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -401,7 +401,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Exponentiation **.**\n\nExponentiation binds tightest, followed by unary operators, then multiplication and division, then addition and subtraction. So `2 ** 3 * 2` means `(2 ** 3) * 2`.",
+      "answer": "**Correct answer: C) Exponentiation **.**\n\n- **Precedence Hierarchy:** Among arithmetic operators, exponentiation (`**`) has the highest binding precedence (below only parentheses `()`) and associates **right-to-left** (`2 ** 3 ** 2 == 2 ** 9 == 512`), followed by unary `+x`/`-x`/`~x`, multiplicative `*`/`/`/`//`/`%`, and additive `+`/`-`.\n- **Example:** `2 + 3 * 2 ** 3` evaluates `2 ** 3 = 8` first, then `3 * 8 = 24`, and finally `2 + 24 = 26`.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -448,7 +448,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) if.**\n\n`if` begins a conditional branch; Python has no `switch` keyword in the version relevant to this paper.",
+      "answer": "**Correct answer: A) if.**\n\n- **Conditional Branching:** Python uses `if`, `elif`, and `else` clauses to evaluate truthiness and execute mutually exclusive indented suites selectively.\n- **Why other options are wrong:** `for` is a definite iteration keyword, while neither `loop` nor C-style `switch` exists as a keyword in Python (structural pattern matching in Python 3.10+ uses `match`/`case`).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -496,7 +496,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) 0 1 2.**\n\n`range(3)` yields 0, 1, and 2, printed on one line with trailing spaces.",
+      "answer": "**Correct answer: B) 0 1 2.**\n\n- **Half-Open `range(stop)`:** `range(3)` starts at default `0`, increments by `1`, and stops strictly before `3`, yielding `0`, `1`, and `2`.\n- **Formatting Detail:** Passing `end=\" \"` overrides `print()`'s default newline `'\\n'` with a space, printing `0 1 2 ` on a single line rather than starting at `1` or including `3`.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -544,7 +544,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) break.**\n\n`break` terminates the nearest enclosing loop; `continue` only skips to the next iteration.",
+      "answer": "**Correct answer: B) break.**\n\n- **Immediate Loop Exit:** Executing `break` inside a `for` or `while` body immediately terminates the innermost enclosing loop (skipping any `else` clause attached to that loop) and transfers control to the next statement.\n- **Why other options are wrong:** `continue` skips only the current iteration, `pass` is a no-op placeholder, and `exit()` terminates the whole Python interpreter.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -592,7 +592,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) import.**\n\n`import module_name` loads a module, and `from module_name import name` pulls in a single object from it. Keywords like `include` and `require` belong to other languages.",
+      "answer": "**Correct answer: C) import.**\n\n- **Module Loading:** The `import` keyword (`import math` or `from math import sqrt`) searches `sys.path`, executes the target `.py` module once if not already cached in `sys.modules`, and binds its namespace in the current scope.\n- **Why other options are wrong:** `#include` is a C/C++ preprocessor directive, `using` belongs to C++/C#, and `module` is not a Python keyword.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -640,7 +640,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) A collection of modules in a directory.**\n\nA package is a directory containing modules and traditionally an `__init__.py` file.",
+      "answer": "**Correct answer: B) A collection of modules in a directory.**\n\n- **Hierarchical Namespace:** A Python package is a filesystem directory grouping related `.py` module files (and optional sub-packages), traditionally marked with an `__init__.py` initialization file so dotted imports like `import pkg.mod` work cleanly.\n- **Why other options are wrong:** A single function, variable, or operator is a language construct inside a module, not a package directory.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -688,7 +688,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) w.**\n\n`w` opens a file for writing and truncates an existing file; `a` appends and `x` creates exclusively.",
+      "answer": "**Correct answer: B) w.**\n\n- **Write-Truncate Mode (`'w'`):** Passing mode `'w'` to `open(path, 'w')` opens the file for writing text, creating the file if it does not exist and truncating (overwriting) any existing content to zero bytes.\n- **Why other options are wrong:** `'r'` opens read-only, `'a'` appends exclusively at EOF without truncating, and `'x'` performs exclusive creation (raising `FileExistsError` if present).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -736,7 +736,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) MVC.**\n\nDjango is commonly described as MVC/MTV; among the printed options, MVC is the expected answer.",
+      "answer": "**Correct answer: A) MVC.**\n\n- **Architectural Pattern:** Django implements the **Model–View–Controller (MVC)** separation of concerns under its own **MVT (Model–View–Template)** terminology, where the Model manages ORM database tables, the View handles request logic, the Template renders HTML, and Django's URL dispatcher acts as the Controller.\n- **Why other options are wrong:** OOP and POP are general programming paradigms, and AI is artificial intelligence.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -785,7 +785,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Rendering HTML pages dynamically.**\n\nThe template layer renders dynamic HTML using context data.",
+      "answer": "**Correct answer: C) Rendering HTML pages dynamically.**\n\n- **Presentation Layer:** Django's Template engine combines static HTML structure with Django Template Language (DTL) placeholders (`{{ variable }}`) and tags (`{% for %}`, `{% if %}`) populated from a View's context dictionary to generate dynamic web pages safely (with auto-escaping against XSS).\n- **Why other options are wrong:** Models manage database schemas, `urls.py` routes URLs, and ORM classes define models.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -827,7 +827,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 5 marks (categories 3 + examples 2) + b) 3 marks.**\n\n**a) Built-in data types in Python**\n\n| Category | Types | Example |\n|---|---|---|\n| Numeric | int, float, complex | 20, 3.14, 2 + 3j |\n| Text sequence | str | \"Python\" |\n| Binary sequence | bytes, bytearray, memoryview | b\"Py\" |\n| Sequence (mutable) | list, range | [1, 2], range(5) |\n| Sequence (immutable) | tuple | (1, 2) |\n| Mapping | dict | {\"a\": 1} |\n| Set | set, frozenset | {1, 2} |\n| Boolean | bool | True, False |\n| None type | NoneType | None |\n\nThey differ in mutability, ordering, allowed operations and memory layout, which is why a list can be changed but a tuple cannot, and a dict is accessed by key instead of index.\n\n**b) Importance of indentation**\n\nIndentation defines code blocks in Python instead of braces. The block under if, for, while, def, class and try must be indented consistently; wrong indentation raises IndentationError and changes program meaning.\n\n```python\nif marks >= 40:\n    print(\"Pass\")   # indented: part of the if block\nprint(\"Done\")       # not indented: runs regardless\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 5 Marks + (b) 3 Marks\n\n### (a) Built-in Data Types in Python (5 Marks)\n\nPython is dynamically and strongly typed: variables hold references to typed heap objects rather than fixed-type memory slots. Its standard built-in data types fall into seven core families:\n\n| Category | Built-in Type(s) | Mutability | Representative Literal / Constructor |\n|---|---|---|---|\n| **Numeric** | `int`, `float`, `complex` | Immutable | `42`, `3.14159`, `3 + 4j` |\n| **Boolean** | `bool` (subclass of `int`) | Immutable | `True`, `False` |\n| **Text Sequence** | `str` | Immutable | `'Python'`, `\"Diploma\"` |\n| **Sequence Types** | `list` (mutable); `tuple`, `range` (immutable) | Mixed | `[10, 20]`, `(10, 20)`, `range(0, 10, 2)` |\n| **Mapping** | `dict` | Mutable | `{'roll': 101, 'dept': 'CST'}` |\n| **Set Types** | `set` (mutable); `frozenset` (immutable) | Mixed | `{1, 2, 3}`, `frozenset([1, 2])` |\n| **Binary & Null** | `bytes`, `bytearray`, `memoryview`, `NoneType` | Mixed / Immutable | `b'ABC'`, `bytearray(4)`, `None` |\n\n- **Arbitrary-Precision Integers:** Python `int` grows dynamically to arbitrary precision without 32-bit/64-bit integer overflow, while `float` follows IEEE-754 double precision.\n- **Mutability & Hashing Rule:** Immutable objects (`int`, `str`, `tuple` of immutables, `frozenset`) are hashable and valid as `dict` keys or `set` members; mutable containers (`list`, `dict`, `set`) can be modified in place without changing `id(obj)`.\n\n### (b) Importance of Indentation in Python (3 Marks)\n\n- **Syntactic Block Delimiter:** Unlike C or Java (which delimit blocks with `{ ... }`), Python uses leading whitespace (**off-side rule**, PEP 8 standard = **4 spaces per level**) to group statements belonging to `if`, `for`, `while`, `def`, `class`, and `try` suites.\n- **Compile-Time Enforcement:** Dedenting marks the end of a suite, while inconsistent or missing indentation raises `IndentationError` (or `TabError` when mixing tabs and spaces) before execution.\n- **Semantic Impact:** Shifting a statement's indentation changes program logic directly:\n\n```python\nmarks = 35\nif marks >= 40:\n    print(\"Passed\")       # Inside the if-suite: skipped when marks == 35\n    print(\"Congrats!\")    # Same indentation level -> same block\nprint(\"Result Checked\")   # Dedented: executes unconditionally\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -868,7 +868,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 3 marks + b) 5 marks (program 4 + explanation 1).**\n\n**a) Representing a string**\n\nStrings are immutable sequences of Unicode characters, written with single quotes, double quotes or triple quotes:\n\n```python\ns1 = 'Hello'\ns2 = \"Diploma\"\ns3 = '''Multi-line\nstring'''\nprint(s1[0])   # H\n```\nCharacters are accessed by index (s[0]), sliced (s[1:4]), and cannot be changed in place.\n\n**b) Palindrome program**\n\n```python\ns = input(\"Enter a string: \")\nif s == s[::-1]:\n    print(\"Palindrome\")\nelse:\n    print(\"Not palindrome\")\n```\ns[::-1] reverses the string; equality with the original decides the result. Example: \"madam\" -> Palindrome; \"python\" -> Not palindrome.\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 3 Marks + (b) 5 Marks\n\n### (a) Representing a String in Python (3 Marks)\n\n- **Unicode Sequence:** In Python 3, a string (`str`) is an **ordered, immutable sequence of Unicode code points**.\n- **Four Quoting Forms:** Strings can be written using single quotes (`'...'`), double quotes (`\"...\"`), triple quotes (`'''...'''` or `\"\"\"...\"\"\"` for multi-line text and docstrings), or raw prefix `r'...'` (which disables backslash escape sequences like `\\n`):\n\n```python\ns1 = 'Kolkata'                    # Single-quoted string\ns2 = \"Student's Copy\"             # Double quotes allow embedded apostrophe\ns3 = \"\"\"Line 1\nLine 2\"\"\"                         # Triple-quoted multi-line string\ns4 = r'C:\\new_folder\\test.py'     # Raw string preserves backslashes literally\nprint(s1[0], s1[-1], s1[1:4])     # Output: K a olk\n```\n\n- **Immutability:** Individual characters can be read with zero-based (`s1[0]`) or negative (`s1[-1]`) indexing, but item assignment (`s1[0] = 'M'`) raises `TypeError`.\n\n### (b) Python Program to Check Palindrome String (5 Marks)\n\nA string is a **palindrome** if it reads identically forward and backward after normalizing case (for example, `\"Madam\"` or `\"racecar\"`).\n\n```python\ndef is_palindrome(text: str) -> bool:\n    cleaned = text.strip().lower()\n    # Compare characters from both ends moving inward (O(n) time, O(1) index check)\n    left, right = 0, len(cleaned) - 1\n    while left < right:\n        if cleaned[left] != cleaned[right]:\n            return False\n        left += 1\n        right -= 1\n    return True\n\n\n# Demonstration with idiomatic slice check s == s[::-1] alongside two-pointer check\nfor sample in [\"Madam\", \"level\", \"Python\"]:\n    normalized = sample.lower()\n    slice_check = (normalized == normalized[::-1])\n    verdict = \"Palindrome\" if is_palindrome(sample) and slice_check else \"Not a Palindrome\"\n    print(f\"{sample!r:10} -> {verdict}\")\n```\n\n- **Verified Output:**\n\n```text\n'Madam'    -> Palindrome\n'level'    -> Palindrome\n'Python'   -> Not a Palindrome\n```\n\n- **How It Works:** Both two-pointer inward comparison (`cleaned[left] == cleaned[right]`) and Python's step-`-1` slice reversal (`normalized == normalized[::-1]`) run in `O(n)` time over string length `n`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -909,7 +909,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 5 marks + b) 3 marks.**\n\n**a) Lists, Tuples and Dictionaries**\n\n| | Example | Nature |\n|---|---|---|\n| List | [1, 2, 3] | Ordered, mutable, indexed by position |\n| Tuple | (1, 2, 3) | Ordered, immutable |\n| Dictionary | {\"roll\": 1} | Unordered mapping of unique keys to values |\n\n```python\nlst = [1, 2, 3]\nlst[0] = 9          # allowed\n\ntpl = (1, 2, 3)\n# tpl[0] = 9        # TypeError\n\nd = {\"name\": \"Riya\"}\nprint(d[\"name\"])    # Riya\n```\n\n**b) Indexing vs Slicing**\n\n- **Indexing** returns one element at a position: a[2].\n- **Slicing** returns a new sequence over a range: a[1:4], with optional start, stop and step (a[::-1] reverses).\n\n```python\na = [10, 20, 30, 40, 50]\nprint(a[2])    # 30   (indexing)\nprint(a[1:4])  # [20, 30, 40]   (slicing)\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 5 Marks + (b) 3 Marks\n\n### (a) Lists vs Tuples vs Dictionaries (5 Marks)\n\n> [!COMPARE] List vs Tuple vs Dictionary in Python\n> | Parameter | `list` | `tuple` | `dict` |\n> |---|---|---|---|\n> | **Literal Syntax** | Square brackets: `[10, 20, 30]` | Parentheses / comma: `(10, 20, 30)` | Curly braces `key: value`: `{'id': 10, 'gpa': 8.5}` |\n> | **Mutability** | **Mutable** (append, pop, sort, assign in place). | **Immutable** (fixed size and element bindings). | **Mutable** mapping (insert, update, delete keys). |\n> | **Access Mechanism** | Positional integer index (`0` to `n-1` or `-1`). | Positional integer index (`0` to `n-1` or `-1`). | Unique hashable key (`d['id']` or `d.get('id')`, `O(1)` average). |\n> | **Duplicate Elements** | Allowed freely. | Allowed freely. | Keys must be unique (values may repeat). |\n> | **Hashability & Dict Key Use** | Unhashable (`TypeError` if used as key). | Hashable if all contained items are hashable. | Unhashable (`TypeError` if used as key). |\n> | **Typical Use Case** | Dynamic homogeneous/heterogeneous collections. | Fixed records, coordinates, multiple return values. | Fast key-based lookup tables and structured records. |\n\n```python\nmarks = [78, 85, 91]          # List: mutable\nmarks[0] = 80                 # Valid -> [80, 85, 91]\n\ncoords = (22.57, 88.36)       # Tuple: immutable coordinate pair\nstudent = {\"roll\": 7, \"marks\": marks, \"loc\": coords}\nprint(student[\"roll\"], student[\"loc\"][0])   # Output: 7 22.57\n```\n\n### (b) List Slicing vs List Indexing (3 Marks)\n\n> [!COMPARE] List Indexing vs List Slicing\n> | Aspect | List Indexing (`lst[i]`) | List Slicing (`lst[start:stop:step]`) |\n> |---|---|---|\n> | **Return Value** | Returns the **single element** stored at position `i` (unwrapped item type). | Always returns a **new `list`** containing the extracted subsequence (`[]` if empty). |\n> | **Out-of-Range Behaviour** | Raises `IndexError` when `i >= len(lst)` or `i < -len(lst)`. | Clamps bounds gracefully without raising `IndexError` (`lst[2:99]` works safely). |\n> | **Step & Reversal** | Accesses one offset only (`lst[-1]` = last item). | Supports arbitrary stride and reversal (`lst[::2]`, `lst[::-1]`). |\n\n```python\na = [10, 20, 30, 40, 50]\nprint(a[2], type(a[2]).__name__)       # Output: 30 int\nprint(a[1:4], a[::-1])                 # Output: [20, 30, 40] [50, 40, 30, 20, 10]\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -952,7 +952,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Loop and its importance**\n\nA loop repeats a block of code — either over a sequence (for) or while a condition holds (while). Loops are essential because they avoid writing the same code repeatedly and make programs shorter, easier to maintain and able to handle data of any size:\n\n```python\nfor i in range(5):\n    print(i)\n```\n\n**b) break and continue**\n\n- **break** exits the loop immediately.\n- **continue** skips the rest of the current iteration and starts the next one.\n\n```python\nfor n in range(6):\n    if n % 2 == 0:\n        continue      # skip even numbers\n    if n == 5:\n        break\n    print(n)\n# Output: 1 3\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 4 Marks + (b) 4 Marks\n\n### (a) What Is a Loop and Why It Is Essential (4 Marks)\n\n- **Definition:** A **loop** is an iterative control-flow construct that executes an indented block of statements repeatedly either over every item of an iterable (`for` loop — definite iteration) or as long as a Boolean condition remains truthy (`while` loop — indefinite iteration).\n- **Code Reuse & DRY Principle:** Replaces hundreds of duplicated lines with one concise body, eliminating copy-paste bugs.\n- **Dynamic Data Scaling:** Processes runtime-sized collections (files, database rows, sensor streams, lists of `N` students) where `N` is unknown at coding time.\n- **Algorithmic Foundation:** Powers accumulation, searching, sorting, matrix traversal, and retry/polling workflows:\n\n```python\nscores = [72, 85, 90, 68]\ntotal = 0\nfor s in scores:\n    total += s\nprint(\"Average:\", total / len(scores))   # Output: Average: 78.75\n```\n\n### (b) `break` and `continue` Statements with Examples (4 Marks)\n\n> [!COMPARE] `break` vs `continue` Loop-Control Statements\n> | Parameter | `break` Statement | `continue` Statement |\n> |---|---|---|\n> | **Action on Loop** | Terminates the innermost enclosing `for`/`while` loop **immediately**. | Aborts only the **current iteration** and jumps to the next iteration header. |\n> | **Subsequent Iterations** | None — remaining items/iterations are never visited. | Remaining iterations proceed normally. |\n> | **Effect on Loop `else:`** | Skips the loop's optional `else:` suite completely. | Does **not** prevent the loop's `else:` suite from running at normal exhaustion. |\n\n```python\nfor n in range(1, 8):\n    if n % 2 == 0:\n        continue          # Skip even numbers (2, 4) and continue loop\n    if n == 7:\n        break             # Exit loop completely when n reaches 7\n    print(n, end=\" \")\n# Verified Output: 1 3 5 \n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -994,7 +994,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 2 marks + b) 6 marks (output of the printed snippet).**\n\n**a) Logical and Identity operators**\n\n- **Logical operators** combine boolean expressions: and, or, not.\n```python\nprint(True and False)   # False\nprint(True or False)    # True\nprint(not True)         # False\n```\n- **Identity operators** compare whether two objects are the same object in memory: is, is not.\n```python\nx = []\nprint([] is [])      # False  (two different list objects)\nprint(x is x)        # True   (same object)\n```\n\n**b) Output of the snippet**\n\nWith a = 5 (binary 101) and b = 3 (binary 011):\n\n| Statement | Operation | Output |\n|---|---|---|\n| print(a & b) | bitwise AND | 1 |\n| print(a | b) | bitwise OR | 7 |\n| print(a ^ b) | bitwise XOR | 6 |\n| print(~a) | bitwise NOT | -6 |\n| print(a << 1) | left shift by 1 | 10 |\n| print(a >> 1) | right shift by 1 | 2 |\n\nNote: the question text describes logical/identity operators, but the printed snippet uses bitwise operators; the outputs above are for the printed snippet.\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 2 Marks + (b) 6 Marks\n\n### (a) Logical and Identity Operators in Python (2 Marks)\n\n- **Logical Operators (`and`, `or`, `not`):** Combine or invert truthiness using **short-circuit evaluation** (`x and y` returns `x` if `x` is falsy, else `y`; `x or y` returns `x` if `x` is truthy, else `y`; `not x` returns a `bool`).\n- **Identity Operators (`is`, `is not`):** Test whether two references point to the **exact same object in memory** (`id(x) == id(y)`), as opposed to `==` which tests value equality:\n\n```python\na_list = [1, 2]\nb_list = [1, 2]\nprint(a_list == b_list, a_list is b_list)    # Output: True False\nprint(5 > 2 and 10 < 20, not False)          # Output: True True\n```\n\n### (b) Step-by-Step Bitwise Trace & Exact Output (6 Marks)\n\nGiven `a = 5` (`0b0101` in 4-bit binary) and `b = 3` (`0b0011` in 4-bit binary), the printed snippet evaluates six **bitwise** operations:\n\n| Statement | Binary Evaluation (`a = 0101₂`, `b = 0011₂`) | Operation Rule | Exact Output |\n|---|---|---|---|\n| `print(a & b)` | `0101 & 0011 = 0001₂` | Bitwise AND (`1` only where both bits are `1`) | `1` |\n| `print(a | b)` | `0101 ¦ 0011 = 0111₂` | Bitwise OR (`1` where at least one bit is `1`) | `7` |\n| `print(a ^ b)` | `0101 ^ 0011 = 0110₂` | Bitwise XOR (`1` where bits differ) | `6` |\n| `print(~a)` | `~5 = -(5 + 1)` | Two's-complement bitwise NOT identity `~x = -(x + 1)` | `-6` |\n| `print(a << 1)` | `0101 << 1 = 1010₂` | Left shift by `1` bit (`5 × 2¹`) | `10` |\n| `print(a >> 1)` | `0101 >> 1 = 0010₂` | Arithmetic right shift by `1` bit (`5 // 2¹`) | `2` |\n\n- **Exact Console Output (6 lines):**\n\n```text\n1\n7\n6\n-6\n10\n2\n```\n\n> [!TRAP] Two's-Complement `~a` Sign Trap\n> In Python's arbitrary-width two's-complement model, `~a` inverts the infinite leading sign bits as well, so `~5` always equals `-(5 + 1) = -6` (never `+10` or `-5`).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1037,7 +1037,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 3 marks + b) 5 marks (syntax 2 + use 3).**\n\n**a) User-defined vs built-in function**\n\n| Built-in function | User-defined function |\n|---|---|\n| Supplied with Python, e.g. len(), print(), max() | Created by the programmer with def |\n| Ready to use | Written for application-specific logic |\n| Defined in Python's core/library | Defined in the current script or module |\n\n**b) Lambda function**\n\nA lambda is an anonymous, single-expression function defined with lambda instead of def:\n\n```python\nsquare = lambda x: x * x\nprint(square(5))   # 25\n```\nIt is used for short, throwaway functions, especially as arguments to map(), filter() and sorted(key=...):\n```python\nnums = [1, 2, 3]\nprint(list(map(lambda x: x * 2, nums)))   # [2, 4, 6]\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 3 Marks + (b) 5 Marks\n\n### (a) User-Defined Function vs Built-In Function (3 Marks)\n\n> [!COMPARE] Built-In Function vs User-Defined Function\n> | Parameter | Built-In Function | User-Defined Function (UDF) |\n> |---|---|---|\n> | **Origin & Availability** | Pre-implemented in Python's `builtins` namespace (mostly in C inside CPython); available without `def` or `import`. | Written explicitly by the programmer using `def` (or `lambda`) inside a `.py` script or module. |\n> | **Customization** | Fixed general-purpose specification (`len()`, `print()`, `sum()`, `max()`, `type()`). | Tailored to domain-specific business rules, formulas, or modular workflows. |\n> | **Execution Speed & Maintenance** | C-optimized and maintained by Python core developers. | Interpreted as Python bytecode and maintained by the application author. |\n\n### (b) Lambda Function and Why It Is Used (5 Marks)\n\n- **Definition & Syntax:** A **lambda function** is a small **anonymous (nameless) inline function** created with the `lambda` keyword using the syntax `lambda arg1, arg2, ...: single_expression`. It evaluates the expression and returns its result implicitly without a `return` keyword.\n- **Key Constraints:** A `lambda` body is restricted to **one expression** — it cannot contain multi-line statements (`while`, `try`, assignments `=`, or docstrings).\n- **Why It Is Used in Practice:**\n  1. **Concise Higher-Order Callbacks:** Passed inline to `map()`, `filter()`, and `functools.reduce()` without polluting the module namespace with one-off `def` helper names.\n  2. **Custom Sort/Extrema Keys:** Supplies field extractors to `sorted(..., key=...)`, `list.sort(key=...)`, `min()`, and `max()`.\n  3. **Event Handlers & Closures:** Creates lightweight parameterized callbacks in GUI or web dispatch tables.\n\n```python\nstudents = [(\"Riya\", 88), (\"Arjun\", 94), (\"Kabir\", 79)]\n\n# 1. Custom sort key: sort descending by marks (index 1)\nranked = sorted(students, key=lambda rec: rec[1], reverse=True)\n\n# 2. Functional pipeline with filter() and map()\nevens_squared = list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, range(1, 7))))\n\nprint(\"Ranked:\", ranked)               # [('Arjun', 94), ('Riya', 88), ('Kabir', 79)]\nprint(\"Evens squared:\", evens_squared) # [4, 16, 36]\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1078,7 +1078,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 2 marks + b) 6 marks.**\n\n**a) Purpose of packages**\n\nPackages group related modules into a namespace, make code reusable and distributable, and prevent name clashes between modules of different projects.\n\n**b) Module vs Package**\n\n| Module | Package |\n|---|---|\n| One .py file | A directory containing modules |\n| Example: math_utils.py | Example: myproject/utils/ with __init__.py |\n| import math_utils | import myproject.utils |\n\n```python\n# mypackage/__init__.py   (makes the folder a package)\n# mypackage/math_utils.py\ndef add(a, b):\n    return a + b\n\n# main.py\nfrom mypackage import math_utils\nprint(math_utils.add(2, 3))   # 5\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 2 Marks + (b) 6 Marks\n\n### (a) Purpose of Python Packages (2 Marks)\n\n- **Hierarchical Namespace Isolation:** Packages organize dozens of related modules into nested directories (`college.exam.grading`) so identical module names (such as `utils.py` or `models.py`) in different subsystems never collide in `sys.modules`.\n- **Modular Distribution & Maintainability:** Enables clean packaging as wheels/sdists on PyPI (`pip install`), controlled public API exposure via `__all__` inside `__init__.py`, selective submodule loading, and team-level separation of concerns.\n\n### (b) Module vs Package with Suitable Example (6 Marks)\n\n> [!COMPARE] Python Module vs Python Package\n> | Parameter | Module | Package |\n> |---|---|---|\n> | **Filesystem Unit** | A **single `.py` source file** (or C extension). | A **directory** containing one or more `.py` modules and sub-packages. |\n> | **Initializer File** | None — the `.py` file itself is the module. | Traditionally contains `__init__.py` (executes on package import and optionally defines `__all__`). |\n> | **Namespace Depth** | Flat single-level namespace (`import geometry`). | Dotted hierarchical namespace (`from shapes.solid import cylinder`). |\n> | **Typical Scale** | Cohesive functions/classes for one topic (`math.py`, `csv.py`). | Multi-module library or application (`numpy`, `django`, `email`). |\n\n- **Directory Layout & Working Code Example:**\n\n```ascii\nproject_root/\n├── main.py\n└── calc_pkg/              <-- Package directory\n    ├── __init__.py        <-- Package initializer\n    ├── basic.py           <-- Module 1\n    └── stats.py           <-- Module 2\n```\n\n```python\n# calc_pkg/basic.py  (Module inside package)\ndef add(a, b):\n    return a + b\n\n# calc_pkg/stats.py  (Second module inside package)\ndef mean(values):\n    return sum(values) / len(values)\n\n# main.py  (Importing modules from the package)\nfrom calc_pkg import basic\nfrom calc_pkg.stats import mean\n\nprint(basic.add(12, 8))          # Output: 20\nprint(mean([70, 80, 90]))        # Output: 80.0\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1119,7 +1119,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) File read and write functions**\n\n- open(name, mode) — returns a file object\n- read([n]) — reads up to n characters (or the whole file)\n- readline() — reads one line\n- readlines() — reads all lines into a list\n- write(s) — writes string s, returns the character count\n- writelines(seq) — writes an iterable of strings\n\n```python\nwith open(\"demo.txt\", \"w\") as f:\n    f.write(\"Line 1\\nLine 2\\n\")\nwith open(\"demo.txt\", \"r\") as f:\n    print(f.readlines())   # ['Line 1\\n', 'Line 2\\n']\n```\nwith closes the file automatically.\n\n**b) Lambda function**\n\nAn anonymous one-expression function:\n```python\ndouble = lambda x: x * 2\nprint(double(4))   # 8\n```\nUsed for short callbacks with map(), filter(), sorted().\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 4 Marks + (b) 4 Marks\n\n### (a) File Read and Write Functions with Examples (4 Marks)\n\nPython's file objects returned by `open(filename, mode, encoding='utf-8')` provide three reading methods and two writing methods:\n\n| Method | Behaviour & Return Value |\n|---|---|\n| `f.read(n=-1)` | Reads up to `n` characters (or the entire remaining file when `n` is omitted) as a single `str`. |\n| `f.readline()` | Reads and returns **one line** (including trailing `'\\n'`), or `''` at EOF. |\n| `f.readlines()` | Reads all remaining lines and returns them as a `list[str]`. |\n| `f.write(text)` | Writes string `text` to the file without adding a newline automatically; returns character count written. |\n| `f.writelines(seq)` | Writes every string in iterable `seq` sequentially without inserting separators. |\n\n```python\n# Context manager ('with') flushes and closes the file even if an exception occurs\nwith open(\"notes.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"Unit 1: Basics\\n\")\n    f.writelines([\"Unit 2: Control Flow\\n\", \"Unit 3: Functions\\n\"])\n\nwith open(\"notes.txt\", \"r\", encoding=\"utf-8\") as f:\n    first = f.readline().strip()       # 'Unit 1: Basics'\n    rest = f.readlines()               # ['Unit 2: Control Flow\\n', 'Unit 3: Functions\\n']\nprint(first, len(rest))                # Output: Unit 1: Basics 2\n```\n\n### (b) Lambda Function and Why It Is Used (4 Marks)\n\n- **Definition:** A `lambda` function (`lambda parameters: expression`) is a concise **anonymous function object** that evaluates a single expression and implicitly returns its value.\n- **Key Characteristics:** Accepts zero or more arguments (including defaults and `*args`), holds no `def` name unless bound to a variable, and cannot contain multi-line statements.\n- **Practical Uses:** Ideal for short inline key extractors and functional transformations where defining a separate `def` helper adds visual clutter:\n\n```python\nitems = [(\"pen\", 15), (\"notebook\", 60), (\"eraser\", 8)]\ncheapest_first = sorted(items, key=lambda item: item[1])\ndiscounted = list(map(lambda item: (item[0], round(item[1] * 0.9, 1)), cheapest_first))\nprint(discounted)   # [('eraser', 7.2), ('pen', 13.5), ('notebook', 54.0)]\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1161,7 +1161,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Regular expressions in Python**\n\nThe re module provides pattern matching on strings. A pattern describes the shape of text to find using literals and metacharacters such as ^, $, ., *, +, [], () and \\d.\n\n```python\nimport re\nprint(re.search(r\"\\d+\", \"abc123\").group())   # 123\nprint(re.findall(r\"\\d+\", \"a1 b22 c3\"))       # ['1', '22', '3']\nprint(re.split(r\"\\s+\", \"a  b c\"))            # ['a', 'b', 'c']\n```\nCommon functions: re.match() (start of string), re.search() (anywhere), re.findall() (all matches), re.split() and re.sub().\n\n**b) Django MVC/MTV architecture**\n\nDjango follows **MVT** (Model-View-Template), which is Django's name for MVC:\n- **Model** — data and database logic\n- **Template** — presentation (HTML)\n- **View** — request logic that connects Model and Template\n\nDjango itself acts as the controller via its URL dispatcher, which routes requests to views.\n\n```python\n# models.py\nclass Student(models.Model):\n    name = models.CharField(max_length = 50)\n\n# views.py\ndef student_list(request):\n    students = Student.objects.all()\n    return render(request, \"list.html\", {\"students\": students})\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 Marks: (a) 4 Marks + (b) 4 Marks\n\n### (a) Working of Regular Expressions in Python (4 Marks)\n\nPython's standard `re` module compiles pattern strings (written as raw strings `r\"...\"` so backslashes are passed directly to the regex engine) into finite-automaton matchers for searching, validating, splitting, and substituting text:\n\n- **Core Metacharacters:** `.` (any char except newline), `^` (start anchor), end-of-string dollar anchor, `*` (`0+`), `+` (`1+`), `?` (`0` or `1`), `{m,n}` (quantifier), `[a-z]` (character class), `\\d` (digit), `\\w` (word char), and `\\s` (whitespace).\n- **Essential `re` Functions:** `re.match()` checks only at index `0`; `re.search()` scans for the first match anywhere; `re.findall()` returns all non-overlapping matches; `re.sub()` replaces matches.\n\n```python\nimport re\n\ntext = \"Roll: 104, Marks: 89, Pin: 700091\"\nprint(re.search(r\"\\d+\", text).group())          # Output: 104  (first integer)\nprint(re.findall(r\"\\b\\d{2,3}\\b\", text))         # Output: ['104', '89']\nprint(re.sub(r\"\\d+\", \"#\", \"Room 12 Floor 3\"))   # Output: Room # Floor #\n```\n\n### (b) Django MVC / MVT Architecture (4 Marks)\n\nDjango implements the classic **MVC (Model–View–Controller)** pattern through its **MVT (Model–View–Template)** request-response lifecycle, where the framework's URL dispatcher acts as the Controller:\n\n```ascii\nHTTP Request -> [ URL Dispatcher (urls.py) ] -> [ View (views.py) ] <-> [ Model / ORM (models.py) ] <-> DB\n                                                       |\nHTTP Response <-------- [ Template (HTML + DTL) ] <----+\n```\n\n- **Model (`models.py`):** Python classes subclassing `django.db.models.Model` that define database schema and execute SQL queries cleanly through Django's Object-Relational Mapper (ORM).\n- **View (`views.py`):** Business-logic callable (function or class-based view) that accepts `HttpRequest`, queries Models, and returns an `HttpResponse`.\n- **Template (`templates/*.html`):** Presentation layer using Django Template Language (`{{ var }}`, `{% for %}`) to render dynamic HTML safely.\n\n```python\n# models.py\nclass Course(models.Model):\n    title = models.CharField(max_length=80)\n\n# views.py\ndef course_list(request):\n    courses = Course.objects.all()\n    return render(request, \"courses.html\", {\"courses\": courses})\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

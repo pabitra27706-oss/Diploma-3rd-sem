@@ -115,7 +115,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Tree.**\n\nA tree represents hierarchical parent–child relationships; arrays and linked lists are linear.",
+      "answer": "**Correct answer: B) Tree**\n\n- **Hierarchical Non-Linear Structure:** In a **tree**, each node can branch to zero, one, or multiple child nodes (`1 : many` parent-child hierarchy), so elements cannot be arranged in a single sequential line.\n- **Why Others Fail:** **Arrays** (`A`) and **Linked Lists** (`C`) are **linear** data structures where every interior element has at most one unique predecessor and one unique successor.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -163,7 +163,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Queue.**\n\nBreadth-first traversal visits all neighbours of a vertex before going deeper, and a FIFO queue keeps those pending vertices in the correct order. Depth-first traversal would use a stack.",
+      "answer": "**Correct answer: C) Queue**\n\n- **Level-by-Level FIFO Exploration:** **Breadth-First Search (BFS)** visits all vertices at distance `k` from the source before exploring vertices at distance `k + 1`, using a **FIFO Queue** (`enqueue` newly discovered neighbours at `rear`, `dequeue` next vertex from `front`).\n- **Contrast:** **Depth-First Search (DFS)** uses a **LIFO Stack** (`A`) or recursion.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -211,7 +211,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) front.**\n\nQueue deletion happens at the front; insertion happens at the rear.",
+      "answer": "**Correct answer: A) `front`**\n\n- **Two-Ended FIFO Discipline:** A queue enforces **First-In-First-Out (FIFO)** order using two pointers: elements are **deleted (`dequeue`) from the `front`** end (`A`) and **inserted (`enqueue`) at the `rear`** end (`B`).\n- **Why Others Fail:** `top` (`C`) and `bottom` (`D`) refer to the ends of a LIFO stack.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -259,7 +259,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Leaf node.**\n\nA node with no children is a leaf, also called a terminal node, and its degree is 0. An internal node has one or two children.",
+      "answer": "**Correct answer: C) Leaf node**\n\n- **Terminal / External Node:** Any tree node with **out-degree `0`** (both `left == NULL` and `right == NULL` in a binary tree, i.e., zero children) is called a **leaf node** (or terminal/external node).\n- **Why Others Fail:** An **interior (internal) node** (`A`) has at least one child; the **root node** (`B`) is the topmost node with no parent.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -307,7 +307,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Stack.**\n\nA stack orders elements linearly; trees and graphs are non-linear.",
+      "answer": "**Correct answer: C) Stack**\n\n- **Sequential `1 : 1` Adjacency:** A **stack** stores elements in a strict sequential order (`bottom -> ... -> top`) under **Last-In-First-Out (LIFO)** access, where each internal element has one immediate predecessor and one successor.\n- **Why Others Fail:** **Trees** (`A`) and **Graphs** (`B`) are **non-linear** structures with branching or arbitrary multi-edge connectivity.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -355,7 +355,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Stack.**\n\nEach function call pushes an activation record and each return pops it, so recursion is managed on the call stack. That LIFO order matches nested calls exactly.",
+      "answer": "**Correct answer: C) Stack**\n\n- **Runtime Activation Stack:** Every recursive call **pushes** a new activation record (holding parameters, local variables, and the return address) onto the system **call stack**.\n- **LIFO Unwinding:** The most deeply nested base-case call must return **first**, matching a **LIFO Stack** (`pop` on `return`) rather than a FIFO queue (`A`).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -403,7 +403,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Enqueue.**\n\n`enqueue` is a queue insertion operation; stack operations are push and pop.",
+      "answer": "**Correct answer: C) Enqueue**\n\n- **Queue vs Stack Operations:** **`Enqueue`** (inserting an item at the `rear` end) and **`Dequeue`** (removing an item from the `front` end) are standard operations of a **FIFO Queue**, not a stack.\n- **Standard Stack ADT Operations:** **`Push`** (`A`, insert at `top`), **`Pop`** (`B`, remove from `top`), **`Peek`/`Top`** (read `top` without removing), `isEmpty()`, and `isFull()`.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -452,7 +452,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) In-order.**\n\nIn-order traversal visits left subtree, root, right subtree, yielding sorted keys for a valid BST.",
+      "answer": "**Correct answer: B) In-order**\n\n- **BST Ordering Invariant:** In any Binary Search Tree, `left_subtree_keys < node->key < right_subtree_keys`.\n- **Why In-Order Sorts (`O(n)`):** **In-order traversal (`Left -> Root -> Right`)** recursively outputs all smaller keys in the left subtree, then the current node's key, and finally all larger keys in the right subtree—producing strictly ascending sorted order.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -500,7 +500,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) All of these.**\n\nLinked nodes can implement stacks, queues, and tree nodes; `All of these` is the intended answer.",
+      "answer": "**Correct answer: D) All of these**\n\n- **Dynamic Node Representation:** Dynamically allocated pointer-linked nodes serve as the underlying storage representation for:\n  - **Linked Stack (`A`):** Singly linked list with `O(1)` `push`/`pop` at `top` (`head`).\n  - **Linked Queue (`B`):** Singly linked list maintaining `front` and `rear` pointers.\n  - **Linked Trees (`C`):** Multi-pointer nodes (`left`, `right` or child/sibling links) without fixed array size limits.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -550,7 +550,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) n*(n-1)/2.**\n\nEvery unordered pair of distinct vertices has one edge, so there are C(n,2)=n(n−1)/2 edges.",
+      "answer": "**Correct answer: C) `n*(n-1)/2`**\n\n- **Handshaking / Pairwise Derivation:** In an undirected **complete graph `K_n`**, every vertex is connected directly to all `n - 1` other vertices (`degree = n - 1`).\n- **Edge Formula:** Summing degrees over `n` vertices counts each undirected edge twice, giving `|E| = C(n, 2) = n * (n - 1) / 2` (note: `n - 1` in `A` is the edge count of a tree).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -598,7 +598,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) A list where the last node points back to the first node.**\n\nIn a circular linked list the final node links back to the first, forming a ring.",
+      "answer": "**Correct answer: C) A list where the last node points back to the first node**\n\n- **Closed Ring Topology:** Instead of setting `last->next = NULL` (which defines an ordinary singly linked list in `A`), a **circular linked list** stores `last->next = head`, forming a continuous loop.\n- **Advantage:** Any node can be reached starting from any other node, ideal for round-robin CPU scheduling.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -646,7 +646,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) NULL.**\n\nA non-circular singly linked list ends with a null next pointer.",
+      "answer": "**Correct answer: C) `NULL`**\n\n- **End-of-List Sentinel:** In a standard non-circular **singly linked list**, the tail node's `next` link is explicitly assigned **`NULL`** (`last->next == NULL`), signalling that no successor node exists.\n- **Traversal Use:** Loops safely stop on `while (curr != NULL)` instead of dereferencing invalid memory (`A` describes a circular list).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -694,7 +694,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) In-order.**\n\nInorder visits the left subtree, then the root, then the right subtree, which is Left–Root–Right. In a binary search tree this prints the keys in sorted order.",
+      "answer": "**Correct answer: C) In-order**\n\n- **Depth-First Binary Tree Traversal Orders:**\n  - **In-order (`C`):** Visits **`Left subtree -> Root -> Right subtree`** (places `Root` *in between* its two subtrees and prints BST keys in sorted ascending order).\n  - **Pre-order (`A`):** Visits `Root -> Left subtree -> Right subtree` (`Root` *before* subtrees).\n  - **Post-order (`B`):** Visits `Left subtree -> Right subtree -> Root` (`Root` *after* subtrees).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -742,7 +742,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Less than root.**\n\nFor every BST node, keys in its left subtree are smaller than the node key.",
+      "answer": "**Correct answer: C) Less than root**\n\n- **Recursive BST Property:** For every node `N` in a Binary Search Tree, **every key in `N`'s left subtree is strictly less than `N->key`** (`C`), while every key in `N`'s right subtree is strictly greater than `N->key` (`A`).\n- **Search Benefit:** Enables `O(log n)` binary-search pruning on balanced trees.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -790,7 +790,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Data and a pointer to the next node.**\n\nA singly linked list node stores a data field and one next pointer.",
+      "answer": "**Correct answer: C) Data and a pointer to the next node**\n\n- **Self-Referential Node Layout:** Each node of a singly linked list (`struct Node { int data; struct Node *next; };`) consists of two fields: an **information (`data`) field** storing the payload and a **single link (`next`) pointer** storing the address of the successor node (or `NULL` at the tail).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -833,7 +833,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** A data structure organizes data for efficient storage and access. Common operations include traversal, search, insertion, deletion, sorting, merging, and updating.\n\n**b)** Linear structures arrange elements in a sequence (array, stack, queue, linked list) with one predecessor/successor. Non-linear structures represent hierarchical or networked relationships (tree, graph) where one element may connect to several others.",
+      "answer": "> [!MARKS] 5 + 3 = 8 Marks\n> **a) Data Structure & Operations (`1m + 4m = 5m`):** Definition + 6 core operations with examples | **b) Linear vs Non-Linear (`3m`):** Side-by-side comparison across 6 parameters.\n\n### a) Data Structure & Its Fundamental Operations (5 Marks)\n\n- **Definition (`1m`):** A **data structure** is a logical and mathematical model for organizing, storing, and linking related data items in computer memory, paired with a well-defined set of operations that access and manipulate them efficiently.\n- **Six Core Operations on Data Structures (`4m`):**\n  1. **Traversal:** Visiting every element in the structure **exactly once** to process or display it (e.g., scanning an array `0..n-1` or in-order traversal of a binary tree).\n  2. **Searching:** Locating the position/address of a record matching a target **key** (e.g., Linear Search `O(n)`, Binary Search `O(log n)`).\n  3. **Insertion:** Adding a new data element at a specified position (e.g., `push` onto a stack, inserting a node at the head of a linked list).\n  4. **Deletion:** Removing an existing element from the structure and reclaiming or relinking storage (e.g., `dequeue` from a queue).\n  5. **Sorting:** Rearranging elements in ascending or descending key order (e.g., Quick Sort, Merge Sort).\n  6. **Merging:** Combining two sorted data structures into a single sorted sequence.\n\n### b) Linear vs Non-Linear Data Structures (3 Marks)\n\n> [!COMPARE] Linear vs Non-Linear Data Structures\n> | Parameter | Linear Data Structure | Non-Linear Data Structure |\n> |---|---|---|\n> | **Element Arrangement** | Arranged sequentially in a single line (`1 : 1` relationship). | Arranged hierarchically (`1 : many`) or as a network (`many : many`). |\n> | **Predecessor / Successor** | Every interior item has **one unique predecessor** and **one unique successor**. | An item may link to **multiple children or neighbours**. |\n> | **Single-Run Traversal** | All elements can be traversed cleanly in a **single linear pass**. | Requires branching/backtracking (`BFS`, `DFS`, tree traversals). |\n> | **Levels Involved** | Single-level organization. | Multi-level hierarchy or arbitrary graph topology. |\n> | **Memory Utilization** | Arrays may waste pre-allocated slots; linked lists are dynamic. | Dynamic pointer-based nodes use memory efficiently on demand. |\n> | **Examples** | **Array**, **Stack**, **Queue**, **Linked List**. | **Tree** (`BST`, `AVL`, `B-Tree`), **Graph**. |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -876,7 +876,7 @@
         }
       ],
       "markSplit": "6+2",
-      "answer": "**a)** A stack is LIFO. Push: check overflow, increment top, store item. Pop: check underflow, return item at top, decrement top. Queue applications include printer scheduling and breadth-first traversal / CPU scheduling.\n\n**b)** An input-restricted deque allows insertion at one end but deletion from both ends; an output-restricted deque allows deletion at one end but insertion at both ends.",
+      "answer": "> [!MARKS] 6 + 2 = 8 Marks\n> **a) Stack (`PUSH`/`POP`) + Queue Applications (`4m + 2m = 6m`):** LIFO diagram, `PUSH`/`POP` algorithms, and 2 queue uses | **b) Restricted Deques (`2m`):** Input-restricted vs output-restricted deque.\n\n### a) Stack Concept, `PUSH` / `POP` Algorithms & Queue Applications (6 Marks)\n\n- **Stack Concept:** A **stack** is a restricted linear data structure following **Last-In-First-Out (LIFO)** order—both insertion (**`PUSH`**) and deletion (**`POP`**) occur exclusively at a single end called **`TOP`** (initialized to `TOP = -1` for 0-based `STACK[0..MAX-1]`).\n\n```ascii\n  PUSH(x) -->  [ 30 ] <-- TOP = 2   --> POP() removes 30\n               [ 20 ]\n               [ 10 ] <-- bottom (index 0)\n```\n\n- **`PUSH(STACK, TOP, MAX, ITEM)` Algorithm (`O(1)`):**\n  1. **Overflow check:** `if (TOP == MAX - 1)` then print `\"Stack Overflow\"` and `Exit`.\n  2. Increment top pointer: `TOP = TOP + 1`.\n  3. Insert item: `STACK[TOP] = ITEM`.\n  4. `Return`.\n- **`POP(STACK, TOP)` Algorithm (`O(1)`):**\n  1. **Underflow check:** `if (TOP == -1)` then print `\"Stack Underflow\"` and `Exit`.\n  2. Save top element: `ITEM = STACK[TOP]`.\n  3. Decrement top pointer: `TOP = TOP - 1`.\n  4. `Return ITEM`.\n- **Two Practical Applications of a Queue (`2m`):**\n  - **1. Operating System Job & Printer Spooling:** Ready-queue FCFS/Round-Robin CPU scheduling and print-spool buffers service requests strictly in arrival (`FIFO`) order.\n  - **2. Graph Breadth-First Search (BFS) & Network Packet Buffering:** BFS explores vertices level-by-level using a FIFO queue; routers buffer incoming packets in queues.\n\n### b) Input-Restricted vs Output-Restricted Deque (2 Marks)\n\nA **Deque (Double-Ended Queue)** permits operations at both `FRONT` and `REAR`; its two constrained variants are:\n\n> [!COMPARE] Input-Restricted Deque vs Output-Restricted Deque\n> | Parameter | Input-Restricted Deque | Output-Restricted Deque |\n> |---|---|---|\n> | **Insertion Allowed At** | **One end only** (typically `REAR`). | **Both ends** (`FRONT` and `REAR`). |\n> | **Deletion Allowed At** | **Both ends** (`FRONT` and `REAR`). | **One end only** (typically `FRONT`). |\n> | **Typical Use Case** | Job-stealing schedulers where tasks enter one queue end. | Priority event buffers where urgent items insert at `FRONT`. |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -919,7 +919,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** A queue is FIFO. Circular enqueue: if `(rear+1)%size == front`, report full; otherwise `rear = (rear+1)%size`, store item at `rear`, and set `front` if it was empty.\n\n**b)** A circular queue treats the array as a ring so the space freed at the front can be reused; `front` and `rear` wrap using modulo arithmetic.",
+      "answer": "> [!MARKS] 5 + 3 = 8 Marks\n> **a) Queue Definition + Circular Queue `ENQUEUE` Algorithm (`1m + 4m = 5m`)** | **b) Circular Queue Concept (`3m`):** Overcoming false overflow via modulo ring wrap-around + diagram.\n\n### a) Queue Definition & Circular Queue Insertion Algorithm (5 Marks)\n\n- **Queue Definition (`1m`):** A **queue** is an ordered linear data structure operating on the **First-In-First-Out (FIFO)** principle where insertions (**`enqueue`**) take place at the **`REAR`** end and deletions (**`dequeue`**) take place at the **`FRONT`** end.\n- **Algorithm `CQ_INSERT(CQ, FRONT, REAR, MAX, ITEM)` (`0`-based indices `0..MAX-1`, initially `FRONT = -1, REAR = -1`) (`4m`):**\n  1. **Check Overflow (Full Ring):**\n     `if ((REAR + 1) % MAX == FRONT)` (equivalently `(FRONT == 0 && REAR == MAX - 1) || (FRONT == REAR + 1)`), print `\"Circular Queue Overflow\"` and `Return`.\n  2. **Advance `FRONT` / `REAR`:**\n     - `if (FRONT == -1)` *(queue was empty)*: set `FRONT = 0` and `REAR = 0`.\n     - `else`: wrap `REAR = (REAR + 1) % MAX`.\n  3. **Store Element:** `CQ[REAR] = ITEM`.\n  4. `Return` *(time complexity `O(1)`)*.\n\n### b) Concept of a Circular Queue (3 Marks)\n\n- **False Overflow Problem in Linear Array Queues:** In an ordinary array queue, after repeated `enqueue` and `dequeue` operations, `REAR` reaches `MAX - 1` and triggers overflow **even when early slots `0 .. FRONT - 1` sit completely vacant**.\n- **Modulo Ring Wrap-Around Solution:** A **circular queue** logically bends `CQ[0 .. MAX - 1]` into a closed ring so index `0` immediately follows index `MAX - 1`:\n\n> [!FORMULA] Circular Index Advancement\n> `REAR = (REAR + 1) % MAX` on insertion, and `FRONT = (FRONT + 1) % MAX` on deletion.\n\n```ascii\n        [0: 50] <-- REAR = 0 (wrapped around into freed slot!)\n       /       \\\n  [4: 40]     [1: empty]\n      \\         /\n       [3:30]-[2:20] <-- FRONT = 2\n```\n\n- **Key Benefits:** `100%` reuse of vacated front cells in `O(1)` time with **zero element shifting**, widely used in OS ring buffers, UART serial I/O, and multimedia streaming.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -961,7 +961,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** To move n disks from source A to destination C using auxiliary B: recursively move n−1 disks from A to B, move the largest disk from A to C, then recursively move n−1 disks from B to C. Base case: one disk moves directly.\n\n**b)** Create a new node, set its data, set `new->next = head`, then set `head = new`.",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks\n> **a) Recursive Tower of Hanoi (`4m`):** Divide-and-conquer rules, recursive algorithm, `n = 3` trace (`7` moves), and `2ⁿ - 1` complexity | **b) SLL Head Insertion (`4m`):** Pointer diagram + step-by-step algorithm & C function.\n\n### a) Solving Tower of Hanoi Using Recursion (4 Marks)\n\n- **Problem Statement & Rules:** Move `n` disks of decreasing sizes from **Source peg `A`** to **Destination peg `C`** using **Auxiliary peg `B`**, moving **one disk at a time** and never placing a larger disk onto a smaller disk.\n- **Recursive Decomposition (`TOH(n, A, B, C)`):**\n  1. **Base Case (`n == 1`):** Move disk `1` directly from `A -> C` and return.\n  2. **Step 1:** Recursively move top `n - 1` disks from **`A -> B`** using `C` as auxiliary: `TOH(n - 1, A, C, B)`.\n  3. **Step 2:** Move the largest `n`-th disk directly from **`A -> C`**.\n  4. **Step 3:** Recursively move the `n - 1` disks from **`B -> C`** using `A` as auxiliary: `TOH(n - 1, B, A, C)`.\n\n> [!FORMULA] Move Count & Recurrence\n> `T(n) = 2·T(n - 1) + 1` with `T(1) = 1` -> **`T(n) = 2ⁿ - 1` moves** (`O(2ⁿ)` time, `O(n)` call-stack space).\n\n- **Worked `n = 3` Trace (`2³ - 1 = 7` moves):**\n  `1: D1 A->C`, `2: D2 A->B`, `3: D1 C->B`, `4: D3 A->C`, `5: D1 B->A`, `6: D2 B->C`, `7: D1 A->C`.\n\n### b) Algorithm to Insert a Node at the Beginning of a Singly Linked List (4 Marks)\n\n```ascii\n  Before:  HEAD --> [20 | *] --> [30 | NULL]\n  Step 1:  NEW = [10 | *] --(NEW->next = HEAD)--> [20 | *] --> [30 | NULL]\n  Step 2:  HEAD = NEW   --> [10 | *] --> [20 | *] --> [30 | NULL]\n```\n\n- **Algorithm `INSERT_BEGIN(HEAD, ITEM)` (`O(1)` time):**\n  1. Allocate a new node from heap/free-pool: `NEW = allocateNode()`.\n  2. **Overflow check:** `if (NEW == NULL)` print `\"Heap Memory Overflow\"` and `Return HEAD`.\n  3. Store data field: `NEW->data = ITEM`.\n  4. Link `NEW` ahead of current first node: `NEW->next = HEAD` *(works identically even when `HEAD == NULL`)*.\n  5. Update head pointer: `HEAD = NEW`.\n  6. `Return HEAD`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1008,7 +1008,7 @@
         }
       ],
       "markSplit": "2+3+3",
-      "answer": "**a)** A doubly linked list supports traversal in both directions, O(1) deletion when a node pointer is known, and easier predecessor access, at the cost of an extra pointer per node.\n\n**b)** Each nonzero term is a node containing coefficient, exponent, and next: `(3,3) -> (2,2) -> (5,1) -> (2,0) -> NULL`.\n\n**c)** Linked lists use non-contiguous nodes, dynamic size, and O(1) insertion/deletion after a known pointer but no random access. Arrays are contiguous, fixed or resizable, support O(1) indexing, but insertion/deletion may shift elements.",
+      "answer": "> [!MARKS] 2 + 3 + 3 = 8 Marks\n> **a) Doubly Linked List Advantages (`2m`)** | **b) Polynomial `3x³ + 2x² + 5x + 2` Linked Representation (`3m`):** Node `struct` + chain diagram | **c) Linked List vs Linear Array (`3m`):** `[!COMPARE]` table.\n\n### a) Advantages of Doubly Linked List Over Singly Linked List (2 Marks)\n\n- **1. Bidirectional Traversal:** Every node carries both `prev` and `next` pointers, allowing seamless forward (`HEAD -> TAIL`) and backward (`TAIL -> HEAD`) traversal.\n- **2. `O(1)` Arbitrary Node Deletion:** Given a pointer `p` to the target node, `p->prev->next = p->next` deletes `p` in `O(1)` time without scanning from `HEAD` to locate `p`'s predecessor.\n- **3. Easy Insertion *Before* a Given Node:** `p->prev` gives immediate access to the preceding node (ideal for browser back/forward history and LRU caches).\n\n### b) Linked-List Representation of `P(x) = 3x³ + 2x² + 5x + 2` (3 Marks)\n\n- **Node Structure:** Only non-zero terms are stored in **descending order of exponents**, where each node holds three fields:\n\n```c\nstruct PolyNode {\n    int coeff;             /* coefficient of term */\n    int exp;               /* power / exponent of x */\n    struct PolyNode *next; /* link to next lower-degree term */\n};\n```\n\n- **Linked Chain Diagram for `3x³ + 2x² + 5x¹ + 2x⁰`:**\n\n```ascii\n  POLY --> [ 3 | 3 | * ] --> [ 2 | 2 | * ] --> [ 5 | 1 | * ] --> [ 2 | 0 | NULL ]\n             (3x^3)            (2x^2)            (5x^1)            (2x^0)\n```\n\n- **Sparse Efficiency:** Zero-coefficient terms (e.g., in `5x¹⁰⁰ + 2`) consume zero memory, unlike dense coefficient arrays.\n\n### c) Comparison Between Linked List and Linear Array (3 Marks)\n\n> [!COMPARE] Linked List vs Linear Array\n> | Parameter | Linked List | Linear Array |\n> |---|---|---|\n> | **Memory Layout** | **Non-contiguous** heap nodes connected via pointers. | **Contiguous** block of adjacent memory cells. |\n> | **Size Flexibility** | **Dynamic**—grows and shrinks at runtime (`malloc`/`free`). | **Fixed** at allocation time (resizing requires `realloc` copy). |\n> | **Element Access** | **Sequential `O(n)`**—must follow links from `HEAD`. | **Random `O(1)`** direct indexing via `base + i * sizeof(T)`. |\n> | **Insertion / Deletion** | **`O(1)`** pointer relinking once position pointer is known. | **`O(n)`** element shifting required in middle/front. |\n> | **Memory Overhead** | Extra `4`/`8` bytes per node for `next` (and `prev`) pointers. | Zero per-element pointer overhead; high CPU cache locality. |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1051,7 +1051,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** An AVL tree is a self-balancing BST where the balance factor of every node is −1, 0, or +1. Rotations: LL (right rotation), RR (left rotation), LR (left then right), and RL (right then left).\n\n**b)** Insert the keys in order and apply LL/RR/LR/RL rotations after each imbalance. For the normalized sequence `54, 2345, 6172, 5918, 1077, 3422, 44`, one valid final AVL tree has level order `2345; 54, 5918; 44, 1077, 3422, 6172`: root 2345, left child 54 with children 44 and 1077, and right child 5918 with children 3422 and 6172. Its in-order traversal is `44, 54, 1077, 2345, 3422, 5918, 6172`, and every node has balance factor −1, 0, or +1.",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks\n> **a) AVL Tree & Four Rotations (`4m`):** Balance-factor invariant + `LL`, `RR`, `LR`, `RL` table | **b) Step-by-Step AVL Construction (`4m`):** Full 7-insertion trace with `RR` & `LL` rebalancing and final ASCII tree.\n\n### a) AVL Tree & Its Four Rebalancing Rotations (4 Marks)\n\n- **Definition:** An **AVL tree** (Adelson-Velsky & Landis) is a self-balancing Binary Search Tree in which the **Balance Factor (`BF`)** of every node satisfies **`BF in {-1, 0, +1}`**, guaranteeing `O(log n)` height for search, insert, and delete:\n\n> [!FORMULA] Balance Factor\n> `BF(N) = height(N->left) - height(N->right)` (`|BF(N)| >= 2` triggers rotation at the lowest unbalanced ancestor).\n\n| Imbalance Case | Insertion Path from Critical Node `A` | Corrective Rotation(s) |\n|---|---|---|\n| **`LL` (`BF = +2`)** | Left subtree of `A`'s **Left** child | **Single Right Rotation** around `A` |\n| **`RR` (`BF = -2`)** | Right subtree of `A`'s **Right** child | **Single Left Rotation** around `A` |\n| **`LR` (`BF = +2`)** | Right subtree of `A`'s **Left** child `B` | **Double Rotation:** Left-rotate `B`, then Right-rotate `A` |\n| **`RL` (`BF = -2`)** | Left subtree of `A`'s **Right** child `B` | **Double Rotation:** Right-rotate `B`, then Left-rotate `A` |\n\n### b) Construct AVL Tree for `54, 2345, 6172, 5918, 1077, 3422, 44` (4 Marks)\n\n1. **Insert `54`:** `[54]` (`BF = 0`).\n2. **Insert `2345`:** Right of `54` -> `54 (BF = -1) -> R: 2345 (0)`.\n3. **Insert `6172`:** Right of `2345` -> `54` gets **`BF = -2` (`RR` imbalance)**! Apply **Single Left Rotation on `54`** -> root becomes `2345 (BF = 0)` with `L: 54`, `R: 6172`.\n4. **Insert `5918`:** Left of `6172` -> `BF(6172) = +1`, `BF(2345) = -1` (balanced).\n5. **Insert `1077`:** Right of `54` -> `BF(54) = -1`, `BF(2345) = 0` (balanced).\n6. **Insert `3422`:** Left of `5918` (`6172 -> L: 5918 -> L: 3422`) -> `6172` gets **`BF = +2` (`LL` imbalance)**! Apply **Single Right Rotation on `6172`** -> `5918` rises above `3422` (left) and `6172` (right), attached as right child of `2345`.\n7. **Insert `44`:** Left of `54` -> every node now has **`BF = 0`**!\n\n```ascii\n                 [2345] (BF = 0)\n                /               \\\n          [54] (BF = 0)     [5918] (BF = 0)\n          /        \\         /          \\\n     [44] (0)  [1077] (0) [3422] (0)  [6172] (0)\n```\n\n- **Verification:** In-order traversal = `44, 54, 1077, 2345, 3422, 5918, 6172` (sorted BST) and all `7` nodes satisfy `BF in {-1, 0, +1}`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1093,7 +1093,7 @@
         }
       ],
       "markSplit": "6+2",
-      "answer": "**a)** Pre-order gives the root first: F. Split the in-order sequence at F: left `E A C K`, right `H D B G`. Recursively use the next pre-order root for each subtree: A (left) and D (right), then E, K/C, H, G/B. Textual tree: F has left child A and right child D; A has left E and right K; K has left C; D has left H and right G; G has left B.\n\n**b)** Linked lists grow/shrink dynamically, insert/delete efficiently after a known node, and do not require contiguous memory or costly shifting.",
+      "answer": "> [!MARKS] 6 + 2 = 8 Marks\n> **a) Binary Tree Reconstruction (`6m`):** Reconstruction logic + step-by-step partition table + final ASCII binary tree | **b) Linked-List Advantages (`2m`):** Four key benefits.\n\n### a) Reconstructing the Binary Tree from In-Order & Pre-Order (6 Marks)\n\n- **Reconstruction Logic:**\n  1. **Pre-order (`Root -> Left -> Right`)** always lists the **current subtree's root first**.\n  2. Locate that root inside **In-order (`Left -> Root -> Right`)**: all symbols to its **left** belong to its left subtree, and all symbols to its **right** belong to its right subtree.\n  3. Apply the rule recursively to each non-empty left and right partition.\n\n| Step | Pre-Order Segment | Root Picked | In-Order Split (`Left | Root | Right`) |\n|---|---|:-:|---|\n| **1** | `F A E K C D H G B` | **`F`** | `E A C K` ¦ **`F`** ¦ `H D B G` |\n| **2 (Left of `F`)** | `A E K C` | **`A`** | `E` ¦ **`A`** ¦ `C K` (`E` is left leaf of `A`) |\n| **3 (Right of `A`)** | `K C` | **`K`** | `C` ¦ **`K`** ¦ *(empty)* (`C` is left child of `K`) |\n| **4 (Right of `F`)** | `D H G B` | **`D`** | `H` ¦ **`D`** ¦ `B G` (`H` is left leaf of `D`) |\n| **5 (Right of `D`)** | `G B` | **`G`** | `B` ¦ **`G`** ¦ *(empty)* (`B` is left child of `G`) |\n\n```ascii\n              [F]\n            /     \\\n          [A]     [D]\n         /   \\   /   \\\n       [E]   [K] [H] [G]\n             /       /\n           [C]     [B]\n```\n\n- **Cross-Check:**\n  - **In-order (`L-Root-R`):** `E A C K F H D B G` (matches given sequence).\n  - **Pre-order (`Root-L-R`):** `F A E K C D H G B` (matches given sequence).\n\n### b) Advantages of a Linked List (2 Marks)\n\n- **1. Dynamic Runtime Sizing:** Grows and shrinks on demand via heap allocation (`malloc`/`free`) with zero fixed upper-bound waste.\n- **2. `O(1)` Insertion & Deletion:** Inserting or deleting at a known node pointer relinks `1`–`2` pointers without shifting `O(n)` elements.\n- **3. Non-Contiguous Heap Allocation:** Succeeds even when free RAM is fragmented into small blocks.\n- **4. Foundation for Dynamic ADTs:** Easily implements unbounded stacks, queues, sparse polynomials, and graph adjacency lists.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1137,7 +1137,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** A BST is a binary tree where left-subtree keys are smaller and right-subtree keys are larger than the root, recursively. A stack is LIFO (push/pop at one end); a queue is FIFO (enqueue at rear, dequeue at front).\n\n**b)** A B-tree of order m is a balanced multiway search tree: every node has at most m children, all leaves are at the same level, keys are sorted within nodes, and internal nodes (except the root) are at least half full.",
+      "answer": "> [!MARKS] 5 + 3 = 8 Marks\n> **a) Binary Search Tree + Stack vs Queue (`3m + 2m = 5m`):** BST invariant & example + `[!COMPARE]` table | **b) Properties of a B-Tree of Order `m` (`3m`):** Five defining invariants.\n\n### a) Binary Search Tree (BST) & Stack vs Queue (5 Marks)\n\n- **Binary Search Tree Concept (`3m`):** A **BST** is a node-based binary tree where every node `N` obeys the **symmetric ordering property**:\n  - Every key in **`N->left`** is **strictly less** than `N->key`.\n  - Every key in **`N->right`** is **strictly greater** than `N->key`.\n  - Both left and right subtrees are themselves valid BSTs.\n  - **Complexity:** Search, insertion, and deletion run in **`O(log n)`** average time (`O(n)` worst case on a skewed tree), and **in-order traversal** yields keys in sorted ascending order.\n\n```ascii\n        [50]\n       /    \\\n     [30]   [70]\n     /  \\   /  \\\n   [20][40][60][80]   (In-order: 20, 30, 40, 50, 60, 70, 80)\n```\n\n> [!COMPARE] Stack vs Queue (`2m`)\n> | Parameter | Stack | Queue |\n> |---|---|---|\n> | **Access Principle** | **LIFO** (Last-In-First-Out). | **FIFO** (First-In-First-Out). |\n> | **Active Pointers** | Single pointer **`TOP`** for both `push` and `pop`. | Two pointers: **`REAR`** (`enqueue`) and **`FRONT`** (`dequeue`). |\n> | **Core Operations** | `Push(x)`, `Pop()`, `Peek()`. | `Enqueue(x)`, `Dequeue()`, `Front()`. |\n> | **Key Applications** | Function call/recursion stack, `DFS`, postfix evaluation. | CPU/printer scheduling, `BFS`, I/O buffering. |\n\n### b) Main Properties of a B-Tree of Order `m` (3 Marks)\n\nA **B-Tree of order `m`** (Knuth convention) is a height-balanced multiway search tree optimized for disk/database blocks, satisfying **five invariants**:\n\n- **1. Maximum Children & Keys:** Every node has **at most `m` children** and **at most `m - 1` sorted keys**.\n- **2. Minimum Occupancy (Half-Full Rule):** Every internal node (except root) has **at least `ceil(m / 2)` children** (`ceil(m / 2) - 1` keys).\n- **3. Root Exception:** If the tree is non-empty, the root has at least **`2` children** (`1` key) unless the root itself is a leaf.\n- **4. Key-Child Separation:** A node with `k` keys (`k_1 < k_2 < ... < k_k`) has exactly **`k + 1` child pointers** partitioning key ranges between adjacent keys.\n- **5. Uniform Leaf Depth:** **All leaf nodes appear at the exact same level**, guaranteeing logarithmic `O(log_m n)` height via bottom-up node splitting.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1181,7 +1181,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** In infix notation an operator appears between its operands, e.g. `A + B`. Queue deletion: if `front == -1`, report underflow; else return `queue[front]`, increment `front` (or wrap modulo size), and reset both pointers when empty.\n\n**b)** DFS explores as far as possible along a branch before backtracking, typically using a stack/recursion. BFS explores all neighbours level by level, typically using a queue.",
+      "answer": "> [!MARKS] 5 + 3 = 8 Marks\n> **a) Infix Notation + Queue Deletion Algorithm (`1m + 4m = 5m`)** | **b) DFS vs BFS (`3m`):** Side-by-side graph traversal comparison.\n\n### a) Infix Notation & Queue Deletion (`DEQUEUE`) Algorithm (5 Marks)\n\n- **Infix Notation (`1m`):** An arithmetic expression format in which every binary **operator is written in between its two operands**, e.g., `(A + B) * C`. Unlike prefix (`* + A B C`) and postfix (`A B + C *`), infix requires **operator precedence, associativity rules, and parentheses** to resolve ambiguity.\n- **Algorithm `QUEUE_DELETE(Q, FRONT, REAR)` (`0`-based array `Q[0..MAX-1]`, empty sentinel `FRONT == -1`) (`4m`):**\n  1. **Check Underflow:**\n     `if (FRONT == -1)` then print `\"Queue Underflow (Queue is Empty)\"` and `Return`.\n  2. **Extract Front Element:**\n     `ITEM = Q[FRONT]`.\n  3. **Update `FRONT` / `REAR` Pointers:**\n     - `if (FRONT == REAR)` *(last remaining element was just removed)*: reset `FRONT = -1` and `REAR = -1`.\n     - `else` *(linear queue)*: `FRONT = FRONT + 1` *(or `FRONT = (FRONT + 1) % MAX` in a circular queue)*.\n  4. `Return ITEM` *(executes in `O(1)` time)*.\n\n### b) Depth-First Search (DFS) vs Breadth-First Search (BFS) (3 Marks)\n\n> [!COMPARE] Depth-First Search (DFS) vs Breadth-First Search (BFS)\n> | Parameter | Depth-First Search (DFS) | Breadth-First Search (BFS) |\n> |---|---|---|\n> | **Exploration Strategy** | Plunges **as deep as possible** along a branch before backtracking. | Explores **level by level** (all distance-`k` vertices before `k + 1`). |\n> | **Auxiliary Data Structure** | **LIFO Stack** (or system call stack via recursion). | **FIFO Queue**. |\n> | **Shortest Path (Unweighted)** | Does **not** guarantee shortest path by edge count. | **Guarantees shortest path** (minimum edges) from source. |\n> | **Time Complexity** | `O(V + E)` (adjacency list) / `O(V²)` (matrix). | `O(V + E)` (adjacency list) / `O(V²)` (matrix). |\n> | **Typical Applications** | Cycle detection, topological sort, strongly connected components, mazes. | Unweighted shortest path, bipartite testing, peer-to-peer broadcast. |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

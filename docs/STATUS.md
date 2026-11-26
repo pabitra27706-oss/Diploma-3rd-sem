@@ -1,5 +1,90 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
+## Phase 18 — PYQ answer expansion & rich structured model answers — ✅* engineering complete, awaiting owner Termux acceptance (all 6 parts `18.1`–`18.6` · `924/924` Q, 2026-11-26)
+
+Branch `arena/84c55b1a-diploma-3rd-sem` (cut from `main` at `06656a9`; `ba437d4`
+and `ae9850c` pushed to `origin` at owner direction; Parts `18.2`, `18.4`, and
+`18.3` committed locally/unpushed; no PR, merge, or deploy). Owner approved
+**Mode B** starting with CSO (`"Mode b approved / Start with cso"`), verified CSO
+on Termux (`"Test pass continue with algorithm"`), directed `"Ok complete c"`,
+`"Ok continue to ds complete"`, and `"Continue with python"`. Full evidence:
+[`phases/18-pyq-answer-expansion/record.md`](phases/18-pyq-answer-expansion/record.md).
+
+- **Part 18.1 (Cross-Surface Rich-Content Engine & Read-Only Linter) — ✅ complete (Termux-passed at `ba437d4`):**
+  `assets/js/rich-content.js` (`StudyRichContent`, bundled into `shell.bundle.js`)
+  brings pipe-safe Markdown tables, `* `/`isCodeLine()` bullet fix,
+  `[!COMPARE]` Comparison Boxes (`.compare-box`), and
+  `[!MARKS]`/`[!FORMULA]`/`[!KEY]`/`[!TRAP]` Callout Boxes (`.rich-callout`) to
+  all 5 surfaces (`pyq/answers.html` + Print/PDF, `practice/session.html`,
+  `quiz/{review,result}.html`, and `cards.html` with collapsible long-card back),
+  token-pure in `assets/css/hub.css` (`check_tokens.py --strict` = `0` findings).
+  Added read-only `scripts/audit_pyq_answers.py` + Mode B non-`answer` field
+  immutability lock in `tests/test_data_pipeline.py`.
+- **Part 18.5 (`CST207` CSO — 6 papers / 195 questions) — ✅ complete (Termux-passed at `ba437d4`):**
+  All `195` CSO answers hand-authored directly via `edit_file` (`0` scripts),
+  expanding `CST207` prose **`9,587 → 29,338` words (`3.06×`)**, overall median
+  **`33w → 91w`**, eliminating all `41` `P002` `**Model answer:**` stubs, fixing
+  `P003-Q28` (`3+5` mark split) and `P002-Q60` (`40H+40H=80H → OF=1`), and adding
+  `18` `[!COMPARE]` boxes, `51` `[!MARKS]` headers, and `33` `ascii` diagrams
+  (`audit_pyq_answers.py --subject CST207 --strict` = `0` errors).
+- **Part 18.6 (`CST209` Algorithms — 5 papers / 167 questions) — ✅ complete (pushed at `ae9850c`):**
+  All `167` Algorithms answers hand-authored directly via `edit_file` (`0`
+  scripts), expanding `CST209` prose **`7,541 → 21,220` words (`2.81×`)**,
+  overall median **`30w → 63w`**, `>= 5m` medians `P003` `48→343w`, `P004`
+  `48→312w`, `P005` `42→383w`, `P006` `63→344w`, eliminating all `41` `P001`
+  `**Model answer:**` stubs, fixing `P006-Q18` inline `**a)** ```text` defect and
+  `P004-Q14` BST leaf-count input hallucination (`10, 1, 3, 5, 15, 12, 16` →
+  leaves `{5, 12, 16}` = `3`), preserving `unit: 5` on `P001-Q56` and `P003-Q34`,
+  and adding `15` `[!COMPARE]` boxes, `44` `[!MARKS]` headers, and `14` `ascii`
+  diagrams. `audit_pyq_answers.py --subject CST209 --strict` = **`0` structural,
+  `0` depth errors**.
+- **Part 18.2 (`CST201` C — 6 papers / 198 questions) — ✅ complete (local, unpushed):**
+  All `198` C answers hand-authored directly via `edit_file` (`0` scripts),
+  expanding `CST201` prose **`8,540 → 26,696` words (`3.13×`)**, `>= 5m` medians
+  `P001` `70→399w`, `P002` `191→333w`, `P003` `43→300w`, `P004` `63→309w`, `P005`
+  `63→327w`, `P006` `76→324w`, eliminating all `41` `P002` `**Model answer:**`
+  stubs, closing all `7` unclosed fences in `P006`, fixing all `4` mark-split
+  contradictions (`P003-Q32,Q33`, `P005-Q17,Q22`) plus `P002-Q60` `strcat`
+  string-literal UB & `" CST201"` code leak, and adding `21` `[!COMPARE]` boxes,
+  `53` `[!MARKS]` headers, and **`57/57` `gcc -std=c99 -Wall -Wextra -Werror`
+  standalone C programs** (`audit_pyq_answers.py --subject CST201 --strict` =
+  **`0` structural, `0` depth errors**).
+- **Part 18.4 (`CST205` DS — 6 papers / 194 questions) — ✅ complete (local, unpushed):**
+  All `194` DS answers hand-authored directly via `edit_file` (`0` scripts),
+  expanding `CST205` prose **`9,634 → 26,101` words (`2.71×`)**, overall median
+  **`32w → 59w`**, `>= 5m` medians `P001` `59→457w`, `P002` `219→262w`, `P003`
+  `74→334w`, `P004` `59→383w`, `P005` `64→376w`, `P006` `64→376w`, eliminating
+  all `42` `P002` `**Model answer:**` stubs, fixing all `3` mark-split
+  contradictions (`P003-Q31`, `P005-Q18,Q21`) + `P004-Q22` `3+1+1+1+1+1` header,
+  preserving `unit: 5` on `P001-Q3,Q21,Q22,Q25`, and adding `22` `[!COMPARE]`
+  boxes, `52` `[!MARKS]` headers, `38` `ascii` diagrams, and **`5/5`
+  `gcc -std=c99 -Wall -Wextra -Werror` standalone C programs**
+  (`audit_pyq_answers.py --subject CST205 --strict` = **`0` structural, `0`
+  depth errors**).
+- **Part 18.3 (`CST203` Python — 5 papers / 170 questions) — ✅ complete (local, unpushed):**
+  All `170` Python answers hand-authored directly via `edit_file` (`0` scripts),
+  expanding `CST203` prose **`9,461 → 19,307` words (`2.04×`)**, overall median
+  **`32w → 62w`**, `>= 5m` medians `P001` `83→238w`, `P003` `147→295w`, `P004`
+  `164→294w`, `P005` `216→312w`, `P006` `130→316w`, eliminating all `42` `P001`
+  `**Model answer:**` stubs, closing all `18` unclosed fences (`P003` `6`, `P004`
+  `3`, `P005` `3`, `P006` `6`), fixing both broken bitwise-`|` pipe-table rows
+  (`P003-Q31`, `P006-Q20`), preserving exact alias `CST203-P001-Q43 ==
+  CST203-P001-Q44` (`924 raw / 923 unique / 1 alias`), and adding `28`
+  `[!COMPARE]` boxes, `43` `[!MARKS]` headers, and **`67/67` `ast.parse` +
+  `64/64` standalone `/tmp`-executed Python snippets**
+  (`audit_pyq_answers.py --subject CST203 --strict` = **`0` structural, `0`
+  depth errors**).
+- **Full-Corpus Gates (`924/924` Q across `28` papers):**
+  `audit_pyq_answers.py --strict` = **`0` structural, `0` depth/format findings**
+  (`44,763 → 122,662` words = `2.74×`, `108` `[!COMPARE]` boxes across `99` Q,
+  `243` `[!MARKS]` headers); `207/207` Python tests `OK`; `16/16` deterministic
+  Node `.cjs` suites `PASS`; 14-step canonical rebuild byte-identical on Pass 2;
+  all site, token, accessibility, page-weight, and integrity checks exit `0`. No
+  browser/Playwright or physical-device preview of Parts `18.2`–`18.4` in this
+  sandbox.
+- **Next:** Await owner instruction before pushing local commits, opening a PR,
+  merging, or deploying.
+
 ## Phase 17 — Topic-map cross-check — ✅* owner-passed (Termux test, 2026-11-19); branch pushed; merge NOT authorised
 
 Branch `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (PR #31 merge), head

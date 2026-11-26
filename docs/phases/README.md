@@ -32,11 +32,12 @@ docs/phases/
   10-device-acceptance/   final cross-device matrix after implementation 1–9
   11-suggestions/         subject-wise past questions and quick revision guides
   12-cst201-c-content/          Computer Programming in C (unit-1..5/)          ✅
-  13-cst203-python-content/     Scripting Languages — Python (unit-1..5/)       📋
-  14-cst205-ds-content/         Data Structures (unit-1..4/)                    📋
-  15-cst207-cso-content/        Computer System Organization (unit-1..5/)       📋
-  16-cst209-algorithms-content/ Algorithms (unit-1..4/ + unit-5-supplementary/) 📋
-  17-topic-map-crosscheck/      topic-map audit across all five subjects       📋
+  13-cst203-python-content/     Scripting Languages — Python (unit-1..5/)       ✅
+  14-cst205-ds-content/         Data Structures (unit-1..4/)                    ✅*
+  15-cst207-cso-content/        Computer System Organization (unit-1..5/)       ✅*
+  16-cst209-algorithms-content/ Algorithms (unit-1..4/ + unit-5-supplementary/) ✅*
+  17-topic-map-crosscheck/      topic-map audit across all five subjects       ✅*
+  18-pyq-answer-expansion/      924 PYQ model-answer expansion & rich boxes     ✅* (all 6 parts 18.1–18.6 complete · 924/924 Q · awaiting owner Termux pass)
 ```
 
 ## Folder convention

@@ -152,7 +152,12 @@
       const plan = lastPlan || { dueCount: 0, newRemaining: 0 };
       $('#card-progress').textContent = `${index + 1} / ${queue.length}`;
       $('#card-front').textContent = card.front;
-      $('#card-back').textContent = card.back;
+      const backHost = $('#card-back');
+      if (globalThis.StudyRichContent && typeof globalThis.StudyRichContent.renderDom === 'function') {
+        globalThis.StudyRichContent.renderDom(document, backHost, card.back, { compactCard: true });
+      } else {
+        backHost.textContent = card.back;
+      }
       const verification = notes[card.verification] || notes['model-answer-not-certified'];
       $('#card-citation').textContent = `${verification} · Source: ${card.citationLabel}`
         + (card.marks ? ` · ${card.marks} mark${card.marks === 1 ? '' : 's'}` : '');

@@ -116,7 +116,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) top.**\n\nStack insertion (`push`) and deletion (`pop`) both act on the top element, which is what makes the structure LIFO. The bottom is reached only after everything above it is removed.",
+      "answer": "**Correct answer: C) `top`**\n\n- **Single-End LIFO Access:** In a stack, both insertion (**`push`**) and deletion (**`pop`**) take place exclusively at one designated open end called **`top`** (`STACK[++top] = item`).\n- **Why Others Fail:** `front` (`A`) and `rear` (`B`) are queue endpoints, while `bottom` (`D`) is the sealed base of the stack.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -165,7 +165,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) 4, 3, 2, 1.**\n\nA stack removes the most recently pushed element first, so 4 leaves before 3, then 2, then 1. This reversal of the input order is the LIFO property.",
+      "answer": "**Correct answer: C) `4, 3, 2, 1`**\n\n- **Push Sequence (`bottom -> top`):** Pushing `1, 2, 3, 4` in order builds stack state `[1, 2, 3, 4]` with `4` sitting at `top`.\n- **LIFO Pop Reversal:** Because a stack obeys **Last-In-First-Out (LIFO)** order, successive `pop()` calls remove `4` first, then `3`, then `2`, and finally `1` (`4, 3, 2, 1`).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -213,7 +213,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Binary search.**\n\nLinked lists lack O(1) random access to the middle element; linear traversal and node insertion are natural.",
+      "answer": "**Correct answer: C) Binary search**\n\n- **No `O(1)` Random Indexing:** **Binary Search** repeatedly jumps directly to `mid = (low + high) / 2` in `O(1)` time, which requires contiguous array indexing; walking `n / 2` `next` pointers in a linked list degrades binary search to **`O(n)`**.\n- **Why Others Suit Linked Lists:** Insertion sort (`A`), linear search (`B`), and sparse polynomial addition (`D`) rely only on sequential scans and `O(1)` pointer relinking.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -261,7 +261,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) p->prev->next = NULL.**\n\nThe predecessor of the tail must become the new tail with a NULL next link; then `p` can be freed.",
+      "answer": "**Correct answer: C) `p->prev->next = NULL`**\n\n- **Unlinking the Tail Node (`p`):** In a multi-node doubly linked list, `p->prev` points to the second-last node (which becomes the new tail); setting **`p->prev->next = NULL`** detaches `p` from the list before calling `free(p)`.\n- **Why Others Fail:** `p->next` (`A`) is already `NULL`, and `p = NULL` (`B`) only clears the local pointer variable, leaving a dangling link in `p->prev->next`.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -309,7 +309,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) four pointer exchanges.**\n\nSet the new node’s `prev` and `next`, then update the predecessor’s `next` and successor’s `prev`.",
+      "answer": "**Correct answer: A) four pointer exchanges**\n\n- **Four Link Updates (`NEW` inserted between adjacent nodes `A` and `B`):**\n  1. `NEW->prev = A;` *(backward pointer to predecessor `A`)*\n  2. `NEW->next = B;` *(forward pointer to successor `B`)*\n  3. `A->next = NEW;` *(predecessor `A` now points forward to `NEW`)*\n  4. `B->prev = NEW;` *(successor `B` now points backward to `NEW`)*",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -357,7 +357,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) DCBA.**\n\nA queue is FIFO, so the removal order is the insertion order.",
+      "answer": "**Correct answer: D) `DCBA`**\n\n- **FIFO Queue Preservation:** Enqueuing `'D'`, `'C'`, `'B'`, `'A'` in order places `'D'` at `front` and `'A'` at `rear`: `[front: D, C, B, A :rear]`.\n- **Removal Sequence:** Because a queue obeys **First-In-First-Out (FIFO)** order, dequeuing one character at a time removes them in the exact arrival order **`D`, `C`, `B`, `A`** (`DCBA`; note `ABCD` would be the LIFO stack result).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -405,7 +405,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Postorder traversal.**\n\nPostorder visits the left subtree, then the right subtree, and only then the root, so the root comes last. Preorder visits the root first and inorder places it in between.",
+      "answer": "**Correct answer: C) Postorder traversal**\n\n- **Post-Order Order (`Left -> Right -> Root`):** Postorder recursively traverses the entire **left subtree**, then the entire **right subtree**, and visits the **root node last** (essential for bottom-up tree deletion and postfix expression generation).\n- **Contrast:** **Preorder** (`A`) visits `Root` first (`Root -> Left -> Right`), and **Inorder** (`B`) visits `Root` in the middle (`Left -> Root -> Right`).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -453,7 +453,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) 3.**\n\nPostorder’s last node `A` is the root; inorder splits at `A`, giving left inorder `DBE` (3 nodes) and right `FC`.",
+      "answer": "**Correct answer: D) `3`**\n\n- **Step 1 — Identify Root from Post-Order:** In `Post-order = D E B F C A`, the **last** node **`A`** is the root of the entire binary tree.\n- **Step 2 — Split In-Order at `A`:** Partitioning `In-order = D B E | A | F C` around root `A` yields left-subtree in-order **`D B E` (`3` nodes)** and right-subtree in-order `F C` (`2` nodes).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -503,7 +503,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) both a and b.**\n\nA B-tree is a self-balancing ordered search tree.",
+      "answer": "**Correct answer: D) both a and b**\n\n- **Always Height-Balanced (`A`):** Every leaf node in a B-tree sits at the **exact same depth**, maintained automatically via bottom-up node splitting and sibling merging/redistribution.\n- **Ordered Multiway Search Tree (`B`):** Keys inside every node are stored in sorted ascending order and partition child subtrees into ordered key intervals.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -551,7 +551,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) both (a) and (b).**\n\nA binary tree is ordered and no node has more than two children.",
+      "answer": "**Correct answer: C) For which both (a) and (b) above are correct**\n\n- **Maximum Degree `<= 2` (`B`):** Every node in a binary tree has `0`, `1`, or `2` children (never more than `2`).\n- **Positionally Ordered (`A`):** Left child and right child are **distinct ordered positions** even when a node has only `1` child (unlike an unordered general tree); `D` defines a *strict/full* binary tree rather than a general binary tree.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -599,7 +599,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) 1.**\n\nOnly the top element is directly accessible, so a single pop removes exactly one item. Further removals need further pop operations.",
+      "answer": "**Correct answer: C) `1`**\n\n- **Atomic Single-Element `POP`:** Because only the single topmost element pointed to by `top` is accessible in a stack ADT, one `pop()` operation removes **at most `1` element** at any instant (`ITEM = STACK[top--]`).\n- **Multiple Removals:** Removing `k` items requires executing `k` sequential `pop()` calls (`0` when underflowing an empty stack).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -647,7 +647,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) 3.**\n\nWith 1-based array indexing, parent = `floor(6/2) = 3`. With 0-based indexing it would be 2; the printed options indicate the 1-based convention.",
+      "answer": "**Correct answer: B) `3`**\n\n- **1-Based Array Indexing Formula (Root at Index `1`):** For any child at index `i > 1`, `parent(i) = floor(i / 2)` (with `left = 2*p` and `right = 2*p + 1`), giving `floor(6 / 2) =` **`3`** (child `6` is the left child of node `3`).\n- **0-Based Indexing Note:** Under 0-based indexing (`root = 0`), `parent(i) = floor((i - 1) / 2) = floor(5 / 2) = 2`; textbook WBSCTE papers assume 1-based indexing unless stated otherwise.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -697,7 +697,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) 3.**\n\nThe three standard depth-first traversals are preorder, inorder and postorder, differing in when the root is visited. Level-order is a breadth-first variant added separately.",
+      "answer": "**Correct answer: D) `3`**\n\n- **Three Standard Depth-First Order Traversals:** Keeping left-before-right order fixed (`L` before `R`), there are **`3` canonical recursive order traversals** based on when the root `N` is visited:\n  1. **Pre-order:** `N -> L -> R`\n  2. **In-order:** `L -> N -> R`\n  3. **Post-order:** `L -> R -> N` *(Level-order is categorized separately as breadth-first traversal)*.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -745,7 +745,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) 2.**\n\nEach binary-tree node has at most left and right children.",
+      "answer": "**Correct answer: C) `2`**\n\n- **Binary Degree Bound:** By definition, every node in a **binary tree** has out-degree at most **`2`**—consisting of at most one **left child** and at most one **right child**.\n- **Valid Child Counts:** Any individual binary-tree node may have `0` children (leaf), `1` child, or `2` children, never `3` (`D`).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -793,7 +793,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) L = I + 1.**\n\nIn a full binary tree every internal node has exactly two children, so leaves are one more than internal nodes.",
+      "answer": "**Correct answer: B) `L = I + 1`**\n\n- **Handshaking / Edge Proof:** In a **full (strict) binary tree**, every internal node (`I`) has **exactly `2` children** and every leaf (`L`) has `0` children, so total nodes `N = I + L` and total child links (edges) `E = 2 * I`.\n- **Tree Identity (`E = N - 1`):** Equating `2 * I = (I + L) - 1` simplifies immediately to **`L = I + 1`**.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -845,7 +845,7 @@
         }
       ],
       "markSplit": "2+2+2+2",
-      "answer": "**a)** A data structure organizes and stores data so operations can be performed efficiently.\n\n**b)** Primitive: basic types such as `int`, `char`, `float`. Non-primitive: arrays, lists, stacks, queues, trees, graphs.\n\n**c)** Linear elements form a sequence (array, list, stack, queue); non-linear elements have hierarchical or many-to-many relationships (tree, graph).\n\n**d)** With 0-based indices and 3 columns: `3500 + 4*(5*3 + 2) = 3568`. With 1-based indices it would be `3500 + 4*((5-1)*3 + (2-1)) = 3552`.",
+      "answer": "> [!MARKS] 2 + 2 + 2 + 2 = 8 Marks\n> **a) Data Structure (`2m`)** | **b) Primitive vs Non-Primitive (`2m`)** | **c) Linear vs Non-Linear (`2m`)** | **d) Row-Major Address of `A[5, 2]` (`2m`)**.\n\n### a) Definition of Data Structure (2 Marks)\n\n- **Definition:** A **data structure** is a systematic logical and mathematical organization of related data elements in memory together with a well-defined set of operations (`traversal`, `search`, `insertion`, `deletion`, `sorting`) that process those elements efficiently in time and space.\n\n### b) Primitive & Non-Primitive Data Structures (2 Marks)\n\n- **Primitive Data Structures:** Machine-supported atomic scalar data types directly operated upon by CPU instructions. *Examples:* `int`, `char`, `float`, `double`, pointers.\n- **Non-Primitive Data Structures:** Derived/composite structures built from primitive types to store collections of elements. *Examples:* **Arrays**, **Linked Lists**, **Stacks**, **Queues**, **Trees**, and **Graphs**.\n\n### c) Linear vs Non-Linear Data Structures (2 Marks)\n\n> [!COMPARE] Linear vs Non-Linear Data Structure\n> | Parameter | Linear Data Structure | Non-Linear Data Structure |\n> |---|---|---|\n> | **Arrangement** | Sequential `1 : 1` chain of elements. | Hierarchical (`1 : many`) or networked (`many : many`). |\n> | **Single-Pass Traversal** | All items can be visited in one linear scan. | Requires branching/backtracking (`BFS`, `DFS`, tree orders). |\n> | **Examples** | Array, Stack, Queue, Linked List. | Binary Tree, AVL/B-Tree, Graph. |\n\n### d) Row-Major Address Calculation for `8 × 3` Matrix (`B = 3500, w = 4`) (2 Marks)\n\n> [!FORMULA] Row-Major Address Formula (`M × N` Matrix, `N = 3` Columns)\n> `LOC(A[i, j]) = B + w * [ (i - L_r) * N + (j - L_c) ]`, where `B = 3500`, `w = 4` bytes, `N = 3`.\n\n- **Case 1 — `0`-Based Indexing (`L_r = 0, L_c = 0`, C Convention):**\n  `LOC(A[5, 2]) = 3500 + 4 * (5 * 3 + 2) = 3500 + 4 * 17 = 3500 + 68 =` **`3568`**.\n- **Case 2 — `1`-Based Indexing (`L_r = 1, L_c = 1`, Textbook Convention):**\n  `LOC(A[5, 2]) = 3500 + 4 * ((5 - 1) * 3 + (2 - 1)) = 3500 + 4 * 13 = 3500 + 52 =` **`3552`**.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -893,7 +893,7 @@
         }
       ],
       "markSplit": "2+2+4",
-      "answer": "**a)** An ADT specifies operations and behavior without exposing representation; a stack with `push`, `pop`, `top` is an example.\n\n**b)** Last in, first out: the most recently inserted item is removed first. `top` points to the accessible end.\n\n**c)**\n```text\nPUSH(S,x): if full overflow else S[++top]=x\nPOP(S):    if empty underflow else return S[top--]\n```",
+      "answer": "> [!MARKS] 2 + 2 + 4 = 8 Marks\n> **a) Abstract Data Type (`2m`):** Definition + Stack ADT example | **b) LIFO & `TOP` (`1m + 1m = 2m`)** | **c) `PUSH` & `POP` Algorithms (`2m + 2m = 4m`)**.\n\n### a) Abstract Data Type (ADT) with Example (2 Marks)\n\n- **Definition:** An **Abstract Data Type (ADT)** is a mathematical specification of a data type defined purely by **what values it holds** and **what operations are permitted** (with preconditions/postconditions), **hiding** how it is represented internally in memory.\n- **Example — `Stack` ADT:** Specifies operations `push(x)`, `pop()`, `peek()`, and `isEmpty()`, while hiding whether the underlying storage uses a contiguous C array or a dynamic singly linked list.\n\n### b) Why Stack Is Called LIFO & Meaning of `TOP` (2 Marks)\n\n- **Why Called LIFO (`1m`):** Because insertion (`push`) and deletion (`pop`) both occur at the same single end, the **last element inserted** into the stack is always the **first element removed** (**Last-In-First-Out**), just like a pile of plates.\n- **Top of the Stack (`TOP`) (`1m`):** `TOP` is an integer index (or node pointer) tracking the **most recently inserted, currently accessible element** (`TOP == -1` indicates an empty `0`-based array stack `S[0 .. MAX - 1]`).\n\n### c) `PUSH` and `POP` Algorithms for a Stack (4 Marks)\n\n```text\nAlgorithm PUSH(S, TOP, MAX, ITEM)\n1. If TOP == MAX - 1 then\n       Write \"STACK OVERFLOW\"\n       Return\n2. TOP = TOP + 1\n3. S[TOP] = ITEM\n4. Return\n```\n\n```text\nAlgorithm POP(S, TOP)\n1. If TOP == -1 then\n       Write \"STACK UNDERFLOW\"\n       Return\n2. ITEM = S[TOP]\n3. TOP = TOP - 1\n4. Return ITEM\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -937,7 +937,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 2 marks + b) 6 marks (evaluation).**\n\n**a) Postfix expression**\n\nA **postfix expression** (also called Reverse Polish Notation, RPN) is a mathematical notation in which every **operator follows its operands**. Unlike infix notation, postfix does not need parentheses to define precedence — the order of operations is unambiguous.\n\n- Infix: `A + B` → Postfix: `A B +`\n- Infix: `(A + B) * C` → Postfix: `A B + C *`\n- Infix: `A * B + C` → Postfix: `A B * C +`\n\nAdvantage: easy to evaluate using a stack; no need for operator precedence rules or parentheses.\n\n**b) Evaluate postfix `5, 6, 2, +, 8, +, 4, /, −` using a stack**\n\nTokens: `5  6  2  +  8  +  4  /  −`\n\n| Token | Action | Stack (bottom → top) |\n|---|---|---|\n| 5 | push | [5] |\n| 6 | push | [5, 6] |\n| 2 | push | [5, 6, 2] |\n| + | pop 2, pop 6 → 6+2 = 8; push 8 | [5, 8] |\n| 8 | push | [5, 8, 8] |\n| + | pop 8, pop 8 → 8+8 = 16; push 16 | [5, 16] |\n| 4 | push | [5, 16, 4] |\n| / | pop 4, pop 16 → 16/4 = 4; push 4 | [5, 4] |\n| − | pop 4, pop 5 → 5−4 = 1; push 1 | [1] |\n\n**Final result: 1**\n\nExplanation: The expression corresponds to infix `5 − ((6 + 2) + 8) / 4` = `5 − (16 / 4)` = `5 − 4` = **1**.\nFor `-` and `/`, the first popped value is the second operand and the second popped value is the first operand (e.g. `5 − 4`, `16 / 4`).\n",
+      "answer": "> [!MARKS] 3 + 5 = 8 Marks\n> **a) Postfix Expression (`3m`):** Reverse Polish Notation definition, properties, and examples | **b) Stack Evaluation of `5, 6, 2, +, 8, +, 4, /, −` (`5m`):** Algorithm rules + 9-step stack trace (`= 1`).\n\n### a) Postfix Expression (Reverse Polish Notation) (3 Marks)\n\n- **Definition:** A **postfix expression** (Reverse Polish Notation, **RPN**) is an algebraic notation in which every binary **operator is placed immediately after its two operands** (`op1 op2 operator`).\n- **Key Properties & Examples:**\n  - **Parenthesis-Free & Unambiguous:** Evaluation order is fixed entirely by token positions—no operator-precedence hierarchy or parentheses are needed at runtime.\n  - **Examples:** Infix `A + B` -> Postfix **`A B +`**; Infix `(A + B) * C` -> Postfix **`A B + C *`**; Infix `A + B * C` -> Postfix **`A B C * +`**.\n\n### b) Stack Evaluation of `5, 6, 2, +, 8, +, 4, /, −` (5 Marks)\n\n- **Stack Evaluation Rules (Left-to-Right Scan):**\n  1. If the scanned token is an **operand**, `PUSH` it onto the stack.\n  2. If the token is a binary **operator `op`**, `POP` the top element into **`B` (second/right operand)**, `POP` the next element into **`A` (first/left operand)**, compute `A op B`, and `PUSH` the result back.\n  3. When all tokens are consumed, the single remaining stack value is the final answer.\n\n| Step | Scanned Token | Stack Action (`A = 2nd popped, B = 1st popped`) | Stack (`bottom -> top`) |\n|:-:|---|---|---|\n| 1 | `5` | Operand -> `PUSH(5)` | `[ 5 ]` |\n| 2 | `6` | Operand -> `PUSH(6)` | `[ 5, 6 ]` |\n| 3 | `2` | Operand -> `PUSH(2)` | `[ 5, 6, 2 ]` |\n| 4 | `+` | `B = 2, A = 6` -> `6 + 2 = 8` -> `PUSH(8)` | `[ 5, 8 ]` |\n| 5 | `8` | Operand -> `PUSH(8)` | `[ 5, 8, 8 ]` |\n| 6 | `+` | `B = 8, A = 8` -> `8 + 8 = 16` -> `PUSH(16)` | `[ 5, 16 ]` |\n| 7 | `4` | Operand -> `PUSH(4)` | `[ 5, 16, 4 ]` |\n| 8 | `/` | `B = 4, A = 16` -> `16 / 4 = 4` -> `PUSH(4)` | `[ 5, 4 ]` |\n| 9 | `−` | `B = 4, A = 5` -> `5 - 4 = 1` -> `PUSH(1)` | **`[ 1 ]`** |\n\n> [!TRAP] Operand Order for `-` and `/`\n> Always compute `second_popped - first_popped` (`5 - 4 = 1`, not `4 - 5 = -1`) and `16 / 4 = 4`.\n\n- **Final Answer:** **`1`** (matches equivalent infix `5 - ((6 + 2) + 8) / 4 = 5 - 16 / 4 = 5 - 4 = 1`).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -979,7 +979,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Recursion uses self-calls and the call stack; iteration uses loops. Recursion suits tree/divide-and-conquer problems; iteration generally uses less stack.\n\n**b)**\n```c\nvoid hanoi(int n, char s, char d, char a) {\n    if (n == 1) { printf(\"%c -> %c\\n\", s, d); return; }\n    hanoi(n-1, s, a, d);\n    printf(\"%c -> %c\\n\", s, d);\n    hanoi(n-1, a, d, s);\n}\n```",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks\n> **a) Recursion vs Iteration (`4m`):** Side-by-side comparison across 6 parameters | **b) Recursive Tower of Hanoi (`4m`):** Complete C program + `n = 3` trace (`7` moves).\n\n### a) Recursion vs Iteration (4 Marks)\n\n> [!COMPARE] Recursion vs Iteration\n> | Parameter | Recursion | Iteration |\n> |---|---|---|\n> | **Mechanism** | A function repeatedly **calls itself** on smaller subproblems. | A loop construct (`for`, `while`, `do-while`) repeats a block. |\n> | **Termination** | Stops when an explicit **base case** is reached. | Stops when the **loop continuation condition** becomes false (`0`). |\n> | **Memory Usage** | **`O(depth)` stack space**—pushes one activation frame per call. | **`O(1)` auxiliary stack space**—reuses fixed local variables. |\n> | **Execution Speed** | Slightly slower due to function-call/return frame overhead. | Faster—executes lightweight CPU branch instructions. |\n> | **Failure Mode** | Missing base case causes runtime **Stack Overflow** crash. | Buggy update causes an **infinite loop** (CPU hang, fixed memory). |\n> | **Best Suited For** | Tree/graph traversals, Quick/Merge Sort, Tower of Hanoi. | Linear array scans, counting, iterative DP tables. |\n\n### b) Recursive Function & Program for Tower of Hanoi (4 Marks)\n\n```c\n#include <stdio.h>\n\nvoid towerOfHanoi(int n, char src, char aux, char dest) {\n    if (n == 1) {\n        printf(\"Move disk 1 from %c -> %c\\n\", src, dest);\n        return; /* base case */\n    }\n    towerOfHanoi(n - 1, src, dest, aux);               /* Step 1: n-1 to aux */\n    printf(\"Move disk %d from %c -> %c\\n\", n, src, dest); /* Step 2: nth to dest */\n    towerOfHanoi(n - 1, aux, src, dest);               /* Step 3: n-1 to dest */\n}\n\nint main(void) {\n    int n = 3;\n    towerOfHanoi(n, 'A', 'B', 'C');\n    return 0;\n}\n```\n\n- **Output for `n = 3` (`2³ - 1 = 7` moves):**\n  `D1: A->C`, `D2: A->B`, `D1: C->B`, `D3: A->C`, `D1: B->A`, `D2: B->C`, `D1: A->C` (`T(n) = 2ⁿ - 1` moves, `O(2ⁿ)` time).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1021,7 +1021,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** A linear queue can leave unusable front slots after dequeues; a circular queue wraps rear/front with modulo and reuses them.\n\n**b)**\n```text\nINSERT(Q,x): if rear == MAX-1 overflow\n             else Q[++rear] = x; if front == -1 front = 0\n```",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks\n> **a) Linear Queue vs Circular Queue (`4m`):** Side-by-side comparison across 6 parameters | **b) Linear Queue `INSERT` Algorithm (`4m`):** Step-by-step algorithm + pointer trace & explanation.\n\n### a) Linear Queue vs Circular Queue (4 Marks)\n\n> [!COMPARE] Linear Queue vs Circular Queue\n> | Parameter | Linear Queue | Circular Queue |\n> |---|---|---|\n> | **Logical Topology** | Straight line (`0` to `MAX - 1`); `MAX - 1` has no successor. | Closed ring—index `0` immediately follows `MAX - 1`. |\n> | **Pointer Update** | Linear increment: `REAR = REAR + 1`, `FRONT = FRONT + 1`. | Modulo wrap-around: `REAR = (REAR + 1) % MAX`. |\n> | **Overflow Condition** | `REAR == MAX - 1` (even if `FRONT > 0`). | `(REAR + 1) % MAX == FRONT`. |\n> | **False Overflow** | **Suffers from false overflow**—freed front slots cannot be reused until whole queue empties. | **Eliminates false overflow**—reuses vacated front slots automatically. |\n> | **Space Utilization** | Poor under continuous `enqueue`/`dequeue` traffic. | `100%` utilization of all `MAX` array slots. |\n> | **Typical Use Case** | Simple one-shot batch queues. | OS ring buffers, CPU round-robin queues, network/audio buffers. |\n\n### b) Insert (`ENQUEUE`) Algorithm for a Linear Queue & Explanation (4 Marks)\n\n```text\nAlgorithm LQ_INSERT(Q, FRONT, REAR, MAX, ITEM)\n[Q[0 .. MAX - 1] is a 0-based array; initially FRONT = -1, REAR = -1]\n\n1. [Check Overflow]\n   If REAR == MAX - 1 then\n       Write \"QUEUE OVERFLOW\"\n       Return\n2. [Initialize or Advance Pointers]\n   If FRONT == -1 then          // Queue was completely empty\n       FRONT = 0\n       REAR  = 0\n   Else\n       REAR  = REAR + 1\n3. [Insert Element]\n   Q[REAR] = ITEM\n4. Return\n```\n\n- **Step-by-Step Explanation:**\n  - **Step 1 (Overflow Guard):** Checks whether `REAR` has already reached the last array index `MAX - 1`; if so, no slot exists to the right.\n  - **Step 2 (Empty vs Non-Empty Case):** When inserting the **very first element** (`FRONT == -1`), both `FRONT` and `REAR` must move from `-1` to index `0`. On subsequent insertions, `FRONT` stays fixed while `REAR` increments by `1`.\n  - **Step 3 & Complexity:** Stores `ITEM` at `Q[REAR]` in **`O(1)` constant time** (`O(1)` extra space).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1063,7 +1063,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks (differences) + b) 4 marks (algorithm + explanation).**\n\n**a) Differences between Array and Linked List**\n\n| Array | Linked List |\n|---|---|\n| Elements are stored in **contiguous** memory locations. | Elements (nodes) are stored **non-contiguously**; each node holds data and a pointer to the next node. |\n| Size is **fixed** at declaration (static). | Size is **dynamic** — grows/shrinks at run time. |\n| Access by index in **O(1)** time (random access). | Access is **O(n)** — must traverse from the head (sequential access). |\n| Insertion/deletion is expensive: elements must be shifted (**O(n)**). | Insertion/deletion is cheap once position is known: only pointer changes (**O(1)**). |\n| No extra memory for pointers. | Extra memory required for the `next` pointer in each node. |\n| Memory allocated at compile time (stack/static) or via fixed-size block. | Memory allocated at run time from the heap (one node at a time). |\n| Example: `int a[10];` | Example: `struct node { int data; struct node* next; };` |\n\n**b) Algorithm to add a data item at the beginning of a singly linked list**\n\n```\nAlgorithm Insert-At-Beginning(head, x):\n1. Allocate a new node N.\n2. N->data = x\n3. N->next = head        // new node points to the current first node\n4. head = N              // head now points to the new node (new first node)\n5. Return head\n```\n\n**Explanation:**\n- The new node `N` is created and given the data `x`.\n- `N->next` is set to the current `head`, so the new node links to the rest of the list.\n- `head` is updated to point to `N`, making `N` the first node.\n- The previous first node becomes the second node, and the rest of the list remains unchanged.\n\nExample: list `10 → 20 → 30 → NULL`; insert `5` at beginning → `5 → 10 → 20 → 30 → NULL`.\n\nTime complexity: **O(1)** (no traversal needed). Space: O(1) extra.\n",
+      "answer": "> [!MARKS] 3 + 5 = 8 Marks\n> **a) Array vs Linked List (`3m`):** 6-parameter `[!COMPARE]` table | **b) SLL Beginning Insertion (`5m`):** Pointer diagram, step-by-step algorithm, C implementation, and `O(1)` explanation.\n\n### a) Differences Between Array and Linked List (3 Marks)\n\n> [!COMPARE] Array vs Linked List\n> | Parameter | Array | Linked List |\n> |---|---|---|\n> | **Memory Layout** | **Contiguous** adjacent memory cells. | **Non-contiguous** heap nodes connected via pointers. |\n> | **Size Allocation** | **Fixed (static)** at creation (`int a[50];`). | **Dynamic**—grows and shrinks per node at runtime (`malloc`/`free`). |\n> | **Element Access** | **`O(1)` random access** via `a[i]`. | **`O(n)` sequential access** by following `next` links from `HEAD`. |\n> | **Insertion / Deletion** | **`O(n)`**—requires shifting subsequent elements. | **`O(1)`** pointer relinking once target position is known. |\n> | **Pointer Overhead** | **`0` extra bytes** per element (high cache locality). | Extra `4`/`8` bytes per node for `next` (and `prev`) pointer(s). |\n> | **Binary Search** | Directly supported in **`O(log n)`** on sorted arrays. | Inefficient (`O(n)`) due to lack of `O(1)` midpoint indexing. |\n\n### b) Algorithm to Add a Data Item at the Beginning of a Singly Linked List (5 Marks)\n\n```ascii\n  Before:  HEAD --> [10 | *] --> [20 | *] --> [30 | NULL]\n  Step 3:  NEW = [5 | *] --(NEW->next = HEAD)--> [10 | *] --> ...\n  Step 4:  HEAD = NEW   --> [5 | *] --> [10 | *] --> [20 | *] --> [30 | NULL]\n```\n\n```text\nAlgorithm SLL_INSERT_BEGIN(HEAD, ITEM)\n1. Allocate a new node NEW from heap memory.\n2. If NEW == NULL then\n       Write \"MEMORY OVERFLOW\" and Return HEAD\n3. Set NEW->data = ITEM\n4. Set NEW->next = HEAD      // link NEW ahead of current first node\n5. Set HEAD = NEW            // update HEAD to point to NEW\n6. Return HEAD\n```\n\n- **Explanation & Edge-Case Correctness:**\n  - **Order of Pointer Updates Matters:** `NEW->next = HEAD` **must** execute *before* `HEAD = NEW`; reversing steps `4` and `5` would overwrite `HEAD` first, losing the rest of the list and causing `NEW->next = NEW` (a self-loop).\n  - **Empty-List Case (`HEAD == NULL`):** Step `4` sets `NEW->next = NULL` and Step `5` sets `HEAD = NEW`, creating a valid 1-node list automatically without a separate `if` branch.\n  - **Complexity:** **`O(1)` time** (zero list traversal) and **`O(1)` auxiliary space**.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1105,7 +1105,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** A circular list links the last node’s `next` back to the first/header node; no NULL terminator.\n\n**b)**\n```text\nn = newNode(x); n->next = NULL\nif head == NULL: head = n; return\nfor p = head while p->next != NULL: p = p->next\np->next = n\n```",
+      "answer": "> [!MARKS] 2 + 6 = 8 Marks\n> **a) Circular Linked List Diagram & Explanation (`2m`)** | **b) SLL Tail Insertion Algorithm & Explanation (`6m`):** Pointer diagram, step-by-step algorithm, empty-list handling, and C code.\n\n### a) Circular Linked List Diagram & Explanation (2 Marks)\n\n```ascii\n  HEAD --> [ 10 | * ] --> [ 20 | * ] --> [ 30 | * ] --+\n              ^                                       |\n              +------------- (last->next = HEAD) -----+\n```\n\n- **Explanation:** In a **circular linked list**, the `next` pointer of the **last node points back to the first (`HEAD`) node** rather than storing `NULL`. There is no `NULL` end sentinel; a full traversal starts at `curr = HEAD` and loops via `do { ... curr = curr->next; } while (curr != HEAD);`, enabling continuous cyclic access (e.g., round-robin task scheduling).\n\n### b) Algorithm to Insert a New Element at the End of a Singly Linked List (6 Marks)\n\n```ascii\n  Before:  HEAD --> [10 | *] --> [20 | NULL]        NEW = [30 | NULL]\n                                  ^PTR (PTR->next == NULL)\n  After:   HEAD --> [10 | *] --> [20 | *] --------> [30 | NULL]\n```\n\n```text\nAlgorithm SLL_INSERT_END(HEAD, ITEM)\n1. Allocate a new node NEW from heap.\n2. If NEW == NULL then\n       Write \"MEMORY OVERFLOW\" and Return HEAD\n3. Set NEW->data = ITEM and NEW->next = NULL\n4. [Case 1: Empty List]\n   If HEAD == NULL then\n       HEAD = NEW\n       Return HEAD\n5. [Case 2: Non-Empty List — Traverse to Tail]\n   Set PTR = HEAD\n   While PTR->next != NULL do\n       PTR = PTR->next\n6. [Attach NEW after Tail]\n   Set PTR->next = NEW\n7. Return HEAD\n```\n\n- **Detailed Explanation:**\n  - **Node Initialization (Steps 1–3):** Allocates `NEW`, stores `ITEM`, and sets `NEW->next = NULL` because `NEW` will become the new tail node.\n  - **Empty-List Guard (Step 4):** When `HEAD == NULL`, `HEAD->next` does not exist; setting `HEAD = NEW` directly creates a 1-node list safely.\n  - **Tail Traversal (Steps 5–6):** Notice the loop condition is **`PTR->next != NULL`** (not `PTR != NULL`), stopping with `PTR` pointing directly at the current last node so `PTR->next = NEW` grafts `NEW` onto the end.\n  - **Complexity:** **`O(n)` time** to scan `n` existing nodes (`O(1)` if an explicit `TAIL` pointer is maintained) and **`O(1)` extra space**.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1146,7 +1146,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Let `n1` be degree-1 nodes. Total edges `E = n0+n1+n2−1`; also `E = n1+2*n2`. Equating gives `n0 = n2 + 1`.\n\n**b)** Root A; left subtree root B with left D (right I) and right E (right J); right subtree root C with left F and right G (left K).",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks\n> **a) Algebraic Proof of `n₀ = n₂ + 1` (`4m`)** | **b) Binary Tree Reconstruction (`4m`):** Step-by-step Pre-Order/In-Order split table + ASCII tree.\n\n### a) Proof That `n₀ = n₂ + 1` in Any Non-Empty Binary Tree (4 Marks)\n\n- **Definitions:** Let a non-empty binary tree have `N` total nodes partitioned by out-degree (number of children, `0`, `1`, or `2`):\n  - `n₀` = number of leaf (terminal) nodes (degree `0`)\n  - `n₁` = number of degree-`1` internal nodes\n  - `n₂` = number of degree-`2` internal nodes\n  1. **Node Count Equation:**\n     `N = n₀ + n₁ + n₂`  *(Equation 1)*\n  2. **Edge Count by Incoming Parent Links:** Every node except the single root has **exactly `1` incoming edge** from its parent, so total edges:\n     `E = N - 1 = n₀ + n₁ + n₂ - 1`  *(Equation 2)*\n  3. **Edge Count by Outgoing Child Links:** Degree-`0` nodes contribute `0` outgoing edges, degree-`1` nodes contribute `1` each, and degree-`2` nodes contribute `2` each:\n     `E = 0·n₀ + 1·n₁ + 2·n₂ = n₁ + 2·n₂`  *(Equation 3)*\n  4. **Equate Equations (2) and (3):**\n     `n₀ + n₁ + n₂ - 1 = n₁ + 2·n₂`\n     Subtract `(n₁ + n₂)` from both sides -> **`n₀ - 1 = n₂` => `n₀ = n₂ + 1`** *(Hence Proved)*.\n\n### b) Reconstruct Binary Tree from Pre-Order & In-Order (4 Marks)\n\n- **Given:** Pre-order = `A B D I E J C F G K`, In-order = `D I B E J A F C K G`.\n\n| Step | Pre-Order Segment | Root | In-Order Partition (`Left ¦ Root ¦ Right`) |\n|---|---|:-:|---|\n| **1** | `A B D I E J C F G K` | **`A`** | `D I B E J` ¦ **`A`** ¦ `F C K G` |\n| **2 (Left of `A`)** | `B D I E J` | **`B`** | `D I` ¦ **`B`** ¦ `E J` |\n| **3 (Left of `B`)** | `D I` | **`D`** | *(empty)* ¦ **`D`** ¦ `I` (`I` is right child of `D`) |\n| **4 (Right of `B`)** | `E J` | **`E`** | *(empty)* ¦ **`E`** ¦ `J` (`J` is right child of `E`) |\n| **5 (Right of `A`)** | `C F G K` | **`C`** | `F` ¦ **`C`** ¦ `K G` (`F` is left leaf of `C`) |\n| **6 (Right of `C`)** | `G K` | **`G`** | `K` ¦ **`G`** ¦ *(empty)* (`K` is left child of `G`) |\n\n```ascii\n                [A]\n              /     \\\n            [B]     [C]\n           /   \\   /   \\\n         [D]   [E][F]  [G]\n           \\     \\     /\n           [I]   [J] [K]\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1189,7 +1189,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** A B-tree of order m is a balanced multiway search tree; every node has at most m children and internal nodes (except root) are at least half full.\n\n**b)** Insert in order, splitting any 3-key/full node by promoting its median. The sequence begins `[40,50]`, inserting 60 splits to root 50 with children `[40]` and `[60]`; continue the same promotion rule for 30,70,20,80,10,90,9,99. All leaves remain at the same depth.",
+      "answer": "> [!MARKS] 2 + 6 = 8 Marks\n> **a) B-Tree Definition & Example Diagram (`2m`)** | **b) Step-by-Step Order-`3` B-Tree Construction (`6m`):** All `11` insertions (`50..99`) with node-split promotions and final 3-level diagram.\n\n### a) B-Tree Definition & Example (2 Marks)\n\n- **Definition:** A **B-Tree of order `m`** is a self-balancing multiway search tree in which every node holds at most **`m - 1` sorted keys** and **`m` children**, every non-root internal node has at least **`ceil(m / 2)` children**, and **all leaf nodes lie at the exact same depth**.\n- **Order-`3` (`2-3` Tree) Parameters:** Max children = `3`, Max keys per node = **`2`**, Min keys = **`1`**; any node temporarily reaching **`3` keys overflows** and splits by promoting its **median (`2`nd) key** upward.\n\n### b) Order-`3` B-Tree Construction: `50, 40, 60, 30, 70, 20, 80, 10, 90, 9, 99` (6 Marks)\n\n1. **Insert `50`:** `[50]`\n2. **Insert `40`:** `[40 | 50]`\n3. **Insert `60`:** `[40 | 50 | 60]` *(overflow -> promote `50`)*:\n   `Root [50]` -> children `[40]`, `[60]`.\n4. **Insert `30`:** Goes to left leaf -> `Root [50]` -> children `[30 | 40]`, `[60]`.\n5. **Insert `70`:** Goes to right leaf -> `Root [50]` -> children `[30 | 40]`, `[60 | 70]`.\n6. **Insert `20`:** Left leaf `[20 | 30 | 40]` overflows -> promote `30` into root:\n   `Root [30 | 50]` -> children `[20]`, `[40]`, `[60 | 70]`.\n7. **Insert `80`:** Rightmost leaf `[60 | 70 | 80]` overflows -> promote `70` into root `[30 | 50 | 70]`, which **also overflows** -> promote median `50` to create a **new root** (height = `3`):\n\n```ascii\n            [50]\n           /    \\\n        [30]    [70]\n        /  \\    /  \\\n     [20] [40][60] [80]\n```\n\n8. **Insert `10`:** Leftmost leaf becomes `[10 | 20]` (under `[30]`).\n9. **Insert `90`:** Rightmost leaf becomes `[80 | 90]` (under `[70]`).\n10. **Insert `9`:** Leftmost leaf `[9 | 10 | 20]` overflows -> promote `10` into `[30]` -> internal node becomes `[10 | 30]` with children `[9]`, `[20]`, `[40]`.\n11. **Insert `99`:** Rightmost leaf `[80 | 90 | 99]` overflows -> promote `90` into `[70]` -> internal node becomes `[70 | 90]` with children `[60]`, `[80]`, `[99]`.\n\n- **Final Order-`3` B-Tree Diagram (After All `11` Insertions):**\n\n```ascii\n                      [ 50 ]\n                 /              \\\n          [ 10 | 30 ]        [ 70 | 90 ]\n          /    |    \\        /    |    \\\n        [9]  [20]  [40]    [60] [80]  [99]\n```\n\n- **Verification:** All `11` keys appear in sorted in-order (`9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99`), every node holds `1`–`2` keys (`<= m - 1`), and all `6` leaves sit at depth `2`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1232,7 +1232,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** From the printed tree: A has left B (right D) and right C; C has left E (left G) and right F (left H, right I).\n\nPre-order: `A B D C E G F H I`.\n\nPost-order: `D B G E H I F C A`.\n\n**b)** BFS uses a queue: mark/start vertex, enqueue it; while queue not empty, dequeue `v`, visit unvisited neighbours, mark and enqueue them.",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks\n> **a) Pre-Order & Post-Order Traversals (`2m + 2m = 4m`):** Tree diagram + step-by-step subtree expansions | **b) Graph BFS Algorithm (`4m`):** Queue-based algorithm, explanation, and `O(V + E)` complexity.\n\n### a) Pre-Order and Post-Order Traversal of the Printed Binary Tree (4 Marks)\n\n```ascii\n              [A]\n            /     \\\n          [B]     [C]\n            \\    /   \\\n            [D] [E]  [F]\n                /   /   \\\n              [G]  [H]  [I]\n```\n\n- **1. Pre-Order Traversal (`Root -> Left -> Right`):**\n  - Visit **`A`** -> Pre(`B`: **`B`**, left empty, right **`D`**) -> Pre(`C`: **`C`**, Pre(`E`: **`E`**, left **`G`**), Pre(`F`: **`F`**, left **`H`**, right **`I`**)).\n  - **Pre-Order Result:** **`A  B  D  C  E  G  F  H  I`**\n- **2. Post-Order Traversal (`Left -> Right -> Root`):**\n  - Post(`B`: left empty, Post(`D`) = **`D`**, root **`B`**) -> Post(`C`: Post(`E`: **`G`**, **`E`**), Post(`F`: **`H`**, **`I`**, **`F`**), root **`C`**) -> root **`A`**.\n  - **Post-Order Result:** **`D  B  G  E  H  I  F  C  A`**\n\n### b) Breadth-First Search (BFS) Algorithm for Graph Traversal (4 Marks)\n\n```text\nAlgorithm BFS(G, s)\n[G = (V, E) is a graph; s is the starting source vertex]\n\n1. For each vertex u in V do\n       visited[u] = FALSE\n2. Initialize an empty FIFO queue Q\n3. visited[s] = TRUE\n4. ENQUEUE(Q, s)\n5. While Q is not empty do\n       u = DEQUEUE(Q)\n       Visit / print u\n       For each neighbour w adjacent to u do\n           If visited[w] == FALSE then\n               visited[w] = TRUE\n               ENQUEUE(Q, w)\n6. Return\n```\n\n- **Working & Complexity Explanation:**\n  - **Wavefront Exploration:** Marking `visited[w] = TRUE` *at the moment `w` is enqueued* prevents duplicate queue insertions on cyclic graphs. The FIFO queue ensures every vertex at edge distance `k` from `s` is visited before any vertex at distance `k + 1`.\n  - **Complexity:** **`O(V + E)` time** using adjacency lists (`O(V²)` with an adjacency matrix) and **`O(V)` space** for `visited[]` and `Q`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

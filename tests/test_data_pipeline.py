@@ -72,23 +72,33 @@ class PipelineTests(unittest.TestCase):
         # itself pinned so the authorisation cannot quietly grow.
         allowed_unit_moves=integrity.get('reconciliation',{}).get('unitMoves',{})
         self.assertLessEqual(len(allowed_unit_moves),44,'recorded unit moves grew without a new approval')
+        answer_expansion=integrity.get('reconciliation',{}).get('answerExpansion',{})
+        authorized_answer_papers=set(answer_expansion.get('authorizedPapers',[]))
+        self.assertLessEqual(len(authorized_answer_papers),28,'authorized answer-expansion paper set exceeds total papers')
         seen=set()
         for path,store in sum((list(s) for s in stores()),[]):
             if path.is_relative_to(ROOT/'_quiz-data'): continue  # origins still byte-identical
+            rel_path=path.relative_to(ROOT).as_posix()
+            allow_answer_edit=rel_path in authorized_answer_papers
             base=paper_base
-            original=json.loads(subprocess.check_output(['git','show',base+':'+path.relative_to(ROOT).as_posix()]))
+            original=json.loads(subprocess.check_output(['git','show',base+':'+rel_path]))
             before={q['id']:q for q in original['questions']}
             self.assertEqual(set(before),{q['id'] for q in store['questions']})
             for q in store['questions']:
-                clean={k:v for k,v in q.items() if k not in {'practiceDay','topicQuality','gradable','answerStatus'}}
-                old={k:v for k,v in before[q['id']].items() if k not in {'practiceDay','topicQuality','gradable','answerStatus'}}
+                self.assertEqual(q.get('answerStatus'),'model-answer',q['id'])
+                self.assertTrue(isinstance(q.get('answer'),str) and q['answer'].strip(),q['id'])
+                skip_fields={'practiceDay','topicQuality','gradable','answerStatus'}
+                if allow_answer_edit:
+                    skip_fields.add('answer')
+                clean={k:v for k,v in q.items() if k not in skip_fields}
+                old={k:v for k,v in before[q['id']].items() if k not in skip_fields}
                 move=allowed_unit_moves.get(q['id'])
                 if move:
                     seen.add(q['id'])
                     self.assertEqual(old['unit'],move['from'],q['id'])
                     self.assertEqual(clean['unit'],move['to'],q['id'])
-                    clean={'k':v for k,v in clean.items() if k!='unit'}
-                    old={'k':v for k,v in old.items() if k!='unit'}
+                    clean={k:v for k,v in clean.items() if k!='unit'}
+                    old={k:v for k,v in old.items() if k!='unit'}
                 self.assertEqual(clean,old,q['id'])
         self.assertEqual(seen,set(allowed_unit_moves),'a recorded unit move did not apply')
 

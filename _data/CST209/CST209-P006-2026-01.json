@@ -115,7 +115,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Has lower time and space complexity.**\n\nEfficiency concerns the resources an algorithm uses, chiefly time and space.",
+      "answer": "**Correct Answer: B) Has lower time and space complexity**\n\n- **Resource-Bounded Performance:** In algorithm analysis, **efficiency** measures how economically an algorithm consumes computational resources — specifically **running time `T(n)`** (CPU elementary operations) and **auxiliary memory `S(n)`** — as input size `n` grows.\n- **Why Other Options Fail:** Producing correct results (`A`) defines **correctness** (a prerequisite, not efficiency), while code simplicity (`C`) and generic typing (`D`) are software-engineering traits rather than asymptotic efficiency.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -162,7 +162,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) O notation.**\n\nBig-O gives an asymptotic upper bound; Ω gives a lower bound and Θ a tight bound.",
+      "answer": "**Correct Answer: C) O notation**\n\n- **Asymptotic Upper Bound (`Big-O`):** Formally, `f(n) = O(g(n))` if positive constants `c > 0` and `n₀ ≥ 1` exist such that **`0 ≤ f(n) ≤ c · g(n)` for all `n ≥ n₀`**, bounding the growth rate from above (commonly used for worst-case running time).\n- **Why Other Options Fail:** **`Ω` (`B`)** gives an asymptotic *lower* bound, **`Θ` (`A`)** gives an asymptotically *tight* (both upper and lower) bound, and `ρ` (`D`) is not a standard asymptotic complexity notation.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -209,7 +209,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Merge Sort.**\n\nMerge Sort divides the array, recursively sorts halves, and merges them.",
+      "answer": "**Correct Answer: B) Merge Sort**\n\n- **Classic Three-Phase Divide & Conquer:** **Merge Sort** splits an `n`-element array at `mid = ⌊(low + high)/2⌋` into two independent `n/2` subarrays (**Divide**), recursively sorts both halves (**Conquer**), and merges the two sorted halves in `Θ(n)` time (**Combine**), yielding `T(n) = 2T(n/2) + Θ(n) = Θ(n log n)`.\n- **Why Other Options Fail:** **Prim's (`A`)** and **Dijkstra's (`C`)** follow the **Greedy** paradigm, while **Bellman-Ford (`D`)** uses **Dynamic Programming** edge relaxation.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -257,7 +257,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) Ambiguity.**\n\nAn algorithm must be unambiguous; finiteness, effectiveness, input, and output are standard properties.",
+      "answer": "**Correct Answer: D) Ambiguity**\n\n- **Violation of Definiteness:** Knuth's five essential properties of a valid algorithm are **Input** (`≥ 0` quantities), **Output** (`≥ 1` result), **Definiteness** (every step must be precise and **unambiguous**), **Finiteness** (`A` — terminates in finite steps), and **Effectiveness** (`B` — each step is basic and executable).\n- **Why Option D Is Selected:** **Ambiguity** directly contradicts *definiteness* — an instruction open to multiple interpretations cannot be executed deterministically.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -304,7 +304,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) Quick Sort.**\n\nQuick Sort averages O(n log n); the other three average O(n²).",
+      "answer": "**Correct Answer: A) Quick Sort**\n\n- **Log-Linear Average Growth:** Over random permutations of `n` elements, **Quick Sort** partitions arrays into balanced expected splits, solving `T(n) = 2T(n/2) + Θ(n)` for an average-case time complexity of **`Θ(n log n)`** with tiny inner-loop constants.\n- **Why Other Options Fail:** **Selection Sort (`B`)**, **Bubble Sort (`C`)**, and **Insertion Sort (`D`)** are elementary quadratic algorithms whose average-case complexity is **`Θ(n²)`**.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -352,7 +352,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Count Sort.**\n\nCounting Sort uses key values as array indices rather than pairwise comparisons.",
+      "answer": "**Correct Answer: B) Count Sort**\n\n- **Index-Frequency Sorting (No Pairwise `A[i] < A[j]`):** **Counting Sort** tallies the frequency of each integer key in `0..k`, computes prefix sums to locate exact output indices, and places elements directly in **`Θ(n + k)`** linear time — bypassing the `Ω(n log n)` decision-tree comparison lower bound.\n- **Why Other Options Fail:** **Merge Sort (`A`)**, **Quick Sort (`C`)**, and **Heap Sort (`D`)** all rely on pairwise key comparisons.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -399,7 +399,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) O(n log n).**\n\nMerge Sort divides log n levels and merges O(n) items per level.",
+      "answer": "**Correct Answer: B) O(n log n)**\n\n- **Recurrence & Recursion-Tree Proof:** Merge Sort always splits `n` items into two equal halves (`⌈log₂ n⌉` tree levels) and performs `Θ(n)` linear two-pointer merging across each level, solving **`T(n) = 2T(n/2) + Θ(n) = Θ(n log n)`** (Master Theorem Case 2).\n- **Case Invariance:** Unlike Quick Sort, Merge Sort guarantees **`O(n log n)` in best, average, and worst cases alike**.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -446,7 +446,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Selection Sort.**\n\nSelection Sort repeatedly selects the minimum from the unsorted suffix.",
+      "answer": "**Correct Answer: C) Selection Sort**\n\n- **Minimum-Extraction Invariant:** On pass `i` (`0 ≤ i ≤ n − 2`), **Selection Sort** scans the unsorted suffix `A[i..n−1]` to locate the **minimum remaining element** (`min_idx`) and swaps `A[i] ↔ A[min_idx]`, performing at most `n − 1` swaps (`Θ(n²)` comparisons in all cases).\n- **Why Other Options Fail:** **Bubble Sort (`A`)** swaps adjacent inversions, **Insertion Sort (`B`)** shifts `A[i]` into a sorted prefix, and **Shell Sort (`D`)** uses diminishing `h`-gap insertion passes.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -493,7 +493,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) Sorted lists.**\n\nBinary Search needs random access and a sorted order to discard half the range.",
+      "answer": "**Correct Answer: A) Sorted lists**\n\n- **Monotonic Order Precondition:** **Binary Search** compares `key` against `A[mid]` and safely discards either the entire left half (`key > A[mid]`) or right half (`key < A[mid]`) in `O(1)` time **only if elements are already arranged in monotonic (sorted) order** with random-access indexing.\n- **Why Other Options Fail:** On unsorted lists (`B`) or sequential-only FIFO queues (`D`), discarding half the elements can miss `key`, requiring `O(n)` Linear Search instead.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -540,7 +540,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) O(n).**\n\nOn average, linear search examines about half of n elements, which is Θ(n).",
+      "answer": "**Correct Answer: A) O(n)**\n\n- **Expected Comparisons Derivation:** Assuming the target key is equally likely to reside at any of the `n` positions (`1..n`), **Linear Search** performs `(1 + 2 + … + n) / n = (n + 1) / 2` comparisons on a successful search (and `n` on an unsuccessful search), which simplifies asymptotically to **`Θ(n)` / `O(n)`**.\n- **Contrast:** `O(1)` (`C`) occurs only in the best case (`A[0] == key`), and `O(log n)` (`B`) belongs to Binary Search.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -587,7 +587,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) Smaller than the parent node.**\n\nThe BST invariant places smaller keys in the left subtree.",
+      "answer": "**Correct Answer: A) Smaller than the parent node**\n\n- **BST Ordering Invariant:** For every node `x` in a strict **Binary Search Tree (`BST`)**, every key in `x`'s **left subtree** satisfies `key(left) < key(x)` (hence the **left child is strictly smaller than its parent**), while every key in `x`'s **right subtree** satisfies `key(right) > key(x)`.\n- **Payoff:** This invariant enables `O(h)` binary-search-like lookup and ensures an **inorder traversal (`L–N–R`)** visits keys in sorted ascending order.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -634,7 +634,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) They minimize search time.**\n\nBalancing keeps height O(log n), bounding search/insert/delete time.",
+      "answer": "**Correct Answer: B) They minimize search time**\n\n- **Logarithmic Height Guarantee:** An ordinary BST fed sorted input degenerates into a skewed linear chain of height `h = n − 1`, degrading search to `O(n)`. **Self-balancing binary search trees** (`AVL`, `Red-Black`) enforce rotation invariants that keep **`h = O(log n)`**, minimizing worst-case search, insertion, and deletion time.\n- **Why Other Options Fail:** Balanced trees store extra balance/color metadata (`A` false) and require rotation logic (`C` false).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -681,7 +681,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Greedy method.**\n\nKruskal's algorithm greedily adds the cheapest edge that does not form a cycle.",
+      "answer": "**Correct Answer: B) Greedy method**\n\n- **Greedy Safe-Edge Selection:** **Kruskal's Minimum Spanning Tree (`MST`)** algorithm sorts all edges in non-decreasing weight order (`O(E log E)`) and repeatedly makes the **greedy locally optimal choice** — adding the lightest remaining edge `(u, v)` that does not create a cycle (checked via Disjoint-Set `Union-Find`).\n- **Global Optimality:** By the MST *cut property*, these greedy edge picks provably yield a globally minimum-weight spanning tree.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -729,7 +729,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Negative edges.**\n\nDijkstra settles a vertex as soon as its distance is smallest, which assumes distances never decrease later, and a negative edge can break that. Bellman–Ford must be used when negative weights exist.",
+      "answer": "**Correct Answer: C) Negative edges**\n\n- **Broken Greedy Monotonicity:** **Dijkstra's algorithm** permanently settles the unvisited vertex `u` with minimum `dist[u]` under the assumption that adding future path edges can **never reduce path cost** (`w(x, y) ≥ 0`). A **negative-weight edge** discovered later can create a cheaper detour to an already-settled vertex, invalidating its finalized distance.\n- **Remedy:** Graphs with negative edge weights require the **`O(V · E)` Bellman-Ford algorithm**.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -777,7 +777,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) Produces local optimum.**\n\nA greedy algorithm makes the locally best choice at each step; global optimality is not guaranteed for every problem.",
+      "answer": "**Correct Answer: D) Produces local optimum**\n\n- **Stepwise Myopic Selection:** By definition, every **greedy algorithm** selects the **locally optimal choice** at each decision step without reconsidering past choices or exploring future subproblems.\n- **Why Option A Fails:** A greedy strategy reaches a **global optimum (`A`)** *only* when the problem satisfies both the *greedy-choice property* and *optimal substructure* (e.g., Fractional Knapsack, MST, Huffman coding — whereas greedy fails on `0/1` Knapsack and arbitrary coin systems).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -819,7 +819,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** An algorithm is a finite, well-defined sequence of steps that transforms input into output. Good algorithms have input, output, definiteness, finiteness, effectiveness, correctness, efficiency, and readability.\n\n**b)** Big-O describes an upper bound, Big-Ω a lower bound, Big-Θ a tight bound; little-o and little-ω describe strict bounds. Example: Merge Sort is Θ(n log n).",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Definition & Characteristics of a Good Algorithm [4 Marks]\n\nAn **algorithm** is a finite, ordered sequence of unambiguous, elementary computational steps that accepts well-defined input(s) and terminates with the required output(s).\n- **1. Input:** Accepts zero or more externally supplied quantities (e.g., `gcd(a, b)` takes two non-negative integers).\n- **2. Output:** Produces **at least one** well-defined result corresponding to the input.\n- **3. Definiteness (Unambiguity):** Every step must be crystal clear with one exact meaning (e.g., `r ← a mod b`, never *\"pick a small number\"*).\n- **4. Finiteness:** Must terminate after a **finite number of steps** for every valid input (e.g., Euclid's `GCD` decreases `b` strictly toward `0`).\n- **5. Effectiveness:** Every operation must be basic enough to execute in finite time with pencil and paper.\n- **Example — Euclid's GCD (`gcd(48, 18)`):** `(48, 18) → (18, 12) → (12, 6) → (6, 0)` → returns **`6`** in `3` finite, unambiguous modulo steps.\n\n### b) Asymptotic Notations in Algorithm Analysis [4 Marks]\n\nAsymptotic notations characterize growth rate `T(n)` for large `n` while ignoring machine-dependent constants and lower-order terms:\n\n> [!COMPARE] Big-O vs Big-Omega (`Ω`) vs Big-Theta (`Θ`) Asymptotic Bounds\n> | Parameter | Big-O (`O(g(n))`) | Big-Omega (`Ω(g(n))`) | Big-Theta (`Θ(g(n))`) |\n> |---|---|---|---|\n> | **Bound Type** | **Asymptotic Upper Bound** (`≤`). | **Asymptotic Lower Bound** (`≥`). | **Asymptotically Tight Bound** (`=`). |\n> | **Formal Inequality (`∀ n ≥ n₀`)** | `0 ≤ f(n) ≤ c · g(n)` (`c > 0`). | `0 ≤ c · g(n) ≤ f(n)` (`c > 0`). | `0 ≤ c₁·g(n) ≤ f(n) ≤ c₂·g(n)`. |\n> | **Typical Case Described** | Worst-case ceiling (e.g., Insertion Sort `O(n²)`). | Best-case / problem lower floor (`Ω(n)`). | Exact order when upper & lower match (Merge Sort `Θ(n log n)`). |\n\n- **Strict Notations:** **Little-o (`o(g(n))`)** denotes a strict upper bound (`lim f(n)/g(n) = 0`, e.g., `2n = o(n²)`), and **Little-omega (`ω(g(n))`)** denotes a strict lower bound (`lim f(n)/g(n) = ∞`).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -860,7 +860,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Divide and Conquer splits a problem into independent subproblems, solves them recursively, and combines results. Merge Sort: divide array, sort halves, merge.\n\n**b)** Divide and Conquer solves independent subproblems once; dynamic programming solves overlapping subproblems and stores their results (memoization/tabulation) for reuse.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Divide and Conquer Technique with Suitable Example [4 Marks]\n\n**Divide and Conquer (`D&C`)** solves a problem of size `n` in three recursive phases:\n1. **Divide:** Partition the original instance into `a ≥ 1` smaller, **disjoint (independent)** subproblems of size `n / b`.\n2. **Conquer:** Solve each subproblem recursively (solving tiny base cases directly in `O(1)`).\n3. **Combine:** Merge the subproblem solutions into the solution for the full input.\n\n```ascii\n[38, 27, 43, 3] --Divide--> [38, 27] & [43, 3] --Divide--> [38] [27] [43] [3]\n                                                              |\n[3, 27, 38, 43] <--Combine-- [27, 38] & [3, 43] <--Combine---+\n```\n\n- **Recurrence & Complexity (Merge Sort Example):** Splitting takes `O(1)`, conquering two halves takes `2T(n/2)`, and linear merging takes `Θ(n)`, yielding **`T(n) = 2T(n/2) + Θ(n) = Θ(n log n)`**.\n\n### b) Divide and Conquer vs Dynamic Programming [4 Marks]\n\n> [!COMPARE] Divide and Conquer vs Dynamic Programming\n> | Parameter | Divide and Conquer (`D&C`) | Dynamic Programming (`DP`) |\n> |---|---|---|\n> | **Subproblem Structure** | Subproblems are **independent / non-overlapping**. | Subproblems **overlap heavily** (shared sub-instances). |\n> | **Recomputation & Storage** | Each disjoint subproblem is solved once without a lookup table. | Solves each distinct subproblem **once** and caches it via **tabulation** or **memoization**. |\n> | **Execution Direction** | Naturally **top-down recursive**. | Typically **bottom-up iterative** table filling (or top-down memoized). |\n> | **Target Problem Class** | General decomposition (sorting, searching, matrix multiply). | **Optimization / counting** problems with *optimal substructure*. |\n> | **Classic Examples** | **Merge Sort, Quick Sort, Binary Search, Strassen's**. | **`0/1` Knapsack, Floyd-Warshall, Bellman-Ford, LCS**. |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -901,7 +901,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** ```text\nfor i = 0 to n-2:\n    swapped = false\n    for j = 0 to n-i-2:\n        if A[j] > A[j+1]: swap A[j], A[j+1]; swapped = true\n    if not swapped: break\n```\n\n**b)** Pass 1: `25,48,37,12,57,86,33,92`; pass 2: `25,37,12,48,57,33,86,92`; pass 3: `25,12,37,48,33,57,86,92`; pass 4: `12,25,37,33,48,57,86,92`; pass 5: `12,25,33,37,48,57,86,92`. Sorted result: `12,25,33,37,48,57,86,92`.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Optimized Bubble Sort Algorithm [4 Marks]\n\n```text\nBUBBLE_SORT(A, n):\n  for i <- 0 to n - 2 do\n      swapped <- false\n      for j <- 0 to n - i - 2 do\n          if A[j] > A[j + 1] then\n              swap(A[j], A[j + 1])\n              swapped <- true\n      if swapped == false then\n          break    // Early termination: array is already sorted\n```\n\n- **Complexity:** Best case **`Θ(n)`** (`0` swaps on Pass 1 with `swapped` flag); Average & Worst case **`Θ(n²)`** comparisons/swaps; Auxiliary space **`O(1)`** in-place; **Stable**.\n\n### b) Step-by-Step Bubble Sort Trace on `A = [25, 57, 48, 37, 12, 92, 86, 33]` (`n = 8`) [4 Marks]\n\nEach pass bubbles the largest unsorted key into its final right-hand position (`¦ ...` marks the settled sorted suffix):\n\n| Pass | Adjacent Swaps Executed (`A[j] > A[j+1]`) | Array State After Pass | Swaps |\n| :---: | :--- | :--- | :---: |\n| Init | — | `[25, 57, 48, 37, 12, 92, 86, 33]` | — |\n| **1** | `(57,48)`, `(57,37)`, `(57,12)`, `(92,86)`, `(92,33)` | `[25, 48, 37, 12, 57, 86, 33 ¦` **`92`**`]` | `5` |\n| **2** | `(48,37)`, `(48,12)`, `(86,33)` | `[25, 37, 12, 48, 57, 33 ¦` **`86, 92`**`]` | `3` |\n| **3** | `(37,12)`, `(57,33)` | `[25, 12, 37, 48, 33 ¦` **`57, 86, 92`**`]` | `2` |\n| **4** | `(25,12)`, `(48,33)` | `[12, 25, 37, 33 ¦` **`48, 57, 86, 92`**`]` | `2` |\n| **5** | `(37,33)` | `[12, 25, 33 ¦` **`37, 48, 57, 86, 92`**`]` | `1` |\n| **6** | None (`12 < 25 < 33` → `swapped = false`, **break**) | **`[12, 25, 33, 37, 48, 57, 86, 92]`** | `0` |\n\n- **Final Sorted Array:** **`12, 25, 33, 37, 48, 57, 86, 92`** (completed in `13` total swaps with early termination on Pass 6).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -943,7 +943,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** Merge Sort: O(n log n) all cases, O(n) auxiliary space, stable. Quick Sort: O(n log n) average, O(n²) worst, O(log n) stack, not stable by default. Heap Sort: O(n log n) all cases, O(1) auxiliary space, not stable.\n\n**b)** LSD Radix Sort uses stable buckets for the units, tens, and hundreds digits.\n\n- After the units pass: `320, 361, 142, 423, 365, 126, 347, 538, 549`.\n- After the tens pass: `320, 423, 126, 538, 142, 347, 549, 361, 365`.\n- After the hundreds pass: `126, 142, 320, 347, 361, 365, 423, 538, 549`.\n\nFinal sorted order: `126, 142, 320, 347, 361, 365, 423, 538, 549`.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 3 marks + b) 5 marks\n\n### a) Merge Sort vs Quick Sort vs Heap Sort [3 Marks]\n\n> [!COMPARE] Merge Sort vs Quick Sort vs Heap Sort\n> | Parameter | Merge Sort | Quick Sort | Heap Sort |\n> |---|---|---|---|\n> | **Best-Case Time** | `Θ(n log n)` | `Θ(n log n)` | `Θ(n log n)` (`O(n)` all-equal keys) |\n> | **Average-Case Time** | `Θ(n log n)` | `Θ(n log n)` (fastest in-cache constants) | `Θ(n log n)` |\n> | **Worst-Case Time** | **`Θ(n log n)`** | **`Θ(n²)`** (skewed pivot on sorted input) | **`Θ(n log n)`** |\n> | **Auxiliary Space** | **`Θ(n)`** (temporary merge array) | **`O(log n)`** recursion stack (`O(n)` unoptimized worst) | **`O(1)`** strictly in-place |\n> | **Stability** | **Stable** | Unstable | Unstable |\n\n### b) LSD Radix Sort on `347, 142, 361, 423, 538, 126, 320, 549, 365` (`d = 3` digits) [5 Marks]\n\nLeast-Significant-Digit (`LSD`) Radix Sort distributes `n = 9` numbers into decimal buckets `0–9` **stably** (preserving prior relative order inside every bucket) from **Units (`10⁰`) → Tens (`10¹`) → Hundreds (`10²`)** in `Θ(d · (n + 10))` time:\n\n| Pass & Digit | Non-Empty Stable Buckets (`0 → 9`) | Sequence After Collecting Buckets `0..9` |\n| :--- | :--- | :--- |\n| **Initial** | — | `347, 142, 361, 423, 538, 126, 320, 549, 365` |\n| **Pass 1 (`1s` digit)** | `B[0]:320`, `B[1]:361`, `B[2]:142`, `B[3]:423`, `B[5]:365`, `B[6]:126`, `B[7]:347`, `B[8]:538`, `B[9]:549` | `320, 361, 142, 423, 365, 126, 347, 538, 549` |\n| **Pass 2 (`10s` digit)** | `B[2]:[320, 423, 126]`, `B[3]:[538]`, `B[4]:[142, 347, 549]`, `B[6]:[361, 365]` | `320, 423, 126, 538, 142, 347, 549, 361, 365` |\n| **Pass 3 (`100s` digit)** | `B[1]:[126, 142]`, `B[3]:[320, 347, 361, 365]`, `B[4]:[423]`, `B[5]:[538, 549]` | **`126, 142, 320, 347, 361, 365, 423, 538, 549`** |\n\n- **Final Sorted Output:** **`126, 142, 320, 347, 361, 365, 423, 538, 549`**.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -987,7 +987,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** Binary Search repeatedly compares the target with the middle element of a sorted range and discards half: set `low=0`, `high=n-1`; while `low<=high`, compute `mid`; if `A[mid]==key` return mid; if `key<A[mid]` set `high=mid-1`; else set `low=mid+1`.\n\n**b)** Linear Search scans sequentially, works on unsorted data, and is O(n). Binary Search requires sorted random-access data and is O(log n), but needs preprocessing/sorting.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 5 marks + b) 3 marks\n\n### a) Binary Search Algorithm & Worked Trace [5 Marks]\n\n**Binary Search** applies decrease-and-conquer on a **sorted random-access array `A[0..n−1]`**, halving the active interval `[low..high]` on every comparison (`T(n) = T(n/2) + O(1) = O(log n)`):\n\n```text\nBINARY_SEARCH(A, n, key):\n  low <- 0;  high <- n - 1\n  while low <= high do\n      mid <- low + floor((high - low) / 2)   // Prevents (low + high) integer overflow\n      if A[mid] == key then return mid\n      else if key < A[mid] then high <- mid - 1\n      else low <- mid + 1\n  return -1   // Key not found\n```\n\n- **Worked Example:** Search `key = 37` in sorted `A = [12, 25, 33, 37, 48, 57, 86, 92]` (`n = 8`):\n\n| Step | `low` | `high` | `mid` | `A[mid]` | Comparison & Action |\n| :---: | :---: | :---: | :---: | :---: | :--- |\n| **1** | `0` | `7` | `3` | `37` | `37 == A[3]` → **Found immediately at index `3`!** |\n\n- *(Searching `key = 86` instead: Step 1 `mid = 3` (`86 > 37 → low = 4`); Step 2 `mid = 5` (`86 > 57 → low = 6`); Step 3 `mid = 6` (`A[6] == 86` → Found in `3 ≤ ⌈log₂ 8⌉` steps).)*\n\n### b) Linear Search vs Binary Search [3 Marks]\n\n> [!COMPARE] Linear Search vs Binary Search\n> | Parameter | Linear (Sequential) Search | Binary Search |\n> |---|---|---|\n> | **Input Precondition** | Works on **any unsorted or sorted** array/linked list. | Requires **sorted order** + `O(1)` **random access** (arrays). |\n> | **Time Complexity** | Best `O(1)`; Average & Worst **`O(n)`**. | Best `O(1)`; Average & Worst **`O(log n)`**. |\n> | **Auxiliary Space** | `O(1)` iterative. | `O(1)` iterative (`O(log n)` if recursive). |\n> | **Dynamic Updates** | Zero sorting overhead on frequent insertions. | Maintaining sorted array costs `O(n)` per insertion/deletion. |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1028,7 +1028,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** A BST is a binary tree with smaller keys in the left subtree and larger keys in the right subtree. Insertion follows comparisons to a null child and attaches a new leaf. Deletion handles leaf (remove), one child (link child), or two children (replace with in-order successor/predecessor, then delete that node).\n\n**b)** Balanced trees keep height logarithmic, guaranteeing O(log n) search, insertion, and deletion instead of O(n) on a skewed chain.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 5 marks + b) 3 marks\n\n### a) Binary Search Tree (`BST`): Definition, Insertion, and Deletion [5 Marks]\n\nA **Binary Search Tree (`BST`)** is a rooted binary tree where every node `x` satisfies the **BST ordering property**: all keys in `x.left` are **`< x.key`**, and all keys in `x.right` are **`> x.key`**.\n\n- **1. BST Insertion (`O(h)`):** Compare new key `k` at root; branch left if `k < x.key` or right if `k > x.key` until reaching `NULL`, and attach `new Node(k)` as a leaf.\n- **2. BST Deletion (`O(h)` — Three Exhaustive Structural Cases):**\n\n```ascii\nCase 1 (Leaf: del 20)     Case 2 (1 Child: del 30)    Case 3 (2 Children: del 50)\n     30                        50                          50  --> replace with\n    /  \\   ==>   30           /  \\    ==>    50           /  \\     inorder successor 60:\n  [20]  40         \\       [30]   70        /  \\        30    70        60\n                    40        \\           40    70           /  \\      /  \\\n                               40                          [60]  80  30    70 (80)\n```\n\n  - **Case 1 — Leaf Node (`0` children):** Simply set parent's child pointer to `NULL` and free the node.\n  - **Case 2 — One Child:** Bypass the deleted node by linking its single child directly to its parent.\n  - **Case 3 — Two Children:** Locate the node's **inorder successor** (minimum key in `x.right`, or inorder predecessor in `x.left`), copy that key into `x`, and recursively delete the successor (which has at most `1` right child → reduces to Case 1 or 2).\n\n### b) Significance of Balanced Binary Search Trees [3 Marks]\n\n- **Preventing Skewed `O(n)` Degeneration:** Inserting pre-sorted keys (`10, 20, 30, 40, …`) into an unbalanced BST creates a degenerate linked chain of height **`h = n − 1`**, degrading search, insert, and delete from `O(log n)` to **`O(n)`**.\n- **Guaranteed `O(log n)` Worst-Case Bounds:** Self-balancing BSTs (**AVL Trees** with `|BF| ≤ 1` and **Red-Black Trees** with black-height invariants) perform `O(1)` local rotations (`LL, RR, LR, RL`) during updates so tree height strictly satisfies **`h = Θ(log n)`** (`≤ 1.44 log₂ n` for AVL), ensuring predictable real-time lookup in databases, `std::map`, and OS schedulers.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1069,7 +1069,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Hashing maps keys to table indices via a hash function. Collisions are handled by separate chaining, linear/quadratic/double-hash open addressing, and rehashing or perfect hashing in special cases.\n\n**b)** Rabin-Karp uses a rolling hash to compare a pattern hash with each text-window hash; on a hash match it verifies characters to avoid spurious hits. Average search is O(n+m), worst case O(nm) with many collisions.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Hashing & Collision Resolution Techniques [4 Marks]\n\n**Hashing** maps a key `k` from a large universe into a compact array index `0..m−1` via a **hash function `h(k)`** (e.g., division method `h(k) = k mod m`), achieving **`O(1)` expected** insert, search, and delete. A **collision** occurs when two distinct keys map to the same slot (`h(k₁) == h(k₂)`):\n\n> [!COMPARE] Separate Chaining vs Open Addressing Collision Resolution\n> | Parameter | Separate Chaining (Open Hashing) | Open Addressing (Closed Hashing) |\n> |---|---|---|\n> | **Storage Layout** | Each slot `T[i]` points to a **linked list (bucket chain)** of colliding keys. | All keys reside **directly inside table `T[0..m−1]`** (`α = n/m ≤ 1`). |\n> | **Probe / Resolution Rule** | Append/search along chain `T[h(k)]` (`O(1 + α)` average). | Probe sequence `h(k, i) = (h₁(k) + f(i)) mod m` for `i = 0, 1, 2, …`:<br>• **Linear Probing:** `f(i) = i` (*primary clustering*)<br>• **Quadratic Probing:** `f(i) = c₁i + c₂i²` (*secondary clustering*)<br>• **Double Hashing:** `f(i) = i · h₂(k)` (*minimal clustering*) |\n> | **Deletion Handling** | Standard linked-list node removal. | Requires lazy **`DELETED` tombstone** markers so probe chains stay intact. |\n\n### b) Rabin-Karp String Matching Algorithm [4 Marks]\n\nGiven text `T[0..n−1]` and pattern `P[0..m−1]` over alphabet radix `d` and prime modulus `q`, **Rabin-Karp** compares `P`'s hash `p` against each length-`m` window hash `t_s` of `T`:\n\n> [!FORMULA] Rolling Hash Recurrence (`O(1)` Window Slide)\n> `t_{s+1} = (d × (t_s − T[s] × h) + T[s + m]) mod q`, where `h = d^(m−1) mod q`.\n\n1. **Preprocessing (`Θ(m)`):** Compute `p` for `P[0..m−1]` and initial window `t₀` for `T[0..m−1]` via Horner's rule.\n2. **Sliding & Spurious-Hit Verification:** For shift `s = 0..n−m`: if `t_s ≠ p`, reject in `O(1)`; if `t_s == p` (*hash hit*), compare `T[s..s+m−1]` vs `P[0..m−1]` character-by-character to filter out **spurious hits** (hash collisions).\n3. **Worked Mini-Trace (`T = \"31415\"`, `P = \"15\"`, `d = 10`, `q = 13`):** `p = 15 mod 13 = 2`. Windows: `\"31\"→5 ≠ 2`, `\"14\"→1 ≠ 2`, `\"41\"→2 == 2` (*spurious hit*: `\"41\" ≠ \"15\"`), `\"15\"→2 == 2` (*exact match at shift `s = 3`!*).\n4. **Complexity:** Average **`O(n + m)`**; Worst case **`O(n · m)`** under pathological hash collisions.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1111,7 +1111,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** A graph G=(V,E) consists of vertices and edges. Types include directed/undirected, weighted/unweighted, connected/disconnected, cyclic/acyclic, complete, and bipartite graphs.\n\n**b)** Prim's algorithm starts from any vertex and repeatedly adds the cheapest edge crossing from the visited set to an unvisited vertex, using a priority queue, until all vertices are included. It grows one MST tree rather than sorting all edges as Kruskal does.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 3 marks + b) 5 marks\n\n### a) Definition of Graph & Major Graph Types [3 Marks]\n\nA **graph** `G = (V, E)` consists of a finite non-empty set of **vertices (nodes) `V`** and a set of **edges `E`** connecting vertex pairs:\n- **1. Undirected vs Directed (*Digraph*):** Unordered pairs `{u, v}` (Facebook friendships) vs ordered arcs `(u → v)` (web hyperlinks).\n- **2. Weighted Graph:** Associates a real cost `w(e)` with each edge (road network distances).\n- **3. Connected vs Disconnected:** Path exists between every vertex pair vs multiple isolated components.\n- **4. Cyclic vs Acyclic (`DAG`):** Contains at least one closed simple cycle vs zero directed cycles (task dependency `DAG`).\n- **5. Complete Graph (`Kₙ`) & Bipartite Graph:** Every pair connected (`n(n − 1)/2` edges) vs vertices split into `V₁ ∪ V₂` with edges strictly between `V₁` and `V₂`.\n\n### b) Prim's Algorithm for Minimum Spanning Tree (`MST`) [5 Marks]\n\nGiven a connected, undirected weighted graph `G = (V, E)`, **Prim's greedy algorithm** grows a single tree `T` starting from an arbitrary root `r`, repeatedly adding the **minimum-weight safe edge `(u, v)`** crossing the cut `(T, V − T)` until `|T| = |V|`:\n- **Algorithm Steps:** Initialize `key[v] = ∞`, `parent[v] = NIL` for all `v`, set `key[r] = 0`, and push all vertices into a Min-Priority Queue `Q`. While `Q ≠ ∅`: extract `u = EXTRACT_MIN(Q)`, and for every `(u, v) ∈ Adj[u]` with `v ∈ Q` and `w(u, v) < key[v]`, update `parent[v] ← u` and `key[v] ← w(u, v)`. **Complexity:** **`O(E log V)`** with binary heap (`O(V²)` with array).\n\n```ascii\n    (A)---2---(B)\n     | \\       |         Start at A:\n     6   3     1         Step 1: Pick (A, B) w=2   [Tree: {A, B}]\n     |     \\   |         Step 2: Pick (B, D) w=1   [Tree: {A, B, D}]\n    (C)---4---(D)        Step 3: Pick (C, D) w=4   [Tree: {A, B, D, C}]\n```\n\n| Step | Tree Set `T` | Candidate Cut Edges | Chosen Min Edge | Weight |\n| :---: | :--- | :--- | :---: | :---: |\n| **1** | `{A}` | `(A,B)=2, (A,D)=3, (A,C)=6` | **`(A, B)`** | `2` |\n| **2** | `{A, B}` | `(B,D)=1, (A,D)=3, (A,C)=6` | **`(B, D)`** | `1` |\n| **3** | `{A, B, D}` | `(D,C)=4, (A,C)=6` (`(A,D)=3` internal) | **`(D, C)`** | `4` |\n\n- **Total MST Cost:** `2 + 1 + 4 =` **`7`** (`|V| − 1 = 3` edges).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1153,7 +1153,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** Dijkstra initializes the source distance to 0 and others to infinity, repeatedly extracts the unsettled vertex with smallest tentative distance, relaxes all outgoing non-negative edges, and marks it settled. A priority queue gives O((V+E) log V).\n\n**b)** Topological sorting gives a linear ordering of a directed acyclic graph such that every edge u→v has u before v. It can be produced by repeatedly removing indegree-zero vertices (Kahn's algorithm) or by reverse DFS finish order; it is used for scheduling and dependency resolution.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 5 marks + b) 3 marks\n\n### a) Dijkstra's Single-Source Shortest Path (`SSSP`) Algorithm [5 Marks]\n\nFor a weighted graph `G = (V, E)` with **non-negative edge weights (`w(u, v) ≥ 0`)**, **Dijkstra's greedy algorithm** computes shortest-path distances `dist[v]` from source `s` to all vertices:\n\n> [!FORMULA] Edge Relaxation Rule\n> `RELAX(u, v, w): if dist[u] + w(u, v) < dist[v] then dist[v] ← dist[u] + w(u, v); parent[v] ← u`\n\n1. **Initialization:** Set `dist[s] = 0`, `dist[v] = ∞` (`∀ v ≠ s`), settled set `S = ∅`, and insert `V` into Min-Heap `Q`.\n2. **Greedy Selection & Relaxation:** Repeatedly extract unsettled `u = EXTRACT_MIN(Q)`, add `u` to `S`, and apply `RELAX(u, v, w)` to every outgoing edge `(u, v)`. **Complexity:** **`O((V + E) log V)`** with binary min-heap (`O(V²)` with array).\n- **Worked Trace (`s = A`; edges `A→B:4`, `A→C:1`, `C→B:2`, `B→D:1`, `C→D:5`):**\n\n| Step | Settled `u` | `dist[A]` | `dist[B]` | `dist[C]` | `dist[D]` | Relaxations Triggered |\n| :---: | :---: | :---: | :---: | :---: | :---: | :--- |\n| Init | — | **`0`** | `∞` | `∞` | `∞` | — |\n| **1** | **`A`** | `0` | `4` | **`1`** | `∞` | `A→B (4)`, `A→C (1)` |\n| **2** | **`C`** | `0` | **`3`** | `1` | `6` | `C→B (1+2 = 3 < 4)`, `C→D (1+5 = 6)` |\n| **3** | **`B`** | `0` | `3` | `1` | **`4`** | `B→D (3+1 = 4 < 6)` |\n| **4** | **`D`** | `0` | `3` | `1` | `4` | Final distances: `A:0, C:1, B:3, D:4` |\n\n### b) Short Note on Topological Sorting [3 Marks]\n\n- **Definition:** A **topological sort** of a **Directed Acyclic Graph (`DAG`)** `G = (V, E)` is a linear ordering of all vertices such that for every directed edge **`u → v`**, vertex `u` appears **strictly before** `v` in the sequence (impossible if `G` contains a directed cycle).\n- **Two `Θ(V + E)` Algorithms:**\n  1. **Kahn's In-Degree Algorithm (`BFS`):** Repeatedly dequeue vertices with `indegree == 0`, append to output, and decrement neighbors' in-degrees (if output count `< |V|`, a cycle exists).\n  2. **DFS Finish-Time Method:** Run `DFS` and push each vertex onto a stack upon finishing (`BLACK`), reading the stack top-to-bottom.\n- **Applications:** Build systems (`Makefile`), course-prerequisite scheduling, and spreadsheet formula evaluation.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

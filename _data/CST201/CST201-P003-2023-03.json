@@ -125,7 +125,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) int *ptr.**\n\nThe `*` is part of the declarator and binds to the name, so `ptr` is declared as a pointer to `int`. `int_ptr x` and `*int ptr` are not valid C syntax.",
+      "answer": "**Correct answer: B) `int *ptr`**\n\n- **Declarator Syntax:** In C, the indirection asterisk `*` precedes the variable identifier (`int *ptr`), declaring `ptr` as a pointer to `int` (`*ptr` has type `int`).\n- **Why Others Fail:** `int_ptr x` treats `int_ptr` as an undeclared type name, and `*int ptr` places `*` illegally before the base type keyword.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -173,7 +173,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) 4.**\n\nOn typical 32-bit and 64-bit compilers an `int` occupies 4 bytes, which this paper assumes. The standard only guarantees at least 2 bytes, so a 16-bit compiler would answer 2.",
+      "answer": "**Correct answer: A) `4`**\n\n- **Modern 32/64-Bit Compiler Standard:** On standard 32-bit and 64-bit platforms (ILP32, LP64, LLP64 such as GCC, Clang, and MSVC), `sizeof(int)` is **`4` bytes** (`32` bits, signed range `-2,147,483,648` to `2,147,483,647`).\n- **ISO C Minimum Note:** ISO C guarantees at least `2` bytes (`16` bits on legacy DOS compilers like Turbo C).",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -222,7 +222,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A.**\n\nC arrays use square brackets for the size and a brace-enclosed list for the values: `int a[3] = {1, 2, 3};`. `new` is C++ syntax and parentheses are not allowed in C.",
+      "answer": "**Correct answer: A) `int a[3] = {1, 2, 3};`**\n\n- **Brace-Enclosed Initializer List:** C declares array dimension inside square brackets `[3]` and supplies initial element values inside curly braces `{1, 2, 3}`.\n- **Why Others Fail:** Option B omits `[]` (scalar `int` cannot take 3 values), Option C uses C++/Java `new`, and Option D uses parentheses and `[]` list syntax.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -270,7 +270,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Both a and b.**\n\nA function may take no arguments or several, and may return a value or be `void`. Neither input nor output is compulsory, so both statements hold.",
+      "answer": "**Correct answer: C) Both a and b**\n\n- **Four Function Categories in C:** A C function may take arguments (`int f(int x)`) or take none (`int f(void)`), and may return a value (`return res;`) or return nothing (`void f(...)`).\n- **Conclusion:** Both statements (a) and (b) are true.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -319,7 +319,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) printf(\"\\\\n\").**\n\nTo print the two literal characters backslash and n, the backslash itself must be escaped, giving `\"\\\\n\"`. A plain `\"\\n\"` would only move output to a new line.",
+      "answer": "**Correct answer: D) `printf(\"\\\\n\")`**\n\n- **Escaping the Backslash:** Because `\\n` inside double quotes is interpreted as a single newline control character (ASCII `10`), printing the literal two-character text `\\n` requires escaping the backslash itself as `\\\\` followed by `n`.\n- **Why Others Fail:** `printf(\"n\")` prints `n`, `echo` is shell syntax, and `printf('\\n')` passes a `char` (`int`) where `const char *` is expected.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -369,7 +369,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) 1020.**\n\nPointer arithmetic scales by the size of the pointed type: `p + 5` advances 5 `int` objects, and with 4-byte `int`s that is 20 bytes, so 1020. With 2-byte `int`s it would be 1010.",
+      "answer": "**Correct answer: A) `1020`**\n\n- **Pointer Scale-Factor Formula:** Adding integer `k` to typed pointer `T *p` computes `address(p) + k * sizeof(T)`.\n- **Calculation:** Consistent with Q1(ii)'s 32-bit `sizeof(int) = 4` bytes, `p + 5 = 1000 + 5 * 4 = 1020` (note: on a legacy 2-byte `int` system it would be `1010`).",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -418,7 +418,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) conio.h.**\n\n`conio.h` is a legacy compiler-specific console header from Turbo C, not part of ISO C. `stdio.h` and `stdlib.h` are both standard headers.",
+      "answer": "**Correct answer: C) `conio.h`**\n\n- **Non-Standard DOS Header:** `<conio.h>` (declaring `clrscr()` and `getch()`) is a proprietary MS-DOS / Turbo C extension and is **not** part of the ISO/ANSI C standard library.\n- **Standard Headers:** Both `<stdio.h>` (standard I/O) and `<stdlib.h>` (memory allocation, conversions, `exit`) are official ISO C headers.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -466,7 +466,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) 10.**\n\nThe loop adds every element of {1, 2, 3, 4}, giving 1 + 2 + 3 + 4 = 10. Option 20 would require each value to be counted twice.",
+      "answer": "**Correct answer: D) `10`**\n\n- **Loop Trace (`i = 0..3`):** Starting from `sum = 0`, the loop visits `a[0]=1`, `a[1]=2`, `a[2]=3`, and `a[3]=4`, accumulating `0 + 1 + 2 + 3 + 4 = 10`.\n- **Printed Output:** `printf(\"%d\", sum)` prints `10` (note: initializing `sum = 0` is mandatory to avoid adding to stack garbage).",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -515,7 +515,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) 16.**\n\nMultiplication and division are evaluated before addition: 4/2 = 2 and 6*2 = 12, so 2 + 2 + 12 = 16. Reading strictly left to right would wrongly give 15.",
+      "answer": "**Correct answer: C) `16`**\n\n- **Operator Precedence:** Division `/` and multiplication `*` have higher precedence than addition `+`:\n  - `4 / 2 = 2` and `6 * 2 = 12`\n  - `sum = 2 + 2 + 12 = 16` (naive left-to-right ignoring precedence would wrongly give `18`).",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -564,7 +564,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) do-while loop.**\n\nIt tests the condition after running the body, which makes it exit-controlled. `while` and `for` test first and are entry-controlled loops.",
+      "answer": "**Correct answer: C) `do-while` loop**\n\n- **Exit-Controlled (Post-Test) Loop:** `do { ... } while (cond);` executes its body **first** and checks `cond` at the bottom, guaranteeing at least `1` execution.\n- **Contrast:** Both `while` and `for` test their condition before entering the body (entry-controlled).",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -612,7 +612,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) Stack.**\n\nEach call pushes an activation record holding parameters, locals and the return address, and each return pops it, so recursion is managed on the stack. A queue would give the wrong order.",
+      "answer": "**Correct answer: A) Stack**\n\n- **LIFO Call Stack:** Every recursive call pushes an **activation record (stack frame)** storing parameters, local variables, and return address onto the runtime call stack; returning pops the most recent frame in Last-In-First-Out order.\n- **Why Others Fail:** FIFO queues cannot unwind nested calls back to the immediate caller.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -660,7 +660,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) volatile.**\n\n`volatile` is a type qualifier telling the compiler an object may change unexpectedly; it is not a storage class. `extern` and `static` are storage classes, and `typedef` only names types.",
+      "answer": "**Correct answer: A) `volatile`**\n\n- **Type Qualifier vs Storage-Class Specifier:** In ISO C grammar, `extern`, `static`, `auto`, `register`, and `typedef` (for syntactic convenience) are classified as **storage-class specifiers**.\n- **Why `volatile` Is Selected:** `volatile` (like `const`) is a **type qualifier** preventing compiler caching of externally modified memory.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -710,7 +710,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Dennis Ritchie.**\n\nDennis Ritchie developed C at Bell Laboratories around 1972 while building UNIX. James Gosling created Java and Rasmus Lerdorf created PHP.",
+      "answer": "**Correct answer: C) Dennis Ritchie**\n\n- **Origin of C:** **Dennis Ritchie** designed and implemented the C programming language around `1972` at AT&T Bell Laboratories (evolving from Ken Thompson's B language) to rewrite the UNIX operating system kernel.\n- **Distractors:** James Gosling created Java; Rasmus Lerdorf created PHP.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -758,7 +758,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) int $main;.**\n\nIdentifiers may use letters, digits and underscores only, so the `$` character makes this declaration invalid. The other three names are legal.",
+      "answer": "**Correct answer: D) `int $main;`**\n\n- **Identifier Character Set:** Standard C identifiers allow only letters (`A–Z`, `a–z`), digits (`0–9`), and underscores (`_`), starting with a letter or underscore.\n- **Why D Fails:** `number`, `rate`, and `variable_count` obey all C lexical rules, whereas `$main` begins with a prohibited dollar-sign character.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -807,7 +807,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) LowerCase letters.**\n\nC keywords are case-sensitive and spelled in lowercase, such as `int`, `while` and `return`. Writing `Int` or `WHILE` creates a different identifier, not a keyword.",
+      "answer": "**Correct answer: A) LowerCase letters**\n\n- **Case-Sensitive Grammar:** Every traditional ANSI C keyword (`int`, `float`, `if`, `else`, `while`, `for`, `return`, `struct`, `sizeof`) is written strictly in **lowercase**.\n- **Note:** Capitalized spellings like `Int` or `WHILE` are treated as ordinary user identifiers rather than keywords.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -855,7 +855,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) volatile.**\n\n`volatile` is a reserved C keyword and can never be used as a variable name. `true` is only a C99 macro, and `friend` and `export` are not C keywords.",
+      "answer": "**Correct answer: A) `volatile`**\n\n- **Reserved Keyword Restriction:** `volatile` is one of ANSI C's 32 reserved keywords (type qualifier), so declaring a variable named `volatile` causes a syntax error.\n- **Why Others Are Valid in C89:** `friend` and `export` are C++ keywords (valid identifiers in C), and `true` is an identifier unless `<stdbool.h>` (C99) is included.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -903,7 +903,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) #.**\n\nEvery preprocessor directive starts with `#`, as in `#include` and `#define`. The dollar, quote and ampersand symbols have no preprocessor meaning.",
+      "answer": "**Correct answer: A) `#`**\n\n- **Hash Directive Prefix:** Every C preprocessor command begins with the pound/hash symbol `#` as the first non-whitespace token on a line (e.g., `#include`, `#define`, `#ifdef`, `#pragma`).\n- **Translation Stage:** Preprocessor directives execute **before** actual compilation and do not end with semicolons.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -951,7 +951,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) Void function.**\n\nA function declared with return type `void` sends no value back to the caller. Example: `void display(void) { ... }`.",
+      "answer": "**Correct answer: D) Void function**\n\n- **`void` Return Type:** A function that performs an action (such as printing output or modifying data via pointers) without sending any value back to its caller is declared with return type `void` (`void display(int x)`).\n- **Early Exit:** It may omit `return` or use a bare `return;` statement.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -999,7 +999,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) 32 keywords.**\n\nANSI C (C89/C90) defines exactly 32 keywords, including `int`, `if`, `struct`, `union` and `sizeof`. Later standards add a few more.",
+      "answer": "**Correct answer: B) `32 keywords`**\n\n- **ANSI C89 / ISO C90 Standard:** Classic ANSI C defines **32 reserved keywords** (`auto`, `break`, `case`, `char`, `const`, `continue`, `default`, `do`, `double`, `else`, `enum`, `extern`, `float`, `for`, `goto`, `if`, `int`, `long`, `register`, `return`, `short`, `signed`, `sizeof`, `static`, `struct`, `switch`, `typedef`, `union`, `unsigned`, `void`, `volatile`, `while`).\n- **Note:** C99 added `5` (`37`) and C11 added `7` (`44`), while `32` is the standard textbook answer.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -1048,7 +1048,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) logical.**\n\n`&&` is the logical AND: it returns 1 only when both operands are non-zero and short-circuits otherwise. A single `&` would be the bitwise AND.",
+      "answer": "**Correct answer: B) logical**\n\n- **Logical AND (`&&`):** Binary **logical** operator that evaluates `expr1 && expr2` to `1` if both operands are non-zero, or `0` otherwise, using **short-circuit evaluation** (skips `expr2` when `expr1 == 0`).\n- **Contrast:** Single `&` is either binary **Bitwise AND** (`a & b`) or unary **address-of** (`&x`).",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -1096,7 +1096,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) switch.**\n\n`continue` belongs to loops and jumps to the next iteration of the enclosing `for`, `while` or `do-while`. `switch` is a selection construct, so it cannot take `continue`.",
+      "answer": "**Correct answer: B) `switch`**\n\n- **Iteration-Only Jump Statement:** ISO C permits `continue;` **only inside loop bodies** (`for`, `while`, `do-while`) to advance to the next loop iteration.\n- **Why `switch` Fails:** Writing `continue;` inside a standalone `switch` block (not nested inside an outer loop) causes a compile-time error; `switch` uses `break;` to exit.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -1144,7 +1144,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) obj file.**\n\nThe compiler translates each `.c` source file into an object (`.obj`/`.o`) file of machine code, which the linker then combines. Class files belong to Java.",
+      "answer": "**Correct answer: B) `obj file`**\n\n- **C Translation Pipeline:** The **compiler** translates preprocessed C source code (`.c`) into a relocatable machine-code **object file** (`.obj` on Windows / `.o` on Linux/UNIX); the **linker** subsequently combines `.obj` files with `.lib` libraries into an executable.\n- **Distractors:** `.class` belongs to Java bytecode; `.bat` is a DOS batch script.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -1192,7 +1192,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) return.**\n\n`return` ends the function and passes control, with an optional value, back to the caller. `goto` only jumps to a label inside the same function.",
+      "answer": "**Correct answer: D) `return`**\n\n- **Function Exit & Return Transfer:** Executing `return` (or `return expr;`) unwinds the called function's stack frame and transfers execution control—along with any return value—back to the calling function.\n- **Why Others Fail:** `goto` jumps only within the **same** function, `switch` branches across cases, and `go back` is not valid C.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -1240,7 +1240,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) 6 5.**\n\n`b = a++` stores the old value 5 in `b` and then increments `a` to 6. Printing `a` first gives 6 5.",
+      "answer": "**Correct answer: A) `6 5`**\n\n- **Post-Increment Trace (`b = a++;`):** `a++` evaluates to `a`'s original value `5` (assigned to `b`) and increments `a` to `6`.\n- **Print Order:** `printf(\"%d %d\", a, b)` prints `a` (`6`) followed by `b` (`5`), producing `6 5`.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -1287,7 +1287,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) -2.**\n\nThe remainder takes the sign of the dividend, and -5 = 3(-1) + (-2), so `x % y` is -2. A positive remainder would require a positive dividend.",
+      "answer": "**Correct answer: A) `-2`**\n\n- **Dividend-Sign Rule (`%`):** In standard C, integer division `-5 / 3` truncates toward zero to `-1`, and the remainder carries the **sign of the dividend `x`** (`-5`).\n- **Verification:** `(-1) * 3 + (-2) = -5`, so `x % y = -5 % 3 = -2`.",
       "answerStatus": "model-answer",
       "marks": 1,
       "markSplit": "1",
@@ -1329,7 +1329,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks (program) + b) 4 marks (program).**\n\n**a) C program to find the GCD of two numbers**\n\n```c\n#include <stdio.h>\nint gcd(int a, int b) {\n    while (b != 0) {\n        int t = a % b;\n        a = b;\n        b = t;\n    }\n    return a;\n}\nint main() {\n    int x, y;\n    printf(\"Enter two numbers: \");\n    scanf(\"%d %d\", &x, &y);\n    printf(\"GCD of %d and %d = %d\\n\", x, y, gcd(x, y));\n    return 0;\n}\n```\nExample: input `48 18` → output `GCD of 48 and 18 = 6`. Uses Euclid's algorithm: repeatedly replace `(a, b)` with `(b, a % b)` until `b` becomes 0.\n\n**b) C program to check whether a number is divisible by 5 and 11**\n\n```c\n#include <stdio.h>\nint main() {\n    int n;\n    printf(\"Enter a number: \");\n    scanf(\"%d\", &n);\n    if (n % 5 == 0 && n % 11 == 0) {\n        printf(\"%d is divisible by both 5 and 11.\\n\", n);\n    } else {\n        printf(\"%d is NOT divisible by both 5 and 11.\\n\", n);\n    }\n    return 0;\n}\n```\nThe condition `n % 5 == 0 && n % 11 == 0` is true only when the number leaves remainder 0 on division by both 5 and 11 (equivalently, divisible by 55).\n",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks (`a`: C program to find GCD of two numbers — 4m · `b`: C program to check divisibility by both 5 and 11 — 4m)\n\n### Part (a) — C Program to Find GCD (Greatest Common Divisor) of Two Numbers\n\n- **Euclidean Algorithm:** Repeatedly replace `(a, b)` with `(b, a % b)` until remainder `b == 0`; the last non-zero value in `a` is `GCD(a, b)` (`O(log(min(a, b)))` time).\n\n```c\n#include <stdio.h>\n\nint gcd(int a, int b) {\n    if (a < 0) a = -a;\n    if (b < 0) b = -b;\n    while (b != 0) {\n        int rem = a % b;\n        a = b;\n        b = rem;\n    }\n    return a;\n}\n\nint main(void) {\n    int x, y;\n    printf(\"Enter two integers: \");\n    if (scanf(\"%d %d\", &x, &y) != 2) return 1;\n    printf(\"GCD of %d and %d = %d\\n\", x, y, gcd(x, y));\n    return 0;\n}\n```\n\n- **Dry-Run (`48, 18`):** `(48, 18) -> (18, 12) -> (12, 6) -> (6, 0)` → `GCD of 48 and 18 = 6`.\n\n### Part (b) — C Program to Check Divisibility by Both `5` and `11`\n\n- **Compound Logical Condition:** Since `gcd(5, 11) == 1`, an integer `n` is divisible by **both** `5` and `11` if and only if `(n % 5 == 0) && (n % 11 == 0)` (equivalently `n % 55 == 0`).\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    int n;\n    printf(\"Enter an integer: \");\n    if (scanf(\"%d\", &n) != 1) return 1;\n\n    if ((n % 5 == 0) && (n % 11 == 0))\n        printf(\"%d is divisible by both 5 and 11.\\n\", n);\n    else\n        printf(\"%d is NOT divisible by both 5 and 11.\\n\", n);\n\n    return 0;\n}\n```\n\n- **Sample Outputs:** Input `110` → `110 is divisible by both 5 and 11.`; input `25` → `25 is NOT divisible by both 5 and 11.`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1370,7 +1370,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** `for` combines initialization, condition, and update in its header; `while` keeps them separate. Use `for` for counted loops, `while` for condition-driven loops.\n\n**b)**\n```c\nint m[5], total=0; for(int i=0;i<5;i++){scanf(\"%d\",&m[i]); total+=m[i];}\ndouble p=total/5.0;\nchar g = p>=90?'A':p>=80?'B':p>=70?'C':p>=60?'D':p>=40?'E':'F';\nprintf(\"%.2f %c\", p, g);\n```",
+      "answer": "> [!MARKS] 3 + 5 = 8 Marks (`a`: `for` loop vs `while` loop with example — 3m · `b`: C program for 5-subject percentage & grade — 5m)\n\n### Part (a) — `for` Loop vs `while` Loop\n\n> [!COMPARE] `for` Loop vs `while` Loop in C\n> | Parameter | `for` Loop | `while` Loop |\n> |---|---|---|\n> | **Syntax** | `for (init; cond; update) { ... }` | `init; while (cond) { ... update; }` |\n> | **Control Placement** | Initialization, condition, and step sit together in one header. | Only the condition sits in the header; init/update are separate. |\n> | **Effect of `continue`** | Jumps to the `update` expression before re-testing `cond`. | Jumps directly to `cond` (can cause infinite loop if update is skipped). |\n> | **Ideal Use Case** | Fixed/counter-controlled iterations (array traversal `0..n-1`). | Event/sentinel-driven loops (`while ((ch = getchar()) != EOF)`). |\n\n### Part (b) — C Program for 5-Subject Percentage and Grade Calculation\n\n- **Standard Grading Scale:** `>= 90%`: `A` · `>= 80%`: `B` · `>= 70%`: `C` · `>= 60%`: `D` · `>= 40%`: `E` · `< 40%`: `F`.\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    int c_prog, ds, algo, python, cso, total;\n    double pct;\n    char grade;\n\n    printf(\"Enter marks (out of 100) for C, DS, Algorithms, Python, CSO:\\n\");\n    if (scanf(\"%d %d %d %d %d\", &c_prog, &ds, &algo, &python, &cso) != 5)\n        return 1;\n\n    total = c_prog + ds + algo + python + cso;\n    pct = total / 5.0;\n\n    if (pct >= 90.0)      grade = 'A';\n    else if (pct >= 80.0) grade = 'B';\n    else if (pct >= 70.0) grade = 'C';\n    else if (pct >= 60.0) grade = 'D';\n    else if (pct >= 40.0) grade = 'E';\n    else                  grade = 'F';\n\n    printf(\"Percentage = %.2f%%, Grade = %c\\n\", pct, grade);\n    return 0;\n}\n```\n\n- **Sample Output (`84 78 88 90 80`):** `total = 420`, `Percentage = 84.00%, Grade = B`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1413,7 +1413,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** `goto label` jumps to a labelled statement in the same function; it is rarely preferred, but can break out of deeply nested loops.\n\n**b)**\n```c\nfor (int start=5; start>=1; start--) {\n    for (int j=start; j<=5; j++) printf(\"%d\", j);\n    printf(\"\\n\");\n}\n```",
+      "answer": "> [!MARKS] 3 + 5 = 8 Marks (`a`: Use of `goto` statement with example — 3m · `b`: Nested-loop C program for `5 / 45 / 345 / 2345 / 12345` — 5m)\n\n### Part (a) — Use of the `goto` Statement in C\n\n- **Purpose:** `goto label;` transfers execution unconditionally to `label:` within the **same function** (jumping across two different functions with `goto` is illegal in C; variable-length arrays cannot be jumped into).\n- **Practical Use Case:** While unrestricted `goto` is discouraged in structured programming because backward jumps obscure invariants, forward `goto` provides a clean single-step exit out of **deeply nested loops** (where `break;` exits only one level) or jumps to shared error/resource cleanup:\n\n```c\nfor (int i = 0; i < 10; i++) {\n    for (int j = 0; j < 10; j++) {\n        if (grid[i][j] < 0) goto error_exit;\n    }\n}\nerror_exit:\nprintf(\"Stopped on negative entry.\\n\");\n```\n\n### Part (b) — Nested-Loop C Program to Print `5 / 45 / 345 / 2345 / 12345`\n\n- **Row/Column Pattern Analysis:** Across `5` rows, the starting digit `start` counts **down** from `5` to `1`, while inner column variable `j` counts **up** from `start` to `5` on each row:\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    int start, j;\n    for (start = 5; start >= 1; start--) {\n        for (j = start; j <= 5; j++) {\n            printf(\"%d\", j);\n        }\n        printf(\"\\n\");\n    }\n    return 0;\n}\n```\n\n- **Row-by-Row Trace & Verified Output:**\n\n| Outer `start` | Inner `j` values (`start..5`) | Printed Line |\n|---|---|---|\n| `5` | `5` | `5` |\n| `4` | `4, 5` | `45` |\n| `3` | `3, 4, 5` | `345` |\n| `2` | `2, 3, 4, 5` | `2345` |\n| `1` | `1, 2, 3, 4, 5` | `12345` |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1455,7 +1455,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "**a)** Check every diagonal element is 1 and every off-diagonal element is 0.\n\n```c\nfor(i=0;i<n;i++) for(j=0;j<n;j++)\n  if(a[i][j] != (i==j)) { identity=0; break; }\n```\n\n**b)** An array is a contiguous fixed-size collection of same-type elements. Advantages: indexed random access, cache locality, simple iteration.",
+      "answer": "> [!MARKS] 5 + 3 = 8 Marks (`a`: C program to check whether a matrix is an identity matrix — 5m · `b`: Array definition & advantages — 3m)\n\n### Part (a) — C Program to Check Whether a Matrix Is an Identity Matrix\n\n- **Identity Matrix Definition (`Iₙ`):** A **square** `n x n` matrix in which every principal diagonal entry equals `1` (`a[i][j] == 1` when `i == j`) and every off-diagonal entry equals `0` (`a[i][j] == 0` when `i != j`).\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    int a[10][10], r, c, i, j, is_identity = 1;\n\n    printf(\"Enter rows and columns (max 10 10): \");\n    if (scanf(\"%d %d\", &r, &c) != 2 || r < 1 || r > 10 || c < 1 || c > 10)\n        return 1;\n\n    if (r != c) {\n        printf(\"Not an Identity Matrix (must be square).\\n\");\n        return 0;\n    }\n\n    printf(\"Enter %d elements:\\n\", r * c);\n    for (i = 0; i < r; i++) {\n        for (j = 0; j < c; j++) {\n            scanf(\"%d\", &a[i][j]);\n            if ((i == j && a[i][j] != 1) || (i != j && a[i][j] != 0)) {\n                is_identity = 0;\n            }\n        }\n    }\n\n    if (is_identity)\n        printf(\"The matrix is an Identity Matrix.\\n\");\n    else\n        printf(\"The matrix is NOT an Identity Matrix.\\n\");\n    return 0;\n}\n```\n\n### Part (b) — Definition and Advantages of an Array\n\n- **Definition:** An **array** is a linear, fixed-size data structure storing a collection of **homogeneous** (same-type) elements in **contiguous memory locations** under a single variable name.\n- **Key Advantages:**\n  1. **`O(1)` Random Access:** Any element `a[i]` is reached directly via `base + i * sizeof(type)` without sequential scanning.\n  2. **Compact Loop Processing:** One `for` loop processes hundreds of values instead of declaring hundreds of separate variables.\n  3. **Cache Locality & Foundation:** Contiguous layout maximizes CPU cache hits and underpins matrices, strings, heaps, and hash tables.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1497,7 +1497,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** `auto`, `register`, `static`, `extern` control storage duration, scope/linkage, and default initialization.\n\n**b)** Call by value copies the argument, so the callee cannot mutate the caller’s object. Call by address passes `&x`; dereferencing the pointer changes the original.",
+      "answer": "> [!MARKS] 4 + 4 = 8 Marks (`a`: Storage classes in C — 4m · `b`: Call by value vs call by address — 4m)\n\n### Part (a) — Storage Classes Used in C\n\n- **Role:** C's four variable storage classes specify **storage location**, **default initial value**, **scope/linkage**, and **lifetime**:\n\n| Storage Class | Storage Location | Initial Value | Scope / Linkage | Lifetime |\n|---|---|---|---|---|\n| `auto` | Stack (RAM) | Garbage | Local to block (no linkage) | Until block exits |\n| `register` | CPU register (hint) | Garbage | Local to block (`&` illegal) | Until block exits |\n| `static` | Data / BSS segment | `0` | Block-local or file-internal | Entire program execution |\n| `extern` | Data / BSS segment | `0` | Global across `.c` source files | Entire program execution |\n\n- **Example:** `static int count = 0; count++;` inside a function keeps its incremented value across calls, whereas `auto int count = 0;` resets on every invocation.\n\n### Part (b) — Call by Value vs Call by Address\n\n> [!COMPARE] Call by Value vs Call by Address in C\n> | Parameter | Call by Value | Call by Address |\n> |---|---|---|\n> | **What Is Passed** | Copies of actual argument **values** (`swap(a, b)`). | Memory **addresses** of actual variables (`swap(&a, &b)`). |\n> | **Formal Parameters** | Ordinary value variables (`int x, int y`). | Pointer variables (`int *x, int *y`). |\n> | **Caller Side Effects** | Changes inside callee **never** alter caller variables. | Dereferencing `*x` directly updates caller variables in place. |\n> | **Memory & Return** | Copies full data; returns only one scalar value. | Copies compact addresses; can update multiple caller outputs. |\n\n```c\nvoid byVal(int x)  { x = 50; }       /* caller variable unchanged */\nvoid byAddr(int *p){ *p = 50; }      /* caller variable becomes 50 */\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1539,7 +1539,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** `strcmp(a,b)` compares two strings lexicographically and returns 0 when equal; `strcat(dst,src)` appends `src` to `dst`.\n\n**b)**\n```c\nfor (int i=0; s[i]; i++)\n  if (s[i]>='a' && s[i]<='z') s[i]-=32;\n  else if (s[i]>='A' && s[i]<='Z') s[i]+=32;\n```",
+      "answer": "> [!MARKS] 3 + 5 = 8 Marks (`a`: `strcmp()` and `strcat()` — 3m · `b`: C program to toggle lowercase/uppercase without `<string.h>` — 5m)\n\n### Part (a) — String Operations `strcmp()` and `strcat()` (`<string.h>`)\n\n- **`int strcmp(const char *s1, const char *s2)`:**\n  - Compares `s1` and `s2` character-by-character using unsigned ASCII values until a mismatch or `'\\0'`.\n  - Returns `0` if `s1` and `s2` are identical, `< 0` if `s1 < s2` (e.g., `strcmp(\"ABC\", \"abc\") < 0`), and `> 0` if `s1 > s2`.\n- **`char *strcat(char *dest, const char *src)`:**\n  - Appends a copy of `src` onto the end of `dest` (overwriting `dest`'s `'\\0'` and adding a new terminating `'\\0'`); `dest` must have capacity `>= strlen(dest) + strlen(src) + 1`.\n\n### Part (b) — C Program to Toggle Lowercase ↔ Uppercase Without `<string.h>`\n\n- **ASCII Case-Offset Rule:** Uppercase `'A'..'Z'` (`65..90`) and lowercase `'a'..'z'` (`97..122`) differ by **`32`** (`'a' - 'A' == 32`): subtract `32` (`ch - 'a' + 'A'`) for lowercase→uppercase, and add `32` (`ch - 'A' + 'a'`) for uppercase→lowercase, stopping at `'\\0'`.\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    char str[100];\n    int i;\n\n    printf(\"Enter a string: \");\n    if (fgets(str, sizeof(str), stdin) == NULL) return 1;\n\n    for (i = 0; str[i] != '\\0'; i++) {\n        if (str[i] >= 'a' && str[i] <= 'z') {\n            str[i] = (char)(str[i] - ('a' - 'A'));      /* to uppercase */\n        } else if (str[i] >= 'A' && str[i] <= 'Z') {\n            str[i] = (char)(str[i] + ('a' - 'A'));      /* to lowercase */\n        }\n    }\n\n    printf(\"Converted string: %s\", str);\n    return 0;\n}\n```\n\n- **Sample Output (`\"Hello C 2023!\"`):** Prints `Converted string: hELLO c 2023!` — digits, spaces, and punctuation fail both range checks and remain untouched, `fgets()` safely prevents buffer overflow while reading multi-word lines, and zero `<string.h>` functions are used.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1581,7 +1581,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks (program) + b) 4 marks (definition + advantages).**\n\n**a) C program to add two numbers using pointers and a function**\n\n```c\n#include <stdio.h>\nvoid add(int *a, int *b, int *result) {\n    *result = *a + *b;\n}\nint main() {\n    int x, y, z;\n    printf(\"Enter two numbers: \");\n    scanf(\"%d %d\", &x, &y);\n    add(&x, &y, &z);          // pass addresses\n    printf(\"Sum = %d\\n\", z);\n    return 0;\n}\n```\nExample: input `7 8` → output `Sum = 15`. The function receives the addresses of `x`, `y`, `z` and writes the sum directly into `z`'s memory location.\n\n**b) What is a pointer? Advantages of using pointers**\n\nA **pointer** is a variable that stores the memory address of another variable instead of a data value.\n\n**Advantages:**\n1. **Pass-by-reference**: functions can modify variables in the calling function (avoids copying large data).\n2. **Dynamic memory allocation**: memory can be allocated at run time using `malloc`, `calloc`, `realloc`.\n3. **Efficient array and string handling**: arrays and strings are processed using pointer arithmetic.\n4. **Building complex data structures**: linked lists, trees, graphs are created using pointers.\n5. **Faster execution**: accessing data via address is often faster than copying values.\n6. **Returning multiple values from a function**: through pointer parameters.\n\n```c\nint n = 100;\nint *ptr = &n;     // ptr stores address of n\nprintf(\"%d\", *ptr); // dereference → 100\n```\n\n",
+      "answer": "> [!MARKS] 5 + 3 = 8 Marks (`a`: C program to add two numbers using pointers and function — 5m · `b`: Pointer definition & advantages — 3m)\n\n### Part (a) — C Program to Add Two Numbers Using Pointers and a Function\n\n- **Design:** Pass addresses `&x`, `&y`, and `&sum` to `void addNumbers(const int *a, const int *b, int *result)` so the function reads `*a` and `*b` and writes their sum directly into `*result`.\n\n```c\n#include <stdio.h>\n\nvoid addNumbers(const int *a, const int *b, int *result) {\n    *result = *a + *b;\n}\n\nint main(void) {\n    int x, y, sum;\n    printf(\"Enter two integers: \");\n    if (scanf(\"%d %d\", &x, &y) != 2) return 1;\n\n    addNumbers(&x, &y, &sum);           /* pass addresses */\n    printf(\"Sum of %d and %d = %d\\n\", x, y, sum);\n    return 0;\n}\n```\n\n- **Sample Run (`x = 27, y = 15`):** `addNumbers` dereferences `*a` (`27`) and `*b` (`15`), writes `42` into `*result`, and `main()` prints `Sum of 27 and 15 = 42`.\n\n### Part (b) — What Is a Pointer? Advantages of Using Pointers in C\n\n- **Definition:** A **pointer** is a derived variable that holds the **memory address** of another typed variable (`int n = 10; int *p = &n;` where `*p == 10`).\n- **Key Advantages:**\n  1. **Call-by-Address Mutation:** Enables functions to modify caller variables and return multiple outputs.\n  2. **Dynamic Heap Memory:** Required for `malloc()`, `calloc()`, `realloc()`, and `free()`.\n  3. **Zero-Copy Array/Struct Passing:** Passes large arrays and `struct` objects efficiently via a single address instead of copying kilobytes on the stack.\n  4. **Dynamic Data Structures:** Essential for building linked lists, trees, and graphs.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1623,7 +1623,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks (program) + b) 4 marks (program).**\n\n**a) C program to find the ASCII value of a character**\n\n```c\n#include <stdio.h>\nint main() {\n    char ch;\n    printf(\"Enter a character: \");\n    scanf(\" %c\", &ch);\n    printf(\"ASCII value of '%c' = %d\\n\", ch, ch);\n    return 0;\n}\n```\nExample: input `'A'` → output `ASCII value of 'A' = 65`.\n\nA `char` is stored internally as its integer ASCII code, so printing it with `%d` gives the ASCII value.\n\n**b) C program to find all prime numbers between a given interval using functions**\n\n```c\n#include <stdio.h>\nint isPrime(int n) {\n    if (n < 2) return 0;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return 0;\n    }\n    return 1;\n}\nint main() {\n    int lo, hi, i;\n    printf(\"Enter lower and upper bound: \");\n    scanf(\"%d %d\", &lo, &hi);\n    printf(\"Prime numbers between %d and %d:\\n\", lo, hi);\n    for (i = lo; i <= hi; i++) {\n        if (isPrime(i)) {\n            printf(\"%d \", i);\n        }\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```\nExample: input `10 30` → output `11 13 17 19 23 29`. The `isPrime` function returns 1 if `n` is prime (no divisor from 2 up to √n), else 0.\n",
+      "answer": "> [!MARKS] 3 + 5 = 8 Marks (`a`: C program to print ASCII value of a character — 3m · `b`: C program to print prime numbers in an interval using functions — 5m)\n\n### Part (a) — C Program to Find the ASCII Value of a Character\n\n- **Concept:** A `char` stores a 1-byte integer character code; printing it with `%c` displays the glyph while `%d` prints its decimal ASCII code (`'A' -> 65`, `'a' -> 97`, `'0' -> 48`).\n\n```c\n#include <stdio.h>\n\nint main(void) {\n    char ch;\n    printf(\"Enter a character: \");\n    if (scanf(\" %c\", &ch) != 1) return 1;\n    printf(\"ASCII value of '%c' = %d\\n\", ch, (unsigned char)ch);\n    return 0;\n}\n```\n\n### Part (b) — C Program to Find All Prime Numbers in an Interval Using Functions\n\n- **Trial-Division Primality (`O(√n)`):** An integer `n >= 2` is prime iff it has no divisor `d` satisfying `2 <= d * d <= n` (`0`, `1`, and negatives are not prime).\n\n```c\n#include <stdio.h>\n\nint isPrime(int n) {\n    int d;\n    if (n < 2) return 0;\n    for (d = 2; d * d <= n; d++) {\n        if (n % d == 0) return 0;\n    }\n    return 1;\n}\n\nvoid printPrimes(int low, int high) {\n    int num;\n    printf(\"Prime numbers between %d and %d: \", low, high);\n    for (num = low; num <= high; num++) {\n        if (isPrime(num)) {\n            printf(\"%d \", num);\n        }\n    }\n    printf(\"\\n\");\n}\n\nint main(void) {\n    int low, high;\n    printf(\"Enter lower and upper bounds: \");\n    if (scanf(\"%d %d\", &low, &high) != 2) return 1;\n    if (low > high) { int t = low; low = high; high = t; }\n    printPrimes(low, high);\n    return 0;\n}\n```\n\n- **Sample Output (`10 30`):** `Prime numbers between 10 and 30: 11 13 17 19 23 29`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1675,7 +1675,7 @@
         }
       ],
       "markSplit": "2+2+2+2",
-      "answer": "**a)** `malloc(n)` allocates `n` uninitialized bytes.\n\n**b)** `calloc(count,size)` allocates and zero-initializes an array.\n\n**c)** `realloc(p,n)` resizes an existing allocation, preserving the old contents up to the smaller size.\n\n**d)** `free(p)` releases dynamically allocated memory.\n\n```c\nint *a = malloc(5*sizeof *a); a = realloc(a,10*sizeof *a); free(a);\n```",
+      "answer": "> [!MARKS] 2 + 2 + 2 + 2 = 8 Marks (`a`: `malloc()` — 2m · `b`: `calloc()` — 2m · `c`: `realloc()` — 2m · `d`: `free()` — 2m)\n\nAll four dynamic heap-management functions are declared in `<stdlib.h>`:\n\n### (a) `malloc()` — Memory Allocation\n- **Prototype:** `void *malloc(size_t size);`\n- **Behaviour:** Allocates **one contiguous block** of `size` uninitialized bytes on the heap (contents are indeterminate garbage) and returns a generic pointer to the first byte, or `NULL` if heap allocation fails.\n\n### (b) `calloc()` — Contiguous Allocation\n- **Prototype:** `void *calloc(size_t n, size_t elem_size);`\n- **Behaviour:** Allocates heap memory for an array of `n` elements of `elem_size` bytes each (`n * elem_size` total) and **initializes every byte to `0`**, returning `NULL` on failure.\n\n### (c) `realloc()` — Re-Allocation\n- **Prototype:** `void *realloc(void *ptr, size_t new_size);`\n- **Behaviour:** Resizes a previously allocated heap block pointed to by `ptr` to `new_size` bytes (either expanding in place or allocating a new block, copying up to `min(old_size, new_size)` bytes, and freeing the old block); if it fails, it returns `NULL` and leaves the original block untouched.\n\n### (d) `free()` — Deallocation\n- **Prototype:** `void free(void *ptr);`\n- **Behaviour:** Releases a heap block obtained from `malloc`/`calloc`/`realloc` back to the free store to prevent **memory leaks** (`free(NULL)` is a safe no-op; set `ptr = NULL;` afterward to prevent dangling/double-free bugs).\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int *a = calloc(3, sizeof *a);          /* {0, 0, 0} */\n    if (!a) return 1;\n    int *tmp = realloc(a, 5 * sizeof *a);   /* grow to 5 ints */\n    if (!tmp) { free(a); return 1; }\n    a = tmp;\n    a[3] = 40; a[4] = 50;\n    printf(\"%d %d\\n\", a[0], a[4]);          /* 0 50 */\n    free(a);\n    a = NULL;\n    return 0;\n}\n```",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
