@@ -87,7 +87,7 @@ class PipelineTests(unittest.TestCase):
         # hash pair per question: the frozen answer must hash to `oldSha256` and the
         # stored answer to `newSha256`. Any other answer text fails.
         allowed_answer_rewrites=integrity.get('reconciliation',{}).get('answerRewrites',{})
-        self.assertLessEqual(len(allowed_answer_rewrites),76,'recorded answer rewrites grew without a new approval')
+        self.assertLessEqual(len(allowed_answer_rewrites),130,'recorded answer rewrites grew without a new approval')
         allowed_rewrite_ids=set(allowed_answer_rewrites)
         seen_rewrites=set()
         seen_fences=set()

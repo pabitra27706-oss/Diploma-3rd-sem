@@ -983,6 +983,53 @@ growth to 76 and refused it until their caps were raised to that exact number �
 the allowances are still per-question hash matches with no wildcard. Gates:
 **202/202 unittest**, 14/14 node suites, all 13 checks green.
 
+## PYQ answer-depth review, step 3 — Computer Organisation (CST207) — 2026-11-26
+
+**Owner command:** "Continue to c ... Make it rich follow python's system of
+numbering or even more ok" — i.e. apply the same pass to C (CST207), use the
+Python numbering/reference convention, and go at least as deep.
+
+**All 54 CST207 Group B answers rewritten**: **3,625 → 11,657 words**, median
+**7.0 → 31.0 words/mark**, answers under 8 w/mark **36 → 0**. Per paper: P001
+(8×10-mark) 6.7→27.0, P002 (12×2-mark) 7.0→38.5, P003 5.6→28.6, P004 7.4→28.4,
+P005 5.9→32.6, P006 8.2→35.4. For comparison the subject medians now read
+Python 16.6, Algorithms 23.0, **COA 31.0**, DS 7.1, CSO 7.6 — COA is the
+richest, which is what "or even more" asked for.
+
+**Numbering follows the Python convention** established in step 2b: every
+answer opens with the mark split naming each part (`a) 5 + b(i)) 2 + b(ii)) 3`),
+each part heading carries its marks, and COA's five-part and ten-mark questions
+use lettered sub-parts exactly as the paper does. Where a question says "any two
+of four", **all** notes are supplied and labelled, so either choice is complete.
+
+**Every numeric trace was computed, not asserted.** Two C harnesses were
+compiled and run (gcc) and their output is what the answers quote: Booth
+multiplication for `7 × −5`, `−9 × −13` and `−11 × −9` (all three verified
+against the true products −35, +117, +99, with per-step A/Q/Q−1 rows); restoring
+division `13/4` (quotient 3, remainder 1); LRU = **13** and FIFO = **15** page
+faults on the 18-reference string with 3 frames; cache AMAT for both textbook
+cases, `8/65 ns → 14.5 ns` (inclusive) or `13.7 ns` (parallel) and `8/80 ns →
+16.0 ns` (inclusive) or `15.2 ns` (parallel); and two's complement `−75 = B5H`,
+`−6 = FAH`. The existing answers had already contradicted themselves on the
+cache formula (one said 15.2 ns, another 14.5 ns for the same convention), so
+both conventions are now stated explicitly for each numeric case.
+
+**One wrong published figure was caught and fixed in an earlier answer.**
+`CST207-P005-Q20 b)` previously read "-75 → `11001011`"; the correct two's
+complement is **`10110101` (B5H)** and the rewrite proves it by the invert-and-
+add-one steps. `CST207-P004-Q19 b)` previously gave 15.2 ns labelled as
+"concurrent lookup" with a 16 ns alternative; both are now shown as named
+conventions.
+
+`reconciliation.answerRewrites` grows to **130** entries (76 CST209 + 54 CST207),
+each with an exact old→new SHA-256 pair; both guards were raised to that exact
+count and the frozen-tree allowance now names the six CST207 papers. Gates:
+**202/202 unittest**, 14/14 node suites, all 13 checks green, all 130 rewritten
+answers rendering with balanced markup.
+
+**Still awaiting the owner:** CSO (CST205), Data Structures (CST201), Python's
+thin 2022 paper, and the missing diagrams for "draw a diagram" questions.
+
 ## Phase 13 accepted, and the decisions Phases 14–17 must inherit — 2026-11-19
 
 **Owner command:** "All good. Ok then this phase is completed." Phase 13

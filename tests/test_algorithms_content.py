@@ -54,9 +54,12 @@ class AlgorithmsContentTests(unittest.TestCase):
             # by test_data_pipeline, which pins old and new answer hashes exactly.
             allowed|={'_data/CST209/CST209-P001-2022-06.json','_data/CST209/CST209-P003-2023-03.json',
                       '_data/CST209/CST209-P004-2024-01.json','_data/CST209/CST209-P005-2024-12.json',
-                      '_data/CST209/CST209-P006-2026-01.json','_data/pyq-integrity.json'}
-            self.assertEqual({q.split('-')[0] for q in rewrites},{'CST209'},'rewrite allowance is CST209 only')
-            self.assertEqual(len(rewrites),76,'rewrite allowance grew without a new approval')
+                      '_data/CST209/CST209-P006-2026-01.json','_data/pyq-integrity.json',
+                      '_data/CST207/CST207-P001-2021-03.json','_data/CST207/CST207-P002-2022-06.json',
+                      '_data/CST207/CST207-P003-2023-03.json','_data/CST207/CST207-P004-2024-01.json',
+                      '_data/CST207/CST207-P005-2024-12.json','_data/CST207/CST207-P006-2026-01.json'}
+            self.assertEqual({q.split('-')[0] for q in rewrites},{'CST209','CST207'},'rewrite allowance subjects changed')
+            self.assertEqual(len(rewrites),130,'rewrite allowance grew without a new approval')
         drifted={k for k in set(before)|set(after) if before.get(k)!=after.get(k)}
         self.assertEqual(drifted-allowed,set(),'unapproved data drift')
         self.assertEqual(before,after, 'reverted: authorised files drifted from the pinned tree') if not allowed else None
