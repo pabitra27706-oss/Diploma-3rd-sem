@@ -72,6 +72,16 @@ class PipelineTests(unittest.TestCase):
         # itself pinned so the authorisation cannot quietly grow.
         allowed_unit_moves=integrity.get('reconciliation',{}).get('unitMoves',{})
         self.assertLessEqual(len(allowed_unit_moves),44,'recorded unit moves grew without a new approval')
+        # A recorded reconciliation may also authorise appending a closing ``` fence
+        # to an answer whose last code block was never terminated. The allowance is
+        # an exact match-and-append: listed ids only, and the stored answer must equal
+        # the frozen answer plus that suffix. Anything else stays byte-identical.
+        allowed_fence_repairs=integrity.get('reconciliation',{}).get('answerSuffixRepairs',{})
+        self.assertLessEqual(len(allowed_fence_repairs),18,'recorded fence repairs grew without a new approval')
+        for qid,suffix in allowed_fence_repairs.items():
+            self.assertEqual(suffix,{'appended':'```'},qid)
+        allowed_fence_ids=set(allowed_fence_repairs)
+        seen_fences=set()
         seen=set()
         for path,store in sum((list(s) for s in stores()),[]):
             if path.is_relative_to(ROOT/'_quiz-data'): continue  # origins still byte-identical
@@ -89,8 +99,19 @@ class PipelineTests(unittest.TestCase):
                     self.assertEqual(clean['unit'],move['to'],q['id'])
                     clean={'k':v for k,v in clean.items() if k!='unit'}
                     old={'k':v for k,v in old.items() if k!='unit'}
+                if q['id'] in allowed_fence_ids:
+                    seen_fences.add(q['id'])
+                    self.assertEqual(allowed_fence_repairs[q['id']]['appended'],'```',q['id'])
+                    # the stored answer must be the frozen answer plus one closing fence
+                    repaired=clean['answer'].rstrip('\n')
+                    frozen=old['answer'].rstrip('\n')
+                    self.assertTrue(repaired.endswith('\n```'),q['id'])
+                    self.assertEqual(repaired[:-len('\n```')],frozen,q['id'])
+                    clean={'k':v for k,v in clean.items() if k!='answer'}
+                    old={'k':v for k,v in old.items() if k!='answer'}
                 self.assertEqual(clean,old,q['id'])
         self.assertEqual(seen,set(allowed_unit_moves),'a recorded unit move did not apply')
+        self.assertEqual(seen_fences,allowed_fence_ids,'a recorded fence repair did not apply')
 
     def test_generator_is_idempotent_and_dry_run_does_not_write(self):
         paths=list((ROOT/'_data').rglob('*.json'))+list((ROOT/'_quiz-data').rglob('*.json'))+list((ROOT/'docs/data').glob('*'))

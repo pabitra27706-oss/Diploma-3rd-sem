@@ -800,6 +800,56 @@ an integration.
 Merging is not a claim of device verification. Phase 10 owns physical-device,
 screen-reader, zoom, print and offline evidence, and none of it exists yet.
 
+## PYQ answer-depth review, step 1 — closing-fence repair (2026-11-26)
+
+**Owner command:** "See pyqs answers are way too short accordingly to the given
+number only python is correct can you analysis that?" — then, after the
+analysis: "Ok start step 1", where step 1 was the formatting-only repair
+proposed in that report.
+
+**What the analysis measured** (no files changed in that pass): across the 302
+Group B/C answers, the median is **7.1 words per mark in C, 7.6 in DS, 7.0 in
+CSO and 7.5 in Algorithms**, against **16.6 in Python**. Median words for an
+8-mark answer: 67 / 69 / 56 / 63 versus **145** in Python. Pearson r between
+marks and answer length is 0.91 in Python and 0.44–0.63 everywhere else, i.e.
+answer length barely tracks the marks outside Python. Twelve questions that
+print "draw a diagram / flowchart" have no diagram in the model answer, and
+sixteen that ask for a program or pseudocode have no code block. Bringing the
+other four subjects to Python's standard needs roughly **10,200 more words
+across 302 answers**. Python's own 2022 paper (`CST203-P001`) is the exception
+inside Python: its 6-mark answers average 71 words against 163–259 elsewhere.
+
+**Step 1, executed here:** 18 CST203 answers (P003 6, P004 3, P005 3, P006 6)
+ended **inside an opened ``` code block with no closing fence**. One closing
+fence was appended to each; nothing else changed. This is a formatting repair,
+not a content edit: `question`, `options`, `correct`, `marks`, `markSplit`,
+`subparts`, `topic`, `tags`, `unit` and the other 906 answers are byte-identical,
+proved field by field against the previous commit. No answer certification is
+inferred, and the ten open source-review findings are untouched.
+
+- Recorded in `_data/pyq-integrity.json` as
+  `reconciliation.answerSuffixRepairs` (exact-id allow-list, capped at 18) so
+  the frozen-tree guard can tell this repair apart from drift. The Phase-12
+  `unitMoves` record (44 retags) is preserved unchanged — an earlier draft of
+  this repair overwrote it and the pipeline guard caught it, which is why that
+  guard now also pins the fence list.
+- `tests/test_data_pipeline.py` and `tests/test_algorithms_content.py` each
+  gained a narrow allowance: listed ids only, stored answer must equal the
+  frozen answer plus exactly one closing fence, and anything else still fails.
+  Both were ablated (fence removed → fail; prose reworded → fail) before being
+  claimed as protection.
+- Derived data regenerated: `practice-pool.json` (18 `answer` scalars),
+  `assets/cards/CST203.json` (18 `back` fields), search index, data version.
+  No card was added, removed or re-keyed.
+- Gates: **202/202 unittest**, 14/14 node suites, and all 13 dependency-free
+  checks green.
+
+**Deliberately not done in step 1** (each is a content GATE under `rule.md` §3
+and needs its own owner yes): expanding the four short subjects' Group B
+answers, fixing Python's thin 2022 paper, and adding the missing diagrams and
+code blocks. The 12 inline-fence answers (`**b)** ```c` on one line) were also
+left alone: they render correctly today.
+
 ## Phase 13 accepted, and the decisions Phases 14–17 must inherit — 2026-11-19
 
 **Owner command:** "All good. Ok then this phase is completed." Phase 13
