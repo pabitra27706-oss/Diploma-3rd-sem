@@ -56,7 +56,7 @@ class AlgorithmsContentTests(unittest.TestCase):
                       '_data/CST209/CST209-P004-2024-01.json','_data/CST209/CST209-P005-2024-12.json',
                       '_data/CST209/CST209-P006-2026-01.json','_data/pyq-integrity.json'}
             self.assertEqual({q.split('-')[0] for q in rewrites},{'CST209'},'rewrite allowance is CST209 only')
-            self.assertEqual(len(rewrites),47,'rewrite allowance grew without a new approval')
+            self.assertEqual(len(rewrites),76,'rewrite allowance grew without a new approval')
         drifted={k for k in set(before)|set(after) if before.get(k)!=after.get(k)}
         self.assertEqual(drifted-allowed,set(),'unapproved data drift')
         self.assertEqual(before,after, 'reverted: authorised files drifted from the pinned tree') if not allowed else None

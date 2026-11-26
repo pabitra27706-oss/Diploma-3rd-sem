@@ -950,6 +950,39 @@ The integrity record now carries the final hashes for all 47 rewritten answers;
 finding still not waived. Gates: **202/202 unittest**, 14/14 node suites, all 13
 checks green, all 47 answers rendering with balanced markup.
 
+## PYQ answer-depth review, step 2c — the short-answer tail (2026-11-26)
+
+**Owner feedback:** "Too small answers increases it's quality."
+
+A density sweep of CST209 found the remaining tail was not Group B at all but
+**Group A**: the 29 fill-in-the-blank and define-this questions in
+`CST209-P001`, which answered in **3–18 words** — often a bare token, e.g.
+"**Model answer:** 2." for *each node in a binary tree has at most ___ child
+nodes*, or "O(n log n)." for heap sort's running time. Elsewhere in the same
+subject, MCQ answers already average ~31 words, so these were the outlier.
+
+**All 29 rewritten to 51–78 words (median 67)**, following the MCQ house style:
+the direct answer first, then the reason it is correct, then the contrast that
+makes it a question at all (queue vs stack, `Ω` vs `O` vs `Θ`, heap as one array
+vs a pointer tree). Two-mark MCQ items that sit below 26 words were left alone —
+they average 19 and are in line with MCQs in the other four subjects (median
+29–33), so the deficit was specific to the fill-in set.
+
+**Claims checked, one corrected.** Euclid's algorithm was described as halving
+the larger number each step; that is false (gcd(89, 55) takes 9 steps against
+`log₂ 55 ≈ 5.8`). The text now says the worst case is a pair of consecutive
+Fibonacci numbers, giving `O(log min(a, b))`. Other asserted figures were
+verified: the balanced-tree height convention that makes a leaf's balance factor
+0, 0/1-indexed heap child and parent formulae, `gcd(48, 18)` finishing in three
+steps with answer 6, insertion sort's `n²/4 = 250,000` average shifts at
+`n = 1,000`, and `n²` = 1 million against `n³` = 1 billion.
+
+`reconciliation.answerRewrites` now records **76** answers (the 47 Group B plus
+these 29), each with its exact old and new SHA-256. The two guards caught the
+growth to 76 and refused it until their caps were raised to that exact number —
+the allowances are still per-question hash matches with no wildcard. Gates:
+**202/202 unittest**, 14/14 node suites, all 13 checks green.
+
 ## Phase 13 accepted, and the decisions Phases 14–17 must inherit — 2026-11-19
 
 **Owner command:** "All good. Ok then this phase is completed." Phase 13
