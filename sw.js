@@ -8,7 +8,7 @@
                   names the data cache, so a corrected explanation reaches a
                   returning device without a shell update, a prompt or a reset.
 */
-const VERSION = 'study-2026-11-26-phase18-cso';
+const VERSION = 'study-2026-11-26-phase18-algo';
 const CACHE_PREFIX = 'diploma-3rd-sem-';
 const CACHE_NAME = CACHE_PREFIX + VERSION;
 const DATA_CACHE_PREFIX = CACHE_PREFIX + 'data-';

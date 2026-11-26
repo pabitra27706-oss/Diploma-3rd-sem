@@ -37,7 +37,7 @@ docs/phases/
   15-cst207-cso-content/        Computer System Organization (unit-1..5/)       ✅*
   16-cst209-algorithms-content/ Algorithms (unit-1..4/ + unit-5-supplementary/) ✅*
   17-topic-map-crosscheck/      topic-map audit across all five subjects       ✅*
-  18-pyq-answer-expansion/      924 PYQ model-answer expansion & rich boxes     🚧 (18.1 + 18.5 CSO ✅)
+  18-pyq-answer-expansion/      924 PYQ model-answer expansion & rich boxes     🚧 (18.1 + 18.5 CSO + 18.6 Algo ✅)
 ```
 
 ## Folder convention

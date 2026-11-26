@@ -115,7 +115,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Ambiguity.**\n\nAn algorithm must be finite, definite, have input/output, and be effective; ambiguity is not allowed.",
+      "answer": "**Correct Option:** **C) Ambiguity**\n\n**Explanation (1 Mark):**\n- **Five Essential Characteristics:** By Knuth's classical definition, every valid algorithm must satisfy **Finiteness** (terminates in finite steps), **Definiteness** (unambiguous instructions), **Input** (`≥ 0` quantities), **Output** (`≥ 1` result), and **Effectiveness**.\n- **Why Ambiguity Is Excluded:** **Ambiguity** permits multiple conflicting interpretations of a step, directly violating **Definiteness**.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -163,7 +163,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C.**\n\nMultiplicity is the number of copies of an element, so a multiset may hold several copies of the same value. An ordinary set allows only one copy of each element.",
+      "answer": "**Correct Option:** **C) Number of times an element appears in the multiset**\n\n**Explanation (1 Mark):**\n- **Multiplicity Definition:** Unlike a standard mathematical set (where duplicates are forbidden), a **multiset (bag)** permits repeated elements, and the **multiplicity `m(x)`** of `x` counts how many copies of `x` occur (e.g., in `{a, a, a, b}`, multiplicity of `a` is **`3`**).\n- **Distractors:** Option **A** is total cardinality `∑ m(x)`, and Option **B** is support size.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -211,7 +211,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) O(log n).**\n\nThe worst case of binary search still halves the interval at every comparison, giving about log₂ n steps. That is why it requires the array to be sorted beforehand.",
+      "answer": "**Correct Option:** **B) O(log n)**\n\n**Explanation (1 Mark):**\n- **Halving Recurrence:** On a sorted array of `n` elements, Binary Search discards half of the active interval `[low..high]` on every midpoint test: `T(n) = T(n/2) + O(1)`.\n- **Worst-Case Bound:** When the key is absent or found on the final split, it performs `⌊log₂ n⌋ + 1 =` **`O(log n)`** comparisons.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -259,7 +259,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Quick Sort.**\n\nAverage case Θ(n log n), with good cache behavior; the other three are Θ(n²) average case.",
+      "answer": "**Correct Option:** **B) Quick Sort**\n\n**Explanation (1 Mark):**\n- **Average-Case Scaling:** **Quick Sort** runs in **`Θ(n log n)`** expected time with tight inner loops, sequential cache locality, and in-place partitioning.\n- **Why Others Trail:** Bubble Sort (**A**), Selection Sort (**C**), and Insertion Sort (**D**) all degrade to quadratic **`Θ(n²)`** average-case time on large random inputs.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -307,7 +307,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Dynamic Programming.**\n\nDynamic programming stores the result of each subproblem so overlapping subproblems are solved only once. Greedy and divide-and-conquer methods do not reuse results.",
+      "answer": "**Correct Option:** **B) Dynamic Programming**\n\n**Explanation (1 Mark):**\n- **Core DP Hallmarks:** **Dynamic Programming (`DP`)** solves each distinct subproblem **once** and caches its value in a table (*tabulation/memoization*) whenever a problem exhibits both **optimal substructure** and **overlapping subproblems**.\n- **Contrast:** Divide and Conquer (**A**) is designed for *disjoint/independent* subproblems and would recompute overlapping sub-instances exponentially.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -355,7 +355,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Merge Sort.**\n\nMerge sort divides the array into halves, sorts each recursively, and merges the sorted halves. That divide, recurse and combine pattern is divide and conquer.",
+      "answer": "**Correct Option:** **B) Merge Sort**\n\n**Explanation (1 Mark):**\n- **Three-Step D&C Pattern:** **Merge Sort** **divides** `A[0..n−1]` into two halves of size `n/2`, **conquers** each half recursively, and **combines** them via linear `MERGE` (`T(n) = 2T(n/2) + Θ(n) = Θ(n log n)`).\n- **Why Others Differ:** Bubble (**A**) and Selection (**C**) are incremental `Θ(n²)` sorts, while Heap Sort (**D**) is transform-and-conquer using a binary heap.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -403,7 +403,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) O(nk).**\n\nHere n is the number of keys and k is the number of digits/passes.",
+      "answer": "**Correct Option:** **A) O(nk)**\n\n**Explanation (1 Mark):**\n- **Non-Comparison Bucket Passes:** For `n` keys each having `k` digits (over a bounded base/radix `b`), **Radix Sort** performs `k` stable Counting/Bucket Sort passes costing `O(n + b)` per pass.\n- **Total Complexity:** Treating radix `b` as a constant (e.g., `b = 10`), total runtime is **`O(n · k)`**.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -451,7 +451,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) Chaining.**\n\nIn chaining each bucket points to a linked list of all keys that hash to it, so colliding keys simply share that list. Open addressing instead probes for another slot.",
+      "answer": "**Correct Option:** **D) Chaining**\n\n**Explanation (1 Mark):**\n- **Open Hashing Mechanism:** In **Separate Chaining**, each hash table slot `T[i]` stores a pointer to a **linked list** containing all keys whose hash value equals `i`, giving `O(1 + α)` average lookup.\n- **Why Others Differ:** Linear Probing (**A**), Quadratic Probing (**B**), and Double Hashing (**C**) are *open addressing* schemes that probe alternate array slots without linked lists.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -499,7 +499,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Bellman–Ford Algorithm.**\n\nIt relaxes all edges |V|−1 times and can detect negative cycles; Dijkstra requires non-negative weights.",
+      "answer": "**Correct Option:** **C) Bellman–Ford Algorithm**\n\n**Explanation (1 Mark):**\n- **Negative-Edge Support:** **Bellman–Ford** relaxes all `|E|` edges across `|V| − 1` passes (`O(V · E)`), correctly handling **negative edge weights** and detecting reachable **negative-weight cycles** on a `|V|`-th check.\n- **Why Others Fail:** **Dijkstra's** (**A**) requires `w(u, v) ≥ 0`, while **Prim's** (**B**) and **Kruskal's** (**D**) compute Minimum Spanning Trees (`MST`), not shortest paths.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -547,7 +547,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) Greedy Approach.**\n\nPrim's algorithm repeatedly adds the cheapest edge that connects a new vertex to the tree, never reconsidering earlier choices. That local choice turns out to be globally optimal for spanning trees.",
+      "answer": "**Correct Option:** **C) Greedy Approach**\n\n**Explanation (1 Mark):**\n- **Cut Property Choice:** **Prim's algorithm** grows a single spanning tree from a start vertex by greedily picking the **minimum-weight edge** crossing the cut `(T, V − T)` at every step.\n- **Global Optimality:** By the *MST cut property*, this locally cheapest safe edge always extends to a globally minimum spanning tree without backtracking.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -596,7 +596,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D.**\n\nRabin–Karp computes a rolling hash for each text window and compares it with the pattern's hash, so most mismatching positions are rejected in constant time. Only hash matches are verified character by character.",
+      "answer": "**Correct Option:** **D) search for substrings by calculating hash values**\n\n**Explanation (1 Mark):**\n- **Rolling-Hash Filtering:** **Rabin–Karp** computes the hash of pattern `P[0..m−1]` and slides an `O(1)` **rolling hash** across every length-`m` text window `T[s..s+m−1]`.\n- **Fast Rejection:** Windows whose hash differs from `P` are skipped in `O(1)`, and character-by-character verification runs *only* when hashes match (to eliminate spurious hits).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -644,7 +644,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) O(n²).**\n\nHighly unbalanced partitions, e.g. already sorted input with a poor pivot, cause quadratic time.",
+      "answer": "**Correct Option:** **B) O(n²)**\n\n**Explanation (1 Mark):**\n- **Skewed `0 : n−1` Partitioning:** When the chosen pivot is consistently the smallest or largest element (e.g., first/last element pivot on an already sorted or reverse-sorted array), Quick Sort degrades to **`T(n) = T(n − 1) + Θ(n) = Θ(n²)`**.\n- **Mitigation:** Randomized or median-of-three pivot selection keeps expected runtime at `Θ(n log n)`.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -692,7 +692,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) n − 1.**\n\nA tree is connected and acyclic, so it has exactly n−1 edges.",
+      "answer": "**Correct Option:** **B) n − 1**\n\n**Explanation (1 Mark):**\n- **Tree Structural Theorem:** A **tree** is a minimally connected, acyclic undirected graph on `n` vertices (`n ≥ 1`), so it always contains **exact `|E| = n − 1` edges**.\n- **Boundary Check:** Removing any single edge disconnects the tree into `2` components, while adding any edge creates a unique simple cycle (`n` edges).",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -740,7 +740,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) O(n).**\n\nBottom-up `Build-Max-Heap` is linear time, not n separate insertions.",
+      "answer": "**Correct Option:** **C) O(n)**\n\n**Explanation (1 Mark):**\n- **Bottom-Up `BUILD_MAX_HEAP`:** Calling `MAX_HEAPIFY` from the last internal node `⌊n/2⌋ − 1` down to `0` skips all `⌈n/2⌉` leaves (`height = 0`) and sifts most nodes only `1–2` levels.\n- **Tight Summation:** Total work is bounded by `∑_{h=0}^{⌊log n⌋} ⌈n / 2^(h+1)⌉ · O(h) = O(n · ∑ h/2^h) =` **`O(n)`** linear time.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -788,7 +788,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) avoid rechecking matched characters.**\n\nThe LPS/prefix table tells how far to shift after a mismatch.",
+      "answer": "**Correct Option:** **A) avoid rechecking the matched characters**\n\n**Explanation (1 Mark):**\n- **`LPS` Prefix Table:** **KMP** precomputes `LPS[0..m−1]` (*Longest Proper Prefix which is also a Suffix*) for the pattern in `Θ(m)` time.\n- **No Text Backtracking:** On a mismatch at `P[j]`, KMP sets `j ← LPS[j − 1]` while **never moving the text pointer `i` backward**, achieving deterministic **`Θ(n + m)`** worst-case matching.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -830,7 +830,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** Finiteness, definiteness, input, output, effectiveness, and termination.\n\n**b)** Asymptotic notation describes growth rates independent of machine constants: O (upper), Ω (lower), Θ (tight), o (strict upper), ω (strict lower).",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 3 marks + b) 5 marks\n\n### a) Key Characteristics Every Algorithm Must Possess [3 Marks]\n\n1. **Input:** Accepts zero or more well-defined external quantities before execution begins.\n2. **Output:** Generates **at least one** well-defined result having a specified relation to the input.\n3. **Definiteness (Unambiguity):** Every step is stated precisely without vague or subjective operations.\n4. **Finiteness:** Guaranteed to **terminate after a finite number of steps** on all valid inputs.\n5. **Effectiveness:** Every elementary step is basic and feasible to carry out manually in finite time.\n\n### b) Asymptotic Notation & Its Major Types [5 Marks]\n\n**Asymptotic notation** is a mathematical language for characterizing the **growth rate** of an algorithm's running time `T(n)` or space `S(n)` as input size `n → ∞`, abstracting away hardware constants and lower-order terms:\n\n> [!COMPARE] Big-O vs Big-Omega (`Ω`) vs Big-Theta (`Θ`) Asymptotic Notations\n> | Parameter | Big-O (`O(g(n))`) | Big-Omega (`Ω(g(n))`) | Big-Theta (`Θ(g(n))`) |\n> |---|---|---|---|\n> | **Mathematical Role** | **Asymptotic Upper Bound** (`f` grows no faster than `g`). | **Asymptotic Lower Bound** (`f` grows at least as fast as `g`). | **Asymptotically Tight Bound** (`f` and `g` grow at the same rate). |\n> | **Formal Definition** | `∃ c > 0, n₀` s.t. `0 ≤ f(n) ≤ c·g(n)` `∀ n ≥ n₀`. | `∃ c > 0, n₀` s.t. `0 ≤ c·g(n) ≤ f(n)` `∀ n ≥ n₀`. | `∃ c₁, c₂ > 0, n₀` s.t. `c₁·g(n) ≤ f(n) ≤ c₂·g(n)` `∀ n ≥ n₀`. |\n> | **Concrete Example (`f(n) = 3n² + 5n`)** | `3n² + 5n = O(n²)` (`c = 8, n₀ = 1`). | `3n² + 5n = Ω(n²)` (`c = 3, n₀ = 1`). | `3n² + 5n = Θ(n²)` (`c₁ = 3, c₂ = 8`). |\n\n- **Strict Bounds:** **Little-o (`o(g(n))`)** gives a non-tight upper bound (`lim_{n→∞} f(n)/g(n) = 0`, e.g., `5n = o(n²)`), whereas **Little-omega (`ω(g(n))`)** gives a non-tight lower bound (`lim_{n→∞} f(n)/g(n) = ∞`, e.g., `n² = ω(n)`).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -879,7 +879,7 @@
         }
       ],
       "markSplit": "3+3+2",
-      "answer": "**a)** Divide the problem, solve subproblems recursively, then combine results (merge sort, quicksort).\n\n**b)** `T(n)=2T(n/2)+1` expands to `2^k T(1) + (2^k−1)` with `n=2^k`, so `T(n)=Θ(n)`.\n\n**c)** The nested loops execute `n × n` statements: Θ(n²).",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 3 marks + b) 3 marks + c) 2 marks\n\n### a) Divide and Conquer Approach [3 Marks]\n\n- **1. Divide:** Split an instance of size `n` into `a` smaller, **independent** sub-instances of size `n / b`.\n- **2. Conquer:** Solve each sub-instance recursively until reaching constant-size base cases (`O(1)`).\n- **3. Combine:** Stitch the sub-solutions into the global answer (`T(n) = aT(n/b) + f(n)`).\n- **Examples:** **Merge Sort** (`2T(n/2) + Θ(n) = Θ(n log n)`) and **Binary Search** (`T(n/2) + O(1) = O(log n)`).\n\n### b) Solving `T(n) = 2T(n/2) + 1` via Iterative / Back-Substitution [3 Marks]\n\nAssume `T(1) = 1` and `n = 2^k` (so `k = log₂ n`):\n- **Step 1:** `T(n) = 2T(n/2) + 1`\n- **Step 2:** Substitute `T(n/2) = 2T(n/4) + 1` → `T(n) = 2[2T(n/4) + 1] + 1 = 2² T(n/2²) + 2 + 1`\n- **Step 3:** Substitute `T(n/4) = 2T(n/8) + 1` → `T(n) = 2³ T(n/2³) + 2² + 2 + 1`\n- **After `k` expansions:**\n  `T(n) = 2^k T(n / 2^k) + (1 + 2 + 2² + … + 2^(k−1))`\n- Setting `n / 2^k = 1` (`2^k = n`) and summing the geometric series `(2^k − 1)/(2 − 1)`:\n  `T(n) = n · T(1) + (n − 1) = n + n − 1 = 2n − 1 =` **`Θ(n)`**.\n- *(Inductive check: for `T(m) ≤ 2m − 1`, `T(n) ≤ 2(2(n/2) − 1) + 1 = 2n − 1`, Q.E.D.)*\n\n### c) Time Complexity of Two Nested Loops (`0` to `n − 1`) [2 Marks]\n\n```text\nfor i <- 0 to n - 1 do        // Executes n iterations\n    for j <- 0 to n - 1 do    // Executes n iterations per outer i\n        statement             // O(1) elementary operation\n```\n\n- **Exact Step Summation:** `∑_{i=0}^{n−1} ∑_{j=0}^{n−1} 1 = ∑_{i=0}^{n−1} n = n × n = n²` → Time Complexity = **`Θ(n²)`**.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -921,7 +921,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Find the minimum in the unsorted suffix and swap it into position. `[5,2,9,1]` → `[1,2,9,5]` → `[1,2,5,9]`.\n\n**b)** All are Θ(n²) average/worst. Bubble swaps adjacent inversions; selection uses O(n) swaps; insertion is efficient on nearly sorted/small data. Selection and insertion are in-place; bubble and insertion are stable in their usual form.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Selection Sort Algorithm & Worked Example [4 Marks]\n\n**Selection Sort** partitions `A[0..n−1]` into a sorted prefix `A[0..i−1]` and an unsorted suffix `A[i..n−1]`. In pass `i`, it scans `A[i..n−1]` to locate the **minimum element's index `min_idx`** and swaps `A[i] ↔ A[min_idx]` (performing **at most `n − 1` swaps** total):\n\n```text\nSELECTION_SORT(A, n):\n  for i <- 0 to n - 2 do\n      min_idx <- i\n      for j <- i + 1 to n - 1 do\n          if A[j] < A[min_idx] then min_idx <- j\n      swap(A[i], A[min_idx])\n```\n\n- **Worked Trace on `A = [64, 25, 12, 22, 11]` (`n = 5`):**\n\n| Pass `i` | Unsorted Suffix Scanned | Minimum Found | Swap Executed | Array State (`¦` = Sorted Prefix) |\n| :---: | :--- | :---: | :---: | :--- |\n| **0** | `[64, 25, 12, 22, 11]` | `11` (`idx 4`) | `64 ↔ 11` | `[`**`11`** `¦ 25, 12, 22, 64]` |\n| **1** | `[25, 12, 22, 64]` | `12` (`idx 2`) | `25 ↔ 12` | `[`**`11, 12`** `¦ 25, 22, 64]` |\n| **2** | `[25, 22, 64]` | `22` (`idx 3`) | `25 ↔ 22` | `[`**`11, 12, 22`** `¦ 25, 64]` |\n| **3** | `[25, 64]` | `25` (`idx 3`) | `25 ↔ 25` | **`[11, 12, 22, 25, 64]`** |\n\n### b) Bubble Sort vs Selection Sort vs Insertion Sort [4 Marks]\n\n> [!COMPARE] Bubble Sort vs Selection Sort vs Insertion Sort\n> | Parameter | Bubble Sort (Flagged) | Selection Sort | Insertion Sort |\n> |---|---|---|---|\n> | **Core Mechanism** | Repeatedly swaps adjacent inverted pairs. | Picks minimum from unsorted suffix and swaps once per pass. | Shifts larger sorted keys right to insert `A[i]` in order. |\n> | **Best-Case Time** | **`Θ(n)`** (`0` swaps) | **`Θ(n²)`** (always scans suffix) | **`Θ(n)`** (already sorted) |\n> | **Avg / Worst Time** | `Θ(n²)` / `Θ(n²)` | `Θ(n²)` / `Θ(n²)` | `Θ(n²)` / `Θ(n²)` |\n> | **Worst-Case Writes/Swaps** | `Θ(n²)` swaps | **`O(n)` swaps** (ideal when writes are costly) | `Θ(n²)` shifts |\n> | **Stability & Adaptivity** | **Stable** & adaptive | **Unstable** & non-adaptive | **Stable**, adaptive & online |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -963,7 +963,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Choose a pivot (e.g. 72), partition into `<72` and `>72`, recursively sort both sides and concatenate: `[13,14,22,38,45,48,58,69,72,79,81,93]`.\n\n**b)** Best/average: Θ(n log n) with balanced partitions. Worst: Θ(n²) with maximally unbalanced partitions.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Quick Sort Trace on `38, 81, 22, 48, 13, 69, 93, 14, 45, 58, 79, 72` [4 Marks]\n\nUsing **Lomuto Partition** (choosing the **last element** of each active subarray as `pivot`), elements `≤ pivot` move left of `pivot`, `pivot` lands in its **exact final index**, and elements `> pivot` remain on the right:\n\n| Call / Subarray | Pivot | Left (`< pivot`) | Settled Pivot | Right (`> pivot`) |\n| :--- | :---: | :--- | :---: | :--- |\n| **1. Full (`0..11`)** | **`72`** | `[38, 22, 48, 13, 69, 14, 45, 58]` | **`[72]`** (`idx 8`) | `[81, 79, 93]` |\n| **2a. Left (`0..7`)** | **`58`** | `[38, 22, 48, 13, 14, 45]` | **`[58]`** (`idx 6`) | `[69]` *(base)* |\n| **2b. Right (`9..11`)** | **`93`** | `[81, 79]` | **`[93]`** (`idx 11`) | `[]` |\n| **3a. Sub (`0..5`)** | **`45`** | `[38, 22, 13, 14]` | **`[45]`** (`idx 4`) | `[48]` *(base)* |\n| **3b. Sub (`9..10`)** | **`79`** | `[]` | **`[79]`** (`idx 9`) | `[81]` *(base)* |\n| **4. Sub (`0..3`)** | **`14`** | `[13]` *(base)* | **`[14]`** (`idx 1`) | `[38, 22]` |\n| **5. Sub (`2..3`)** | **`22`** | `[]` | **`[22]`** (`idx 2`) | `[38]` *(base)* |\n\n- **Final Sorted Sequence:** **`13, 14, 22, 38, 45, 48, 58, 69, 72, 79, 81, 93`**.\n\n### b) Best-Case vs Worst-Case Time Complexity of Quick Sort [4 Marks]\n\n> [!COMPARE] Quick Sort Best Case vs Worst Case\n> | Parameter | Best Case (`Θ(n log n)`) | Worst Case (`Θ(n²)`) |\n> |---|---|---|\n> | **Partition Split** | Every pivot splits the subarray into two **nearly equal halves** (`⌊(n−1)/2⌋` and `⌈(n−1)/2⌉`). | Every pivot is the extreme min or max, creating a **`0 : (n − 1)` skewed split**. |\n> | **Triggering Input** | Median-value pivots at every recursion level. | Already **sorted or reverse-sorted** input with naive first/last-element pivot. |\n> | **Recurrence Relation** | `T(n) = 2T(n/2) + Θ(n)` (`log₂ n` levels × `Θ(n)` work/level) = **`Θ(n log n)`**. | `T(n) = T(n − 1) + Θ(n) = ∑_{k=1}^n ck` = **`Θ(n²)`**. |\n> | **Recursion Stack Space** | `Θ(log n)` frames. | `Θ(n)` frames (unless tail-call optimized + randomized pivot). |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1005,7 +1005,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)**\n```text\nwhile lo <= hi: mid=(lo+hi)//2\n  if a[mid]==x return mid\n  elif a[mid]>x hi=mid-1 else lo=mid+1\nreturn -1\n```\n\n**b)** A collision occurs when two keys hash to the same slot. Open addressing uses linear/quadratic probing or double hashing; separate chaining stores colliding keys in a list.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 3 marks + b) 5 marks\n\n### a) Iterative Binary Search Algorithm [3 Marks]\n\nPrecondition: Array `A[0..n−1]` is sorted in ascending order (`O(log n)` worst-case time, `O(1)` space):\n\n```text\nBINARY_SEARCH(A, n, key):\n  low <- 0\n  high <- n - 1\n  while low <= high do\n      mid <- low + floor((high - low) / 2)\n      if A[mid] == key then\n          return mid            // Target found at index mid\n      else if key < A[mid] then\n          high <- mid - 1       // Discard right half\n      else\n          low <- mid + 1        // Discard left half\n  return -1                     // Target absent\n```\n\n### b) Collision in Hashing & Collision Resolution Techniques [5 Marks]\n\nA **hash collision** occurs when two distinct keys `k₁ ≠ k₂` produce the identical bucket address `h(k₁) == h(k₂)` in table `T[0..m−1]` (inevitable whenever key universe `|U| > m` by the Pigeonhole Principle).\n\n- **1. Separate Chaining (*Open Hashing*):**\n  - Each table slot `T[i]` heads a **singly/doubly linked list** of all keys hashing to `i`.\n  - Supports load factor `α = n/m > 1` gracefully with `O(1 + α)` expected search/insert and straightforward pointer deletion.\n- **2. Open Addressing (*Closed Hashing* — `α ≤ 1`, all keys stored inside `T`):**\n  Probe sequence `h(k, i) = (h₁(k) + f(i)) mod m` for `i = 0, 1, …, m − 1`:\n  - **Linear Probing (`f(i) = i`):** Probes `(h₁(k) + i) mod m` sequentially; cache-friendly, but suffers from **primary clustering** (long contiguous runs merge and widen).\n  - **Quadratic Probing (`f(i) = c₁i + c₂i²`):** Jumps quadratically `(h₁(k) + i²) mod m`, eliminating primary clustering while leaving mild **secondary clustering** among keys sharing `h₁(k)`.\n  - **Double Hashing (`f(i) = i · h₂(k)`):** Uses a second independent non-zero hash `h₂(k)` (coprime to `m`, e.g., `R − (k mod R)`), giving key-specific step sizes and **eliminating both primary and secondary clustering**.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1049,7 +1049,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** An MST connects all vertices with minimum total edge weight and no cycles.\n\n**b)** Printed edges include 0–3(5), 0–1(7), 1–2(8), 1–3(9), 1–4(7), 2–4(5), 3–4(15), 3–5(6), 5–4(8), 4–6(9), 5–6(11). Kruskal selects 0–3(5), 2–4(5), 3–5(6), 0–1(7), 1–4(7), 4–6(9); total weight **39**.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 2 marks + b) 6 marks\n\n### a) Minimum Spanning Tree (`MST`) [2 Marks]\n\nGiven a connected, undirected weighted graph `G = (V, E)`, a **Spanning Tree** is an acyclic subgraph connecting all `|V|` vertices using **exact `|V| − 1` edges**. A **Minimum Spanning Tree (`MST`)** is a spanning tree whose **sum of edge weights `∑_{e ∈ T} w(e)` is minimum** among all possible spanning trees of `G`.\n\n### b) Kruskal's MST Trace on the Printed Weighted Graph (`|V| = 7`, Vertices `0..6`) [6 Marks]\n\n**Printed Graph Edges (`11` edges):** `0–3(5), 2–4(5), 3–5(6), 0–1(7), 1–4(7), 1–2(8), 5–4(8), 1–3(9), 4–6(9), 5–6(11), 3–4(15)`.\n**Kruskal's Greedy Rule (`O(E log E)`):** Sort all edges in non-decreasing weight order and accept each edge `(u, v)` iff `FIND(u) ≠ FIND(v)` in Disjoint-Set Union-Find (creates no cycle), stopping at `|V| − 1 = 6` edges:\n\n| Step | Sorted Edge `(u, v)` | Weight | Cycle Check (`FIND(u)` vs `FIND(v)`) | Decision | MST Edges Count |\n| :---: | :---: | :---: | :--- | :---: | :---: |\n| **1** | **`0 – 3`** | `5` | `{0} ≠ {3}` | **Accept** | `1` |\n| **2** | **`2 – 4`** | `5` | `{2} ≠ {4}` | **Accept** | `2` |\n| **3** | **`3 – 5`** | `6` | `{0,3} ≠ {5}` | **Accept** | `3` |\n| **4** | **`0 – 1`** | `7` | `{0,3,5} ≠ {1}` | **Accept** | `4` |\n| **5** | **`1 – 4`** | `7` | `{0,1,3,5} ≠ {2,4}` | **Accept** | `5` |\n| **6** | `1 – 2` | `8` | Both in `{0,1,2,3,4,5}` (`1–4–2`) | *Reject (Cycle)* | `5` |\n| **7** | `5 – 4` | `8` | Both in `{0,1,2,3,4,5}` (`5–3–0–1–4`) | *Reject (Cycle)* | `5` |\n| **8** | `1 – 3` | `9` | Both in `{0,1,2,3,4,5}` (`1–0–3`) | *Reject (Cycle)* | `5` |\n| **9** | **`4 – 6`** | `9` | `{0,1,2,3,4,5} ≠ {6}` | **Accept (Stop!)** | **`6 = ¦V¦ − 1`** |\n\n```ascii\n  (0)---7---(1)       (2)\n   |         |       /\n   5         7     5          MST Edges: {0-3, 2-4, 3-5, 0-1, 1-4, 4-6}\n   |         |   /            Total MST Weight = 5 + 5 + 6 + 7 + 7 + 9 = 39\n  (3)---6---(5) (4)---9---(6)\n```\n\n- **Total Minimum Cost:** `5 + 5 + 6 + 7 + 7 + 9 =` **`39`**.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1091,7 +1091,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** A Directed Acyclic Graph has directed edges and no directed cycle; prerequisite graphs and topological-sort dependency graphs are examples.\n\n**b)** Initialize `D[i][j]=w(i,j)` (0 on diagonal, ∞ if no edge). For each `k`, for each `i,j`, set `D[i][j]=min(D[i][j], D[i][k]+D[k][j])`. For a 3-vertex example, applying intermediate vertex 1 updates 2→3 from ∞ to `w(2,1)+w(1,3)`; repeat for all k to obtain all-pairs shortest paths.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 2 marks + b) 6 marks\n\n### a) Directed Acyclic Graph (`DAG`) with Example [2 Marks]\n\nA **Directed Acyclic Graph (`DAG`)** is a directed graph `G = (V, E)` containing **zero directed cycles** — no non-empty directed path starts and ends at the same vertex. Every DAG admits at least one **topological ordering**.\n- **Example:** University course prerequisites `Math1 → DS → Algorithms` and `Math1 → CSO → OS` (edges `(Math1, DS), (DS, Algo), (Math1, CSO), (CSO, OS)` have no cycle).\n\n### b) Floyd–Warshall All-Pairs Shortest Path (`APSP`) Algorithm & Worked Example [6 Marks]\n\n**Floyd–Warshall** uses Dynamic Programming (`Θ(V³)` time, `Θ(V²)` space) to compute shortest paths between **every pair `(i, j)`** across intermediate vertex sets `{1..k}`:\n\n> [!FORMULA] Floyd–Warshall DP Recurrence\n> `D^(k)[i][j] = min( D^(k−1)[i][j],  D^(k−1)[i][k] + D^(k−1)[k][j] )` for `k = 1..V`.\n\n- **Worked 4-Vertex Example:** Directed edges `1→2 (3)`, `1→4 (7)`, `2→1 (8)`, `2→3 (2)`, `3→1 (5)`, `3→4 (1)`, `4→1 (2)`:\n\n```text\nD^(0) (Direct edges):      D^(1) (via k = 1):         D^(2) (via k = 2):\n    1   2   3   4              1   2   3   4              1   2   3   4\n1 [ 0   3  inf  7 ]        1 [ 0   3  inf  7 ]        1 [ 0   3   5   7 ]\n2 [ 8   0   2  inf]   =>   2 [ 8   0   2  15 ]   =>   2 [ 8   0   2  15 ]\n3 [ 5  inf  0   1 ]        3 [ 5   8   0   1 ]        3 [ 5   8   0   1 ]\n4 [ 2  inf inf  0 ]        4 [ 2   5  inf  0 ]        4 [ 2   5   7   0 ]\n\nD^(3) (via k = 3):         D^(4) (Final APSP via k = 4):\n    1   2   3   4              1   2   3   4\n1 [ 0   3   5   6 ]        1 [ 0   3   5   6 ]   (1->2->3->4 = 3+2+1 = 6 < 7)\n2 [ 7   0   2   3 ]   =>   2 [ 5   0   2   3 ]   (2->3->4->1 = 2+1+2 = 5 < 7)\n3 [ 5   8   0   1 ]        3 [ 3   6   0   1 ]   (3->4->1 = 1+2 = 3 < 5)\n4 [ 2   5   7   0 ]        4 [ 2   5   7   0 ]\n```\n\n- **Negative-Cycle Detection:** If any diagonal entry becomes negative (`D[i][i] < 0`), the graph contains a negative-weight cycle.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1133,7 +1133,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** A trie stores characters along root-to-node paths; shared prefixes share nodes, and terminal markers indicate complete words.\n\n**b)** Root branches `b`, `d`, `s`; `b-a` branches `t` (bat) and `l-l` (ball); `d-o` branches `l-l` (doll), `r-k` (dork), `r-m` (dorm), and marks “do” terminal; `s-e` branches `n-d` (send) and `n-s-e` (sense). Lookup is O(length of word).",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 3 marks + b) 5 marks\n\n### a) Tries (Prefix Trees) & How They Store Strings [3 Marks]\n\nA **Trie** (*retrieval / prefix tree*) is a multi-way rooted tree specialized for storing a dynamic set of strings over an alphabet `Σ`:\n- **Character-Along-Edge Path:** Unlike a BST (which stores whole keys at nodes), each edge from parent to child represents **one character**, so a node's implicit prefix equals the characters along its root-to-node path.\n- **Shared Prefixes & `isEndOfWord` Flag:** Words sharing a common prefix (e.g., `\"do\"`, `\"doll\"`, `\"dork\"`, `\"dorm\"`) **share the exact same prefix nodes**, saving space and supporting instant autocomplete; a boolean **`isEnd` (`*`)** flag marks complete dictionary words.\n\n### b) Trie Construction & Search Efficiency (`*` = `isEndOfWord = true`) [5 Marks]\n\nDictionary: `{\"bat\", \"ball\", \"doll\", \"dork\", \"do\", \"dorm\", \"send\", \"sense\"}`:\n\n```ascii\n                        (root)\n                     /     |      \\\n                   b       d        s\n                   |       |        |\n                   a      o*        e\n                  / \\    /  \\       |\n                t*   l  l    r      n\n                     |  |   / \\    / \\\n                    l* l*  k*  m* d*  s\n                                      |\n                                      e*\n```\n\n- **Notice Critical Prefix Sharing:**\n  - **`\"do\"`** marks node `o*` as terminal while still branching downward to `l→l*` (`\"doll\"`) and `r→{k*, m*}` (`\"dork\"`, `\"dorm\"`).\n  - **`\"send\"` and `\"sense\"`** share `s→e→n` before splitting at `d*` vs `s→e*`.\n- **How It Facilitates Fast Search (`O(L)`):**\n  1. **Exact Lookup in `O(L)` Time (Independent of Dictionary Size `N`):** Searching a query of length `L` follows at most `L` character links from `root` — e.g., `\"dorm\"` takes **`4` character steps** whether the dictionary holds `8` words or `8 million` words, returning `true` iff all edges exist and the final node has `isEnd == true`.\n  2. **Early Prefix Miss (`O(1)`–`O(L)`):** Searching `\"cat\"` fails immediately at `root` (`no 'c' child` in `1` step), and prefix queries (`startsWith(\"do\")`) enumerate all completions by traversing the subtree under `o*`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1176,7 +1176,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "**a)** KMP precomputes LPS (longest proper prefix which is also suffix) for the pattern and shifts the pattern on mismatch without moving the text pointer backward.\n\n**b)** `lps(\"ababd\") = [0,0,1,2,0]`. The pattern matches at 0-based index **10** (`ababcabcab ababd`). Time is O(n+m).",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 3 marks + b) 5 marks\n\n### a) Knuth–Morris–Pratt (`KMP`) String Matching Algorithm [3 Marks]\n\nNaive string matching backtracks text pointer `i` on mismatches (`O(n · m)` worst case). **KMP** achieves deterministic **`Θ(n + m)`** worst-case time in two phases:\n1. **Pattern Preprocessing (`COMPUTE_LPS`, `Θ(m)`):** Builds `LPS[0..m−1]` (*Longest Proper Prefix of `P[0..j]` that is also a Suffix of `P[0..j]`*).\n2. **Non-Backtracking Scan (`Θ(n)`):** Compares `T[i]` with `P[j]`. On match, increment both `i` and `j`. On mismatch: if `j > 0`, jump **`j ← LPS[j − 1]`** (**`i` never decrements!**) so already matched prefix characters are reused; if `j == 0`, increment `i`.\n\n### b) KMP Trace for `T = \"ababcabcabababd\"` (`n = 15`) & `P = \"ababd\"` (`m = 5`) [5 Marks]\n\n- **Step 1 — Construct `LPS` Array for `P = \"ababd\"`:**\n\n| Index `j` | `0` | `1` | `2` | `3` | `4` |\n| :--- | :---: | :---: | :---: | :---: | :---: |\n| **`P[j]`** | `a` | `b` | `a` | `b` | `d` |\n| **Sub-pattern `P[0..j]`** | `\"a\"` | `\"ab\"` | `\"aba\"` (`\"a\"`) | `\"abab\"` (`\"ab\"`) | `\"ababd\"` (`∅`) |\n| **`LPS[j]`** | **`0`** | **`0`** | **`1`** | **`2`** | **`0`** |\n\n- **Step 2 — Step-by-Step Matching Trace (`i` on `T`, `j` on `P`):**\n\n| Window / Text `i` | Pattern `j` | Comparison | Action Taken |\n| :--- | :--- | :--- | :--- |\n| `i = 0..3` (`\"abab\"`) | `j = 0..3` | `T[0..3] == P[0..3]` | Advance to `i = 4, j = 4` |\n| `i = 4` (`'c'`) | `j = 4` (`'d'`) | Mismatch `'c' ≠ 'd'` | Fallback `j ← LPS[3] = 2`, then `LPS[1] = 0`, `'c' ≠ 'a'` → `i = 5, j = 0` |\n| `i = 5..6` (`\"ab\"`) | `j = 0..1` | `T[5..6] == P[0..1]` | Advance to `i = 7, j = 2` |\n| `i = 7` (`'c'`) | `j = 2` (`'a'`) | Mismatch `'c' ≠ 'a'` | Fallback `j ← LPS[1] = 0`, `'c' ≠ 'a'` → `i = 8, j = 0` |\n| `i = 8..11` (`\"abab\"`) | `j = 0..3` | `T[8..11] == P[0..3]` | Advance to `i = 12, j = 4` |\n| `i = 12` (`'a'`) | `j = 4` (`'d'`) | Mismatch `'a' ≠ 'd'` | Fallback **`j ← LPS[3] = 2`** (`i` stays `12`; reuses `T[10..11] = \"ab\"`!) |\n| `i = 12..14` (`\"abd\"`) | `j = 2..4` | `T[12..14] == P[2..4]` | **`j = 5 == m` → PATTERN FOUND!** |\n\n- **Result:** Pattern `\"ababd\"` **exists** starting at **0-based index `10`** (`T[10..14] = \"ababd\"`).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

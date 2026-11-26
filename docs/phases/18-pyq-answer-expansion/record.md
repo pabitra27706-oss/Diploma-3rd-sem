@@ -2,18 +2,18 @@
 
 # Phase 18 — PYQ Answer Expansion & Rich Structured Model Answers
 
-- Status: 🚧 in progress (Owner approved **Mode B** starting with CSO on `2026-11-26`; **Part 18.1 ✅** and **Part 18.5 `CST207` CSO ✅** complete & verified; Parts `18.2`, `18.3`, `18.4`, `18.6` next) · Branch: `arena/84c55b1a-diploma-3rd-sem` (base `06656a9`)
-- CI: local workspace verified (`206/206` Python tests + `16/16` deterministic Node `.cjs` suites + all site/token/a11y/budget/integrity checks exit `0`); pushed to `origin/arena/84c55b1a-diploma-3rd-sem` for owner Termux review (check GitHub Actions for hosted CI status; no PR/merge/deploy authorized)
-- **Preview:** local Termux preview (`rule.md` §7); no browser/Chromium available in this sandbox
+- Status: 🚧 in progress (Owner approved **Mode B** on `2026-11-26`; **Part 18.1 ✅** + **Part 18.5 `CST207` CSO ✅** pushed at `ba437d4` & owner-passed on Termux; **Part 18.6 `CST209` Algorithms ✅** `167/167` Q complete locally; Parts `18.2` C, `18.3` Python, `18.4` DS remaining) · Branch: `arena/84c55b1a-diploma-3rd-sem` (base `06656a9`)
+- CI: local workspace verified (`207/207` Python tests + `16/16` deterministic Node `.cjs` suites + all site/token/a11y/budget/integrity checks exit `0`); commit `ba437d4` (Parts `18.1` + `18.5`) pushed to `origin/arena/84c55b1a-diploma-3rd-sem`; Part `18.6` (`CST209`) is local/unpushed pending owner instruction (no PR/merge/deploy authorized)
+- **Preview:** local Termux preview (`rule.md` §7); owner reported `"Test pass continue with algorithm"` on `ba437d4`; no browser/Chromium available in this sandbox
 
 ## Parts
 
-- 18.1 — Cross-surface rich-answer renderer (`assets/js/rich-content.js`: `[!COMPARE]` comparison boxes, `[!MARKS]`/`[!FORMULA]`/`[!KEY]`/`[!TRAP]` callout boxes, pipe-safe tables, bullet-vs-code fix, Print/Practice/Quiz/Flashcard parity) + read-only `scripts/audit_pyq_answers.py` + Mode B field-level immutability lock — ✅ complete (`2026-11-26`)
+- 18.1 — Cross-surface rich-answer renderer (`assets/js/rich-content.js`: `[!COMPARE]` comparison boxes, `[!MARKS]`/`[!FORMULA]`/`[!KEY]`/`[!TRAP]` callout boxes, pipe-safe tables, bullet-vs-code fix, Print/Practice/Quiz/Flashcard parity) + read-only `scripts/audit_pyq_answers.py` + Mode B field-level immutability lock — ✅ complete (`2026-11-26`, owner Termux test passed)
 - 18.2 — Computer Programming in C (`CST201`, 6 papers / 198 questions) direct hand-authored answer expansion (`gcc`-verified) — 📋 planned
 - 18.3 — Scripting Languages — Python (`CST203`, 5 papers / 170 questions) direct hand-authored answer expansion (`python3`-verified, `Q43 == Q44` alias preserved) — 📋 planned
 - 18.4 — Data Structures (`CST205`, 6 papers / 194 questions) direct hand-authored answer expansion (`gcc` + step-trace verified) — 📋 planned
-- 18.5 — Computer System Organization (`CST207`, 6 papers / 195 questions) direct hand-authored answer expansion (Booth/division/IEEE-754/page-fault/8086/architecture verified) — ✅ complete (`2026-11-26`, `195/195` Q pass `audit_pyq_answers.py --subject CST207 --strict` with `0` errors)
-- 18.6 — Algorithms (`CST209`, 5 papers / 167 questions) direct hand-authored answer expansion + final Mode B integrity re-pin + 14-step canonical rebuild & full gate suite — 📋 planned
+- 18.5 — Computer System Organization (`CST207`, 6 papers / 195 questions) direct hand-authored answer expansion (Booth/division/IEEE-754/page-fault/8086/architecture verified) — ✅ complete (`2026-11-26`, `195/195` Q `0` strict errors; owner Termux test passed)
+- 18.6 — Algorithms (`CST209`, 5 papers / 167 questions) direct hand-authored answer expansion + Mode B integrity/exception-ledger re-pin + 14-step canonical rebuild & full gate suite — ✅ complete (`2026-11-26`, `167/167` Q pass `audit_pyq_answers.py --subject CST209 --strict` with `0` errors)
 
 ## Reused (reuse scan for this phase)
 
@@ -61,11 +61,21 @@
      - `P004` (`23` Q, `8m` Group B): overall median `23w → 98w`, `>=5m` median **`55w → 347w`** (`2` `[!COMPARE]`, `8` `[!MARKS]`, `5` `ascii` diagrams).
      - `P005` (`22` Q, `8m` Group B): overall median `26w → 107w`, `>=5m` median **`45w → 381w`** (`4` `[!COMPARE]`, `8` `[!MARKS]`, `3` `ascii` diagrams; verified `(-9) × (-13) = +117` Booth 5-cycle trace & `FIFO=15 / LRU=13` 3-frame page-fault traces).
      - `P006` (`24` Q, `8m` Group B): overall median `26w → 112w`, `>=5m` median **`64w → 422w`** (`3` `[!COMPARE]`, `9` `[!MARKS]`, `6` `ascii` diagrams).
-   - Updated `_data/pyq-integrity.json` (`reconciliation.answerExpansion.authorizedPapers` + 6 `CST207` SHA-256 hashes; `_data/CST207/registry.json` and all 22 other papers byte-identical), bumped `sw.js` `VERSION` to `study-2026-11-26-phase18-cso`, updated `tests/test_cards.py` shard budget (`< 420 KB` per lazy subject shard, `< 1.85 MB` across all 5 shards), and ran the 14-step canonical rebuild twice with byte-identical Pass 2 output.
+   - Updated `_data/pyq-integrity.json` (`reconciliation.answerExpansion.authorizedPapers` + 6 `CST207` SHA-256 hashes; `_data/CST207/registry.json` and all 22 other papers byte-identical), bumped `sw.js` `VERSION` to `study-2026-11-26-phase18-cso`, updated `tests/test_cards.py` shard budget (`< 420 KB` per lazy subject shard, `< 1.85 MB` across all 5 shards), and ran the 14-step canonical rebuild twice with byte-identical Pass 2 output. Committed & pushed at `ba437d4` (`origin/arena/84c55b1a-diploma-3rd-sem`); owner Termux test passed (`"Test pass continue with algorithm"`).
+4. **Part 18.6 — Direct Hand-Authored Algorithms (`CST209`) Answer Expansion (`5` papers · `167` questions, zero prose-generation scripts):**
+   - Hand-authored all `167` questions across `CST209-P006-2026-01.json` (`24` Q), `CST209-P005-2024-12.json` (`24` Q), `CST209-P004-2024-01.json` (`23` Q), `CST209-P003-2023-03.json` (`34` Q), and `CST209-P001-2022-06.json` (`62` Q).
+   - Total `CST209` answer prose expanded from **`7,541` → `21,220` words (`2.81×`)**, overall median **`30w` → `63w`** (`15` `[!COMPARE]` boxes, `44` `[!MARKS]` headers, `14` `ascii` diagrams):
+     - `P001` (`62` Q, `6m` Group C + `41` short/fill stubs): `3,312 → 5,078w`, overall median **`14w → 48w`**, `>=5m` median `269w`, `41/41` `**Model answer:**` stubs eliminated (`3` `[!COMPARE]`, `9` `[!MARKS]`, `4` `ascii` diagrams; `unit: 5` preserved on `Q56`).
+     - `P003` (`34` Q, `8m` Group B): `1,292 → 4,066w`, overall median `38w → 47w`, `>=5m` median **`48w → 343w`** (`3` `[!COMPARE]`, `9` `[!MARKS]`, `2` `ascii` diagrams; `unit: 5` preserved on `Q34`).
+     - `P004` (`23` Q, `8m` Group B): `1,279 → 3,565w`, overall median `26w → 66w`, `>=5m` median **`48w → 312w`** (`1` `[!COMPARE]`, `8` `[!MARKS]`, `3` `ascii` diagrams; fixed `Q14` BST leaf-count input hallucination `10, 20, 5, 12, 16` → verified `10, 1, 3, 5, 15, 12, 16` leaves `{5, 12, 16}` = `3`, plus full `5`-pass Bellman–Ford relaxation table on `Q22` and `11`-shift Naive String Matching table on `Q23`).
+     - `P005` (`24` Q, `8m` Group B): `771 → 4,229w` (`5.49×`), overall median `32w → 64w`, `>=5m` median **`42w → 383w`** (`3` `[!COMPARE]`, `9` `[!MARKS]`, `2` `ascii` diagrams; full Lomuto Quick Sort trace on `12` keys, `7`-vertex Kruskal MST trace `cost=39`, `4×4` Floyd–Warshall `D^(0)..D^(4)` matrices, `8`-word Trie `ascii` tree, and `KMP` `LPS=[0,0,1,2,0]` pointer trace).
+     - `P006` (`24` Q, `8m` Group B): `887 → 4,282w` (`4.83×`), overall median `20w → 77w`, `>=5m` median **`63w → 344w`** (`5` `[!COMPARE]`, `9` `[!MARKS]`, `3` `ascii` diagrams; fixed `Q18` inline `**a)** ```text` structural defect, `6`-pass Bubble Sort trace, and `3`-pass LSD Radix Sort bucket trace).
+   - Updated `_data/pyq-integrity.json` (`11` authorized papers, `362` expanded questions across `CST207` + `CST209`), re-pinned `contentHash` ONLY on `CST209-P001-Q56` and `CST209-P003-Q34` in `docs/data/validation-exceptions.json` (`unit: 5` and all non-`answer` fields unchanged), bumped `sw.js` `VERSION` to `study-2026-11-26-phase18-algo`, added `test_completed_phase18_subjects_pass_strict_audit` to `tests/test_audit_pyq_answers.py`, and ran the 14-step canonical rebuild twice with byte-identical Pass 2 output.
 
-## Checks (`2026-11-26` — Part 18.1 + Part 18.5 CSO)
+## Checks (`2026-11-26` — Part 18.1 + Part 18.5 CSO + Part 18.6 Algorithms)
 
-- `python3 scripts/audit_pyq_answers.py --subject CST207 --strict --verbose` → **`6` papers, `195` questions · `structural=0` · `depth/format=0` · `[!COMPARE]=16` Q (`18` boxes) · `[!MARKS]=51`** (exit `0`)
+- `python3 scripts/audit_pyq_answers.py --subject CST207 --strict` → **`6` papers, `195` questions · `structural=0` · `depth/format=0` · `[!COMPARE]=18` · `[!MARKS]=51`** (exit `0`)
+- `python3 scripts/audit_pyq_answers.py --subject CST209 --strict --verbose` → **`5` papers, `167` questions · `structural=0` · `depth/format=0` · `[!COMPARE]=15` · `[!MARKS]=44`** (exit `0`)
 - `python3 scripts/validate_pyq.py` → `28` papers, `924` questions, `0` errors, `0` warnings (`PASS`)
 - `python3 scripts/check_pyq_integrity.py` → `PYQ integrity: 0 changed/added/missing files` (exit `0`)
 - `python3 scripts/validate_data.py --check-baseline` → matches source-review ledger (`0` unexpected changes, exit `0`)
@@ -73,16 +83,16 @@
 - `python3 scripts/audit_accessibility.py --fail` → `84` pages, `74` token contrast pairs, `0` findings (exit `0`)
 - `python3 scripts/check_tokens.py --strict` → `321` palette entries, `84` pages, `0` findings (exit `0`)
 - `python3 scripts/audit_page_weight.py --budget` → all `84` pages within `340 KB` CSS / `350 KB` JS (`max CSS = 328,434 B`, `max JS = 195,322 B`, exit `0`)
-- `python3 scripts/check_platform.py`, `build_suggestions.py --check`, `build_icon_subset.py --check`, `build_data_version.py --check`, `check_root_rewrite.py`, `check_readme_paths.py` → all exit `0`
-- `python3 -m unittest discover -s tests -p "test_*.py"` → **`206` tests, `OK`, `0` skipped** (including `test_no_semantic_or_answer_changes` proving every non-`answer` field across all 28 papers is unchanged vs `664674b`)
+- `python3 scripts/check_platform.py`, `build_suggestions.py --check`, `build_icon_subset.py --check`, `build_data_version.py --check`, `check_root_rewrite.py`, `check_readme_paths.py`, `verify_cst209_traces.py`, `verify_cst209_graphs.py` → all exit `0`
+- `python3 -m unittest discover -s tests -p "test_*.py"` → **`207` tests, `OK`, `0` skipped** (including `test_no_semantic_or_answer_changes` proving every non-`answer` field across all 28 papers is unchanged vs `664674b`)
 - Deterministic Node suites (`tests/{attempt-store,data-pipeline-consumers,data-version,discovery-dom,preferences,quiz-engine-dom,rich-content-dom,section-notes,storage-mirror,storage-recovery,storage,study-dom,study-offline,study-store,theme-skew}.cjs` + `scripts/audit_cst209_runtime.cjs`) → **`16/16` suites `PASS`**
-- **Not run / not verifiable here:** Playwright/Chromium browser smoke suites (`playwright-core` not installed in sandbox), physical phone rendering, and print-to-PDF visual preview; remaining 4 subjects (`CST201`, `CST203`, `CST205`, `CST209`) are queued next.
+- **Not run / not verifiable here:** Playwright/Chromium browser smoke suites (`playwright-core` not installed in sandbox), physical phone rendering of the new `CST209` answers, and print-to-PDF visual preview; remaining 3 subjects (`CST201` C, `CST203` Python, `CST205` DS = `562` Q) are queued next.
 
 ## Next-chat prompt
 
-- Continue Phase 18 direct hand-authored PYQ answer expansion (`0` prose-generation scripts) across the remaining 4 subjects: **Part `18.2` (`CST201` C, `198` Q)**, **Part `18.3` (`CST203` Python, `170` Q)**, **Part `18.4` (`CST205` DS, `194` Q)**, and **Part `18.6` (`CST209` Algorithms, `167` Q + final canonical rebuild)**.
+- Continue Phase 18 direct hand-authored PYQ answer expansion (`0` prose-generation scripts) across the remaining 3 subjects: **Part `18.2` (`CST201` C, `198` Q)**, **Part `18.3` (`CST203` Python, `170` Q)**, and **Part `18.4` (`CST205` DS, `194` Q)**.
 
 ## Follow-ups
 
-- Execute Parts `18.2` (`CST201` C), `18.3` (`CST203` Python), `18.4` (`CST205` DS), and `18.6` (`CST209` Algorithms) in the order preferred by the owner, verifying each paper with `audit_pyq_answers.py --strict` and compiler/trace checks.
+- Execute Parts `18.2` (`CST201` C), `18.3` (`CST203` Python), and `18.4` (`CST205` DS) in the order preferred by the owner, verifying each paper with `audit_pyq_answers.py --strict` and `gcc`/`python3` compiler/trace checks, then run the final corpus-wide `audit_pyq_answers.py --strict` across all `924` questions.
 - Optional future phase (only if requested after Phase 18): standalone `_quiz-data/` non-MCQ model-answer & explanation parity pass.

@@ -5,7 +5,7 @@
 
 ---
 
-## Part 18.1 — Cross-Surface Rich-Answer Renderer, Comparison/Callout Boxes, Flashcard/Print/Quiz Parity & Read-Only Answer Linter
+## Part 18.1 — Cross-Surface Rich-Answer Renderer, Comparison/Callout Boxes, Flashcard/Print/Quiz Parity & Read-Only Answer Linter (`✅` Complete — `2026-11-26`, Termux-passed at `ba437d4`)
 
 ### Why first
 Expanding 924 PYQ answers before fixing their five runtime consumers would leak raw `|---|---|`, `> [!COMPARE]`, and `**bold**` syntax onto `pyq/answers.html` Print/PDF (`pyq/js/answers.js:1599–1655`), `practice/session.html` (`practice/js/session.js:281–437`), `quiz/review.html` (`quiz/js/review.js:623`), and `cards.html` (`assets/js/study-ui.js:171`), and leave `isCodeLine()` (`pyq/js/answers.js:368`) and `splitTableRow()` (`pyq/js/answers.js:394`) corrupting lists and bitwise-OR table cells.
@@ -98,7 +98,7 @@ Expanding 924 PYQ answers before fixing their five runtime consumers would leak 
 
 ---
 
-## Part 18.5 — Computer System Organization (`CST207`) Direct Hand-Authored Answer Expansion (`6` papers · `195` questions)
+## Part 18.5 — Computer System Organization (`CST207`) Direct Hand-Authored Answer Expansion (`6` papers · `195` questions) (`✅` Complete — `2026-11-26`, Termux-passed at `ba437d4`)
 
 ### Baseline defects to resolve (measured on `06656a9`)
 - **195 questions** across `P001` (`27`), `P002` (`65`), `P003` (`34`), `P004` (`23`), `P005` (`22`), `P006` (`24`); `35 / 51` (`68.6%`) of `>= 5m` long answers `< 120w`; **29 of 34** `2023–2026` 8-mark answers `< 80w` (`P003` med `42w`, `P004` `61w`, `P005` `46w`, `P006` `64w`); only `6` tables across all 195 questions.
@@ -115,7 +115,7 @@ Expanding 924 PYQ answers before fixing their five runtime consumers would leak 
 
 ---
 
-## Part 18.6 — Algorithms (`CST209`) Direct Hand-Authored Answer Expansion, Mode B Integrity Re-Pin & Full Canonical Gate (`5` papers · `167` questions)
+## Part 18.6 — Algorithms (`CST209`) Direct Hand-Authored Answer Expansion, Mode B Integrity Re-Pin & Full Canonical Gate (`5` papers · `167` questions) (`✅` Complete — `2026-11-26`, `167/167` Q `0` strict errors; final corpus-wide gate re-runs as remaining subjects finish)
 
 ### Baseline defects to resolve (measured on `06656a9`)
 - **167 questions** across `P001` (`62`), `P003` (`34`), `P004` (`23`), `P005` (`24`), `P006` (`24`); **only 1 Markdown table in the entire subject**; `34 / 44` (`77.3%`) of `>= 5m` long answers `< 120w`; **32 of 35 (`91.4%`)** `2023–2026` 8-mark answers `< 80w` (`P003` med `48w`, `P004` `50w`, `P005` `42w`, `P006` `63w`).

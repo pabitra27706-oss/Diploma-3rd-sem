@@ -72,6 +72,16 @@ class AuditPyqAnswersTests(unittest.TestCase):
         proc = subprocess.run(['node', str(ROOT / 'tests/rich-content-dom.cjs')], capture_output=True, text=True)
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
 
+    def test_completed_phase18_subjects_pass_strict_audit(self):
+        cso = apa.run_audit(subject='CST207')
+        self.assertEqual(cso['questions'], 195)
+        self.assertEqual(cso['structuralIssues'], 0)
+        self.assertEqual(cso['depthIssues'], 0)
+        algo = apa.run_audit(subject='CST209')
+        self.assertEqual(algo['questions'], 167)
+        self.assertEqual(algo['structuralIssues'], 0)
+        self.assertEqual(algo['depthIssues'], 0)
+
 
 if __name__ == '__main__':
     unittest.main()

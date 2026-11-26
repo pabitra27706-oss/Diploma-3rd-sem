@@ -1,13 +1,13 @@
 Documentation checkpoint: **2026-11-18 — Phases 1–10 administratively closed by owner direction**. The controlling closure table is [`PROJECT-CLOSURE.md`](PROJECT-CLOSURE.md): implemented work keeps its recorded pass evidence; remaining tests/content checks are marked skipped or unverified, never promoted to passes. Detailed phase evidence remains historical and is superseded for scheduling by that closure decision.
 
-## Phase 18 — PYQ answer expansion & rich structured model answers — 🚧 in progress (Part 18.1 ✅ + Part 18.5 CSO ✅, 2026-11-26)
+## Phase 18 — PYQ answer expansion & rich structured model answers — 🚧 in progress (Part 18.1 ✅ + Part 18.5 CSO ✅ + Part 18.6 Algorithms ✅, 2026-11-26)
 
-Branch `arena/84c55b1a-diploma-3rd-sem` (cut from `main` at `06656a9`; pushed
-to `origin` at owner direction for Termux review; no PR, merge, or deploy). Owner approved **Mode B** starting with
-CSO (`"Mode b approved / Start with cso"`). Full evidence:
+Branch `arena/84c55b1a-diploma-3rd-sem` (cut from `main` at `06656a9`; `ba437d4`
+pushed to `origin` at owner direction and Termux-verified; Part `18.6` local/unpushed; no PR, merge, or deploy). Owner approved **Mode B** starting with
+CSO (`"Mode b approved / Start with cso"`), then reported `"Test pass continue with algorithm"`. Full evidence:
 [`phases/18-pyq-answer-expansion/record.md`](phases/18-pyq-answer-expansion/record.md).
 
-- **Part 18.1 (Cross-Surface Rich-Content Engine & Read-Only Linter) — ✅ complete:**
+- **Part 18.1 (Cross-Surface Rich-Content Engine & Read-Only Linter) — ✅ complete (Termux-passed at `ba437d4`):**
   `assets/js/rich-content.js` (`StudyRichContent`, bundled into `shell.bundle.js`)
   brings pipe-safe Markdown tables, `* `/`isCodeLine()` bullet fix,
   `[!COMPARE]` Comparison Boxes (`.compare-box`), and
@@ -17,25 +17,32 @@ CSO (`"Mode b approved / Start with cso"`). Full evidence:
   token-pure in `assets/css/hub.css` (`check_tokens.py --strict` = `0` findings).
   Added read-only `scripts/audit_pyq_answers.py` + Mode B non-`answer` field
   immutability lock in `tests/test_data_pipeline.py`.
-- **Part 18.5 (`CST207` CSO — 6 papers / 195 questions) — ✅ complete:**
+- **Part 18.5 (`CST207` CSO — 6 papers / 195 questions) — ✅ complete (Termux-passed at `ba437d4`):**
   All `195` CSO answers hand-authored directly via `edit_file` (`0` scripts),
   expanding `CST207` prose **`9,587 → 29,338` words (`3.06×`)**, overall median
-  **`33w → 91w`**, `>= 5m` medians `P001` `62→377w`, `P003` `42→309w`, `P004`
-  `55→347w`, `P005` `45→381w`, `P006` `64→422w`, eliminating all `41` `P002`
-  `**Model answer:**` stubs, fixing `P003-Q28` (`3+5` mark split) and `P002-Q60`
-  (`40H+40H=80H → OF=1`), and adding `18` `[!COMPARE]` boxes, `51` `[!MARKS]`
-  headers, and `33` `ascii` hardware/flowchart diagrams.
-  `audit_pyq_answers.py --subject CST207 --strict` = **`0` structural, `0` depth
-  errors**.
-- **Gates:** `206/206` Python tests `OK`; `16/16` deterministic Node `.cjs`
+  **`33w → 91w`**, eliminating all `41` `P002` `**Model answer:**` stubs, fixing
+  `P003-Q28` (`3+5` mark split) and `P002-Q60` (`40H+40H=80H → OF=1`), and adding
+  `18` `[!COMPARE]` boxes, `51` `[!MARKS]` headers, and `33` `ascii` diagrams
+  (`audit_pyq_answers.py --subject CST207 --strict` = `0` errors).
+- **Part 18.6 (`CST209` Algorithms — 5 papers / 167 questions) — ✅ complete (local, unpushed):**
+  All `167` Algorithms answers hand-authored directly via `edit_file` (`0`
+  scripts), expanding `CST209` prose **`7,541 → 21,220` words (`2.81×`)**,
+  overall median **`30w → 63w`**, `>= 5m` medians `P003` `48→343w`, `P004`
+  `48→312w`, `P005` `42→383w`, `P006` `63→344w`, eliminating all `41` `P001`
+  `**Model answer:**` stubs, fixing `P006-Q18` inline `**a)** ```text` defect and
+  `P004-Q14` BST leaf-count input hallucination (`10, 1, 3, 5, 15, 12, 16` →
+  leaves `{5, 12, 16}` = `3`), preserving `unit: 5` on `P001-Q56` and `P003-Q34`,
+  and adding `15` `[!COMPARE]` boxes, `44` `[!MARKS]` headers, and `14` `ascii`
+  diagrams. `audit_pyq_answers.py --subject CST209 --strict` = **`0` structural,
+  `0` depth errors**.
+- **Gates:** `207/207` Python tests `OK`; `16/16` deterministic Node `.cjs`
   suites `PASS`; 14-step canonical rebuild byte-identical on Pass 2; all site,
   token, accessibility, page-weight (`≤ 328.4 KB` CSS / `≤ 195.3 KB` JS), and
-  integrity checks exit `0`. No browser/Playwright or physical-device preview in
-  this sandbox.
+  integrity checks exit `0`. No browser/Playwright or physical-device preview of
+  Part `18.6` in this sandbox.
 - **Remaining in Phase 18:** Parts `18.2` (`CST201` C, `198` Q), `18.3`
-  (`CST203` Python, `170` Q), `18.4` (`CST205` DS, `194` Q), and `18.6`
-  (`CST209` Algorithms, `167` Q). Do not push, open a PR, merge, or deploy
-  without explicit owner instruction.
+  (`CST203` Python, `170` Q), and `18.4` (`CST205` DS, `194` Q). Do not push,
+  open a PR, merge, or deploy without explicit owner instruction.
 
 ## Phase 17 — Topic-map cross-check — ✅* owner-passed (Termux test, 2026-11-19); branch pushed; merge NOT authorised
 
