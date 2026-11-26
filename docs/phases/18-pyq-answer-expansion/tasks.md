@@ -38,7 +38,7 @@ Expanding 924 PYQ answers before fixing their five runtime consumers would leak 
 
 ---
 
-## Part 18.2 — Computer Programming in C (`CST201`) Direct Hand-Authored Answer Expansion (`6` papers · `198` questions)
+## Part 18.2 — Computer Programming in C (`CST201`) Direct Hand-Authored Answer Expansion (`6` papers · `198` questions) (`✅` Complete — `2026-11-26`, `198/198` Q `0` strict errors, `57/57` `gcc -Werror` programs)
 
 ### Baseline defects to resolve (measured on `06656a9`)
 - **198 questions** across `P001` (`28`), `P002` (`65`), `P003` (`34`), `P004` (`23`), `P005` (`24`), `P006` (`24`); overall median `30w`; `40 / 53` (`75.5%`) of `>= 5m` long questions `< 120w`; only `2` tables and `7` bulleted answers in the entire subject.
@@ -59,7 +59,7 @@ Expanding 924 PYQ answers before fixing their five runtime consumers would leak 
 
 ---
 
-## Part 18.3 — Scripting Languages — Python (`CST203`) Direct Hand-Authored Answer Expansion (`5` papers · `170` questions)
+## Part 18.3 — Scripting Languages — Python (`CST203`) Direct Hand-Authored Answer Expansion (`5` papers · `170` questions) (`✅` Complete — `2026-11-26`, `170/170` Q `0` strict errors, `67/67` `ast.parse` + `64/64` standalone `python3` snippets verified, `Q43 == Q44` byte-identical)
 
 ### Baseline defects to resolve (measured on `06656a9`)
 - **170 questions** across `P001` (`66`), `P003` (`34`), `P004` (`23`), `P005` (`23`), `P006` (`24`).
@@ -80,7 +80,7 @@ Expanding 924 PYQ answers before fixing their five runtime consumers would leak 
 
 ---
 
-## Part 18.4 — Data Structures (`CST205`) Direct Hand-Authored Answer Expansion (`6` papers · `194` questions)
+## Part 18.4 — Data Structures (`CST205`) Direct Hand-Authored Answer Expansion (`6` papers · `194` questions) (`✅` Complete — `2026-11-26`, `194/194` Q `0` strict errors, `5/5` `gcc -Werror` programs)
 
 ### Baseline defects to resolve (measured on `06656a9`)
 - **194 questions** across `P001` (`25`), `P002` (`63`), `P003` (`34`), `P004` (`23`), `P005` (`25`), `P006` (`24`); `33 / 52` (`63.5%`) of `>= 5m` long answers `< 120w`; **30 of 36** `2023–2026` 8-mark answers `< 80w` (`P003` med `74w`, `P004` `61w`, `P005` `69w`, `P006` `64w`); only `5` tables across all 194 questions.
@@ -115,7 +115,7 @@ Expanding 924 PYQ answers before fixing their five runtime consumers would leak 
 
 ---
 
-## Part 18.6 — Algorithms (`CST209`) Direct Hand-Authored Answer Expansion, Mode B Integrity Re-Pin & Full Canonical Gate (`5` papers · `167` questions) (`✅` Complete — `2026-11-26`, `167/167` Q `0` strict errors; final corpus-wide gate re-runs as remaining subjects finish)
+## Part 18.6 — Algorithms (`CST209`) Direct Hand-Authored Answer Expansion, Mode B Integrity Re-Pin & Full Canonical Gate (`5` papers · `167` questions) (`✅` Complete — `2026-11-26`, `167/167` Q `0` strict errors; full `924/924` Q corpus-wide gate `0/0` green)
 
 ### Baseline defects to resolve (measured on `06656a9`)
 - **167 questions** across `P001` (`62`), `P003` (`34`), `P004` (`23`), `P005` (`24`), `P006` (`24`); **only 1 Markdown table in the entire subject**; `34 / 44` (`77.3%`) of `>= 5m` long answers `< 120w`; **32 of 35 (`91.4%`)** `2023–2026` 8-mark answers `< 80w` (`P003` med `48w`, `P004` `50w`, `P005` `42w`, `P006` `63w`).

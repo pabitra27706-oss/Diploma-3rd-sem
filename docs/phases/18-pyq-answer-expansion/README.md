@@ -1,6 +1,6 @@
 # Phase 18 — PYQ Answer Expansion & Rich Structured Model Answers
 
-- **Status:** 🚧 In Progress (`2026-11-26`: Mode B owner-approved; **Part `18.1` Rich Renderer/Linter ✅**, **Part `18.5` CSO `195/195` Q ✅** owner-passed on Termux, and **Part `18.6` Algorithms `167/167` Q ✅** complete & gate-verified; Parts `18.2` C, `18.3` Python, `18.4` DS remaining)
+- **Status:** ✅* Engineering Complete — Awaiting Owner Termux Acceptance (`2026-11-26`: Mode B owner-approved; **all 6 parts `18.1`–`18.6` complete — `924/924` PYQ answers across all `28` papers directly hand-authored (`0` prose-generation scripts), expanding corpus `44,763 → 122,662` words (`2.74×`) with `0` structural and `0` depth/format findings on `audit_pyq_answers.py --strict`**)
 - **Scope:** All **28 archived WBSCTE PYQ papers / 924 questions** (`_data/CST{201,203,205,207,209}/*.json`) plus all **5 runtime answer consumers** (`pyq/answers.html` screen + print, `practice/session.html`, `quiz/review.html` + `quiz/result.html`, and `cards.html`)
 - **Companion Spec:** [`authoring-standard.md`](authoring-standard.md) — mandatory mark-proportional depth rubric, structured bulleting rules, `[!COMPARE]` comparison-box & callout-box syntax, and before/after exemplars
 

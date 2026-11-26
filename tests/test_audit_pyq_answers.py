@@ -73,14 +73,22 @@ class AuditPyqAnswersTests(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
 
     def test_completed_phase18_subjects_pass_strict_audit(self):
-        cso = apa.run_audit(subject='CST207')
-        self.assertEqual(cso['questions'], 195)
-        self.assertEqual(cso['structuralIssues'], 0)
-        self.assertEqual(cso['depthIssues'], 0)
-        algo = apa.run_audit(subject='CST209')
-        self.assertEqual(algo['questions'], 167)
-        self.assertEqual(algo['structuralIssues'], 0)
-        self.assertEqual(algo['depthIssues'], 0)
+        full = apa.run_audit()
+        self.assertEqual(full['papers'], 28)
+        self.assertEqual(full['questions'], 924)
+        self.assertEqual(full['structuralIssues'], 0)
+        self.assertEqual(full['depthIssues'], 0)
+        for code, expected_q in [
+            ('CST201', 198),
+            ('CST203', 170),
+            ('CST205', 194),
+            ('CST207', 195),
+            ('CST209', 167),
+        ]:
+            sub = apa.run_audit(subject=code)
+            self.assertEqual(sub['questions'], expected_q)
+            self.assertEqual(sub['structuralIssues'], 0)
+            self.assertEqual(sub['depthIssues'], 0)
 
 
 if __name__ == '__main__':
