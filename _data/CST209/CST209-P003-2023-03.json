@@ -1335,7 +1335,7 @@
         }
       ],
       "markSplit": "2+2+2+2",
-      "answer": "\n**Mark distribution — Total 8 marks: 2 + 2 + 2 + 2.**\n\n**a.i) Algorithm** — a finite, step-by-step and unambiguous procedure that takes zero or more inputs, produces at least one output and terminates.\n\n**a.ii) Big-Oh O** is the **upper bound**: `f(n) = O(g(n))` if constants `c, n₀ > 0` exist with `f(n) ≤ c·g(n)` for all `n ≥ n₀`, i.e. the cost grows no faster than `g`. Example: `3n² + 5n = O(n²)`.\n\n**b.i) Time complexity** is the number of elementary operations an algorithm performs, as a function of input size `n`, ignoring machine constants — the growth rate, not the seconds.\n\n**b.ii) Why they matter** — they predict how an algorithm will scale and let us compare two solutions independently of hardware: at `n = 10⁶` a `Θ(n²)` sort needs ~10¹² steps while a `Θ(n log n)` sort needs ~2·10⁷. Space complexity matters because memory is finite.\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a.i) 2 + a.ii) 2 + b.i) 2 + b.ii) 2.**\n\n**a.i) Algorithm (2 marks)** — a finite, step-by-step and unambiguous procedure that takes zero or more inputs, produces at least one output and terminates.\n\n**a.ii) Big-Oh O (2 marks)** is the **upper bound**: `f(n) = O(g(n))` if constants `c, n₀ > 0` exist with `f(n) ≤ c·g(n)` for all `n ≥ n₀`, i.e. the cost grows no faster than `g`. Example: `3n² + 5n = O(n²)`.\n\n**b.i) Time complexity (2 marks)** is the number of elementary operations an algorithm performs, as a function of input size `n`, ignoring machine constants — the growth rate, not the seconds.\n\n**b.ii) Why they matter (2 marks)** — they predict how an algorithm will scale and let us compare two solutions independently of hardware: at `n = 10⁶` a `Θ(n²)` sort needs ~10¹² steps while a `Θ(n log n)` sort needs ~2·10⁷. Space complexity matters because memory is finite.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1376,7 +1376,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Time complexity of the loop**\n\n`i = 1, 2, 4, 8, …` doubles each iteration, so after `k` iterations `i = 2ᵏ`. The loop stops when `2ᵏ > n`, i.e. `k = ⌊log₂ n⌋ + 1`. Each iteration does `Θ(1)` work.\n\n**Therefore T(n) = Θ(log n).** With `n = 16`: `i` = 1, 2, 4, 8, 16 → 5 iterations ≈ `log₂ 16 + 1`.\n\n**b) Divide and conquer** — split the problem into subproblems of the same type, solve them recursively, then combine the answers. It gives `T(n) = a·T(n/b) + f(n)`, solved by the Master Theorem. Examples: merge sort (`Θ(n log n)`), quick sort, binary search (`Θ(log n)`).\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 4 + b) 4.**\n\n**a) Time complexity of the loop (4 marks)**\n\n`i = 1, 2, 4, 8, …` doubles each iteration, so after `k` iterations `i = 2ᵏ`. The loop stops when `2ᵏ > n`, i.e. `k = ⌊log₂ n⌋ + 1`. Each iteration does `Θ(1)` work.\n\n**Therefore T(n) = Θ(log n).** With `n = 16`: `i` = 1, 2, 4, 8, 16 → 5 iterations ≈ `log₂ 16 + 1`.\n\n**b) Divide and conquer (4 marks)** — split the problem into subproblems of the same type, solve them recursively, then combine the answers. It gives `T(n) = a·T(n/b) + f(n)`, solved by the Master Theorem. Examples: merge sort (`Θ(n log n)`), quick sort, binary search (`Θ(log n)`).\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1423,7 +1423,7 @@
         }
       ],
       "markSplit": "2+4+2",
-      "answer": "\n**Mark distribution — Total 8 marks: 2 + 4 + 2.**\n\n**a) Linear search is suitable when** the data is **unsorted** (binary search is impossible), the collection is small, only sequential access is available (a linked list), or only one search is needed so sorting first would cost more.\n\n**b.i) Binary search**\n\n```text\nlow = 0; high = n - 1\nwhile low <= high:\n    mid = (low + high) / 2\n    if A[mid] = key: return mid\n    if A[mid] < key: low = mid + 1\n    else: high = mid - 1\nreturn -1\n```\n\n**b.ii) Why O(log n)** — each comparison halves the search space, so after `k` steps at most `n/2ᵏ` elements remain. The search ends when `n/2ᵏ = 1`, i.e. `k = log₂ n`. Hence `T(n) = Θ(log n)`.\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 2 + b.i) 4 + b.ii) 2.**\n\n**a) Linear search is suitable when (2 marks)** the data is **unsorted** (binary search is impossible), the collection is small, only sequential access is available (a linked list), or only one search is needed so sorting first would cost more.\n\n**b.i) Binary search (4 marks)**\n\n```text\nlow = 0; high = n - 1\nwhile low <= high:\n    mid = (low + high) / 2\n    if A[mid] = key: return mid\n    if A[mid] < key: low = mid + 1\n    else: high = mid - 1\nreturn -1\n```\n\n**b.ii) Why O(log n) (2 marks)** — each comparison halves the search space, so after `k` steps at most `n/2ᵏ` elements remain. The search ends when `n/2ᵏ = 1`, i.e. `k = log₂ n`. Hence `T(n) = Θ(log n)`.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1464,7 +1464,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks + b) 4 marks.**\n\n**a) Significance and advantage of height balancing** — BST operations cost `O(h)`, and sorted insertion makes `h = n`, degrading the tree to a list. An AVL tree keeps `|height(left) − height(right)| ≤ 1` by rotating after each update, so `h = O(log n)` always. **Advantages:** guaranteed `O(log n)` search, insert and delete; performance independent of insertion order; bounded recursion depth.\n\n**b) Insertion pseudo code**\n\n```text\nInsert(root, key):\n    if root = null: return new Node(key)\n    if key < root.key:      root.left  = Insert(root.left,  key)\n    else if key > root.key: root.right = Insert(root.right, key)\n    return root            // duplicates ignored\n```\n\nWalking down costs `O(h)`; in a balanced tree that is `O(log n)`.\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 4 + b) 4.**\n\n**a) Significance and advantage of height balancing (4 marks)** — BST operations cost `O(h)`, and sorted insertion makes `h = n`, degrading the tree to a list. An AVL tree keeps `|height(left) − height(right)| ≤ 1` by rotating after each update, so `h = O(log n)` always. **Advantages:** guaranteed `O(log n)` search, insert and delete; performance independent of insertion order; bounded recursion depth.\n\n**b) Insertion pseudo code (4 marks)**\n\n```text\nInsert(root, key):\n    if root = null: return new Node(key)\n    if key < root.key:      root.left  = Insert(root.left,  key)\n    else if key > root.key: root.right = Insert(root.right, key)\n    return root            // duplicates ignored\n```\n\nWalking down costs `O(h)`; in a balanced tree that is `O(log n)`.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1506,7 +1506,7 @@
         }
       ],
       "markSplit": "3+5",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 3 marks + b) 5 marks.**\n\n**a) How Prim's algorithm works** — it grows **one** MST tree from a start vertex: repeatedly pick the cheapest edge joining a vertex already in the tree to one outside it, and add it. After `V − 1` edges the MST is complete. It is greedy and relies on the cut property, running in `O(E log V)` with a heap.\n\n**b) Kruskal's algorithm** sorts all edges by weight and adds each one unless it closes a cycle, using union-find to test that, and stops at `V − 1` edges. On the printed graph the edges are `A–B=1`, `D–E=2`, `B–C=3`, `C–D=4`, `A–E=5`, `A–C=7`, `A–D=10`:\n\n| Edge | Weight | Action |\n|---|---|---|\n| A–B | 1 | **add** |\n| D–E | 2 | **add** |\n| B–C | 3 | **add** |\n| C–D | 4 | **add** — now `A, B, C, D, E` are connected |\n| A–E, A–C, A–D | 5, 7, 10 | reject — each closes the cycle |\n\n**MST weight = 1 + 2 + 3 + 4 = 10** over `V − 1 = 4` edges.\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 3 + b) 5.**\n\n**a) How Prim's algorithm works (3 marks)** — it grows **one** MST tree from a start vertex: repeatedly pick the cheapest edge joining a vertex already in the tree to one outside it, and add it. After `V − 1` edges the MST is complete. It is greedy and relies on the cut property, running in `O(E log V)` with a heap.\n\n**b) Kruskal's algorithm (5 marks)** sorts all edges by weight and adds each one unless it closes a cycle, using union-find to test that, and stops at `V − 1` edges. On the printed graph the edges are `A–B=1`, `D–E=2`, `B–C=3`, `C–D=4`, `A–E=5`, `A–C=7`, `A–D=10`:\n\n| Edge | Weight | Action |\n|---|---|---|\n| A–B | 1 | **add** |\n| D–E | 2 | **add** |\n| B–C | 3 | **add** |\n| C–D | 4 | **add** — now `A, B, C, D, E` are connected |\n| A–E, A–C, A–D | 5, 7, 10 | reject — each closes the cycle |\n\n**MST weight = 1 + 2 + 3 + 4 = 10** over `V − 1 = 4` edges.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1545,7 +1545,7 @@
         }
       ],
       "markSplit": "8",
-      "answer": "\n**Mark distribution — Total 8 marks.**\n\n**Merge sort** divides the array in half, sorts each half recursively, and merges the two sorted halves. For `[38, 27, 43, 3, 9, 82, 10]`:\n\n```text\n[38, 27, 43, 3, 9, 82, 10]\n   |-- [38, 27, 43]  ->  [27, 38] + [43]  ->  [27, 38, 43]\n   `-- [3, 9, 82, 10] -> [3, 9] + [10, 82] ->  [3, 9, 10, 82]\nmerge -> [3, 9, 10, 27, 38, 43, 82]\n```\n\nThe merge step compares the two front elements and always takes the smaller, so it costs `Θ(n)` per level. There are `log₂ n` levels, hence `T(n) = 2T(n/2) + Θ(n) = Θ(n log n)` in **all** cases. It is stable but needs `Θ(n)` extra space.\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 8.**\n\n**a) Merge sort algorithm with a worked example (8 marks)**\n\n**Merge sort** divides the array in half, sorts each half recursively, and merges the two sorted halves. For `[38, 27, 43, 3, 9, 82, 10]`:\n\n```text\n[38, 27, 43, 3, 9, 82, 10]\n   |-- [38, 27, 43]  ->  [27, 38] + [43]  ->  [27, 38, 43]\n   `-- [3, 9, 82, 10] -> [3, 9] + [10, 82] ->  [3, 9, 10, 82]\nmerge -> [3, 9, 10, 27, 38, 43, 82]\n```\n\nThe merge step compares the two front elements and always takes the smaller, so it costs `Θ(n)` per level. There are `log₂ n` levels, hence `T(n) = 2T(n/2) + Θ(n) = Θ(n log n)` in **all** cases. It is stable but needs `Θ(n)` extra space.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1586,7 +1586,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 2 marks + b) 6 marks.**\n\n**a) Hashing** maps a key to a table slot with a hash function `h(k)`, giving `O(1)` average insert, search and delete. A **collision** happens when two keys hash to the same slot.\n\n**b) Collision resolution**\n\n| Method | Idea | Note |\n|---|---|---|\n| **Separate chaining** | Each slot holds a linked list of its keys | `α` may exceed 1; easy deletion |\n| **Linear probing** | Try `(h(k)+i) mod m` for `i = 1, 2, …` | Simple; primary clustering |\n| **Quadratic probing** | Try `(h(k)+c₁i+c₂i²) mod m` | Reduces clustering |\n| **Double hashing** | Try `(h₁(k)+i·h₂(k)) mod m` | Best key spread |\n\n**Rehashing** — enlarge the table and re-insert when the load factor crosses about 0.75.\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 2 + b) 6.**\n\n**a) Hashing (2 marks)** maps a key to a table slot with a hash function `h(k)`, giving `O(1)` average insert, search and delete. A **collision** happens when two keys hash to the same slot.\n\n**b) Collision resolution (6 marks)**\n\n| Method | Idea | Note |\n|---|---|---|\n| **Separate chaining** | Each slot holds a linked list of its keys | `α` may exceed 1; easy deletion |\n| **Linear probing** | Try `(h(k)+i) mod m` for `i = 1, 2, …` | Simple; primary clustering |\n| **Quadratic probing** | Try `(h(k)+c₁i+c₂i²) mod m` | Reduces clustering |\n| **Double hashing** | Try `(h₁(k)+i·h₂(k)) mod m` | Best key spread |\n\n**Rehashing** — enlarge the table and re-insert when the load factor crosses about 0.75.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1629,7 +1629,7 @@
         }
       ],
       "markSplit": "5+3",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 5 marks + b) 3 marks.**\n\n**a) Dijkstra's shortest-path algorithm**\n\n```text\nrepeat V - 1 times (or until all settled):\n    u = unsettled vertex with the smallest dist[]\n    mark u settled\n    for each neighbour v of u:\n        if dist[u] + w(u,v) < dist[v]:\n            dist[v] = dist[u] + w(u,v); prev[v] = u\n```\n\nSettling the minimum is safe because all weights are non-negative, so no later path can improve it. It runs in `O(V²)` or `O((V+E) log V)` with a heap, and fails if any weight is negative.\n\n**b) Example** — from `A` with `A–C = 1`, `C–B = 2`, `A–B = 4`, `B–D = 2`, `C–D = 5`, `D–E = 3`:\n\n```text\nA=0 → C=1 → B=1+2=3 (beats the direct 4) → D=3+2=5 (beats 1+5=6) → E=5+3=8\n```\n\n**Shortest distances: A 0, C 1, B 3, D 5, E 8.**\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 5 + b) 3.**\n\n**a) Dijkstra's shortest-path algorithm (5 marks)**\n\n```text\nrepeat V - 1 times (or until all settled):\n    u = unsettled vertex with the smallest dist[]\n    mark u settled\n    for each neighbour v of u:\n        if dist[u] + w(u,v) < dist[v]:\n            dist[v] = dist[u] + w(u,v); prev[v] = u\n```\n\nSettling the minimum is safe because all weights are non-negative, so no later path can improve it. It runs in `O(V²)` or `O((V+E) log V)` with a heap, and fails if any weight is negative.\n\n**b) Example (3 marks)** — from `A` with `A–C = 1`, `C–B = 2`, `A–B = 4`, `B–D = 2`, `C–D = 5`, `D–E = 3`:\n\n```text\nA=0 → C=1 → B=1+2=3 (beats the direct 4) → D=3+2=5 (beats 1+5=6) → E=5+3=8\n```\n\n**Shortest distances: A 0, C 1, B 3, D 5, E 8.**\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1670,7 +1670,7 @@
         }
       ],
       "markSplit": "6+2",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 6 marks + b) 2 marks.**\n\n**a) Rabin–Karp** compares **hashes** of the pattern and of every text window, verifying characters only when the hashes match. The window hash is rolled in `O(1)`:\n\n```text\np = hash(P[0..m-1]); t = hash(T[0..m-1])\nfor s = 0 to n-m:\n    if p = t and P = T[s..s+m-1]: report match at s\n    t = (d*(t - T[s]*d^(m-1)) + T[s+m]) mod q\n```\n\nPreprocessing is `Θ(m)`; matching is `Θ(n+m)` on average and `Θ(nm)` in the worst case (all hashes equal).\n\n**b) Rabin–Karp vs KMP** — both average `Θ(n+m)`, but KMP uses the LPS table to guarantee `Θ(n+m)` in the worst case, while Rabin–Karp may degrade to `Θ(nm)`. Rabin–Karp's advantage is **multi-pattern** search: one hash comparison tests many patterns at once.\n",
+      "answer": "\n**Mark distribution — Total 8 marks: a) 6 + b) 2.**\n\n**a) Rabin–Karp (6 marks)** compares **hashes** of the pattern and of every text window, verifying characters only when the hashes match. The window hash is rolled in `O(1)`:\n\n```text\np = hash(P[0..m-1]); t = hash(T[0..m-1])\nfor s = 0 to n-m:\n    if p = t and P = T[s..s+m-1]: report match at s\n    t = (d*(t - T[s]*d^(m-1)) + T[s+m]) mod q\n```\n\nPreprocessing is `Θ(m)`; matching is `Θ(n+m)` on average and `Θ(nm)` in the worst case (all hashes equal).\n\n**b) Rabin–Karp vs KMP (2 marks)** — both average `Θ(n+m)`, but KMP uses the LPS table to guarantee `Θ(n+m)` in the worst case, while Rabin–Karp may degrade to `Θ(nm)`. Rabin–Karp's advantage is **multi-pattern** search: one hash comparison tests many patterns at once.\n",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",

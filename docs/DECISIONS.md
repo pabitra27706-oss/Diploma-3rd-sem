@@ -910,6 +910,46 @@ depth passes, the Python 2022 paper's thin 6-markers, and the missing
 diagrams/code blocks for "draw a diagram" questions — each is a separate content
 GATE and needs its own owner yes.
 
+## PYQ answer-depth review, step 2b — part structure and 2-mark growth (2026-11-26)
+
+**Owner feedback on step 2:** "the questions with parts numbers sometimes not so
+good and 2 marks questions a little big will be better."
+
+**Part-numbered answers.** The headings were already there, but three things
+made them read badly, and all three are now fixed across the 35 part-marked
+answers (77 parts):
+
+- The mark split said *"Total 8 marks: 2 + 4 + 2"* with no indication of which
+  part got what. Every line now names the part: **"Total 8 marks: a) 2 + b.i) 4
+  + b.ii) 2"**, taken from the stored `subparts`/`markSplit` rather than typed.
+- Part headings carried no marks, so a reader could not see where marks were
+  earned. Each now ends with its value, e.g. **"b.ii) Why `O(log n)` (2
+  marks)"**. 77/77 parts tagged.
+- Part **sizes** ignored their marks. The worst case was `CST209-P004-Q20 b)`,
+  a **1-mark** yes/no question answered with **43 words**; it is now 30. Four
+  more oversized parts were tightened: `P004-Q22 b)` (141→120),
+  `P004-Q23 b)` (158→137), `P005-Q23 b)` (151→120), `P006-Q24 a)` (181→147).
+  Per-part density now has a median of 18.7 words/mark with no part under 9;
+  the eight parts still above 28 are the ones carrying pseudocode and trace
+  tables, where the word count is dominated by code lines.
+
+**2-mark answers.** All twelve `CST209-P001` Group B answers grew from ~30 to
+**67–86 words** (median 77). This deliberately goes *above* the CST203 2-mark
+median of 12 words, on the owner's explicit instruction; the depth is spent on
+the mechanism plus one worked figure rather than padding.
+
+Arithmetic in the new text was checked rather than asserted: `log₂(10!) ≈ 21.8`
+for the comparison-sort lower bound, binary search at `n = 10⁶` needing 20
+comparisons, insertion sort's average `n²/4 = 25 million` against merge sort's
+`≈130,000` at `n = 10,000`, and the reuse of the already-verified Dijkstra,
+naive-search and trie figures. One draft figure (50 million) was wrong and was
+corrected to 25 million before committing.
+
+The integrity record now carries the final hashes for all 47 rewritten answers;
+`CST209-P003-Q34`'s ledger `contentHash` was re-anchored again, its open unit-5
+finding still not waived. Gates: **202/202 unittest**, 14/14 node suites, all 13
+checks green, all 47 answers rendering with balanced markup.
+
 ## Phase 13 accepted, and the decisions Phases 14–17 must inherit — 2026-11-19
 
 **Owner command:** "All good. Ok then this phase is completed." Phase 13
