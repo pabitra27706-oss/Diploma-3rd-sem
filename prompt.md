@@ -1,3 +1,10 @@
+> **Phase 18 — 2026-11-26 (🚧 in progress — Mode B approved; Part 18.1 Rich Renderer ✅ + Part 18.5 CSO `195/195` Q ✅ complete):**
+> Branch `arena/84c55b1a-diploma-3rd-sem` (cut from `main` at `06656a9`; pushed to `origin` at owner direction for Termux review; no PR/merge/deploy).
+> Owner approved Mode B starting with CSO (`"Mode b approved / Start with cso"`).
+> - **Part 18.1 (`✅`):** Shipped shared zero-dependency `assets/js/rich-content.js` (`StudyRichContent`, bundled into `assets/js/shell.bundle.js`), bringing `[!COMPARE]` Comparison Boxes, `[!MARKS]`/`[!FORMULA]`/`[!KEY]`/`[!TRAP]` Callout Boxes, pipe-safe GFM tables, and `* ` bullet precedence across `pyq/answers.html` (+ Print/PDF), `practice/session.html`, `quiz/{review,result}.html`, and `cards.html` (`0` token findings in `assets/css/hub.css`), plus read-only `scripts/audit_pyq_answers.py` and Mode B non-`answer` field immutability lock in `tests/test_data_pipeline.py`.
+> - **Part 18.5 (`CST207` CSO — `6` papers / `195` Q, `✅`):** Hand-authored all `195` CSO answers directly via `edit_file` (`0` scripts): `9,587 → 29,338` words (`3.06×`), `0` structural/depth findings on `audit_pyq_answers.py --subject CST207 --strict`, `18` `[!COMPARE]` boxes, `51` `[!MARKS]` headers, `33` `ascii` diagrams, `206/206` Python tests + `16/16` Node `.cjs` suites + 2-pass canonical rebuild byte-identical.
+> - **Next steps:** Direct hand-authored `edit_file` expansion (`0` scripts) for the remaining 4 subjects — **Part `18.2` (`CST201` C, `198` Q)**, **Part `18.3` (`CST203` Python, `170` Q)**, **Part `18.4` (`CST205` DS, `194` Q)**, and **Part `18.6` (`CST209` Algorithms, `167` Q)**. Do not push, open a PR, merge, or deploy without explicit owner authorisation.
+
 > **Phase 17 — 2026-11-19 (owner-passed: "Test passed"; branch pushed; merge NOT authorised):**
 > Topic-map cross-check across all five subjects. Branch
 > `arena/1e78bf15-diploma-3rd-sem`, base `9fda855` (verified ancestor). No

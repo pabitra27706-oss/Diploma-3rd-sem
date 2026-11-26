@@ -137,9 +137,12 @@ class CardEligibilityTests(unittest.TestCase):
             self.assertNotIn(b'\n ', raw, f'{path.name} must stay minified (no indentation)')
             parsed = json.loads(raw.decode('utf-8'))
             self.assertEqual(parsed, sorted(parsed, key=lambda card: card['id']), f'{path.name} must be id-ordered')
+            self.assertLess(len(raw), 420_000, f'{path.name} on-demand subject shard must stay compact (<420 KB)')
         total = sum(len((ROOT / 'assets/cards' / meta['file']).read_bytes())
                     for meta in self.manifest['subjects'].values())
-        self.assertLess(total, 1_200_000, 'card shards must stay a compact checked-in payload')
+        # Phase 18 Mode B expands PYQ model answers (mirrored verbatim into card['back']);
+        # each subject shard is fetched lazily one-at-a-time (<420 KB) with a <1.85 MB 5-shard ceiling.
+        self.assertLess(total, 1_850_000, 'card shards must stay a compact checked-in payload')
         for code, note in self.manifest['verificationNotes'].items():
             self.assertIn(code, VERIFICATION_CODES)
             self.assertTrue(note)

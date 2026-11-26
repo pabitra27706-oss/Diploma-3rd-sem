@@ -277,7 +277,12 @@ function begin() {
    ═══════════════════════════════════════════════════════════ */
 
 function renderRichContent(text) {
-  if (!text) return '<p style="color:var(--text-muted)">No content available.</p>';
+  if (!text) return '<p class="rich-empty">No content available.</p>';
+  if (typeof window !== 'undefined' && window.StudyRichContent && typeof window.StudyRichContent.renderHtml === 'function') {
+    return window.StudyRichContent.renderHtml(text, {
+      renderCodeBlock: (raw, langLabel) => buildCodeBlockHtml(escapeForCode(raw), langLabel)
+    });
+  }
 
   // Normalize escape sequences
   let normalized = text

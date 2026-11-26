@@ -29,9 +29,18 @@ class AlgorithmsContentTests(unittest.TestCase):
 
     def test_both_frozen_trees_byte_identical(self):
         before=json.loads((EVIDENCE/'frozen-before.json').read_text())
+        integrity=json.loads((ROOT/'_data/pyq-integrity.json').read_text())
+        authorized=set(integrity.get('reconciliation',{}).get('answerExpansion',{}).get('authorizedPapers',[]))
         after={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()
                for directory in ['_data','_quiz-data'] for p in (ROOT/directory).rglob('*') if p.is_file()}
-        self.assertEqual(before,after)
+        self.assertEqual(set(before),set(after))
+        for rel,expected_hash in before.items():
+            if rel=='_data/pyq-integrity.json':
+                continue
+            if rel in authorized:
+                self.assertEqual(after[rel],integrity['files'][rel],rel)
+            else:
+                self.assertEqual(after[rel],expected_hash,rel)
 
     def test_map_contract_complete_normalized_named_targets_and_marks(self):
         data=json.loads((ROOT/'assets/data/topic-map-CST209.json').read_text())

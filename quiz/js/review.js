@@ -648,7 +648,12 @@ function buildModelAnswerBox(q, headingText = '📖 Model Answer') {
   modelHeader.appendChild(toggleBtn);
   box.appendChild(modelHeader);
 
-  const modelText = createElement('div', 'review-model-text', q.modelAnswer || '');
+  const modelText = createElement('div', 'review-model-text rich-content');
+  if (typeof window !== 'undefined' && window.StudyRichContent && typeof window.StudyRichContent.renderDom === 'function') {
+    window.StudyRichContent.renderDom(document, modelText, q.modelAnswer || '');
+  } else {
+    modelText.textContent = q.modelAnswer || '';
+  }
   modelText.id = `model-text-${q.id}`;
   modelText.setAttribute('hidden', '');
   box.appendChild(modelText);

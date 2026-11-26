@@ -731,12 +731,21 @@ function buildExplanationEl(q) {
 
   const box = createElement('div', 'result-explanation');
   box.dataset.explBox = 'true';
-  box.innerHTML = `
-    <div class="result-explanation-title">
-      <span aria-hidden="true">💡</span> Explanation
-    </div>
-    <p class="result-explanation-text">${q.explanation}</p>
-  `;
+
+  const title = createElement('div', 'result-explanation-title');
+  const icon = createElement('span', '', '💡');
+  icon.setAttribute('aria-hidden', 'true');
+  title.appendChild(icon);
+  title.appendChild(document.createTextNode(' Explanation'));
+  box.appendChild(title);
+
+  const explBody = createElement('div', 'result-explanation-text rich-content');
+  if (typeof window !== 'undefined' && window.StudyRichContent && typeof window.StudyRichContent.renderDom === 'function') {
+    window.StudyRichContent.renderDom(document, explBody, q.explanation);
+  } else {
+    explBody.textContent = q.explanation;
+  }
+  box.appendChild(explBody);
   return box;
 }
 

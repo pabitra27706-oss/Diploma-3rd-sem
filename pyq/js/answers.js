@@ -219,7 +219,12 @@ function scrollToTop() {
 // ═══════════════════════════════════════════════════════════
 
 function renderRichContent(text) {
-  if (!text) return '<p style="color:var(--text-muted)">No content available.</p>';
+  if (!text) return '<p class="rich-empty">No content available.</p>';
+  if (typeof window !== 'undefined' && window.StudyRichContent && typeof window.StudyRichContent.renderHtml === 'function') {
+    return window.StudyRichContent.renderHtml(text, {
+      renderCodeBlock: (raw, langLabel) => buildCodeBlockHtml(escapeHtmlForCode(raw), langLabel)
+    });
+  }
 
   // Normalize line endings
   let normalized = text;
@@ -1593,6 +1598,9 @@ function printIncludeAnswers() {
 // key can be built from the same source text.
 function printAnswerBody(q) {
   if (!q.answer) return '';
+  if (typeof window !== 'undefined' && window.StudyRichContent && typeof window.StudyRichContent.renderPrintHtml === 'function') {
+    return `<div class="print-answer-label">Answer</div>${window.StudyRichContent.renderPrintHtml(q.answer)}`;
+  }
   const answerText = q.answer.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
   let html = '';
   const hasExplicitCode = answerText.includes('```');
@@ -1713,7 +1721,7 @@ function buildPrintContent() {
     html += `<section class="print-answers-section"><h2>Answers</h2>${answersHtml}</section>`;
   }
 
-  html += `<div style="text-align:center;padding:1rem;color:#888;border-top:1px solid #ddd;margin-top:2rem;">
+  html += `<div class="print-sheet-footer">
     Diploma 3rd Sem PYQ App · ${new Date().toLocaleDateString()}
   </div>`;
 

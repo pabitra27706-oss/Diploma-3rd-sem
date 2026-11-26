@@ -113,7 +113,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) SISD.**\n\nThe classic stored-program Von Neumann machine has one instruction stream and one data stream.",
+      "answer": "**Correct Option:** **A) SISD** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Single Instruction, Single Data (`SISD`):** Under Flynn's classification, a classical **Von Neumann uniprocessor** fetches **one instruction stream** (`IS`) sequentially via the Program Counter and operates on **one data stream** (`DS`) per instruction in a single ALU.\n- **Contrast with Parallel Flynn Classes:**\n  - **SIMD (`B`):** Vector/GPU processors applying one instruction to multiple data elements in lockstep.\n  - **MISD (`C`):** Multiple instruction units operating on a single data stream.\n  - **MIMD (`D`):** Multicore/multiprocessor systems running independent instruction streams on separate data.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -161,7 +161,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) push.**\n\nZero-address instructions operate on the top of a stack, so they need no explicit memory/register address.",
+      "answer": "**Correct Option:** **A) push** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Stack-Organized Zero-Address Architecture:** Zero-address computers evaluate expressions on an **implicit hardware stack** pointed to by `SP` (`TOS`), where instructions omit explicit register/memory operand fields (pure zero-address ALU ops include `ADD`, `SUB`, `MUL`, and stack operations use implicit `TOS`).\n- **Comparison of Printed Choices:**\n  - `push` (`A`): Printed with **zero explicit address fields** and belongs exclusively to stack-organized instruction sets.\n  - `load A` (`B`) & `store x` (`D`): **One-address** accumulator instructions (`AC ← M[A]`, `M[x] ← AC`).\n  - `move R1, A` (`C`): **Two-address** instruction specifying both destination and source.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -210,7 +210,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Translation Look-aside Buffer.**\n\nA TLB caches recent virtual-to-physical page translations.",
+      "answer": "**Correct Option:** **B) Translation Look-aside Buffer** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Definition:** **TLB** stands for **Translation Look-aside Buffer**, a small, high-speed associative hardware cache located inside the processor's **Memory Management Unit (`MMU`)**.\n- **Architectural Role:** Stores recently translated `Virtual Page Number (VPN) → Physical Frame Number (PFN)` pairs (along with valid, dirty, and protection bits) so virtual-to-physical translation completes in `1` cycle on a TLB hit without consulting the page table in main RAM.\n- **Why Other Options Fail:** `Translation Loop Buffer` and `Time Loop Block` are fabricated distractors.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -258,7 +258,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A.**\n\nA page map/page table translates virtual page numbers into physical frame numbers.",
+      "answer": "**Correct Option:** **A) It maps the virtual addresses to physical addresses** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Page Map Table (`PMT` / Page Table):** Maintained per process by the OS and consulted by the `MMU`, each Page Table Entry (`PTE`) indexed by the **Virtual Page Number (`VPN`)** yields the corresponding **Physical Frame Number (`PFN`)** in main RAM.\n- **Address Concatenation:** Combining `PFN` with the unchanged **Page Offset (`d`)** forms the final physical memory address `[PFN | d]`.\n- **Why Other Options Fail:** Reverse physical-to-virtual lookup (`B`) is not standard PMT forward translation, and virtual vs logical addresses (`C`) refer to CPU-side addresses prior to physical mapping.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -306,7 +306,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) 0100 0001 in AL.**\n\nDecimal 65 is `41H`, which is binary `0100 0001`.",
+      "answer": "**Correct Option:** **D) 0100 0001 in AL** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Decimal Immediate Operand:** In 8086 assembly, an unsuffixed numeric literal `65` in `MOV AL, 65` is assembled as **base-10 (`65₁₀`)** and loaded into the 8-bit register `AL`.\n- **Base Conversion (`65₁₀ → Hex → Binary`):**\n  - `65₁₀ = 4 × 16 + 1 = 41H` (ASCII `'A'`).\n  - Expanding `41H` into two 4-bit nibbles gives `4H = 0100₂` and `1H = 0001₂` → **`0100 0001₂`**.\n- **Why Other Options Fail:** `0100 0010₂` (`A`) and `42H` (`B`) equal decimal `66`, while `40H` (`C`) equals decimal `64`.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -356,7 +356,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D.**\n\nA page fault traps to the OS when the referenced page is valid but not resident in main memory.",
+      "answer": "**Correct Option:** **D) Page fault occurs when a program accesses a page which is not present in main memory** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Demand-Paging Trap:** A **page fault** occurs when a running program references a virtual page whose Page Table Entry has **`Valid/Present bit = 0`**, meaning the page currently resides on secondary backing storage (disk/swap) rather than in a physical RAM frame.\n- **OS Handling Sequence:** The `MMU` raises a synchronous trap to the OS, which selects a free/victim RAM frame, loads the missing page from disk, updates the `PTE` (`Present = 1`), and restarts the faulting instruction.\n- **Why Other Options Fail:** Accessing another process's unauthorized memory (`A`) causes a **protection/segmentation fault**, while accessing a resident page (`B`) is a normal **page hit**.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -404,7 +404,7 @@
         }
       ],
       "correct": "C",
-      "answer": "**Correct answer: C) CU and ALU.**\n\nThe control unit directs operations; the arithmetic/logic unit executes them. Registers are internal storage.",
+      "answer": "**Correct Option:** **C) CU and ALU** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Two Principal Functional Units of a CPU:**\n  1. **Control Unit (`CU`):** Fetches and decodes instructions, sequences timing steps, and issues control signals across the CPU, memory, and I/O.\n  2. **Arithmetic Logic Unit (`ALU`):** Executes all binary arithmetic (`ADD`, `SUB`, `INC`) and bitwise Boolean logic (`AND`, `OR`, `XOR`, `SHIFT`, `CMP`) operations.\n- **Why Other Options Fail:** Internal **registers** act as local scratchpad storage supporting the `CU` and `ALU`, while **main memory** (`B`) sits outside the CPU on the system bus.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -453,7 +453,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) parallel processing.**\n\nParallel processing executes multiple operations concurrently. Vector/array processing are more specific forms.",
+      "answer": "**Correct Option:** **A) parallel processing** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Umbrella Architectural Term:** **Parallel processing** is the general computer-organization paradigm denoting **concurrent execution of multiple data-processing operations** across pipelined stages, multiple ALUs, or multiple processor cores to boost throughput.\n- **Relationship to Specialized Forms:**\n  - **Array processing (`B`)** and **vector processing (`C`)** are specific SIMD sub-techniques of parallel processing tailored to homogeneous array/vector operands.\n  - **Distributed processing (`D`)** spreads tasks across networked autonomous computers rather than inside a single parallel processor system.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -500,7 +500,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) 128 bits.**\n\n`16 × 8 = 128` cells/bits in the usual 16 words × 8 bits per word interpretation.",
+      "answer": "**Correct Option:** **D) 128 bits** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **`W × B` Memory Organization Formula:** A memory chip specified as **`W × B`** contains **`W` addressable words (locations)** with **`B` bits per word**, giving total storage capacity `C = W × B` bits.\n- **Direct Substitution:**\n  `Total Capacity = 16 words × 8 bits/word = 128 bits` (`= 16 bytes`, requiring `log₂(16) = 4` address lines and `8` data lines).\n- **Why Other Options Fail:** `256`, `512`, and `1024` bits correspond to `32 × 8`, `64 × 8`, and `128 × 8` memory arrays respectively.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -548,7 +548,7 @@
         }
       ],
       "correct": "A",
-      "answer": "**Correct answer: A) 4 GB.**\n\nA 32-bit address selects `2^32` byte-addressed locations = 4 GiB.",
+      "answer": "**Correct Option:** **A) 4 GB** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Byte-Addressable Space Calculation:** With an `n = 32`-bit address bus on a standard byte-addressable processor (`1 location = 1 Byte`), the total number of distinct addressable bytes is **`2³²` bytes**.\n- **Power-of-Two Unit Breakdown:**\n  `2³² Bytes = 2² × 2³⁰ Bytes = 4 × 1 GB = 4 GB` (`4,294,967,296` bytes).\n- **Exam Watchout (`GB` vs `Gb`):** Option A (**`4 GB`**, Gigabytes) is exact, whereas Option B (**`4 Gb`**, Gigabits) is `8×` smaller (`512 MB`); Options C (`2³¹ B`) and D (`2²² B`) have wrong exponents.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -597,7 +597,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer per the scan annotation: B) Block by Block.**\n\nThe handwritten mark selects B. In many textbooks, cache-to-CPU transfers are word-by-word while main-memory-to-cache transfers are block-by-block, so this item is architecture-convention dependent.",
+      "answer": "**Correct Option:** **B) Block by Block** *(1 mark — per stored scan key; see convention note below)*\n\n**Explanation *(1 mark)*:**\n- **Stored Key Context:** Cache memory is organized into fixed-size **cache lines (blocks)** so spatial locality brings multi-word blocks closer to the processor; the annotated scan marks **B) Block by Block**.\n- **Important Textbook Distinction (Morris Mano / Stallings):**\n  - **Main Memory ↔ Cache:** Always transferred **Block by Block** (a full cache line of `16–64` bytes per miss).\n  - **Cache ↔ CPU Register:** Physically delivered **Word by Word** (`A`) over the CPU-cache data path. In written exams, stating this two-level distinction earns full credit under either convention.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -647,7 +647,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Hit ratio.**\n\nHit ratio = cache hits / total accesses; miss ratio and average access time are derived from it.",
+      "answer": "**Correct Option:** **B) Hit ratio** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Cache Performance Metric:** Cache effectiveness is measured by its **Hit Ratio (`h`)**, defined as the fraction of total CPU memory requests satisfied directly from cache:\n  `Hit Ratio (h) = Cache Hits / (Cache Hits + Cache Misses)`\n- **Impact on Speed:** A high hit ratio (`h ≥ 0.90`) minimizes costly main-memory accesses in `AMAT = h × Tc + (1 − h) × (Tc + Tm)`.\n- **Why Other Options Fail:** `Chart ratio`, `Cache ratio`, and `Data ratio` are non-standard distractor phrases.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -695,7 +695,7 @@
         }
       ],
       "correct": "D",
-      "answer": "**Correct answer: D) PC.**\n\nMAR holds the address and MDR the data; the data bus carries it. The program counter is not part of the memory write data path.",
+      "answer": "**Correct Option:** **D) PC** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Registers Active in a Memory Write (`M[MAR] ← MDR`):**\n  1. **`MAR` (`C`):** Receives the target destination address and drives the address bus.\n  2. **`MDR` (`B`):** Holds the data word to be written.\n  3. **`Data bus` (`A`):** Carries the word from `MDR` into the selected RAM cells when `WR̄` asserts.\n- **Why `PC` Is Excluded:** The **Program Counter (`PC`)** tracks the address of the **next instruction fetch**, so it plays no role in transferring a data operand to memory during a store cycle.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -745,7 +745,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) Main memory.**\n\nThe CPU addresses main memory directly; auxiliary/secondary storage is reached through I/O controllers.",
+      "answer": "**Correct Option:** **B) Main memory** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Direct Bus-Addressable Primary Storage:** **Main memory** (`RAM` / `ROM`, buffered by cache) connects directly to the CPU's **address, data, and control buses**, allowing `LOAD`/`STORE` and instruction fetches to address words directly via `MAR` and `MDR`.\n- **Why Other Options Fail:** **Auxiliary memory (`A`)** and **Secondary memory (`C`)** are synonymous terms for non-volatile mass storage (magnetic disks, SSDs, tapes) that cannot be addressed directly by the CPU ALU — data must first be staged into **main memory** via I/O controllers or DMA.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -793,7 +793,7 @@
         }
       ],
       "correct": "B",
-      "answer": "**Correct answer: B) 2^35.**\n\nThe number of page frames equals the number of logical addresses divided by the page size, 2^46 / 2^11 = 2^35. The exponent is simply subtracted because both values are powers of two.",
+      "answer": "**Correct Option:** **B) 2^35** *(1 mark)*\n\n**Explanation *(1 mark)*:**\n- **Given Parameters:**\n  - Total logical (virtual) address space = `2⁴⁶` addresses (`46`-bit virtual address).\n  - Page size = `2¹¹` addresses per page (`11`-bit page offset `d`).\n- **Virtual Page Count Calculation:**\n  `Number of Virtual Pages = Virtual Address Space / Page Size = 2⁴⁶ / 2¹¹ = 2^(46 − 11) = 2³⁵ pages`.\n- **Why Other Options Fail:** `35` (`A`) is only the **bit width** of the Virtual Page Number (`VPN`) field, `2²⁵` (`C`) subtracts the wrong exponent, and `2⁵⁷` (`D`) multiplies instead of dividing.",
       "answerStatus": "model-answer",
       "marks": 2,
       "markSplit": "1+1",
@@ -837,7 +837,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** A Von Neumann machine has CPU (CU + ALU + registers), main memory, input, output, and shared address/data/control buses. Instructions and data share the same memory.\n\n**b)** System buses: address bus carries location, data bus carries words, control bus carries read/write/clock/interrupt signals. All devices attach to these shared lines.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Basic Structure of a Von Neumann Computer [4 Marks]\n\n```ascii\n                 +------------------ CPU ------------------+\n+---------+      |  +-----------------------------------+  |      +----------+\n|  Input  | ---> |  |      Control Unit (PC, IR)        |  | ---> |  Output  |\n|  Unit   |      |  +-----------------+-----------------+  |      |   Unit   |\n+---------+      |                    | Control Signals    |      +----------+\n                 |  +-----------------v-----------------+  |\n                 |  |   ALU (Accumulator & Flag Reg)    |  |\n                 |  +-----------------+-----------------+  |\n                 +--------------------|--------------------+\n                                      | MAR / MDR\n                         +------------v------------+\n                         |   Unified Main Memory   |\n                         |  (Instructions + Data)  |\n                         +-------------------------+\n```\n\n- **Main Memory (`M`):** Single addressable read-write array storing both binary instructions and operand data.\n- **Control Unit (`CU`):** Sequences execution via `PC` and `IR`, decoding opcodes into hardware control signals.\n- **Arithmetic Logic Unit (`ALU`) & Registers:** Executes arithmetic/logic micro-operations using the Accumulator (`AC`), `MAR`, `MDR`, and status flags.\n- **Input & Output Subsystems:** Transfer programs/data into memory and present computed results to external devices.\n\n### b) System Bus Architecture of a Digital Computer [4 Marks]\n\nA **system bus** is a shared parallel communication highway interconnecting the **CPU**, **Main Memory**, and **I/O Controllers**:\n\n```ascii\n  +---------+           +---------------+           +-----------------+\n  |   CPU   |           |  Main Memory  |           | I/O Controllers |\n  +---------+           +---------------+           +-----------------+\n    |  ^  ^                  ^  ^  ^                     ^  ^  ^\n    v  |  |                  |  |  |                     |  |  |\n  ==================================================================  Address Bus (Unidirectional)\n    |  v  |                  |  v  |                     |  v  |\n  <================================================================>  Data Bus    (Bidirectional)\n       |  v                     |  v                        |  v\n  <================================================================>  Control Bus (Read/Write/IRQ)\n```\n\n- **Address Bus (Unidirectional):** Driven by the CPU (or DMA master) to select `2ⁿ` unique memory words or I/O ports (`n` address lines).\n- **Data Bus (Bidirectional):** Transfers `w`-bit instructions and data words in both directions (`CPU ↔ Memory`, `CPU ↔ I/O`); bus width sets word transfer bandwidth.\n- **Control Bus (Command & Timing):** Carries synchronization and status lines including `MEMR̄`, `MEMW̄`, `IOR̄`, `IOW̄`, `CLK`, `READY`, `INTR`, and `HOLD`/`HLDA`.\n- **Bus Arbitration & Tri-State Control:** Because all units share a common set of wires, tri-state buffers (`0`, `1`, `High-Z`) ensure only **one active bus master** drives the bus at any instant, while synchronous or asynchronous handshake signals coordinate fast and slow peripherals.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -878,7 +878,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "\n**Mark distribution — Total 8 marks: a) 4 marks (instruction cycle) + b) 4 marks (zero-address program).**\n\n**a) Basic instruction cycle**\n\nThe **instruction cycle** is the sequence of steps the CPU performs to execute one instruction. It repeats continuously (Fetch → Execute) under the control of the clock and the Program Counter (PC).\n\n```\n[ Fetch ] → [ Decode ] → [ Fetch Operands ] → [ Execute ] → [ Store Result ] → (update PC) → back to Fetch\n```\n\n1. **Fetch**: The CPU reads the instruction from memory at the address in the PC into the Instruction Register (IR); PC is incremented.\n2. **Decode**: The Control Unit interprets the opcode in IR to determine what operation to perform and which operands are involved.\n3. **Fetch operands**: Required data is fetched from registers or memory into CPU registers.\n4. **Execute**: The ALU performs the operation (add, compare, move, etc.).\n5. **Store result**: The result is written back to a register or memory.\n6. The PC is updated to point to the next instruction, and the cycle repeats.\n\nDiagram:\n```\n   PC ───► [Memory] ───► [IR] ───► [Control Unit] ───► [ALU/Registers]\n    ▲                                                            │\n    └────────────────────(PC updated)────────────────────────────┘\n```\n\n**b) Zero-address instructions to evaluate `X = (A + B) * (C + D)`**\n\nZero-address (stack-organized) machines use a stack. Operands are pushed onto the stack; operators pop the top two values, compute, and push the result.\n\n| Instruction | Stack after execution (top on right) |\n|---|---|\n| `PUSH A` | [A] |\n| `PUSH B` | [A, B] |\n| `ADD` | [A+B] |\n| `PUSH C` | [A+B, C] |\n| `PUSH D` | [A+B, C, D] |\n| `ADD` | [A+B, C+D] |\n| `MUL` | [(A+B)×(C+D)] |\n| `POP X` | [] (result stored in X) |\n\n**Program:**\n```\nPUSH A\nPUSH B\nADD\nPUSH C\nPUSH D\nADD\nMUL\nPOP X\n```\n`ADD` pops B and A, pushes A+B. `MUL` pops (C+D) and (A+B), pushes the product. `POP X` stores the final result into memory location X.\n",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Basic Instruction Cycle with Diagram [4 Marks]\n\nThe **instruction cycle** is the repetitive hardware state machine executed by the CPU from power-on until `HALT` to process one machine instruction after another:\n\n```ascii\n       +---------+     +----------+     +---------------+     +-----------+     +-------------+\nStart->|  Fetch  | --> |  Decode  | --> | Fetch Operand | --> |  Execute  | --> | Check INTR? |\n       +---------+     +----------+     +---------------+     +-----------+     +------+------+\n            ^                                                                          |\n            +--------------------------- Next Instruction (PC) ------------------------+ \n```\n\n1. **Fetch Cycle:** Reads the next instruction from memory using `PC`: `MAR ← PC`, `MDR ← M[MAR]`, `IR ← MDR`, `PC ← PC + 1`.\n2. **Decode Cycle:** The Control Unit decodes `IR[opcode]` and addressing-mode bits.\n3. **Operand Fetch (Indirect) Cycle:** Computes the Effective Address (`EA`) and loads memory/register operands if required.\n4. **Execute & Write-Back Cycle:** Performs the ALU, data-transfer, or branch operation and stores the result.\n5. **Interrupt Check:** If `INTR = 1` and interrupts are enabled, saves `PC` and vectors to the ISR before repeating Fetch.\n\n### b) Zero-Address Stack Program for `X = (A + B) * (C + D)` [4 Marks]\n\n- **Postfix (RPN) Form:** Converting `(A + B) * (C + D)` to Reverse Polish Notation gives **`A B + C D + *`**.\n- **Zero-Address Rule:** `PUSH M` pushes memory operand `M` onto `TOS`; `ADD` and `MUL` implicitly pop the top two stack items, push the result back onto `TOS`, and `POP X` stores `TOS` into `X`.\n\n```asm\nPUSH A      ; TOS <- M[A]\nPUSH B      ; TOS <- M[B]\nADD         ; Pop B, Pop A -> Push (A + B)\nPUSH C      ; TOS <- M[C]\nPUSH D      ; TOS <- M[D]\nADD         ; Pop D, Pop C -> Push (C + D)\nMUL         ; Pop (C + D), Pop (A + B) -> Push (A + B) * (C + D)\nPOP  X      ; M[X] <- Pop TOS\n```\n\n| Step | Instruction | Stack State *(Bottom → `TOS`)* | Effect |\n| :---: | :--- | :--- | :--- |\n| 1 | `PUSH A` | `[A]` | Load `A` |\n| 2 | `PUSH B` | `[A, B]` | Load `B` |\n| 3 | `ADD` | `[A + B]` | Sum `A + B` on `TOS` |\n| 4 | `PUSH C` | `[A + B, C]` | Load `C` |\n| 5 | `PUSH D` | `[A + B, C, D]` | Load `D` |\n| 6 | `ADD` | `[A + B, C + D]` | Sum `C + D` on `TOS` |\n| 7 | `MUL` | `[(A + B) × (C + D)]` | Product on `TOS` |\n| 8 | `POP X` | `[]` *(empty)* | `M[X] ← (A + B) × (C + D)` |",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -919,7 +919,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Minimum mode is a single-processor system where 8086 generates control signals directly; maximum mode supports multiprocessor/coprocessor systems and uses an 8288 bus controller.\n\n**b)** Immediate `MOV AX,5`; register `MOV AX,BX`; direct `MOV AX,[1234H]`; register indirect `MOV AX,[BX]`; also indexed/based and based-indexed modes.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Minimum Mode vs Maximum Mode in 8086 Microprocessor [4 Marks]\n\n> [!COMPARE] Intel 8086 Minimum Mode vs Maximum Mode\n> | Parameter | Minimum Mode (`MN/MX̄ = 1`) | Maximum Mode (`MN/MX̄ = 0`) |\n> |---|---|---|\n> | **Pin 33 Connection** | Tied to **`+5V` (`Logic 1`)**. | Tied to **`GND` (`Logic 0`)**. |\n> | **Processor Topology** | **Single-processor** (uniprocessor) system. | **Multiprocessor / Coprocessor** (`8087` NDP, `8089` IOP) system. |\n> | **Bus Control Signals** | Generated **directly by the 8086** on pins `24–31` (`INTĀ`, `ALE`, `DEN̄`, `DT/R̄`, `M/IŌ`, `WR̄`). | Pins `24–31` emit status `S̄₂, S̄₁, S̄₀`; external **Intel 8288 Bus Controller** generates `MEMR̄`, `MEMW̄`, `IOR̄`, `IOW̄`, `ALE`, `DEN`. |\n> | **DMA / Bus Arbitration** | Dedicated **`HOLD`** (input) and **`HLDA`** (output) handshake pins. | Bidirectional request/grant pins **`RQ̄/GT̄₀`** and **`RQ̄/GT̄₁`** plus hardware bus **`LOCK̄`**. |\n> | **Queue Status & Cost** | No external queue status pins; lower chip count and board cost. | Provides **`QS₁, QS₀`** so numeric coprocessors track the 8086 prefetch queue; higher board cost. |\n\n### b) Four Addressing Modes in 8086 with Examples [4 Marks]\n\n1. **Immediate Addressing Mode:** The 8-bit or 16-bit constant datum is part of the instruction bytes.\n   - *Example:* `MOV AX, 3A5FH` → loads constant `3A5FH` directly into `AX`.\n2. **Register Addressing Mode:** Source and destination operands are internal CPU registers (no external memory bus cycle).\n   - *Example:* `ADD DX, BX` → computes `DX ← DX + BX`.\n3. **Direct Memory Addressing Mode:** The 16-bit Effective Address (`EA`) offset inside segment `DS` is explicitly encoded in `[disp16]`.\n   - *Example:* `MOV CX, [4000H]` → loads word from physical address `(DS × 10H) + 4000H`.\n4. **Based-Indexed Addressing Mode:** `EA` equals the sum of a base register (`BX`/`BP`) and an index register (`SI`/`DI`) for array/table traversal.\n   - *Example:* `MOV AL, [BX + SI]` → accesses byte at `(DS × 10H) + BX + SI`.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -962,7 +962,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Direct mapping: one fixed cache line per memory block. Fully associative: any block in any line. Set-associative: a block maps to a set and can occupy any way in it.\n\n**b)** With concurrent lookup: `0.9×8 + 0.1×80 = 15.2 ns`. If the miss penalty is added after the cache lookup: `8 + 0.1×80 = 16 ns`. State the convention used.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Cache Mapping Techniques [4 Marks]\n\nCache mapping determines where main-memory block `j` may reside among `m` cache lines:\n1. **Direct Mapping (`Line = j mod m`):** Each memory block maps to **exactly one** predetermined cache line; physical address splits into `[Tag | Line Index | Word Offset]`. Uses `1` comparator (fast, low cost) but suffers **conflict misses** when two active blocks share the same line index.\n2. **Fully Associative Mapping:** Any memory block may be placed into **any free cache line**; address splits into `[Tag | Word Offset]`. Eliminates conflict misses completely, but requires `m` parallel CAM tag comparators and replacement hardware (`LRU`/`FIFO`).\n3. **`k`-Way Set-Associative Mapping (`Set = j mod v`, `v = m / k`):** Divides the cache into `v` sets of `k` lines (*ways*) each; address splits into `[Tag | Set Index | Word Offset]`. Block `j` maps to one fixed set and can occupy any of its `k` ways — combining low conflict misses with modest `k`-comparator hardware.\n\n### b) Average Memory Access Time (`AMAT`) Calculation [4 Marks]\n\n- **Given Data:**\n  - Cache access time `Tc = 8 ns`\n  - Main memory access time `Tm = 80 ns`\n  - Hit ratio `h = 90% = 0.90` → Miss ratio `1 − h = 10% = 0.10`\n\n> [!FORMULA] Average / Effective Memory Access Time (`AMAT`)\n> - **Case 1 — Simultaneous (Parallel) Lookup (`Tm` = total miss time):** `AMAT = h × Tc + (1 − h) × Tm`\n> - **Case 2 — Hierarchical (Sequential) Lookup (`Tm` added after `Tc` miss check):** `AMAT = Tc + (1 − h) × Tm = h × Tc + (1 − h) × (Tc + Tm)`\n\n- **Step-by-Step Evaluation:**\n  - **Under Simultaneous Access Convention:**\n    `AMAT = (0.90 × 8 ns) + (0.10 × 80 ns) = 7.2 ns + 8.0 ns = 15.2 ns`\n  - **Under Sequential (Look-Through) Access Convention:**\n    `AMAT = 8 ns + (0.10 × 80 ns) = 8.0 ns + 8.0 ns = 16.0 ns`\n- **Conclusion:** Average memory access time is **`15.2 ns`** (parallel lookup) or **`16.0 ns`** (sequential lookup), achieving roughly a **`5×` speedup** over uncached `80 ns` DRAM.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1004,7 +1004,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** CISC has complex multi-cycle instructions, many addressing modes, and microcode; RISC uses a small fixed-length load/store instruction set, many registers, and hardwired pipelining.\n\n**b)** DMA lets an I/O controller transfer blocks directly to/from memory without per-byte CPU intervention; the CPU is interrupted when the transfer completes. Virtual memory maps process virtual addresses to physical frames and swaps pages to secondary storage on demand.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks *(both short-note options provided below)*\n\n### a) Difference Between CISC and RISC Architecture [4 Marks]\n\n> [!COMPARE] CISC vs RISC Architecture\n> | Parameter | CISC (*Complex Instruction Set Computer*) | RISC (*Reduced Instruction Set Computer*) |\n> |---|---|---|\n> | **Instruction Set & Width** | Large (`100–300+` instructions), **variable-length** (`1–15` bytes). | Compact (`30–50` core instructions), **fixed-length** (`32-bit`). |\n> | **Cycles per Instruction** | Multi-cycle execution (`CPI = 2` to `15+`). | Single-cycle pipelined execution (`CPI ≈ 1`). |\n> | **Memory Operand Rule** | ALU instructions can read/write memory directly (`ADD [BX], AX`). | Strict **Load/Store** architecture: only `LW`/`SW` touch memory; ALU uses registers only. |\n> | **Control Unit Design** | **Microprogrammed** control memory (ROM microcode). | **Hardwired** combinational control logic for fast decoding. |\n> | **Registers & Addressing** | Fewer general registers (`8–16`), many complex addressing modes. | Large register file (`32+`), few simple addressing modes. |\n> | **Examples** | Intel x86, VAX, Motorola 680x0. | ARM, RISC-V, MIPS, SPARC. |\n\n### b) Short Notes [4 Marks]\n\n#### i) Direct Memory Access (`DMA`)\n- **Concept:** Hardware I/O technique allowing a **DMA Controller (`DMAC`)** to move bulk data blocks directly between high-speed peripherals (disk, network) and main RAM without executing CPU `IN`/`OUT` loops per byte.\n- **Operation:** CPU initializes the DMAC's **Address Register**, **Byte Count Register**, and **Mode/Control** bits. DMAC requests the bus via `HOLD`, receives `HLDA` from the CPU, transfers data using **Burst** or **Cycle-Stealing** mode, and raises an interrupt once the count hits zero.\n\n#### ii) Virtual Memory\n- **Concept:** Memory-management scheme separating a program's large **logical (virtual) address space** from physical RAM capacity using **demand paging** backed by disk/SSD swap space.\n- **Operation:** Virtual addresses `[VPN | Offset]` are translated by the **`MMU`** using the **Page Table** and **`TLB`** into `[PFN | Offset]`. Unresident pages (`Valid = 0`) trigger a **page fault** so the OS loads only needed pages on demand.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1047,7 +1047,7 @@
         }
       ],
       "markSplit": "2+6",
-      "answer": "**a)** A bias is added to the true exponent so IEEE-754 exponents are stored as unsigned values (bias 127 for single, 1023 for double).\n\n**b)** 8086 is a 16-bit CPU split into BIU and EU. BIU handles instruction queue, segment registers, and bus; EU has ALU, general registers, flags, and control. It has a 20-bit address bus, 16-bit multiplexed address/data bus, control/status pins, clock, reset, interrupt, and min/max mode pins.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 2 marks + b) 6 marks\n\n### a) Biased Exponent in Floating-Point Representation [2 Marks]\n\nIn IEEE-754 floating-point numbers, a fixed positive constant (**`Bias = 2^(k−1) − 1`** for a `k`-bit exponent field) is added to the signed true exponent `e` to form an **unsigned stored exponent `E = e + Bias`**:\n- **Standard Bias Values:** **`127`** for 32-bit single precision (`k = 8`, normal `e ∈ [−126, +127] → E ∈ [1, 254]`) and **`1023`** for 64-bit double precision (`k = 11`).\n- **Why Biasing Is Used:** Allows positive and negative exponents to be compared in **fast unsigned integer comparator hardware** without separate exponent sign logic.\n\n### b) Intel 8086 Architecture and 40-Pin DIP Configuration [6 Marks]\n\n#### 1. Internal Architecture (`BIU` + `EU`)\n- **Bus Interface Unit (`BIU`):** Contains four 16-bit segment registers (`CS`, `DS`, `SS`, `ES`), `16`-bit `IP`, a **20-bit physical address adder** (`PA = Seg × 10H + Offset` → `1 MB` space), and a **6-byte FIFO prefetch queue**.\n- **Execution Unit (`EU`):** Contains four 16-bit general data registers (`AX`, `BX`, `CX`, `DX` — each splittable into `H`/`L` bytes), pointer/index registers (`SP`, `BP`, `SI`, `DI`), a **16-bit ALU**, Instruction Decoder, and **16-bit Flag Register** (`CF, PF, AF, ZF, SF, OF, TF, IF, DF`).\n\n#### 2. 8086 40-Pin DIP Configuration\n\n```ascii\n                 +--------\\_/--------+\n         GND   1 |                   | 40  VCC (+5V)\n        AD14   2 |                   | 39  AD15\n     AD13..2 3-14|    Intel 8086     | 38-35 A16/S3 .. A19/S6\n         AD1  15 |    (40-Pin DIP)   | 34  BHE* / S7\n         AD0  16 |                   | 33  MN / MX*\n         NMI  17 |                   | 32  RD*\n        INTR  18 |                   | 31  HOLD   (RQ*/GT0*)\n         CLK  19 |                   | 30  HLDA   (RQ*/GT1*)\n         GND  20 |                   | 29  WR*    (LOCK*)\n                 | 21..28: RESET, READY, TEST*, INTA*, ALE, DEN*, DT/R*, M/IO* |\n                 +-------------------+\n```\n\n- **Multiplexed Bus Pins (`AD₀–AD₁₅`, `A₁₆/S₃–A₁₉/S₆`):** Carry `20`-bit address during `T₁` (latched by **`ALE`**) and `16`-bit data + status during `T₂–T₄`.\n- **Control & Mode Pins:** **`BHĒ`** enables the upper data bank (`D₈–D₁₅`), **`MN/MX̄`** selects Minimum (`1`) vs Maximum (`0`) mode, **`RD̄`/`WR̄`/`M/IŌ`** control memory and I/O cycles, and **`INTR`/`NMI`/`RESET`/`READY`** handle interrupts, reset, and slow-memory wait states.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1091,7 +1091,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** SISD, SIMD, MISD, MIMD classify machines by number of instruction and data streams.\n\n**b)** Single: 1 sign bit, 8 exponent bits (bias 127), 23 fraction bits. Double: 1 sign bit, 11 exponent bits (bias 1023), 52 fraction bits. Normal values use a hidden leading 1.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Flynn's Classification of Computers [4 Marks]\n\nMichael J. Flynn's taxonomy categorizes computer systems by the concurrency of **Instruction Streams (`IS`)** and **Data Streams (`DS`)**:\n\n| Category | Instruction Stream | Data Stream | Architecture & Real-World Example |\n| :--- | :---: | :---: | :--- |\n| **SISD** | Single | Single | Sequential uniprocessor executing one instruction on one operand stream (classic Von Neumann core, 8086). |\n| **SIMD** | Single | Multiple | Single control unit broadcasts one instruction across many lockstep processing elements on array/vector data (GPUs, Intel AVX, Cray vector units). |\n| **MISD** | Multiple | Single | Multiple functional units apply distinct operations/checks to the same single data stream (systolic arrays, redundant avionics fault-checking). |\n| **MIMD** | Multiple | Multiple | Autonomous processors execute independent programs/threads on distinct data sets (symmetric multiprocessors, multicore CPUs, compute clusters). |\n\n### b) IEEE-754 Single and Double Precision Formats [4 Marks]\n\n```ascii\nSingle Precision (32 bits):  [ Sign: 1b | Exponent E: 8b (Bias 127)  | Fraction F: 23b ]\nDouble Precision (64 bits):  [ Sign: 1b | Exponent E: 11b (Bias 1023)| Fraction F: 52b ]\n```\n\n> [!FORMULA] IEEE-754 Normalized Value\n> `Value = (−1)^S × (1.F)₂ × 2^(E − Bias)`\n\n- **Single Precision (`32-bit`):** `S` (`bit 31`), `E` (`bits 30–23`, `8` bits, `Bias = 127`), `F` (`bits 22–0`, `23` bits + hidden `1` = `24`-bit significand, `~7` decimal digits, range `≈ ±1.18 × 10⁻³⁸` to `±3.40 × 10³⁸`).\n- **Double Precision (`64-bit`):** `S` (`bit 63`), `E` (`bits 62–52`, `11` bits, `Bias = 1023`), `F` (`bits 51–0`, `52` bits + hidden `1` = `53`-bit significand, `~15–17` decimal digits, range `≈ ±2.23 × 10⁻³⁰⁸` to `±1.80 × 10³⁰⁸`).\n- **Reserved Encodings:** `E = 0, F = 0` (`±0`); `E = 0, F ≠ 0` (subnormal); `E = all 1s, F = 0` (`±∞`); `E = all 1s, F ≠ 0` (`NaN`).",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
@@ -1133,7 +1133,7 @@
         }
       ],
       "markSplit": "4+4",
-      "answer": "**a)** Pipelining overlaps instruction stages (fetch, decode, execute, memory, write-back). Types include instruction pipelines, arithmetic pipelines, and superscalar/VLIW or superpipelined designs.\n\n**b)** Structural hazards (resource conflicts), data hazards (RAW/WAR/WAW dependencies), and control hazards (branches/interrupts). Forwarding, stalling, branch prediction, and separate caches mitigate them.",
+      "answer": "> [!MARKS] Mark Distribution — Total 8 marks: a) 4 marks + b) 4 marks\n\n### a) Concept of Pipelining and Its Types [4 Marks]\n\n**Pipelining** decomposes a sequential hardware task into `k` buffered sub-stages separated by clocked latches so `k` operations execute simultaneously at different completion stages, boosting throughput up to `k×`:\n- **1. Arithmetic Pipeline:** Subdivides multi-step ALU/FPU calculations into clocked stages — for example, **floating-point addition** split into *(i) Exponent Compare → (ii) Mantissa Alignment → (iii) Significand Add/Sub → (iv) Normalization & Rounding* (used in vector and GPU units).\n- **2. Instruction Pipeline:** Overlaps the instruction cycle across **`IF` (Fetch) → `ID` (Decode) → `EX` (Execute) → `MEM` (Memory) → `WB` (Write-Back)** so one instruction finishes per clock cycle in steady state.\n- **3. Linear vs Non-Linear / Superscalar Pipelines:** Linear pipelines pass strictly stage-by-stage without feedback, whereas dynamic/superscalar pipelines issue multiple instructions per clock across parallel execution pipelines.\n\n### b) Types of Pipeline Hazards [4 Marks]\n\n1. **Structural Hazards:** Hardware resource contention when two stages need the same functional unit in the same clock cycle (e.g., `IF` and `MEM` competing for a single unified memory port). *Solution:* Split **Harvard `I-Cache` and `D-Cache`** and multi-ported register files.\n2. **Data Hazards:** An instruction depends on the result of an earlier instruction still in the pipeline:\n   - **RAW (*Read After Write*):** `I₂` reads a register before `I₁` writes it (true data dependency).\n   - **WAR (*Write After Read*):** `I₂` overwrites a source register before `I₁` reads it (anti-dependency).\n   - **WAW (*Write After Write*):** Two instructions write the same register out of order (output dependency).\n   - *Solution:* **Operand forwarding (bypassing)**, hardware stall interlocks, and register renaming.\n3. **Control (Branch) Hazards:** Conditional branches (`BEQ`, `JNZ`) alter `PC` mid-pipeline, invalidating instructions already fetched after the branch. *Solution:* **Branch prediction**, **Branch Target Buffer (`BTB`)**, and **delayed branch** scheduling.",
       "answerStatus": "model-answer",
       "marks": 8,
       "type": "theory",
