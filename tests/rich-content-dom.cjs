@@ -78,4 +78,29 @@ const Rich = require('../assets/js/rich-content.js');
   assert.equal(host.querySelectorAll('script').length, 0);
 }
 
+/* 5. Emphasis wrapping inline code (PYQ review answers: **`Stack`** used to leak raw **) */
+{
+  const answer = '**Fill-in Answer:** **`Stack`**\n\n- **Explanation:** A **Stack** enforces the **Last-In, First-Out (`LIFO`)** discipline.';
+  const html = Rich.renderHtml(answer);
+  assert(!html.includes('**'), 'rendered HTML must not leak raw ** markers');
+  assert(html.includes('<strong><code>Stack</code></strong>'), 'bold inline code must render as code nested inside strong');
+  assert(html.includes('<strong>Last-In, First-Out (<code>LIFO</code>)</strong>'), 'bold text containing inline code must keep the code inside strong');
+
+  const printHtml = Rich.renderPrintHtml(answer);
+  assert(!printHtml.includes('**'), 'print backend must not leak raw ** markers either');
+
+  assert(Rich.renderHtml('**`O(n log n)`**').includes('<strong><code>O(n log n)</code></strong>'), 'bold-wrapped code span must nest');
+  assert(Rich.renderHtml('*italic `code` end*').includes('<em>italic <code>code</code> end</em>'), 'italic may wrap inline code');
+  assert(Rich.renderHtml('**Nested *italic* inside**').includes('<strong>Nested <em>italic</em> inside</strong>'), 'emphasis may nest inside emphasis');
+  assert(Rich.renderHtml('a ** b').includes('**'), 'unmatched ** must remain literal text');
+  assert(Rich.renderHtml('star * alone').includes('*'), 'unmatched * must remain literal text');
+
+  const { doc } = createMiniDom('https://example.test/Diploma-3rd-sem/pyq/answers.html');
+  const host = doc.createElement('div');
+  Rich.renderDom(doc, host, answer);
+  const codes = host.querySelectorAll('code');
+  assert(codes.length >= 2, 'DOM backend must render code spans inside emphasis');
+  assert(!host.textContent.includes('**'), 'DOM backend must not leak raw ** markers');
+}
+
 console.log('PASS StudyRichContent HTML, Print, and pure-DOM suites');

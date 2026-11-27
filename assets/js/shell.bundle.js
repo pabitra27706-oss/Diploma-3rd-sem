@@ -49,12 +49,39 @@
       .replace(/'/g, '&#039;');
   }
 
+  /* Convert literal \\n / \\t into real newlines/tabs only OUTSIDE code:
+     inline `code` spans (single line) and ``` fences (line-start) keep the
+     two-character sequences so C/Python escapes render literally. */
   function normalizeInput(text) {
     if (!text) return '';
-    return String(text)
-      .replace(/\r\n?/g, '\n')
-      .replace(/\\n/g, '\n')
-      .replace(/\\t/g, '\t');
+    var raw = String(text).replace(/\r\n?/g, '\n');
+    var out = '';
+    var lines = raw.split('\n');
+    var inFence = false;
+    for (var li = 0; li < lines.length; li += 1) {
+      var line = lines[li];
+      if (line.trim().slice(0, 3) === '```') inFence = !inFence;
+      if (inFence) {
+        out += (li ? '\n' : '') + line;
+        continue;
+      }
+      var converted = '';
+      var j = 0;
+      var inCode = false;
+      while (j < line.length) {
+        var ch = line.charAt(j);
+        if (ch === '`') { inCode = !inCode; converted += ch; j += 1; continue; }
+        if (!inCode && ch === '\\' && j + 1 < line.length) {
+          var nx = line.charAt(j + 1);
+          if (nx === 'n') { converted += '\n'; j += 2; continue; }
+          if (nx === 't') { converted += '\t'; j += 2; continue; }
+        }
+        converted += ch;
+        j += 1;
+      }
+      out += (li ? '\n' : '') + converted;
+    }
+    return out;
   }
 
   /* Split a Markdown table row on unescaped `|` outside inline backtick spans. */
@@ -159,49 +186,120 @@
     return 'Code';
   }
 
-  /* Inline tokenizer: protects `code` spans first, then parses **bold** and *italic*. */
-  function parseEmphasisSegment(seg) {
-    var out = [];
-    var re = /\*\*([\s\S]+?)\*\*|__(?!_)([\s\S]+?)__|\*(?!\s|\*)([^*\n]+?)(?<!\s)\*/g;
-    var last = 0;
-    var m;
-    while ((m = re.exec(seg)) !== null) {
-      if (m.index > last) {
-        out.push({ type: 'text', value: seg.slice(last, m.index) });
-      }
-      if (m[1] !== undefined || m[2] !== undefined) {
-        var inner = m[1] !== undefined ? m[1] : m[2];
-        out.push({ type: 'strong', children: [{ type: 'text', value: inner }] });
-      } else if (m[3] !== undefined) {
-        out.push({ type: 'em', children: [{ type: 'text', value: m[3] }] });
-      }
-      last = re.lastIndex;
-    }
-    if (last < seg.length) {
-      out.push({ type: 'text', value: seg.slice(last) });
-    }
-    return out;
+  function isSpaceChar(ch) {
+    return ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r';
   }
 
+  /* Index just past the end of the inline code span opening at `from`,
+     or -1 when the backtick cannot start a valid code span. */
+  function codeSpanEnd(s, from) {
+    var closeTick = s.indexOf('`', from + 1);
+    if (closeTick <= from + 1) return -1;
+    var inner = s.slice(from + 1, closeTick);
+    if (inner.indexOf('\n') !== -1 || inner.indexOf('\r') !== -1) return -1;
+    return closeTick + 1;
+  }
+
+  /* Find the closing emphasis marker at or after `from`, skipping inline code spans
+     so a `**` (or `*`) inside `code` never terminates an enclosing strong/em. */
+  function findCloseDelimiter(s, marker, from, isEm) {
+    var n = s.length;
+    var i = from;
+    while (i < n) {
+      var ch = s.charAt(i);
+      if (ch === '`') {
+        var end = codeSpanEnd(s, i);
+        if (end !== -1) { i = end; continue; }
+        i += 1;
+        continue;
+      }
+      if (isEm) {
+        if (ch === '\n' || ch === '\r') return -1;
+        if (ch === '*' && s.charAt(i + 1) === '*') { i += 2; continue; } /* skip ** pairs */
+        if (ch === '*' && i > from && !isSpaceChar(s.charAt(i - 1))) return i;
+        i += 1;
+        continue;
+      }
+      if (ch === marker.charAt(0) && s.charAt(i + 1) === marker.charAt(0)) return i;
+      i += 1;
+    }
+    return -1;
+  }
+
+  /* Inline tokenizer: single left-to-right pass. Emphasis (**bold**, __bold__,
+     *italic*) matches its closing delimiter outside inline code spans and its
+     inner content is parsed recursively, so emphasis can wrap code spans
+     (e.g. **`Stack`** -> strong(code(Stack))). Unmatched markers are emitted
+     as literal text. */
   function parseInlines(str) {
     var s = String(str == null ? '' : str);
     if (!s) return [];
     var tokens = [];
-    var tickRe = /`([^`\n]+)`/g;
-    var last = 0;
-    var m;
-    while ((m = tickRe.exec(s)) !== null) {
-      if (m.index > last) {
-        var before = parseEmphasisSegment(s.slice(last, m.index));
-        for (var b = 0; b < before.length; b += 1) tokens.push(before[b]);
+    var i = 0;
+    var textStart = 0;
+    var n = s.length;
+
+    function flushText(upto) {
+      if (upto > textStart) tokens.push({ type: 'text', value: s.slice(textStart, upto) });
+    }
+
+    while (i < n) {
+      var ch = s.charAt(i);
+
+      /* ── Inline code span: `code` (non-empty, single line) ── */
+      if (ch === '`') {
+        var codeEnd = codeSpanEnd(s, i);
+        if (codeEnd !== -1) {
+          flushText(i);
+          tokens.push({ type: 'code', value: s.slice(i + 1, codeEnd - 1) });
+          i = codeEnd;
+          textStart = i;
+          continue;
+        }
+        i += 1;
+        continue;
       }
-      tokens.push({ type: 'code', value: m[1] });
-      last = tickRe.lastIndex;
+
+      /* ── Emphasis markers (single _ is literal) ── */
+      if (ch === '*' || ch === '_') {
+        var isDouble = s.charAt(i + 1) === ch;
+        if (ch === '_' && !isDouble) { i += 1; continue; }
+        var marker = isDouble ? ch + ch : ch;
+        var innerStart = i + marker.length;
+        if (innerStart >= n) { i += marker.length; continue; }
+
+        if (marker === '*') {
+          /* Italic: inner may not open with whitespace/asterisk, may not span lines */
+          if (isSpaceChar(s.charAt(innerStart)) || s.charAt(innerStart) === '*') { i += 1; continue; }
+          var closeEm = findCloseDelimiter(s, '*', innerStart, true);
+          if (closeEm > innerStart) {
+            flushText(i);
+            tokens.push({ type: 'em', children: parseInlines(s.slice(innerStart, closeEm)) });
+            i = closeEm + 1;
+            textStart = i;
+            continue;
+          }
+          i += 1;
+          continue;
+        }
+
+        /* Strong (** or __): inner runs to the next matching delimiter outside code spans */
+        if (marker === '__' && s.charAt(innerStart) === '_') { i += 1; continue; }
+        var closeStrong = findCloseDelimiter(s, marker, innerStart, false);
+        if (closeStrong > innerStart) {
+          flushText(i);
+          tokens.push({ type: 'strong', children: parseInlines(s.slice(innerStart, closeStrong)) });
+          i = closeStrong + marker.length;
+          textStart = i;
+          continue;
+        }
+        i += marker.length; /* unmatched opener — keep both characters as literal text */
+        continue;
+      }
+
+      i += 1;
     }
-    if (last < s.length) {
-      var tail = parseEmphasisSegment(s.slice(last));
-      for (var t = 0; t < tail.length; t += 1) tokens.push(tail[t]);
-    }
+    flushText(n);
     return tokens;
   }
 
